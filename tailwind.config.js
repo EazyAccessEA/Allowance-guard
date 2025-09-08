@@ -121,11 +121,18 @@ module.exports = {
       spacing: {
         '18': '4.5rem',
         '88': '22rem',
+        '128': '32rem',
+        '144': '36rem',
       },
       borderRadius: {
+        'sm': '0.125rem',
+        'DEFAULT': '0.25rem',
+        'md': '0.375rem',
+        'lg': '0.5rem',
         'xl': '0.75rem',
         '2xl': '1rem',
         '3xl': '1.5rem',
+        'full': '9999px',
       },
       boxShadow: {
         'reown': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
