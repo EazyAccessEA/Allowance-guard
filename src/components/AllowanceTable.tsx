@@ -17,12 +17,24 @@ type Row = {
 
 export default function AllowanceTable({
   data,
-  onRefresh
-}: { data: Row[]; onRefresh: () => Promise<void> }) {
+  onRefresh,
+  selectedWallet,
+  connectedAddress
+}: {
+  data: Row[]
+  onRefresh: () => Promise<void>
+  selectedWallet: string | null
+  connectedAddress: string | undefined
+}) {
   const [sel, setSel] = useState<Record<string, boolean>>({})
   const [busy, setBusy] = useState(false)
   const [progress, setProgress] = useState<string | null>(null)
-  const { revokeMany } = useBulkRevoke()
+  const { revokeMany } = useBulkRevoke(selectedWallet)
+  
+  const revokeAllowed =
+    !!selectedWallet &&
+    !!connectedAddress &&
+    selectedWallet.toLowerCase() === connectedAddress.toLowerCase()
 
   function keyOf(r: Row) {
     return `${r.chain_id}:${r.token_address}:${r.spender_address}:${r.allowance_type}`
@@ -55,7 +67,8 @@ export default function AllowanceTable({
     <div className="mt-4">
       <div className="mb-3 flex items-center gap-2">
         <button onClick={selectRisky} className="rounded border px-3 py-1 text-xs">Select risky</button>
-        <button onClick={handleBulk} disabled={busy || !selectedRows.length} className="rounded border px-3 py-1 text-xs">
+        <button onClick={handleBulk} disabled={busy || !selectedRows.length || !revokeAllowed}
+                className="rounded border px-3 py-1 text-xs">
           {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
         </button>
       </div>

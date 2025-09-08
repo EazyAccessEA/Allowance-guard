@@ -14,8 +14,8 @@ type AllowanceRow = {
   risk_flags: string[]
 }
 
-export function useBulkRevoke() {
-  const { revoke } = useRevoke()
+export function useBulkRevoke(selectedWallet?: string | null) {
+  const { revoke } = useRevoke(selectedWallet)
 
   async function revokeMany(rows: AllowanceRow[], onProgress?: (i:number, total:number)=>void) {
     for (let i = 0; i < rows.length; i++) {

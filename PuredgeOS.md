@@ -849,3 +849,35 @@ file://file-Q5QCSvWoN3gU7N9nmprqdH
   
 
 **Note**: The foundational design aesthetic described above is inspired by and builds upon the proven design language of enterprise platforms, incorporating successful patterns from leading developer tools and professional applications. This ensures our products feel professional, trustworthy, and immediately recognizable across any industry or use case while maintaining our unique brand personality and PuredgeOS quality standards.
+
+1) “Feature Cards” (aka Services grid)
+Add a FeatureCard component (icon, title, 1–2 lines body, optional CTA) and a responsive 3/2/1 grid preset under the Marketing Page template. Keep tokens + dark-mode first. This sits naturally in the Component Library and your Marketing layout. 
+
+2) “Process Timeline” (3–5 steps)
+Ship a StepTimeline + a compact WizardProgress—ideal for onboarding/flows and a homepage “how it works” strip. Respect reduced motion and your standard durations. 
+
+3) “Portfolio Carousel / Showcase”
+Create a lightweight Carousel (no heavy libs): roving tabindex, arrow keys, touch drag, snap points, lazy-loaded slides. Gate with budgets; fall back to a static grid when prefers-reduced-motion or on low devices. 
+
+4) “Team strip” (horizontal scroller)
+Use a scroll-snap CardRail with keyboardable previous/next and visible focus. Ensure min 48×48 targets for avatars/controls. 
+
+5) “FAQ accordion”
+A FaqAccordion (details/summary or ARIA accordion) with managed focus and announcement of expanded panels. Fits Marketing Page and Support. 
+
+6) “Filter Chips / Tags” (blog/work filter)
+Add a FilterChip + ChipGroup (single/multi-select). Keyboard navigation, clear state, and high-contrast tokens. Lives in the core library. 
+
+Where they plug into PuredgeOS (so it stays “on-spec”)
+
+Component Library: All six belong as first-class components with Storybook docs, a11y notes, and tests. 
+
+Marketing Page layout: Hero → Feature Cards → Process Timeline → Showcase Carousel → Team Rail → FAQ—already an approved layout type. 
+
+
+Motion identity & prefs: Use your tokenized easing/durations and honor prefers-reduced-motion. 
+
+Performance budgets: Keep bundles trim; degrade on low-cap devices; lazy-load imagery. 
+
+
+Accessibility gates: 48px targets, keyboard operability, focus order, live-region messaging; CI must pass Axe/Lighthouse

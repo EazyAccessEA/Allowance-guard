@@ -1,14 +1,18 @@
 'use client'
 
 import ConnectButton from '@/components/ConnectButton'
+import WalletManager from '@/components/WalletManager'
+import OnboardingChecklist from '@/components/OnboardingChecklist'
 import AllowanceTable from '@/components/AllowanceTable'
 import { useAccount } from 'wagmi'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { load, save } from '@/lib/storage'
+
+const ACTIVE_KEY = 'ag.activeWallet'
 
 export default function HomePage() {
-  const { address, isConnected } = useAccount()
-  const [pending, setPending] = useState(false)
-  const [message, setMessage] = useState<string | null>(null)
+  const { address: connectedAddress, isConnected } = useAccount()
+  const [selectedWallet, setSelectedWallet] = useState<string | null>(() => load<string | null>(ACTIVE_KEY, null))
   const [rows, setRows] = useState<{
     chain_id: number
     token_address: string
@@ -21,6 +25,13 @@ export default function HomePage() {
     risk_score: number
     risk_flags: string[]
   }[]>([])
+  const [pending, setPending] = useState(false)
+  const [message, setMessage] = useState<string | null>(null)
+  const [hadScan, setHadScan] = useState(false)
+  const [hadRevoke, setHadRevoke] = useState(() => load<boolean>('ag.hadRevoke', false))
+  const [hasSavedWallet, setHasSavedWallet] = useState(false)
+
+  useEffect(() => { save(ACTIVE_KEY, selectedWallet) }, [selectedWallet])
 
   async function fetchAllowances(addr: string) {
     const res = await fetch(`/api/allowances?wallet=${addr}`)
@@ -28,36 +39,26 @@ export default function HomePage() {
     setRows(json.allowances || [])
   }
 
-  async function refreshAfterRevoke() {
-    if (address) await fetchAllowances(address)
-  }
-
   async function startScan() {
-    if (!address) return
-    setPending(true)
-    setMessage(null)
+    const target = selectedWallet || connectedAddress
+    if (!target) return alert('Select or connect a wallet first')
+    setPending(true); setMessage(null)
     try {
       const res = await fetch('/api/scan', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ walletAddress: address, chains: ['eth','arb','base'] })
+        body: JSON.stringify({ walletAddress: target, chains: ['eth','arb','base'] })
       })
       const json = await res.json()
       setMessage(json.message || 'Scan started')
-
-      // quick polling burst
-      for (let i = 0; i < 5; i++) {
-        await new Promise(r => setTimeout(r, 1500))
-        await fetchAllowances(address)
-      }
-
-      // Auto-refresh risk after scanning
       await fetch('/api/risk/refresh', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ wallet: address })
+        body: JSON.stringify({ wallet: target })
       })
-      await fetchAllowances(address)
+      // quick polling
+      for (let i = 0; i < 5; i++) { await new Promise(r => setTimeout(r, 1200)); await fetchAllowances(target) }
+      setHadScan(true)
     } catch (e: unknown) {
       setMessage(e instanceof Error ? e.message : 'Scan failed')
     } finally {
@@ -65,33 +66,49 @@ export default function HomePage() {
     }
   }
 
-  return (
-    <main className="mx-auto max-w-xl px-6 py-10">
-      <h1 className="text-2xl font-semibold">Allowance Guard</h1>
-      <p className="text-sm text-gray-600 mt-2">
-        Connect your wallet to scan allowances on Ethereum, Arbitrum, and Base.
-      </p>
+  // mark revoke completion when rows lose risky items
+  useEffect(() => {
+    const anyRisky = rows.some(r => r.is_unlimited || (r.risk_flags || []).includes('STALE'))
+    if (!anyRisky && rows.length) { setHadRevoke(true); save('ag.hadRevoke', true) }
+  }, [rows])
 
-      <div className="mt-6">
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-10">
+      <h1 className="text-2xl font-semibold">Allowance Guard</h1>
+      <p className="text-sm text-gray-600 mt-2">Monitor & revoke risky approvals across Ethereum, Arbitrum, and Base.</p>
+
+      <div className="mt-4 flex items-center gap-3">
         <ConnectButton />
+        <button onClick={startScan} disabled={pending} className="rounded border px-4 py-2 text-sm">
+          {pending ? 'Scanning…' : 'Start Allowance Scan'}
+        </button>
+        {message && <div className="text-sm text-gray-700">{message}</div>}
       </div>
 
-      {isConnected && (
-        <section className="mt-6 space-y-3">
-          <div className="text-sm">
-            Connected: <span className="font-mono">{address}</span>
-          </div>
-          <button
-            onClick={startScan}
-            disabled={pending}
-            className="rounded-md border px-4 py-2 text-sm"
-          >
-            {pending ? 'Starting…' : 'Start Allowance Scan'}
-          </button>
-          {message && <div className="text-sm text-gray-700">{message}</div>}
-          {rows && <AllowanceTable data={rows} onRefresh={refreshAfterRevoke} />}
+      <WalletManager
+        selected={selectedWallet}
+        onSelect={(a) => setSelectedWallet(a || null)}
+        onSavedChange={(list) => setHasSavedWallet(list.length > 0)}
+      />
+
+      {selectedWallet && (
+        <section className="mt-6">
+          <div className="text-sm">Active wallet: <span className="font-mono">{selectedWallet}</span></div>
+          <AllowanceTable
+            data={rows}
+            onRefresh={async () => { if (selectedWallet) await fetchAllowances(selectedWallet) }}
+            selectedWallet={selectedWallet}
+            connectedAddress={connectedAddress}
+          />
         </section>
       )}
+
+      <OnboardingChecklist
+        isConnected={isConnected}
+        hadScan={hadScan}
+        hasSavedWallet={hasSavedWallet}
+        hadRevoke={hadRevoke}
+      />
     </main>
   )
 }

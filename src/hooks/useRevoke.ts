@@ -11,7 +11,7 @@ type Row = {
   allowance_type: 'per-token'|'all-assets'|string
 }
 
-export function useRevoke() {
+export function useRevoke(selectedWallet?: string | null) {
   const { address } = useAccount()
   const activeChainId = useChainId()
   const { switchChainAsync } = useSwitchChain()
@@ -19,6 +19,9 @@ export function useRevoke() {
 
   async function revoke(row: Row) {
     if (!address) throw new Error('Connect your wallet first')
+    if (!selectedWallet || selectedWallet.toLowerCase() !== address.toLowerCase()) {
+      throw new Error('Connect the selected wallet to revoke')
+    }
 
     // Ensure we're on the correct chain
     if (activeChainId !== row.chain_id) {
