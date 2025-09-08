@@ -73,42 +73,122 @@ export default function HomePage() {
   }, [rows])
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-10">
-      <h1 className="text-2xl font-semibold">Allowance Guard</h1>
-      <p className="text-sm text-gray-600 mt-2">Monitor & revoke risky approvals across Ethereum, Arbitrum, and Base.</p>
+    <div className="min-h-screen bg-gradient-to-br from-reown-blue-50 via-white to-reown-teal-50 dark:from-reown-gray-900 dark:via-reown-gray-800 dark:to-reown-gray-900">
+      {/* Header */}
+      <header className="border-b border-reown-gray-200 bg-white/80 backdrop-blur-sm dark:border-reown-gray-700 dark:bg-reown-gray-800/80">
+        <div className="mx-auto max-w-7xl px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="h-8 w-8 rounded-lg bg-gradient-reown flex items-center justify-center">
+                <span className="text-sm font-bold text-white">AG</span>
+              </div>
+              <h1 className="text-2xl font-bold gradient-text">Allowance Guard</h1>
+            </div>
+            <ConnectButton />
+          </div>
+        </div>
+      </header>
 
-      <div className="mt-4 flex items-center gap-3">
-        <ConnectButton />
-        <button onClick={startScan} disabled={pending} className="rounded border px-4 py-2 text-sm">
-          {pending ? 'Scanning…' : 'Start Allowance Scan'}
-        </button>
-        {message && <div className="text-sm text-gray-700">{message}</div>}
-      </div>
+      <main className="mx-auto max-w-7xl px-6 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-reown-gray-900 dark:text-white mb-4">
+            Monitor & Revoke Risky Approvals
+          </h2>
+          <p className="text-lg text-reown-gray-600 dark:text-reown-gray-300 max-w-2xl mx-auto">
+            Secure your wallet by monitoring token allowances across Ethereum, Arbitrum, and Base networks. 
+            Identify and revoke risky approvals with ease.
+          </p>
+        </div>
 
-      <WalletManager
-        selected={selectedWallet}
-        onSelect={(a) => setSelectedWallet(a || null)}
-        onSavedChange={(list) => setHasSavedWallet(list.length > 0)}
-      />
+        {/* Action Cards */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* Scan Card */}
+          <div className="card">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="h-10 w-10 rounded-lg bg-gradient-reown flex items-center justify-center">
+                <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-reown-gray-900 dark:text-white">Scan Allowances</h3>
+            </div>
+            <p className="text-reown-gray-600 dark:text-reown-gray-300 mb-4">
+              Scan your wallet to discover all token approvals across supported networks.
+            </p>
+            <button 
+              onClick={startScan} 
+              disabled={pending} 
+              className="btn-primary w-full"
+            >
+              {pending ? (
+                <div className="flex items-center space-x-2">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                  <span>Scanning…</span>
+                </div>
+              ) : (
+                'Start Allowance Scan'
+              )}
+            </button>
+            {message && (
+              <div className="mt-3 p-3 rounded-lg bg-reown-blue-50 border border-reown-blue-200 text-sm text-reown-blue-700 dark:bg-reown-blue-900/20 dark:border-reown-blue-800 dark:text-reown-blue-300">
+                {message}
+              </div>
+            )}
+          </div>
 
-      {selectedWallet && (
-        <section className="mt-6">
-          <div className="text-sm">Active wallet: <span className="font-mono">{selectedWallet}</span></div>
-          <AllowanceTable
-            data={rows}
-            onRefresh={async () => { if (selectedWallet) await fetchAllowances(selectedWallet) }}
-            selectedWallet={selectedWallet}
-            connectedAddress={connectedAddress}
+          {/* Wallet Manager Card */}
+          <div className="card">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="h-10 w-10 rounded-lg bg-gradient-to-r from-reown-teal-500 to-reown-blue-500 flex items-center justify-center">
+                <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-reown-gray-900 dark:text-white">Wallet Manager</h3>
+            </div>
+            <WalletManager
+              selected={selectedWallet}
+              onSelect={(a) => setSelectedWallet(a || null)}
+              onSavedChange={(list) => setHasSavedWallet(list.length > 0)}
+            />
+          </div>
+        </div>
+
+        {/* Allowances Table */}
+        {selectedWallet && (
+          <div className="card mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-lg font-semibold text-reown-gray-900 dark:text-white">Allowances</h3>
+                <p className="text-sm text-reown-gray-600 dark:text-reown-gray-300">
+                  Active wallet: <span className="font-mono text-reown-blue-600 dark:text-reown-blue-400">{selectedWallet}</span>
+                </p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="h-2 w-2 rounded-full bg-reown-success-500"></div>
+                <span className="text-sm text-reown-gray-600 dark:text-reown-gray-300">Connected</span>
+              </div>
+            </div>
+            <AllowanceTable
+              data={rows}
+              onRefresh={async () => { if (selectedWallet) await fetchAllowances(selectedWallet) }}
+              selectedWallet={selectedWallet}
+              connectedAddress={connectedAddress}
+            />
+          </div>
+        )}
+
+        {/* Onboarding Checklist */}
+        <div className="card">
+          <OnboardingChecklist
+            isConnected={isConnected}
+            hadScan={hadScan}
+            hasSavedWallet={hasSavedWallet}
+            hadRevoke={hadRevoke}
           />
-        </section>
-      )}
-
-      <OnboardingChecklist
-        isConnected={isConnected}
-        hadScan={hadScan}
-        hasSavedWallet={hasSavedWallet}
-        hadRevoke={hadRevoke}
-      />
-    </main>
+        </div>
+      </main>
+    </div>
   )
 }

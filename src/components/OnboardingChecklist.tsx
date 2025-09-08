@@ -30,8 +30,8 @@ export default function OnboardingChecklist({
   }, [isConnected, hadScan, hasSavedWallet, hadRevoke])
 
   const Item = ({ done, label }: { done: boolean; label: string }) => (
-    <div className={`rounded border px-3 py-2 text-sm ${done ? 'bg-green-50 border-green-200' : ''}`}>
-      <span className="mr-2">{done ? '✔' : '•'}</span>{label}
+    <div className={`rounded-lg border px-4 py-3 text-sm transition-all duration-200 ${done ? 'bg-reown-success-50 border-reown-success-200 text-reown-success-700 dark:bg-reown-success-900/20 dark:border-reown-success-800 dark:text-reown-success-300' : 'border-reown-gray-200 bg-white text-reown-gray-700 dark:border-reown-gray-700 dark:bg-reown-gray-800 dark:text-reown-gray-300'}`}>
+      <span className="mr-3 text-lg">{done ? '✅' : '⭕'}</span>{label}
     </div>
   )
 

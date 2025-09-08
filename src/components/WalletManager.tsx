@@ -45,17 +45,17 @@ export default function WalletManager({
       <h2 className="text-base font-semibold">Wallets</h2>
 
       <div className="flex gap-2">
-        <input className="w-[22rem] rounded border px-3 py-2 text-sm font-mono"
+        <input className="input w-[22rem] font-mono"
                placeholder="0x... address" value={addr} onChange={e => setAddr(e.target.value)} />
-        <input className="w-[14rem] rounded border px-3 py-2 text-sm"
+        <input className="input w-[14rem]"
                placeholder="Label (optional)" value={label} onChange={e => setLabel(e.target.value)} />
-        <button onClick={add} className="rounded border px-3 py-2 text-sm">Save</button>
+        <button onClick={add} className="btn-primary">Save</button>
       </div>
 
       {saved.length > 0 && (
         <div className="flex items-center gap-2">
           <select
-            className="rounded border px-3 py-2 text-sm font-mono"
+            className="input font-mono"
             value={selected ?? ''}
             onChange={(e) => onSelect(e.target.value)}
           >
@@ -64,7 +64,7 @@ export default function WalletManager({
             ))}
           </select>
           {current && (
-            <button onClick={() => remove(current.address)} className="rounded border px-3 py-2 text-sm">
+            <button onClick={() => remove(current.address)} className="btn-secondary">
               Remove
             </button>
           )}

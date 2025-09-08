@@ -65,36 +65,49 @@ export default function AllowanceTable({
 
   return (
     <div className="mt-4">
-      <div className="mb-3 flex items-center gap-2">
-        <button onClick={selectRisky} className="rounded border px-3 py-1 text-xs">Select risky</button>
+      <div className="mb-4 flex items-center gap-3">
+        <button onClick={selectRisky} className="btn-secondary text-xs">Select risky</button>
         <button onClick={handleBulk} disabled={busy || !selectedRows.length || !revokeAllowed}
-                className="rounded border px-3 py-1 text-xs">
+                className="btn-primary text-xs">
           {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto rounded-lg border border-reown-gray-200 dark:border-reown-gray-700">
         <table className="w-full text-sm">
-          <thead className="text-left">
+          <thead className="bg-reown-gray-50 dark:bg-reown-gray-800">
             <tr>
-              <th></th><th>Chain</th><th>Token</th><th>Spender</th><th>Std</th><th>Type</th>
-              <th>Amount</th><th>Badges</th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300"></th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Chain</th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Token</th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Spender</th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Std</th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Type</th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Amount</th>
+              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Badges</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-reown-gray-200 dark:divide-reown-gray-700">
             {data.map((r, i) => (
-              <tr key={i} className="border-t">
-                <td>
-                  <input type="checkbox" checked={!!sel[keyOf(r)]} onChange={() => toggle(r)} />
+              <tr key={i} className="hover:bg-reown-gray-50 dark:hover:bg-reown-gray-800/50 transition-colors">
+                <td className="px-4 py-3">
+                  <input 
+                    type="checkbox" 
+                    checked={!!sel[keyOf(r)]} 
+                    onChange={() => toggle(r)}
+                    className="rounded border-reown-gray-300 text-reown-blue-600 focus:ring-reown-blue-500"
+                  />
                 </td>
-                <td>{r.chain_id}</td>
-                <td className="font-mono">{r.token_address}</td>
-                <td className="font-mono">{r.spender_address}</td>
-                <td>{r.standard}</td>
-                <td>{r.allowance_type}</td>
-                <td className="font-mono">{r.amount}</td>
-                <td className="space-x-1">
-                  {r.is_unlimited && <span className="rounded bg-red-100 px-2 py-0.5 text-xs text-red-700">UNLIMITED</span>}
-                  {r.risk_flags?.includes('STALE') && <span className="rounded bg-amber-100 px-2 py-0.5 text-xs text-amber-800">STALE</span>}
+                <td className="px-4 py-3 font-medium text-reown-gray-900 dark:text-white">{r.chain_id}</td>
+                <td className="px-4 py-3 font-mono text-reown-gray-600 dark:text-reown-gray-300">{r.token_address}</td>
+                <td className="px-4 py-3 font-mono text-reown-gray-600 dark:text-reown-gray-300">{r.spender_address}</td>
+                <td className="px-4 py-3 text-reown-gray-600 dark:text-reown-gray-300">{r.standard}</td>
+                <td className="px-4 py-3 text-reown-gray-600 dark:text-reown-gray-300">{r.allowance_type}</td>
+                <td className="px-4 py-3 font-mono text-reown-gray-900 dark:text-white">{r.amount}</td>
+                <td className="px-4 py-3">
+                  <div className="flex gap-2">
+                    {r.is_unlimited && <span className="badge badge-error">UNLIMITED</span>}
+                    {r.risk_flags?.includes('STALE') && <span className="badge badge-warning">STALE</span>}
+                  </div>
                 </td>
               </tr>
             ))}
