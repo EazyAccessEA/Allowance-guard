@@ -18,6 +18,8 @@ export default function HomePage() {
     amount: string
     is_unlimited: boolean
     last_seen_block: string
+    risk_score: number
+    risk_flags: string[]
   }[]>([])
 
   async function fetchAllowances(addr: string) {
@@ -48,6 +50,14 @@ export default function HomePage() {
         await new Promise(r => setTimeout(r, 1500))
         await fetchAllowances(address)
       }
+
+      // Auto-refresh risk after scanning
+      await fetch('/api/risk/refresh', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ wallet: address })
+      })
+      await fetchAllowances(address)
     } catch (e: unknown) {
       setMessage(e instanceof Error ? e.message : 'Scan failed')
     } finally {

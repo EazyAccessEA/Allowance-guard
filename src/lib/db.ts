@@ -28,7 +28,7 @@ export async function upsertAllowance(a: {
 export async function listAllowances(wallet: string, riskOnly = false) {
   const q = `
     SELECT chain_id, token_address, spender_address, standard, allowance_type,
-           amount, is_unlimited, last_seen_block
+           amount, is_unlimited, last_seen_block, risk_score, risk_flags
     FROM allowances
     WHERE wallet_address = $1 ${riskOnly ? 'AND (is_unlimited = true OR risk_score > 0)' : ''}
     ORDER BY is_unlimited DESC, amount DESC
