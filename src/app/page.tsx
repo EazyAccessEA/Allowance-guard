@@ -1,6 +1,7 @@
 'use client'
 
 import ConnectButton from '@/components/ConnectButton'
+import AllowanceTable from '@/components/AllowanceTable'
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
 
@@ -8,6 +9,26 @@ export default function HomePage() {
   const { address, isConnected } = useAccount()
   const [pending, setPending] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
+  const [rows, setRows] = useState<{
+    chain_id: number
+    token_address: string
+    spender_address: string
+    standard: string
+    allowance_type: string
+    amount: string
+    is_unlimited: boolean
+    last_seen_block: string
+  }[]>([])
+
+  async function fetchAllowances(addr: string) {
+    const res = await fetch(`/api/allowances?wallet=${addr}`)
+    const json = await res.json()
+    setRows(json.allowances || [])
+  }
+
+  async function refreshAfterRevoke() {
+    if (address) await fetchAllowances(address)
+  }
 
   async function startScan() {
     if (!address) return
@@ -17,13 +38,16 @@ export default function HomePage() {
       const res = await fetch('/api/scan', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          walletAddress: address,
-          chains: ['eth', 'arb', 'base']
-        })
+        body: JSON.stringify({ walletAddress: address, chains: ['eth','arb','base'] })
       })
       const json = await res.json()
       setMessage(json.message || 'Scan started')
+
+      // quick polling burst
+      for (let i = 0; i < 5; i++) {
+        await new Promise(r => setTimeout(r, 1500))
+        await fetchAllowances(address)
+      }
     } catch (e: unknown) {
       setMessage(e instanceof Error ? e.message : 'Scan failed')
     } finally {
@@ -55,6 +79,7 @@ export default function HomePage() {
             {pending ? 'Starting…' : 'Start Allowance Scan'}
           </button>
           {message && <div className="text-sm text-gray-700">{message}</div>}
+          {rows && <AllowanceTable data={rows} onRefresh={refreshAfterRevoke} />}
         </section>
       )}
     </main>
