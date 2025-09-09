@@ -86,7 +86,7 @@ export default function HomePage() {
             <div className="flex items-center space-x-4">
               <div className="relative w-10 h-10">
                 <Image
-                  src="/AG_Logo1.png"
+                  src="/AG_Logo2.png"
                   alt="Allowance Guard Logo"
                   width={40}
                   height={40}
@@ -258,7 +258,7 @@ export default function HomePage() {
               <div className="flex items-center space-x-3 mb-4">
                 <div className="relative w-8 h-8">
                   <Image
-                    src="/AG_Logo1.png"
+                    src="/AG_Logo2.png"
                     alt="Allowance Guard Logo"
                     width={32}
                     height={32}
