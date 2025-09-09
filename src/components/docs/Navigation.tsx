@@ -7,9 +7,9 @@ interface NavigationProps {
 
 const sections = [
   { id: 'overview', label: 'Overview', icon: '📖' },
-  { id: 'quickstart', label: 'Quick Start', icon: '🚀' },
-  { id: 'features', label: 'Features', icon: '⚡' },
-  { id: 'api', label: 'API Reference', icon: '🔧' },
+  { id: 'quickstart', label: 'Quick Start', icon: 'rocket' },
+  { id: 'features', label: 'Features', icon: 'zap' },
+  { id: 'api', label: 'API Reference', icon: 'wrench' },
   { id: 'security', label: 'Security', icon: '🔒' },
   { id: 'faq', label: 'FAQ', icon: '❓' },
 ]

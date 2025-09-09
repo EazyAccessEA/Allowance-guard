@@ -33,7 +33,7 @@ export function HexCard({
     )}>
       {eyebrow && (
         <div className={cn(
-          'hex-clip inline-block px-3 py-1 text-xs font-medium mb-4',
+          'rounded-md inline-block px-3 py-1 text-xs font-medium mb-4',
           eyebrowClasses[eyebrowColor]
         )}>
           {eyebrow}

@@ -130,12 +130,12 @@ function OverviewSection() {
       {/* Key Features Grid */}
       <div className="grid md:grid-cols-3 gap-6">
         <FeatureCard
-          icon="🔍"
+          icon="search"
           title="Wallet Indexer"
           description="Automatically scans and indexes all token allowances across multiple chains with real-time updates."
         />
         <FeatureCard
-          icon="⚠️"
+          icon="warning"
           title="Risk Engine"
           description="Advanced risk scoring identifies unlimited allowances and stale permissions that pose security threats."
         />

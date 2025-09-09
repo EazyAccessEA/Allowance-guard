@@ -31,7 +31,7 @@ export default function OnboardingChecklist({
 
   const Item = ({ done, label }: { done: boolean; label: string }) => (
     <div className={`border-2 px-4 py-3 text-sm transition-all duration-200 ${done ? 'bg-ag-brand text-ag-bg border-ag-brand' : 'border-ag-line bg-ag-panel text-ag-text'}`}>
-      <span className="mr-3 text-lg">{done ? '✅' : '⭕'}</span>{label}
+      <span className="mr-3 text-lg">{done ? '✓' : '○'}</span>{label}
     </div>
   )
 

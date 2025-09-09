@@ -78,7 +78,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-obsidian text-sandstone">
+    <div className="min-h-screen bg-canvas text-text">
       {/* PuredgeOS Enterprise Header */}
       <header className="border-b border-border bg-surface sticky top-0 z-50 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-6 py-4">
@@ -95,20 +95,20 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <h1 className="text-xl font-heading font-bold text-sandstone">Allowance Guard</h1>
+                <h1 className="text-xl font-heading font-bold text-text">Allowance Guard</h1>
                 <p className="text-sm text-muted">Enterprise Security Dashboard</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-6">
               <nav className="hidden md:flex items-center space-x-6">
-                <a href="/docs" className="text-muted hover:text-sandstone transition-colors duration-200">
+                <a href="/docs" className="text-muted hover:text-text transition-colors duration-200">
                   Documentation
                 </a>
-                <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-sandstone transition-colors duration-200">
+                <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors duration-200">
                   GitHub
                 </a>
-                <a href="https://discord.gg/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-sandstone transition-colors duration-200">
+                <a href="https://discord.gg/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors duration-200">
                   Support
                 </a>
               </nav>
@@ -133,7 +133,7 @@ export default function HomePage() {
               {selectedWallet && (
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-muted">Active Wallet:</span>
-                  <span className="font-mono text-sm text-sandstone bg-surface px-2 py-1 border border-border">
+                  <span className="font-mono text-sm text-text bg-surface px-2 py-1 border border-border">
                     {selectedWallet.slice(0, 6)}...{selectedWallet.slice(-4)}
                   </span>
                 </div>
@@ -160,7 +160,7 @@ export default function HomePage() {
             {/* Wallet Management Card */}
             <div className="bg-surface border border-border p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-heading font-semibold text-sandstone">Wallet Management</h2>
+                <h2 className="text-lg font-heading font-semibold text-text">Wallet Management</h2>
                 <div className="w-2 h-2 bg-emerald rounded-full"></div>
               </div>
               <WalletManager
@@ -172,7 +172,7 @@ export default function HomePage() {
 
             {/* Quick Actions Card */}
             <div className="bg-surface border border-border p-6">
-              <h2 className="text-lg font-heading font-semibold text-sandstone mb-4">Quick Actions</h2>
+              <h2 className="text-lg font-heading font-semibold text-text mb-4">Quick Actions</h2>
               <div className="space-y-3">
                 <HexButton 
                   onClick={startScan} 
@@ -196,7 +196,7 @@ export default function HomePage() {
 
             {/* Onboarding Progress Card */}
             <div className="bg-surface border border-border p-6">
-              <h2 className="text-lg font-heading font-semibold text-sandstone mb-4">Getting Started</h2>
+              <h2 className="text-lg font-heading font-semibold text-text mb-4">Getting Started</h2>
               <OnboardingChecklist
                 isConnected={isConnected}
                 hadScan={hadScan}
@@ -212,7 +212,7 @@ export default function HomePage() {
               <div className="bg-surface border border-border p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h2 className="text-xl font-heading font-semibold text-sandstone">Allowance Dashboard</h2>
+                    <h2 className="text-xl font-heading font-semibold text-text">Allowance Dashboard</h2>
                     <p className="text-muted mt-1">
                       Monitor and manage token allowances for enhanced security
                     </p>
@@ -237,7 +237,7 @@ export default function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-heading font-semibold text-sandstone mb-2">No Wallet Selected</h3>
+                <h3 className="text-lg font-heading font-semibold text-text mb-2">No Wallet Selected</h3>
                 <p className="text-muted mb-6">
                   Connect your wallet or select a saved wallet to begin monitoring allowances
                 </p>
@@ -266,7 +266,7 @@ export default function HomePage() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-heading font-semibold text-sandstone">Allowance Guard</h3>
+                  <h3 className="text-lg font-heading font-semibold text-text">Allowance Guard</h3>
                   <p className="text-sm text-muted">Enterprise Security Platform</p>
                 </div>
               </div>
@@ -277,22 +277,22 @@ export default function HomePage() {
             </div>
             
             <div>
-              <h4 className="font-heading font-semibold text-sandstone mb-3">Product</h4>
+              <h4 className="font-heading font-semibold text-text mb-3">Product</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="/docs" className="text-muted hover:text-sandstone transition-colors">Documentation</a></li>
-                <li><a href="/docs#features" className="text-muted hover:text-sandstone transition-colors">Features</a></li>
-                <li><a href="/docs#api" className="text-muted hover:text-sandstone transition-colors">API Reference</a></li>
-                <li><a href="/docs#security" className="text-muted hover:text-sandstone transition-colors">Security</a></li>
+                <li><a href="/docs" className="text-muted hover:text-text transition-colors">Documentation</a></li>
+                <li><a href="/docs#features" className="text-muted hover:text-text transition-colors">Features</a></li>
+                <li><a href="/docs#api" className="text-muted hover:text-text transition-colors">API Reference</a></li>
+                <li><a href="/docs#security" className="text-muted hover:text-text transition-colors">Security</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-heading font-semibold text-sandstone mb-3">Community</h4>
+              <h4 className="font-heading font-semibold text-text mb-3">Community</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-sandstone transition-colors">GitHub</a></li>
-                <li><a href="https://discord.gg/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-sandstone transition-colors">Discord</a></li>
-                <li><a href="https://twitter.com/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-sandstone transition-colors">Twitter</a></li>
-                <li><a href="mailto:support@allowanceguard.com" className="text-muted hover:text-sandstone transition-colors">Support</a></li>
+                <li><a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors">GitHub</a></li>
+                <li><a href="https://discord.gg/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors">Discord</a></li>
+                <li><a href="https://twitter.com/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-text transition-colors">Twitter</a></li>
+                <li><a href="mailto:support@allowanceguard.com" className="text-muted hover:text-text transition-colors">Support</a></li>
               </ul>
             </div>
           </div>
@@ -302,9 +302,9 @@ export default function HomePage() {
               © 2024 Allowance Guard. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 mt-4 md:mt-0">
-              <a href="/privacy" className="text-sm text-muted hover:text-sandstone transition-colors">Privacy Policy</a>
-              <a href="/terms" className="text-sm text-muted hover:text-sandstone transition-colors">Terms of Service</a>
-              <a href="/security" className="text-sm text-muted hover:text-sandstone transition-colors">Security</a>
+              <a href="/privacy" className="text-sm text-muted hover:text-text transition-colors">Privacy Policy</a>
+              <a href="/terms" className="text-sm text-muted hover:text-text transition-colors">Terms of Service</a>
+              <a href="/security" className="text-sm text-muted hover:text-text transition-colors">Security</a>
             </div>
           </div>
         </div>

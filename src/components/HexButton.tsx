@@ -16,7 +16,7 @@ export function HexButton({
   children, 
   ...props 
 }: HexButtonProps) {
-  const baseClasses = 'hex-clip hex-focus transition-normal font-medium inline-flex items-center justify-center border-2'
+  const baseClasses = 'rounded-md transition-all duration-200 font-medium inline-flex items-center justify-center border-2 focus:outline-none focus:ring-2 focus:ring-offset-2'
   
   const variantClasses = {
     primary: 'bg-primary text-primary-foreground border-primary hover:bg-primary/90 hover:border-primary/90',

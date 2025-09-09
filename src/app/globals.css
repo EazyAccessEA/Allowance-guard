@@ -7,27 +7,27 @@
 @tailwind utilities;
 
 :root {
-  /* PuredgeOS 3.0 Design Tokens - Dark Mode First */
-  --background: #1E1F23; /* Obsidian Graphite */
-  --foreground: #E4E2DD; /* Sandstone Fog */
-  --muted: #A0A0A0; /* Muted text */
-  --muted-foreground: #A0A0A0;
-  --border: #383838; /* Border color */
-  --input: #121D2B; /* Midnight Navy */
+  /* Light Mode Design Tokens */
+  --background: #ffffff;
+  --foreground: #1E1F23;
+  --muted: #6B7280;
+  --muted-foreground: #9CA3AF;
+  --border: #E5E7EB;
+  --input: #ffffff;
   --primary: #2563EB; /* Cobalt Azure */
-  --primary-foreground: #E4E2DD;
+  --primary-foreground: #ffffff;
   --secondary: #00C2B2; /* Serum Teal */
-  --secondary-foreground: #1E1F23;
+  --secondary-foreground: #ffffff;
   --accent: #D4FF4F; /* Solar Lime */
   --accent-foreground: #1E1F23;
   --destructive: #EF4444; /* Crimson Alert */
-  --destructive-foreground: #E4E2DD;
+  --destructive-foreground: #ffffff;
   --success: #10B981; /* Emerald Success */
   --warning: #F59E0B; /* Amber Warning */
-  --ring: #D4FF4F; /* Solar Lime focus ring */
+  --ring: #2563EB; /* Cobalt Azure focus ring */
   --radius: 0.5rem;
   
-  /* PuredgeOS Motion Tokens */
+  /* Motion Tokens */
   --motion-duration-fast: 150ms;
   --motion-duration-base: 250ms;
   --motion-duration-slow: 400ms;
@@ -40,7 +40,7 @@
 }
 
 .dark {
-  /* Dark mode is primary in PuredgeOS */
+  /* Dark mode support (optional) */
   --background: #1E1F23;
   --foreground: #E4E2DD;
   --muted: #A0A0A0;

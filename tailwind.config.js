@@ -9,29 +9,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // PuredgeOS 3.0 Enterprise-Grade Color Palette
-        obsidian: '#1E1F23',        // Primary dark background
+        // Light Mode Color Palette
         'cobalt-azure': '#2563EB',  // Primary brand accent
         serum: '#00C2B2',           // Secondary brand accent
-        sandstone: '#E4E2DD',       // Light text/surface
         emerald: '#10B981',         // Success states
         amber: '#F59E0B',           // Warning states
         crimson: '#EF4444',         // Error states
-        midnight: '#121D2B',        // Alternate dark background
         solar: '#D4FF4F',           // Focus/accent color
         
-        // Semantic aliases following PuredgeOS tokens
+        // Semantic aliases
         primary: '#2563EB',         // Cobalt Azure
         secondary: '#00C2B2',       // Serum Teal
         success: '#10B981',         // Emerald Success
         warning: '#F59E0B',         // Amber Warning
         danger: '#EF4444',          // Crimson Alert
-        canvas: '#1E1F23',          // Obsidian Graphite
-        surface: '#121D2B',         // Midnight Navy
-        text: '#E4E2DD',            // Sandstone Fog
-        muted: '#A0A0A0',           // Muted text
-        border: '#383838',          // Border color
-        focus: '#D4FF4F',           // Solar Lime focus ring
+        canvas: '#ffffff',          // White background
+        surface: '#F9FAFB',         // Light surface
+        text: '#1E1F23',            // Dark text
+        muted: '#6B7280',           // Muted text
+        border: '#E5E7EB',          // Light border
+        focus: '#2563EB',           // Cobalt Azure focus ring
       },
       fontFamily: {
         heading: ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
