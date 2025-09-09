@@ -32,21 +32,12 @@ export function HexButton({
     lg: 'px-8 py-4 text-lg min-h-[52px]',
   }
   
-  const focusClasses = {
-    primary: 'hex-focus',
-    ghost: 'hex-focus',
-    danger: 'hex-focus-danger',
-    warn: 'hex-focus-warn',
-    info: 'hex-focus-info',
-  }
-  
   return (
     <button
       className={cn(
         baseClasses,
         variantClasses[variant],
         sizeClasses[size],
-        focusClasses[variant],
         className
       )}
       {...props}
