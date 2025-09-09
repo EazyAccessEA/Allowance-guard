@@ -59,36 +59,36 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-200">
+    <footer className="bg-surface border-t border-border">
       {/* Newsletter Section */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <div className="bg-background border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-2xl font-semibold text-foreground mb-3">
                 Subscribe to our newsletter.
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-muted-foreground">
                 You can unsubscribe at any time. Our{' '}
-                <a href="/privacy" className="underline hover:text-gray-900">
+                <a href="/privacy" className="underline hover:text-foreground transition-colors">
                   Privacy Policy
                 </a>{' '}
                 is available here.
               </p>
             </div>
             
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md">
               <input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="flex-1 px-4 py-3 bg-input border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary rounded-full"
                 required
               />
               <HexButton
                 type="submit"
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white border-blue-600 hover:border-blue-700"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white border-primary hover:border-primary/90"
                 size="md"
               >
                 <ArrowRight className="w-4 h-4" />
@@ -96,7 +96,7 @@ export default function Footer() {
             </form>
             
             {subscribed && (
-              <div className="text-sm text-emerald-600 font-medium">
+              <div className="text-sm text-emerald font-medium">
                 Successfully subscribed!
               </div>
             )}
@@ -105,17 +105,29 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Product */}
+          <div>
+            <h4 className="text-lg font-semibold text-foreground mb-6">Product</h4>
+            <ul className="space-y-4">
+              <li><a href="/features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a></li>
+              <li><a href="/how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">How it Works</a></li>
+              <li><a href="/security" className="text-muted-foreground hover:text-foreground transition-colors">Security</a></li>
+              <li><a href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a></li>
+              <li><a href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors">Integrations</a></li>
+            </ul>
+          </div>
+
           {/* Developers */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Developers</h4>
-            <ul className="space-y-3">
+            <h4 className="text-lg font-semibold text-foreground mb-6">Developers</h4>
+            <ul className="space-y-4">
               {footerLinks.developers.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {link.label}
                   </a>
@@ -124,32 +136,27 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Solutions */}
+          {/* Support */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Solutions</h4>
-            <ul className="space-y-3">
-              {footerLinks.solutions.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+            <h4 className="text-lg font-semibold text-foreground mb-6">Support</h4>
+            <ul className="space-y-4">
+              <li><a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a></li>
+              <li><a href="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</a></li>
+              <li><a href="/status" className="text-muted-foreground hover:text-foreground transition-colors">Status</a></li>
+              <li><a href="/help" className="text-muted-foreground hover:text-foreground transition-colors">Help Center</a></li>
+              <li><a href="/community" className="text-muted-foreground hover:text-foreground transition-colors">Community</a></li>
             </ul>
           </div>
 
           {/* Connect */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Connect</h4>
-            <ul className="space-y-3">
+            <h4 className="text-lg font-semibold text-foreground mb-6">Connect</h4>
+            <ul className="space-y-4">
               {footerLinks.connect.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
+                    className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -160,55 +167,38 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="text-sm font-semibold text-gray-900 mb-4">Company</h4>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
         {/* Legal Links */}
-        <div className="mt-8 pt-8 border-t border-gray-200">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex flex-wrap gap-6">
-              <a href="/terms" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+        <div className="mt-16 pt-8 border-t border-border">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div className="flex flex-wrap gap-8">
+              <a href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
                 Terms of Service
               </a>
-              <a href="/privacy" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              <a href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
                 Privacy Policy
               </a>
-              <a href="/cookies" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              <a href="/cookies" className="text-muted-foreground hover:text-foreground transition-colors">
                 Cookie Policy
               </a>
             </div>
             
-            <div className="flex items-center gap-4">
-              <p className="text-sm text-gray-600">
+            <div className="flex items-center gap-6">
+              <p className="text-muted-foreground">
                 © 2025 Allowance Guard. All rights reserved.
               </p>
               
               {/* Brand Elements */}
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
+                  <div className="w-3 h-3 bg-background rounded-full"></div>
                 </div>
-                <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-                  <div className="text-white text-sm font-bold">/</div>
+                <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
+                  <div className="text-background text-lg font-bold">/</div>
                 </div>
-                <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">AG</span>
+                <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
+                  <span className="text-background text-sm font-bold">AG</span>
                 </div>
               </div>
             </div>

@@ -6,32 +6,32 @@
 @tailwind utilities;
 
 :root {
-  /* Light Mode Design Tokens */
-  --background: #ffffff;
-  --foreground: #1E1F23;
-  --muted: #6B7280;
-  --muted-foreground: #9CA3AF;
-  --border: #E5E7EB;
-  --input: #ffffff;
-  --primary: #2563EB; /* Cobalt Azure */
+  /* Reown-Inspired Design Tokens (Adjacent Colors) */
+  --background: #1a1d29; /* Deep navy blue (opposite of Reown's dark grey) */
+  --foreground: #f8fafc; /* Off-white/cream text */
+  --muted: #94a3b8; /* Light blue-grey */
+  --muted-foreground: #64748b; /* Muted blue-grey */
+  --border: #334155; /* Blue-grey border */
+  --input: #2d3142; /* Soft blue-grey input background */
+  --primary: #8b5cf6; /* Purple/violet CTAs (opposite of Reown's blue) */
   --primary-foreground: #ffffff;
-  --secondary: #00C2B2; /* Serum Teal */
+  --secondary: #10b981; /* Emerald green accents (opposite of Reown's orange) */
   --secondary-foreground: #ffffff;
-  --accent: #D4FF4F; /* Solar Lime */
-  --accent-foreground: #1E1F23;
-  --destructive: #EF4444; /* Crimson Alert */
+  --accent: #06b6d4; /* Cyan accent */
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444; /* Crimson Alert */
   --destructive-foreground: #ffffff;
-  --success: #10B981; /* Emerald Success */
-  --warning: #F59E0B; /* Amber Warning */
-  --ring: #2563EB; /* Cobalt Azure focus ring */
-  --radius: 0.5rem;
+  --success: #10b981; /* Emerald Success */
+  --warning: #f59e0b; /* Amber Warning */
+  --ring: #8b5cf6; /* Purple focus ring */
+  --radius: 0.75rem; /* More rounded corners like Reown */
   
   /* Additional semantic colors for components */
-  --canvas: #ffffff;
-  --surface: #F9FAFB;
-  --text: #1E1F23;
-  --emerald: #10B981;
-  --crimson: #EF4444;
+  --canvas: #2d3142; /* Soft blue-grey canvas */
+  --surface: #334155; /* Blue-grey surface */
+  --text: #f8fafc; /* Off-white text */
+  --emerald: #10b981;
+  --crimson: #ef4444;
   
   /* Motion Tokens */
   --motion-duration-fast: 150ms;
@@ -46,24 +46,24 @@
 }
 
 .dark {
-  /* Dark mode support (optional) */
-  --background: #1E1F23;
-  --foreground: #E4E2DD;
-  --muted: #A0A0A0;
-  --muted-foreground: #A0A0A0;
-  --border: #383838;
-  --input: #121D2B;
-  --primary: #2563EB;
-  --primary-foreground: #E4E2DD;
-  --secondary: #00C2B2;
-  --secondary-foreground: #1E1F23;
-  --accent: #D4FF4F;
-  --accent-foreground: #1E1F23;
-  --destructive: #EF4444;
-  --destructive-foreground: #E4E2DD;
-  --success: #10B981;
-  --warning: #F59E0B;
-  --ring: #D4FF4F;
+  /* Dark mode support (optional) - same as light mode for consistency */
+  --background: #1a1d29;
+  --foreground: #f8fafc;
+  --muted: #94a3b8;
+  --muted-foreground: #64748b;
+  --border: #334155;
+  --input: #2d3142;
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --secondary: #10b981;
+  --secondary-foreground: #ffffff;
+  --accent: #06b6d4;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --ring: #8b5cf6;
 }
 
 * {
