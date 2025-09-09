@@ -88,7 +88,12 @@ export default function HomePage() {
               </div>
               <h1 className="text-2xl font-bold text-ag-text">Allowance Guard</h1>
             </div>
-            <ConnectButton />
+            <div className="flex items-center space-x-4">
+              <a href="/docs" className="text-ag-muted hover:text-ag-text transition-colors">
+                Docs
+              </a>
+              <ConnectButton />
+            </div>
           </div>
         </div>
       </header>
@@ -107,7 +112,9 @@ export default function HomePage() {
             <HexButton size="lg" onClick={startScan} disabled={pending}>
               {pending ? 'Scanning...' : 'Start now'}
             </HexButton>
-            <HexButton variant="ghost" size="lg">Read the docs</HexButton>
+            <a href="/docs">
+              <HexButton variant="ghost" size="lg">Read the docs</HexButton>
+            </a>
           </div>
           
           {/* Credibility metrics */}
