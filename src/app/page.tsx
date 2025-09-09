@@ -179,6 +179,31 @@ export default function HomePage() {
           </div>
         </div>
 
+        {/* Getting Started Section - Top Priority */}
+        <div className="mb-8">
+          <div className="bg-surface border border-border p-6 overflow-hidden">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-heading font-semibold text-text">Getting Started</h2>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                <span className="text-sm text-muted">Follow these steps</span>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex space-x-6 pb-4 animate-scroll">
+                  <OnboardingChecklist
+                    isConnected={isConnected}
+                    hadScan={hadScan}
+                    hasSavedWallet={hasSavedWallet}
+                    hadRevoke={hadRevoke}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Main Dashboard Grid */}
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left Column - Controls */}
@@ -218,17 +243,6 @@ export default function HomePage() {
                   </div>
                 )}
               </div>
-            </div>
-
-            {/* Onboarding Progress Card */}
-            <div className="bg-surface border border-border p-6">
-              <h2 className="text-lg font-heading font-semibold text-text mb-4">Getting Started</h2>
-              <OnboardingChecklist
-                isConnected={isConnected}
-                hadScan={hadScan}
-                hasSavedWallet={hasSavedWallet}
-                hadRevoke={hadRevoke}
-              />
             </div>
 
             {/* Email Alerts Subscription */}

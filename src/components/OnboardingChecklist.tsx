@@ -29,21 +29,31 @@ export default function OnboardingChecklist({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected, hadScan, hasSavedWallet, hadRevoke])
 
-  const Item = ({ done, label }: { done: boolean; label: string }) => (
-    <div className={`border-2 px-4 py-3 text-sm transition-all duration-200 ${done ? 'bg-ag-brand text-ag-bg border-ag-brand' : 'border-ag-line bg-ag-panel text-ag-text'}`}>
-      <span className="mr-3 text-lg">{done ? '✓' : '○'}</span>{label}
+  const Item = ({ done, label, step }: { done: boolean; label: string; step: number }) => (
+    <div className={`flex-shrink-0 w-64 border-2 px-4 py-3 text-sm transition-all duration-200 rounded-md ${
+      done 
+        ? 'bg-emerald/10 text-emerald border-emerald' 
+        : 'border-border bg-surface text-text'
+    }`}>
+      <div className="flex items-center">
+        <div className={`w-6 h-6 rounded-full flex items-center justify-center mr-3 text-xs font-bold ${
+          done 
+            ? 'bg-emerald text-white' 
+            : 'bg-muted text-muted-foreground'
+        }`}>
+          {done ? '✓' : step}
+        </div>
+        <span className="font-medium">{label}</span>
+      </div>
     </div>
   )
 
   return (
-    <section className="mt-6">
-      <h2 className="text-base font-semibold">Getting started</h2>
-      <div className="mt-2 grid gap-2">
-        <Item done={state.connect} label="Connect your wallet" />
-        <Item done={state.scan} label="Run your first scan" />
-        <Item done={state.save} label="Save a wallet address" />
-        <Item done={state.revoke} label="Bulk revoke risky approvals (if any)" />
-      </div>
-    </section>
+    <div className="flex space-x-4 min-w-max">
+      <Item done={state.connect} label="Connect your wallet" step={1} />
+      <Item done={state.scan} label="Run your first scan" step={2} />
+      <Item done={state.save} label="Save a wallet address" step={3} />
+      <Item done={state.revoke} label="Bulk revoke risky approvals" step={4} />
+    </div>
   )
 }
