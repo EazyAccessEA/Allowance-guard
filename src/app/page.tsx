@@ -33,6 +33,9 @@ export default function HomePage() {
   const [hadScan, setHadScan] = useState(false)
   const [hadRevoke, setHadRevoke] = useState(() => load<boolean>('ag.hadRevoke', false))
   const [hasSavedWallet, setHasSavedWallet] = useState(false)
+  const [email, setEmail] = useState('')
+  const [riskOnly, setRiskOnly] = useState(true)
+  const [subMsg, setSubMsg] = useState<string | null>(null)
 
   useEffect(() => { save(ACTIVE_KEY, selectedWallet) }, [selectedWallet])
 
@@ -74,6 +77,29 @@ export default function HomePage() {
       setMessage('Scan failed: ' + (e instanceof Error ? e.message : 'Unknown error'))
     } finally {
       setPending(false)
+    }
+  }
+
+  async function subscribe() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return alert('Select or connect a wallet first')
+    if (!email) return alert('Please enter an email address')
+    
+    try {
+      const res = await fetch('/api/alerts/subscribe', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email, wallet: target, riskOnly })
+      })
+      const json = await res.json()
+      if (json.ok) {
+        setSubMsg('Successfully subscribed to daily alerts')
+        setEmail('')
+      } else {
+        setSubMsg(`Subscription failed: ${json.error}`)
+      }
+    } catch (e: unknown) {
+      setSubMsg(`Subscription failed: ${e instanceof Error ? e.message : 'Unknown error'}`)
     }
   }
 
@@ -203,6 +229,45 @@ export default function HomePage() {
                 hasSavedWallet={hasSavedWallet}
                 hadRevoke={hadRevoke}
               />
+            </div>
+
+            {/* Email Alerts Subscription */}
+            <div className="bg-surface border border-border p-6">
+              <h2 className="text-lg font-heading font-semibold text-text mb-4">Daily Email Alerts</h2>
+              <div className="space-y-4">
+                <div>
+                  <input
+                    className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm text-text placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                  />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="riskOnly"
+                    checked={riskOnly}
+                    onChange={(e) => setRiskOnly(e.target.checked)}
+                    className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                  />
+                  <label htmlFor="riskOnly" className="text-sm text-text">
+                    Only send alerts when risky approvals are detected
+                  </label>
+                </div>
+                <button
+                  onClick={subscribe}
+                  className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                >
+                  Subscribe to Daily Alerts
+                </button>
+                {subMsg && (
+                  <div className={`text-sm ${subMsg.includes('Successfully') ? 'text-emerald' : 'text-crimson'}`}>
+                    {subMsg}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
