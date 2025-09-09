@@ -46,9 +46,9 @@ export default function WalletManager({
       <h2 className="text-base font-semibold">Wallets</h2>
 
       <div className="flex gap-2">
-        <input className="w-[22rem] px-3 py-2 bg-ag-panel border-2 border-ag-line text-ag-text font-mono placeholder-ag-muted focus:border-ag-brand focus:outline-none"
+        <input className="flex-1 px-3 py-2 bg-input border-2 border-border text-text font-mono placeholder-muted-foreground focus:border-primary focus:outline-none rounded-full"
                placeholder="0x... address" value={addr} onChange={e => setAddr(e.target.value)} />
-        <input className="w-[14rem] px-3 py-2 bg-ag-panel border-2 border-ag-line text-ag-text placeholder-ag-muted focus:border-ag-brand focus:outline-none"
+        <input className="flex-1 px-3 py-2 bg-input border-2 border-border text-text placeholder-muted-foreground focus:border-primary focus:outline-none rounded-full"
                placeholder="Label (optional)" value={label} onChange={e => setLabel(e.target.value)} />
         <HexButton onClick={add}>Save</HexButton>
       </div>
@@ -56,7 +56,7 @@ export default function WalletManager({
       {saved.length > 0 && (
         <div className="flex items-center gap-2">
           <select
-            className="px-3 py-2 bg-ag-panel border-2 border-ag-line text-ag-text font-mono focus:border-ag-brand focus:outline-none"
+            className="px-3 py-2 bg-input border-2 border-border text-text font-mono focus:border-primary focus:outline-none rounded-full"
             value={selected ?? ''}
             onChange={(e) => onSelect(e.target.value)}
           >

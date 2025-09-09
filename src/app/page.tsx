@@ -138,8 +138,8 @@ export default function HomePage() {
                   Support
                 </a>
               </nav>
-              <ConnectButton />
-            </div>
+        <ConnectButton />
+      </div>
           </div>
         </div>
       </header>
@@ -226,7 +226,7 @@ export default function HomePage() {
               <h2 className="text-base md:text-lg font-heading font-semibold text-text mb-4">Quick Actions</h2>
               <div className="space-y-3">
                 <HexButton 
-                  onClick={startScan} 
+            onClick={startScan}
                   disabled={pending || !selectedWallet}
                   className="w-full justify-center"
                 >
@@ -270,12 +270,13 @@ export default function HomePage() {
                     Only send alerts when risky approvals are detected
                   </label>
                 </div>
-                <button
+                <HexButton
                   onClick={subscribe}
-                  className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full"
+                  size="md"
                 >
                   Subscribe to Daily Alerts
-                </button>
+                </HexButton>
                 {subMsg && (
                   <div className={`text-sm ${subMsg.includes('Successfully') ? 'text-emerald' : 'text-crimson'}`}>
                     {subMsg}
@@ -327,7 +328,7 @@ export default function HomePage() {
             )}
           </div>
         </div>
-      </main>
+    </main>
 
       {/* PuredgeOS Enterprise Footer */}
       <footer className="border-t border-border bg-surface mt-16">
