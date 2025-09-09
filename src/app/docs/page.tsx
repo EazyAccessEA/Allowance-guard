@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { HexButton } from '@/components/HexButton'
 import { HexCard } from '@/components/HexCard'
@@ -20,8 +21,15 @@ export default function DocsPage() {
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="hex-clip w-8 h-8 bg-ag-brand flex items-center justify-center">
-                <span className="text-sm font-bold text-ag-bg">AG</span>
+              <div className="relative w-8 h-8">
+                <Image
+                  src="/AG_Logo1.png"
+                  alt="Allowance Guard Logo"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain"
+                  priority
+                />
               </div>
               <h1 className="text-2xl font-bold text-ag-text">Allowance Guard</h1>
               <HexBadge variant="info" size="sm">Docs</HexBadge>
@@ -56,6 +64,47 @@ export default function DocsPage() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t-2 border-ag-line bg-ag-panel mt-16">
+        <div className="mx-auto max-w-7xl px-6 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center space-x-3">
+              <div className="relative w-8 h-8">
+                <Image
+                  src="/AG_Logo1.png"
+                  alt="Allowance Guard Logo"
+                  width={32}
+                  height={32}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-ag-text">Allowance Guard</h3>
+                <p className="text-sm text-ag-muted">Documentation</p>
+              </div>
+            </div>
+            
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="flex items-center space-x-6">
+                <Link href="/" className="text-ag-muted hover:text-ag-text transition-colors">
+                  Back to App
+                </Link>
+                <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-ag-muted hover:text-ag-text transition-colors">
+                  GitHub
+                </a>
+                <a href="https://discord.gg/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-ag-muted hover:text-ag-text transition-colors">
+                  Discord
+                </a>
+              </div>
+              
+              <div className="text-sm text-ag-muted">
+                © 2024 Allowance Guard. All rights reserved.
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </HexBackground>
   )
 }
