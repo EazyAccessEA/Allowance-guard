@@ -19,16 +19,16 @@ export function HexCard({
   hover = true 
 }: HexCardProps) {
   const eyebrowClasses = {
-    brand: 'bg-ag-brand text-ag-bg',
-    danger: 'bg-ag-danger text-ag-bg',
-    warn: 'bg-ag-warn text-ag-bg',
-    info: 'bg-ag-info text-ag-bg',
+    brand: 'bg-primary text-primary-foreground',
+    danger: 'bg-destructive text-destructive-foreground',
+    warn: 'bg-warning text-foreground',
+    info: 'bg-secondary text-secondary-foreground',
   }
   
   return (
     <div className={cn(
-      'bg-ag-panel border-2 border-ag-line transition-normal',
-      hover && 'hover:bg-ag-panel-hover hover:border-ag-line-hover',
+      'bg-surface border border-border transition-all duration-200',
+      hover && 'hover:bg-surface/80 hover:border-primary/50',
       className
     )}>
       {eyebrow && (

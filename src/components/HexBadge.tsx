@@ -19,11 +19,11 @@ export function HexBadge({
   const baseClasses = 'hex-clip inline-flex items-center font-medium'
   
   const variantClasses = {
-    brand: 'bg-ag-brand text-ag-bg',
-    danger: 'bg-ag-danger text-ag-bg',
-    warn: 'bg-ag-warn text-ag-bg',
-    info: 'bg-ag-info text-ag-bg',
-    neutral: 'bg-ag-panel text-ag-text border border-ag-line',
+    brand: 'bg-primary text-primary-foreground',
+    danger: 'bg-destructive text-destructive-foreground',
+    warn: 'bg-warning text-foreground',
+    info: 'bg-secondary text-secondary-foreground',
+    neutral: 'bg-surface text-foreground border border-border',
   }
   
   const sizeClasses = {

@@ -19,11 +19,11 @@ export function HexButton({
   const baseClasses = 'hex-clip hex-focus transition-normal font-medium inline-flex items-center justify-center border-2'
   
   const variantClasses = {
-    primary: 'bg-ag-brand text-ag-bg border-ag-brand hover:bg-ag-brand-hover hover:border-ag-brand-hover',
-    ghost: 'bg-transparent text-ag-text border-ag-line hover:bg-ag-panel-hover hover:border-ag-line-hover',
-    danger: 'bg-ag-danger text-ag-bg border-ag-danger hover:bg-ag-danger-hover hover:border-ag-danger-hover',
-    warn: 'bg-ag-warn text-ag-bg border-ag-warn hover:bg-ag-warn-hover hover:border-ag-warn-hover',
-    info: 'bg-ag-info text-ag-bg border-ag-info hover:bg-ag-info-hover hover:border-ag-info-hover',
+    primary: 'bg-primary text-primary-foreground border-primary hover:bg-primary/90 hover:border-primary/90',
+    ghost: 'bg-transparent text-foreground border-border hover:bg-surface hover:border-border',
+    danger: 'bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/90 hover:border-destructive/90',
+    warn: 'bg-warning text-foreground border-warning hover:bg-warning/90 hover:border-warning/90',
+    info: 'bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90 hover:border-secondary/90',
   }
   
   const sizeClasses = {

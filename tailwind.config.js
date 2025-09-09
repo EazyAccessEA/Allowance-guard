@@ -9,41 +9,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // AG Hex System Colors - Solids only
-        ag: {
-          bg: '#0B0C0E',
-          panel: '#111317',
-          line: '#1B1E24',
-          text: '#E7E9ED',
-          muted: '#A7AEBB',
-          brand: '#27E3A1',
-          danger: '#FF4D4F',
-          warn: '#FFC53D',
-          info: '#3DA9FF',
-          // Hover states
-          'bg-hover': '#0F1012',
-          'panel-hover': '#15171B',
-          'line-hover': '#202329',
-          'text-hover': '#F0F2F5',
-          'muted-hover': '#B8BFC9',
-          'brand-hover': '#1FCB8A',
-          'brand-active': '#17A673',
-          'danger-hover': '#FF3333',
-          'danger-active': '#E63939',
-          'warn-hover': '#FFB800',
-          'warn-active': '#E6A600',
-          'info-hover': '#1A8CE6',
-          'info-active': '#0D73CC',
-        },
-        // Legacy aliases for compatibility
-        primary: '#27E3A1',
-        secondary: '#3DA9FF',
-        accent: '#FFC53D',
-        success: '#27E3A1',
-        warning: '#FFC53D',
-        error: '#FF4D4F',
+        // PuredgeOS 3.0 Enterprise-Grade Color Palette
+        obsidian: '#1E1F23',        // Primary dark background
+        'cobalt-azure': '#2563EB',  // Primary brand accent
+        serum: '#00C2B2',           // Secondary brand accent
+        sandstone: '#E4E2DD',       // Light text/surface
+        emerald: '#10B981',         // Success states
+        amber: '#F59E0B',           // Warning states
+        crimson: '#EF4444',         // Error states
+        midnight: '#121D2B',        // Alternate dark background
+        solar: '#D4FF4F',           // Focus/accent color
+        
+        // Semantic aliases following PuredgeOS tokens
+        primary: '#2563EB',         // Cobalt Azure
+        secondary: '#00C2B2',       // Serum Teal
+        success: '#10B981',         // Emerald Success
+        warning: '#F59E0B',         // Amber Warning
+        danger: '#EF4444',          // Crimson Alert
+        canvas: '#1E1F23',          // Obsidian Graphite
+        surface: '#121D2B',         // Midnight Navy
+        text: '#E4E2DD',            // Sandstone Fog
+        muted: '#A0A0A0',           // Muted text
+        border: '#383838',          // Border color
+        focus: '#D4FF4F',           // Solar Lime focus ring
       },
       fontFamily: {
+        heading: ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Monaco', 'Consolas', 'monospace'],
       },

@@ -7,42 +7,57 @@
 @tailwind utilities;
 
 :root {
-  /* Light mode colors */
-  --background: #ffffff;
-  --foreground: #111827;
-  --muted: #6b7280;
-  --muted-foreground: #9ca3af;
-  --border: #e5e7eb;
-  --input: #ffffff;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --secondary: #14b8a6;
-  --secondary-foreground: #ffffff;
-  --accent: #f97316;
-  --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --ring: #3b82f6;
+  /* PuredgeOS 3.0 Design Tokens - Dark Mode First */
+  --background: #1E1F23; /* Obsidian Graphite */
+  --foreground: #E4E2DD; /* Sandstone Fog */
+  --muted: #A0A0A0; /* Muted text */
+  --muted-foreground: #A0A0A0;
+  --border: #383838; /* Border color */
+  --input: #121D2B; /* Midnight Navy */
+  --primary: #2563EB; /* Cobalt Azure */
+  --primary-foreground: #E4E2DD;
+  --secondary: #00C2B2; /* Serum Teal */
+  --secondary-foreground: #1E1F23;
+  --accent: #D4FF4F; /* Solar Lime */
+  --accent-foreground: #1E1F23;
+  --destructive: #EF4444; /* Crimson Alert */
+  --destructive-foreground: #E4E2DD;
+  --success: #10B981; /* Emerald Success */
+  --warning: #F59E0B; /* Amber Warning */
+  --ring: #D4FF4F; /* Solar Lime focus ring */
   --radius: 0.5rem;
+  
+  /* PuredgeOS Motion Tokens */
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 250ms;
+  --motion-duration-slow: 400ms;
+  --motion-easing-gentle: cubic-bezier(0.2, 0.8, 0.2, 1);
+  
+  /* Accessibility Tokens */
+  --a11y-focus-ring: 3px;
+  --a11y-target-min: 48px;
+  --a11y-contrast-min: 4.5;
 }
 
 .dark {
-  /* Dark mode colors */
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --muted: #64748b;
-  --muted-foreground: #94a3b8;
-  --border: #1e293b;
-  --input: #1e293b;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --secondary: #14b8a6;
-  --secondary-foreground: #ffffff;
-  --accent: #f97316;
-  --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --ring: #3b82f6;
+  /* Dark mode is primary in PuredgeOS */
+  --background: #1E1F23;
+  --foreground: #E4E2DD;
+  --muted: #A0A0A0;
+  --muted-foreground: #A0A0A0;
+  --border: #383838;
+  --input: #121D2B;
+  --primary: #2563EB;
+  --primary-foreground: #E4E2DD;
+  --secondary: #00C2B2;
+  --secondary-foreground: #1E1F23;
+  --accent: #D4FF4F;
+  --accent-foreground: #1E1F23;
+  --destructive: #EF4444;
+  --destructive-foreground: #E4E2DD;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --ring: #D4FF4F;
 }
 
 * {
@@ -68,7 +83,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--motion-duration-base) var(--motion-easing-gentle), 
+              color var(--motion-duration-base) var(--motion-easing-gentle);
+  font-size: 16px;
+  font-weight: 400;
 }
 
 /* AG Hex System Components */
@@ -94,10 +112,17 @@ body {
   background: var(--muted-foreground);
 }
 
-/* Focus styles */
+/* PuredgeOS Focus styles - WCAG 2.2 AA compliant */
 *:focus-visible {
-  outline: 2px solid var(--ring);
+  outline: var(--a11y-focus-ring) solid var(--ring);
   outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Ensure minimum touch target size */
+button, a, input, select, textarea {
+  min-height: var(--a11y-target-min);
+  min-width: var(--a11y-target-min);
 }
 
 /* Selection styles */
