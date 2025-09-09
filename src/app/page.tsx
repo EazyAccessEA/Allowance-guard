@@ -180,18 +180,18 @@ export default function HomePage() {
         </div>
 
         {/* Getting Started Section - Top Priority */}
-        <div className="mb-8">
-          <div className="bg-surface border border-border p-6 overflow-hidden">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-heading font-semibold text-text">Getting Started</h2>
+        <div className="mb-6 md:mb-8">
+          <div className="bg-surface border border-border p-4 md:p-6 overflow-hidden">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
+              <h2 className="text-lg md:text-xl font-heading font-semibold text-text">Getting Started</h2>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <span className="text-sm text-muted">Follow these steps</span>
+                <span className="text-xs md:text-sm text-muted">Follow these steps</span>
               </div>
             </div>
             <div className="relative">
               <div className="overflow-x-auto scrollbar-hide">
-                <div className="flex space-x-6 pb-4 animate-scroll">
+                <div className="flex space-x-4 md:space-x-6 pb-4 animate-scroll">
                   <OnboardingChecklist
                     isConnected={isConnected}
                     hadScan={hadScan}
@@ -205,13 +205,13 @@ export default function HomePage() {
         </div>
 
         {/* Main Dashboard Grid */}
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {/* Left Column - Controls */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-4 md:space-y-6">
             {/* Wallet Management Card */}
-            <div className="bg-surface border border-border p-6">
+            <div className="bg-surface border border-border p-4 md:p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-heading font-semibold text-text">Wallet Management</h2>
+                <h2 className="text-base md:text-lg font-heading font-semibold text-text">Wallet Management</h2>
                 <div className="w-2 h-2 bg-emerald rounded-full"></div>
               </div>
               <WalletManager
@@ -222,8 +222,8 @@ export default function HomePage() {
             </div>
 
             {/* Quick Actions Card */}
-            <div className="bg-surface border border-border p-6">
-              <h2 className="text-lg font-heading font-semibold text-text mb-4">Quick Actions</h2>
+            <div className="bg-surface border border-border p-4 md:p-6">
+              <h2 className="text-base md:text-lg font-heading font-semibold text-text mb-4">Quick Actions</h2>
               <div className="space-y-3">
                 <HexButton 
                   onClick={startScan} 
@@ -246,12 +246,12 @@ export default function HomePage() {
             </div>
 
             {/* Email Alerts Subscription */}
-            <div className="bg-surface border border-border p-6">
-              <h2 className="text-lg font-heading font-semibold text-text mb-4">Daily Email Alerts</h2>
+            <div className="bg-surface border border-border p-4 md:p-6">
+              <h2 className="text-base md:text-lg font-heading font-semibold text-text mb-4">Daily Email Alerts</h2>
               <div className="space-y-4">
                 <div>
                   <input
-                    className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm text-text placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="w-full rounded-full border border-border bg-input px-4 py-3 text-sm text-text placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                     placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -288,11 +288,11 @@ export default function HomePage() {
           {/* Right Column - Data Display */}
           <div className="lg:col-span-2">
             {selectedWallet ? (
-              <div className="bg-surface border border-border p-6">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-surface border border-border p-4 md:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-6 space-y-2 sm:space-y-0">
                   <div>
-                    <h2 className="text-xl font-heading font-semibold text-text">Allowance Dashboard</h2>
-                    <p className="text-muted mt-1">
+                    <h2 className="text-lg md:text-xl font-heading font-semibold text-text">Allowance Dashboard</h2>
+                    <p className="text-muted mt-1 text-sm md:text-base">
                       Monitor and manage token allowances for enhanced security
                     </p>
                   </div>

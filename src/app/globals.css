@@ -146,18 +146,18 @@ button, a, input, select, textarea {
   display: none;
 }
 
-/* Scroll animation for Getting Started section */
+/* Continuous scroll animation for Getting Started section */
 @keyframes scroll-horizontal {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-33.333%);
   }
 }
 
 .animate-scroll {
-  animation: scroll-horizontal 20s linear infinite;
+  animation: scroll-horizontal 45s linear infinite;
 }
 
 .animate-scroll:hover {

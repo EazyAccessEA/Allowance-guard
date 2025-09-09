@@ -16,7 +16,7 @@ export function HexBadge({
   size = 'md',
   className 
 }: HexBadgeProps) {
-  const baseClasses = 'rounded-md inline-flex items-center font-medium'
+  const baseClasses = 'rounded-full inline-flex items-center font-medium'
   
   const variantClasses = {
     brand: 'bg-primary text-primary-foreground',
