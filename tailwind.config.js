@@ -9,100 +9,39 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Reown Design System Colors - Adjacent Color Palette
-        reown: {
-          // Primary brand colors - Blue to Teal (adjacent)
-          blue: {
-            50: '#eff6ff',
-            100: '#dbeafe', 
-            200: '#bfdbfe',
-            300: '#93c5fd',
-            400: '#60a5fa',
-            500: '#3b82f6', // Primary blue
-            600: '#2563eb',
-            700: '#1d4ed8',
-            800: '#1e40af',
-            900: '#1e3a8a',
-            950: '#172554',
-          },
-          teal: {
-            50: '#f0fdfa',
-            100: '#ccfbf1',
-            200: '#99f6e4',
-            300: '#5eead4',
-            400: '#2dd4bf',
-            500: '#14b8a6', // Adjacent to blue
-            600: '#0d9488',
-            700: '#0f766e',
-            800: '#115e59',
-            900: '#134e4a',
-            950: '#042f2e',
-          },
-          // Secondary colors - Orange to Red (adjacent)
-          orange: {
-            50: '#fff7ed',
-            100: '#ffedd5',
-            200: '#fed7aa',
-            300: '#fdba74',
-            400: '#fb923c',
-            500: '#f97316', // Warm accent
-            600: '#ea580c',
-            700: '#c2410c',
-            800: '#9a3412',
-            900: '#7c2d12',
-            950: '#431407',
-          },
-          red: {
-            50: '#fef2f2',
-            100: '#fee2e2',
-            200: '#fecaca',
-            300: '#fca5a5',
-            400: '#f87171',
-            500: '#ef4444', // Adjacent to orange
-            600: '#dc2626',
-            700: '#b91c1c',
-            800: '#991b1b',
-            900: '#7f1d1d',
-            950: '#450a0a',
-          },
-          // Neutral colors
-          gray: {
-            50: '#f9fafb',
-            100: '#f3f4f6',
-            200: '#e5e7eb',
-            300: '#d1d5db',
-            400: '#9ca3af',
-            500: '#6b7280',
-            600: '#4b5563',
-            700: '#374151',
-            800: '#1f2937',
-            900: '#111827',
-            950: '#030712',
-          },
-          // Semantic colors
-          success: {
-            50: '#f0fdf4',
-            500: '#22c55e',
-            600: '#16a34a',
-          },
-          warning: {
-            50: '#fffbeb',
-            500: '#f59e0b',
-            600: '#d97706',
-          },
-          error: {
-            50: '#fef2f2',
-            500: '#ef4444',
-            600: '#dc2626',
-          },
+        // AG Hex System Colors - Solids only
+        ag: {
+          bg: '#0B0C0E',
+          panel: '#111317',
+          line: '#1B1E24',
+          text: '#E7E9ED',
+          muted: '#A7AEBB',
+          brand: '#27E3A1',
+          danger: '#FF4D4F',
+          warn: '#FFC53D',
+          info: '#3DA9FF',
+          // Hover states
+          'bg-hover': '#0F1012',
+          'panel-hover': '#15171B',
+          'line-hover': '#202329',
+          'text-hover': '#F0F2F5',
+          'muted-hover': '#B8BFC9',
+          'brand-hover': '#1FCB8A',
+          'brand-active': '#17A673',
+          'danger-hover': '#FF3333',
+          'danger-active': '#E63939',
+          'warn-hover': '#FFB800',
+          'warn-active': '#E6A600',
+          'info-hover': '#1A8CE6',
+          'info-active': '#0D73CC',
         },
         // Legacy aliases for compatibility
-        primary: '#3b82f6',
-        secondary: '#14b8a6',
-        accent: '#f97316',
-        success: '#22c55e',
-        warning: '#f59e0b',
-        error: '#ef4444',
+        primary: '#27E3A1',
+        secondary: '#3DA9FF',
+        accent: '#FFC53D',
+        success: '#27E3A1',
+        warning: '#FFC53D',
+        error: '#FF4D4F',
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
@@ -140,11 +79,7 @@ module.exports = {
         'reown-xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       },
       backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-reown': 'linear-gradient(135deg, #3b82f6 0%, #14b8a6 100%)',
-        'gradient-reown-warm': 'linear-gradient(135deg, #f97316 0%, #ef4444 100%)',
-        'gradient-reown-subtle': 'linear-gradient(135deg, #eff6ff 0%, #f0fdfa 100%)',
+        // No gradients - solids only
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

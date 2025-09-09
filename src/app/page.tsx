@@ -4,6 +4,10 @@ import ConnectButton from '@/components/ConnectButton'
 import WalletManager from '@/components/WalletManager'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import AllowanceTable from '@/components/AllowanceTable'
+import { HexButton } from '@/components/HexButton'
+import { HexCard } from '@/components/HexCard'
+import { HexBadge } from '@/components/HexBadge'
+import { HexBackground } from '@/components/HexBackground'
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { load, save } from '@/lib/storage'
@@ -73,16 +77,16 @@ export default function HomePage() {
   }, [rows])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-reown-blue-50 via-white to-reown-teal-50 dark:from-reown-gray-900 dark:via-reown-gray-800 dark:to-reown-gray-900">
+    <HexBackground className="min-h-screen bg-ag-bg">
       {/* Header */}
-      <header className="border-b border-reown-gray-200 bg-white/80 backdrop-blur-sm dark:border-reown-gray-700 dark:bg-reown-gray-800/80">
+      <header className="border-b-2 border-ag-line bg-ag-panel">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="h-8 w-8 rounded-lg bg-gradient-reown flex items-center justify-center">
-                <span className="text-sm font-bold text-white">AG</span>
+              <div className="hex-clip w-8 h-8 bg-ag-brand flex items-center justify-center">
+                <span className="text-sm font-bold text-ag-bg">AG</span>
               </div>
-              <h1 className="text-2xl font-bold gradient-text">Allowance Guard</h1>
+              <h1 className="text-2xl font-bold text-ag-text">Allowance Guard</h1>
             </div>
             <ConnectButton />
           </div>
@@ -92,82 +96,110 @@ export default function HomePage() {
       <main className="mx-auto max-w-7xl px-6 py-8">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-reown-gray-900 dark:text-white mb-4">
-            Monitor & Revoke Risky Approvals
+          <h2 className="text-5xl font-bold text-ag-text mb-4">
+            Guard the allowances that guard your assets.
           </h2>
-          <p className="text-lg text-reown-gray-600 dark:text-reown-gray-300 max-w-2xl mx-auto">
-            Secure your wallet by monitoring token allowances across Ethereum, Arbitrum, and Base networks. 
-            Identify and revoke risky approvals with ease.
+          <p className="text-lg text-ag-muted max-w-2xl mx-auto mb-8">
+            Monitor token allowances across Ethereum, Arbitrum, and Base. 
+            Find risky approvals and revoke them safely.
           </p>
+          <div className="flex justify-center gap-4 mb-8">
+            <HexButton size="lg" onClick={startScan} disabled={pending}>
+              {pending ? 'Scanning...' : 'Start now'}
+            </HexButton>
+            <HexButton variant="ghost" size="lg">Read the docs</HexButton>
+          </div>
+          
+          {/* Credibility metrics */}
+          <div className="flex justify-center gap-6">
+            <HexBadge variant="brand" size="lg">
+              <span className="font-mono">1,234</span> Allowances scanned
+            </HexBadge>
+            <HexBadge variant="warn" size="lg">
+              <span className="font-mono">89</span> High-risk flagged
+            </HexBadge>
+            <HexBadge variant="info" size="lg">
+              <span className="font-mono">567</span> Revoked
+            </HexBadge>
+          </div>
         </div>
 
-        {/* Action Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {/* Scan Card */}
-          <div className="card">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="h-10 w-10 rounded-lg bg-gradient-reown flex items-center justify-center">
-                <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-reown-gray-900 dark:text-white">Scan Allowances</h3>
-            </div>
-            <p className="text-reown-gray-600 dark:text-reown-gray-300 mb-4">
-              Scan your wallet to discover all token approvals across supported networks.
+        {/* Product Lanes */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          {/* Risk & Revoke Lane */}
+          <HexCard eyebrow="Risk & Revoke" eyebrowColor="warn">
+            <h3 className="text-xl font-semibold text-ag-text mb-3">
+              Find and revoke risky allowances
+            </h3>
+            <p className="text-ag-muted mb-4">
+              Our indexer scans your wallet and flags unlimited allowances and stale permissions. 
+              Revoke them safely with one click.
             </p>
-            <button 
-              onClick={startScan} 
-              disabled={pending} 
-              className="btn-primary w-full"
-            >
-              {pending ? (
-                <div className="flex items-center space-x-2">
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-                  <span>Scanning…</span>
+            <div className="space-y-3">
+              <HexButton 
+                onClick={startScan}
+                disabled={pending}
+                className="w-full"
+              >
+                {pending ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="h-4 w-4 animate-spin border-2 border-ag-bg border-t-transparent"></div>
+                    <span>Scanning…</span>
+                  </div>
+                ) : (
+                  'Scan wallet'
+                )}
+              </HexButton>
+              {message && (
+                <div className="text-sm text-ag-muted">
+                  {message}
                 </div>
-              ) : (
-                'Start Allowance Scan'
               )}
-            </button>
-            {message && (
-              <div className="mt-3 p-3 rounded-lg bg-reown-blue-50 border border-reown-blue-200 text-sm text-reown-blue-700 dark:bg-reown-blue-900/20 dark:border-reown-blue-800 dark:text-reown-blue-300">
-                {message}
-              </div>
-            )}
-          </div>
-
-          {/* Wallet Manager Card */}
-          <div className="card">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="h-10 w-10 rounded-lg bg-gradient-to-r from-reown-teal-500 to-reown-blue-500 flex items-center justify-center">
-                <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-reown-gray-900 dark:text-white">Wallet Manager</h3>
             </div>
-            <WalletManager
-              selected={selectedWallet}
-              onSelect={(a) => setSelectedWallet(a || null)}
-              onSavedChange={(list) => setHasSavedWallet(list.length > 0)}
-            />
-          </div>
+          </HexCard>
+
+          {/* Alerts & Time Machine Lane */}
+          <HexCard eyebrow="Alerts & Time Machine" eyebrowColor="info">
+            <h3 className="text-xl font-semibold text-ag-text mb-3">
+              Real-time alerts and simulation
+            </h3>
+            <p className="text-ag-muted mb-4">
+              Get notified when new allowances are created. Use Time Machine to simulate 
+              revoking allowances and see your risk score change.
+            </p>
+            <div className="space-y-3">
+              <HexButton variant="info" className="w-full">
+                Enable alerts
+              </HexButton>
+              <HexButton variant="ghost" className="w-full">
+                Try Time Machine
+              </HexButton>
+            </div>
+          </HexCard>
         </div>
+
+        {/* Wallet Manager */}
+        <HexCard eyebrow="Wallet Manager" eyebrowColor="brand" className="mb-8">
+          <WalletManager
+            selected={selectedWallet}
+            onSelect={(a) => setSelectedWallet(a || null)}
+            onSavedChange={(list) => setHasSavedWallet(list.length > 0)}
+          />
+        </HexCard>
 
         {/* Allowances Table */}
         {selectedWallet && (
-          <div className="card mb-8">
+          <HexCard className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-lg font-semibold text-reown-gray-900 dark:text-white">Allowances</h3>
-                <p className="text-sm text-reown-gray-600 dark:text-reown-gray-300">
-                  Active wallet: <span className="font-mono text-reown-blue-600 dark:text-reown-blue-400">{selectedWallet}</span>
+                <h3 className="text-lg font-semibold text-ag-text">Allowances</h3>
+                <p className="text-sm text-ag-muted">
+                  Active wallet: <span className="font-mono text-ag-brand">{selectedWallet}</span>
                 </p>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="h-2 w-2 rounded-full bg-reown-success-500"></div>
-                <span className="text-sm text-reown-gray-600 dark:text-reown-gray-300">Connected</span>
+                <div className="h-2 w-2 bg-ag-brand"></div>
+                <span className="text-sm text-ag-muted">Connected</span>
               </div>
             </div>
             <AllowanceTable
@@ -176,19 +208,19 @@ export default function HomePage() {
               selectedWallet={selectedWallet}
               connectedAddress={connectedAddress}
             />
-          </div>
+          </HexCard>
         )}
 
         {/* Onboarding Checklist */}
-        <div className="card">
+        <HexCard eyebrow="Getting Started" eyebrowColor="info">
           <OnboardingChecklist
             isConnected={isConnected}
             hadScan={hadScan}
             hasSavedWallet={hasSavedWallet}
             hadRevoke={hadRevoke}
           />
-        </div>
+        </HexCard>
       </main>
-    </div>
+    </HexBackground>
   )
 }

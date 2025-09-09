@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import '../styles/hex.css';
 
 @tailwind base;
 @tailwind components;
@@ -70,47 +71,9 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Reown Design System Components */
+/* AG Hex System Components */
 @layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-reown-blue-500 to-reown-teal-500 px-4 py-2 text-sm font-medium text-white shadow-reown transition-all duration-200 hover:shadow-reown-lg focus:outline-none focus:ring-2 focus:ring-reown-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-reown-gray-300 bg-white px-4 py-2 text-sm font-medium text-reown-gray-700 shadow-sm transition-all duration-200 hover:bg-reown-gray-50 focus:outline-none focus:ring-2 focus:ring-reown-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:border-reown-gray-600 dark:bg-reown-gray-800 dark:text-reown-gray-200 dark:hover:bg-reown-gray-700;
-  }
-
-  .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-reown-gray-700 transition-all duration-200 hover:bg-reown-gray-100 focus:outline-none focus:ring-2 focus:ring-reown-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:text-reown-gray-200 dark:hover:bg-reown-gray-800;
-  }
-
-  .card {
-    @apply rounded-xl border border-reown-gray-200 bg-white p-6 shadow-reown transition-all duration-200 hover:shadow-reown-lg dark:border-reown-gray-700 dark:bg-reown-gray-800;
-  }
-
-  .input {
-    @apply block w-full rounded-lg border border-reown-gray-300 bg-white px-3 py-2 text-sm placeholder-reown-gray-400 shadow-sm transition-all duration-200 focus:border-reown-blue-500 focus:outline-none focus:ring-1 focus:ring-reown-blue-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-reown-gray-600 dark:bg-reown-gray-800 dark:text-white dark:placeholder-reown-gray-500 dark:focus:border-reown-blue-400;
-  }
-
-  .badge {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
-  }
-
-  .badge-success {
-    @apply bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400;
-  }
-
-  .badge-warning {
-    @apply bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400;
-  }
-
-  .badge-error {
-    @apply bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400;
-  }
-
-  .gradient-text {
-    @apply bg-gradient-to-r from-reown-blue-500 to-reown-teal-500 bg-clip-text text-transparent;
-  }
+  /* All components now use hex utilities from hex.css */
 }
 
 /* Custom scrollbar */

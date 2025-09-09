@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { load, save } from '@/lib/storage'
+import { HexButton } from './HexButton'
 
 type Saved = { address: string; label: string }
 
@@ -45,17 +46,17 @@ export default function WalletManager({
       <h2 className="text-base font-semibold">Wallets</h2>
 
       <div className="flex gap-2">
-        <input className="input w-[22rem] font-mono"
+        <input className="w-[22rem] px-3 py-2 bg-ag-panel border-2 border-ag-line text-ag-text font-mono placeholder-ag-muted focus:border-ag-brand focus:outline-none"
                placeholder="0x... address" value={addr} onChange={e => setAddr(e.target.value)} />
-        <input className="input w-[14rem]"
+        <input className="w-[14rem] px-3 py-2 bg-ag-panel border-2 border-ag-line text-ag-text placeholder-ag-muted focus:border-ag-brand focus:outline-none"
                placeholder="Label (optional)" value={label} onChange={e => setLabel(e.target.value)} />
-        <button onClick={add} className="btn-primary">Save</button>
+        <HexButton onClick={add}>Save</HexButton>
       </div>
 
       {saved.length > 0 && (
         <div className="flex items-center gap-2">
           <select
-            className="input font-mono"
+            className="px-3 py-2 bg-ag-panel border-2 border-ag-line text-ag-text font-mono focus:border-ag-brand focus:outline-none"
             value={selected ?? ''}
             onChange={(e) => onSelect(e.target.value)}
           >
@@ -64,9 +65,9 @@ export default function WalletManager({
             ))}
           </select>
           {current && (
-            <button onClick={() => remove(current.address)} className="btn-secondary">
+            <HexButton variant="ghost" onClick={() => remove(current.address)}>
               Remove
-            </button>
+            </HexButton>
           )}
         </div>
       )}

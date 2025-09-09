@@ -1,6 +1,8 @@
 'use client'
 import { useState, useMemo } from 'react'
 import { useBulkRevoke } from '@/hooks/useBulkRevoke'
+import { HexButton } from './HexButton'
+import { HexBadge } from './HexBadge'
 
 type Row = {
   chain_id: number
@@ -66,47 +68,46 @@ export default function AllowanceTable({
   return (
     <div className="mt-4">
       <div className="mb-4 flex items-center gap-3">
-        <button onClick={selectRisky} className="btn-secondary text-xs">Select risky</button>
-        <button onClick={handleBulk} disabled={busy || !selectedRows.length || !revokeAllowed}
-                className="btn-primary text-xs">
+        <HexButton onClick={selectRisky} size="sm" variant="ghost">Select risky</HexButton>
+        <HexButton onClick={handleBulk} disabled={busy || !selectedRows.length || !revokeAllowed} size="sm">
           {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
-        </button>
+        </HexButton>
       </div>
-      <div className="overflow-x-auto rounded-lg border border-reown-gray-200 dark:border-reown-gray-700">
+      <div className="overflow-x-auto border-2 border-ag-line">
         <table className="w-full text-sm">
-          <thead className="bg-reown-gray-50 dark:bg-reown-gray-800">
+          <thead className="bg-ag-panel">
             <tr>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300"></th>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Chain</th>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Token</th>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Spender</th>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Std</th>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Type</th>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Amount</th>
-              <th className="px-4 py-3 text-left font-medium text-reown-gray-700 dark:text-reown-gray-300">Badges</th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text"></th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text">Chain</th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text">Token</th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text">Spender</th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text">Std</th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text">Type</th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text">Amount</th>
+              <th className="px-4 py-3 text-left font-medium text-ag-text">Badges</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-reown-gray-200 dark:divide-reown-gray-700">
+          <tbody className="divide-y-2 divide-ag-line">
             {data.map((r, i) => (
-              <tr key={i} className="hover:bg-reown-gray-50 dark:hover:bg-reown-gray-800/50 transition-colors">
+              <tr key={i} className="hover:bg-ag-panel-hover transition-colors">
                 <td className="px-4 py-3">
                   <input 
                     type="checkbox" 
                     checked={!!sel[keyOf(r)]} 
                     onChange={() => toggle(r)}
-                    className="rounded border-reown-gray-300 text-reown-blue-600 focus:ring-reown-blue-500"
+                    className="border-ag-line text-ag-brand focus:ring-ag-brand"
                   />
                 </td>
-                <td className="px-4 py-3 font-medium text-reown-gray-900 dark:text-white">{r.chain_id}</td>
-                <td className="px-4 py-3 font-mono text-reown-gray-600 dark:text-reown-gray-300">{r.token_address}</td>
-                <td className="px-4 py-3 font-mono text-reown-gray-600 dark:text-reown-gray-300">{r.spender_address}</td>
-                <td className="px-4 py-3 text-reown-gray-600 dark:text-reown-gray-300">{r.standard}</td>
-                <td className="px-4 py-3 text-reown-gray-600 dark:text-reown-gray-300">{r.allowance_type}</td>
-                <td className="px-4 py-3 font-mono text-reown-gray-900 dark:text-white">{r.amount}</td>
+                <td className="px-4 py-3 font-medium text-ag-text">{r.chain_id}</td>
+                <td className="px-4 py-3 font-mono text-ag-muted">{r.token_address}</td>
+                <td className="px-4 py-3 font-mono text-ag-muted">{r.spender_address}</td>
+                <td className="px-4 py-3 text-ag-muted">{r.standard}</td>
+                <td className="px-4 py-3 text-ag-muted">{r.allowance_type}</td>
+                <td className="px-4 py-3 font-mono text-ag-text">{r.amount}</td>
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
-                    {r.is_unlimited && <span className="badge badge-error">UNLIMITED</span>}
-                    {r.risk_flags?.includes('STALE') && <span className="badge badge-warning">STALE</span>}
+                    {r.is_unlimited && <HexBadge variant="danger" size="sm">UNLIMITED</HexBadge>}
+                    {r.risk_flags?.includes('STALE') && <HexBadge variant="warn" size="sm">STALE</HexBadge>}
                   </div>
                 </td>
               </tr>
