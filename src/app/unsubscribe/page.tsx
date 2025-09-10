@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 
+type Status = 'idle' | 'loading' | 'success' | 'error'
+
 export default function UnsubscribePage() {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState('')
   const searchParams = useSearchParams()
 
@@ -125,10 +127,10 @@ export default function UnsubscribePage() {
 
               <button
                 type="submit"
-                disabled={status === 'loading' as const}
+                disabled={status === 'loading'}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {status === 'loading' as const ? 'Unsubscribing...' : 'Unsubscribe'}
+                {status === 'loading' ? 'Unsubscribing...' : 'Unsubscribe'}
               </button>
             </form>
           )}

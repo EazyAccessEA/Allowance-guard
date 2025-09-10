@@ -12,10 +12,12 @@ interface Preferences {
   updated_at: string
 }
 
+type Status = 'idle' | 'loading' | 'success' | 'error'
+
 export default function PreferencesPage() {
   const [email, setEmail] = useState('')
   const [preferences, setPreferences] = useState<Preferences | null>(null)
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [status, setStatus] = useState<Status>('idle')
   const [message, setMessage] = useState('')
   const searchParams = useSearchParams()
 
@@ -146,7 +148,7 @@ export default function PreferencesPage() {
               </div>
               <button
                 onClick={() => loadPreferences(email)}
-                disabled={!email || status === 'loading' as const}
+                disabled={!email || status === 'loading'}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Load Preferences
