@@ -519,19 +519,106 @@ export default function HomePage() {
                   Get daily digests in your Slack workspace
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <input 
-                    className="flex-1 rounded border px-3 py-2 text-sm"
-                    placeholder="https://hooks.slack.com/services/…"
-                    value={webhook} 
-                    onChange={e=>setWebhook(e.target.value)} 
-                  />
-                  <button 
-                    onClick={addSlack} 
-                    className="rounded border px-4 py-2 text-sm bg-green-600 text-white hover:bg-green-700"
-                  >
-                    Add Webhook
-                  </button>
+                {/* Step-by-Step Instructions */}
+                <div className="bg-white rounded-lg p-4 mb-4 border border-green-200">
+                  <h4 className="font-semibold text-gray-900 mb-3">📋 How to Set Up Slack Webhook:</h4>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-green-600 font-bold text-xs">1</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Go to your Slack workspace</p>
+                        <p className="text-gray-600">Open Slack in your browser or app</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-green-600 font-bold text-xs">2</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Create a new app</p>
+                        <p className="text-gray-600">Go to <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">api.slack.com/apps</a> → "Create New App" → "From scratch"</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-green-600 font-bold text-xs">3</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Name your app</p>
+                        <p className="text-gray-600">App name: "Allowance Guard Alerts", select your workspace</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-green-600 font-bold text-xs">4</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Enable Incoming Webhooks</p>
+                        <p className="text-gray-600">In your app settings → "Incoming Webhooks" → Toggle "Activate Incoming Webhooks" to ON</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-green-600 font-bold text-xs">5</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Add webhook to channel</p>
+                        <p className="text-gray-600">Click "Add New Webhook to Workspace" → Choose a channel (e.g., #alerts) → "Allow"</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-green-600 font-bold text-xs">6</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Copy the webhook URL</p>
+                        <p className="text-gray-600">Copy the webhook URL (starts with https://hooks.slack.com/services/) and paste it below</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Webhook Input */}
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Paste your Slack webhook URL here:
+                    </label>
+                    <input 
+                      className="w-full rounded border px-3 py-2 text-sm"
+                      placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+                      value={webhook} 
+                      onChange={e=>setWebhook(e.target.value)} 
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button 
+                      onClick={addSlack} 
+                      className="rounded border px-4 py-2 text-sm bg-green-600 text-white hover:bg-green-700"
+                    >
+                      Add Webhook
+                    </button>
+                    {slackMsg && (
+                      <span className="text-sm text-green-600 flex items-center">
+                        {slackMsg}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="bg-blue-50 border border-blue-200 rounded p-3">
+                    <p className="text-blue-800 text-xs">
+                      <strong>💡 Tip:</strong> You can create multiple webhooks for different channels. 
+                      Each webhook will receive alerts for this wallet.
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
