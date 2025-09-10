@@ -1,207 +1,265 @@
-'use client'
-
-import { useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-
-interface FAQItem {
-  question: string
-  answer: string
-  category: string
-}
-
-const faqData: FAQItem[] = [
-  {
-    question: "What is Allowance Guard?",
-    answer: "Allowance Guard is a security tool that helps you monitor and manage token approvals across your wallets. It scans your wallet addresses to find active token approvals and helps you revoke risky or unnecessary permissions to protect your assets.",
-    category: "General"
-  },
-  {
-    question: "How does Allowance Guard work?",
-    answer: "Allowance Guard connects to your wallet and scans for active token approvals across multiple blockchain networks. It identifies which contracts have permission to spend your tokens and helps you revoke permissions that are no longer needed or pose security risks.",
-    category: "General"
-  },
-  {
-    question: "Is Allowance Guard safe to use?",
-    answer: "Yes, Allowance Guard is designed with security in mind. We only read your wallet's approval data - we never ask for your private keys or seed phrases. All operations are performed through your connected wallet using standard blockchain transactions.",
-    category: "Security"
-  },
-  {
-    question: "Can I recover stolen assets using Allowance Guard?",
-    answer: "No. Allowance Guard is a preventative security tool that helps you practice proper wallet hygiene by revoking risky approvals. It cannot recover stolen funds, but it can help prevent future theft by removing dangerous permissions.",
-    category: "Security"
-  },
-  {
-    question: "What if I have a 'sweeper bot' stealing my ETH?",
-    answer: "If you have a bot that steals ETH as soon as it's deposited, your seed phrase was compromised. Revoking approvals won't help in this case. You should abandon this wallet and create a new one with a fresh seed phrase.",
-    category: "Security"
-  },
-  {
-    question: "Is disconnecting my wallet enough instead of revoking approvals?",
-    answer: "No. Disconnecting your wallet from a website only prevents that website from seeing your address. Your token approvals remain active and can still be exploited. You must explicitly revoke approvals to remove permissions.",
-    category: "Security"
-  },
-  {
-    question: "Do hardware wallets protect against approval exploits?",
-    answer: "Hardware wallets protect your private keys but offer no extra protection against approval exploits. Since approvals don't require your private keys to be stolen, hardware wallets cannot prevent these attacks. You still need to manage your approvals carefully.",
-    category: "Security"
-  },
-  {
-    question: "How much does it cost to use Allowance Guard?",
-    answer: "Allowance Guard is free to use, but revoking approvals requires gas fees for blockchain transactions. Gas costs vary by network and current conditions. You can choose when to revoke approvals based on gas prices.",
-    category: "Costs"
-  },
-  {
-    question: "Why does my wallet show 'approve' when I'm revoking?",
-    answer: "Token contracts use the same function for both approving and revoking. When revoking, you're setting the approval amount to 0. You can verify this by checking the transaction details in your wallet - it should show the approval being set to 0.",
-    category: "Technical"
-  },
-  {
-    question: "What happens to my staked tokens when I revoke approvals?",
-    answer: "Revoking approvals doesn't affect your staked or deposited tokens. They remain staked and you can still withdraw them. However, you'll need to grant new approvals if you want to add more tokens to your staked position.",
-    category: "Technical"
-  },
-  {
-    question: "Which approvals should I revoke?",
-    answer: "Focus on revoking approvals for unknown or suspicious contracts. Well-known protocols like Uniswap are generally safe to keep active. Consider revoking approvals for contracts you no longer use or trust. It's a balance between security and convenience.",
-    category: "Best Practices"
-  },
-  {
-    question: "Do I need to revoke approvals on testnets?",
-    answer: "Generally no. Testnet tokens have no real value, so testnet approvals don't pose security risks to your mainnet assets. Each approval only applies to the specific token on the specific network where it was granted.",
-    category: "Technical"
-  },
-  {
-    question: "Which networks does Allowance Guard support?",
-    answer: "Allowance Guard currently supports Ethereum, Arbitrum, and Base networks. We're working on adding support for more EVM-compatible networks. Check our documentation for the most up-to-date list of supported networks.",
-    category: "Technical"
-  },
-  {
-    question: "How often should I check my approvals?",
-    answer: "We recommend checking your approvals monthly or after using new DeFi protocols. Set up email alerts to be notified of new approvals automatically. Regular monitoring helps you maintain good wallet hygiene and catch suspicious activity early.",
-    category: "Best Practices"
-  },
-  {
-    question: "Can I set up alerts for new approvals?",
-    answer: "Yes! Allowance Guard can send you email alerts when new approvals are detected on your monitored wallets. You can customize alert settings to receive notifications for all approvals or only high-risk ones.",
-    category: "Features"
-  }
-]
-
-const categories = ["All", "General", "Security", "Technical", "Best Practices", "Features", "Costs"]
+import Image from 'next/image'
+import { HelpCircle, Shield, AlertTriangle, Mail, Settings, Eye, Lock, Zap } from 'lucide-react'
 
 export default function FAQPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [openItems, setOpenItems] = useState<Set<number>>(new Set())
-
-  const filteredFAQs = selectedCategory === "All" 
-    ? faqData 
-    : faqData.filter(faq => faq.category === selectedCategory)
-
-  const toggleItem = (index: number) => {
-    const newOpenItems = new Set(openItems)
-    if (newOpenItems.has(index)) {
-      newOpenItems.delete(index)
-    } else {
-      newOpenItems.add(index)
+  const faqCategories = [
+    {
+      id: 'general',
+      title: 'General Questions',
+      icon: HelpCircle,
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-50',
+      questions: [
+        {
+          q: 'What is Allowance Guard?',
+          a: 'Allowance Guard is a security tool that helps you identify and manage dangerous token approvals on your wallet. It scans your wallet for risky permissions that could allow malicious contracts to drain your funds.'
+        },
+        {
+          q: 'How does it work?',
+          a: 'We scan the blockchain to find all token approvals associated with your wallet address, analyze them for risk factors, and provide you with actionable information about which approvals to revoke.'
+        },
+        {
+          q: 'Is it free to use?',
+          a: 'Yes, Allowance Guard is completely free to use. We believe wallet security should be accessible to everyone in the crypto community.'
+        },
+        {
+          q: 'Do I need to create an account?',
+          a: 'No account required. Simply connect your wallet and start scanning. We only store your email address if you choose to subscribe to alerts.'
+        }
+      ]
+    },
+    {
+      id: 'security',
+      title: 'Security & Privacy',
+      icon: Shield,
+      color: 'text-green-600',
+      bgColor: 'bg-green-50',
+      questions: [
+        {
+          q: 'Is my wallet safe?',
+          a: 'Absolutely. We never have access to your private keys, seed phrases, or wallet funds. All scanning happens locally in your browser, and we only read public blockchain data.'
+        },
+        {
+          q: 'What data do you collect?',
+          a: 'We only collect your wallet address (public) and email address (if you subscribe to alerts). We never store private keys, transaction data, or personal information.'
+        },
+        {
+          q: 'Can you access my funds?',
+          a: 'No, we cannot and will never access your funds. We are a read-only service that only analyzes public blockchain data. Your private keys never leave your device.'
+        },
+        {
+          q: 'How do you protect my privacy?',
+          a: 'We use industry-standard encryption, never share your data with third parties, and follow strict privacy practices. Your wallet address is only used for blockchain scanning.'
+        }
+      ]
+    },
+    {
+      id: 'technical',
+      title: 'Technical Issues',
+      icon: Settings,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-50',
+      questions: [
+        {
+          q: 'Which wallets are supported?',
+          a: 'We support all major wallet providers including MetaMask, WalletConnect, Coinbase Wallet, and others. Any wallet that can connect via standard protocols will work.'
+        },
+        {
+          q: 'Which networks do you support?',
+          a: 'Currently we support Ethereum, Arbitrum, and Base. We are working on adding more networks based on user demand.'
+        },
+        {
+          q: 'Why is my scan taking so long?',
+          a: 'Scanning time depends on how many approvals you have and network congestion. Large wallets with many approvals may take a few minutes to scan completely.'
+        },
+        {
+          q: 'What if the scan fails?',
+          a: 'Try refreshing the page, reconnecting your wallet, or switching networks. If problems persist, contact our support team for assistance.'
+        }
+      ]
+    },
+    {
+      id: 'alerts',
+      title: 'Alerts & Notifications',
+      icon: Mail,
+      color: 'text-yellow-600',
+      bgColor: 'bg-yellow-50',
+      questions: [
+        {
+          q: 'How do email alerts work?',
+          a: 'You can subscribe to receive email notifications when new risky approvals are detected. Choose between immediate alerts, daily digests, or weekly summaries.'
+        },
+        {
+          q: 'Can I set up Slack notifications?',
+          a: 'Yes, you can integrate with Slack using webhooks. This allows you to receive real-time notifications in your team workspace.'
+        },
+        {
+          q: 'How often will I receive alerts?',
+          a: 'You control the frequency. Choose from immediate alerts for high-risk approvals, daily summaries, or weekly overviews based on your preferences.'
+        },
+        {
+          q: 'Can I customize what triggers alerts?',
+          a: 'Yes, you can set risk thresholds, choose specific networks, and filter by approval types to receive only the alerts that matter to you.'
+        }
+      ]
+    },
+    {
+      id: 'troubleshooting',
+      title: 'Troubleshooting',
+      icon: AlertTriangle,
+      color: 'text-red-600',
+      bgColor: 'bg-red-50',
+      questions: [
+        {
+          q: 'My wallet won\'t connect',
+          a: 'Make sure your wallet is unlocked and you\'re on a supported network. Try refreshing the page or switching to a different browser.'
+        },
+        {
+          q: 'I\'m not seeing any approvals',
+          a: 'This could mean you have no token approvals, or there might be a network issue. Try switching networks or contact support if the problem persists.'
+        },
+        {
+          q: 'The revoke button isn\'t working',
+          a: 'Revoking approvals requires a blockchain transaction. Make sure you have enough ETH for gas fees and that your wallet is properly connected.'
+        },
+        {
+          q: 'I\'m not receiving email alerts',
+          a: 'Check your spam folder, verify your email address in preferences, and ensure alerts are enabled. Contact support if you continue having issues.'
+        }
+      ]
     }
-    setOpenItems(newOpenItems)
-  }
+  ]
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Mobile-First Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 sm:py-12">
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-gray-600 text-base sm:text-lg">
-            Everything you need to know about Allowance Guard and token approval security.
-          </p>
-        </div>
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 sm:py-12">
-        {/* Mobile-First Category Filter */}
-        <div className="mb-6 sm:mb-8">
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
+          <div className="flex items-center justify-center">
+            <div className="relative w-12 h-12 mr-3">
+              <Image
+                src="/AG_Logo2.png"
+                alt="Allowance Guard"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">Allowance Guard</h1>
           </div>
         </div>
+      </header>
 
-        {/* Mobile-First FAQ Items */}
-        <div className="space-y-3 sm:space-y-4">
-          {filteredFAQs.map((faq, index) => {
-            const isOpen = openItems.has(index)
+      {/* Content */}
+      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <HelpCircle className="w-8 h-8 text-blue-600 mr-3" />
+            <h1 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h1>
+          </div>
+          <p className="text-gray-600">
+            Find answers to common questions about Allowance Guard and wallet security.
+          </p>
+        </div>
+
+        {/* FAQ Categories */}
+        <div className="space-y-8">
+          {faqCategories.map((category) => {
+            const Icon = category.icon
             return (
-              <div
-                key={index}
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm"
-              >
-                <button
-                  onClick={() => toggleItem(index)}
-                  className="w-full px-4 py-4 sm:px-6 text-left flex items-start justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <span className="text-gray-900 font-medium pr-4 text-left leading-tight">
-                    {faq.question}
-                  </span>
-                  {isOpen ? (
-                    <ChevronUp className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-500 flex-shrink-0 mt-0.5" />
-                  )}
-                </button>
-                
-                {isOpen && (
-                  <div className="px-4 pb-4 sm:px-6 border-t border-gray-100">
-                    <p className="text-gray-600 leading-relaxed pt-4 text-sm sm:text-base">
-                      {faq.answer}
-                    </p>
+              <section key={category.id} className="mb-12">
+                <div className="flex items-center mb-6">
+                  <div className={`w-12 h-12 ${category.bgColor} rounded-lg flex items-center justify-center mr-4`}>
+                    <Icon className={`w-6 h-6 ${category.color}`} />
                   </div>
-                )}
-              </div>
+                  <h2 className="text-2xl font-semibold text-gray-900">{category.title}</h2>
+                </div>
+                
+                <div className="space-y-4">
+                  {category.questions.map((faq, index) => (
+                    <div key={index} className="bg-white border border-gray-200 rounded-lg p-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.q}</h3>
+                      <p className="text-gray-600 leading-relaxed">{faq.a}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
             )
           })}
         </div>
 
-        {/* Mobile-First Contact Section */}
-        <div className="mt-12 sm:mt-16">
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 sm:p-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Still have questions?
-            </h2>
-            <p className="text-gray-600 mb-6 text-sm sm:text-base">
-              Can&apos;t find what you&apos;re looking for? We&apos;re here to help.
+        {/* Quick Actions */}
+        <section className="mt-12 bg-gray-50 border border-gray-200 rounded-lg p-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Still Need Help?</h2>
+          <p className="text-gray-600 mb-6">
+            Can&apos;t find the answer you&apos;re looking for? We&apos;re here to help.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a 
+              href="/contact" 
+              className="flex items-center p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-300 transition-colors"
+            >
+              <Mail className="w-5 h-5 text-blue-600 mr-3" />
+              <div>
+                <h3 className="text-sm font-medium text-gray-900">Contact Support</h3>
+                <p className="text-xs text-gray-500">Get personalized help</p>
+              </div>
+            </a>
+            
+            <a 
+              href="/docs" 
+              className="flex items-center p-4 bg-white border border-gray-200 rounded-lg hover:border-green-300 transition-colors"
+            >
+              <Eye className="w-5 h-5 text-green-600 mr-3" />
+              <div>
+                <h3 className="text-sm font-medium text-gray-900">Documentation</h3>
+                <p className="text-xs text-gray-500">Detailed guides</p>
+              </div>
+            </a>
+            
+            <a 
+              href="/security" 
+              className="flex items-center p-4 bg-white border border-gray-200 rounded-lg hover:border-purple-300 transition-colors"
+            >
+              <Lock className="w-5 h-5 text-purple-600 mr-3" />
+              <div>
+                <h3 className="text-sm font-medium text-gray-900">Security Info</h3>
+                <p className="text-xs text-gray-500">Safety measures</p>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        {/* Security Notice */}
+        <section className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+          <div className="flex items-start">
+            <AlertTriangle className="w-6 h-6 text-yellow-600 mr-3 mt-1" />
+            <div>
+              <h3 className="text-lg font-semibold text-yellow-800 mb-2">Important Security Reminder</h3>
+              <p className="text-yellow-700 text-sm">
+                Allowance Guard is a security tool, but it cannot recover stolen funds. Always verify contract addresses, 
+                never share your private keys, and be cautious when interacting with new dApps. If you suspect your wallet 
+                has been compromised, revoke all approvals immediately and move your funds to a new wallet.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-50 border-t border-gray-200 mt-16">
+        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
+          <div className="text-center">
+            <p className="text-gray-600 text-sm">
+              © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 sm:justify-center">
-              <a
-                href="/docs"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors text-center text-sm sm:text-base"
-              >
-                View Documentation
-              </a>
-              <a
-                href="mailto:support@allowanceguard.com"
-                className="px-6 py-3 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors text-center text-sm sm:text-base"
-              >
-                Contact Support
-              </a>
+            <div className="mt-4 space-x-6">
+              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>
-      </div>
+      </footer>
     </div>
   )
 }

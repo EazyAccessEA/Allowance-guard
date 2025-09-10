@@ -1,583 +1,368 @@
-'use client'
-
-import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
-import { HexButton } from '@/components/HexButton'
-import { HexCard } from '@/components/HexCard'
-import { HexBadge } from '@/components/HexBadge'
-import { HexBackground } from '@/components/HexBackground'
-import { CodeBlock } from '@/components/docs/CodeBlock'
-import { FeatureCard } from '@/components/docs/FeatureCard'
-import { Navigation } from '@/components/docs/Navigation'
+import { Shield, Eye, AlertTriangle, Mail, Settings, BookOpen, ArrowRight, CheckCircle } from 'lucide-react'
 
 export default function DocsPage() {
-  const [activeSection, setActiveSection] = useState('overview')
-
-  return (
-    <HexBackground className="min-h-screen bg-ag-bg">
-      {/* Header */}
-      <header className="border-b-2 border-ag-line bg-ag-panel sticky top-0 z-50">
-        <div className="mx-auto max-w-7xl px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-               <div className="relative w-8 h-8">
-                 <Image
-                   src="/AG_Logo2.png"
-                   alt="Allowance Guard Logo"
-                   width={32}
-                   height={32}
-                   className="w-full h-full object-contain"
-                   priority
-                 />
-               </div>
-              <h1 className="text-2xl font-bold text-ag-text">Allowance Guard</h1>
-              <HexBadge variant="info" size="sm">Docs</HexBadge>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="text-ag-muted hover:text-ag-text transition-colors">
-                ← Back to App
-              </Link>
-              <HexButton variant="ghost" size="sm">
-                GitHub
-              </HexButton>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Sidebar Navigation */}
-          <div className="lg:col-span-1">
-            <Navigation activeSection={activeSection} onSectionChange={setActiveSection} />
-          </div>
-
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            {activeSection === 'overview' && <OverviewSection />}
-            {activeSection === 'quickstart' && <QuickstartSection />}
-            {activeSection === 'features' && <FeaturesSection />}
-            {activeSection === 'api' && <APISection />}
-            {activeSection === 'security' && <SecuritySection />}
-            {activeSection === 'faq' && <FAQSection />}
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="border-t-2 border-ag-line bg-ag-panel mt-16">
-        <div className="mx-auto max-w-7xl px-6 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center space-x-3">
-               <div className="relative w-8 h-8">
-                 <Image
-                   src="/AG_Logo2.png"
-                   alt="Allowance Guard Logo"
-                   width={32}
-                   height={32}
-                   className="w-full h-full object-contain"
-                 />
-               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-ag-text">Allowance Guard</h3>
-                <p className="text-sm text-ag-muted">Documentation</p>
-              </div>
-            </div>
-            
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="flex items-center space-x-6">
-                <Link href="/" className="text-ag-muted hover:text-ag-text transition-colors">
-                  Back to App
-                </Link>
-                <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-ag-muted hover:text-ag-text transition-colors">
-                  GitHub
-                </a>
-                <a href="https://discord.gg/allowanceguard" target="_blank" rel="noopener noreferrer" className="text-ag-muted hover:text-ag-text transition-colors">
-                  Discord
-                </a>
-              </div>
-              
-              <div className="text-sm text-ag-muted">
-                © 2024 Allowance Guard. All rights reserved.
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </HexBackground>
-  )
-}
-
-function OverviewSection() {
-  return (
-    <div className="space-y-8">
-      {/* Hero */}
-      <div className="text-center py-12">
-        <h1 className="text-5xl font-bold text-ag-text mb-4">
-          Allowance Guard Documentation
-        </h1>
-        <p className="text-xl text-ag-muted max-w-3xl mx-auto mb-8">
-          Comprehensive guide to securing your wallet by monitoring and managing token allowances 
-          across Ethereum, Arbitrum, and Base networks.
-        </p>
-        <div className="flex justify-center gap-4">
-          <HexButton size="lg">Get Started</HexButton>
-          <HexButton variant="ghost" size="lg">View on GitHub</HexButton>
-        </div>
-      </div>
-
-      {/* Key Features Grid */}
-      <div className="grid md:grid-cols-3 gap-6">
-        <FeatureCard
-          icon="search"
-          title="Wallet Indexer"
-          description="Automatically scans and indexes all token allowances across multiple chains with real-time updates."
-        />
-        <FeatureCard
-          icon="warning"
-          title="Risk Engine"
-          description="Advanced risk scoring identifies unlimited allowances and stale permissions that pose security threats."
-        />
-        <FeatureCard
-          icon="🚨"
-          title="Alert Pipeline"
-          description="Real-time notifications when new allowances are created or risky patterns are detected."
-        />
-      </div>
-
-      {/* Core Features */}
-      <HexCard eyebrow="Core Features" eyebrowColor="brand">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-lg font-semibold text-ag-text mb-3">Allowance Dashboard</h3>
-            <p className="text-ag-muted mb-4">
-              Comprehensive view of all token allowances with risk scoring, amount tracking, 
-              and spender identification across supported networks.
-            </p>
-            <ul className="space-y-2 text-sm text-ag-muted">
-              <li>• Real-time allowance monitoring</li>
-              <li>• Multi-chain support (Ethereum, Arbitrum, Base)</li>
-              <li>• Risk-based categorization</li>
-              <li>• Historical tracking</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-ag-text mb-3">Bulk Revocation</h3>
-            <p className="text-ag-muted mb-4">
-              Safely revoke multiple allowances with one-click operations and immediate 
-              feedback on transaction status.
-            </p>
-            <ul className="space-y-2 text-sm text-ag-muted">
-              <li>• Batch revocation support</li>
-              <li>• Progress tracking</li>
-              <li>• Transaction confirmation</li>
-              <li>• Error handling</li>
-            </ul>
-          </div>
-        </div>
-      </HexCard>
-
-      {/* Time Machine */}
-      <HexCard eyebrow="Time Machine" eyebrowColor="info">
-        <div className="text-center">
-          <h3 className="text-2xl font-bold text-ag-text mb-4">Simulate Before You Act</h3>
-          <p className="text-ag-muted mb-6 max-w-2xl mx-auto">
-            Use Time Machine to simulate revoking allowances and see how it affects your 
-            overall risk score without making any real transactions.
-          </p>
-          <div className="flex justify-center gap-4">
-            <HexButton variant="info">Try Time Machine</HexButton>
-            <HexButton variant="ghost">Learn More</HexButton>
-          </div>
-        </div>
-      </HexCard>
-    </div>
-  )
-}
-
-function QuickstartSection() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold text-ag-text mb-4">Quick Start Guide</h1>
-        <p className="text-lg text-ag-muted">
-          Get up and running with Allowance Guard in minutes. Follow these steps to secure your wallet.
-        </p>
-      </div>
-
-      {/* Step 1 */}
-      <HexCard eyebrow="Step 1" eyebrowColor="brand">
-        <h3 className="text-xl font-semibold text-ag-text mb-3">Connect Your Wallet</h3>
-        <p className="text-ag-muted mb-4">
-          Connect your wallet using our secure Web3 connection. We support all major wallets 
-          including MetaMask, WalletConnect, and Coinbase Wallet.
-        </p>
-        <CodeBlock language="javascript">
-{`// Connect wallet using AppKit
-import { createAppKit } from '@reown/appkit'
-
-const appKit = createAppKit({
-  projectId: 'your-project-id',
-  networks: [mainnet, arbitrum, base],
-  defaultNetwork: mainnet
-})
-
-// Open connection modal
-appKit.open()`}
-        </CodeBlock>
-      </HexCard>
-
-      {/* Step 2 */}
-      <HexCard eyebrow="Step 2" eyebrowColor="warn">
-        <h3 className="text-xl font-semibold text-ag-text mb-3">Scan Your Allowances</h3>
-        <p className="text-ag-muted mb-4">
-          Run a comprehensive scan to discover all token allowances across supported networks. 
-          Our indexer will identify and categorize each allowance by risk level.
-        </p>
-        <CodeBlock language="javascript">
-{`// Scan wallet allowances
-const response = await fetch('/api/scan', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    walletAddress: '0x...',
-    chains: ['eth', 'arb', 'base']
-  })
-})
-
-const { allowances, riskScore } = await response.json()`}
-        </CodeBlock>
-      </HexCard>
-
-      {/* Step 3 */}
-      <HexCard eyebrow="Step 3" eyebrowColor="info">
-        <h3 className="text-xl font-semibold text-ag-text mb-3">Review and Revoke</h3>
-        <p className="text-ag-muted mb-4">
-          Review the risk analysis and revoke dangerous allowances. Use Time Machine to 
-          simulate changes before making real transactions.
-        </p>
-        <CodeBlock language="javascript">
-{`// Revoke allowance
-const revokeTx = await writeContract({
-  address: tokenAddress,
-  abi: erc20Abi,
-  functionName: 'approve',
-  args: [spenderAddress, 0n] // Set to 0 to revoke
-})
-
-// Or use bulk revocation
-const bulkRevoke = await fetch('/api/revoke/bulk', {
-  method: 'POST',
-  body: JSON.stringify({ allowances: selectedAllowances })
-})`}
-        </CodeBlock>
-      </HexCard>
-
-      {/* Next Steps */}
-      <HexCard eyebrow="Next Steps" eyebrowColor="info">
-        <h3 className="text-xl font-semibold text-ag-text mb-4">What&apos;s Next?</h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <h4 className="font-semibold text-ag-text mb-2">Enable Alerts</h4>
-            <p className="text-sm text-ag-muted">
-              Set up real-time notifications for new allowances and risk changes.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-ag-text mb-2">API Integration</h4>
-            <p className="text-sm text-ag-muted">
-              Integrate Allowance Guard into your dApp or security workflow.
-            </p>
-          </div>
-        </div>
-      </HexCard>
-    </div>
-  )
-}
-
-function FeaturesSection() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold text-ag-text mb-4">Features</h1>
-        <p className="text-lg text-ag-muted">
-          Comprehensive security features designed to protect your digital assets.
-        </p>
-      </div>
-
-      {/* Risk Engine */}
-      <HexCard eyebrow="Risk Engine" eyebrowColor="warn">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-xl font-semibold text-ag-text mb-3">Advanced Risk Scoring</h3>
-            <p className="text-ag-muted mb-4">
-              Our risk engine analyzes allowance patterns to identify potential security threats 
-              and categorize them by risk level.
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <HexBadge variant="danger" size="sm">HIGH</HexBadge>
-                <span className="text-sm text-ag-muted">Unlimited allowances</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <HexBadge variant="warn" size="sm">MEDIUM</HexBadge>
-                <span className="text-sm text-ag-muted">Stale permissions</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <HexBadge variant="info" size="sm">LOW</HexBadge>
-                <span className="text-sm text-ag-muted">Standard usage</span>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-semibold text-ag-text mb-3">Risk Factors</h4>
-            <ul className="space-y-2 text-sm text-ag-muted">
-              <li>• Allowance amount vs. token balance</li>
-              <li>• Time since last interaction</li>
-              <li>• Spender reputation and history</li>
-              <li>• Network activity patterns</li>
-              <li>• Smart contract analysis</li>
-            </ul>
-          </div>
-        </div>
-      </HexCard>
-
-      {/* Multi-Chain Support */}
-      <HexCard eyebrow="Multi-Chain" eyebrowColor="brand">
-        <h3 className="text-xl font-semibold text-ag-text mb-3">Cross-Chain Monitoring</h3>
-        <p className="text-ag-muted mb-4">
-          Monitor allowances across multiple blockchain networks with unified risk scoring.
-        </p>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="text-center p-4 border-2 border-ag-line">
-            <div className="text-2xl mb-2">⟠</div>
-            <div className="font-semibold text-ag-text">Ethereum</div>
-            <div className="text-sm text-ag-muted">Mainnet</div>
-          </div>
-          <div className="text-center p-4 border-2 border-ag-line">
-            <div className="text-2xl mb-2">🔷</div>
-            <div className="font-semibold text-ag-text">Arbitrum</div>
-            <div className="text-sm text-ag-muted">L2 Scaling</div>
-          </div>
-          <div className="text-center p-4 border-2 border-ag-line">
-            <div className="text-2xl mb-2">🔵</div>
-            <div className="font-semibold text-ag-text">Base</div>
-            <div className="text-sm text-ag-muted">Coinbase L2</div>
-          </div>
-        </div>
-      </HexCard>
-
-      {/* Time Machine */}
-      <HexCard eyebrow="Time Machine" eyebrowColor="info">
-        <h3 className="text-xl font-semibold text-ag-text mb-3">Simulation Mode</h3>
-        <p className="text-ag-muted mb-4">
-          Test allowance changes without risk. Time Machine lets you simulate revoking 
-          allowances and see the impact on your security score.
-        </p>
-        <div className="bg-ag-panel p-4 border-2 border-ag-line">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-ag-text">Simulation Mode Active</span>
-            <HexBadge variant="info" size="sm">LIVE</HexBadge>
-          </div>
-          <p className="text-xs text-ag-muted">
-            Changes are simulated only. No real transactions will be made.
-          </p>
-        </div>
-      </HexCard>
-    </div>
-  )
-}
-
-function APISection() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold text-ag-text mb-4">API Reference</h1>
-        <p className="text-lg text-ag-muted">
-          Complete API documentation for integrating Allowance Guard into your applications.
-        </p>
-      </div>
-
-      {/* Authentication */}
-      <HexCard eyebrow="Authentication" eyebrowColor="brand">
-        <h3 className="text-xl font-semibold text-ag-text mb-3">API Keys</h3>
-        <p className="text-ag-muted mb-4">
-          All API requests require authentication using your project API key.
-        </p>
-        <CodeBlock language="bash">
-{`curl -H "Authorization: Bearer YOUR_API_KEY" \\
-  https://api.allowanceguard.com/v1/allowances`}
-        </CodeBlock>
-      </HexCard>
-
-      {/* Endpoints */}
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-ag-text">Endpoints</h2>
-        
-        <HexCard>
-          <div className="flex items-center gap-3 mb-3">
-            <HexBadge variant="brand" size="sm">GET</HexBadge>
-            <code className="text-ag-text font-mono">/api/allowances</code>
-          </div>
-          <p className="text-ag-muted mb-3">Retrieve all allowances for a wallet address.</p>
-          <CodeBlock language="javascript">
-{`const response = await fetch('/api/allowances?wallet=0x...')
-const allowances = await response.json()`}
-          </CodeBlock>
-        </HexCard>
-
-        <HexCard>
-          <div className="flex items-center gap-3 mb-3">
-            <HexBadge variant="warn" size="sm">POST</HexBadge>
-            <code className="text-ag-text font-mono">/api/scan</code>
-          </div>
-          <p className="text-ag-muted mb-3">Initiate a new allowance scan for a wallet.</p>
-          <CodeBlock language="javascript">
-{`const response = await fetch('/api/scan', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    walletAddress: '0x...',
-    chains: ['eth', 'arb', 'base']
-  })
-})`}
-          </CodeBlock>
-        </HexCard>
-
-        <HexCard>
-          <div className="flex items-center gap-3 mb-3">
-            <HexBadge variant="info" size="sm">POST</HexBadge>
-            <code className="text-ag-text font-mono">/api/risk/refresh</code>
-          </div>
-          <p className="text-ag-muted mb-3">Refresh risk scores for a wallet&apos;s allowances.</p>
-          <CodeBlock language="javascript">
-{`const response = await fetch('/api/risk/refresh', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ wallet: '0x...' })
-})`}
-          </CodeBlock>
-        </HexCard>
-      </div>
-    </div>
-  )
-}
-
-function SecuritySection() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold text-ag-text mb-4">Security</h1>
-        <p className="text-lg text-ag-muted">
-          Security is our top priority. Learn about our security measures and best practices.
-        </p>
-      </div>
-
-      <HexCard eyebrow="Security Measures" eyebrowColor="danger">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-lg font-semibold text-ag-text mb-3">Data Protection</h3>
-            <ul className="space-y-2 text-sm text-ag-muted">
-              <li>• End-to-end encryption for all data</li>
-              <li>• No private keys stored or transmitted</li>
-              <li>• Read-only blockchain access</li>
-              <li>• GDPR compliant data handling</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-ag-text mb-3">Audit & Compliance</h3>
-            <ul className="space-y-2 text-sm text-ag-muted">
-              <li>• Regular security audits</li>
-              <li>• Bug bounty program</li>
-              <li>• Open source components</li>
-              <li>• SOC 2 Type II certified</li>
-            </ul>
-          </div>
-        </div>
-      </HexCard>
-
-      <HexCard eyebrow="Best Practices" eyebrowColor="info">
-        <h3 className="text-xl font-semibold text-ag-text mb-3">Security Best Practices</h3>
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-semibold text-ag-text mb-2">Regular Monitoring</h4>
-            <p className="text-sm text-ag-muted">
-              Check your allowances regularly and revoke unused permissions immediately.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-ag-text mb-2">Principle of Least Privilege</h4>
-            <p className="text-sm text-ag-muted">
-              Only approve the minimum amount necessary for dApp functionality.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-ag-text mb-2">Verify Spenders</h4>
-            <p className="text-sm text-ag-muted">
-              Always verify the spender address matches the intended dApp or service.
-            </p>
-          </div>
-        </div>
-      </HexCard>
-    </div>
-  )
-}
-
-function FAQSection() {
-  const faqs = [
+  const quickStartSteps = [
     {
-      question: "What is a token allowance?",
-      answer: "A token allowance is permission you give to a smart contract to spend your tokens on your behalf. This is required for dApps to interact with your tokens."
+      step: 1,
+      title: "Connect Your Wallet",
+      description: "Click the Connect Wallet button and select your preferred wallet provider.",
+      icon: Shield,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50"
     },
     {
-      question: "Why should I monitor my allowances?",
-      answer: "Unused or excessive allowances can be security risks. Malicious actors could potentially exploit them to drain your tokens."
+      step: 2,
+      title: "Scan for Approvals",
+      description: "Click Scan Now to check all your token approvals across supported networks.",
+      icon: Eye,
+      color: "text-green-600",
+      bgColor: "bg-green-50"
     },
     {
-      question: "Is it safe to revoke allowances?",
-      answer: "Yes, revoking allowances is safe and only removes permissions. It doesn&apos;t affect your token balance or other wallet functions."
+      step: 3,
+      title: "Review Results",
+      description: "Examine your approvals and identify any risky or unlimited permissions.",
+      icon: AlertTriangle,
+      color: "text-yellow-600",
+      bgColor: "bg-yellow-50"
     },
     {
-      question: "How often should I check my allowances?",
-      answer: "We recommend checking monthly or after using new dApps. Enable alerts for real-time monitoring of new allowances."
+      step: 4,
+      title: "Set Up Alerts",
+      description: "Configure email or Slack notifications to stay informed about new approvals.",
+      icon: Mail,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50"
+    }
+  ]
+
+  const supportedNetworks = [
+    { name: "Ethereum", chainId: 1, status: "Full Support" },
+    { name: "Arbitrum", chainId: 42161, status: "Full Support" },
+    { name: "Base", chainId: 8453, status: "Full Support" }
+  ]
+
+  const riskLevels = [
+    {
+      level: "UNLIMITED",
+      description: "Can take any amount from your wallet",
+      color: "text-red-600",
+      bgColor: "bg-red-50",
+      borderColor: "border-red-200",
+      action: "Revoke immediately"
     },
     {
-      question: "What networks are supported?",
-      answer: "Currently we support Ethereum mainnet, Arbitrum, and Base. More networks will be added based on user demand."
+      level: "HIGH RISK",
+      description: "Large amounts or unknown contracts",
+      color: "text-yellow-600",
+      bgColor: "bg-yellow-50",
+      borderColor: "border-yellow-200",
+      action: "Review carefully"
+    },
+    {
+      level: "SAFE",
+      description: "Small amounts from trusted sources",
+      color: "text-green-600",
+      bgColor: "bg-green-50",
+      borderColor: "border-green-200",
+      action: "Monitor periodically"
     }
   ]
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold text-ag-text mb-4">Frequently Asked Questions</h1>
-        <p className="text-lg text-ag-muted">
-          Common questions about Allowance Guard and token allowance security.
-        </p>
-      </div>
-
-      <div className="space-y-4">
-        {faqs.map((faq, index) => (
-          <HexCard key={index}>
-            <h3 className="text-lg font-semibold text-ag-text mb-2">{faq.question}</h3>
-            <p className="text-ag-muted">{faq.answer}</p>
-          </HexCard>
-        ))}
-      </div>
-
-      <HexCard eyebrow="Need Help?" eyebrowColor="info">
-        <div className="text-center">
-          <h3 className="text-xl font-semibold text-ag-text mb-3">Still have questions?</h3>
-          <p className="text-ag-muted mb-4">
-            Our support team is here to help. Reach out through our community channels.
-          </p>
-          <div className="flex justify-center gap-4">
-            <HexButton variant="info">Discord</HexButton>
-            <HexButton variant="ghost">GitHub Issues</HexButton>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
+          <div className="flex items-center justify-center">
+            <div className="relative w-12 h-12 mr-3">
+              <Image
+                src="/AG_Logo2.png"
+                alt="Allowance Guard"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">Allowance Guard</h1>
           </div>
         </div>
-      </HexCard>
+      </header>
+
+      {/* Content */}
+      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <BookOpen className="w-8 h-8 text-blue-600 mr-3" />
+            <h1 className="text-3xl font-bold text-gray-900">Documentation</h1>
+          </div>
+          <p className="text-gray-600">
+            Complete guide to using Allowance Guard to protect your wallet from dangerous token approvals.
+          </p>
+        </div>
+
+        {/* Quick Start */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Quick Start Guide</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {quickStartSteps.map((step) => {
+              const Icon = step.icon
+              return (
+                <div key={step.step} className={`${step.bgColor} border border-gray-200 rounded-lg p-6`}>
+                  <div className="flex items-center mb-4">
+                    <div className={`w-10 h-10 ${step.bgColor} border-2 border-gray-300 rounded-full flex items-center justify-center mr-4`}>
+                      <span className="text-lg font-bold text-gray-700">{step.step}</span>
+                    </div>
+                    <Icon className={`w-6 h-6 ${step.color}`} />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
+                  <p className="text-gray-600">{step.description}</p>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* Supported Networks */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Supported Networks</h2>
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <p className="text-gray-600 mb-4">
+              Allowance Guard currently supports the following blockchain networks:
+            </p>
+            <div className="space-y-3">
+              {supportedNetworks.map((network) => (
+                <div key={network.chainId} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
+                  <div>
+                    <h3 className="text-lg font-medium text-gray-900">{network.name}</h3>
+                    <p className="text-sm text-gray-500">Chain ID: {network.chainId}</p>
+                  </div>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                    <CheckCircle className="w-4 h-4 mr-1" />
+                    {network.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Risk Levels */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Understanding Risk Levels</h2>
+          <div className="space-y-4">
+            {riskLevels.map((risk) => (
+              <div key={risk.level} className={`${risk.bgColor} ${risk.borderColor} border rounded-lg p-6`}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className={`text-lg font-semibold ${risk.color} mb-2`}>{risk.level}</h3>
+                    <p className="text-gray-700 mb-2">{risk.description}</p>
+                    <p className="text-sm font-medium text-gray-600">Recommended action: {risk.action}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className={`w-4 h-4 ${risk.bgColor} border-2 ${risk.borderColor} rounded-full`}></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* How It Works */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">How Allowance Guard Works</h2>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <span className="text-sm font-bold text-blue-600">1</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Blockchain Analysis</h3>
+                  <p className="text-gray-600">
+                    We scan the blockchain to find all token approvals associated with your wallet address. 
+                    This includes ERC-20, ERC-721, and ERC-1155 token approvals.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <span className="text-sm font-bold text-green-600">2</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Risk Assessment</h3>
+                  <p className="text-gray-600">
+                    Each approval is analyzed for risk factors including amount, contract reputation, 
+                    and time since last interaction to determine the risk level.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <span className="text-sm font-bold text-yellow-600">3</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Local Processing</h3>
+                  <p className="text-gray-600">
+                    All analysis happens locally in your browser. We never store your private keys 
+                    or have access to your wallet funds.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start">
+                <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <span className="text-sm font-bold text-purple-600">4</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">Actionable Results</h3>
+                  <p className="text-gray-600">
+                    You receive clear, actionable information about which approvals to revoke 
+                    and how to protect your wallet going forward.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Setting Up Alerts */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Setting Up Alerts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div className="flex items-center mb-4">
+                <Mail className="w-6 h-6 text-blue-600 mr-3" />
+                <h3 className="text-lg font-semibold text-gray-900">Email Alerts</h3>
+              </div>
+              <p className="text-gray-600 mb-4">
+                Receive email notifications when new risky approvals are detected on your wallet.
+              </p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• Daily digest of all approvals</li>
+                <li>• Immediate alerts for high-risk approvals</li>
+                <li>• Weekly security summary</li>
+                <li>• Customizable risk thresholds</li>
+              </ul>
+              <a href="/preferences" className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium mt-4">
+                Configure Email Alerts
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </a>
+            </div>
+            
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <div className="flex items-center mb-4">
+                <Settings className="w-6 h-6 text-green-600 mr-3" />
+                <h3 className="text-lg font-semibold text-gray-900">Slack Integration</h3>
+              </div>
+              <p className="text-gray-600 mb-4">
+                Get real-time notifications in your Slack workspace for immediate awareness.
+              </p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• Real-time notifications</li>
+                <li>• Team collaboration</li>
+                <li>• Custom webhook integration</li>
+                <li>• Risk-only or all approvals</li>
+              </ul>
+              <a href="/preferences" className="inline-flex items-center text-green-600 hover:text-green-800 text-sm font-medium mt-4">
+                Set Up Slack
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Best Practices */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Security Best Practices</h2>
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            <div className="flex items-start">
+              <AlertTriangle className="w-6 h-6 text-yellow-600 mr-3 mt-1" />
+              <div>
+                <h3 className="text-lg font-semibold text-yellow-800 mb-3">Important Security Tips</h3>
+                <ul className="space-y-2 text-yellow-700">
+                  <li>• <strong>Revoke unlimited approvals immediately</strong> - These allow any amount to be taken</li>
+                  <li>• <strong>Review approvals regularly</strong> - Check your wallet at least weekly</li>
+                  <li>• <strong>Be cautious with new dApps</strong> - Only approve what you need</li>
+                  <li>• <strong>Use specific amounts</strong> - Avoid unlimited approvals when possible</li>
+                  <li>• <strong>Keep software updated</strong> - Use the latest wallet and browser versions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Troubleshooting */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Troubleshooting</h2>
+          <div className="space-y-4">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Scan Not Working?</h3>
+              <p className="text-gray-600 mb-3">
+                If the scan fails or returns no results, try these solutions:
+              </p>
+              <ul className="space-y-1 text-sm text-gray-600">
+                <li>• Ensure your wallet is connected and unlocked</li>
+                <li>• Check that you&apos;re on a supported network (Ethereum, Arbitrum, Base)</li>
+                <li>• Try refreshing the page and reconnecting your wallet</li>
+                <li>• Clear your browser cache and cookies</li>
+              </ul>
+            </div>
+            
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Not Receiving Alerts?</h3>
+              <p className="text-gray-600 mb-3">
+                If you&apos;re not getting email or Slack notifications:
+              </p>
+              <ul className="space-y-1 text-sm text-gray-600">
+                <li>• Check your spam/junk folder</li>
+                <li>• Verify your email address in preferences</li>
+                <li>• Ensure Slack webhook URL is correct</li>
+                <li>• Check that alerts are enabled in your preferences</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Getting Help */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Need More Help?</h2>
+          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <p className="text-gray-600 mb-4">
+              Can&apos;t find what you&apos;re looking for? We&apos;re here to help.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <a href="/faq" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                Frequently Asked Questions
+              </a>
+              <a href="/contact" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                Contact Support
+              </a>
+              <a href="/security" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                Security Information
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-50 border-t border-gray-200 mt-16">
+        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
+          <div className="text-center">
+            <p className="text-gray-600 text-sm">
+              © {new Date().getFullYear()} Allowance Guard. All rights reserved.
+            </p>
+            <div className="mt-4 space-x-6">
+              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
