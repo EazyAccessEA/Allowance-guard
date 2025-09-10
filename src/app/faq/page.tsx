@@ -183,7 +183,7 @@ export default function FAQPage() {
               Still have questions?
             </h2>
             <p className="text-gray-600 mb-6 text-sm sm:text-base">
-              Can't find what you're looking for? We're here to help.
+              Can&apos;t find what you&apos;re looking for? We&apos;re here to help.
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 sm:justify-center">
               <a

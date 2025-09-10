@@ -21,42 +21,6 @@ export default function Footer() {
     setTimeout(() => setSubscribed(false), 3000)
   }
 
-  const footerLinks = {
-    developers: [
-      { label: 'Docs', href: '/docs' },
-      { label: 'Dashboard', href: '/dashboard' },
-      { label: 'GitHub', href: 'https://github.com/EazyAccessEA/Allowance-guard' },
-      { label: 'Status', href: '/status' },
-      { label: 'Security', href: '/security' },
-      { label: 'FAQ', href: '/faq' },
-    ],
-    solutions: [
-      { label: 'DeFi', href: '/solutions/defi' },
-      { label: 'Payments', href: '/solutions/payments' },
-      { label: 'Custodians', href: '/solutions/custodians' },
-      { label: 'Compliance', href: '/solutions/compliance' },
-      { label: 'Mobile Wallets', href: '/solutions/mobile' },
-      { label: 'Gaming', href: '/solutions/gaming' },
-      { label: 'Marketplaces', href: '/solutions/marketplaces' },
-      { label: 'Social', href: '/solutions/social' },
-    ],
-    connect: [
-      { label: 'X (Twitter)', href: 'https://twitter.com/allowanceguard', icon: Twitter },
-      { label: 'LinkedIn', href: 'https://linkedin.com/company/allowance-guard', icon: Linkedin },
-      { label: 'YouTube', href: 'https://youtube.com/@allowanceguard', icon: Youtube },
-      { label: 'Discord', href: 'https://discord.gg/allowanceguard', icon: MessageCircle },
-      { label: 'Farcaster', href: 'https://warpcast.com/allowanceguard' },
-    ],
-    company: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Enterprise', href: '/enterprise' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Newsroom', href: '/newsroom' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Media Kit', href: '/media-kit' },
-      { label: 'Contact', href: '/contact' },
-    ],
-  }
 
   return (
     <footer className="bg-gray-50 border-t border-gray-200">

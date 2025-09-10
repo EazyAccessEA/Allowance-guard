@@ -6,7 +6,7 @@ import AllowanceTable from '@/components/AllowanceTable'
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { load, save } from '@/lib/storage'
-import { Shield, Zap, Eye, Mail, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react'
+import { Shield, Zap, Eye, Mail, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 
 const ACTIVE_KEY = 'ag.activeWallet'

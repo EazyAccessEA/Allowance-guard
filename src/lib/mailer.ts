@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer'
-import { emailLogger, logEmailOperation } from './logger'
+import { emailLogger } from './logger'
 
 // Microsoft SMTP Configuration from .env.local
 const host = process.env.SMTP_HOST || 'smtp-mail.outlook.com'

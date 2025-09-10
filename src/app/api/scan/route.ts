@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { scanWalletOnChain } from '@/lib/scanner'
-import { apiLogger, logApiCall, logScanOperation } from '@/lib/logger'
+import { apiLogger, logScanOperation } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 
