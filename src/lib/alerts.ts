@@ -164,7 +164,7 @@ export async function sendSlackDigests() {
   const subs = await pool.query(`SELECT wallet_address, webhook_url, risk_only FROM slack_subscriptions`)
   let total = 0
 
-  for (const s of subs.rows as any[]) {
+  for (const s of subs.rows as { wallet_address: string; webhook_url: string; risk_only: boolean }[]) {
     const wallet = (s.wallet_address as string).toLowerCase()
     const rows = await fetchRiskRows(wallet)
     const policy = await getPolicy(wallet)

@@ -4,7 +4,7 @@ import ConnectButton from '@/components/ConnectButton'
 import WalletManager from '@/components/WalletManager'
 import AllowanceTable from '@/components/AllowanceTable'
 import { useAccount } from 'wagmi'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { load, save } from '@/lib/storage'
 import { Shield, Zap, Eye, Mail, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
@@ -34,7 +34,15 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
   
   // Policy and Slack state
-  const [policy, setPolicy] = useState<any>(null)
+  const [policy, setPolicy] = useState<{
+    min_risk_score: number
+    unlimited_only: boolean
+    include_spenders: string[]
+    ignore_spenders: string[]
+    include_tokens: string[]
+    ignore_tokens: string[]
+    chains: number[]
+  } | null>(null)
   const [webhook, setWebhook] = useState('')
   const [slackMsg, setSlackMsg] = useState<string | null>(null)
 
@@ -97,15 +105,15 @@ export default function HomePage() {
     }
   }
 
-  async function loadPolicy() {
+  const loadPolicy = useCallback(async () => {
     const target = selectedWallet || connectedAddress
     if (!target) return
     const r = await fetch(`/api/policy?wallet=${target}`)
     const j = await r.json()
     setPolicy(j.policy ?? { min_risk_score:0, unlimited_only:false, include_spenders:[], ignore_spenders:[], include_tokens:[], ignore_tokens:[], chains:[] })
-  }
+  }, [selectedWallet, connectedAddress])
 
-  useEffect(() => { loadPolicy() }, [selectedWallet, connectedAddress])
+  useEffect(() => { loadPolicy() }, [loadPolicy])
 
   async function savePolicy() {
     const target = selectedWallet || connectedAddress
