@@ -1,7 +1,10 @@
 import { pool } from '@/lib/db'
 import { sendMail } from '@/lib/mailer'
+import { getPolicy, applyPolicy } from '@/lib/policy'
+import { sendSlack } from '@/lib/slack'
 
 type AllowRow = {
+  chain_id: number
   token_address: string
   spender_address: string
   standard: string
@@ -10,16 +13,31 @@ type AllowRow = {
   is_unlimited: boolean
   last_seen_block: string
   risk_flags: string[]
+  risk_score: number
 }
 
 async function fetchRisky(wallet: string) {
   const { rows } = await pool.query<AllowRow>(
-    `SELECT token_address, spender_address, standard, allowance_type, amount, is_unlimited, last_seen_block, risk_flags
+    `SELECT chain_id, token_address, spender_address, standard, allowance_type, amount, is_unlimited, last_seen_block, risk_flags, risk_score
      FROM allowances
-     WHERE wallet_address = $1 AND (is_unlimited = true OR ARRAY['STALE']::text[] && risk_flags)
+     WHERE wallet_address = $1 AND (is_unlimited = true OR risk_score > 0 OR ARRAY['STALE']::text[] && risk_flags)
      ORDER BY is_unlimited DESC, amount::numeric DESC
      LIMIT 500`,
      [wallet]
+  )
+  return rows
+}
+
+async function fetchRiskRows(wallet: string) {
+  const { rows } = await pool.query<AllowRow>(
+    `SELECT chain_id, token_address, spender_address, standard, allowance_type, amount,
+            is_unlimited, last_seen_block, risk_flags, risk_score
+       FROM allowances
+      WHERE wallet_address=$1
+        AND (is_unlimited=true OR risk_score > 0 OR ARRAY['STALE']::text[] && risk_flags)
+      ORDER BY is_unlimited DESC, amount::numeric DESC
+      LIMIT 1000`,
+    [wallet]
   )
   return rows
 }
@@ -140,4 +158,42 @@ export async function sendDailyDigests() {
   }
   
   return { sent: total, errors }
+}
+
+export async function sendSlackDigests() {
+  const subs = await pool.query(`SELECT wallet_address, webhook_url, risk_only FROM slack_subscriptions`)
+  let total = 0
+
+  for (const s of subs.rows as any[]) {
+    const wallet = (s.wallet_address as string).toLowerCase()
+    const rows = await fetchRiskRows(wallet)
+    const policy = await getPolicy(wallet)
+    const filtered = applyPolicy(rows, policy)
+
+    if (s.risk_only && filtered.length === 0) continue
+
+    const text = filtered.length
+      ? `Allowance Guard: ${filtered.length} risky approval${filtered.length>1?'s':''} for ${wallet}`
+      : `Allowance Guard: Daily summary for ${wallet} (no risky approvals)`
+
+    const blocks = [
+      { type: 'section', text: { type: 'mrkdwn', text } },
+      ...(filtered.slice(0, 20).map(r => ({
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text:
+`*${r.standard}* • chain ${r.chain_id}
+*Token*: \`${r.token_address}\`
+*Spender*: \`${r.spender_address}\`
+*Type*: ${r.allowance_type} • *Amount*: ${r.amount}
+*Badges*: ${r.is_unlimited ? 'UNLIMITED ' : ''}${r.risk_flags?.includes('STALE') ? 'STALE' : ''}  (score ${r.risk_score})`
+        }
+      })))
+    ]
+
+    await sendSlack(s.webhook_url, { text, blocks })
+    total++
+  }
+  return { sent: total }
 }

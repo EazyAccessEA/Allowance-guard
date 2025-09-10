@@ -32,6 +32,11 @@ export default function HomePage() {
   const [riskOnly, setRiskOnly] = useState(true)
   const [subMsg, setSubMsg] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  
+  // Policy and Slack state
+  const [policy, setPolicy] = useState<any>(null)
+  const [webhook, setWebhook] = useState('')
+  const [slackMsg, setSlackMsg] = useState<string | null>(null)
 
   useEffect(() => { save(ACTIVE_KEY, selectedWallet) }, [selectedWallet])
 
@@ -90,6 +95,37 @@ export default function HomePage() {
     } catch (e) {
       setError(`Subscription failed: ${e instanceof Error ? e.message : 'Unknown error'}`)
     }
+  }
+
+  async function loadPolicy() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return
+    const r = await fetch(`/api/policy?wallet=${target}`)
+    const j = await r.json()
+    setPolicy(j.policy ?? { min_risk_score:0, unlimited_only:false, include_spenders:[], ignore_spenders:[], include_tokens:[], ignore_tokens:[], chains:[] })
+  }
+
+  useEffect(() => { loadPolicy() }, [selectedWallet, connectedAddress])
+
+  async function savePolicy() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return alert('Select or connect a wallet first')
+    const r = await fetch('/api/policy', {
+      method:'POST', headers:{'content-type':'application/json'},
+      body: JSON.stringify({ wallet: target, ...policy })
+    })
+    setSlackMsg(r.ok ? 'Policy saved' : 'Failed to save policy')
+  }
+
+  async function addSlack() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return alert('Select or connect a wallet first')
+    const r = await fetch('/api/slack/subscribe', {
+      method:'POST', headers:{'content-type':'application/json'},
+      body: JSON.stringify({ wallet: target, webhookUrl: webhook, riskOnly: true })
+    })
+    setSlackMsg(r.ok ? 'Slack webhook added' : 'Failed to add webhook')
+    if (r.ok) setWebhook('')
   }
 
   const targetWallet = selectedWallet || connectedAddress
@@ -299,6 +335,109 @@ export default function HomePage() {
                   {subMsg && (
                     <p className="text-sm text-green-600">{subMsg}</p>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* Risk Policy */}
+            {hasSavedWallet && (
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Risk Policy</h3>
+                <p className="text-gray-600 text-sm mb-4">
+                  Configure what counts as alert-worthy for your wallet
+                </p>
+                
+                {policy && (
+                  <div className="space-y-4">
+                    <div className="flex gap-4 items-center">
+                      <label className="text-sm font-medium w-32">Min risk score</label>
+                      <input 
+                        className="rounded border px-3 py-2 text-sm w-24" 
+                        type="number"
+                        value={policy.min_risk_score}
+                        onChange={e=>setPolicy({...policy, min_risk_score: Number(e.target.value)})}
+                      />
+                    </div>
+                    
+                    <label className="text-sm flex items-center gap-2">
+                      <input 
+                        type="checkbox" 
+                        checked={policy.unlimited_only}
+                        onChange={e=>setPolicy({...policy, unlimited_only: e.target.checked})}
+                      />
+                      Only alert on UNLIMITED approvals
+                    </label>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <div className="text-sm font-medium mb-2">Include spenders (comma-separated)</div>
+                        <input 
+                          className="w-full rounded border px-3 py-2 text-sm"
+                          value={(policy.include_spenders||[]).join(',')}
+                          onChange={e=>setPolicy({...policy, include_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
+                        />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium mb-2">Ignore spenders</div>
+                        <input 
+                          className="w-full rounded border px-3 py-2 text-sm"
+                          value={(policy.ignore_spenders||[]).join(',')}
+                          onChange={e=>setPolicy({...policy, ignore_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
+                        />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium mb-2">Include tokens</div>
+                        <input 
+                          className="w-full rounded border px-3 py-2 text-sm"
+                          value={(policy.include_tokens||[]).join(',')}
+                          onChange={e=>setPolicy({...policy, include_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
+                        />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium mb-2">Ignore tokens</div>
+                        <input 
+                          className="w-full rounded border px-3 py-2 text-sm"
+                          value={(policy.ignore_tokens||[]).join(',')}
+                          onChange={e=>setPolicy({...policy, ignore_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={savePolicy} 
+                        className="rounded border px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700"
+                      >
+                        Save Policy
+                      </button>
+                      {slackMsg && <span className="text-sm text-green-600">{slackMsg}</span>}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Slack Alerts */}
+            {hasSavedWallet && (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6 mt-8">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Slack Alerts</h3>
+                <p className="text-gray-600 text-sm mb-4">
+                  Get daily digests in your Slack workspace
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input 
+                    className="flex-1 rounded border px-3 py-2 text-sm"
+                    placeholder="https://hooks.slack.com/services/…"
+                    value={webhook} 
+                    onChange={e=>setWebhook(e.target.value)} 
+                  />
+                  <button 
+                    onClick={addSlack} 
+                    className="rounded border px-4 py-2 text-sm bg-green-600 text-white hover:bg-green-700"
+                  >
+                    Add Webhook
+                  </button>
                 </div>
               </div>
             )}
