@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     const parsed = Body.safeParse(json)
     
     if (!parsed.success) {
-      apiLogger.warn('Invalid scan request body', { errors: parsed.error.errors })
+      apiLogger.warn('Invalid scan request body', { errors: parsed.error.issues })
       return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
     }
     

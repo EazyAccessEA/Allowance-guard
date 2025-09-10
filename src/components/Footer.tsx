@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { ArrowRight, Twitter, Linkedin, Youtube, MessageCircle } from 'lucide-react'
+import { ArrowRight, Twitter } from 'lucide-react'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
