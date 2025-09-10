@@ -1,36 +1,245 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Allowance Guard
 
-## Getting Started
+**Version 1.0.0** - Secure token approval monitoring and management platform
 
-First, run the development server:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+
+## 🛡️ Overview
+
+Allowance Guard is a comprehensive security platform for monitoring and managing token approvals across multiple blockchain networks. Built for DeFi users, enterprises, and security-conscious teams.
+
+### Key Features
+
+- **🔍 Real-time Monitoring**: Track token approvals across Ethereum, Arbitrum, and Base
+- **⚠️ Risk Assessment**: Advanced algorithms identify unlimited and stale approvals
+- **📧 Email Alerts**: Get notified about risky approvals via Microsoft SMTP
+- **🔗 Wallet Management**: Save and monitor multiple wallet addresses
+- **⚡ One-Click Revoke**: Instantly revoke risky approvals with gas optimization
+- **📊 Analytics**: Comprehensive reporting and risk scoring
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ 
+- Upstash PostgreSQL (or other managed database)
+- Microsoft SMTP account
+- RPC endpoints (Alchemy, Infura, or QuickNode)
+- WalletConnect project
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/allowance-guard/allowance-guard.git
+cd allowance-guard
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp production.env.example .env.local
+
+# Run database migrations
+npm run migrate
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file with the following variables:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Database (Upstash)
+DATABASE_URL=postgresql://username:password@your-upstash-host:5432/allowance_guard
 
-## Learn More
+# RPC URLs
+ETHEREUM_RPC_URL=https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY
+ARBITRUM_RPC_URL=https://arb-mainnet.g.alchemy.com/v2/YOUR_KEY
+BASE_RPC_URL=https://base-mainnet.g.alchemy.com/v2/YOUR_KEY
 
-To learn more about Next.js, take a look at the following resources:
+# WalletConnect
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Microsoft SMTP
+SMTP_HOST=smtp-mail.outlook.com
+SMTP_PORT=587
+SMTP_USER=your_email@outlook.com
+SMTP_PASS=your_app_password
+ALERTS_FROM_EMAIL=your_email@outlook.com
+ALERTS_FROM_NAME=Allowance Guard
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🏗️ Production Deployment
 
-## Deploy on Vercel
+### Vercel Deployment (Recommended)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Deploy to production
+vercel --prod
+```
+
+### Manual Deployment
+
+```bash
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+### Environment Variables
+
+For production, use the `production.env.example` as a template and configure:
+
+- **Database**: Upstash PostgreSQL connection string
+- **RPC URLs**: Production-grade endpoints
+- **SMTP**: Microsoft 365 Business account
+- **Security**: Strong secrets and keys
+
+## 📋 Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint issues
+npm run type-check   # Run TypeScript checks
+npm run migrate      # Run database migrations
+npm run test:smtp    # Test SMTP configuration
+npm run analyze      # Analyze bundle size
+```
+
+## 🏛️ Architecture
+
+### Frontend
+- **Next.js 15.5.2** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **Reown/WalletConnect** for wallet integration
+- **Viem** for blockchain interactions
+
+### Backend
+- **Next.js API Routes** for serverless functions
+- **Upstash PostgreSQL** for data persistence
+- **Microsoft SMTP** for email alerts
+- **Rate limiting** and security headers
+
+### Infrastructure
+- **Vercel** serverless hosting
+- **Upstash** managed database
+- **SSL/TLS** encryption (automatic)
+- **CDN** and edge functions
+
+## 🔧 Configuration
+
+### Database Schema
+
+The application uses two main tables:
+
+- **`allowances`**: Stores token approval data with risk scores
+- **`alert_subscriptions`**: Manages email alert preferences
+
+### Supported Networks
+
+- **Ethereum Mainnet** (Chain ID: 1)
+- **Arbitrum One** (Chain ID: 42161)
+- **Base** (Chain ID: 8453)
+
+### Risk Assessment
+
+The platform evaluates approvals based on:
+
+- **Unlimited approvals** (highest risk)
+- **Stale approvals** (unused for extended periods)
+- **High-value tokens** (significant financial exposure)
+- **Unknown spenders** (unverified contracts)
+
+## 📧 Email Alerts
+
+Configured with Microsoft SMTP for reliable delivery:
+
+- **Daily digests** of risky approvals
+- **Real-time alerts** for critical issues
+- **Customizable preferences** per wallet
+- **Professional formatting** with HTML templates
+
+## 🔒 Security
+
+### Implemented Security Measures
+
+- **Rate limiting** on API endpoints
+- **Input validation** with Zod schemas
+- **SQL injection** prevention
+- **XSS protection** headers
+- **CSRF protection**
+- **Secure headers** configuration
+
+### Best Practices
+
+- Use strong, unique passwords
+- Enable 2FA on all accounts
+- Regularly update dependencies
+- Monitor for security vulnerabilities
+- Use HTTPS in production
+
+## 📊 Monitoring
+
+### Health Checks
+
+- **Database connectivity**
+- **RPC endpoint status**
+- **SMTP configuration**
+- **Application performance**
+
+### Logging
+
+- **Structured logging** with context
+- **Error tracking** and reporting
+- **Performance metrics**
+- **Security event monitoring**
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- **Documentation**: [docs.allowanceguard.com](https://docs.allowanceguard.com)
+- **Issues**: [GitHub Issues](https://github.com/allowance-guard/allowance-guard/issues)
+- **Email**: support@allowanceguard.com
+
+## 🗺️ Roadmap
+
+### Version 1.1.0
+- [ ] Additional blockchain networks
+- [ ] Advanced analytics dashboard
+- [ ] Mobile app support
+- [ ] API rate limiting improvements
+
+### Version 1.2.0
+- [ ] Multi-signature wallet support
+- [ ] Custom risk rules
+- [ ] Integration with popular DeFi protocols
+- [ ] Advanced notification channels
+
+---
+
+**Built with ❤️ by the Allowance Guard Team**
