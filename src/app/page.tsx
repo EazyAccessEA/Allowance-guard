@@ -188,49 +188,57 @@ export default function HomePage() {
             
             {/* Primary Action - Always Visible */}
             <div className="mb-8 sm:mb-12">
-              {!isConnected ? (
-                <div className="space-y-4">
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
-                    <p className="text-blue-800 text-sm font-medium mb-3">
-                      🔗 Connect your wallet to get started
-                    </p>
-                    <ConnectButton />
-                  </div>
-                  <p className="text-gray-500 text-xs">
-                    We never store your private keys. Your wallet stays in your control.
-                  </p>
+              <div className="space-y-4">
+                {/* Wallet Connection - Always Visible */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                  {!isConnected ? (
+                    <>
+                      <p className="text-blue-800 text-sm font-medium mb-3">
+                        🔗 Connect your wallet to get started
+                      </p>
+                      <ConnectButton />
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-green-800 text-sm font-medium mb-3">
+                        ✅ Wallet connected! Ready to scan
+                      </p>
+                      <div className="flex gap-2">
+                        <ConnectButton />
+                        <button 
+                          onClick={startScan}
+                          disabled={pending}
+                          className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors text-sm"
+                        >
+                          {pending ? (
+                            <>
+                              <svg className="w-4 h-4 animate-spin mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                              </svg>
+                              Scanning...
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="w-4 h-4 mr-2" />
+                              Scan Now
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4 max-w-md mx-auto">
-                    <p className="text-green-800 text-sm font-medium mb-3">
-                      ✅ Wallet connected! Now scan for approvals
-                    </p>
-                    <button 
-                      onClick={startScan}
-                      disabled={pending}
-                      className="w-full inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
-                    >
-                      {pending ? (
-                        <>
-                          <svg className="w-5 h-5 animate-spin mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                          </svg>
-                          Scanning Your Approvals...
-                        </>
-                      ) : (
-                        <>
-                          <Eye className="w-5 h-5 mr-2" />
-                          Scan My Approvals Now
-                        </>
-                      )}
-                    </button>
-                  </div>
-                  <p className="text-gray-500 text-xs">
+                
+                <p className="text-gray-500 text-xs text-center">
+                  We never store your private keys. Your wallet stays in your control.
+                </p>
+                
+                {isConnected && (
+                  <p className="text-gray-500 text-xs text-center">
                     This will check all your token approvals across Ethereum, Arbitrum, and Base
                   </p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
             {/* Error Display */}
