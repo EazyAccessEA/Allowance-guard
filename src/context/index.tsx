@@ -97,11 +97,7 @@ try {
       '--w3m-border-radius-master': '12px',
       '--w3m-font-size-master': '14px',
       '--w3m-font-family': 'Inter, ui-sans-serif, system-ui',
-    },
-    // Additional configuration to prevent telemetry
-    enableNetworkView: false,
-    enableAccountView: false,
-    enableExplorer: false
+    }
   })
 } catch (error) {
   // Silently handle AppKit initialization errors
