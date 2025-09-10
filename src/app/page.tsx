@@ -341,13 +341,13 @@ export default function HomePage() {
                 </div>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center">
-                  Try it now
-                </button>
-                <button className="px-8 py-4 bg-transparent border-2 border-gray-600 hover:border-gray-500 text-white font-medium rounded-lg transition-colors duration-200">
+              <div className="flex justify-center">
+                <a 
+                  href="/docs" 
+                  className="px-8 py-4 bg-transparent border-2 border-gray-600 hover:border-gray-500 text-white font-medium rounded-lg transition-colors duration-200"
+                >
                   Docs
-                </button>
+                </a>
               </div>
             </div>
           </div>
