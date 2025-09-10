@@ -1,8 +1,9 @@
 import { eth, arb, bas } from '@/lib/rpc'
+import { logger } from './logger'
 
 export async function run() {
   try {
-    console.log('Checking RPC connections...')
+    logger.info('Starting RPC health check')
     
     const [ethBlock, arbBlock, baseBlock] = await Promise.all([
       eth.getBlockNumber(),
@@ -10,13 +11,15 @@ export async function run() {
       bas.getBlockNumber()
     ])
     
-    console.log('ETH block:', ethBlock.toString())
-    console.log('ARB block:', arbBlock.toString())
-    console.log('BASE block:', baseBlock.toString())
+    logger.info('RPC health check completed', {
+      eth: ethBlock.toString(),
+      arb: arbBlock.toString(),
+      base: baseBlock.toString()
+    })
     
-    console.log('All RPC connections healthy!')
+    logger.info('All RPC connections healthy')
   } catch (error) {
-    console.error('RPC health check failed:', error)
+    logger.error('RPC health check failed', { error: error instanceof Error ? error.message : 'Unknown error' })
   }
 }
 

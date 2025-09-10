@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
+import { apiLogger, logEmailOperation } from '@/lib/logger'
 
 export async function POST(req: Request) {
   const { email, wallet, riskOnly = true } = await req.json().catch(() => ({}))
@@ -19,9 +20,14 @@ export async function POST(req: Request) {
        ON CONFLICT (email, wallet_address) DO UPDATE SET risk_only = EXCLUDED.risk_only`,
       [email.toLowerCase(), wallet.toLowerCase(), !!riskOnly]
     )
+    
+    logEmailOperation('Subscription created', email, true)
+    apiLogger.info('Email subscription created', { email, wallet, riskOnly })
+    
     return NextResponse.json({ ok: true })
   } catch (error) {
-    console.error('Subscription error:', error)
+    logEmailOperation('Subscription failed', email, false, error instanceof Error ? error.message : 'Unknown error')
+    apiLogger.error('Subscription error', { error: error instanceof Error ? error.message : 'Unknown error', email, wallet })
     return NextResponse.json({ error: 'Subscription failed' }, { status: 500 })
   }
 }
@@ -38,9 +44,14 @@ export async function DELETE(req: Request) {
       `DELETE FROM alert_subscriptions WHERE email = $1 AND wallet_address = $2`,
       [email.toLowerCase(), wallet.toLowerCase()]
     )
+    
+    logEmailOperation('Unsubscription completed', email, true)
+    apiLogger.info('Email unsubscription completed', { email, wallet })
+    
     return NextResponse.json({ ok: true })
   } catch (error) {
-    console.error('Unsubscription error:', error)
+    logEmailOperation('Unsubscription failed', email, false, error instanceof Error ? error.message : 'Unknown error')
+    apiLogger.error('Unsubscription error', { error: error instanceof Error ? error.message : 'Unknown error', email, wallet })
     return NextResponse.json({ error: 'Unsubscription failed' }, { status: 500 })
   }
 }

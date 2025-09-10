@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer'
+import { emailLogger, logEmailOperation } from './logger'
 
 // Microsoft SMTP Configuration from .env.local
 const host = process.env.SMTP_HOST || 'smtp-mail.outlook.com'
@@ -80,7 +81,7 @@ export function createEmailHTML(content: string, recipientEmail: string): string
 
 export function getTransport() {
   if (!host || !user || !pass) {
-    console.warn('SMTP configuration missing, using log-only transport')
+    emailLogger.warn('SMTP configuration missing, using log-only transport')
     // Dev fallback: log-only transport
     return nodemailer.createTransport({ jsonTransport: true }) as nodemailer.Transporter
   }
@@ -123,7 +124,7 @@ export async function sendMail(to: string, subject: string, html: string, text?:
       text: text || fullHTML.replace(/<[^>]*>/g, '') // Auto-generate text from HTML if not provided
     })
     
-    console.log('Email sent successfully:', {
+    emailLogger.info('Email sent successfully', {
       messageId: info.messageId,
       to: to,
       subject: subject,
@@ -132,7 +133,7 @@ export async function sendMail(to: string, subject: string, html: string, text?:
     
     return info
   } catch (error) {
-    console.error('Email send failed:', {
+    emailLogger.error('Email send failed', {
       error: error instanceof Error ? error.message : 'Unknown error',
       to: to,
       subject: subject,
@@ -213,10 +214,10 @@ export async function testSMTPConnection() {
   try {
     const transporter = getTransport()
     await transporter.verify()
-    console.log('✅ SMTP connection successful!')
+    emailLogger.info('SMTP connection successful')
     return true
   } catch (error) {
-    console.error('❌ SMTP connection failed:', error)
+    emailLogger.error('SMTP connection failed', { error: error instanceof Error ? error.message : 'Unknown error' })
     return false
   }
 }
