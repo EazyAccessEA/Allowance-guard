@@ -57,7 +57,7 @@ export default function PreferencesPage() {
         setStatus('idle')
         setMessage('')
       }, 3000)
-    } catch (error) {
+    } catch {
       setStatus('error')
       setMessage('Failed to save preferences. Please try again.')
     }

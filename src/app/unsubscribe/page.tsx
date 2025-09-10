@@ -45,7 +45,7 @@ export default function UnsubscribePage() {
         setStatus('idle')
         setMessage('')
       }, 5000)
-    } catch (error) {
+    } catch {
       setStatus('error')
       setMessage('Failed to unsubscribe. Please try again or contact support.')
     }
@@ -176,7 +176,7 @@ export default function UnsubscribePage() {
                       name="unsubscribeType"
                       value={option.id}
                       checked={unsubscribeType === option.id}
-                      onChange={(e) => setUnsubscribeType(e.target.value as any)}
+                      onChange={(e) => setUnsubscribeType(e.target.value as 'all' | 'alerts' | 'digest' | 'marketing')}
                       className="sr-only"
                     />
                     <div className="flex items-start">

@@ -48,7 +48,7 @@ export default function ContactPage() {
         setStatus('idle')
         setMessage('')
       }, 5000)
-    } catch (error) {
+    } catch {
       setStatus('error')
       setMessage('Failed to send message. Please try again or use one of our alternative contact methods.')
     }
