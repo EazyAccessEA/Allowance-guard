@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { HexButton } from './HexButton'
+import Image from 'next/image'
 import { ArrowRight, Twitter, Linkedin, Youtube, MessageCircle } from 'lucide-react'
 
 export default function Footer() {
@@ -59,44 +59,38 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-surface border-t border-border">
+    <footer className="bg-gray-50 border-t border-gray-200">
       {/* Newsletter Section */}
-      <div className="bg-background border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-            <div className="flex-1">
-              <h3 className="text-2xl font-semibold text-foreground mb-3">
-                Subscribe to our newsletter.
-              </h3>
-              <p className="text-muted-foreground">
-                You can unsubscribe at any time. Our{' '}
-                <a href="/privacy" className="underline hover:text-foreground transition-colors">
-                  Privacy Policy
-                </a>{' '}
-                is available here.
-              </p>
-            </div>
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+          <div className="text-center">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3">
+              Stay updated with Allowance Guard
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Get the latest security tips and product updates.
+            </p>
             
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 px-4 py-3 bg-input border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary rounded-full"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               />
-              <HexButton
+              <button
                 type="submit"
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white border-primary hover:border-primary/90"
-                size="md"
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
               >
+                Subscribe
                 <ArrowRight className="w-4 h-4" />
-              </HexButton>
+              </button>
             </form>
             
             {subscribed && (
-              <div className="text-sm text-emerald font-medium">
+              <div className="text-sm text-green-600 font-medium mt-4">
                 Successfully subscribed!
               </div>
             )}
@@ -105,102 +99,83 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Product */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-6">Product</h4>
-            <ul className="space-y-4">
-              <li><a href="/features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a></li>
-              <li><a href="/how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">How it Works</a></li>
-              <li><a href="/security" className="text-muted-foreground hover:text-foreground transition-colors">Security</a></li>
-              <li><a href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a></li>
-              <li><a href="/integrations" className="text-muted-foreground hover:text-foreground transition-colors">Integrations</a></li>
-            </ul>
-          </div>
-
-          {/* Developers */}
-          <div>
-            <h4 className="text-lg font-semibold text-foreground mb-6">Developers</h4>
-            <ul className="space-y-4">
-              {footerLinks.developers.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Product</h4>
+            <ul className="space-y-3">
+              <li><a href="/docs" className="text-gray-600 hover:text-gray-900 transition-colors">Documentation</a></li>
+              <li><a href="/faq" className="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a></li>
+              <li><a href="/security" className="text-gray-600 hover:text-gray-900 transition-colors">Security</a></li>
+              <li><a href="/features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a></li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-6">Support</h4>
-            <ul className="space-y-4">
-              <li><a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a></li>
-              <li><a href="/faq" className="text-muted-foreground hover:text-foreground transition-colors">FAQ</a></li>
-              <li><a href="/status" className="text-muted-foreground hover:text-foreground transition-colors">Status</a></li>
-              <li><a href="/help" className="text-muted-foreground hover:text-foreground transition-colors">Help Center</a></li>
-              <li><a href="/community" className="text-muted-foreground hover:text-foreground transition-colors">Community</a></li>
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Support</h4>
+            <ul className="space-y-3">
+              <li><a href="/preferences" className="text-gray-600 hover:text-gray-900 transition-colors">Preferences</a></li>
+              <li><a href="/unsubscribe" className="text-gray-600 hover:text-gray-900 transition-colors">Unsubscribe</a></li>
+              <li><a href="mailto:support@allowanceguard.com" className="text-gray-600 hover:text-gray-900 transition-colors">Contact Support</a></li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Legal</h4>
+            <ul className="space-y-3">
+              <li><a href="/terms" className="text-gray-600 hover:text-gray-900 transition-colors">Terms of Service</a></li>
+              <li><a href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">Privacy Policy</a></li>
+              <li><a href="/cookies" className="text-gray-600 hover:text-gray-900 transition-colors">Cookie Policy</a></li>
             </ul>
           </div>
 
           {/* Connect */}
           <div>
-            <h4 className="text-lg font-semibold text-foreground mb-6">Connect</h4>
-            <ul className="space-y-4">
-              {footerLinks.connect.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {link.icon && <link.icon className="w-4 h-4" />}
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+            <h4 className="text-lg font-semibold text-gray-900 mb-4">Connect</h4>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="https://twitter.com/allowanceguard"
+                  className="text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Twitter className="w-4 h-4" />
+                  Twitter
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/EazyAccessEA/Allowance-guard"
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub
+                </a>
+              </li>
             </ul>
           </div>
         </div>
 
-        {/* Legal Links */}
-        <div className="mt-16 pt-8 border-t border-border">
+        {/* Bottom Section */}
+        <div className="mt-12 pt-8 border-t border-gray-200">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div className="flex flex-wrap gap-8">
-              <a href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                Terms of Service
-              </a>
-              <a href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Privacy Policy
-              </a>
-              <a href="/cookies" className="text-muted-foreground hover:text-foreground transition-colors">
-                Cookie Policy
-              </a>
-            </div>
-            
-            <div className="flex items-center gap-6">
-              <p className="text-muted-foreground">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 relative">
+                <Image
+                  src="/AG_Logo2.png"
+                  alt="Allowance Guard"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p className="text-gray-600">
                 © 2025 Allowance Guard. All rights reserved.
               </p>
-              
-              {/* Brand Elements */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
-                  <div className="w-3 h-3 bg-background rounded-full"></div>
-                </div>
-                <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
-                  <div className="text-background text-lg font-bold">/</div>
-                </div>
-                <div className="w-10 h-10 bg-foreground rounded-xl flex items-center justify-center">
-                  <span className="text-background text-sm font-bold">AG</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
