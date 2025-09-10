@@ -176,14 +176,11 @@ export default function HomePage() {
             <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8 max-w-3xl mx-auto">
               <div className="flex items-center justify-center mb-3">
                 <Shield className="w-6 h-6 text-green-600 mr-2" />
-                <h2 className="text-xl font-semibold text-green-800">Here&apos;s How to Protect Yourself</h2>
+                <h2 className="text-xl font-semibold text-green-800">Protection is Simple</h2>
               </div>
-              <div className="text-green-700 text-sm sm:text-base space-y-2">
-                <p><strong>Step 1:</strong> Connect your wallet below</p>
-                <p><strong>Step 2:</strong> Scan for dangerous approvals</p>
-                <p><strong>Step 3:</strong> Revoke risky permissions instantly</p>
-                <p><strong>Step 4:</strong> Set up alerts to stay protected</p>
-              </div>
+              <p className="text-green-700 text-sm sm:text-base text-center">
+                Connect your wallet below, scan for dangerous approvals, and revoke risky permissions instantly.
+              </p>
             </div>
             
             {/* Primary Action - Always Visible */}
@@ -278,77 +275,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Clear Process Section */}
+      {/* What You&apos;ll See Section */}
       <section className="bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 sm:py-16">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-              Protect Your Wallet in 4 Simple Steps
+              What You&apos;ll See After Scanning
             </h2>
             <p className="text-gray-600">
-              No technical knowledge required. Just follow these steps to secure your assets.
+              We categorize your approvals by risk level to help you make informed decisions.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <span className="text-xl font-bold text-blue-600">1</span>
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-red-600 font-bold text-xl">!</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Connect Your Wallet</h3>
-              <p className="text-gray-600 text-sm">Click the connect button above. We never see your private keys.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">UNLIMITED</h3>
+              <p className="text-gray-600 text-sm">Can take any amount from your wallet</p>
             </div>
-
             <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <span className="text-xl font-bold text-green-600">2</span>
+              <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-yellow-600 font-bold text-xl">⚠</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Scan for Approvals</h3>
-              <p className="text-gray-600 text-sm">We check all your token approvals across Ethereum, Arbitrum, and Base.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">HIGH RISK</h3>
+              <p className="text-gray-600 text-sm">Large amounts or unknown contracts</p>
             </div>
-
             <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <span className="text-xl font-bold text-orange-600">3</span>
+              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-green-600 font-bold text-xl">✓</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Review Results</h3>
-              <p className="text-gray-600 text-sm">See which approvals are risky and need to be revoked.</p>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                <span className="text-xl font-bold text-red-600">4</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Revoke & Protect</h3>
-              <p className="text-gray-600 text-sm">One-click revoke dangerous approvals and set up alerts.</p>
-            </div>
-          </div>
-
-          {/* What You&apos;ll See */}
-          <div className="mt-12 bg-white rounded-lg p-6 border border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">What You&apos;ll See After Scanning</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center">
-                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-red-600 font-bold">!</span>
-                </div>
-                <h4 className="font-medium text-gray-900">UNLIMITED</h4>
-                <p className="text-sm text-gray-600">Can take any amount</p>
-              </div>
-              <div className="text-center">
-                <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-yellow-600 font-bold">⚠</span>
-                </div>
-                <h4 className="font-medium text-gray-900">HIGH RISK</h4>
-                <p className="text-sm text-gray-600">Large amounts or unknown contracts</p>
-              </div>
-              <div className="text-center">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-green-600 font-bold">✓</span>
-                </div>
-                <h4 className="font-medium text-gray-900">SAFE</h4>
-                <p className="text-sm text-gray-600">Small amounts from trusted sources</p>
-              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">SAFE</h3>
+              <p className="text-gray-600 text-sm">Small amounts from trusted sources</p>
             </div>
           </div>
         </div>
