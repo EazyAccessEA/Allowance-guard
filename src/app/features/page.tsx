@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Shield, Eye, Mail, Settings, Zap, Lock, CheckCircle, AlertTriangle, Clock, Users, BarChart3, Bell, Coins, Image, Package, FileText } from 'lucide-react'
+import { Shield, Eye, Mail, Settings, Zap, Lock, CheckCircle, AlertTriangle, Clock, Users, BarChart3, Bell, Coins, ImageIcon, Package, FileText } from 'lucide-react'
 
 export default function FeaturesPage() {
   const coreFeatures = [
@@ -123,7 +123,7 @@ export default function FeaturesPage() {
     {
       standard: 'ERC-721',
       description: 'NFT approvals',
-      icon: Image,
+      icon: ImageIcon,
       status: 'Full Support'
     },
     {
