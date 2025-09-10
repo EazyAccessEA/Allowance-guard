@@ -1,253 +1,327 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
-
-interface Preferences {
-  email: string
-  is_active: boolean
-  daily_digest: boolean
-  risk_alerts: boolean
-  created_at: string
-  updated_at: string
-}
-
-type Status = 'idle' | 'loading' | 'success' | 'error'
+import Image from 'next/image'
+import { CheckCircle, AlertCircle, Mail, Bell, Shield, Settings } from 'lucide-react'
 
 export default function PreferencesPage() {
   const [email, setEmail] = useState('')
-  const [preferences, setPreferences] = useState<Preferences | null>(null)
-  const [status, setStatus] = useState<Status>('idle')
+  const [preferences, setPreferences] = useState({
+    emailAlerts: true,
+    riskOnly: true,
+    dailyDigest: true,
+    weeklySummary: false,
+    slackAlerts: false,
+    webhookUrl: ''
+  })
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
-  const searchParams = useSearchParams()
 
   useEffect(() => {
-    const emailParam = searchParams.get('email')
-    if (emailParam) {
-      setEmail(emailParam)
-      loadPreferences(emailParam)
-    }
-  }, [searchParams])
-
-  const loadPreferences = async (emailAddress: string) => {
-    setStatus('loading')
-    try {
-      const response = await fetch(`/api/preferences?email=${encodeURIComponent(emailAddress)}`)
-      const data = await response.json()
-
-      if (response.ok) {
-        setPreferences(data)
-        setStatus('success')
-      } else {
-        setStatus('error')
-        setMessage(data.error || 'Failed to load preferences')
+    // Load existing preferences if user is logged in
+    const savedEmail = localStorage.getItem('ag.userEmail')
+    const savedPrefs = localStorage.getItem('ag.preferences')
+    
+    if (savedEmail) setEmail(savedEmail)
+    if (savedPrefs) {
+      try {
+        setPreferences(JSON.parse(savedPrefs))
+      } catch (e) {
+        console.error('Error loading preferences:', e)
       }
-    } catch {
+    }
+  }, [])
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('loading')
+    setMessage('')
+
+    try {
+      // Save to localStorage for demo
+      localStorage.setItem('ag.userEmail', email)
+      localStorage.setItem('ag.preferences', JSON.stringify(preferences))
+
+      // In a real app, you'd call your API here
+      // await fetch('/api/preferences', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email, preferences })
+      // })
+
+      setStatus('success')
+      setMessage('Your preferences have been saved successfully!')
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        setStatus('idle')
+        setMessage('')
+      }, 3000)
+    } catch (error) {
       setStatus('error')
-      setMessage('Network error. Please try again.')
+      setMessage('Failed to save preferences. Please try again.')
     }
   }
 
-  const updatePreferences = async (updates: Partial<Preferences>) => {
-    if (!preferences) return
-
-    setStatus('loading')
-    try {
-      const response = await fetch('/api/preferences', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: preferences.email,
-          ...updates
-        }),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        setPreferences(data)
-        setStatus('success')
-        setMessage('Preferences updated successfully')
-      } else {
-        setStatus('error')
-        setMessage(data.error || 'Failed to update preferences')
-      }
-    } catch {
-      setStatus('error')
-      setMessage('Network error. Please try again.')
-    }
-  }
-
-  const handleToggle = (field: keyof Preferences) => {
-    if (!preferences) return
-    updatePreferences({ [field]: !preferences[field] })
+  const handlePreferenceChange = (key: string, value: boolean | string) => {
+    setPreferences(prev => ({ ...prev, [key]: value }))
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-white mb-2">Email Preferences</h1>
-          <p className="text-gray-400">Manage your Allowance Guard notification settings</p>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
+          <div className="flex items-center justify-center">
+            <div className="relative w-12 h-12 mr-3">
+              <Image
+                src="/AG_Logo2.png"
+                alt="Allowance Guard"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900">Allowance Guard</h1>
+          </div>
         </div>
+      </header>
 
-        <div className="bg-gray-800 rounded-lg p-8 shadow-xl">
-          {status === 'error' && (
-            <div className="mb-6 bg-red-900 border border-red-700 rounded-md p-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-200">Error</h3>
-                  <div className="mt-2 text-sm text-red-200">
-                    <p>{message}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {status === 'success' && message && (
-            <div className="mb-6 bg-green-900 border border-green-700 rounded-md p-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-green-200">Success</h3>
-                  <div className="mt-2 text-sm text-green-200">
-                    <p>{message}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {!preferences && status !== 'loading' ? (
-            <div className="text-center">
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Enter your email address
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="your@email.com"
-                />
-              </div>
-              <button
-                onClick={() => loadPreferences(email)}
-                disabled={!email}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Load Preferences
-              </button>
-            </div>
-          ) : preferences ? (
-            <div className="space-y-6">
-              <div>
-                <h2 className="text-lg font-semibold text-white mb-2">Email Settings</h2>
-                <p className="text-sm text-gray-400 mb-4">{preferences.email}</p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-white">Email Alerts</h3>
-                    <p className="text-sm text-gray-400">Receive security alerts via email</p>
-                  </div>
-                  <button
-                    onClick={() => handleToggle('is_active')}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-                      preferences.is_active ? 'bg-blue-600' : 'bg-gray-600'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        preferences.is_active ? 'translate-x-6' : 'translate-x-1'
-                      }`}
-                    />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-white">Daily Digest</h3>
-                    <p className="text-sm text-gray-400">Daily summary of your token approvals</p>
-                  </div>
-                  <button
-                    onClick={() => handleToggle('daily_digest')}
-                    disabled={!preferences.is_active}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${
-                      preferences.daily_digest ? 'bg-blue-600' : 'bg-gray-600'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        preferences.daily_digest ? 'translate-x-6' : 'translate-x-1'
-                      }`}
-                    />
-                  </button>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-sm font-medium text-white">Risk Alerts</h3>
-                    <p className="text-sm text-gray-400">Immediate alerts for high-risk approvals</p>
-                  </div>
-                  <button
-                    onClick={() => handleToggle('risk_alerts')}
-                    disabled={!preferences.is_active}
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${
-                      preferences.risk_alerts ? 'bg-blue-600' : 'bg-gray-600'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        preferences.risk_alerts ? 'translate-x-6' : 'translate-x-1'
-                      }`}
-                    />
-                  </button>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-gray-700">
-                <p className="text-xs text-gray-500">
-                  Member since: {new Date(preferences.created_at).toLocaleDateString()}
-                </p>
-                <p className="text-xs text-gray-500">
-                  Last updated: {new Date(preferences.updated_at).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
-              <p className="text-gray-400 mt-2">Loading preferences...</p>
-            </div>
-          )}
-        </div>
-
-        <div className="text-center">
-          <p className="text-sm text-gray-500">
-            Need help? Contact us at{' '}
-            <a href="mailto:support@allowanceguard.com" className="text-blue-400 hover:text-blue-300">
-              support@allowanceguard.com
-            </a>
+      {/* Content */}
+      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Notification Preferences</h1>
+          <p className="text-gray-600">
+            Manage how and when you receive security alerts and updates from Allowance Guard.
           </p>
         </div>
-      </div>
+
+        <form onSubmit={handleSave} className="space-y-8">
+          {/* Email Settings */}
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div className="flex items-center mb-4">
+              <Mail className="w-5 h-5 text-blue-600 mr-2" />
+              <h2 className="text-xl font-semibold text-gray-900">Email Settings</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter your email address"
+                  required
+                />
+                <p className="text-sm text-gray-500 mt-1">
+                  We&apos;ll use this to send you security alerts and updates.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Alert Preferences */}
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div className="flex items-center mb-4">
+              <Bell className="w-5 h-5 text-green-600 mr-2" />
+              <h2 className="text-xl font-semibold text-gray-900">Alert Preferences</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Email Alerts</h3>
+                  <p className="text-sm text-gray-500">Receive security alerts via email</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={preferences.emailAlerts}
+                    onChange={(e) => handlePreferenceChange('emailAlerts', e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Risk-Only Alerts</h3>
+                  <p className="text-sm text-gray-500">Only receive alerts for high-risk approvals</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={preferences.riskOnly}
+                    onChange={(e) => handlePreferenceChange('riskOnly', e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Daily Digest</h3>
+                  <p className="text-sm text-gray-500">Receive a daily summary of your wallet status</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={preferences.dailyDigest}
+                    onChange={(e) => handlePreferenceChange('dailyDigest', e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Weekly Summary</h3>
+                  <p className="text-sm text-gray-500">Receive a weekly overview of your security status</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={preferences.weeklySummary}
+                    onChange={(e) => handlePreferenceChange('weeklySummary', e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Slack Integration */}
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <div className="flex items-center mb-4">
+              <Settings className="w-5 h-5 text-purple-600 mr-2" />
+              <h2 className="text-xl font-semibold text-gray-900">Slack Integration</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-900">Slack Alerts</h3>
+                  <p className="text-sm text-gray-500">Receive alerts in your Slack workspace</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={preferences.slackAlerts}
+                    onChange={(e) => handlePreferenceChange('slackAlerts', e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+
+              {preferences.slackAlerts && (
+                <div>
+                  <label htmlFor="webhook" className="block text-sm font-medium text-gray-700 mb-2">
+                    Slack Webhook URL
+                  </label>
+                  <input
+                    type="url"
+                    id="webhook"
+                    value={preferences.webhookUrl}
+                    onChange={(e) => handlePreferenceChange('webhookUrl', e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://hooks.slack.com/services/..."
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    <a href="/docs" className="text-blue-600 hover:text-blue-800">
+                      Learn how to set up Slack webhooks
+                    </a>
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Status Message */}
+          {message && (
+            <div className={`p-4 rounded-lg flex items-center ${
+              status === 'success' 
+                ? 'bg-green-50 border border-green-200 text-green-800' 
+                : 'bg-red-50 border border-red-200 text-red-800'
+            }`}>
+              {status === 'success' ? (
+                <CheckCircle className="w-5 h-5 mr-2" />
+              ) : (
+                <AlertCircle className="w-5 h-5 mr-2" />
+              )}
+              {message}
+            </div>
+          )}
+
+          {/* Save Button */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={status === 'loading'}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors flex items-center"
+            >
+              {status === 'loading' ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Saving...
+                </>
+              ) : (
+                'Save Preferences'
+              )}
+            </button>
+          </div>
+        </form>
+
+        {/* Help Section */}
+        <div className="mt-12 bg-gray-50 border border-gray-200 rounded-lg p-6">
+          <div className="flex items-center mb-4">
+            <Shield className="w-5 h-5 text-gray-600 mr-2" />
+            <h3 className="text-lg font-semibold text-gray-900">Need Help?</h3>
+          </div>
+          <p className="text-gray-600 mb-4">
+            If you have questions about your notification preferences or need assistance, we&apos;re here to help.
+          </p>
+          <div className="space-y-2">
+            <a href="/contact" className="text-blue-600 hover:text-blue-800 text-sm">
+              Contact Support
+            </a>
+            <span className="text-gray-400 mx-2">•</span>
+            <a href="/faq" className="text-blue-600 hover:text-blue-800 text-sm">
+              FAQ
+            </a>
+            <span className="text-gray-400 mx-2">•</span>
+            <a href="/docs" className="text-blue-600 hover:text-blue-800 text-sm">
+              Documentation
+            </a>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-50 border-t border-gray-200 mt-16">
+        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
+          <div className="text-center">
+            <p className="text-gray-600 text-sm">
+              © {new Date().getFullYear()} Allowance Guard. All rights reserved.
+            </p>
+            <div className="mt-4 space-x-6">
+              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -82,7 +82,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li><a href="/preferences" className="text-gray-600 hover:text-gray-900 transition-colors">Preferences</a></li>
               <li><a href="/unsubscribe" className="text-gray-600 hover:text-gray-900 transition-colors">Unsubscribe</a></li>
-              <li><a href="mailto:support@allowanceguard.com" className="text-gray-600 hover:text-gray-900 transition-colors">Contact Support</a></li>
+              <li><a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact Support</a></li>
             </ul>
           </div>
 
