@@ -6,7 +6,7 @@ import AllowanceTable from '@/components/AllowanceTable'
 import { useAccount } from 'wagmi'
 import { useEffect, useState, useCallback } from 'react'
 import { load, save } from '@/lib/storage'
-import { Shield, Zap, Eye, Mail, AlertTriangle } from 'lucide-react'
+import { Shield, Eye, AlertTriangle } from 'lucide-react'
 import Image from 'next/image'
 
 const ACTIVE_KEY = 'ag.activeWallet'
@@ -539,7 +539,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">Create a new app</p>
-                        <p className="text-gray-600">Go to <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">api.slack.com/apps</a> → "Create New App" → "From scratch"</p>
+                        <p className="text-gray-600">Go to <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">api.slack.com/apps</a> → &quot;Create New App&quot; → &quot;From scratch&quot;</p>
                       </div>
                     </div>
                     
@@ -549,7 +549,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">Name your app</p>
-                        <p className="text-gray-600">App name: "Allowance Guard Alerts", select your workspace</p>
+                        <p className="text-gray-600">App name: &quot;Allowance Guard Alerts&quot;, select your workspace</p>
                       </div>
                     </div>
                     
@@ -559,7 +559,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">Enable Incoming Webhooks</p>
-                        <p className="text-gray-600">In your app settings → "Incoming Webhooks" → Toggle "Activate Incoming Webhooks" to ON</p>
+                        <p className="text-gray-600">In your app settings → &quot;Incoming Webhooks&quot; → Toggle &quot;Activate Incoming Webhooks&quot; to ON</p>
                       </div>
                     </div>
                     
@@ -569,7 +569,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">Add webhook to channel</p>
-                        <p className="text-gray-600">Click "Add New Webhook to Workspace" → Choose a channel (e.g., #alerts) → "Allow"</p>
+                        <p className="text-gray-600">Click &quot;Add New Webhook to Workspace&quot; → Choose a channel (e.g., #alerts) → &quot;Allow&quot;</p>
                       </div>
                     </div>
                     
