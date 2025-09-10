@@ -87,7 +87,7 @@ try {
       email: false,
       socials: false,
       onramp: false,
-      swap: false
+      swaps: false
     },
     themeMode: 'dark', // Match the new Reown-style dark theme
     themeVariables: {
