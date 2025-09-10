@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Shield, Eye, Mail, Settings, Zap, Lock, CheckCircle, AlertTriangle, Clock, Users, BarChart3, Bell } from 'lucide-react'
+import { Shield, Eye, Mail, Settings, Zap, Lock, CheckCircle, AlertTriangle, Clock, Users, BarChart3, Bell, Coins, Image, Package, FileText } from 'lucide-react'
 
 export default function FeaturesPage() {
   const coreFeatures = [
@@ -117,25 +117,25 @@ export default function FeaturesPage() {
     {
       standard: 'ERC-20',
       description: 'Fungible token approvals',
-      icon: '🪙',
+      icon: Coins,
       status: 'Full Support'
     },
     {
       standard: 'ERC-721',
       description: 'NFT approvals',
-      icon: '🖼️',
+      icon: Image,
       status: 'Full Support'
     },
     {
       standard: 'ERC-1155',
       description: 'Multi-token approvals',
-      icon: '📦',
+      icon: Package,
       status: 'Full Support'
     },
     {
       standard: 'ERC-2612',
       description: 'Permit-based approvals',
-      icon: '✍️',
+      icon: FileText,
       status: 'Full Support'
     }
   ]
@@ -257,17 +257,22 @@ export default function FeaturesPage() {
               Allowance Guard supports all major Ethereum token standards:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {supportedStandards.map((standard) => (
-                <div key={standard.standard} className="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                  <div className="text-3xl mb-3">{standard.icon}</div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{standard.standard}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{standard.description}</p>
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    <CheckCircle className="w-3 h-3 mr-1" />
-                    {standard.status}
-                  </span>
-                </div>
-              ))}
+              {supportedStandards.map((standard) => {
+                const Icon = standard.icon
+                return (
+                  <div key={standard.standard} className="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Icon className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{standard.standard}</h3>
+                    <p className="text-sm text-gray-600 mb-3">{standard.description}</p>
+                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      <CheckCircle className="w-3 h-3 mr-1" />
+                      {standard.status}
+                    </span>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </section>
