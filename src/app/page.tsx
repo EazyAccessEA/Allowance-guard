@@ -31,8 +31,23 @@ export default function HomePage() {
   const [email, setEmail] = useState('')
   const [riskOnly, setRiskOnly] = useState(true)
   const [subMsg, setSubMsg] = useState<string | null>(null)
+  const [currentStep, setCurrentStep] = useState(1)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => { save(ACTIVE_KEY, selectedWallet) }, [selectedWallet])
+
+  // Auto-advance steps based on state
+  useEffect(() => {
+    if (isConnected && currentStep === 1) {
+      setCurrentStep(2)
+    }
+  }, [isConnected, currentStep])
+
+  useEffect(() => {
+    if (hasSavedWallet && currentStep === 3) {
+      setCurrentStep(4)
+    }
+  }, [hasSavedWallet, currentStep])
 
   async function fetchAllowances(addr: string) {
     const res = await fetch(`/api/allowances?wallet=${addr}`)
@@ -42,16 +57,31 @@ export default function HomePage() {
 
   async function startScan() {
     const target = selectedWallet || connectedAddress
-    if (!target) return alert('Select or connect a wallet first')
+    if (!target) {
+      setError('Please select or connect a wallet first')
+      return
+    }
+    
     setPending(true)
+    setError(null)
+    
     try {
-      const res = await fetch('/api/scan', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ wallet: target }) })
+      const res = await fetch('/api/scan', { 
+        method: 'POST', 
+        headers: { 'content-type': 'application/json' }, 
+        body: JSON.stringify({ wallet: target }) 
+      })
+      
       const json = await res.json()
       if (json.ok) {
         await fetchAllowances(target)
+        setSelectedWallet(target)
+        setCurrentStep(3)
+      } else {
+        setError(`Scan failed: ${json.error || 'Unknown error'}. Please check your wallet address and try again.`)
       }
     } catch (e) {
-      console.error('Scan error:', e)
+      setError(`Network error: ${e instanceof Error ? e.message : 'Unknown error'}. Please check your connection and try again.`)
     } finally {
       setPending(false)
     }
@@ -59,7 +89,12 @@ export default function HomePage() {
 
   async function subscribe() {
     const target = selectedWallet || connectedAddress
-    if (!target) return alert('Select or connect a wallet first')
+    if (!target) {
+      setError('Please select or connect a wallet first')
+      return
+    }
+    
+    try {
     const res = await fetch('/api/alerts/subscribe', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -67,6 +102,31 @@ export default function HomePage() {
     })
     const ok = res.ok
     setSubMsg(ok ? 'Successfully subscribed to daily alerts' : 'Subscription failed')
+    } catch (e) {
+      setError(`Subscription failed: ${e instanceof Error ? e.message : 'Unknown error'}`)
+    }
+  }
+
+  // Navigation helpers
+  function goBack() {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1)
+      setError(null)
+    }
+  }
+
+  function resetFlow() {
+    setCurrentStep(1)
+    setSelectedWallet(null)
+    setRows([])
+    setError(null)
+    setSubMsg(null)
+    setPending(false)
+  }
+
+  function goToStep(step: number) {
+    setCurrentStep(step)
+    setError(null)
   }
 
   const targetWallet = selectedWallet || connectedAddress
@@ -97,15 +157,78 @@ export default function HomePage() {
                     {/* Tablet Screen Content - Interactive Steps */}
                     <div className="p-6 h-full flex flex-col bg-gradient-to-b from-gray-900 to-black">
                       {/* Header */}
-                      <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg font-semibold text-white">Allowance Guard</h2>
-                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs font-bold">AG</span>
+                        <div className="flex items-center gap-2">
+                          <button 
+                            onClick={resetFlow}
+                            className="text-gray-400 hover:text-white text-xs"
+                            title="Start over"
+                          >
+                            Reset
+                          </button>
+                          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">AG</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Error Display */}
+                      {error && (
+                        <div className="mb-4 p-3 bg-red-900/50 border border-red-700 rounded-lg">
+                          <div className="flex items-start gap-2">
+                            <svg className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                            </svg>
+                            <div className="flex-1">
+                              <p className="text-red-200 text-sm">{error}</p>
+                              <div className="mt-2 flex gap-2">
+                                <button 
+                                  onClick={() => setError(null)}
+                                  className="text-red-300 hover:text-red-200 text-xs underline"
+                                >
+                                  Dismiss
+                                </button>
+                                <a 
+                                  href="/docs" 
+                                  className="text-red-300 hover:text-red-200 text-xs underline"
+                                >
+                                  Get Help
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Navigation Controls */}
+                      <div className="flex items-center justify-between mb-4">
+                        <button 
+                          onClick={goBack}
+                          disabled={currentStep <= 1}
+                          className="flex items-center gap-1 text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                          Back
+                        </button>
+                        <div className="flex gap-1">
+                          {[1, 2, 3, 4].map((step) => (
+                            <button
+                              key={step}
+                              onClick={() => goToStep(step)}
+                              className={`w-2 h-2 rounded-full transition-colors ${
+                                step === currentStep ? 'bg-blue-500' : 
+                                step < currentStep ? 'bg-green-500' : 'bg-gray-600'
+                              }`}
+                            />
+                          ))}
               </div>
             </div>
 
                       {/* Step 1 - Connect Wallet */}
-                      {!isConnected && (
+                      {currentStep === 1 && !isConnected && (
                         <div className="flex-1 space-y-4">
                           <div className="text-center mb-6">
                             <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -143,7 +266,7 @@ export default function HomePage() {
                       )}
                       
                       {/* Step 2 - Run Scan */}
-                      {isConnected && !targetWallet && (
+                      {currentStep === 2 && isConnected && !targetWallet && (
                         <div className="flex-1 space-y-4">
                           <div className="text-center mb-6">
                             <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -152,7 +275,7 @@ export default function HomePage() {
                               </svg>
                             </div>
                             <h3 className="text-white font-semibold mb-2">Wallet Connected!</h3>
-                            <p className="text-gray-400 text-sm">Now let&apos;s scan your approvals</p>
+                            <p className="text-gray-400 text-sm">Now let&apos;s scan your approvals. Make sure you&apos;re using the correct wallet address.</p>
                           </div>
                           
                           <button 
@@ -174,11 +297,26 @@ export default function HomePage() {
                               </>
                             )}
                           </button>
+                          
+                          <div className="flex gap-2 mt-4">
+                            <button 
+                              onClick={goBack}
+                              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors text-sm"
+                            >
+                              Back
+                            </button>
+                            <button 
+                              onClick={() => setCurrentStep(3)}
+                              className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm"
+                            >
+                              Skip for now
+                            </button>
+                          </div>
                         </div>
                       )}
                       
                       {/* Step 3 - Save Addresses */}
-                      {targetWallet && (
+                      {currentStep === 3 && targetWallet && (
                         <div className="flex-1 space-y-4">
                           <div className="text-center mb-6">
                             <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -204,9 +342,31 @@ export default function HomePage() {
                           </div>
                         </div>
                       )}
+
+                      {/* Help Section */}
+                      <div className="mt-auto pt-4 border-t border-gray-700">
+                        <div className="text-center">
+                          <p className="text-gray-400 text-xs mb-2">Need help?</p>
+                          <div className="flex gap-2 justify-center">
+                            <a 
+                              href="/docs" 
+                              className="text-blue-400 hover:text-blue-300 text-xs underline"
+                            >
+                              Documentation
+                            </a>
+                            <span className="text-gray-600">•</span>
+                            <a 
+                              href="mailto:support@allowanceguard.com" 
+                              className="text-blue-400 hover:text-blue-300 text-xs underline"
+                            >
+                              Contact Support
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                       
                       {/* Step 4 - Revoke Approvals */}
-                      {hasSavedWallet && rows.length > 0 && (
+                      {currentStep === 4 && hasSavedWallet && rows.length > 0 && (
                         <div className="flex-1 space-y-4">
                           <div className="text-center mb-6">
                             <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-3">
