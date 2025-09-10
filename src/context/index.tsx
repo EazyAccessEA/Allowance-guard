@@ -55,11 +55,14 @@ if (typeof window !== 'undefined') {
   
   // Additional global error suppression
   window.onerror = (message, source) => {
-    if (message?.includes('telemetry') || 
-        source?.includes('coinbase') || 
-        message?.includes('loadTelemetryScript') ||
-        message?.includes('WebSocket connection closed') ||
-        message?.includes('Unauthorized: origin not allowed')) {
+    const messageStr = typeof message === 'string' ? message : ''
+    const sourceStr = typeof source === 'string' ? source : ''
+    
+    if (messageStr.includes('telemetry') || 
+        sourceStr.includes('coinbase') || 
+        messageStr.includes('loadTelemetryScript') ||
+        messageStr.includes('WebSocket connection closed') ||
+        messageStr.includes('Unauthorized: origin not allowed')) {
       return true // Prevent default error handling
     }
     return false
