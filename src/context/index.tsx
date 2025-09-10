@@ -54,7 +54,7 @@ if (typeof window !== 'undefined') {
   }, true)
   
   // Additional global error suppression
-  window.onerror = (message, source, lineno, colno, error) => {
+  window.onerror = (message, source) => {
     if (message?.includes('telemetry') || 
         source?.includes('coinbase') || 
         message?.includes('loadTelemetryScript') ||

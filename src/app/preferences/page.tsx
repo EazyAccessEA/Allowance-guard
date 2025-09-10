@@ -40,7 +40,7 @@ export default function PreferencesPage() {
         setStatus('error')
         setMessage(data.error || 'Failed to load preferences')
       }
-    } catch (error) {
+    } catch {
       setStatus('error')
       setMessage('Network error. Please try again.')
     }
@@ -72,7 +72,7 @@ export default function PreferencesPage() {
         setStatus('error')
         setMessage(data.error || 'Failed to update preferences')
       }
-    } catch (error) {
+    } catch {
       setStatus('error')
       setMessage('Network error. Please try again.')
     }

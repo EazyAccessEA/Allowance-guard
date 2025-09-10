@@ -4,11 +4,10 @@ import ConnectButton from '@/components/ConnectButton'
 import WalletManager from '@/components/WalletManager'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import AllowanceTable from '@/components/AllowanceTable'
-import { HexButton } from '@/components/HexButton'
 import { useAccount } from 'wagmi'
 import { useEffect, useState } from 'react'
 import { load, save } from '@/lib/storage'
-import { Shield, Zap, Eye, ArrowRight, Mail } from 'lucide-react'
+import { Shield, Zap, Eye, Mail } from 'lucide-react'
 
 const ACTIVE_KEY = 'ag.activeWallet'
 
@@ -153,7 +152,7 @@ export default function HomePage() {
                               </svg>
                             </div>
                             <h3 className="text-white font-semibold mb-2">Wallet Connected!</h3>
-                            <p className="text-gray-400 text-sm">Now let's scan your approvals</p>
+                            <p className="text-gray-400 text-sm">Now let&apos;s scan your approvals</p>
                           </div>
                           
                           <button 

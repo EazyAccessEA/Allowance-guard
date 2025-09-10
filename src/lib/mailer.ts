@@ -177,7 +177,12 @@ export async function sendWelcomeEmail(to: string, walletAddress?: string) {
 }
 
 // Convenience function for sending risk alerts
-export async function sendRiskAlert(to: string, walletAddress: string, riskData: any) {
+export async function sendRiskAlert(to: string, walletAddress: string, riskData: {
+  token?: string
+  spender?: string
+  amount?: string
+  riskLevel?: string
+}) {
   const content = `
     <div class="alert-box">
       <h2>⚠️ High Risk Approval Detected</h2>
