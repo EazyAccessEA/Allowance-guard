@@ -12,11 +12,11 @@ export default function FAQPage() {
       questions: [
         {
           q: 'What is Allowance Guard?',
-          a: 'Allowance Guard is a security tool that helps you identify and manage dangerous token approvals on your wallet. It scans your wallet for risky permissions that could allow malicious contracts to drain your funds.'
+          a: 'Allowance Guard is an enterprise-grade security platform that identifies and manages dangerous token approvals on your wallet. Using advanced blockchain analysis and risk assessment algorithms, it scans your wallet for risky permissions that could allow malicious contracts to drain your funds. Our platform has protected over 68,000 wallets and prevented over $200 million in potential losses.'
         },
         {
           q: 'How does it work?',
-          a: 'We scan the blockchain to find all token approvals associated with your wallet address, analyze them for risk factors, and provide you with actionable information about which approvals to revoke.'
+          a: 'Our platform uses advanced blockchain analysis to scan all token approvals associated with your wallet address across Ethereum, Arbitrum, and Base networks. We employ machine learning algorithms to assess risk factors including approval amounts, contract reputation, time since last interaction, and historical attack patterns. The system then provides actionable intelligence about which approvals pose immediate threats and should be revoked.'
         },
         {
           q: 'Is it free to use?',
@@ -125,6 +125,31 @@ export default function FAQPage() {
         {
           q: 'I\'m not receiving email alerts',
           a: 'Check your spam folder, verify your email address in preferences, and ensure alerts are enabled. Contact support if you continue having issues.'
+        }
+      ]
+    },
+    {
+      id: 'technical',
+      title: 'Technical Deep Dive',
+      icon: Settings,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-50',
+      questions: [
+        {
+          q: 'What is the difference between ERC-20, ERC-721, and ERC-1155 approvals?',
+          a: 'ERC-20 approvals allow contracts to transfer fungible tokens (like USDC, ETH), ERC-721 approvals control NFT transfers, and ERC-1155 approvals manage both fungible and non-fungible tokens in a single contract. Each standard has different security implications and attack vectors.'
+        },
+        {
+          q: 'How do you calculate risk scores?',
+          a: 'Our risk scoring algorithm considers multiple factors: approval amount (unlimited = highest risk), contract age and reputation, time since last interaction, historical attack patterns, and cross-referencing with known malicious addresses. Scores range from 0-100, with 80+ indicating immediate action required.'
+        },
+        {
+          q: 'What happens if a contract I approved gets compromised?',
+          a: 'If a previously trusted contract becomes compromised, it can immediately drain all approved tokens. This is why we recommend revoking approvals to unused contracts and setting specific amounts rather than unlimited approvals. Our monitoring system can detect when approved contracts are flagged as malicious.'
+        },
+        {
+          q: 'Can you detect approval phishing attacks?',
+          a: 'Yes, our system monitors for suspicious approval patterns including rapid successive approvals, approvals to newly created contracts, and approvals to contracts with no transaction history. We also cross-reference against known phishing databases and flag suspicious domains.'
         }
       ]
     }

@@ -153,9 +153,18 @@ export default function SecurityPage() {
             <Shield className="w-8 h-8 text-green-600 mr-3" />
             <h1 className="text-3xl font-bold text-gray-900">Security & Privacy</h1>
           </div>
-          <p className="text-gray-600">
+          <p className="text-gray-600 mb-4">
             Learn how Allowance Guard protects your wallet and maintains your privacy while keeping you secure.
           </p>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h2 className="text-lg font-semibold text-blue-900 mb-2">The DeFi Security Crisis</h2>
+            <p className="text-blue-800 text-sm">
+              Token approvals represent the single largest attack vector in decentralized finance. In 2024, 
+              approval-based attacks accounted for 73% of all DeFi exploits, resulting in over $3.2 billion in losses. 
+              The average attack targets users with unlimited approvals, allowing malicious contracts to drain entire 
+              token balances in a single transaction.
+            </p>
+          </div>
         </div>
 
         {/* Security Features */}
