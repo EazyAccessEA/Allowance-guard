@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { HelpCircle, Shield, AlertTriangle, Mail, Settings, Eye, Lock, Zap } from 'lucide-react'
+import { HelpCircle, Shield, AlertTriangle, Mail, Settings, Eye, Lock } from 'lucide-react'
 
 export default function FAQPage() {
   const faqCategories = [

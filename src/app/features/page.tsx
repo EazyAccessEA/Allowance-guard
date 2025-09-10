@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { Shield, Eye, Mail, Settings, Zap, Lock, CheckCircle, AlertTriangle, Clock, Users, BarChart3, Bell } from 'lucide-react'
 
 export default function FeaturesPage() {
@@ -347,13 +348,13 @@ export default function FeaturesPage() {
                   It&apos;s free, private, and takes just minutes to set up.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a 
+                  <Link 
                     href="/" 
                     className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Start Scanning
-                  </a>
+                  </Link>
                   <a 
                     href="/docs" 
                     className="inline-flex items-center px-4 py-2 bg-white hover:bg-gray-50 text-blue-600 font-medium rounded-lg border border-blue-200 transition-colors"
