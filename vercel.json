@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "src/app/api/alerts/daily/route.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "headers": [
     {
       "source": "/api/alerts/daily",
