@@ -81,20 +81,20 @@ export default function HomePage() {
           <div className="absolute top-10 -right-60 w-[700px] h-[700px] bg-gradient-to-bl from-gray-500/25 to-gray-700/15 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-60 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-gray-600/20 to-gray-800/10 rounded-full blur-3xl"></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
-        </div>
-        
+              </div>
+              
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Left Side - Interactive Phone Demo */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Left Side - Interactive Tablet Demo */}
             <div className="relative flex justify-center lg:justify-start">
               <div className="relative">
                 {/* Spotlight Effect */}
                 <div className="absolute -inset-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"></div>
                 
-                {/* Phone Frame with Realistic Styling */}
-                <div className="relative w-80 h-[600px] bg-gradient-to-b from-gray-800 to-black rounded-[3rem] p-2 shadow-2xl">
-                  <div className="w-full h-full bg-black rounded-[2.5rem] overflow-hidden relative">
-                    {/* Phone Screen Content - Interactive Steps */}
+                {/* Tablet Frame with Realistic Styling */}
+                <div className="relative w-96 h-[500px] bg-gradient-to-b from-gray-800 to-black rounded-[2rem] p-3 shadow-2xl">
+                  <div className="w-full h-full bg-black rounded-[1.5rem] overflow-hidden relative">
+                    {/* Tablet Screen Content - Interactive Steps */}
                     <div className="p-6 h-full flex flex-col bg-gradient-to-b from-gray-900 to-black">
                       {/* Header */}
                       <div className="flex items-center justify-between mb-6">
