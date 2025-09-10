@@ -34,8 +34,12 @@ type Row = {
   chain_id: number
   token_address: string
   spender_address: string
+  standard: string
+  allowance_type: string
+  amount: string
   risk_score: number
   is_unlimited: boolean
+  risk_flags: string[]
 }
 
 export function applyPolicy(rows: Row[], p: Policy) {
