@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Twitter } from 'lucide-react'
+import DonationButton from './DonationButton'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
@@ -122,6 +123,11 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
+            
+            {/* Donation Button */}
+            <div className="mt-4">
+              <DonationButton />
+            </div>
           </div>
         </div>
 

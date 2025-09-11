@@ -209,6 +209,47 @@ export async function sendRiskAlert(to: string, walletAddress: string, riskData:
   return sendMail(to, '🚨 High Risk Token Approval Alert', content)
 }
 
+// Convenience function for sending thank you emails for donations
+export async function sendThankYouEmail({
+  to,
+  donorName,
+  amount,
+  currency
+}: {
+  to: string
+  donorName: string
+  amount: string
+  currency: string
+}) {
+  const content = `
+    <h2>Thank You, ${donorName}! 💝</h2>
+    <p>Your generous donation of <strong>$${amount} ${currency}</strong> helps us keep Allowance Guard free and secure for everyone.</p>
+    
+    <div class="success-box">
+      <h3>How Your Support Helps:</h3>
+      <ul>
+        <li>Keep Allowance Guard free for all users</li>
+        <li>Add support for more blockchain networks</li>
+        <li>Improve security features and monitoring</li>
+        <li>Provide better user experience</li>
+      </ul>
+    </div>
+    
+    <h2>Receipt Details</h2>
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <p><strong>Donation Amount:</strong> $${amount} ${currency}</p>
+      <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+      <p><strong>Transaction ID:</strong> Available in your Coinbase Commerce dashboard</p>
+    </div>
+    
+    <p>Thank you for supporting the future of DeFi security! Your contribution makes a real difference in keeping the crypto ecosystem safe.</p>
+    
+    <p><a href="https://allowanceguard.com" class="button">Continue Using Allowance Guard</a></p>
+  `
+  
+  return sendMail(to, 'Thank you for supporting Allowance Guard! 💝', content)
+}
+
 // Test function for SMTP configuration
 export async function testSMTPConnection() {
   try {
