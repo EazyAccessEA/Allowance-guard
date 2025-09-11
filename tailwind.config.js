@@ -9,42 +9,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // PureEdgeOS 4.0 - Fireart Studio Color Palette
-        // Core colors
-        obsidian: '#1E1F23',        // Primary dark background
-        platinum: '#F8FAFC',        // Ultra-light backgrounds
-        charcoal: '#64748B',        // Subtle text and borders
-        sandstone: '#E4E2DD',       // Light background/text
-        
-        // Brand colors
-        cobalt: '#2563EB',          // Primary brand accent
-        electric: '#0EA5E9',        // Interactive highlights
-        teal: '#00C2B2',            // Secondary accent
-        warmGray: '#F1F5F9',        // Card backgrounds
-        
-        // Semantic colors
-        emerald: '#10B981',         // Success states
-        amber: '#F59E0B',           // Warning states
-        crimson: '#EF4444',         // Error states
-        navy: '#121D2B',            // Alternate dark background
-        
-        // Semantic aliases for compatibility
-        primary: '#2563EB',         // Cobalt
-        secondary: '#00C2B2',       // Teal
-        success: '#10B981',         // Emerald
-        warning: '#F59E0B',         // Amber
-        danger: '#EF4444',          // Crimson
-        canvas: '#ffffff',          // White background
-        surface: '#F9FAFB',         // Light surface
-        text: '#1E1F23',            // Dark text
-        muted: '#64748B',           // Charcoal
-        border: '#E5E7EB',          // Light border
-        focus: '#2563EB',           // Cobalt focus ring
+        // Phase 0 - Restrained Design Tokens
+        ink: '#0A0A0A',        // primary text
+        stone: '#6B7280',      // secondary text
+        mist: '#F6F7F9',       // soft background
+        line: '#E5E7EB',       // separators
+        cobalt: '#265BFF',     // accent
+        white: '#FFFFFF',
       },
       fontFamily: {
-        heading: ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Monaco', 'Consolas', 'monospace'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+      },
+      maxWidth: {
+        wrap: '1120px', // content width
+        reading: '720px',
       },
       fontSize: {
         // Fireart-style typography scale with generous spacing
