@@ -33,6 +33,14 @@ export default function HomePage() {
   const [subMsg, setSubMsg] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   
+  // Job and pagination state
+  const [jobId, setJobId] = useState<number | null>(null)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(25)
+  const [total, setTotal] = useState(0)
+  const [message, setMessage] = useState<string | null>(null)
+  const [hadScan, setHadScan] = useState(false)
+  
   // Policy and Slack state
   const [policy, setPolicy] = useState<{
     min_risk_score: number
@@ -56,10 +64,11 @@ export default function HomePage() {
 
   useEffect(() => { save(ACTIVE_KEY, selectedWallet) }, [selectedWallet])
 
-  async function fetchAllowances(addr: string) {
-    const res = await fetch(`/api/allowances?wallet=${addr}`)
+  async function fetchAllowances(addr: string, p = page, ps = pageSize) {
+    const res = await fetch(`/api/allowances?wallet=${addr}&page=${p}&pageSize=${ps}`)
     const json = await res.json()
     setRows(json.allowances || [])
+    setTotal(json.total || 0)
   }
 
   async function startScan() {
@@ -69,39 +78,64 @@ export default function HomePage() {
       return
     }
     
+    if (pending) return // debounce
+    
     setPending(true)
     setError(null)
+    setMessage('Queuing…')
     
     try {
       const res = await fetch('/api/scan', { 
         method: 'POST', 
         headers: { 'content-type': 'application/json' }, 
-        body: JSON.stringify({ wallet: target }) 
+        body: JSON.stringify({ walletAddress: target, chains: ['eth','arb','base'] }) 
       })
       
       const json = await res.json()
-      if (json.ok) {
-        // Refresh risk scores after scan
-        await fetch('/api/risk/refresh', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ wallet: target })
-        })
-        
-        // Enrich with metadata and labels
-        await fetch('/api/enrich', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ wallet: target })
-        })
-        
-        await fetchAllowances(target)
-        setSelectedWallet(target)
-      } else {
-        setError(`Scan failed: ${json.error || 'Unknown error'}. Please check your wallet address and try again.`)
+      if (!res.ok) throw new Error(json.error || 'Failed to queue')
+      
+      setJobId(json.jobId)
+      setMessage(`Scan queued (#${json.jobId})`)
+      
+      // Optional: immediately ping the processor in dev
+      if (process.env.NODE_ENV !== 'production') {
+        fetch('/api/jobs/process', { method: 'POST' }).catch(()=>{})
       }
-    } catch (e) {
-      setError(`Network error: ${e instanceof Error ? e.message : 'Unknown error'}. Please check your connection and try again.`)
+      
+      // Poll job until done
+      for (let i = 0; i < 40; i++) {
+        await new Promise(r => setTimeout(r, 3000))
+        const s = await fetch(`/api/jobs/${json.jobId}`).then(r => r.json())
+        if (s.status === 'succeeded') { 
+          setMessage('Scan complete')
+          break 
+        }
+        if (s.status === 'failed') { 
+          setMessage(`Scan failed: ${s.error || ''}`)
+          break 
+        }
+        setMessage(`Scanning… (attempt ${s.attempts})`)
+      }
+      
+      // post-scan tasks
+      await fetch('/api/risk/refresh', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ wallet: target })
+      })
+      
+      await fetch('/api/enrich', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ wallet: target })
+      })
+      
+      await fetchAllowances(target, page, pageSize)
+      setSelectedWallet(target)
+      setHadScan(true)
+      
+    } catch (e: any) {
+      setError(`Network error: ${e?.message || 'Unknown error'}. Please check your connection and try again.`)
     } finally {
       setPending(false)
     }
@@ -328,6 +362,24 @@ export default function HomePage() {
               </div>
             )}
 
+            {/* Message Display */}
+            {message && (
+              <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg max-w-2xl mx-auto">
+                <div className="flex items-start">
+                  <Eye className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-blue-800 text-sm">{message}</p>
+                    <button 
+                      onClick={() => setMessage(null)}
+                      className="text-blue-600 hover:text-blue-800 text-sm underline mt-2"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Quick Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-8 max-w-4xl mx-auto">
               <div className="bg-gray-50 rounded-lg p-4">
@@ -427,6 +479,53 @@ export default function HomePage() {
                   connectedAddress={connectedAddress}
                   onRefresh={() => fetchAllowances(targetWallet || '')}
                 />
+                
+                {/* Pagination Controls */}
+                {selectedWallet && total > 0 && (
+                  <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <button 
+                        disabled={page <= 1} 
+                        onClick={async () => { 
+                          const p = page - 1
+                          setPage(p)
+                          selectedWallet && fetchAllowances(selectedWallet, p, pageSize)
+                        }}
+                        className="rounded border px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                      >
+                        Previous
+                      </button>
+                      <span className="text-sm text-gray-600">
+                        Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
+                      </span>
+                      <button 
+                        disabled={page >= Math.ceil(total / pageSize)} 
+                        onClick={async () => { 
+                          const p = page + 1
+                          setPage(p)
+                          selectedWallet && fetchAllowances(selectedWallet, p, pageSize)
+                        }}
+                        className="rounded border px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                      >
+                        Next
+                      </button>
+                    </div>
+                    <select
+                      className="rounded border px-2 py-1 text-sm"
+                      value={pageSize}
+                      onChange={async (e) => {
+                        const ps = Number(e.target.value)
+                        setPageSize(ps)
+                        setPage(1)
+                        selectedWallet && fetchAllowances(selectedWallet, 1, ps)
+                      }}
+                    >
+                      {[10, 25, 50, 100].map(n => (
+                        <option key={n} value={n}>{n} per page</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
             )}
 
