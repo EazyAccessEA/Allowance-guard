@@ -513,21 +513,6 @@ export default function DocsPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-50 border-t border-gray-200 mt-16">
-        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
-          <div className="text-center">
-            <p className="text-gray-600 text-sm">
-              © {new Date().getFullYear()} Allowance Guard. All rights reserved.
-            </p>
-            <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
-      </div>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
