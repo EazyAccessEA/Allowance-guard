@@ -11,10 +11,10 @@ export default function DonationButton() {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-lg hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-md hover:shadow-lg"
+        className="fireart-button bg-gradient-to-r from-crimson to-pink-500 hover:from-crimson-hover hover:to-pink-600"
       >
         <Heart className="w-4 h-4 fill-current" />
-        <span className="text-sm font-medium">Support Us</span>
+        <span>Support Us</span>
       </button>
       
       <DonationModal 

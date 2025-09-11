@@ -6,42 +6,92 @@
 @tailwind utilities;
 
 :root {
-  /* Reown-Inspired Design Tokens (Adjacent Colors) */
-  --background: #1a1d29; /* Deep navy blue (opposite of Reown's dark grey) */
-  --foreground: #f8fafc; /* Off-white/cream text */
-  --muted: #94a3b8; /* Light blue-grey */
-  --muted-foreground: #64748b; /* Muted blue-grey */
-  --border: #334155; /* Blue-grey border */
-  --input: #2d3142; /* Soft blue-grey input background */
-  --primary: #8b5cf6; /* Purple/violet CTAs (opposite of Reown's blue) */
+  /* PureEdgeOS 4.0 - Fireart Studio Design Tokens */
+  
+  /* Core Colors - Fireart-inspired palette */
+  --obsidian: #1E1F23;        /* Primary dark background */
+  --platinum: #F8FAFC;        /* Ultra-light backgrounds */
+  --charcoal: #64748B;        /* Subtle text and borders */
+  --sandstone: #E4E2DD;       /* Light background/text */
+  
+  /* Brand Colors - Sophisticated accent system */
+  --cobalt: #2563EB;          /* Primary brand accent */
+  --electric: #0EA5E9;        /* Interactive highlights */
+  --teal: #00C2B2;            /* Secondary accent */
+  --warm-gray: #F1F5F9;       /* Card backgrounds */
+  
+  /* Semantic Colors */
+  --emerald: #10B981;         /* Success states */
+  --amber: #F59E0B;           /* Warning states */
+  --crimson: #EF4444;         /* Error states */
+  --navy: #121D2B;            /* Alternate dark background */
+  
+  /* Interactive States */
+  --cobalt-hover: #1D4ED8;
+  --cobalt-active: #1E40AF;
+  --teal-hover: #00A896;
+  --teal-active: #008B7A;
+  --emerald-hover: #059669;
+  --emerald-active: #047857;
+  --amber-hover: #D97706;
+  --amber-active: #B45309;
+  --crimson-hover: #DC2626;
+  --crimson-active: #B91C1C;
+  
+  /* Legacy compatibility */
+  --background: var(--platinum);
+  --foreground: var(--obsidian);
+  --muted: var(--charcoal);
+  --muted-foreground: var(--charcoal);
+  --border: #E5E7EB;
+  --input: var(--warm-gray);
+  --primary: var(--cobalt);
   --primary-foreground: #ffffff;
-  --secondary: #10b981; /* Emerald green accents (opposite of Reown's orange) */
+  --secondary: var(--teal);
   --secondary-foreground: #ffffff;
-  --accent: #06b6d4; /* Cyan accent */
+  --accent: var(--electric);
   --accent-foreground: #ffffff;
-  --destructive: #ef4444; /* Crimson Alert */
+  --destructive: var(--crimson);
   --destructive-foreground: #ffffff;
-  --success: #10b981; /* Emerald Success */
-  --warning: #f59e0b; /* Amber Warning */
-  --ring: #8b5cf6; /* Purple focus ring */
-  --radius: 0.75rem; /* More rounded corners like Reown */
+  --success: var(--emerald);
+  --warning: var(--amber);
+  --ring: var(--cobalt);
+  --radius: 0.5rem; /* 8px - Fireart standard */
   
-  /* Additional semantic colors for components */
-  --canvas: #2d3142; /* Soft blue-grey canvas */
-  --surface: #334155; /* Blue-grey surface */
-  --text: #f8fafc; /* Off-white text */
-  --emerald: #10b981;
-  --crimson: #ef4444;
+  /* Fireart Typography System */
+  --font-satoshi: 'Satoshi', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
   
-  /* Motion Tokens */
+  /* Fireart Spacing System (8px grid) */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+  --space-4xl: 6rem;      /* 96px */
+  
+  /* Fireart Motion Tokens */
   --motion-duration-fast: 150ms;
-  --motion-duration-base: 250ms;
-  --motion-duration-slow: 400ms;
-  --motion-easing-gentle: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-duration-base: 200ms;
+  --motion-duration-slow: 300ms;
+  --motion-easing-natural: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Fireart Shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  --shadow-focus-danger: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  --shadow-focus-warn: 0 0 0 3px rgba(245, 158, 11, 0.1);
+  --shadow-focus-info: 0 0 0 3px rgba(16, 185, 129, 0.1);
   
   /* Accessibility Tokens */
   --a11y-focus-ring: 3px;
-  --a11y-target-min: 48px;
+  --a11y-target-min: 44px; /* Fireart standard */
   --a11y-contrast-min: 4.5;
 }
 
@@ -150,6 +200,272 @@ button, a, input, select, textarea {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Fireart Studio Component Styles */
+.fireart-card {
+  background: var(--platinum);
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-subtle);
+  transition: all var(--motion-duration-base) var(--motion-easing-natural);
+}
+
+.fireart-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+.fireart-button {
+  background: var(--cobalt);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 16px;
+  min-height: 44px;
+  transition: all var(--motion-duration-base) var(--motion-easing-natural);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.025em;
+}
+
+.fireart-button:hover {
+  background: var(--cobalt-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.fireart-button:active {
+  transform: translateY(0);
+  background: var(--cobalt-active);
+}
+
+.fireart-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fireart-button-secondary {
+  background: transparent;
+  color: var(--cobalt);
+  border: 1px solid var(--cobalt);
+}
+
+.fireart-button-secondary:hover {
+  background: var(--cobalt);
+  color: white;
+}
+
+.fireart-button-ghost {
+  background: transparent;
+  color: var(--charcoal);
+  border: none;
+}
+
+.fireart-button-ghost:hover {
+  background: var(--warm-gray);
+  color: var(--obsidian);
+}
+
+.fireart-input {
+  background: var(--platinum);
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  color: var(--obsidian);
+  min-height: 44px;
+  transition: all var(--motion-duration-base) var(--motion-easing-natural);
+  width: 100%;
+}
+
+.fireart-input:focus {
+  outline: none;
+  border-color: var(--cobalt);
+  box-shadow: var(--shadow-focus);
+}
+
+.fireart-input::placeholder {
+  color: var(--charcoal);
+}
+
+.fireart-badge {
+  background: var(--warm-gray);
+  color: var(--obsidian);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.025em;
+}
+
+.fireart-badge-success {
+  background: var(--emerald);
+  color: white;
+}
+
+.fireart-badge-warning {
+  background: var(--amber);
+  color: white;
+}
+
+.fireart-badge-danger {
+  background: var(--crimson);
+  color: white;
+}
+
+.fireart-badge-info {
+  background: var(--electric);
+  color: white;
+}
+
+/* Fireart Typography Classes */
+.fireart-heading-1 {
+  font-family: var(--font-satoshi);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--obsidian);
+}
+
+.fireart-heading-2 {
+  font-family: var(--font-satoshi);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--obsidian);
+}
+
+.fireart-heading-3 {
+  font-family: var(--font-satoshi);
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--obsidian);
+}
+
+.fireart-body {
+  font-family: var(--font-inter);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--obsidian);
+}
+
+.fireart-body-large {
+  font-family: var(--font-inter);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.625;
+  color: var(--obsidian);
+}
+
+.fireart-caption {
+  font-family: var(--font-inter);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.375;
+  color: var(--charcoal);
+  letter-spacing: 0.025em;
+}
+
+.fireart-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--obsidian);
+}
+
+/* Fireart Animation Classes */
+.fireart-fade-in {
+  animation: fireartFadeIn var(--motion-duration-slow) var(--motion-easing-natural);
+}
+
+.fireart-slide-up {
+  animation: fireartSlideUp var(--motion-duration-base) var(--motion-easing-natural);
+}
+
+.fireart-scale-in {
+  animation: fireartScaleIn var(--motion-duration-base) var(--motion-easing-natural);
+}
+
+.fireart-bounce-subtle {
+  animation: fireartBounceSubtle var(--motion-duration-slow) var(--motion-easing-bounce);
+}
+
+@keyframes fireartFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fireartSlideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes fireartScaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes fireartBounceSubtle {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .fireart-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .fireart-input {
+    padding: 10px 14px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .fireart-heading-1 {
+    font-size: 2.25rem;
+  }
+  
+  .fireart-heading-2 {
+    font-size: 1.875rem;
+  }
+  
+  .fireart-heading-3 {
+    font-size: 1.5rem;
+  }
 }
 
 /* Continuous scroll animation for Getting Started section */

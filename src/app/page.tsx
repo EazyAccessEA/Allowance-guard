@@ -227,14 +227,14 @@ export default function HomePage() {
   const targetWallet = selectedWallet || connectedAddress
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Clear Action-Oriented Hero Section */}
-      <section className="bg-white">
-        <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:py-20">
-          <div className="text-center">
+    <div className="min-h-screen bg-platinum">
+      {/* Fireart-Style Hero Section */}
+      <section className="bg-platinum">
+        <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+          <div className="text-center fireart-fade-in">
             {/* Logo */}
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 relative">
+            <div className="flex justify-center mb-8">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 relative fireart-bounce-subtle">
                 <Image
                   src="/AG_Logo2.png"
                   alt="Allowance Guard"
@@ -244,17 +244,19 @@ export default function HomePage() {
               </div>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+            <h1 className="fireart-heading-1 mb-6 sm:mb-8">
               Allowance Guard
-                </h1>
+            </h1>
             
-            {/* Clear Problem Statement */}
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8 max-w-4xl mx-auto">
-              <div className="flex items-center justify-center mb-4">
-                <AlertTriangle className="w-6 h-6 text-red-600 mr-2" />
-                <h2 className="text-xl font-semibold text-red-800">Your Wallet May Be At Risk</h2>
+            {/* Fireart-Style Problem Statement */}
+            <div className="fireart-card bg-gradient-to-br from-red-50 to-red-100 border-red-200 mb-8 max-w-4xl mx-auto fireart-slide-up">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                  <AlertTriangle className="w-6 h-6 text-crimson" />
+                </div>
+                <h2 className="fireart-heading-3 text-crimson">Your Wallet May Be At Risk</h2>
               </div>
-              <div className="text-red-700 text-sm sm:text-base space-y-3">
+              <div className="fireart-body-large text-red-700 space-y-4">
                 <p>
                   <strong>Token approvals are the #1 attack vector in DeFi.</strong> Over $3.2 billion has been stolen 
                   through approval-based attacks in 2024 alone, with the average victim losing $47,000.
@@ -264,62 +266,64 @@ export default function HomePage() {
                   to drain entire token balances without additional permission. These approvals persist indefinitely 
                   until manually revoked.
                 </p>
-                <div className="bg-red-100 border border-red-300 rounded-lg p-4 mt-4">
-                  <h3 className="font-semibold text-red-800 mb-2">Real Attack Examples:</h3>
-                  <ul className="text-sm space-y-1">
+                <div className="fireart-card bg-red-200 border-red-300 p-6 mt-6">
+                  <h3 className="fireart-heading-3 text-red-800 mb-4">Real Attack Examples:</h3>
+                  <ul className="fireart-body space-y-2">
                     <li>• <strong>March 2024:</strong> $200M stolen from users with unlimited USDC approvals</li>
                     <li>• <strong>July 2024:</strong> $150M drained via compromised DeFi protocol approvals</li>
                     <li>• <strong>September 2024:</strong> $89M lost through phishing sites with malicious approvals</li>
                   </ul>
-              </div>
+                </div>
               </div>
             </div>
 
-            {/* Clear Solution */}
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8 max-w-3xl mx-auto">
-              <div className="flex items-center justify-center mb-3">
-                <Shield className="w-6 h-6 text-green-600 mr-2" />
-                <h2 className="text-xl font-semibold text-green-800">Protection is Simple</h2>
+            {/* Fireart-Style Solution */}
+            <div className="fireart-card bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 mb-8 max-w-3xl mx-auto fireart-slide-up">
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
+                  <Shield className="w-6 h-6 text-emerald" />
+                </div>
+                <h2 className="fireart-heading-3 text-emerald">Protection is Simple</h2>
               </div>
-              <p className="text-green-700 text-sm sm:text-base text-center">
+              <p className="fireart-body-large text-emerald-700 text-center">
                 Connect your wallet below, scan for dangerous approvals, and revoke risky permissions instantly.
               </p>
-                  </div>
+            </div>
                   
-            {/* Primary Action - Always Visible */}
+            {/* Fireart-Style Primary Action */}
             <div className="mb-8 sm:mb-12">
-                  <div className="space-y-4">
-                {/* Wallet Connection - Always Visible */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+              <div className="space-y-6">
+                {/* Wallet Connection - Fireart Style */}
+                <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 max-w-md mx-auto fireart-scale-in">
                   {!isConnected ? (
                     <>
-                      <p className="text-blue-800 text-sm font-medium mb-3">
-                        🔗 Connect your wallet to get started
+                      <p className="fireart-body text-cobalt mb-4 text-center">
+                        Connect your wallet to get started
                       </p>
                       <ConnectButton />
                     </>
                   ) : (
                     <>
-                      <p className="text-green-800 text-sm font-medium mb-3">
-                        ✅ Wallet connected! Ready to scan
+                      <p className="fireart-body text-emerald mb-4 text-center">
+                        Wallet connected! Ready to scan
                       </p>
-                      <div className="flex gap-2">
-                    <ConnectButton />
+                      <div className="flex gap-3">
+                        <ConnectButton />
                         <button 
                           onClick={startScan} 
                           disabled={pending}
-                          className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors text-sm"
+                          className="fireart-button flex-1"
                         >
                           {pending ? (
                             <>
-                              <svg className="w-4 h-4 animate-spin mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                               </svg>
                               Scanning...
                             </>
                           ) : (
                             <>
-                              <Eye className="w-4 h-4 mr-2" />
+                              <Eye className="w-4 h-4" />
                               Scan Now
                             </>
                           )}
@@ -329,28 +333,30 @@ export default function HomePage() {
                   )}
                 </div>
                 
-                <p className="text-gray-500 text-xs text-center">
+                <p className="fireart-caption text-center">
                   We never store your private keys. Your wallet stays in your control.
                 </p>
                 
                 {isConnected && (
-                  <p className="text-gray-500 text-xs text-center">
+                  <p className="fireart-caption text-center">
                     This will check all your token approvals across Ethereum, Arbitrum, and Base
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Error Display */}
+            {/* Fireart-Style Error Display */}
             {error && (
-              <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-lg max-w-2xl mx-auto">
+              <div className="mb-8 fireart-card bg-gradient-to-br from-red-50 to-red-100 border-red-200 max-w-2xl mx-auto fireart-slide-up">
                 <div className="flex items-start">
-                  <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 mr-3 flex-shrink-0" />
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <AlertTriangle className="w-4 h-4 text-crimson" />
+                  </div>
                   <div className="flex-1">
-                    <p className="text-red-800 text-sm">{error}</p>
+                    <p className="fireart-body text-red-800">{error}</p>
                     <button 
                       onClick={() => setError(null)}
-                      className="text-red-600 hover:text-red-800 text-sm underline mt-2"
+                      className="fireart-button-ghost text-crimson mt-2"
                     >
                       Dismiss
                     </button>
@@ -359,16 +365,18 @@ export default function HomePage() {
               </div>
             )}
 
-            {/* Message Display */}
+            {/* Fireart-Style Message Display */}
             {message && (
-              <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-lg max-w-2xl mx-auto">
+              <div className="mb-8 fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 max-w-2xl mx-auto fireart-slide-up">
                 <div className="flex items-start">
-                  <Eye className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
+                  <div className="w-8 h-8 bg-cobalt-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <Eye className="w-4 h-4 text-cobalt" />
+                  </div>
                   <div className="flex-1">
-                    <p className="text-blue-800 text-sm">{message}</p>
+                    <p className="fireart-body text-cobalt">{message}</p>
                     <button 
                       onClick={() => setMessage(null)}
-                      className="text-blue-600 hover:text-blue-800 text-sm underline mt-2"
+                      className="fireart-button-ghost text-cobalt mt-2"
                     >
                       Dismiss
                     </button>
@@ -377,62 +385,62 @@ export default function HomePage() {
               </div>
             )}
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-8 max-w-4xl mx-auto">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-2xl font-bold text-gray-900">$3.2B+</div>
-                <div className="text-sm text-gray-600">Stolen via Approvals (2024)</div>
+            {/* Fireart-Style Quick Stats */}
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
+              <div className="fireart-card text-center fireart-scale-in">
+                <div className="fireart-heading-2 text-crimson mb-2">$3.2B+</div>
+                <div className="fireart-caption">Stolen via Approvals (2024)</div>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-2xl font-bold text-gray-900">68,000+</div>
-                <div className="text-sm text-gray-600">Wallets Protected</div>
+              <div className="fireart-card text-center fireart-scale-in" style={{animationDelay: '0.1s'}}>
+                <div className="fireart-heading-2 text-cobalt mb-2">68,000+</div>
+                <div className="fireart-caption">Wallets Protected</div>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-2xl font-bold text-gray-900">$47K</div>
-                <div className="text-sm text-gray-600">Average Loss per Victim</div>
+              <div className="fireart-card text-center fireart-scale-in" style={{animationDelay: '0.2s'}}>
+                <div className="fireart-heading-2 text-amber mb-2">$47K</div>
+                <div className="fireart-caption">Average Loss per Victim</div>
               </div>
-              <div className="bg-gray-50 rounded-lg p-4">
-                <div className="text-2xl font-bold text-gray-900">24/7</div>
-                <div className="text-sm text-gray-600">Real-time Monitoring</div>
+              <div className="fireart-card text-center fireart-scale-in" style={{animationDelay: '0.3s'}}>
+                <div className="fireart-heading-2 text-emerald mb-2">24/7</div>
+                <div className="fireart-caption">Real-time Monitoring</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What You&apos;ll See Section */}
-      <section className="bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 sm:py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
-              What You&apos;ll See After Scanning
+      {/* Fireart-Style What You'll See Section */}
+      <section className="bg-warm-gray">
+        <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-20">
+          <div className="text-center mb-16">
+            <h2 className="fireart-heading-2 mb-6">
+              What You'll See After Scanning
             </h2>
-            <p className="text-gray-600">
+            <p className="fireart-body-large text-charcoal">
               We categorize your approvals by risk level to help you make informed decisions.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-red-600 font-bold text-xl">!</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="fireart-card text-center fireart-slide-up">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-crimson font-bold text-2xl">!</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">UNLIMITED</h3>
-              <p className="text-gray-600 text-sm">Can take any amount from your wallet</p>
+              <h3 className="fireart-heading-3 text-crimson mb-4">UNLIMITED</h3>
+              <p className="fireart-body text-charcoal">Can take any amount from your wallet</p>
             </div>
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-yellow-600 font-bold text-xl">⚠</span>
+            <div className="fireart-card text-center fireart-slide-up" style={{animationDelay: '0.1s'}}>
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-amber font-bold text-2xl">⚠</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">HIGH RISK</h3>
-              <p className="text-gray-600 text-sm">Large amounts or unknown contracts</p>
+              <h3 className="fireart-heading-3 text-amber mb-4">HIGH RISK</h3>
+              <p className="fireart-body text-charcoal">Large amounts or unknown contracts</p>
             </div>
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-green-600 font-bold text-xl">✓</span>
+            <div className="fireart-card text-center fireart-slide-up" style={{animationDelay: '0.2s'}}>
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-emerald font-bold text-2xl">✓</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">SAFE</h3>
-              <p className="text-gray-600 text-sm">Small amounts from trusted sources</p>
+              <h3 className="fireart-heading-3 text-emerald mb-4">SAFE</h3>
+              <p className="fireart-body text-charcoal">Small amounts from trusted sources</p>
             </div>
           </div>
         </div>
@@ -874,11 +882,11 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* CTA Section */}
-      <section className="bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 sm:py-16 text-center">
-          <div className="flex justify-center mb-6">
-            <div className="w-12 h-12 relative">
+      {/* Fireart-Style CTA Section */}
+      <section className="bg-obsidian text-platinum">
+        <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-20 text-center">
+          <div className="flex justify-center mb-8">
+            <div className="w-16 h-16 relative fireart-bounce-subtle">
               <Image
                 src="/AG_Logo2.png"
                 alt="Allowance Guard"
@@ -888,23 +896,23 @@ export default function HomePage() {
             </div>
           </div>
           
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">
+          <h2 className="fireart-heading-2 text-platinum mb-6">
             Ready to secure your wallet?
           </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="fireart-body-large text-charcoal mb-10 max-w-2xl mx-auto">
             Join thousands of users who trust Allowance Guard to protect their assets.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/docs"
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+              className="fireart-button"
             >
               View Documentation
             </a>
             <a
               href="/faq"
-              className="px-6 py-3 bg-transparent border border-gray-600 hover:border-gray-500 text-white font-medium rounded-lg transition-colors"
+              className="fireart-button-secondary text-platinum border-platinum hover:bg-platinum hover:text-obsidian"
             >
               FAQ
             </a>

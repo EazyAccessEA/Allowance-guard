@@ -24,15 +24,15 @@ export default function Footer() {
 
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-200">
-      {/* Newsletter Section */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <footer className="bg-warm-gray border-t border-gray-200">
+      {/* Fireart-Style Newsletter Section */}
+      <div className="bg-platinum border-b border-gray-200">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
           <div className="text-center">
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3">
+            <h3 className="fireart-heading-3 mb-4">
               Stay updated with Allowance Guard
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="fireart-body-large text-charcoal mb-8">
               Get the latest security tips and product updates.
             </p>
             
@@ -42,12 +42,12 @@ export default function Footer() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="fireart-input flex-1"
                 required
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="fireart-button"
               >
                 Subscribe
                 <ArrowRight className="w-4 h-4" />
@@ -55,7 +55,7 @@ export default function Footer() {
             </form>
             
             {subscribed && (
-              <div className="text-sm text-green-600 font-medium mt-4">
+              <div className="fireart-body text-emerald mt-4">
                 Successfully subscribed!
               </div>
             )}
@@ -63,48 +63,48 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+      {/* Fireart-Style Main Footer Content */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Product */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Product</h4>
-            <ul className="space-y-3">
-              <li><a href="/docs" className="text-gray-600 hover:text-gray-900 transition-colors">Documentation</a></li>
-              <li><a href="/faq" className="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a></li>
-              <li><a href="/security" className="text-gray-600 hover:text-gray-900 transition-colors">Security</a></li>
-              <li><a href="/features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a></li>
+            <h4 className="fireart-heading-3 mb-6">Product</h4>
+            <ul className="space-y-4">
+              <li><a href="/docs" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Documentation</a></li>
+              <li><a href="/faq" className="fireart-body text-charcoal hover:text-obsidian transition-colors">FAQ</a></li>
+              <li><a href="/security" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Security</a></li>
+              <li><a href="/features" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Features</a></li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Support</h4>
-            <ul className="space-y-3">
-              <li><a href="/preferences" className="text-gray-600 hover:text-gray-900 transition-colors">Preferences</a></li>
-              <li><a href="/unsubscribe" className="text-gray-600 hover:text-gray-900 transition-colors">Unsubscribe</a></li>
-              <li><a href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact Support</a></li>
+            <h4 className="fireart-heading-3 mb-6">Support</h4>
+            <ul className="space-y-4">
+              <li><a href="/preferences" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Preferences</a></li>
+              <li><a href="/unsubscribe" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Unsubscribe</a></li>
+              <li><a href="/contact" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Contact Support</a></li>
             </ul>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Legal</h4>
-            <ul className="space-y-3">
-              <li><a href="/terms" className="text-gray-600 hover:text-gray-900 transition-colors">Terms of Service</a></li>
-              <li><a href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">Privacy Policy</a></li>
-              <li><a href="/cookies" className="text-gray-600 hover:text-gray-900 transition-colors">Cookie Policy</a></li>
+            <h4 className="fireart-heading-3 mb-6">Legal</h4>
+            <ul className="space-y-4">
+              <li><a href="/terms" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Terms of Service</a></li>
+              <li><a href="/privacy" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Privacy Policy</a></li>
+              <li><a href="/cookies" className="fireart-body text-charcoal hover:text-obsidian transition-colors">Cookie Policy</a></li>
             </ul>
           </div>
 
           {/* Connect */}
           <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">Connect</h4>
-            <ul className="space-y-3">
+            <h4 className="fireart-heading-3 mb-6">Connect</h4>
+            <ul className="space-y-4">
               <li>
                 <a
                   href="https://twitter.com/allowanceguard"
-                  className="text-gray-600 hover:text-gray-900 transition-colors flex items-center gap-2"
+                  className="fireart-body text-charcoal hover:text-obsidian transition-colors flex items-center gap-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -115,7 +115,7 @@ export default function Footer() {
               <li>
                 <a
                   href="https://github.com/EazyAccessEA/Allowance-guard"
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  className="fireart-body text-charcoal hover:text-obsidian transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -125,17 +125,17 @@ export default function Footer() {
             </ul>
             
             {/* Donation Button */}
-            <div className="mt-4">
+            <div className="mt-6">
               <DonationButton />
             </div>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
+        {/* Fireart-Style Bottom Section */}
+        <div className="mt-16 pt-8 border-t border-gray-200">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 relative">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 relative">
                 <Image
                   src="/AG_Logo2.png"
                   alt="Allowance Guard"
@@ -143,7 +143,7 @@ export default function Footer() {
                   className="object-contain"
                 />
               </div>
-              <p className="text-gray-600">
+              <p className="fireart-caption">
                 © 2025 Allowance Guard. All rights reserved.
               </p>
             </div>
