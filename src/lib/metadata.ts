@@ -35,7 +35,7 @@ export async function enrichTokenMeta(chainId: number, token: string, standardGu
   const current = await getTokenMeta(chainId, token)
   if (current && isFresh(current.updated_iso)) return current
 
-  const client = clientFor(chainId as any)
+  const client = clientFor(chainId as 1|42161|8453)
   let standard:'ERC20'|'ERC721'|'ERC1155'|'UNKNOWN' = 'UNKNOWN'
   let name: string | null = null
   let symbol: string | null = null
