@@ -129,8 +129,10 @@ export default function AllowanceTable({
                   {(() => {
                     if (r.is_unlimited) return '∞'
                     if (r.token_decimals != null) {
-                      const displayAmount = BigInt(r.amount) === 0n ? '0' :
-                        Number((BigInt(r.amount) / BigInt(10 ** r.token_decimals)).toString())
+                      const amountBigInt = BigInt(r.amount)
+                      const zeroBigInt = BigInt(0)
+                      const displayAmount = amountBigInt === zeroBigInt ? '0' :
+                        Number((amountBigInt / BigInt(10 ** r.token_decimals)).toString())
                       return displayAmount
                     }
                     return r.amount
