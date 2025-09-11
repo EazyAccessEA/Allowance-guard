@@ -1,6 +1,5 @@
 import { pool } from '@/lib/db'
 import { clientFor } from './chains'
-import { readContract } from 'viem'
 import { ERC20_READ_ABI, ERC721_READ_ABI } from './abi'
 
 const TTL_DAYS = 30 // refresh every ~month
@@ -45,28 +44,28 @@ export async function enrichTokenMeta(chainId: number, token: string, standardGu
   // Try ERC20 first (most common)
   try {
     const [n, s, d] = await Promise.all([
-      readContract(client, { address: token as `0x${string}`, abi: ERC20_READ_ABI, functionName: 'name' }),
-      readContract(client, { address: token as `0x${string}`, abi: ERC20_READ_ABI, functionName: 'symbol' }),
-      readContract(client, { address: token as `0x${string}`, abi: ERC20_READ_ABI, functionName: 'decimals' })
+      client.readContract({ address: token as `0x${string}`, abi: ERC20_READ_ABI, functionName: 'name' }),
+      client.readContract({ address: token as `0x${string}`, abi: ERC20_READ_ABI, functionName: 'symbol' }),
+      client.readContract({ address: token as `0x${string}`, abi: ERC20_READ_ABI, functionName: 'decimals' })
     ])
-    name = (n as any) || null
-    symbol = (s as any) || null
-    decimals = Number(d as any)
+    name = (n as string) || null
+    symbol = (s as string) || null
+    decimals = Number(d as number)
     standard = 'ERC20'
   } catch {
     // Try ERC721
     try {
       const [n, s] = await Promise.all([
-        readContract(client, { address: token as `0x${string}`, abi: ERC721_READ_ABI, functionName: 'name' }),
-        readContract(client, { address: token as `0x${string}`, abi: ERC721_READ_ABI, functionName: 'symbol' })
+        client.readContract({ address: token as `0x${string}`, abi: ERC721_READ_ABI, functionName: 'name' }),
+        client.readContract({ address: token as `0x${string}`, abi: ERC721_READ_ABI, functionName: 'symbol' })
       ])
-      name = (n as any) || null
-      symbol = (s as any) || null
+      name = (n as string) || null
+      symbol = (s as string) || null
       decimals = null
       standard = 'ERC721'
     } catch {
       // ERC1155 or non-standard; leave UNKNOWN
-      standard = (standardGuess as any) || 'UNKNOWN'
+      standard = (standardGuess as 'ERC20'|'ERC721'|'ERC1155'|'UNKNOWN') || 'UNKNOWN'
     }
   }
 
