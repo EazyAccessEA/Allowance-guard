@@ -1,36 +1,42 @@
-// AG Hex System Design Tokens
-// Solids only - no gradients, no blur effects
+// PureEdgeOS 4.0 - Fireart Studio Design Tokens
+// Enterprise-grade minimalism with sophisticated aesthetics
 
 export const colors = {
-  // Core colors
-  bg: '#0B0C0E',
-  panel: '#111317', 
-  line: '#1B1E24',
-  text: '#E7E9ED',
-  muted: '#A7AEBB',
+  // Core colors - Fireart-inspired palette
+  obsidian: '#1E1F23',        // Primary dark background
+  platinum: '#F8FAFC',        // Ultra-light backgrounds
+  charcoal: '#64748B',        // Subtle text and borders
+  sandstone: '#E4E2DD',       // Light background/text
   
-  // Brand colors
-  brand: '#27E3A1',
-  danger: '#FF4D4F',
-  warn: '#FFC53D',
-  info: '#3DA9FF',
+  // Brand colors - Sophisticated accent system
+  cobalt: '#2563EB',          // Primary brand accent
+  electric: '#0EA5E9',        // Interactive highlights
+  teal: '#00C2B2',            // Secondary accent
+  warmGray: '#F1F5F9',        // Card backgrounds
   
-  // Semantic variants
-  brandHover: '#1FCB8A',
-  brandActive: '#17A673',
-  dangerHover: '#FF3333',
-  dangerActive: '#E63939',
-  warnHover: '#FFB800',
-  warnActive: '#E6A600',
-  infoHover: '#1A8CE6',
-  infoActive: '#0D73CC',
+  // Semantic colors
+  emerald: '#10B981',         // Success states
+  amber: '#F59E0B',           // Warning states
+  crimson: '#EF4444',         // Error states
+  navy: '#121D2B',            // Alternate dark background
+  
+  // Interactive states
+  cobaltHover: '#1D4ED8',
+  cobaltActive: '#1E40AF',
+  tealHover: '#00A896',
+  tealActive: '#008B7A',
+  emeraldHover: '#059669',
+  emeraldActive: '#047857',
+  amberHover: '#D97706',
+  amberActive: '#B45309',
+  crimsonHover: '#DC2626',
+  crimsonActive: '#B91C1C',
   
   // Neutral variants
-  bgHover: '#0F1012',
-  panelHover: '#15171B',
-  lineHover: '#202329',
-  textHover: '#F0F2F5',
-  mutedHover: '#B8BFC9',
+  obsidianHover: '#25262B',
+  platinumHover: '#F1F5F9',
+  charcoalHover: '#475569',
+  sandstoneHover: '#F0F0ED',
 } as const
 
 export const spacing = {
@@ -46,20 +52,23 @@ export const spacing = {
 
 export const typography = {
   fontFamily: {
-    sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+    // Fireart-inspired typography system
+    satoshi: ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+    inter: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
     mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Monaco', 'Consolas', 'monospace'],
   },
   fontSize: {
-    xs: ['0.75rem', { lineHeight: '1rem' }],
-    sm: ['0.875rem', { lineHeight: '1.25rem' }],
-    base: ['1rem', { lineHeight: '1.5rem' }],
-    lg: ['1.125rem', { lineHeight: '1.75rem' }],
-    xl: ['1.25rem', { lineHeight: '1.75rem' }],
-    '2xl': ['1.5rem', { lineHeight: '2rem' }],
-    '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-    '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
-    '5xl': ['3rem', { lineHeight: '1' }],
-    '6xl': ['3.75rem', { lineHeight: '1' }],
+    // Fireart-style typography scale with generous spacing
+    xs: ['0.75rem', { lineHeight: '1.25rem', letterSpacing: '0.025em' }],
+    sm: ['0.875rem', { lineHeight: '1.375rem', letterSpacing: '0.025em' }],
+    base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '0' }],
+    lg: ['1.125rem', { lineHeight: '1.625rem', letterSpacing: '0' }],
+    xl: ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '0' }],
+    '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
+    '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.025em' }],
+    '4xl': ['2.25rem', { lineHeight: '2.5rem', letterSpacing: '-0.025em' }],
+    '5xl': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
+    '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
   },
   fontWeight: {
     normal: '400',
@@ -70,33 +79,60 @@ export const typography = {
 } as const
 
 export const shadows = {
-  // Solid shadows only - no blur
-  focus: '0 0 0 3px var(--bg), 0 0 0 5px var(--brand)',
-  focusDanger: '0 0 0 3px var(--bg), 0 0 0 5px var(--danger)',
-  focusWarn: '0 0 0 3px var(--bg), 0 0 0 5px var(--warn)',
-  focusInfo: '0 0 0 3px var(--bg), 0 0 0 5px var(--info)',
+  // Fireart-inspired subtle shadows
+  subtle: '0 1px 3px rgba(0, 0, 0, 0.1)',
+  medium: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  large: '0 10px 15px rgba(0, 0, 0, 0.1)',
+  focus: '0 0 0 3px rgba(37, 99, 235, 0.1)',
+  focusDanger: '0 0 0 3px rgba(239, 68, 68, 0.1)',
+  focusWarn: '0 0 0 3px rgba(245, 158, 11, 0.1)',
+  focusInfo: '0 0 0 3px rgba(16, 185, 129, 0.1)',
 } as const
 
 export const transitions = {
-  fast: '150ms ease-out',
-  normal: '200ms ease-out',
-  slow: '300ms ease-out',
+  // Fireart-style natural timing functions
+  fast: '150ms cubic-bezier(0.4, 0, 0.2, 1)',
+  normal: '200ms cubic-bezier(0.4, 0, 0.2, 1)',
+  slow: '300ms cubic-bezier(0.4, 0, 0.2, 1)',
+  bounce: '300ms cubic-bezier(0.68, -0.55, 0.265, 1.55)',
 } as const
 
-// Risk levels for allowance scoring
+// Fireart-inspired component tokens
+export const components = {
+  button: {
+    height: '44px',
+    padding: '12px 24px',
+    borderRadius: '8px',
+    fontSize: '16px',
+    fontWeight: '500',
+  },
+  card: {
+    padding: '24px',
+    borderRadius: '16px',
+    shadow: shadows.subtle,
+  },
+  input: {
+    height: '44px',
+    padding: '12px 16px',
+    borderRadius: '8px',
+    border: '1px solid',
+  },
+} as const
+
+// Risk levels for allowance scoring - updated with new colors
 export const riskLevels = {
   low: {
-    color: colors.info,
+    color: colors.emerald,
     label: 'Low Risk',
     description: 'Standard allowance with normal usage patterns',
   },
   medium: {
-    color: colors.warn,
+    color: colors.amber,
     label: 'Medium Risk', 
     description: 'Unusual patterns or high amounts detected',
   },
   high: {
-    color: colors.danger,
+    color: colors.crimson,
     label: 'High Risk',
     description: 'Unlimited allowance or suspicious activity',
   },
