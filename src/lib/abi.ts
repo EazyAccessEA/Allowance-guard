@@ -49,3 +49,15 @@ export const ERC721_ABI: Abi = [
 ]
 
 // (Optional later) ERC721 "Approval" for single tokenId if you want per-token entries
+
+// Read ABIs for metadata
+export const ERC20_READ_ABI: Abi = [
+  { type:'function', name:'name', stateMutability:'view', inputs:[], outputs:[{type:'string'}] },
+  { type:'function', name:'symbol', stateMutability:'view', inputs:[], outputs:[{type:'string'}] },
+  { type:'function', name:'decimals', stateMutability:'view', inputs:[], outputs:[{type:'uint8'}] }
+]
+
+export const ERC721_READ_ABI: Abi = [
+  { type:'function', name:'name', stateMutability:'view', inputs:[], outputs:[{type:'string'}] },
+  { type:'function', name:'symbol', stateMutability:'view', inputs:[], outputs:[{type:'string'}] }
+]

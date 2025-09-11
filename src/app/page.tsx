@@ -81,6 +81,20 @@ export default function HomePage() {
       
       const json = await res.json()
       if (json.ok) {
+        // Refresh risk scores after scan
+        await fetch('/api/risk/refresh', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ wallet: target })
+        })
+        
+        // Enrich with metadata and labels
+        await fetch('/api/enrich', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ wallet: target })
+        })
+        
         await fetchAllowances(target)
         setSelectedWallet(target)
       } else {

@@ -8,6 +8,11 @@ type Row = {
   chain_id: number
   token_address: string
   spender_address: string
+  token_name?: string | null
+  token_symbol?: string | null
+  token_decimals?: number | null
+  spender_label?: string | null
+  spender_trust?: 'official'|'curated'|'community'|null
   standard: string
   allowance_type: string
   amount: string
@@ -99,11 +104,38 @@ export default function AllowanceTable({
                   />
                 </td>
                 <td className="px-4 py-3 font-medium text-ag-text">{r.chain_id}</td>
-                <td className="px-4 py-3 font-mono text-ag-muted">{r.token_address}</td>
-                <td className="px-4 py-3 font-mono text-ag-muted">{r.spender_address}</td>
+                <td className="px-4 py-3 font-mono text-ag-muted">
+                  {r.token_symbol ? (
+                    <span className="font-sans">{r.token_symbol}</span>
+                  ) : r.token_name ? (
+                    <span className="font-sans">{r.token_name}</span>
+                  ) : (
+                    r.token_address
+                  )}
+                </td>
+                <td className="px-4 py-3 font-mono text-ag-muted">
+                  {r.spender_label ? (
+                    <span className="font-sans">
+                      {r.spender_label}
+                      {r.spender_trust && <span className="ml-2 rounded bg-gray-100 px-1.5 py-0.5 text-[11px] uppercase tracking-wide text-gray-600">{r.spender_trust}</span>}
+                    </span>
+                  ) : (
+                    r.spender_address
+                  )}
+                </td>
                 <td className="px-4 py-3 text-ag-muted">{r.standard}</td>
                 <td className="px-4 py-3 text-ag-muted">{r.allowance_type}</td>
-                <td className="px-4 py-3 font-mono text-ag-text">{r.amount}</td>
+                <td className="px-4 py-3 font-mono text-ag-text">
+                  {(() => {
+                    if (r.is_unlimited) return '∞'
+                    if (r.token_decimals != null) {
+                      const displayAmount = BigInt(r.amount) === 0n ? '0' :
+                        Number((BigInt(r.amount) / BigInt(10 ** r.token_decimals)).toString())
+                      return displayAmount
+                    }
+                    return r.amount
+                  })()}
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
                     {r.is_unlimited && <HexBadge variant="danger" size="sm">UNLIMITED</HexBadge>}
