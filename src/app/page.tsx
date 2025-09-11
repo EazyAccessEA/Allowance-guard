@@ -705,7 +705,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="fireart-body font-medium text-obsidian">Create a new app</p>
-                        <p className="fireart-caption text-charcoal">Go to <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="text-cobalt underline">api.slack.com/apps</a> → "Create New App" → "From scratch"</p>
+                        <p className="fireart-caption text-charcoal">Go to <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="text-cobalt underline">api.slack.com/apps</a> → &quot;Create New App&quot; → &quot;From scratch&quot;</p>
                       </div>
                     </div>
                     
@@ -715,7 +715,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="fireart-body font-medium text-obsidian">Name your app</p>
-                        <p className="fireart-caption text-charcoal">App name: "Allowance Guard Alerts", select your workspace</p>
+                        <p className="fireart-caption text-charcoal">App name: &quot;Allowance Guard Alerts&quot;, select your workspace</p>
                       </div>
                     </div>
                     
@@ -725,7 +725,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="fireart-body font-medium text-obsidian">Enable Incoming Webhooks</p>
-                        <p className="fireart-caption text-charcoal">In your app settings → "Incoming Webhooks" → Toggle "Activate Incoming Webhooks" to ON</p>
+                        <p className="fireart-caption text-charcoal">In your app settings → &quot;Incoming Webhooks&quot; → Toggle &quot;Activate Incoming Webhooks&quot; to ON</p>
                       </div>
                     </div>
                     
@@ -735,7 +735,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="fireart-body font-medium text-obsidian">Add webhook to channel</p>
-                        <p className="fireart-caption text-charcoal">Click "Add New Webhook to Workspace" → Choose a channel (e.g., #alerts) → "Allow"</p>
+                        <p className="fireart-caption text-charcoal">Click &quot;Add New Webhook to Workspace&quot; → Choose a channel (e.g., #alerts) → &quot;Allow&quot;</p>
                       </div>
                     </div>
                     
