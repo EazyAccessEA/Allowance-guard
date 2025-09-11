@@ -28,7 +28,10 @@ export async function POST(req: Request) {
       data: { 
         id: 'mock-charge-id',
         pricing: { local: { amount: '25', currency: 'USD' } },
-        metadata: { donor_email: 'test@example.com' } 
+        metadata: { 
+          donor_email: 'test@example.com',
+          donor_name: 'Test User'
+        } 
       } 
     }
     
