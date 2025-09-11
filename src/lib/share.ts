@@ -58,7 +58,16 @@ export async function getShareByToken(token: string): Promise<ShareRow | null> {
   return rows[0] || null
 }
 
-export function transformRowsForShare(rows: any[], opts: { maskAddrs: boolean; hideAmounts: boolean }) {
+export function transformRowsForShare(rows: {
+  chain_id: number
+  token_address: string
+  spender_address: string
+  standard: string
+  allowance_type: string
+  amount: string
+  is_unlimited: boolean
+  risk_flags: string[]
+}[], opts: { maskAddrs: boolean; hideAmounts: boolean }) {
   return rows.map(r => ({
     chain_id: r.chain_id,
     token_address: opts.maskAddrs ? maskAddress(r.token_address) : r.token_address,

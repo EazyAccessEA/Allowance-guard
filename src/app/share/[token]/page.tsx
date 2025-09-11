@@ -25,8 +25,8 @@ export default function SharePage({ params }: { params: { token: string } }) {
         const j = await r.json()
         if (!r.ok) throw new Error(j.error || 'Error')
         setData(j)
-      } catch (e: any) {
-        setError(e?.message || 'Failed to load')
+      } catch (e: unknown) {
+        setError(e instanceof Error ? e.message : 'Failed to load')
       }
     })()
   }, [params.token])
