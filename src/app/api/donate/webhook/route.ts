@@ -5,7 +5,7 @@ import { sendThankYouEmail } from '@/lib/mailer'
 
 export async function POST(req: Request) {
   try {
-    const body = await req.text()
+    // const body = await req.text() // TODO: Use for webhook verification
     const signature = req.headers.get('x-cc-webhook-signature')
     
     if (!signature) {
@@ -23,7 +23,14 @@ export async function POST(req: Request) {
     // )
     
     // Mock event for now
-    const event = { type: 'charge:confirmed', data: { metadata: { donor_email: 'test@example.com' } } }
+    const event = { 
+      type: 'charge:confirmed', 
+      data: { 
+        id: 'mock-charge-id',
+        pricing: { local: { amount: '25', currency: 'USD' } },
+        metadata: { donor_email: 'test@example.com' } 
+      } 
+    }
     
     if (event.type === 'charge:confirmed') {
       const charge = event.data
