@@ -45,6 +45,14 @@ export default function HomePage() {
   } | null>(null)
   const [webhook, setWebhook] = useState('')
   const [slackMsg, setSlackMsg] = useState<string | null>(null)
+  
+  // Share state
+  const [shareMsg, setShareMsg] = useState<string | null>(null)
+  const [shareToken, setShareToken] = useState<string | null>(null)
+  const [censorAddr, setCensorAddr] = useState(true)
+  const [censorAmt, setCensorAmt] = useState(false)
+  const [riskOnlyShare, setRiskOnlyShare] = useState(true)
+  const [expireDays, setExpireDays] = useState<number | ''>('')
 
   useEffect(() => { save(ACTIVE_KEY, selectedWallet) }, [selectedWallet])
 
@@ -134,6 +142,41 @@ export default function HomePage() {
     })
     setSlackMsg(r.ok ? 'Slack webhook added' : 'Failed to add webhook')
     if (r.ok) setWebhook('')
+  }
+
+  // Share helpers
+  const shareUrl = shareToken ? `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/share/${shareToken}` : null
+
+  async function generateShare() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return alert('Select or connect a wallet first')
+    const r = await fetch('/api/share/create', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        wallet: target,
+        censor_addresses: censorAddr,
+        censor_amounts: censorAmt,
+        risk_only: riskOnlyShare,
+        expires_in_days: typeof expireDays === 'number' ? expireDays : null
+      })
+    })
+    const j = await r.json()
+    if (!r.ok) return setShareMsg(j.error || 'Failed to create link')
+    setShareToken(j.token)
+    setShareMsg('Share link created')
+  }
+
+  async function expireShareLink() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return alert('Select or connect a wallet first')
+    const r = await fetch('/api/share/expire', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ wallet: target })
+    })
+    if (!r.ok) return setShareMsg('Failed to expire link')
+    setShareToken(null)
+    setShareMsg('Share link expired')
   }
 
   const targetWallet = selectedWallet || connectedAddress
@@ -603,6 +646,109 @@ export default function HomePage() {
                     <p className="text-blue-800 text-xs">
                       <strong>💡 Tip:</strong> You can create multiple webhooks for different channels. 
                       Each webhook will receive alerts for this wallet.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Public Share Link */}
+            {hasSavedWallet && (
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mt-8">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Public Share Link</h3>
+                <p className="text-gray-600 text-sm mb-4">
+                  Generate a read-only link to share your wallet&apos;s approval status with others
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label className="text-sm flex items-center gap-2">
+                      <input 
+                        type="checkbox" 
+                        checked={censorAddr} 
+                        onChange={e => setCensorAddr(e.target.checked)} 
+                        className="rounded"
+                      />
+                      Censor addresses (0x1234…abcd)
+                    </label>
+                    <label className="text-sm flex items-center gap-2">
+                      <input 
+                        type="checkbox" 
+                        checked={censorAmt} 
+                        onChange={e => setCensorAmt(e.target.checked)} 
+                        className="rounded"
+                      />
+                      Hide amounts
+                    </label>
+                    <label className="text-sm flex items-center gap-2">
+                      <input 
+                        type="checkbox" 
+                        checked={riskOnlyShare} 
+                        onChange={e => setRiskOnlyShare(e.target.checked)} 
+                        className="rounded"
+                      />
+                      Risky only (UNLIMITED / STALE / risk&gt;0)
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm w-32">Expire after (days)</span>
+                      <input 
+                        className="w-20 rounded border px-2 py-1 text-sm" 
+                        type="number"
+                        value={expireDays} 
+                        onChange={e => setExpireDays(e.target.value ? Number(e.target.value) : '')}
+                        placeholder="Never"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button 
+                      onClick={generateShare} 
+                      className="rounded border px-4 py-2 text-sm bg-purple-600 text-white hover:bg-purple-700"
+                    >
+                      Generate / Rotate
+                    </button>
+                    <button 
+                      onClick={expireShareLink} 
+                      className="rounded border px-4 py-2 text-sm bg-gray-600 text-white hover:bg-gray-700"
+                    >
+                      Expire Link
+                    </button>
+                    {shareMsg && (
+                      <span className="text-sm text-gray-600 flex items-center">
+                        {shareMsg}
+                      </span>
+                    )}
+                  </div>
+
+                  {shareToken && (
+                    <div className="mt-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Share URL:
+                      </label>
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        <input 
+                          className="flex-1 rounded border px-3 py-2 text-sm font-mono" 
+                          readOnly 
+                          value={shareUrl ?? ''} 
+                        />
+                        <button
+                          onClick={async () => { 
+                            await navigator.clipboard.writeText(shareUrl || '')
+                            setShareMsg('URL copied to clipboard!')
+                          }}
+                          className="rounded border px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700"
+                        >
+                          Copy
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="bg-blue-50 border border-blue-200 rounded p-3">
+                    <p className="text-blue-800 text-xs">
+                      <strong>🔒 Privacy:</strong> Share links are read-only and can be expired at any time. 
+                      Addresses and amounts can be censored for privacy.
                     </p>
                   </div>
                 </div>
