@@ -20,14 +20,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid donation data' }, { status: 400 })
     }
     
-    const { amount, email, name, message } = parsed.data
+    const { amount, email } = parsed.data
     
+    // TODO: Fix Coinbase Commerce API integration
     // Initialize Coinbase Commerce client
-    const client = new CommerceSDK({ apiKey: process.env.COINBASE_COMMERCE_API_KEY! })
+    // const client = new CommerceSDK({ apiKey: process.env.COINBASE_COMMERCE_API_KEY! })
     
     // Create Coinbase Commerce charge
     // TODO: Fix API method - temporarily disabled for deployment
-    const charge = { id: 'mock', hosted_url: 'https://allowanceguard.com/coming-soon' } as any
+    const charge = { 
+      id: 'mock-charge-id', 
+      hosted_url: 'https://allowanceguard.com/coming-soon' 
+    }
     // const charge = await client.charges.create({
     //   name: `Allowance Guard Donation - $${amount}`,
     //   description: 'Support Allowance Guard development and maintenance',
