@@ -537,3 +537,13 @@ appkit-button::part(button):focus {
   outline: 2px solid #3b82f6 !important;
   outline-offset: 2px !important;
 }
+
+/* AA contrast safety net for buttons on mid-tone backgrounds */
+.btn-contrast { 
+  color: #0A0A0A; 
+  background-color: #FFFFFF; 
+  border: 1px solid #E5E7EB; 
+}
+.btn-contrast:hover { 
+  background-color: #F6F7F9; 
+}

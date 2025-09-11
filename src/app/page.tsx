@@ -87,13 +87,13 @@ export default function HomePage() {
           </p>
           <div className="flex items-center justify-center gap-3">
             {!isConnected ? (
-              <ConnectButton />
+              <ConnectButton variant="primary" />
             ) : (
-              <button onClick={startScan} disabled={pending} className="rounded-md bg-ink text-white px-5 py-3 text-sm font-medium hover:opacity-90 transition disabled:opacity-50">
+              <button onClick={startScan} disabled={pending} className="inline-flex items-center rounded-md px-5 py-3 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 bg-ink text-white hover:opacity-90 focus:ring-ink/30 disabled:opacity-50">
                 {pending ? 'Scanning…' : 'Scan wallet'}
               </button>
             )}
-            <a href="/docs" className="text-ink/70 text-sm hover:text-ink">Learn more</a>
+            <a href="/docs" className="text-ink/70 text-sm hover:text-ink focus:outline-none focus:ring-2 focus:ring-ink/30 rounded">Learn more</a>
           </div>
         </Container>
       </Section>

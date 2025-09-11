@@ -13,8 +13,8 @@ export default function ValueStrip() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {items.map((it) => (
             <div key={it.title}>
-              <h3 className="text-xl text-ink mb-2">{it.title}</h3>
-              <p className="text-stone">{it.text}</p>
+              <h3 className="text-xl text-ink mb-3">{it.title}</h3>
+              <p className="text-base text-stone max-w-reading">{it.text}</p>
             </div>
           ))}
         </div>

@@ -8,13 +8,13 @@ interface HeaderProps {
 
 export default function Header({ isConnected }: HeaderProps) {
   return (
-    <header className="border-b border-line">
+    <header className="border-b border-line bg-white">
       <Container className="h-14 flex items-center justify-between">
-        <Link href="/" className="text-ink font-medium">Allowance Guard</Link>
+        <Link href="/" className="text-base text-ink font-medium">Allowance Guard</Link>
         <nav className="flex items-center gap-6">
-          <Link href="/docs" className="text-ink/70 hover:text-ink text-sm">Docs</Link>
-          <Link href="/settings" className="text-ink/70 hover:text-ink text-sm">Settings</Link>
-          <span>{isConnected ? '' : <ConnectButton />}</span>
+          <Link href="/docs" className="text-base text-ink/70 hover:text-ink">Docs</Link>
+          <Link href="/settings" className="text-base text-ink/70 hover:text-ink">Settings</Link>
+          {!isConnected && <ConnectButton variant="light" />}
         </nav>
       </Container>
     </header>

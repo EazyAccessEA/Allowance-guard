@@ -14,8 +14,8 @@ export default function RiskExplainer() {
         <div className="divide-y divide-line border border-line rounded-md">
           {rows.map((r, i) => (
             <div key={i} className="px-6 py-4 flex items-start gap-8">
-              <div className="w-40 shrink-0 text-ink font-medium">{r.k}</div>
-              <div className="text-stone">{r.v}</div>
+              <div className="w-40 shrink-0 text-base text-ink font-medium">{r.k}</div>
+              <div className="text-base text-stone">{r.v}</div>
             </div>
           ))}
         </div>
