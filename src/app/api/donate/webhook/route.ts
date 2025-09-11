@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { apiLogger } from '@/lib/logger'
 import { sendThankYouEmail } from '@/lib/mailer'
-import { Webhook } from 'commerce-node'
+import { WebhooksService } from 'commerce-node'
 
 export async function POST(req: Request) {
   try {
@@ -14,7 +14,8 @@ export async function POST(req: Request) {
     }
     
     // Verify webhook signature
-    const event = Webhook.verifyEventBody(
+    const webhooksService = new WebhooksService({ apiKey: process.env.COINBASE_COMMERCE_API_KEY! })
+    const event = webhooksService.verifyEventBody(
       body,
       signature,
       process.env.COINBASE_COMMERCE_WEBHOOK_SECRET!

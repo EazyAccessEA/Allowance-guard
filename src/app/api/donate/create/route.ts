@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { apiLogger } from '@/lib/logger'
-import { Client } from 'commerce-node'
+import { CommerceSDK } from 'commerce-node'
 
 const DonationRequest = z.object({
   amount: z.number().min(1).max(10000),
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     const { amount, email, name, message } = parsed.data
     
     // Initialize Coinbase Commerce client
-    const client = new Client({ apiKey: process.env.COINBASE_COMMERCE_API_KEY! })
+    const client = new CommerceSDK({ apiKey: process.env.COINBASE_COMMERCE_API_KEY! })
     
     // Create Coinbase Commerce charge
     const charge = await client.charge.create({

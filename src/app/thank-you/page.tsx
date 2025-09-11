@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { CheckCircle, Heart, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 

@@ -159,7 +159,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
               />
               <p className="text-xs text-gray-500 mt-1">
-                We'll send you a thank you email and receipt
+                We&apos;ll send you a thank you email and receipt
               </p>
             </div>
 
