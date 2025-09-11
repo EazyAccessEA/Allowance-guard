@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const client = new CommerceSDK({ apiKey: process.env.COINBASE_COMMERCE_API_KEY! })
     
     // Create Coinbase Commerce charge
-    const charge = await client.charge.create({
+    const charge = await client.charges.create({
       name: `Allowance Guard Donation - $${amount}`,
       description: 'Support Allowance Guard development and maintenance',
       local_price: {
