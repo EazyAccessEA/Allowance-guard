@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { apiLogger } from '@/lib/logger'
-import { CommerceSDK } from 'commerce-node'
+// import { CommerceSDK } from 'commerce-node' // TODO: Fix API integration
 
 const DonationRequest = z.object({
   amount: z.number().min(1).max(10000),
