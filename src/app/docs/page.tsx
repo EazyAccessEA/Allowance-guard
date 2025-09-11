@@ -1,12 +1,30 @@
 import Image from 'next/image'
-import { Shield, Eye, AlertTriangle, Mail, Settings, BookOpen, ArrowRight, CheckCircle } from 'lucide-react'
+import { 
+  Shield, 
+  Eye, 
+  AlertTriangle, 
+  Mail, 
+  Settings, 
+  BookOpen, 
+  ArrowRight, 
+  CheckCircle,
+  Network,
+  Zap,
+  Lock,
+  HelpCircle,
+  ExternalLink,
+  DollarSign,
+  Clock,
+  XCircle,
+  Info
+} from 'lucide-react'
 
 export default function DocsPage() {
   const quickStartSteps = [
     {
       step: 1,
       title: "Connect Your Wallet",
-      description: "Click the Connect Wallet button and select your preferred wallet provider.",
+      description: "Click Connect Wallet and select your preferred wallet provider.",
       icon: Shield,
       color: "text-blue-600",
       bgColor: "bg-blue-50"
@@ -14,7 +32,7 @@ export default function DocsPage() {
     {
       step: 2,
       title: "Scan for Approvals",
-      description: "Click Scan Now to check all your token approvals across supported networks.",
+      description: "Click Scan Now to list all your token approvals (ERC-20, ERC-721, ERC-1155) across supported networks.",
       icon: Eye,
       color: "text-green-600",
       bgColor: "bg-green-50"
@@ -22,15 +40,23 @@ export default function DocsPage() {
     {
       step: 3,
       title: "Review Results",
-      description: "Examine your approvals and identify any risky or unlimited permissions.",
+      description: "Examine your approvals. Pay special attention to unlimited approvals and approvals you no longer need.",
       icon: AlertTriangle,
       color: "text-yellow-600",
       bgColor: "bg-yellow-50"
     },
     {
       step: 4,
+      title: "Revoke or Reduce Permissions",
+      description: "Use tools like Revoke.cash or Etherscan's Token Approval tool to revoke or limit approvals.",
+      icon: XCircle,
+      color: "text-red-600",
+      bgColor: "bg-red-50"
+    },
+    {
+      step: 5,
       title: "Set Up Alerts",
-      description: "Configure email or Slack notifications to stay informed about new approvals.",
+      description: "Configure email or Slack alerts so you're notified of new risky approvals as they arise.",
       icon: Mail,
       color: "text-purple-600",
       bgColor: "bg-purple-50"
@@ -46,7 +72,7 @@ export default function DocsPage() {
   const riskLevels = [
     {
       level: "UNLIMITED",
-      description: "Can take any amount from your wallet",
+      description: "The contract has permission to spend any amount from your wallet.",
       color: "text-red-600",
       bgColor: "bg-red-50",
       borderColor: "border-red-200",
@@ -54,19 +80,143 @@ export default function DocsPage() {
     },
     {
       level: "HIGH RISK",
-      description: "Large amounts or unknown contracts",
+      description: "Either large amounts for approval, unknown or frequently used contracts.",
       color: "text-yellow-600",
       bgColor: "bg-yellow-50",
       borderColor: "border-yellow-200",
-      action: "Review carefully"
+      action: "Review carefully; limit or revoke"
     },
     {
       level: "SAFE",
-      description: "Small amounts from trusted sources",
+      description: "Small amounts, trusted sources, older approvals with minimal risk.",
       color: "text-green-600",
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
-      action: "Monitor periodically"
+      action: "Just monitor regularly"
+    }
+  ]
+
+  const howItWorksSteps = [
+    {
+      step: 1,
+      title: "Blockchain Analysis",
+      description: "We scan your wallet address across supported networks to discover all active approvals.",
+      icon: Network,
+      color: "text-blue-600"
+    },
+    {
+      step: 2,
+      title: "Risk Assessment",
+      description: "For each approval, we look at: amount, contract reputation, whether the approval is unlimited, time since last interaction, etc.",
+      icon: AlertTriangle,
+      color: "text-yellow-600"
+    },
+    {
+      step: 3,
+      title: "Local Processing",
+      description: "All scanning and risk calculations happen in your browser — we do not store your private keys or touch your funds.",
+      icon: Lock,
+      color: "text-green-600"
+    },
+    {
+      step: 4,
+      title: "Actionable Results",
+      description: "We show you exactly which approvals are risky, which are safe, and how to revoke or reduce approvals.",
+      icon: CheckCircle,
+      color: "text-purple-600"
+    }
+  ]
+
+  const alertTypes = [
+    {
+      type: "Email Alerts",
+      description: "Get notified when:",
+      icon: Mail,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+      features: [
+        "A new high-risk/unlimited approval is detected",
+        "Daily digest of approvals since last login",
+        "Weekly security summary"
+      ]
+    },
+    {
+      type: "Slack Integration or Webhooks",
+      description: "Real-time alerts when risky approvals are detected.",
+      icon: Settings,
+      color: "text-green-600",
+      bgColor: "bg-green-50",
+      features: [
+        "Real-time notifications",
+        "Team collaboration",
+        "Custom webhook integration"
+      ]
+    },
+    {
+      type: "Custom Risk Thresholds",
+      description: "You can set thresholds so only 'High Risk' or 'Unlimited' approvals trigger alerts — less noise.",
+      icon: Zap,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
+      features: [
+        "Customizable risk levels",
+        "Reduced notification noise",
+        "Personalized alerting"
+      ]
+    }
+  ]
+
+  const bestPractices = [
+    "Revoke unlimited approvals immediately.",
+    "Limit approvals to as small amounts as you reasonably need.",
+    "Frequently scan using tools like Revoke.cash or explorer tools.",
+    "Don't rely on 'disconnecting' your wallet — that doesn't revoke permissions.",
+    "Use hardware wallets where possible — though note: approvals are not prevented just by using hardware wallets. The risk is in granting permissions.",
+    "Be especially cautious with new / untrusted dApps or contracts. Always check contract addresses."
+  ]
+
+  const troubleshootingItems = [
+    {
+      issue: "Nothing shows up when scanning?",
+      solutions: [
+        "Ensure you're on a supported network",
+        "Ensure wallet is unlocked",
+        "Sometimes the browser extension (if using) needs permission / refresh"
+      ]
+    },
+    {
+      issue: "Can't Revoke / Transaction Fails",
+      solutions: [
+        "May lack gas for that network",
+        "The contract may require specific method to revoke (some approvals use nonstandard behavior)",
+        "Very old approvals or expired approvals might behave differently"
+      ]
+    },
+    {
+      issue: "Still seeing unlimited approvals even after revoking?",
+      solutions: [
+        "Check whether the approval is by a 'proxy' contract or a generic spender address",
+        "Use 'show all approvals' and sort by spender address to catch those"
+      ]
+    }
+  ]
+
+  const faqItems = [
+    {
+      question: "How does Allowance Guard differ from Revoke.cash?",
+      answer: "Allowance Guard uses similar scanning / risk detection logic, but aims to integrate it into a unified UI with alerts, and help you automate reminders / reviews."
+    },
+    {
+      question: "Does revoking an approval break functionality?",
+      answer: "Sometimes yes — if a dApp expects to use that permission (e.g. for trading or NFT listing) you may need to grant it again. It's a trade-off: security vs convenience."
+    },
+    {
+      question: "Can I revoke approvals from my hardware wallet?",
+      answer: "Yes. Revoke.cash and explorers support hardware wallets (MetaMask with hardware, etc.). But note that giving approval is separate; hardware wallets protect key storage, but not whether you signed a bad approval."
+    },
+    {
+      question: "Are there risks using Revoke.cash / explorers?",
+      answer: "As with any blockchain tool: Be sure you're on the correct domain (e.g. revoke.cash), Use secure browser, updated wallet, Be aware of gas fees and ensure you understand what you're revoking"
     }
   ]
 
@@ -77,8 +227,8 @@ export default function DocsPage() {
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
-              <Image
-                src="/AG_Logo2.png"
+                 <Image
+                   src="/AG_Logo2.png"
                 alt="Allowance Guard"
                 fill
                 className="object-contain"
@@ -96,29 +246,37 @@ export default function DocsPage() {
             <BookOpen className="w-8 h-8 text-blue-600 mr-3" />
             <h1 className="text-3xl font-bold text-gray-900">Documentation</h1>
           </div>
-          <p className="text-gray-600">
-            Complete guide to using Allowance Guard to protect your wallet from dangerous token approvals.
+          <p className="text-gray-600 mb-4">
+            Protect your wallet from dangerous token approvals. Simple. Transparent. Secure.
           </p>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-center">
+              <Info className="w-5 h-5 text-blue-600 mr-2" />
+              <p className="text-blue-800 text-sm">
+                <strong>Table of Contents:</strong> Quick Start Guide • Supported Networks • Understanding Risk Levels • How Allowance Guard Works • Revoking Token Approvals • Setting Up Alerts • Security Best Practices • Troubleshooting • FAQ • Next Steps
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Quick Start */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Quick Start Guide</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {quickStartSteps.map((step) => {
               const Icon = step.icon
-              return (
+  return (
                 <div key={step.step} className={`${step.bgColor} border border-gray-200 rounded-lg p-6`}>
                   <div className="flex items-center mb-4">
                     <div className={`w-10 h-10 ${step.bgColor} border-2 border-gray-300 rounded-full flex items-center justify-center mr-4`}>
                       <span className="text-lg font-bold text-gray-700">{step.step}</span>
-                    </div>
+        </div>
                     <Icon className={`w-6 h-6 ${step.color}`} />
-                  </div>
+      </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-gray-600">{step.description}</p>
-                </div>
-              )
+                  <p className="text-gray-600 text-sm">{step.description}</p>
+    </div>
+  )
             })}
           </div>
         </section>
@@ -128,21 +286,40 @@ export default function DocsPage() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Supported Networks</h2>
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <p className="text-gray-600 mb-4">
-              Allowance Guard currently supports the following blockchain networks:
+              Allowance Guard currently works across:
             </p>
-            <div className="space-y-3">
-              {supportedNetworks.map((network) => (
-                <div key={network.chainId} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900">{network.name}</h3>
-                    <p className="text-sm text-gray-500">Chain ID: {network.chainId}</p>
-                  </div>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                    <CheckCircle className="w-4 h-4 mr-1" />
-                    {network.status}
-                  </span>
-                </div>
-              ))}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="text-left py-3 font-medium text-gray-900">Network</th>
+                    <th className="text-left py-3 font-medium text-gray-900">Chain ID</th>
+                    <th className="text-left py-3 font-medium text-gray-900">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {supportedNetworks.map((network) => (
+                    <tr key={network.chainId} className="border-b border-gray-100 last:border-b-0">
+                      <td className="py-3 font-medium text-gray-900">{network.name}</td>
+                      <td className="py-3 text-gray-600">{network.chainId}</td>
+                      <td className="py-3">
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          <CheckCircle className="w-3 h-3 mr-1" />
+                          {network.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+          </div>
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <div className="flex items-center">
+                <AlertTriangle className="w-4 h-4 text-yellow-600 mr-2" />
+                <p className="text-yellow-800 text-sm">
+                  <strong>Planned/Optional:</strong> More EVM-compatible networks may be added later.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -150,201 +327,194 @@ export default function DocsPage() {
         {/* Risk Levels */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Understanding Risk Levels</h2>
-          <div className="space-y-4">
-            {riskLevels.map((risk) => (
-              <div key={risk.level} className={`${risk.bgColor} ${risk.borderColor} border rounded-lg p-6`}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className={`text-lg font-semibold ${risk.color} mb-2`}>{risk.level}</h3>
-                    <p className="text-gray-700 mb-2">{risk.description}</p>
-                    <p className="text-sm font-medium text-gray-600">Recommended action: {risk.action}</p>
-                  </div>
-                  <div className="text-right">
-                    <div className={`w-4 h-4 ${risk.bgColor} border-2 ${risk.borderColor} rounded-full`}></div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left py-3 font-medium text-gray-900">Level</th>
+                  <th className="text-left py-3 font-medium text-gray-900">What It Means</th>
+                  <th className="text-left py-3 font-medium text-gray-900">What You Should Do</th>
+                </tr>
+              </thead>
+              <tbody>
+                {riskLevels.map((risk) => (
+                  <tr key={risk.level} className="border-b border-gray-100 last:border-b-0">
+                    <td className="py-3">
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${risk.bgColor} ${risk.color}`}>
+                        {risk.level}
+                      </span>
+                    </td>
+                    <td className="py-3 text-gray-600">{risk.description}</td>
+                    <td className="py-3 text-gray-600">{risk.action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </section>
 
         {/* How It Works */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">How Allowance Guard Works</h2>
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <span className="text-sm font-bold text-blue-600">1</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Blockchain Analysis</h3>
-                  <p className="text-gray-600">
-                    We scan the blockchain to find all token approvals associated with your wallet address. 
-                    This includes ERC-20, ERC-721, and ERC-1155 token approvals.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <span className="text-sm font-bold text-green-600">2</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Risk Assessment</h3>
-                  <p className="text-gray-600">
-                    Each approval is analyzed for risk factors including amount, contract reputation, 
-                    and time since last interaction to determine the risk level.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <span className="text-sm font-bold text-yellow-600">3</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Local Processing</h3>
-                  <p className="text-gray-600">
-                    All analysis happens locally in your browser. We never store your private keys 
-                    or have access to your wallet funds.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start">
-                <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <span className="text-sm font-bold text-purple-600">4</span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Actionable Results</h3>
-                  <p className="text-gray-600">
-                    You receive clear, actionable information about which approvals to revoke 
-                    and how to protect your wallet going forward.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="space-y-6">
+            {howItWorksSteps.map((step) => {
+              const Icon = step.icon
+              return (
+                <div key={step.step} className="flex items-start">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
+                    <span className="text-sm font-bold text-gray-600">{step.step}</span>
+          </div>
+                  <div className="flex-1">
+                    <div className="flex items-center mb-2">
+                      <Icon className={`w-5 h-5 ${step.color} mr-2`} />
+                      <h3 className="text-lg font-medium text-gray-900">{step.title}</h3>
+          </div>
+                    <p className="text-gray-600">{step.description}</p>
+          </div>
+        </div>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* Revoking Token Approvals */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Revoking Token Approvals: Deep Dive</h2>
+          <div className="space-y-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Revoke.cash</h3>
+              <p className="text-gray-600 mb-4">
+                Revoke.cash is one of the most popular tools for managing token approvals. Key features:
+              </p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• Supports <strong>100+ networks</strong></li>
+                <li>• You can either <strong>connect wallet</strong> or <strong>enter wallet address/ENS</strong> to see approvals</li>
+                <li>• Provides filtering / sorting: newest-first, by approved spender, by unlimited approvals, etc.</li>
+                <li>• For each approval you get options: <strong>Revoke</strong> (set the allowance to zero) or <strong>Edit amount</strong> (reduce from unlimited to a specific amount)</li>
+                <li>• There is a browser extension option that warns when you&apos;re about to sign potentially dangerous approvals</li>
+              </ul>
+    </div>
+
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Etherscan & Other Block Explorers</h3>
+              <p className="text-gray-600 mb-4">Another path for revoking approvals:</p>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• Use <strong>Etherscan&apos;s Token Approvals</strong> page (or equivalent on other explorers like Polygonscan)</li>
+                <li>• Steps usually:</li>
+                <li className="ml-4">1. Go to Token Approvals tool</li>
+                <li className="ml-4">2. Connect your wallet or enter your wallet address</li>
+                <li className="ml-4">3. View list of approvals (ERC-20, ERC-721, etc.)</li>
+                <li className="ml-4">4. Find unwanted or unlimited approvals</li>
+                <li className="ml-4">5. Click <strong>Revoke</strong> or &quot;Set approval to zero&quot; / &quot;Cancel approval&quot;</li>
+              </ul>
+      </div>
+
+            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-yellow-800 mb-4">Things to Know / Cost & Risk</h3>
+              <ul className="space-y-2 text-sm text-yellow-700">
+                <li>• <strong>Gas fees:</strong> Revoking approval is an on-chain transaction, so you&apos;ll pay gas (variable depending on network load)</li>
+                <li>• <strong>Each revocation is a separate transaction:</strong> You can&apos;t batch all approvals in one transaction easily</li>
+                <li>• <strong>Revoking doesn&apos;t affect deposited/staked tokens:</strong> If your tokens are already locked or staked, revoking approval won&apos;t remove them</li>
+                <li>• <strong>Revocation is preventative, not restorative:</strong> If tokens are already stolen, revoking doesn&apos;t get them back</li>
+              </ul>
+          </div>
           </div>
         </section>
 
         {/* Setting Up Alerts */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Setting Up Alerts</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <div className="flex items-center mb-4">
-                <Mail className="w-6 h-6 text-blue-600 mr-3" />
-                <h3 className="text-lg font-semibold text-gray-900">Email Alerts</h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                Receive email notifications when new risky approvals are detected on your wallet.
-              </p>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>• Daily digest of all approvals</li>
-                <li>• Immediate alerts for high-risk approvals</li>
-                <li>• Weekly security summary</li>
-                <li>• Customizable risk thresholds</li>
-              </ul>
-              <a href="/preferences" className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium mt-4">
-                Configure Email Alerts
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </a>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <div className="flex items-center mb-4">
-                <Settings className="w-6 h-6 text-green-600 mr-3" />
-                <h3 className="text-lg font-semibold text-gray-900">Slack Integration</h3>
-              </div>
-              <p className="text-gray-600 mb-4">
-                Get real-time notifications in your Slack workspace for immediate awareness.
-              </p>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li>• Real-time notifications</li>
-                <li>• Team collaboration</li>
-                <li>• Custom webhook integration</li>
-                <li>• Risk-only or all approvals</li>
-              </ul>
-              <a href="/preferences" className="inline-flex items-center text-green-600 hover:text-green-800 text-sm font-medium mt-4">
-                Set Up Slack
-                <ArrowRight className="w-4 h-4 ml-1" />
-              </a>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {alertTypes.map((alert) => {
+              const Icon = alert.icon
+              return (
+                <div key={alert.type} className={`${alert.bgColor} border border-gray-200 rounded-lg p-6`}>
+                  <div className="flex items-center mb-4">
+                    <Icon className={`w-6 h-6 ${alert.color} mr-3`} />
+                    <h3 className="text-lg font-semibold text-gray-900">{alert.type}</h3>
+          </div>
+                  <p className="text-gray-600 mb-4 text-sm">{alert.description}</p>
+                  <ul className="space-y-1 text-sm text-gray-600">
+                    {alert.features.map((feature, index) => (
+                      <li key={index}>• {feature}</li>
+                    ))}
+                  </ul>
+    </div>
+  )
+            })}
           </div>
         </section>
 
-        {/* Best Practices */}
+        {/* Security Best Practices */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Security Best Practices</h2>
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
             <div className="flex items-start">
               <AlertTriangle className="w-6 h-6 text-yellow-600 mr-3 mt-1" />
-              <div>
+          <div>
                 <h3 className="text-lg font-semibold text-yellow-800 mb-3">Important Security Tips</h3>
                 <ul className="space-y-2 text-yellow-700">
-                  <li>• <strong>Revoke unlimited approvals immediately</strong> - These allow any amount to be taken</li>
-                  <li>• <strong>Review approvals regularly</strong> - Check your wallet at least weekly</li>
-                  <li>• <strong>Be cautious with new dApps</strong> - Only approve what you need</li>
-                  <li>• <strong>Use specific amounts</strong> - Avoid unlimited approvals when possible</li>
-                  <li>• <strong>Keep software updated</strong> - Use the latest wallet and browser versions</li>
-                </ul>
-              </div>
-            </div>
+                  {bestPractices.map((practice, index) => (
+                    <li key={index}>• {practice}</li>
+                  ))}
+            </ul>
+          </div>
+        </div>
           </div>
         </section>
 
         {/* Troubleshooting */}
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Troubleshooting</h2>
-          <div className="space-y-4">
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Scan Not Working?</h3>
-              <p className="text-gray-600 mb-3">
-                If the scan fails or returns no results, try these solutions:
-              </p>
-              <ul className="space-y-1 text-sm text-gray-600">
-                <li>• Ensure your wallet is connected and unlocked</li>
-                <li>• Check that you&apos;re on a supported network (Ethereum, Arbitrum, Base)</li>
-                <li>• Try refreshing the page and reconnecting your wallet</li>
-                <li>• Clear your browser cache and cookies</li>
-              </ul>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Not Receiving Alerts?</h3>
-              <p className="text-gray-600 mb-3">
-                If you&apos;re not getting email or Slack notifications:
-              </p>
-              <ul className="space-y-1 text-sm text-gray-600">
-                <li>• Check your spam/junk folder</li>
-                <li>• Verify your email address in preferences</li>
-                <li>• Ensure Slack webhook URL is correct</li>
-                <li>• Check that alerts are enabled in your preferences</li>
-              </ul>
-            </div>
+        <div className="space-y-4">
+            {troubleshootingItems.map((item, index) => (
+              <div key={index} className="bg-white border border-gray-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.issue}</h3>
+                <ul className="space-y-1 text-sm text-gray-600">
+                  {item.solutions.map((solution, solIndex) => (
+                    <li key={solIndex}>• {solution}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Getting Help */}
+        {/* FAQ */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Need More Help?</h2>
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 mb-4">
-              Can&apos;t find what you&apos;re looking for? We&apos;re here to help.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <a href="/faq" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                Frequently Asked Questions
-              </a>
-              <a href="/contact" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                Contact Support
-              </a>
-              <a href="/security" className="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                Security Information
-              </a>
-            </div>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">FAQ</h2>
+          <div className="space-y-4">
+            {faqItems.map((item, index) => (
+              <div key={index} className="bg-white border border-gray-200 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Q: {item.question}</h3>
+                <p className="text-gray-600">A: {item.answer}</p>
+              </div>
+            ))}
           </div>
+        </section>
+
+        {/* Next Steps */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Next Steps</h2>
+          <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+            <div className="flex items-start">
+              <CheckCircle className="w-6 h-6 text-green-600 mr-3 mt-1" />
+          <div>
+                <h3 className="text-lg font-semibold text-green-800 mb-3">Recommended Actions</h3>
+                <ul className="space-y-2 text-green-700">
+                  <li>• Use <strong>Revoke.cash</strong> to audit your current approvals: connect or enter your wallet address, inspect unlimited or high-risk approvals, revoke where needed</li>
+                  <li>• Enable regular alerts in Allowance Guard so you&apos;re notified of new risky permissions</li>
+                  <li>• Make revoking approvals part of your regular security routine</li>
+                  <li>• Consider using browser extension / delegate-style tools (when available) for early warning or automatic revocation triggers</li>
+                </ul>
+                <div className="mt-4 p-3 bg-green-100 border border-green-300 rounded-lg">
+                  <p className="text-green-800 text-sm font-medium">
+                    You&apos;re in control. Regular audits + careful approval management = much stronger wallet security.
+            </p>
+          </div>
+        </div>
+            </div>
+    </div>
         </section>
       </main>
 
@@ -359,7 +529,7 @@ export default function DocsPage() {
               <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
               <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
               <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
-            </div>
+      </div>
           </div>
         </div>
       </footer>
