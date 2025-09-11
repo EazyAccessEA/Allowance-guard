@@ -228,13 +228,13 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-platinum">
-      {/* Fireart-Style Hero Section */}
+      {/* PureEdgeOS + Fireart Hero Section - Mobile First */}
       <section className="bg-platinum">
-        <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
           <div className="text-center fireart-fade-in">
             {/* Logo */}
-            <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 relative fireart-bounce-subtle">
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 relative fireart-bounce-subtle">
                 <Image
                   src="/AG_Logo2.png"
                   alt="Allowance Guard"
@@ -244,104 +244,125 @@ export default function HomePage() {
               </div>
             </div>
             
-            <h1 className="fireart-heading-1 mb-6 sm:mb-8">
+            <h1 className="fireart-heading-1 mb-4 sm:mb-6">
               Allowance Guard
             </h1>
             
-            {/* Fireart-Style Problem Statement */}
-            <div className="fireart-card bg-gradient-to-br from-red-50 to-red-100 border-red-200 mb-8 max-w-4xl mx-auto fireart-slide-up">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-3">
-                  <AlertTriangle className="w-6 h-6 text-crimson" />
+            {/* PureEdgeOS Clarity: What This Site Does - 3 Second Rule */}
+            <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 mb-6 max-w-3xl mx-auto fireart-slide-up">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-10 h-10 bg-cobalt-100 rounded-full flex items-center justify-center mr-3">
+                  <Shield className="w-5 h-5 text-cobalt" />
                 </div>
-                <h2 className="fireart-heading-3 text-crimson">Your Wallet May Be At Risk</h2>
+                <h2 className="fireart-heading-3 text-cobalt">Secure Your Crypto Wallet</h2>
               </div>
-              <div className="fireart-body-large text-red-700 space-y-4">
-                <p>
-                  <strong>Token approvals are the #1 attack vector in DeFi.</strong> Over $3.2 billion has been stolen 
-                  through approval-based attacks in 2024 alone, with the average victim losing $47,000.
-                </p>
-                <p>
-                  Most users unknowingly grant <strong>unlimited approvals</strong> to dApps, allowing malicious contracts 
-                  to drain entire token balances without additional permission. These approvals persist indefinitely 
-                  until manually revoked.
-                </p>
-                <div className="fireart-card bg-red-200 border-red-300 p-6 mt-6">
-                  <h3 className="fireart-heading-3 text-red-800 mb-4">Real Attack Examples:</h3>
-                  <ul className="fireart-body space-y-2">
-                    <li>• <strong>March 2024:</strong> $200M stolen from users with unlimited USDC approvals</li>
-                    <li>• <strong>July 2024:</strong> $150M drained via compromised DeFi protocol approvals</li>
-                    <li>• <strong>September 2024:</strong> $89M lost through phishing sites with malicious approvals</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* Fireart-Style Solution */}
-            <div className="fireart-card bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 mb-8 max-w-3xl mx-auto fireart-slide-up">
-              <div className="flex items-center justify-center mb-6">
-                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
-                  <Shield className="w-6 h-6 text-emerald" />
-                </div>
-                <h2 className="fireart-heading-3 text-emerald">Protection is Simple</h2>
-              </div>
-              <p className="fireart-body-large text-emerald-700 text-center">
-                Connect your wallet below, scan for dangerous approvals, and revoke risky permissions instantly.
+              <p className="fireart-body-large text-cobalt-700 text-center mb-4">
+                <strong>Find and revoke dangerous token approvals</strong> that could drain your wallet
+              </p>
+              <p className="fireart-body text-charcoal text-center">
+                Connect your wallet → Scan for risks → Revoke dangerous permissions
               </p>
             </div>
+
+            {/* PureEdgeOS Clarity: Why This Matters - Problem Statement */}
+            <div className="fireart-card bg-gradient-to-br from-red-50 to-red-100 border-red-200 mb-6 max-w-3xl mx-auto fireart-slide-up">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
+                  <AlertTriangle className="w-5 h-5 text-crimson" />
+                </div>
+                <h2 className="fireart-heading-3 text-crimson">$3.2B+ Stolen in 2024</h2>
+              </div>
+              <div className="fireart-body text-red-700 space-y-3">
+                <p>
+                  <strong>Token approvals are the #1 attack vector.</strong> Most users unknowingly grant 
+                  <strong> unlimited approvals</strong> to dApps, allowing malicious contracts to drain 
+                  entire token balances without additional permission.
+                </p>
+                <div className="bg-red-200 border-red-300 p-4 rounded-lg">
+                  <p className="fireart-body text-red-800">
+                    <strong>Average loss per victim: $47,000</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
                   
-            {/* Fireart-Style Primary Action */}
-            <div className="mb-8 sm:mb-12">
-              <div className="space-y-6">
-                {/* Wallet Connection - Fireart Style */}
-                <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 max-w-md mx-auto fireart-scale-in">
-                  {!isConnected ? (
-                    <>
-                      <p className="fireart-body text-cobalt mb-4 text-center">
-                        Connect your wallet to get started
-                      </p>
+            {/* PureEdgeOS Primary Action - Mobile First */}
+            <div className="mb-8">
+              <div className="space-y-4">
+                {/* Step 1: Connect Wallet */}
+                <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 max-w-sm mx-auto fireart-scale-in">
+                  <div className="text-center">
+                    <div className="w-8 h-8 bg-cobalt-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <span className="text-cobalt font-bold text-sm">1</span>
+                    </div>
+                    <h3 className="fireart-body font-medium text-cobalt mb-3">Connect Your Wallet</h3>
+                    {!isConnected ? (
                       <ConnectButton />
-                    </>
-                  ) : (
-                    <>
-                      <p className="fireart-body text-emerald mb-4 text-center">
-                        Wallet connected! Ready to scan
-                      </p>
-                      <div className="flex gap-3">
-                        <ConnectButton />
-                        <button 
-                          onClick={startScan} 
-                          disabled={pending}
-                          className="fireart-button flex-1"
-                        >
-                          {pending ? (
-                            <>
-                              <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                              </svg>
-                              Scanning...
-                            </>
-                          ) : (
-                            <>
-                              <Eye className="w-4 h-4" />
-                              Scan Now
-                            </>
-                          )}
-                        </button>
+                    ) : (
+                      <div className="flex items-center justify-center gap-2 text-emerald">
+                        <div className="w-2 h-2 bg-emerald rounded-full"></div>
+                        <span className="fireart-body text-emerald">Connected</span>
                       </div>
-                    </>
-                  )}
+                    )}
+                  </div>
+                </div>
+
+                {/* Step 2: Scan for Risks */}
+                <div className="fireart-card bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 max-w-sm mx-auto fireart-scale-in">
+                  <div className="text-center">
+                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <span className="text-emerald font-bold text-sm">2</span>
+                    </div>
+                    <h3 className="fireart-body font-medium text-emerald mb-3">Scan for Risks</h3>
+                    {!isConnected ? (
+                      <p className="fireart-caption text-charcoal">Connect wallet first</p>
+                    ) : (
+                      <button 
+                        onClick={startScan} 
+                        disabled={pending}
+                        className="fireart-button w-full"
+                      >
+                        {pending ? (
+                          <>
+                            <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Scanning...
+                          </>
+                        ) : (
+                          <>
+                            <Eye className="w-4 h-4" />
+                            Scan Now
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Step 3: Review & Revoke */}
+                <div className="fireart-card bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 max-w-sm mx-auto fireart-scale-in">
+                  <div className="text-center">
+                    <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <span className="text-amber font-bold text-sm">3</span>
+                    </div>
+                    <h3 className="fireart-body font-medium text-amber mb-3">Review & Revoke</h3>
+                    <p className="fireart-caption text-charcoal">
+                      Review risky approvals and revoke dangerous permissions
+                    </p>
+                  </div>
                 </div>
                 
-                <p className="fireart-caption text-center">
-                  We never store your private keys. Your wallet stays in your control.
-                </p>
-                
-                {isConnected && (
-                  <p className="fireart-caption text-center">
-                    This will check all your token approvals across Ethereum, Arbitrum, and Base
+                <div className="text-center space-y-2">
+                  <p className="fireart-caption text-charcoal">
+                    🔒 We never store your private keys. Your wallet stays in your control.
                   </p>
-                )}
+                  {isConnected && (
+                    <p className="fireart-caption text-charcoal">
+                      Scans Ethereum, Arbitrum, and Base networks
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -385,83 +406,75 @@ export default function HomePage() {
               </div>
             )}
 
-            {/* Fireart-Style Quick Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
+            {/* PureEdgeOS Trust Indicators - Mobile First */}
+            <div className="grid grid-cols-2 gap-4 mt-8 max-w-2xl mx-auto">
               <div className="fireart-card text-center fireart-scale-in">
-                <div className="fireart-heading-2 text-crimson mb-2">$3.2B+</div>
-                <div className="fireart-caption">Stolen via Approvals (2024)</div>
+                <div className="fireart-heading-3 text-crimson mb-1">$3.2B+</div>
+                <div className="fireart-caption">Stolen in 2024</div>
               </div>
               <div className="fireart-card text-center fireart-scale-in" style={{animationDelay: '0.1s'}}>
-                <div className="fireart-heading-2 text-cobalt mb-2">68,000+</div>
+                <div className="fireart-heading-3 text-emerald mb-1">68K+</div>
                 <div className="fireart-caption">Wallets Protected</div>
-              </div>
-              <div className="fireart-card text-center fireart-scale-in" style={{animationDelay: '0.2s'}}>
-                <div className="fireart-heading-2 text-amber mb-2">$47K</div>
-                <div className="fireart-caption">Average Loss per Victim</div>
-              </div>
-              <div className="fireart-card text-center fireart-scale-in" style={{animationDelay: '0.3s'}}>
-                <div className="fireart-heading-2 text-emerald mb-2">24/7</div>
-                <div className="fireart-caption">Real-time Monitoring</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Fireart-Style What You'll See Section */}
+      {/* PureEdgeOS Risk Categories - Mobile First */}
       <section className="bg-warm-gray">
-        <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-20">
-          <div className="text-center mb-16">
-            <h2 className="fireart-heading-2 mb-6">
-              What You&apos;ll See After Scanning
+        <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 sm:py-16">
+          <div className="text-center mb-8">
+            <h2 className="fireart-heading-2 mb-4">
+              Risk Categories
             </h2>
-            <p className="fireart-body-large text-charcoal">
-              We categorize your approvals by risk level to help you make informed decisions.
+            <p className="fireart-body text-charcoal">
+              We categorize approvals by risk level to help you decide what to revoke
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-4 max-w-2xl mx-auto">
             <div className="fireart-card text-center fireart-slide-up">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-crimson font-bold text-2xl">!</span>
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-crimson font-bold text-xl">!</span>
               </div>
-              <h3 className="fireart-heading-3 text-crimson mb-4">UNLIMITED</h3>
-              <p className="fireart-body text-charcoal">Can take any amount from your wallet</p>
+              <h3 className="fireart-heading-3 text-crimson mb-2">UNLIMITED</h3>
+              <p className="fireart-body text-charcoal">Can drain your entire wallet</p>
             </div>
             <div className="fireart-card text-center fireart-slide-up" style={{animationDelay: '0.1s'}}>
-              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-amber font-bold text-2xl">⚠</span>
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-amber font-bold text-xl">⚠</span>
               </div>
-              <h3 className="fireart-heading-3 text-amber mb-4">HIGH RISK</h3>
+              <h3 className="fireart-heading-3 text-amber mb-2">HIGH RISK</h3>
               <p className="fireart-body text-charcoal">Large amounts or unknown contracts</p>
             </div>
             <div className="fireart-card text-center fireart-slide-up" style={{animationDelay: '0.2s'}}>
-              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-emerald font-bold text-2xl">✓</span>
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-emerald font-bold text-xl">✓</span>
               </div>
-              <h3 className="fireart-heading-3 text-emerald mb-4">SAFE</h3>
+              <h3 className="fireart-heading-3 text-emerald mb-2">SAFE</h3>
               <p className="fireart-body text-charcoal">Small amounts from trusted sources</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Application Section */}
+      {/* Main Application Section - Mobile First */}
       {isConnected && (
         <section className="bg-white">
-          <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 sm:py-16">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
+          <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 sm:py-12">
+            <div className="text-center mb-6">
+              <h2 className="fireart-heading-2 mb-3">
                 Your Wallet Security
-                </h2>
-              <p className="text-gray-600">
+              </h2>
+              <p className="fireart-body text-charcoal">
                 Manage your token approvals and stay protected
-                </p>
-              </div>
+              </p>
+            </div>
 
             {/* Wallet Manager */}
-            <div className="bg-gray-50 rounded-lg p-6 mb-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Wallet Addresses</h3>
+            <div className="fireart-card bg-warm-gray mb-6">
+              <h3 className="fireart-heading-3 mb-4">Wallet Addresses</h3>
               <WalletManager 
                 selected={selectedWallet} 
                 onSelect={setSelectedWallet}
@@ -471,10 +484,10 @@ export default function HomePage() {
 
             {/* Allowances Table */}
             {rows.length > 0 && (
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                <div className="px-6 py-4 border-b border-gray-200">
-                  <h3 className="text-lg font-semibold text-gray-900">Token Approvals</h3>
-                  <p className="text-gray-600 text-sm mt-1">
+              <div className="fireart-card overflow-hidden">
+                <div className="border-b border-gray-200 pb-4 mb-4">
+                  <h3 className="fireart-heading-3">Token Approvals</h3>
+                  <p className="fireart-caption mt-1">
                     Review and manage your active token approvals
                   </p>
                 </div>
@@ -487,7 +500,7 @@ export default function HomePage() {
                 
                 {/* Pagination Controls */}
                 {selectedWallet && total > 0 && (
-                  <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                  <div className="border-t border-gray-200 pt-4 mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                       <button 
                         disabled={page <= 1} 
@@ -498,11 +511,11 @@ export default function HomePage() {
                             await fetchAllowances(selectedWallet, p, pageSize)
                           }
                         }}
-                        className="rounded border px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                        className="fireart-button-ghost disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Previous
                       </button>
-                      <span className="text-sm text-gray-600">
+                      <span className="fireart-caption">
                         Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
                       </span>
                       <button 
@@ -514,13 +527,13 @@ export default function HomePage() {
                             await fetchAllowances(selectedWallet, p, pageSize)
                           }
                         }}
-                        className="rounded border px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                        className="fireart-button-ghost disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Next
                       </button>
                     </div>
                     <select
-                      className="rounded border px-2 py-1 text-sm"
+                      className="fireart-input w-auto"
                       value={pageSize}
                       onChange={async (e) => {
                         const ps = Number(e.target.value)
@@ -542,9 +555,9 @@ export default function HomePage() {
 
             {/* Email Alerts */}
             {hasSavedWallet && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Email Alerts</h3>
-                <p className="text-gray-600 text-sm mb-4">
+              <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 mt-6">
+                <h3 className="fireart-heading-3 mb-3">Email Alerts</h3>
+                <p className="fireart-body text-charcoal mb-4">
                   Get notified when new approvals are detected on your wallets
                 </p>
                 
@@ -555,32 +568,32 @@ export default function HomePage() {
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="fireart-input"
                     />
                   </div>
                     
                   <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        id="riskOnly"
-                        checked={riskOnly}
-                        onChange={(e) => setRiskOnly(e.target.checked)}
+                    <input
+                      type="checkbox"
+                      id="riskOnly"
+                      checked={riskOnly}
+                      onChange={(e) => setRiskOnly(e.target.checked)}
                       className="mr-2"
                     />
-                    <label htmlFor="riskOnly" className="text-sm text-gray-600">
+                    <label htmlFor="riskOnly" className="fireart-body text-charcoal">
                       Only alert for high-risk approvals
                     </label>
                   </div>
                   
                   <button
                     onClick={subscribe}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                    className="fireart-button"
                   >
                     Subscribe to Alerts
                   </button>
                   
                   {subMsg && (
-                    <p className="text-sm text-green-600">{subMsg}</p>
+                    <p className="fireart-body text-emerald">{subMsg}</p>
                   )}
                 </div>
               </div>
@@ -588,76 +601,76 @@ export default function HomePage() {
 
             {/* Risk Policy */}
             {hasSavedWallet && (
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mt-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Risk Policy</h3>
-                <p className="text-gray-600 text-sm mb-4">
+              <div className="fireart-card bg-warm-gray mt-6">
+                <h3 className="fireart-heading-3 mb-3">Risk Policy</h3>
+                <p className="fireart-body text-charcoal mb-4">
                   Configure what counts as alert-worthy for your wallet
                 </p>
                 
                 {policy && (
                   <div className="space-y-4">
-                    <div className="flex gap-4 items-center">
-                      <label className="text-sm font-medium w-32">Min risk score</label>
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                      <label className="fireart-body font-medium w-32">Min risk score</label>
                       <input 
-                        className="rounded border px-3 py-2 text-sm w-24" 
+                        className="fireart-input w-24" 
                         type="number"
                         value={policy.min_risk_score}
                         onChange={e=>setPolicy({...policy, min_risk_score: Number(e.target.value)})}
                       />
                     </div>
                     
-                    <label className="text-sm flex items-center gap-2">
+                    <label className="fireart-body flex items-center gap-2">
                       <input 
                         type="checkbox" 
                         checked={policy.unlimited_only}
                         onChange={e=>setPolicy({...policy, unlimited_only: e.target.checked})}
                       />
                       Only alert on UNLIMITED approvals
-                      </label>
+                    </label>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4">
                       <div>
-                        <div className="text-sm font-medium mb-2">Include spenders (comma-separated)</div>
+                        <div className="fireart-body font-medium mb-2">Include spenders (comma-separated)</div>
                         <input 
-                          className="w-full rounded border px-3 py-2 text-sm"
+                          className="fireart-input"
                           value={(policy.include_spenders||[]).join(',')}
                           onChange={e=>setPolicy({...policy, include_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                         />
                       </div>
                       <div>
-                        <div className="text-sm font-medium mb-2">Ignore spenders</div>
+                        <div className="fireart-body font-medium mb-2">Ignore spenders</div>
                         <input 
-                          className="w-full rounded border px-3 py-2 text-sm"
+                          className="fireart-input"
                           value={(policy.ignore_spenders||[]).join(',')}
                           onChange={e=>setPolicy({...policy, ignore_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                         />
                       </div>
                       <div>
-                        <div className="text-sm font-medium mb-2">Include tokens</div>
+                        <div className="fireart-body font-medium mb-2">Include tokens</div>
                         <input 
-                          className="w-full rounded border px-3 py-2 text-sm"
+                          className="fireart-input"
                           value={(policy.include_tokens||[]).join(',')}
                           onChange={e=>setPolicy({...policy, include_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                         />
                       </div>
                       <div>
-                        <div className="text-sm font-medium mb-2">Ignore tokens</div>
+                        <div className="fireart-body font-medium mb-2">Ignore tokens</div>
                         <input 
-                          className="w-full rounded border px-3 py-2 text-sm"
+                          className="fireart-input"
                           value={(policy.ignore_tokens||[]).join(',')}
                           onChange={e=>setPolicy({...policy, ignore_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                         />
                       </div>
                     </div>
                     
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <button 
                         onClick={savePolicy} 
-                        className="rounded border px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700"
+                        className="fireart-button"
                       >
                         Save Policy
                       </button>
-                      {slackMsg && <span className="text-sm text-green-600">{slackMsg}</span>}
+                      {slackMsg && <span className="fireart-body text-emerald">{slackMsg}</span>}
                     </div>
                   </div>
                 )}
@@ -666,86 +679,86 @@ export default function HomePage() {
 
             {/* Slack Alerts */}
             {hasSavedWallet && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6 mt-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Slack Alerts</h3>
-                <p className="text-gray-600 text-sm mb-4">
+              <div className="fireart-card bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 mt-6">
+                <h3 className="fireart-heading-3 mb-3">Slack Alerts</h3>
+                <p className="fireart-body text-charcoal mb-4">
                   Get daily digests in your Slack workspace
                 </p>
                 
                 {/* Step-by-Step Instructions */}
-                <div className="bg-white rounded-lg p-4 mb-4 border border-green-200">
-                  <h4 className="font-semibold text-gray-900 mb-3">📋 How to Set Up Slack Webhook:</h4>
-                  <div className="space-y-3 text-sm">
+                <div className="fireart-card bg-platinum mb-4">
+                  <h4 className="fireart-heading-3 mb-4">How to Set Up Slack Webhook:</h4>
+                  <div className="space-y-4">
                     <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-green-600 font-bold text-xs">1</span>
+                      <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald font-bold text-xs">1</span>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">Go to your Slack workspace</p>
-                        <p className="text-gray-600">Open Slack in your browser or app</p>
+                        <p className="fireart-body font-medium text-obsidian">Go to your Slack workspace</p>
+                        <p className="fireart-caption text-charcoal">Open Slack in your browser or app</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-green-600 font-bold text-xs">2</span>
+                      <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald font-bold text-xs">2</span>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">Create a new app</p>
-                        <p className="text-gray-600">Go to <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">api.slack.com/apps</a> → &quot;Create New App&quot; → &quot;From scratch&quot;</p>
+                        <p className="fireart-body font-medium text-obsidian">Create a new app</p>
+                        <p className="fireart-caption text-charcoal">Go to <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="text-cobalt underline">api.slack.com/apps</a> → "Create New App" → "From scratch"</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-green-600 font-bold text-xs">3</span>
+                      <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald font-bold text-xs">3</span>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">Name your app</p>
-                        <p className="text-gray-600">App name: &quot;Allowance Guard Alerts&quot;, select your workspace</p>
+                        <p className="fireart-body font-medium text-obsidian">Name your app</p>
+                        <p className="fireart-caption text-charcoal">App name: "Allowance Guard Alerts", select your workspace</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-green-600 font-bold text-xs">4</span>
+                      <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald font-bold text-xs">4</span>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">Enable Incoming Webhooks</p>
-                        <p className="text-gray-600">In your app settings → &quot;Incoming Webhooks&quot; → Toggle &quot;Activate Incoming Webhooks&quot; to ON</p>
+                        <p className="fireart-body font-medium text-obsidian">Enable Incoming Webhooks</p>
+                        <p className="fireart-caption text-charcoal">In your app settings → "Incoming Webhooks" → Toggle "Activate Incoming Webhooks" to ON</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-green-600 font-bold text-xs">5</span>
+                      <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald font-bold text-xs">5</span>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">Add webhook to channel</p>
-                        <p className="text-gray-600">Click &quot;Add New Webhook to Workspace&quot; → Choose a channel (e.g., #alerts) → &quot;Allow&quot;</p>
+                        <p className="fireart-body font-medium text-obsidian">Add webhook to channel</p>
+                        <p className="fireart-caption text-charcoal">Click "Add New Webhook to Workspace" → Choose a channel (e.g., #alerts) → "Allow"</p>
                       </div>
                     </div>
                     
                     <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-green-600 font-bold text-xs">6</span>
+                      <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span className="text-emerald font-bold text-xs">6</span>
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">Copy the webhook URL</p>
-                        <p className="text-gray-600">Copy the webhook URL (starts with https://hooks.slack.com/services/) and paste it below</p>
+                        <p className="fireart-body font-medium text-obsidian">Copy the webhook URL</p>
+                        <p className="fireart-caption text-charcoal">Copy the webhook URL (starts with https://hooks.slack.com/services/) and paste it below</p>
                       </div>
                     </div>
                   </div>
                 </div>
                 
                 {/* Webhook Input */}
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block fireart-body font-medium text-obsidian mb-2">
                       Paste your Slack webhook URL here:
                     </label>
                     <input 
-                      className="w-full rounded border px-3 py-2 text-sm"
+                      className="fireart-input"
                       placeholder="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
                       value={webhook} 
                       onChange={e=>setWebhook(e.target.value)} 
@@ -755,19 +768,19 @@ export default function HomePage() {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button 
                       onClick={addSlack} 
-                      className="rounded border px-4 py-2 text-sm bg-green-600 text-white hover:bg-green-700"
+                      className="fireart-button"
                     >
                       Add Webhook
                     </button>
                     {slackMsg && (
-                      <span className="text-sm text-green-600 flex items-center">
+                      <span className="fireart-body text-emerald flex items-center">
                         {slackMsg}
                       </span>
                     )}
                   </div>
                   
-                  <div className="bg-blue-50 border border-blue-200 rounded p-3">
-                    <p className="text-blue-800 text-xs">
+                  <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 p-4">
+                    <p className="fireart-caption text-cobalt">
                       <strong>💡 Tip:</strong> You can create multiple webhooks for different channels. 
                       Each webhook will receive alerts for this wallet.
                     </p>
@@ -778,15 +791,15 @@ export default function HomePage() {
 
             {/* Public Share Link */}
             {hasSavedWallet && (
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-6 mt-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Public Share Link</h3>
-                <p className="text-gray-600 text-sm mb-4">
+              <div className="fireart-card bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200 mt-6">
+                <h3 className="fireart-heading-3 mb-3">Public Share Link</h3>
+                <p className="fireart-body text-charcoal mb-4">
                   Generate a read-only link to share your wallet&apos;s approval status with others
                 </p>
                 
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <label className="text-sm flex items-center gap-2">
+                  <div className="grid grid-cols-1 gap-4">
+                    <label className="fireart-body flex items-center gap-2">
                       <input 
                         type="checkbox" 
                         checked={censorAddr} 
@@ -795,7 +808,7 @@ export default function HomePage() {
                       />
                       Censor addresses (0x1234…abcd)
                     </label>
-                    <label className="text-sm flex items-center gap-2">
+                    <label className="fireart-body flex items-center gap-2">
                       <input 
                         type="checkbox" 
                         checked={censorAmt} 
@@ -804,7 +817,7 @@ export default function HomePage() {
                       />
                       Hide amounts
                     </label>
-                    <label className="text-sm flex items-center gap-2">
+                    <label className="fireart-body flex items-center gap-2">
                       <input 
                         type="checkbox" 
                         checked={riskOnlyShare} 
@@ -813,10 +826,10 @@ export default function HomePage() {
                       />
                       Risky only (UNLIMITED / STALE / risk&gt;0)
                     </label>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm w-32">Expire after (days)</span>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                      <span className="fireart-body w-32">Expire after (days)</span>
                       <input 
-                        className="w-20 rounded border px-2 py-1 text-sm" 
+                        className="fireart-input w-20" 
                         type="number"
                         value={expireDays} 
                         onChange={e => setExpireDays(e.target.value ? Number(e.target.value) : '')}
@@ -828,18 +841,18 @@ export default function HomePage() {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button 
                       onClick={generateShare} 
-                      className="rounded border px-4 py-2 text-sm bg-purple-600 text-white hover:bg-purple-700"
+                      className="fireart-button"
                     >
                       Generate / Rotate
                     </button>
                     <button 
                       onClick={expireShareLink} 
-                      className="rounded border px-4 py-2 text-sm bg-gray-600 text-white hover:bg-gray-700"
+                      className="fireart-button-secondary"
                     >
                       Expire Link
                     </button>
                     {shareMsg && (
-                      <span className="text-sm text-gray-600 flex items-center">
+                      <span className="fireart-body text-charcoal flex items-center">
                         {shareMsg}
                       </span>
                     )}
@@ -847,12 +860,12 @@ export default function HomePage() {
 
                   {shareToken && (
                     <div className="mt-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block fireart-body font-medium text-obsidian mb-2">
                         Share URL:
                       </label>
                       <div className="flex flex-col sm:flex-row gap-2">
                         <input 
-                          className="flex-1 rounded border px-3 py-2 text-sm font-mono" 
+                          className="flex-1 fireart-input font-mono" 
                           readOnly 
                           value={shareUrl ?? ''} 
                         />
@@ -861,7 +874,7 @@ export default function HomePage() {
                             await navigator.clipboard.writeText(shareUrl || '')
                             setShareMsg('URL copied to clipboard!')
                           }}
-                          className="rounded border px-4 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700"
+                          className="fireart-button"
                         >
                           Copy
                         </button>
@@ -869,8 +882,8 @@ export default function HomePage() {
                     </div>
                   )}
                   
-                  <div className="bg-blue-50 border border-blue-200 rounded p-3">
-                    <p className="text-blue-800 text-xs">
+                  <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 p-4">
+                    <p className="fireart-caption text-cobalt">
                       <strong>🔒 Privacy:</strong> Share links are read-only and can be expired at any time. 
                       Addresses and amounts can be censored for privacy.
                     </p>
@@ -882,11 +895,11 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* Fireart-Style CTA Section */}
+      {/* PureEdgeOS CTA Section - Mobile First */}
       <section className="bg-obsidian text-platinum">
-        <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-20 text-center">
-          <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 relative fireart-bounce-subtle">
+        <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 sm:py-16 text-center">
+          <div className="flex justify-center mb-6">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 relative fireart-bounce-subtle">
               <Image
                 src="/AG_Logo2.png"
                 alt="Allowance Guard"
@@ -896,10 +909,10 @@ export default function HomePage() {
             </div>
           </div>
           
-          <h2 className="fireart-heading-2 text-platinum mb-6">
+          <h2 className="fireart-heading-2 text-platinum mb-4">
             Ready to secure your wallet?
           </h2>
-          <p className="fireart-body-large text-charcoal mb-10 max-w-2xl mx-auto">
+          <p className="fireart-body text-charcoal mb-8 max-w-2xl mx-auto">
             Join thousands of users who trust Allowance Guard to protect their assets.
           </p>
           

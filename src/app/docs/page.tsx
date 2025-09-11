@@ -216,9 +216,9 @@ export default function DocsPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-platinum">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-platinum border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
@@ -229,7 +229,7 @@ export default function DocsPage() {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Allowance Guard</h1>
+            <h1 className="fireart-heading-2 text-obsidian">Allowance Guard</h1>
           </div>
         </div>
       </header>
@@ -238,16 +238,16 @@ export default function DocsPage() {
       <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
         <div className="mb-8">
           <div className="flex items-center mb-4">
-            <BookOpen className="w-8 h-8 text-blue-600 mr-3" />
-            <h1 className="text-3xl font-bold text-gray-900">Documentation</h1>
+            <BookOpen className="w-8 h-8 text-cobalt mr-3" />
+            <h1 className="fireart-heading-1 text-obsidian">Documentation</h1>
           </div>
-          <p className="text-gray-600 mb-4">
+          <p className="fireart-body-large text-charcoal mb-4">
             Protect your wallet from dangerous token approvals. Simple. Transparent. Secure.
           </p>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="fireart-card bg-gradient-to-br from-cobalt-50 to-electric-50 border-cobalt-200 p-4">
             <div className="flex items-center">
-              <Info className="w-5 h-5 text-blue-600 mr-2" />
-              <p className="text-blue-800 text-sm">
+              <Info className="w-5 h-5 text-cobalt mr-2" />
+              <p className="fireart-caption text-cobalt">
                 <strong>Table of Contents:</strong> Quick Start Guide • Supported Networks • Understanding Risk Levels • How Allowance Guard Works • Revoking Token Approvals • Setting Up Alerts • Security Best Practices • Troubleshooting • FAQ • Next Steps
               </p>
             </div>
@@ -256,20 +256,24 @@ export default function DocsPage() {
 
         {/* Quick Start */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Quick Start Guide</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <h2 className="fireart-heading-2 text-obsidian mb-6">Quick Start Guide</h2>
+          <div className="grid grid-cols-1 gap-4">
             {quickStartSteps.map((step) => {
               const Icon = step.icon
   return (
-                <div key={step.step} className={`${step.bgColor} border border-gray-200 rounded-lg p-6`}>
-                  <div className="flex items-center mb-4">
-                    <div className={`w-10 h-10 ${step.bgColor} border-2 border-gray-300 rounded-full flex items-center justify-center mr-4`}>
-                      <span className="text-lg font-bold text-gray-700">{step.step}</span>
+                <div key={step.step} className="fireart-card">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-cobalt-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-lg font-bold text-cobalt">{step.step}</span>
         </div>
-                    <Icon className={`w-6 h-6 ${step.color}`} />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Icon className="w-5 h-5 text-cobalt" />
+                        <h3 className="fireart-heading-3 text-obsidian">{step.title}</h3>
       </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
-                  <p className="text-gray-600 text-sm">{step.description}</p>
+                      <p className="fireart-body text-charcoal">{step.description}</p>
+          </div>
+        </div>
     </div>
   )
             })}
@@ -278,40 +282,29 @@ export default function DocsPage() {
 
         {/* Supported Networks */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Supported Networks</h2>
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 mb-4">
+          <h2 className="fireart-heading-2 text-obsidian mb-6">Supported Networks</h2>
+          <div className="fireart-card">
+            <p className="fireart-body text-charcoal mb-4">
               Allowance Guard currently works across:
             </p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 font-medium text-gray-900">Network</th>
-                    <th className="text-left py-3 font-medium text-gray-900">Chain ID</th>
-                    <th className="text-left py-3 font-medium text-gray-900">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {supportedNetworks.map((network) => (
-                    <tr key={network.chainId} className="border-b border-gray-100 last:border-b-0">
-                      <td className="py-3 font-medium text-gray-900">{network.name}</td>
-                      <td className="py-3 text-gray-600">{network.chainId}</td>
-                      <td className="py-3">
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          {network.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-          </div>
-            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="space-y-3">
+              {supportedNetworks.map((network) => (
+                <div key={network.chainId} className="flex items-center justify-between p-4 bg-warm-gray rounded-lg">
+                  <div>
+                    <h3 className="fireart-body font-medium text-obsidian">{network.name}</h3>
+                    <p className="fireart-caption text-charcoal">Chain ID: {network.chainId}</p>
+                  </div>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800">
+                    <CheckCircle className="w-4 h-4 mr-1" />
+                    {network.status}
+                  </span>
+              </div>
+              ))}
+              </div>
+            <div className="mt-4 fireart-card bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200">
               <div className="flex items-center">
-                <AlertTriangle className="w-4 h-4 text-yellow-600 mr-2" />
-                <p className="text-yellow-800 text-sm">
+                <AlertTriangle className="w-4 h-4 text-amber mr-2" />
+                <p className="fireart-caption text-amber-800">
                   <strong>Planned/Optional:</strong> More EVM-compatible networks may be added later.
                 </p>
               </div>
@@ -321,50 +314,46 @@ export default function DocsPage() {
 
         {/* Risk Levels */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Understanding Risk Levels</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-3 font-medium text-gray-900">Level</th>
-                  <th className="text-left py-3 font-medium text-gray-900">What It Means</th>
-                  <th className="text-left py-3 font-medium text-gray-900">What You Should Do</th>
-                </tr>
-              </thead>
-              <tbody>
-                {riskLevels.map((risk) => (
-                  <tr key={risk.level} className="border-b border-gray-100 last:border-b-0">
-                    <td className="py-3">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${risk.bgColor} ${risk.color}`}>
-                        {risk.level}
-                      </span>
-                    </td>
-                    <td className="py-3 text-gray-600">{risk.description}</td>
-                    <td className="py-3 text-gray-600">{risk.action}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <h2 className="fireart-heading-2 text-obsidian mb-6">Understanding Risk Levels</h2>
+          <div className="space-y-4">
+            {riskLevels.map((risk) => (
+              <div key={risk.level} className="fireart-card">
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 ${risk.bgColor} rounded-full flex items-center justify-center flex-shrink-0`}>
+                    <span className={`text-lg font-bold ${risk.color}`}>
+                      {risk.level === 'UNLIMITED' ? '!' : risk.level === 'HIGH RISK' ? '⚠' : '✓'}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="fireart-heading-3 text-obsidian mb-2">{risk.level}</h3>
+                    <p className="fireart-body text-charcoal mb-2">{risk.description}</p>
+                    <p className="fireart-body font-medium text-obsidian">{risk.action}</p>
+                  </div>
+          </div>
+        </div>
+            ))}
           </div>
         </section>
 
         {/* How It Works */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">How Allowance Guard Works</h2>
-          <div className="space-y-6">
+          <h2 className="fireart-heading-2 text-obsidian mb-6">How Allowance Guard Works</h2>
+          <div className="space-y-4">
             {howItWorksSteps.map((step) => {
               const Icon = step.icon
               return (
-                <div key={step.step} className="flex items-start">
-                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                    <span className="text-sm font-bold text-gray-600">{step.step}</span>
+                <div key={step.step} className="fireart-card">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-cobalt-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-lg font-bold text-cobalt">{step.step}</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Icon className="w-5 h-5 text-cobalt" />
+                        <h3 className="fireart-heading-3 text-obsidian">{step.title}</h3>
+                      </div>
+                      <p className="fireart-body text-charcoal">{step.description}</p>
           </div>
-                  <div className="flex-1">
-                    <div className="flex items-center mb-2">
-                      <Icon className={`w-5 h-5 ${step.color} mr-2`} />
-                      <h3 className="text-lg font-medium text-gray-900">{step.title}</h3>
-          </div>
-                    <p className="text-gray-600">{step.description}</p>
           </div>
         </div>
               )

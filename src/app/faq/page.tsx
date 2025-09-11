@@ -156,9 +156,9 @@ export default function FAQPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-platinum">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-platinum border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
@@ -169,7 +169,7 @@ export default function FAQPage() {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Allowance Guard</h1>
+            <h1 className="fireart-heading-2 text-obsidian">Allowance Guard</h1>
           </div>
         </div>
       </header>
@@ -178,10 +178,10 @@ export default function FAQPage() {
       <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
         <div className="mb-8">
           <div className="flex items-center mb-4">
-            <HelpCircle className="w-8 h-8 text-blue-600 mr-3" />
-            <h1 className="text-3xl font-bold text-gray-900">Frequently Asked Questions</h1>
+            <HelpCircle className="w-8 h-8 text-cobalt mr-3" />
+            <h1 className="fireart-heading-1 text-obsidian">Frequently Asked Questions</h1>
           </div>
-          <p className="text-gray-600">
+          <p className="fireart-body-large text-charcoal">
             Find answers to common questions about Allowance Guard and wallet security.
           </p>
         </div>
@@ -193,17 +193,17 @@ export default function FAQPage() {
             return (
               <section key={category.id} className="mb-12">
                 <div className="flex items-center mb-6">
-                  <div className={`w-12 h-12 ${category.bgColor} rounded-lg flex items-center justify-center mr-4`}>
-                    <Icon className={`w-6 h-6 ${category.color}`} />
+                  <div className="w-12 h-12 bg-cobalt-100 rounded-lg flex items-center justify-center mr-4">
+                    <Icon className="w-6 h-6 text-cobalt" />
                   </div>
-                  <h2 className="text-2xl font-semibold text-gray-900">{category.title}</h2>
+                  <h2 className="fireart-heading-2 text-obsidian">{category.title}</h2>
                 </div>
                 
                 <div className="space-y-4">
                   {category.questions.map((faq, index) => (
-                    <div key={index} className="bg-white border border-gray-200 rounded-lg p-6">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.q}</h3>
-                      <p className="text-gray-600 leading-relaxed">{faq.a}</p>
+                    <div key={index} className="fireart-card">
+                      <h3 className="fireart-heading-3 text-obsidian mb-3">{faq.q}</h3>
+                      <p className="fireart-body text-charcoal leading-relaxed">{faq.a}</p>
                     </div>
                   ))}
                 </div>
@@ -213,54 +213,54 @@ export default function FAQPage() {
         </div>
 
         {/* Quick Actions */}
-        <section className="mt-12 bg-gray-50 border border-gray-200 rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Still Need Help?</h2>
-          <p className="text-gray-600 mb-6">
+        <section className="mt-12 fireart-card bg-warm-gray">
+          <h2 className="fireart-heading-2 text-obsidian mb-4">Still Need Help?</h2>
+          <p className="fireart-body text-charcoal mb-6">
             Can&apos;t find the answer you&apos;re looking for? We&apos;re here to help.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <a 
               href="/contact" 
-              className="flex items-center p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-300 transition-colors"
+              className="flex items-center p-4 fireart-card hover:shadow-medium transition-all"
             >
-              <Mail className="w-5 h-5 text-blue-600 mr-3" />
+              <Mail className="w-5 h-5 text-cobalt mr-3" />
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Contact Support</h3>
-                <p className="text-xs text-gray-500">Get personalized help</p>
+                <h3 className="fireart-body font-medium text-obsidian">Contact Support</h3>
+                <p className="fireart-caption text-charcoal">Get personalized help</p>
               </div>
             </a>
             
             <a 
               href="/docs" 
-              className="flex items-center p-4 bg-white border border-gray-200 rounded-lg hover:border-green-300 transition-colors"
+              className="flex items-center p-4 fireart-card hover:shadow-medium transition-all"
             >
-              <Eye className="w-5 h-5 text-green-600 mr-3" />
+              <Eye className="w-5 h-5 text-emerald mr-3" />
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Documentation</h3>
-                <p className="text-xs text-gray-500">Detailed guides</p>
+                <h3 className="fireart-body font-medium text-obsidian">Documentation</h3>
+                <p className="fireart-caption text-charcoal">Detailed guides</p>
               </div>
             </a>
             
             <a 
               href="/security" 
-              className="flex items-center p-4 bg-white border border-gray-200 rounded-lg hover:border-purple-300 transition-colors"
+              className="flex items-center p-4 fireart-card hover:shadow-medium transition-all"
             >
-              <Lock className="w-5 h-5 text-purple-600 mr-3" />
+              <Lock className="w-5 h-5 text-amber mr-3" />
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Security Info</h3>
-                <p className="text-xs text-gray-500">Safety measures</p>
+                <h3 className="fireart-body font-medium text-obsidian">Security Info</h3>
+                <p className="fireart-caption text-charcoal">Safety measures</p>
               </div>
             </a>
           </div>
         </section>
 
         {/* Security Notice */}
-        <section className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+        <section className="mt-8 fireart-card bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200">
           <div className="flex items-start">
-            <AlertTriangle className="w-6 h-6 text-yellow-600 mr-3 mt-1" />
+            <AlertTriangle className="w-6 h-6 text-amber mr-3 mt-1" />
             <div>
-              <h3 className="text-lg font-semibold text-yellow-800 mb-2">Important Security Reminder</h3>
-              <p className="text-yellow-700 text-sm">
+              <h3 className="fireart-heading-3 text-amber-800 mb-2">Important Security Reminder</h3>
+              <p className="fireart-body text-amber-700">
                 Allowance Guard is a security tool, but it cannot recover stolen funds. Always verify contract addresses, 
                 never share your private keys, and be cautious when interacting with new dApps. If you suspect your wallet 
                 has been compromised, revoke all approvals immediately and move your funds to a new wallet.
@@ -271,16 +271,16 @@ export default function FAQPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-50 border-t border-gray-200 mt-16">
+      <footer className="bg-warm-gray border-t border-gray-200 mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
           <div className="text-center">
-            <p className="text-gray-600 text-sm">
+            <p className="fireart-caption text-charcoal">
               © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
             <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
+              <a href="/terms" className="fireart-caption text-cobalt hover:text-obsidian">Terms of Service</a>
+              <a href="/privacy" className="fireart-caption text-cobalt hover:text-obsidian">Privacy Policy</a>
+              <a href="/cookies" className="fireart-caption text-cobalt hover:text-obsidian">Cookie Policy</a>
             </div>
           </div>
         </div>
