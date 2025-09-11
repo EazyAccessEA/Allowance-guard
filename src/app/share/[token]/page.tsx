@@ -14,14 +14,15 @@ type Item = {
   badges: string[]
 }
 
-export default function SharePage({ params }: { params: { token: string } }) {
+export default function SharePage({ params }: { params: Promise<{ token: string }> }) {
   const [data, setData] = useState<{ wallet: string; risk_only: boolean; expires_at: string | null; items: Item[] } | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     ;(async () => {
       try {
-        const r = await fetch(`/api/share/${params.token}`)
+        const { token } = await params
+        const r = await fetch(`/api/share/${token}`)
         const j = await r.json()
         if (!r.ok) throw new Error(j.error || 'Error')
         setData(j)
@@ -29,7 +30,7 @@ export default function SharePage({ params }: { params: { token: string } }) {
         setError(e instanceof Error ? e.message : 'Failed to load')
       }
     })()
-  }, [params.token])
+  }, [params])
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-10">

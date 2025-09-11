@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import { getShareByToken, transformRowsForShare, bumpView } from '@/lib/share'
 import { pool } from '@/lib/db'
 
-export async function GET(_req: Request, { params }: { params: { token: string } }) {
-  const token = params.token
+export async function GET(_req: Request, { params }: { params: Promise<{ token: string }> }) {
+  const { token } = await params
   const share = await getShareByToken(token)
   if (!share) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
