@@ -413,7 +413,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:py-20">
           <div className="text-center mb-16">
             <h2 className="fireart-heading-2 mb-6">
-              What You'll See After Scanning
+              What You&apos;ll See After Scanning
             </h2>
             <p className="fireart-body-large text-charcoal">
               We categorize your approvals by risk level to help you make informed decisions.
