@@ -6,15 +6,10 @@ import {
   Mail, 
   Settings, 
   BookOpen, 
-  ArrowRight, 
   CheckCircle,
   Network,
   Zap,
   Lock,
-  HelpCircle,
-  ExternalLink,
-  DollarSign,
-  Clock,
   XCircle,
   Info
 } from 'lucide-react'
