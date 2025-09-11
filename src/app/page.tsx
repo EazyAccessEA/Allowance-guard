@@ -34,12 +34,10 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
   
   // Job and pagination state
-  const [jobId, setJobId] = useState<number | null>(null)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(25)
   const [total, setTotal] = useState(0)
   const [message, setMessage] = useState<string | null>(null)
-  const [hadScan, setHadScan] = useState(false)
   
   // Policy and Slack state
   const [policy, setPolicy] = useState<{
@@ -94,7 +92,6 @@ export default function HomePage() {
       const json = await res.json()
       if (!res.ok) throw new Error(json.error || 'Failed to queue')
       
-      setJobId(json.jobId)
       setMessage(`Scan queued (#${json.jobId})`)
       
       // Optional: immediately ping the processor in dev
@@ -132,10 +129,10 @@ export default function HomePage() {
       
       await fetchAllowances(target, page, pageSize)
       setSelectedWallet(target)
-      setHadScan(true)
       
-    } catch (e: any) {
-      setError(`Network error: ${e?.message || 'Unknown error'}. Please check your connection and try again.`)
+    } catch (e: unknown) {
+      const errorMessage = e instanceof Error ? e.message : 'Unknown error'
+      setError(`Network error: ${errorMessage}. Please check your connection and try again.`)
     } finally {
       setPending(false)
     }
@@ -489,7 +486,9 @@ export default function HomePage() {
                         onClick={async () => { 
                           const p = page - 1
                           setPage(p)
-                          selectedWallet && fetchAllowances(selectedWallet, p, pageSize)
+                          if (selectedWallet) {
+                            await fetchAllowances(selectedWallet, p, pageSize)
+                          }
                         }}
                         className="rounded border px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                       >
@@ -503,7 +502,9 @@ export default function HomePage() {
                         onClick={async () => { 
                           const p = page + 1
                           setPage(p)
-                          selectedWallet && fetchAllowances(selectedWallet, p, pageSize)
+                          if (selectedWallet) {
+                            await fetchAllowances(selectedWallet, p, pageSize)
+                          }
                         }}
                         className="rounded border px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                       >
@@ -517,7 +518,9 @@ export default function HomePage() {
                         const ps = Number(e.target.value)
                         setPageSize(ps)
                         setPage(1)
-                        selectedWallet && fetchAllowances(selectedWallet, 1, ps)
+                        if (selectedWallet) {
+                          await fetchAllowances(selectedWallet, 1, ps)
+                        }
                       }}
                     >
                       {[10, 25, 50, 100].map(n => (

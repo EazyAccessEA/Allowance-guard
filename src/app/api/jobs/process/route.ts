@@ -3,8 +3,6 @@ import { claimPending, finishJob, JobRow } from '@/lib/jobs'
 import { scanWalletOnChain } from '@/lib/scanner'
 import { apiLogger } from '@/lib/logger'
 
-const MAP: Record<string, 1|42161|8453> = { eth: 1, arb: 42161, base: 8453 }
-
 async function handle(job: JobRow) {
   if (job.type !== 'scan_wallet') throw new Error(`Unknown job type: ${job.type}`)
   const { wallet, chains } = job.payload as { wallet: string; chains: number[] }
@@ -30,9 +28,10 @@ export async function POST() {
         await finishJob(j.id, true)
         done++
         apiLogger.info('Job succeeded', { jobId: j.id })
-      } catch (e: any) { 
-        await finishJob(j.id, false, e?.message || String(e))
-        apiLogger.error('Job failed', { jobId: j.id, error: e?.message || String(e) })
+      } catch (e: unknown) { 
+        const errorMessage = e instanceof Error ? e.message : String(e)
+        await finishJob(j.id, false, errorMessage)
+        apiLogger.error('Job failed', { jobId: j.id, error: errorMessage })
       }
     }
     

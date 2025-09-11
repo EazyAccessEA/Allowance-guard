@@ -4,7 +4,7 @@ import { pool } from '@/lib/db'
 export type JobRow = {
   id: number
   type: string
-  payload: any
+  payload: Record<string, unknown>
   status: 'pending'|'running'|'succeeded'|'failed'
   attempts: number
   max_attempts: number
