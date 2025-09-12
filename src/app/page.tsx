@@ -90,14 +90,14 @@ export default function HomePage() {
           }}
         />
         
-        <Container className="relative text-center max-w-4xl z-10">
+        <Container className="relative text-left max-w-4xl z-10">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
             Find and neutralize risky token approvals
           </h1>
-          <p className="text-xl sm:text-2xl text-stone leading-relaxed mb-12 max-w-3xl mx-auto">
+          <p className="text-xl sm:text-2xl text-stone leading-relaxed mb-12 max-w-3xl">
             A quiet dashboard to review, revoke, and monitor wallet permissions across chains.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start justify-start gap-4">
             {!isConnected ? (
               <ConnectButton 
                 variant="primary" 

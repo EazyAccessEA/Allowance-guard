@@ -23,7 +23,9 @@ if (typeof window !== 'undefined') {
         message.includes('Unauthorized: origin not allowed') ||
         message.includes('Proposal expired') ||
         message.includes('Session expired') ||
-        message.includes('Connection request expired')) {
+        message.includes('Connection request expired') ||
+        message.includes('Origin') && message.includes('not found on Allowlist') ||
+        message.includes('update configuration on cloud.reown.com')) {
       return // Suppress telemetry, WebSocket, and WalletConnect-related errors
     }
     originalConsoleError.apply(console, args)
@@ -39,7 +41,9 @@ if (typeof window !== 'undefined') {
         event.message?.includes('Unauthorized: origin not allowed') ||
         event.message?.includes('Proposal expired') ||
         event.message?.includes('Session expired') ||
-        event.message?.includes('Connection request expired')) {
+        event.message?.includes('Connection request expired') ||
+        (event.message?.includes('Origin') && event.message?.includes('not found on Allowlist')) ||
+        event.message?.includes('update configuration on cloud.reown.com')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -55,7 +59,9 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('Unauthorized: origin not allowed') ||
         event.reason?.message?.includes('Proposal expired') ||
         event.reason?.message?.includes('Session expired') ||
-        event.reason?.message?.includes('Connection request expired')) {
+        event.reason?.message?.includes('Connection request expired') ||
+        (event.reason?.message?.includes('Origin') && event.reason?.message?.includes('not found on Allowlist')) ||
+        event.reason?.message?.includes('update configuration on cloud.reown.com')) {
       event.preventDefault()
       event.stopPropagation()
       return false

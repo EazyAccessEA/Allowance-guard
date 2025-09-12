@@ -126,7 +126,7 @@ export default function ContactPage() {
           }}
         />
         
-        <Container className="relative text-center max-w-4xl z-10">
+        <Container className="relative text-left max-w-4xl z-10">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
             Contact Support
           </h1>

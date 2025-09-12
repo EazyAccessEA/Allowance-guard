@@ -28,7 +28,7 @@ export default function PrivacyPage() {
           }}
         />
         
-        <Container className="relative text-center max-w-4xl z-10">
+        <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Privacy Policy</H1>
           <p className="text-base text-stone mb-8">
             <strong>Last updated:</strong> {new Date().toLocaleDateString('en-US')}

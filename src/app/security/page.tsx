@@ -122,7 +122,7 @@ export default function SecurityPage() {
           }}
         />
         
-        <Container className="relative text-center max-w-4xl z-10">
+        <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Security & Privacy</H1>
           <p className="text-base text-stone max-w-reading mb-6">
             Learn how Allowance Guard protects your wallet and maintains your privacy while keeping you secure.

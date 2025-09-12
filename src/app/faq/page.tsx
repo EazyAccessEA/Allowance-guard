@@ -142,7 +142,7 @@ export default function FAQPage() {
           }}
         />
         
-        <Container className="relative text-center max-w-4xl z-10">
+        <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Frequently Asked Questions</H1>
           <p className="text-base text-stone max-w-reading">
             Find answers to common questions about Allowance Guard and wallet security.

@@ -191,7 +191,7 @@ export default function SettingsPage() {
           }}
         />
         
-        <Container className="relative text-center max-w-4xl z-10">
+        <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Settings</H1>
           <p className="text-base text-stone max-w-reading mb-12">
             Configure alerts, policies, and sharing options for your wallet.

@@ -187,7 +187,7 @@ export default function DocsPage() {
           }}
         />
         
-        <Container className="relative text-center max-w-4xl z-10">
+        <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Documentation</H1>
           <p className="text-base text-stone max-w-reading mb-8">
             Protect your wallet from dangerous token approvals. Simple. Transparent. Secure.
