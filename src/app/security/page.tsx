@@ -121,122 +121,122 @@ export default function SecurityPage() {
               </p>
             </div>
             
-            <div className="space-y-16">
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Key className="w-8 h-8 text-electric" />
+            <div className="space-y-20">
+              <div className="flex items-start gap-12">
+                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Key className="w-10 h-10 text-electric" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-ink mb-4">Read-Only Access</h3>
-                  <p className="text-lg text-stone leading-relaxed mb-6">
+                <div className="flex-1">
+                  <h3 className="text-3xl font-semibold text-ink mb-6">Read-Only Access</h3>
+                  <p className="text-xl text-stone leading-relaxed mb-8">
                     We never have access to your private keys or wallet funds, ensuring your assets remain safe.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">No private key access</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">No private key access</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">No seed phrase storage</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">No seed phrase storage</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">No transaction signing</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">No transaction signing</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Local browser processing only</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Local browser processing only</span>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Database className="w-8 h-8 text-electric" />
+              <div className="flex items-start gap-12">
+                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Database className="w-10 h-10 text-electric" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-ink mb-4">Local Processing</h3>
-                  <p className="text-lg text-stone leading-relaxed mb-6">
+                <div className="flex-1">
+                  <h3 className="text-3xl font-semibold text-ink mb-6">Local Processing</h3>
+                  <p className="text-xl text-stone leading-relaxed mb-8">
                     All analysis happens in your browser, not on our servers, for maximum privacy.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Blockchain data fetched locally</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Blockchain data fetched locally</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Risk analysis in your browser</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Risk analysis in your browser</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">No data sent to our servers</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">No data sent to our servers</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Complete privacy protection</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Complete privacy protection</span>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Lock className="w-8 h-8 text-electric" />
+              <div className="flex items-start gap-12">
+                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Lock className="w-10 h-10 text-electric" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-ink mb-4">Encrypted Storage</h3>
-                  <p className="text-lg text-stone leading-relaxed mb-6">
+                <div className="flex-1">
+                  <h3 className="text-3xl font-semibold text-ink mb-6">Encrypted Storage</h3>
+                  <p className="text-xl text-stone leading-relaxed mb-8">
                     Any minimal data we store is encrypted using industry standards.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">AES-256 encryption</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">AES-256 encryption</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Secure data transmission</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Secure data transmission</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Minimal data retention</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Minimal data retention</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Regular security audits</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Regular security audits</span>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <FileText className="w-8 h-8 text-electric" />
+              <div className="flex items-start gap-12">
+                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <FileText className="w-10 h-10 text-electric" />
                 </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-ink mb-4">Open Source & Auditable</h3>
-                  <p className="text-lg text-stone leading-relaxed mb-6">
+                <div className="flex-1">
+                  <h3 className="text-3xl font-semibold text-ink mb-6">Open Source & Auditable</h3>
+                  <p className="text-xl text-stone leading-relaxed mb-8">
                     Our code is publicly available for community review, fostering transparency and trust.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Public GitHub repository</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Public GitHub repository</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Community code reviews</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Community code reviews</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Transparent development</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Transparent development</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
-                      <span className="text-stone">Regular security updates</span>
+                    <div className="flex items-center gap-4">
+                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
+                      <span className="text-lg text-stone">Regular security updates</span>
                     </div>
                   </div>
                 </div>
@@ -352,7 +352,7 @@ export default function SecurityPage() {
                     <h3 className="text-2xl font-semibold text-ink">Large Amount Approvals</h3>
                     <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
                       Medium Risk
-                    </span>
+                  </span>
                   </div>
                   <p className="text-lg text-stone leading-relaxed mb-4">
                     Approvals for unusually large token amounts relative to your holdings, potentially risky.
