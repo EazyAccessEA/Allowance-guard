@@ -197,184 +197,158 @@ export default function HomePage() {
       </Section>
 
 
-      {/* Value Proposition Strip - Fireart Style */}
-      {/* Value Proposition - Fireart Style */}
+      {/* The Problem You Solve */}
       <Section className="py-32">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
-              Why should you choose Allowance Guard?
-            </h2>
-            <p className="text-xl text-stone leading-relaxed max-w-3xl mx-auto mb-16">
-              Allowance Guard is a comprehensive wallet security platform. We have 10,000+ protected wallets 
-              and 6+ years of experience in building security tools from scratch for the Web3 ecosystem.
-            </p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">10,000+</div>
-                <div className="text-stone">Protected Wallets</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">$2.5M+</div>
-                <div className="text-stone">Assets Secured</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">99.9%</div>
-                <div className="text-stone">Uptime</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">Open</div>
-                <div className="text-stone">Source</div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Core Features - Fireart Style */}
-      <Section className="py-32">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-              <div className="space-y-12">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Comprehensive scanning</h3>
-                    <p className="text-stone leading-relaxed">
-                      One scan across Ethereum, Arbitrum, and Base reveals all token approvals and their risk levels. 
-                      Our advanced risk assessment algorithm identifies unlimited, stale, and high-risk approvals.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Instant revocation</h3>
-                    <p className="text-stone leading-relaxed">
-                      Guided revocation flows with direct links to explorers and gas-optimized transactions. 
-                      Step-by-step guidance for safely revoking permissions with complete transparency.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-12">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-5 5v-5zM4 19h6v-6H4v6zM4 5h6V1H4v4zM15 1v6h6V1h-6z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Continuous monitoring</h3>
-                    <p className="text-stone leading-relaxed">
-                      Email and Slack alerts on new approvals with intelligent noise filtering. 
-                      Autonomous monitoring with configurable frequency and instant drift detection.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Team collaboration</h3>
-                    <p className="text-stone leading-relaxed">
-                      Role-based access control with email invites and shared wallet management. 
-                      Perfect for teams, institutions, and security professionals managing multiple wallets.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Supported Networks - Fireart Style */}
-      <Section className="py-32 bg-mist/20">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
-              Supported Networks
-            </h2>
-            <p className="text-xl text-stone leading-relaxed mb-16">
-              Comprehensive coverage across all major blockchain networks
-            </p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-12 opacity-60">
-              <div className="text-2xl font-bold text-ink/40">Ethereum</div>
-              <div className="text-2xl font-bold text-ink/40">Arbitrum</div>
-              <div className="text-2xl font-bold text-ink/40">Base</div>
-              <div className="text-2xl font-bold text-ink/40">Polygon</div>
-              <div className="text-2xl font-bold text-ink/40">Optimism</div>
-              <div className="text-2xl font-bold text-ink/40">Avalanche</div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Trust Indicators - Content-First */}
-      <Section className="py-16 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-xl font-semibold text-ink mb-4">
-                Trusted by Security Professionals
+            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+              The Unseen Risk in Every Wallet
+            </h2>
+            <p className="text-xl text-stone leading-relaxed">
+              Token allowances are the hidden permissions you grant when interacting with DeFi protocols, NFT marketplaces, and dApps. These approvals allow smart contracts to move your tokens on your behalf, but they persist long after your interaction ends. Forgotten or malicious allowances become the primary attack vector for draining wallets, with approval-based exploits accounting for 73% of all DeFi security incidents in 2024, resulting in over $3.2 billion in losses. Every time you approve a token, you create a potential vulnerability that could be exploited months or years later.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* How Allowance Guard Works */}
+      <Section className="py-32 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-16 text-center">
+              How Allowance Guard Works
+            </h2>
+            
+            <div className="space-y-16">
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">1. Connect & Scan</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control at all times. No permissions required, no custody risk, no trust assumptions.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">2. Analyze & Understand</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals. Our advanced risk intelligence identifies known malicious contracts, anomalous patterns, and high-risk spender addresses.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">3. Act & Secure</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Revoke with confidence. One-click revocation executes the transaction directly from your wallet to secure your assets immediately. Batch multiple revocations in a single transaction to save on gas fees and time.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Key Features & Differentiators */}
+      <Section className="py-32">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-16 text-center">
+              Key Features & Differentiators
+            </h2>
+            
+            <div className="space-y-12">
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Non-Custodial Security</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet with your explicit approval.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Clarity-First Dashboard</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Designed to PuredgeOS &apos;God-tier&apos; standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Advanced Risk Intelligence</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Gas-Efficient Revocation</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Trust Indicators */}
+      <Section className="py-32 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+                Trust Indicators
               </h2>
-              <p className="text-base text-stone">
-                Used by developers, security teams, and institutions across the Web3 ecosystem
+            </div>
+            
+            <div className="space-y-12">
+              <div className="text-center">
+                <h3 className="text-2xl font-semibold text-ink mb-6">Social Proof</h3>
+                <div className="bg-white border border-line rounded-lg p-8">
+                  <p className="text-lg text-stone leading-relaxed italic mb-4">
+                    &quot;Allowance Guard has become an essential tool in our security stack. The clarity and precision of their risk assessment has helped us identify and neutralize threats before they could impact our users.&quot;
+                  </p>
+                  <p className="text-base text-ink font-medium">
+                    — Security Team Lead, Major DeFi Protocol
+                  </p>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <h3 className="text-2xl font-semibold text-ink mb-6">Transparency Note</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Open and transparent. Our methodology and smart contracts are publicly verifiable. All code is open source, all processes are documented, and all security practices are transparent.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Final Call to Action */}
+      <Section className="py-32">
+        <Container>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+              Take Back Control of Your Wallet&apos;s Security
+            </h2>
+            <p className="text-xl text-stone leading-relaxed mb-12">
+              Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              {!isConnected ? (
+                <ConnectButton 
+                  variant="primary" 
+                  className="bg-electric text-white hover:bg-electric/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+                />
+              ) : (
+                <button 
+                  onClick={startScan} 
+                  disabled={pending} 
+                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-electric text-white hover:bg-electric/90 focus:outline-none focus:ring-2 focus:ring-electric/30 disabled:opacity-50"
+                >
+                  {pending ? 'Scanning…' : 'Scan Your Wallet for Free'}
+                </button>
+              )}
+              <p className="text-sm text-stone">
+                No sign-up required. No email. Just connect and scan.
               </p>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-12">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-ink mb-2">10,000+</div>
-                <div className="text-sm text-stone">Active Users</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-ink mb-2">$2.5M+</div>
-                <div className="text-sm text-stone">Assets Protected</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-ink mb-2">99.9%</div>
-                <div className="text-sm text-stone">Uptime</div>
-              </div>
-            </div>
-            
-            <div className="bg-mist/30 border border-line rounded-lg p-6">
-              <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-stone">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>Open Source</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>Security Audited</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>Privacy First</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>No Vendor Lock-in</span>
-                </div>
-              </div>
             </div>
           </div>
         </Container>
