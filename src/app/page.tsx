@@ -1,6 +1,6 @@
 'use client'
 import { useAccount } from 'wagmi'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -9,6 +9,7 @@ import Section from '@/components/ui/Section'
 import ConnectButton from '@/components/ConnectButton'
 import AppArea from '@/components/AppArea'
 import VideoBackground from '@/components/VideoBackground'
+import RotatingTypewriter from '@/components/RotatingTypewriter'
 
 export default function HomePage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -140,19 +141,21 @@ export default function HomePage() {
         
         <Container className="relative text-left max-w-4xl z-10">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
-            Find and neutralize risky token approvals
-          </h1>
+            <RotatingTypewriter 
+    staticPrefix="Find and "
+    messages={[
+      "neutralize risky token approvals",
+      "revoke unlimited spending permissions", 
+      "secure your DeFi wallet approvals"
+    ]}
+    typingSpeed={80}
+    deletingSpeed={40}
+    pauseTime={3000}
+    className=""
+  />          </h1>
           <p className="text-xl sm:text-2xl text-stone leading-relaxed mb-12 max-w-3xl">
             A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
           </p>
-          <div className="flex items-center gap-4 mb-8">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-              🔓 100% Open Source
-            </span>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-              💝 Completely Free
-            </span>
-          </div>
           <div className="flex flex-col sm:flex-row items-start justify-start gap-4">
             {!isConnected ? (
               <ConnectButton 
