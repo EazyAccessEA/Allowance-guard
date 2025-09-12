@@ -80,15 +80,22 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         {/* Content */}
         <div className="space-y-6">
           <p className="text-base text-stone leading-relaxed">
-            Help us maintain and improve Allowance Guard. Your support enables us to:
+            Allowance Guard is <strong>100% free and open source</strong>. Your donations help us:
           </p>
           
           <ul className="text-base text-stone space-y-3 leading-relaxed">
-            <li>• Keep the service free for all users</li>
+            <li>• Keep the service completely free for everyone</li>
             <li>• Add support for more blockchain networks</li>
             <li>• Improve security features and monitoring</li>
-            <li>• Provide better user experience</li>
+            <li>• Maintain servers and infrastructure</li>
+            <li>• Support the open source community</li>
           </ul>
+          
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p className="text-sm text-blue-800">
+              <strong>Open Source:</strong> All code is available on GitHub. No premium features, no paywalls, no subscriptions.
+            </p>
+          </div>
 
           {/* Amount Selection */}
           <div>

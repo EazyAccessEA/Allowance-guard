@@ -29,10 +29,20 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Developer Resources */}
+          {/* Open Source */}
           <div>
-            <h3 className="text-lg font-semibold text-ink mb-6">Developer</h3>
+            <h3 className="text-lg font-semibold text-ink mb-6">Open Source</h3>
             <ul className="space-y-4">
+              <li>
+                <a 
+                  href="https://github.com/allowanceguard/allowance-guard" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-stone hover:text-ink transition-colors duration-200"
+                >
+                  GitHub Repository
+                </a>
+              </li>
               <li>
                 <Link href="/docs/api" className="text-stone hover:text-ink transition-colors duration-200">
                   API Reference
@@ -44,8 +54,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/docs/webhooks" className="text-stone hover:text-ink transition-colors duration-200">
-                  Webhooks
+                <Link href="/docs/contributing" className="text-stone hover:text-ink transition-colors duration-200">
+                  Contributing Guide
                 </Link>
               </li>
             </ul>
@@ -134,7 +144,7 @@ export default function Footer() {
         <div className="mt-16 pt-8 border-t border-line/50">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-stone text-sm">
-              © {new Date().getFullYear()} Allowance Guard. All rights reserved.
+              © {new Date().getFullYear()} Allowance Guard. Open source & free for everyone.
             </div>
             <div className="mt-4 md:mt-0">
               <Link 

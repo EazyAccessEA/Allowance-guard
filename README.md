@@ -1,14 +1,15 @@
 # Allowance Guard
 
-**Version 1.0.0** - Secure token approval monitoring and management platform
+**Version 1.0.0** - Free & Open Source Token Approval Security Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Open Source](https://img.shields.io/badge/Open%20Source-100%25-green.svg)](https://github.com/allowance-guard/allowance-guard)
 
 ## 🛡️ Overview
 
-Allowance Guard is a comprehensive security platform for monitoring and managing token approvals across multiple blockchain networks. Built for DeFi users, enterprises, and security-conscious teams.
+Allowance Guard is a **completely free and open source** security platform for monitoring and managing token approvals across multiple blockchain networks. Built for the DeFi community with no premium features, no paywalls, and no subscriptions.
 
 ### Key Features
 
@@ -18,6 +19,8 @@ Allowance Guard is a comprehensive security platform for monitoring and managing
 - **🔗 Wallet Management**: Save and monitor multiple wallet addresses
 - **⚡ One-Click Revoke**: Instantly revoke risky approvals with gas optimization
 - **📊 Analytics**: Comprehensive reporting and risk scoring
+- **💝 100% Free**: No premium features, no paywalls, no subscriptions
+- **🔓 Open Source**: Full source code available on GitHub
 
 ## 🚀 Quick Start
 
@@ -208,13 +211,55 @@ Configured with Microsoft SMTP for reliable delivery:
 - **Performance metrics**
 - **Security event monitoring**
 
+## 💝 Supporting Allowance Guard
+
+Allowance Guard is **completely free and open source**. We rely on community donations to keep the service running and improve it for everyone.
+
+### Why Donate?
+
+- **Keep it free**: Help us maintain the service without ads or paywalls
+- **Infrastructure**: Cover server costs and database hosting
+- **Development**: Support new features and blockchain networks
+- **Community**: Help the open source DeFi security ecosystem
+
+### How to Support
+
+- **Donate**: Use the "Support Us" button on our website
+- **Contribute**: Submit pull requests and report issues
+- **Share**: Tell others about Allowance Guard
+- **Star**: Give us a star on GitHub
+
 ## 🤝 Contributing
 
+We welcome contributions from the community! Here's how to get started:
+
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
 4. Add tests if applicable
-5. Submit a pull request
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Development Setup
+
+```bash
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/allowance-guard.git
+cd allowance-guard
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp production.env.example .env.local
+
+# Run database migrations
+npm run migrate
+
+# Start development server
+npm run dev
+```
 
 ## 📄 License
 
@@ -225,6 +270,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Documentation**: [docs.allowanceguard.com](https://docs.allowanceguard.com)
 - **Issues**: [GitHub Issues](https://github.com/allowance-guard/allowance-guard/issues)
 - **Email**: legal.support@allowanceguard.com
+- **Discord**: [Join our community](https://discord.gg/allowanceguard) (coming soon)
 
 ## 🗺️ Roadmap
 

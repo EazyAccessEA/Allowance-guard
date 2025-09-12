@@ -161,8 +161,16 @@ export default function FeaturesPage() {
             Features
           </h1>
           <p className="text-xl sm:text-2xl text-stone leading-relaxed max-w-3xl mx-auto">
-            Discover all the powerful features that make Allowance Guard the most comprehensive wallet security tool available.
+            Discover all the powerful features that make Allowance Guard the most comprehensive wallet security tool available. All features are completely free and open source.
           </p>
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+              🔓 Open Source
+            </span>
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+              💝 Always Free
+            </span>
+          </div>
         </Container>
       </Section>
 
