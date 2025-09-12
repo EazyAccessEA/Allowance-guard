@@ -6,6 +6,99 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Ensure AppKit modal appears on top of all other elements */
+w3m-modal {
+  z-index: 9999 !important;
+}
+
+w3m-modal-background {
+  z-index: 9998 !important;
+}
+
+/* Additional AppKit z-index overrides */
+[data-w3m-modal] {
+  z-index: 9999 !important;
+}
+
+[data-w3m-modal-background] {
+  z-index: 9998 !important;
+}
+
+/* Enhanced AppKit modal styling to match Fireart design */
+w3m-modal {
+  --w3m-background-color: #0A0A0A !important;
+  --w3m-border-radius: 16px !important;
+  --w3m-box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Modal content styling */
+w3m-modal w3m-container {
+  background: #0A0A0A !important;
+  border-radius: 16px !important;
+  border: 1px solid #374151 !important;
+}
+
+/* Button styling within modal */
+w3m-modal w3m-button {
+  border-radius: 8px !important;
+  font-family: 'Inter', ui-sans-serif, system-ui !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+w3m-modal w3m-button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* Input styling within modal */
+w3m-modal w3m-input {
+  border-radius: 8px !important;
+  border: 1px solid #374151 !important;
+  background: #1f2937 !important;
+  font-family: 'Inter', ui-sans-serif, system-ui !important;
+}
+
+w3m-modal w3m-input:focus {
+  border-color: #2563EB !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+/* Typography within modal */
+w3m-modal h1,
+w3m-modal h2,
+w3m-modal h3,
+w3m-modal p,
+w3m-modal span {
+  font-family: 'Inter', ui-sans-serif, system-ui !important;
+  color: #F8FAFC !important;
+}
+
+/* Wallet option styling */
+w3m-modal w3m-wallet-button {
+  border-radius: 8px !important;
+  border: 1px solid #374151 !important;
+  background: #1f2937 !important;
+  transition: all 0.2s ease !important;
+}
+
+w3m-modal w3m-wallet-button:hover {
+  background: #374151 !important;
+  border-color: #2563EB !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Close button styling */
+w3m-modal w3m-close-button {
+  border-radius: 8px !important;
+  background: #1f2937 !important;
+  border: 1px solid #374151 !important;
+}
+
+w3m-modal w3m-close-button:hover {
+  background: #374151 !important;
+}
+
 :root {
   /* PureEdgeOS 4.0 - Fireart Studio Design Tokens */
   

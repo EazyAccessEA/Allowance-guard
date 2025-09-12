@@ -109,12 +109,51 @@ try {
     },
     themeMode: 'dark', // Match the new Reown-style dark theme
     themeVariables: {
+      // Core theme colors
       '--w3m-color-mix': '#1f2937',
       '--w3m-color-mix-strength': 40,
-      '--w3m-accent': '#3b82f6',
+      '--w3m-accent': '#2563EB', // Cobalt blue to match our brand
+      '--w3m-accent-fill': '#1D4ED8', // Darker blue for filled states
+      
+      // Border radius
       '--w3m-border-radius-master': '12px',
+      '--w3m-border-radius-xs': '6px',
+      '--w3m-border-radius-s': '8px',
+      '--w3m-border-radius-m': '12px',
+      '--w3m-border-radius-l': '16px',
+      
+      // Typography
       '--w3m-font-size-master': '14px',
+      '--w3m-font-size-xs': '12px',
+      '--w3m-font-size-s': '14px',
+      '--w3m-font-size-m': '16px',
+      '--w3m-font-size-l': '18px',
+      '--w3m-font-size-xl': '20px',
       '--w3m-font-family': 'Inter, ui-sans-serif, system-ui',
+      
+      // Spacing
+      '--w3m-spacing-xs': '4px',
+      '--w3m-spacing-s': '8px',
+      '--w3m-spacing-m': '12px',
+      '--w3m-spacing-l': '16px',
+      '--w3m-spacing-xl': '20px',
+      '--w3m-spacing-xxl': '24px',
+      
+      // Modal specific
+      '--w3m-z-index': '9999',
+      '--w3m-background-color': '#0A0A0A', // Dark background
+      '--w3m-background-border-radius': '16px',
+      
+      // Button styling
+      '--w3m-button-border-radius': '8px',
+      '--w3m-button-hover-highlight': '#1f2937',
+      
+      // Input styling
+      '--w3m-input-border-radius': '8px',
+      '--w3m-input-border': '1px solid #374151',
+      
+      // Overlay
+      '--w3m-overlay-background-color': 'rgba(0, 0, 0, 0.8)',
     }
   })
 } catch (error) {
