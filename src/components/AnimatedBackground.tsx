@@ -10,7 +10,7 @@ interface AnimatedBackgroundProps {
 export default function AnimatedBackground({ 
   images, 
   delay = 10000, 
-  className = "absolute inset-0 bg-cover bg-center bg-no-repeat opacity-45" 
+  className = "absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40" 
 }: AnimatedBackgroundProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
@@ -31,7 +31,8 @@ export default function AnimatedBackground({
         backgroundImage: `url(${images[currentImageIndex]})`,
         backgroundPosition: 'center center',
         backgroundSize: 'cover',
-        transition: 'background-image 1s ease-in-out'
+        transition: 'opacity 2s cubic-bezier(0.4, 0, 0.2, 1), background-image 2s cubic-bezier(0.4, 0, 0.2, 1)',
+        animation: 'fadeInOut 2s ease-in-out'
       }}
     />
   )

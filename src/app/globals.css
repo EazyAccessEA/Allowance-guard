@@ -443,6 +443,13 @@ button, a, input, select, textarea {
   100% { transform: scale(1); }
 }
 
+/* Smooth background image transitions */
+@keyframes fadeInOut {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.4; }
+}
+
 /* Responsive utilities */
 @media (max-width: 640px) {
   .fireart-button {
