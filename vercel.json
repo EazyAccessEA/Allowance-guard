@@ -9,9 +9,5 @@
         }
       ]
     }
-  ],
-  "crons": [
-    { "path": "/api/alerts/daily", "schedule": "5 8 * * *" },
-    { "path": "/api/jobs/process", "schedule": "0 9 * * *" }
   ]
 }
