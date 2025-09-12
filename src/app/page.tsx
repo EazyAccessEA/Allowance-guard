@@ -149,7 +149,7 @@ export default function HomePage() {
       "secure your DeFi wallet\nfrom exploits",
       "protect your wallet from\nmalicious contracts"
     ]}
-    typingSpeed={200}
+    typingSpeed={300}
     deletingSpeed={50}
     pauseTime={3000}
     className=""
