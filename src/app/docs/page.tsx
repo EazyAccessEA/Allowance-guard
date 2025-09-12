@@ -406,7 +406,7 @@ export default function DocsPage() {
                 <div className="border border-line rounded-md p-4 bg-mist">
                   <h4 className="font-medium text-ink mb-2">Scan shows no results</h4>
                   <ul className="space-y-1 text-sm text-stone">
-                    <li>• Ensure you're connected to a supported network</li>
+                    <li>• Ensure you&apos;re connected to a supported network</li>
                     <li>• Check that your wallet is unlocked and connected</li>
                     <li>• Try refreshing the page and reconnecting your wallet</li>
                   </ul>
