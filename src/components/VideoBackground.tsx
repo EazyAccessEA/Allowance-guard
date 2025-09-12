@@ -8,7 +8,7 @@ interface VideoBackgroundProps {
 
 export default function VideoBackground({ 
   videoSrc, 
-  className = "absolute inset-0 w-full h-full object-cover opacity-40" 
+  className = "absolute inset-0 w-full h-full object-cover"
 }: VideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
 

@@ -20,8 +20,13 @@ export default function TermsPage() {
         <VideoBackground 
           videoSrc="/AllowanceGuard..mp4"
         />
-        {/* Subtle overlay for better text readability */}
-        <div className="absolute inset-0 bg-white/80" />
+        {/* Gradient overlay for better text readability - 10% left, 45% right */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to right, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.55) 100%)'
+          }}
+        />
         
         <Container className="relative text-center max-w-4xl z-10">
           <H1 className="mb-6">Terms of Service</H1>
