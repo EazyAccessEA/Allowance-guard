@@ -27,10 +27,11 @@ interface AppAreaProps {
   onPageSize: (pageSize: number) => void
   onRefresh: () => Promise<void>
   connectedAddress: string | undefined
+  canRevoke?: boolean
 }
 
 export default function AppArea({
-  isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress
+  isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress, canRevoke = true
 }: AppAreaProps) {
   const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
   const [monitorFreq, setMonitorFreq] = useState(720)
@@ -119,6 +120,7 @@ export default function AppArea({
                 selectedWallet={selectedWallet}
                 connectedAddress={connectedAddress}
                 onRefresh={onRefresh}
+                canRevoke={canRevoke}
               />
               {/* Pagination */}
               {total > 0 && (

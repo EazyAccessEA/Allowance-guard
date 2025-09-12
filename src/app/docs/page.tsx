@@ -20,7 +20,8 @@ import {
   Search,
   Shield,
   Bell,
-  Zap
+  Zap,
+  Users
 } from 'lucide-react'
 
 export default function DocsPage() {
@@ -34,6 +35,7 @@ export default function DocsPage() {
     { id: 'risk-scoring', title: 'Risk Scoring', icon: AlertTriangle },
     { id: 'alerts', title: 'Alerts & Notifications', icon: Mail },
     { id: 'monitoring', title: 'Autonomous Monitoring', icon: Bell },
+    { id: 'teams', title: 'Teams & Collaboration', icon: Users },
     { id: 'revoking', title: 'Revoking Approvals', icon: Lock },
     { id: 'api', title: 'Settings & API', icon: Settings },
     { id: 'troubleshooting', title: 'Troubleshooting', icon: Wrench },
@@ -68,7 +70,15 @@ export default function DocsPage() {
     { endpoint: "/api/alerts/daily", method: "GET", description: "Trigger daily digest" },
     { endpoint: "/api/jobs/process", method: "GET", description: "Process queued jobs" },
     { endpoint: "/api/monitor", method: "GET/POST", description: "Manage wallet monitoring settings" },
-    { endpoint: "/api/monitor/run", method: "GET", description: "Trigger due monitor scans" }
+    { endpoint: "/api/monitor/run", method: "GET", description: "Trigger due monitor scans" },
+    { endpoint: "/api/auth/magic/request", method: "POST", description: "Request magic link for sign in" },
+    { endpoint: "/api/auth/magic/verify", method: "GET", description: "Verify magic link and create session" },
+    { endpoint: "/api/auth/me", method: "GET", description: "Get current user information" },
+    { endpoint: "/api/auth/signout", method: "POST", description: "Sign out and clear session" },
+    { endpoint: "/api/teams", method: "GET/POST", description: "List teams or create new team" },
+    { endpoint: "/api/teams/wallets", method: "GET/POST", description: "List team wallets or add wallet to team" },
+    { endpoint: "/api/teams/invite", method: "POST", description: "Send team invitation email" },
+    { endpoint: "/api/invites/accept", method: "POST", description: "Accept team invitation" }
   ]
 
   const faqItems = [
@@ -95,6 +105,10 @@ export default function DocsPage() {
     {
       question: "What if a scan fails?",
       answer: "Scans are processed in the background using a job queue system. If a scan fails, you'll see an error message and can retry. The system automatically retries failed jobs."
+    },
+    {
+      question: "How do teams work in AllowanceGuard?",
+      answer: "Teams allow you to collaborate on wallet security with role-based access control. Create a team, add wallet addresses, and invite members with different permission levels (owner, admin, editor, viewer). Viewers have read-only access and cannot revoke approvals, while editors and above can manage wallets and revoke approvals."
     }
   ]
 
@@ -302,6 +316,79 @@ export default function DocsPage() {
                     <li>• <strong>Frequency:</strong> Set rescan interval (minimum 30 minutes)</li>
                     <li>• <strong>Alerts:</strong> Configure email and Slack notification preferences</li>
                   </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'teams':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-semibold text-ink mb-4">Teams & Collaboration</h2>
+              <p className="text-base text-stone mb-6">
+                AllowanceGuard supports team collaboration with role-based access control. Create teams, invite members, and manage wallet access with different permission levels.
+              </p>
+
+              <h3 className="text-xl font-semibold text-ink mb-3">Team Roles</h3>
+              <div className="space-y-4 mb-6">
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <h4 className="font-medium text-ink mb-2">Owner</h4>
+                  <p className="text-sm text-stone">Full control over the team, including adding/removing members, managing wallets, and inviting collaborators.</p>
+                </div>
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <h4 className="font-medium text-ink mb-2">Admin</h4>
+                  <p className="text-sm text-stone">Can manage team members, add wallets, and invite users. Cannot remove the owner.</p>
+                </div>
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <h4 className="font-medium text-ink mb-2">Editor</h4>
+                  <p className="text-sm text-stone">Can add wallets to the team and invite viewers. Can revoke approvals and manage monitoring settings.</p>
+                </div>
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <h4 className="font-medium text-ink mb-2">Viewer</h4>
+                  <p className="text-sm text-stone">Read-only access. Can view approvals and scan results but cannot revoke approvals or modify settings.</p>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-ink mb-3">Getting Started with Teams</h3>
+              <ol className="list-decimal list-inside space-y-2 text-base text-stone mb-6">
+                <li><strong>Sign In:</strong> Use the email magic link authentication to create an account</li>
+                <li><strong>Create Team:</strong> Click &quot;New team&quot; and enter a team name</li>
+                <li><strong>Add Wallets:</strong> Add wallet addresses that your team needs to monitor</li>
+                <li><strong>Invite Members:</strong> Send email invites to collaborators with appropriate roles</li>
+                <li><strong>Manage Access:</strong> Control who can view, edit, or revoke approvals</li>
+              </ol>
+
+              <h3 className="text-xl font-semibold text-ink mb-3">Team Features</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">Shared Wallets</h4>
+                  </div>
+                  <p className="text-sm text-stone">Add multiple wallet addresses to a team for centralized monitoring</p>
+                </div>
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Mail className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">Email Invites</h4>
+                  </div>
+                  <p className="text-sm text-stone">Invite team members via secure email links with role-based access</p>
+                </div>
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Shield className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">Role-Based Access</h4>
+                  </div>
+                  <p className="text-sm text-stone">Control permissions with owner, admin, editor, and viewer roles</p>
+                </div>
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Bell className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">Team Monitoring</h4>
+                  </div>
+                  <p className="text-sm text-stone">Set up autonomous monitoring for team-managed wallets</p>
                 </div>
               </div>
             </div>
@@ -517,6 +604,8 @@ export default function DocsPage() {
         return ['Alerts & Notifications']
       case 'monitoring':
         return ['Autonomous Monitoring']
+      case 'teams':
+        return ['Teams & Collaboration']
       case 'revoking':
         return ['How to Revoke Approvals']
       case 'api':

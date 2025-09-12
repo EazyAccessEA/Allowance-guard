@@ -26,12 +26,14 @@ export default function AllowanceTable({
   data,
   onRefresh,
   selectedWallet,
-  connectedAddress
+  connectedAddress,
+  canRevoke = true
 }: {
   data: Row[]
   onRefresh: () => Promise<void>
   selectedWallet: string | null
   connectedAddress: string | undefined
+  canRevoke?: boolean
 }) {
   const [sel, setSel] = useState<Record<string, boolean>>({})
   const [busy, setBusy] = useState(false)
@@ -87,7 +89,12 @@ export default function AllowanceTable({
     <div className="mt-4">
       <div className="mb-4 flex items-center gap-3">
         <HexButton onClick={selectRisky} size="sm" variant="ghost">Select risky</HexButton>
-        <HexButton onClick={handleBulk} disabled={busy || !selectedRows.length || !revokeAllowed} size="sm">
+        <HexButton 
+          onClick={handleBulk} 
+          disabled={busy || !selectedRows.length || !revokeAllowed || !canRevoke} 
+          size="sm"
+          title={!canRevoke ? 'View-only access' : !revokeAllowed ? 'Connect the selected wallet to revoke' : ''}
+        >
           {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
         </HexButton>
       </div>
