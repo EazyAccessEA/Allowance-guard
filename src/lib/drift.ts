@@ -8,6 +8,7 @@ type AllowRow = {
   token_address: string
   spender_address: string
   allowance_type: 'per-token'|'all-assets'|string
+  standard: string
   amount: string
   is_unlimited: boolean
   risk_score: number
@@ -126,11 +127,12 @@ export async function driftCheckAndNotify(wallet: string) {
       token_address: r.token_address,
       spender_address: r.spender_address,
       risk_score: r.risk_score,
+      standard: r.standard,
       is_unlimited: r.is_unlimited
-    } as any)) as any,
+    })) as AllowRow[],
     policy
   )
-  const allowSet = new Set(filtered.map((r:any)=>`${r.chain_id}:${r.token_address}:${r.spender_address}`))
+  const allowSet = new Set(filtered.map((r: AllowRow)=>`${r.chain_id}:${r.token_address}:${r.spender_address}`))
   const rowsForPolicy = rows.filter(r => allowSet.has(`${r.chain_id}:${r.token_address}:${r.spender_address}`))
 
   // Compute drift against last notified state
@@ -146,7 +148,7 @@ export async function driftCheckAndNotify(wallet: string) {
 
   // Email
   const html = renderEmail(wallet, drifts)
-  const emailSubs = emailsQ.rows as any[]
+  const emailSubs = emailsQ.rows as Array<{email: string, risk_only: boolean}>
   for (const s of emailSubs) {
     if (s.risk_only && drifts.length === 0) continue
     await sendMail(s.email, 'Allowance Guard — Drift detected', html)
@@ -165,7 +167,7 @@ export async function driftCheckAndNotify(wallet: string) {
 *Prev* ${d.prev_unlimited ? 'UNLIMITED' : d.prev_amount} → *Now* ${d.is_unlimited ? 'UNLIMITED' : d.amount}` }
     }))
   ]
-  const slackSubs = hooksQ.rows as any[]
+  const slackSubs = hooksQ.rows as Array<{webhook_url: string, risk_only: boolean}>
   for (const s of slackSubs) {
     if (s.risk_only && drifts.length === 0) continue
     await sendSlack(s.webhook_url, { text, blocks })

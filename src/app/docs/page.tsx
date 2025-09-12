@@ -33,6 +33,7 @@ export default function DocsPage() {
     { id: 'networks', title: 'Supported Networks', icon: Globe },
     { id: 'risk-scoring', title: 'Risk Scoring', icon: AlertTriangle },
     { id: 'alerts', title: 'Alerts & Notifications', icon: Mail },
+    { id: 'monitoring', title: 'Autonomous Monitoring', icon: Bell },
     { id: 'revoking', title: 'Revoking Approvals', icon: Lock },
     { id: 'api', title: 'Settings & API', icon: Settings },
     { id: 'troubleshooting', title: 'Troubleshooting', icon: Wrench },
@@ -55,6 +56,7 @@ export default function DocsPage() {
   const alertFeatures = [
     { type: "Email Alerts", description: "Daily digests via Microsoft SMTP", features: ["Risk-only filtering", "HTML templates", "Customizable preferences"] },
     { type: "Slack Integration", description: "Real-time webhook notifications", features: ["Team collaboration", "Custom webhooks", "Rich formatting"] },
+    { type: "Autonomous Monitoring", description: "Scheduled wallet rescans with drift detection", features: ["Configurable frequency", "Instant drift alerts", "Duplicate prevention"] },
     { type: "Job Processing", description: "Automated background scanning", features: ["5-minute intervals", "Queue management", "Status tracking"] }
   ]
 
@@ -64,7 +66,9 @@ export default function DocsPage() {
     { endpoint: "/api/jobs/[id]", method: "GET", description: "Check job status" },
     { endpoint: "/api/alerts/subscribe", method: "POST", description: "Subscribe to alerts" },
     { endpoint: "/api/alerts/daily", method: "GET", description: "Trigger daily digest" },
-    { endpoint: "/api/jobs/process", method: "GET", description: "Process queued jobs" }
+    { endpoint: "/api/jobs/process", method: "GET", description: "Process queued jobs" },
+    { endpoint: "/api/monitor", method: "GET/POST", description: "Manage wallet monitoring settings" },
+    { endpoint: "/api/monitor/run", method: "GET", description: "Trigger due monitor scans" }
   ]
 
   const faqItems = [
@@ -86,7 +90,7 @@ export default function DocsPage() {
     },
     {
       question: "How often should I check my approvals?",
-      answer: "We recommend setting up email alerts for daily monitoring. The system can automatically notify you of new risky approvals as they're detected."
+      answer: "We recommend setting up autonomous monitoring for continuous protection. The system can automatically rescan your wallet and notify you of new risky approvals as they're detected."
     },
     {
       question: "What if a scan fails?",
@@ -256,6 +260,51 @@ export default function DocsPage() {
                 ))}
         </div>
     </div>
+          </div>
+        )
+      case 'monitoring':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-semibold text-ink mb-4">Autonomous Monitoring</h2>
+              <p className="text-base text-stone mb-6">
+                Enable continuous monitoring of your wallets with automatic rescans and instant drift detection. The system will alert you immediately when new approvals appear or existing ones change.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <h4 className="font-medium text-ink mb-2">How It Works</h4>
+                  <ol className="list-decimal list-inside space-y-1 text-sm text-stone">
+                    <li>Enable monitoring for your wallet with a custom frequency (default: 12 hours)</li>
+                    <li>System automatically rescans your wallet at the specified intervals</li>
+                    <li>Detects drift: new approvals, amount changes, or unlimited flips</li>
+                    <li>Sends instant alerts via email and Slack when changes are detected</li>
+                    <li>Remembers what was alerted to prevent spam notifications</li>
+                  </ol>
+                </div>
+
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <h4 className="font-medium text-ink mb-2">Drift Detection</h4>
+                  <p className="text-sm text-stone mb-3">The system detects the following types of changes:</p>
+                  <ul className="space-y-1 text-sm text-stone">
+                    <li>• <strong>New Approvals:</strong> Previously unseen token approvals</li>
+                    <li>• <strong>Amount Growth:</strong> Approvals that grew from zero to a positive amount</li>
+                    <li>• <strong>Unlimited Flips:</strong> Approvals that became unlimited</li>
+                    <li>• <strong>Policy Filtering:</strong> Only alerts on approvals that match your risk policy</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 bg-mist border border-line rounded-md">
+                  <h4 className="font-medium text-ink mb-2">Configuration</h4>
+                  <p className="text-sm text-stone mb-3">You can configure monitoring settings in the sidebar:</p>
+                  <ul className="space-y-1 text-sm text-stone">
+                    <li>• <strong>Enable/Disable:</strong> Turn monitoring on or off for each wallet</li>
+                    <li>• <strong>Frequency:</strong> Set rescan interval (minimum 30 minutes)</li>
+                    <li>• <strong>Alerts:</strong> Configure email and Slack notification preferences</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         )
 
@@ -466,6 +515,8 @@ export default function DocsPage() {
         return ['Risk Scoring System']
       case 'alerts':
         return ['Alerts & Notifications']
+      case 'monitoring':
+        return ['Autonomous Monitoring']
       case 'revoking':
         return ['How to Revoke Approvals']
       case 'api':
