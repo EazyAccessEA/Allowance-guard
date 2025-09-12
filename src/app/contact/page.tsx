@@ -116,7 +116,7 @@ export default function ContactPage() {
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         {/* Video Background */}
         <VideoBackground 
-          videoSrc="/AllowanceGuard..mp4"
+          videoSrc="/Allowance_Guard_Header.mp4"
         />
         {/* Gradient overlay for better text readability - 10% left, 45% right */}
         <div 
