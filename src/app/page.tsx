@@ -139,25 +139,28 @@ export default function HomePage() {
           }}
         />
         
-        <Container className="relative text-left max-w-4xl z-10">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-8 h-[2.2em] flex items-start">
-            <RotatingTypewriter 
-    staticPrefix="Find and "
-    messages={[
-      "neutralize risky token\napprovals instantly",
-      "revoke unlimited spending\npermissions safely", 
-      "secure your DeFi wallet\nfrom exploits",
-      "protect your wallet from\nmalicious contracts"
-    ]}
-    typingSpeed={300}
-    deletingSpeed={50}
-    pauseTime={3000}
-    className=""
-  />          </h1>
-          <p className="text-xl sm:text-2xl text-stone leading-relaxed mb-12 max-w-3xl">
-            A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
-          </p>
-          <div className="flex flex-col sm:flex-row items-start justify-start gap-4">
+        <Container className="relative z-10">
+          <div className="max-w-4xl">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-8 h-[2.2em]">
+              <RotatingTypewriter 
+                staticPrefix="The power to "
+                messages={[
+                  "see every\nhidden connection clearly.",
+                  "instantly revoke\nany risky approval.",
+                  "find and cut off\nsilent threats.",
+                  "control who has access\nto your funds."
+                ]}
+                typingSpeed={50}
+                deletingSpeed={50}
+                pauseTime={3000}
+                className=""
+              />
+            </h1>
+            <p className="text-xl sm:text-2xl text-stone leading-relaxed mb-12 max-w-3xl">
+              A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
             {!isConnected ? (
               <ConnectButton 
                 variant="primary" 
@@ -181,7 +184,7 @@ export default function HomePage() {
             )}
             <Link 
               href="/docs" 
-              className="text-stone hover:text-ink transition-colors duration-200 text-lg font-medium"
+              className="text-stone hover:text-ink transition-colors duration-200 text-lg font-medium flex items-center h-12"
             >
               Learn more →
             </Link>
