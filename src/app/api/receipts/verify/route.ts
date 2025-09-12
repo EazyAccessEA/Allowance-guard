@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       token: r.token_address as `0x${string}`,
       spender: r.spender_address as `0x${string}`
     })
-    const ok = BigInt(amount) === 0n
+    const ok = BigInt(amount) === BigInt(0)
     await setReceiptResult(Number(r.id), ok, BigInt(amount), ok ? undefined : 'Allowance not zero')
     return NextResponse.json({ ok, postAmount: amount.toString() })
   } catch (e: unknown) {

@@ -23,5 +23,5 @@ export async function readCurrentAllowance(params: {
     address: params.token, abi,
     functionName: 'isApprovedForAll', args: [params.owner, params.spender]
   }) as boolean
-  return { amount: approved ? (1n<<256n)-1n : 0n, isUnlimited: approved }
+  return { amount: approved ? (BigInt(1)<<BigInt(256))-BigInt(1) : BigInt(0), isUnlimited: approved }
 }
