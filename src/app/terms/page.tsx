@@ -19,7 +19,7 @@ export default function TermsPage() {
         {/* Animated Background Images */}
         <AnimatedBackground 
           images={['/Dolphin_Home.jpeg', '/Web.jpeg', '/Face.jpeg', '/Celestial.jpeg', '/Butterfly.jpeg']}
-          delay={10000}
+          delay={20000}
         />
         {/* Subtle overlay for better text readability */}
         <div className="absolute inset-0 bg-white/80" />

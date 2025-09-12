@@ -10,7 +10,7 @@ interface AnimatedBackgroundProps {
 export default function AnimatedBackground({ 
   images, 
   delay = 10000, 
-  className = "absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10" 
+  className = "absolute inset-0 bg-cover bg-center bg-no-repeat opacity-45" 
 }: AnimatedBackgroundProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
