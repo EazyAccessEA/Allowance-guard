@@ -23,10 +23,10 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`text-sm font-medium transition-colors duration-200
+      className={`nav-link px-0 text-sm font-medium transition-colors duration-200
         ${current ? 'text-ink' : 'text-stone hover:text-ink'}`}
     >
-      {children}
+      <span className="leading-ctl">{children}</span>
     </Link>
   )
 }
@@ -53,10 +53,10 @@ export default function Header({ isConnected }: HeaderProps) {
       className={`sticky top-0 z-40 bg-white/95 backdrop-blur-sm
         transition-all duration-200 ${scrolled ? 'border-b border-line/50' : ''}`}
     >
-      <Container className="h-20 flex items-center justify-between">
+      <Container className="h-header flex items-center justify-between">
         {/* Left: logo + wordmark */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-9 h-9">
+          <div className="relative w-10 h-10">
             <Image
               src="/AG_Logo2.png"
               alt="Allowance Guard"
@@ -64,11 +64,11 @@ export default function Header({ isConnected }: HeaderProps) {
               className="object-contain transition-transform duration-200 group-hover:scale-105"
             />
           </div>
-          <span className="text-lg font-semibold text-ink">Allowance Guard</span>
+          <span className="text-lg font-semibold text-ink leading-none">Allowance Guard</span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-10">
+        <nav className="hidden lg:flex items-center gap-8">
           <NavLink href="/docs" current={pathname?.startsWith('/docs') ?? false}>
             Docs
           </NavLink>
@@ -78,7 +78,7 @@ export default function Header({ isConnected }: HeaderProps) {
           {!isConnected && (
             <ConnectButton 
               variant="light" 
-              className="bg-white text-ink border border-line hover:bg-mist hover:border-ink/20 transition-all duration-200"
+              className="h-ctl inline-flex items-center justify-center px-4 bg-white text-ink border border-line hover:bg-mist hover:border-ink/20 transition-all duration-200"
             />
           )}
         </nav>
@@ -88,13 +88,13 @@ export default function Header({ isConnected }: HeaderProps) {
           {!isConnected && (
             <ConnectButton 
               variant="light" 
-              className="bg-white text-ink border border-line hover:bg-mist"
+              className="h-ctl inline-flex items-center justify-center px-4 bg-white text-ink border border-line hover:bg-mist"
             />
           )}
           <button
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line text-ink/70 hover:text-ink hover:bg-mist transition-all duration-200"
+            className="h-ctl w-10 inline-flex items-center justify-center rounded-lg border border-line text-ink/70 hover:text-ink hover:bg-mist transition-all duration-200"
           >
             <span className="sr-only">Open menu</span>
             {/* hamburger */}
@@ -110,18 +110,18 @@ export default function Header({ isConnected }: HeaderProps) {
         className={`lg:hidden border-t border-line/50 bg-white transition-all duration-200 origin-top
         ${open ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}`}
       >
-        <Container className="py-6 flex flex-col gap-6">
+        <Container className="py-3 flex flex-col gap-2">
           <Link
             href="/docs"
-            className={`text-base font-medium transition-colors duration-200 ${pathname?.startsWith('/docs') ? 'text-ink' : 'text-stone hover:text-ink'}`}
+            className="nav-link text-base font-medium text-stone hover:text-ink"
           >
-            Docs
+            <span className="leading-ctl">Docs</span>
           </Link>
           <Link
             href="/settings"
-            className={`text-base font-medium transition-colors duration-200 ${pathname === '/settings' ? 'text-ink' : 'text-stone hover:text-ink'}`}
+            className="nav-link text-base font-medium text-stone hover:text-ink"
           >
-            Settings
+            <span className="leading-ctl">Settings</span>
           </Link>
         </Container>
       </div>

@@ -554,3 +554,9 @@ appkit-button::part(button):focus {
 .btn-contrast:hover { 
   background-color: #F6F7F9; 
 }
+
+/* Header Alignment Utilities - Fireart Style */
+.h-header { height: 64px; }                 /* header bar */
+.h-ctl    { height: 40px; }                 /* buttons, links, toggles */
+.leading-ctl { line-height: 40px; }         /* text inside ctl */
+.nav-link { display: inline-flex; align-items: center; height: 40px; }

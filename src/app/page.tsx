@@ -29,6 +29,8 @@ export default function HomePage() {
   const [pageSize, setPageSize] = useState(25)
   const [total, setTotal] = useState(0)
   const [pending, setPending] = useState(false)
+  const [, setJobId] = useState<number | null>(null)
+  const [message, setMessage] = useState('')
 
   async function fetchAllowances(addr: string, p = page, ps = pageSize) {
     const res = await fetch(`/api/allowances?wallet=${addr}&page=${p}&pageSize=${ps}`)
@@ -39,13 +41,59 @@ export default function HomePage() {
 
   async function startScan() {
     const target = selectedWallet || connectedAddress
-    if (!target || pending) return
+    if (!target) {
+      setMessage('Select or connect a wallet first')
+      return
+    }
+    if (pending) return // debounce protection
     setPending(true)
+    setMessage('Queuing…')
     try {
-      const res = await fetch('/api/scan', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ walletAddress: target, chains: ['eth','arb','base'] }) })
+      const res = await fetch('/api/scan', { 
+        method:'POST', 
+        headers:{'content-type':'application/json'}, 
+        body: JSON.stringify({ walletAddress: target, chains: ['eth','arb','base'] }) 
+      })
       const j = await res.json()
       if (!res.ok) throw new Error(j.error || 'Failed to queue')
+      
+      setJobId(j.jobId)
+      setMessage(`Scan queued (#${j.jobId})`)
+      
+      // Optional: immediately ping the processor in dev
+      if (process.env.NODE_ENV !== 'production') {
+        fetch('/api/jobs/process', { method: 'POST' }).catch(()=>{})
+      }
+      
+      // Poll job until done
+      for (let i = 0; i < 40; i++) {
+        await new Promise(r => setTimeout(r, 3000))
+        const s = await fetch(`/api/jobs/${j.jobId}`).then(r => r.json())
+        if (s.status === 'succeeded') { 
+          setMessage('Scan complete')
+          break 
+        }
+        if (s.status === 'failed') { 
+          setMessage(`Scan failed: ${s.error || ''}`)
+          break 
+        }
+        setMessage(`Scanning… (attempt ${s.attempts})`)
+      }
+      
+      // Post-scan tasks
+      await fetch('/api/risk/refresh', { 
+        method:'POST', 
+        headers:{'content-type':'application/json'}, 
+        body: JSON.stringify({ wallet: target }) 
+      })
+      await fetch('/api/enrich', { 
+        method:'POST', 
+        headers:{'content-type':'application/json'}, 
+        body: JSON.stringify({ wallet: target }) 
+      })
       await fetchAllowances(target, 1, pageSize)
+    } catch (e: unknown) {
+      setMessage(e instanceof Error ? e.message : 'Scan failed to queue')
     } finally {
       setPending(false)
     }
@@ -86,7 +134,7 @@ export default function HomePage() {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.3) 100%)'
+            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
         
@@ -104,13 +152,20 @@ export default function HomePage() {
                 className="bg-ink text-white hover:bg-ink/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
               />
             ) : (
-              <button 
-                onClick={startScan} 
-                disabled={pending} 
-                className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-ink text-white hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-ink/30 disabled:opacity-50"
-              >
-                {pending ? 'Scanning…' : 'Scan wallet'}
-              </button>
+              <div className="flex flex-col gap-2">
+                <button 
+                  onClick={startScan} 
+                  disabled={pending} 
+                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-ink text-white hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-ink/30 disabled:opacity-50"
+                >
+                  {pending ? 'Scanning…' : 'Scan wallet'}
+                </button>
+                {message && (
+                  <p className="text-sm text-stone">
+                    {message}
+                  </p>
+                )}
+              </div>
             )}
             <Link 
               href="/docs" 
