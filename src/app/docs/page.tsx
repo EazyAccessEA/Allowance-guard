@@ -208,21 +208,26 @@ export default function DocsPage() {
             <p className="text-base text-stone mb-6">
                 AllowanceGuard currently supports the following blockchain networks:
             </p>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {supportedNetworks.map((network) => (
-                  <div key={network.chainId} className="flex items-center justify-between p-4 bg-mist border border-line rounded-md">
+                <div key={network.chainId} className="flex items-center justify-between p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-electric" />
+                    </div>
               <div>
-                      <h4 className="font-medium text-ink">{network.name}</h4>
+                      <h4 className="text-lg font-semibold text-ink">{network.name}</h4>
                     <p className="text-sm text-stone">Chain ID: {network.chainId}</p>
               </div>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white border border-line text-ink">
+                  </div>
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-electric/10 text-electric border border-electric/20">
                     {network.status}
                   </span>
             </div>
               ))}
             </div>
           </div>
-          </div>
+        </div>
         )
 
       case 'risk-scoring':
@@ -233,15 +238,15 @@ export default function DocsPage() {
               <p className="text-base text-stone mb-6">
                 AllowanceGuard uses a comprehensive risk scoring system to help you prioritize which approvals need immediate attention:
               </p>
-          <div className="space-y-4">
+          <div className="space-y-6">
                 {riskFactors.map((factor, index) => (
-                  <div key={index} className="flex items-start gap-4 p-4 bg-mist border border-line rounded-md">
-                  <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">
-                      {factor.score}
+                  <div key={index} className="flex items-start gap-6 p-6 bg-white border border-line rounded-lg">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <span className="text-lg font-bold text-electric">{factor.score}</span>
         </div>
                     <div>
-                      <h4 className="font-medium text-ink mb-1">{factor.factor}</h4>
-                      <p className="text-sm text-stone">{factor.description}</p>
+                      <h4 className="text-lg font-semibold text-ink mb-2">{factor.factor}</h4>
+                      <p className="text-base text-stone">{factor.description}</p>
       </div>
       </div>
             ))}
@@ -258,18 +263,33 @@ export default function DocsPage() {
               <p className="text-base text-stone mb-6">
                 Stay informed about your wallet security with automated alerts:
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {alertFeatures.map((alert, index) => (
-                  <div key={index} className="border border-line rounded-md p-4 bg-mist">
-                    <h4 className="font-medium text-ink mb-2">{alert.type}</h4>
-                    <p className="text-sm text-stone mb-3">{alert.description}</p>
-                    <ul className="space-y-1 text-sm text-stone">
-                      {alert.features.map((feature, fIndex) => (
-                        <li key={fIndex}>• {feature}</li>
-                      ))}
-                    </ul>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {alertFeatures.map((alert, index) => {
+                  const IconComponent = alert.type === 'Email Alerts' ? Mail : 
+                                       alert.type === 'Slack Integration' ? Bell :
+                                       alert.type === 'Autonomous Monitoring' ? Zap : Bell
+                  return (
+                    <div key={index} className="border border-line rounded-lg p-6 bg-white">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <IconComponent className="w-6 h-6 text-electric" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-semibold text-ink mb-2">{alert.type}</h4>
+                          <p className="text-base text-stone mb-4">{alert.description}</p>
+                        </div>
+                      </div>
+                      <ul className="space-y-2 text-sm text-stone">
+                        {alert.features.map((feature, fIndex) => (
+                          <li key={fIndex} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
           </div>
-                ))}
+                  )
+                })}
         </div>
     </div>
           </div>
@@ -284,9 +304,16 @@ export default function DocsPage() {
               </p>
               
           <div className="space-y-6">
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h3 id="how-it-works" className="text-xl font-semibold text-ink mb-3">How It Works</h3>
-                  <ol className="list-decimal list-inside space-y-1 text-sm text-stone">
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Zap className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h3 id="how-it-works" className="text-xl font-semibold text-ink mb-3">How It Works</h3>
+                    </div>
+                  </div>
+                  <ol className="list-decimal list-inside space-y-2 text-base text-stone ml-16">
                     <li>Enable monitoring for your wallet with a custom frequency (default: 12 hours)</li>
                     <li>System automatically rescans your wallet at the specified intervals</li>
                     <li>Detects drift: new approvals, amount changes, or unlimited flips</li>
@@ -295,8 +322,15 @@ export default function DocsPage() {
                   </ol>
                 </div>
 
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h3 id="drift-detection" className="text-xl font-semibold text-ink mb-3">Drift Detection</h3>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Bell className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h3 id="drift-detection" className="text-xl font-semibold text-ink mb-3">Drift Detection</h3>
+                    </div>
+                  </div>
                   <p className="text-sm text-stone mb-3">The system detects the following types of changes:</p>
                   <ul className="space-y-1 text-sm text-stone">
                     <li>• <strong>New Approvals:</strong> Previously unseen token approvals</li>
@@ -306,13 +340,29 @@ export default function DocsPage() {
                   </ul>
                 </div>
 
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h3 id="configuration" className="text-xl font-semibold text-ink mb-3">Configuration</h3>
-                  <p className="text-sm text-stone mb-3">You can configure monitoring settings in the sidebar:</p>
-                  <ul className="space-y-1 text-sm text-stone">
-                    <li>• <strong>Enable/Disable:</strong> Turn monitoring on or off for each wallet</li>
-                    <li>• <strong>Frequency:</strong> Set rescan interval (minimum 30 minutes)</li>
-                    <li>• <strong>Alerts:</strong> Configure email and Slack notification preferences</li>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Settings className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h3 id="configuration" className="text-xl font-semibold text-ink mb-3">Configuration</h3>
+                    </div>
+                  </div>
+                  <p className="text-base text-stone mb-4 ml-16">You can configure monitoring settings in the sidebar:</p>
+                  <ul className="space-y-2 text-base text-stone ml-16">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span><strong>Enable/Disable:</strong> Turn monitoring on or off for each wallet</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span><strong>Frequency:</strong> Set rescan interval (minimum 30 minutes)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span><strong>Alerts:</strong> Configure email and Slack notification preferences</span>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -331,21 +381,49 @@ export default function DocsPage() {
 
               <h3 className="text-xl font-semibold text-ink mb-3">Team Roles</h3>
               <div className="space-y-4 mb-6">
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Owner</h4>
-                  <p className="text-sm text-stone">Full control over the team, including adding/removing members, managing wallets, and inviting collaborators.</p>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Owner</h4>
+                      <p className="text-base text-stone">Full control over the team, including adding/removing members, managing wallets, and inviting collaborators.</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Admin</h4>
-                  <p className="text-sm text-stone">Can manage team members, add wallets, and invite users. Cannot remove the owner.</p>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Shield className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Admin</h4>
+                      <p className="text-base text-stone">Can manage team members, add wallets, and invite users. Cannot remove the owner.</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Editor</h4>
-                  <p className="text-sm text-stone">Can add wallets to the team and invite viewers. Can revoke approvals and manage monitoring settings.</p>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Settings className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Editor</h4>
+                      <p className="text-base text-stone">Can add wallets to the team and invite viewers. Can revoke approvals and manage monitoring settings.</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Viewer</h4>
-                  <p className="text-sm text-stone">Read-only access. Can view approvals and scan results but cannot revoke approvals or modify settings.</p>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Search className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Viewer</h4>
+                      <p className="text-base text-stone">Read-only access. Can view approvals and scan results but cannot revoke approvals or modify settings.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -359,34 +437,50 @@ export default function DocsPage() {
               </ol>
 
               <h3 className="text-xl font-semibold text-ink mb-3">Team Features</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Users className="w-4 h-4 text-ink" />
-                    <h4 className="font-medium text-ink">Shared Wallets</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Shared Wallets</h4>
+                      <p className="text-base text-stone">Add multiple wallet addresses to a team for centralized monitoring</p>
+                    </div>
                   </div>
-                  <p className="text-sm text-stone">Add multiple wallet addresses to a team for centralized monitoring</p>
                 </div>
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Mail className="w-4 h-4 text-ink" />
-                    <h4 className="font-medium text-ink">Email Invites</h4>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Email Invites</h4>
+                      <p className="text-base text-stone">Invite team members via secure email links with role-based access</p>
+                    </div>
                   </div>
-                  <p className="text-sm text-stone">Invite team members via secure email links with role-based access</p>
                 </div>
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Shield className="w-4 h-4 text-ink" />
-                    <h4 className="font-medium text-ink">Role-Based Access</h4>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Shield className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Role-Based Access</h4>
+                      <p className="text-base text-stone">Control permissions with owner, admin, editor, and viewer roles</p>
+                    </div>
                   </div>
-                  <p className="text-sm text-stone">Control permissions with owner, admin, editor, and viewer roles</p>
                 </div>
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Bell className="w-4 h-4 text-ink" />
-                    <h4 className="font-medium text-ink">Team Monitoring</h4>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Bell className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Team Monitoring</h4>
+                      <p className="text-base text-stone">Set up autonomous monitoring for team-managed wallets</p>
+                    </div>
                   </div>
-                  <p className="text-sm text-stone">Set up autonomous monitoring for team-managed wallets</p>
                 </div>
               </div>
             </div>
@@ -401,10 +495,17 @@ export default function DocsPage() {
               <p className="text-base text-stone mb-6">
                 Revoking an approval means setting the allowance to zero, preventing the spender from accessing your tokens:
               </p>
-              <div className="space-y-4">
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Using AllowanceGuard</h4>
-                  <ol className="list-decimal list-inside space-y-1 text-sm text-stone">
+              <div className="space-y-6">
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Lock className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Using AllowanceGuard</h4>
+                    </div>
+                  </div>
+                  <ol className="list-decimal list-inside space-y-2 text-base text-stone ml-16">
                     <li>Connect your wallet and scan for approvals</li>
                     <li>Find the approval you want to revoke</li>
                     <li>Click the &quot;Revoke&quot; button</li>
@@ -412,13 +513,32 @@ export default function DocsPage() {
                     <li>Pay the gas fee to complete the revocation</li>
                   </ol>
                 </div>
-                <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Important Notes</h4>
-                  <ul className="space-y-1 text-sm text-stone">
-                    <li>• Each revocation requires a separate transaction and gas fee</li>
-                    <li>• Revoking doesn&apos;t affect already deposited or staked tokens</li>
-                    <li>• Some dApps may require you to re-approve for continued functionality</li>
-                    <li>• Revocation is preventative, not restorative for already stolen funds</li>
+                <div className="p-6 bg-white border border-line rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <AlertTriangle className="w-6 h-6 text-electric" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-ink mb-2">Important Notes</h4>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 text-base text-stone ml-16">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Each revocation requires a separate transaction and gas fee</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Revoking doesn&apos;t affect already deposited or staked tokens</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Some dApps may require you to re-approve for continued functionality</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Revocation is preventative, not restorative for already stolen funds</span>
+                    </li>
               </ul>
     </div>
       </div>
