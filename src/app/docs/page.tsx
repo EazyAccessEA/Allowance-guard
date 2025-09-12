@@ -34,7 +34,7 @@ export default function DocsPage() {
     { id: 'risk-scoring', title: 'Risk Scoring', icon: AlertTriangle },
     { id: 'alerts', title: 'Alerts & Notifications', icon: Mail },
     { id: 'revoking', title: 'Revoking Approvals', icon: Lock },
-    { id: 'api', title: 'API Reference', icon: Settings },
+    { id: 'api', title: 'Settings & API', icon: Settings },
     { id: 'troubleshooting', title: 'Troubleshooting', icon: Wrench },
     { id: 'faq', title: 'FAQ', icon: HelpCircle }
   ]
@@ -296,23 +296,103 @@ export default function DocsPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">API Reference</h2>
+              <h2 className="text-2xl font-semibold text-ink mb-4">Settings & Configuration</h2>
               <p className="text-base text-stone mb-6">
-                AllowanceGuard provides RESTful APIs for programmatic access:
+                AllowanceGuard provides comprehensive settings to customize your security monitoring experience:
               </p>
-              <div className="space-y-4">
-                {apiEndpoints.map((endpoint, index) => (
-                  <div key={index} className="border border-line rounded-md p-4 bg-mist">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-ink text-white">
-                        {endpoint.method}
-                      </span>
-                      <code className="text-sm font-mono text-ink">{endpoint.endpoint}</code>
-                    </div>
-                    <p className="text-sm text-stone">{endpoint.description}</p>
-          </div>
-            ))}
-          </div>
+              
+              <div className="space-y-6">
+                {/* Email Alerts */}
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Mail className="w-5 h-5 text-ink" />
+                    <h3 className="text-lg font-semibold text-ink">Email Alerts</h3>
+                  </div>
+                  <p className="text-sm text-stone mb-4">
+                    Get notified when new approvals are detected on your wallets via Microsoft SMTP.
+                  </p>
+                  <ul className="space-y-2 text-sm text-stone">
+                    <li>• Daily digest emails with risky approval summaries</li>
+                    <li>• Risk-only filtering to reduce notification noise</li>
+                    <li>• HTML templates with professional formatting</li>
+                    <li>• Customizable preferences per wallet address</li>
+                  </ul>
+                </div>
+
+                {/* Risk Policy */}
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Shield className="w-5 h-5 text-ink" />
+                    <h3 className="text-lg font-semibold text-ink">Risk Policy Configuration</h3>
+                  </div>
+                  <p className="text-sm text-stone mb-4">
+                    Configure what counts as alert-worthy for your specific needs.
+                  </p>
+                  <ul className="space-y-2 text-sm text-stone">
+                    <li>• Set minimum risk score thresholds</li>
+                    <li>• Focus on unlimited approvals only</li>
+                    <li>• Include/exclude specific spender addresses</li>
+                    <li>• Filter by token addresses</li>
+                    <li>• Chain-specific policies</li>
+                  </ul>
+                </div>
+
+                {/* Slack Integration */}
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Bell className="w-5 h-5 text-ink" />
+                    <h3 className="text-lg font-semibold text-ink">Slack Integration</h3>
+                  </div>
+                  <p className="text-sm text-stone mb-4">
+                    Get daily digests directly in your Slack workspace.
+                  </p>
+                  <ul className="space-y-2 text-sm text-stone">
+                    <li>• Webhook-based notifications</li>
+                    <li>• Rich formatting with approval details</li>
+                    <li>• Team collaboration features</li>
+                    <li>• Custom channel routing</li>
+                  </ul>
+                </div>
+
+                {/* Public Sharing */}
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Settings className="w-5 h-5 text-ink" />
+                    <h3 className="text-lg font-semibold text-ink">Public Share Links</h3>
+                  </div>
+                  <p className="text-sm text-stone mb-4">
+                    Generate read-only links to share your wallet's approval status.
+                  </p>
+                  <ul className="space-y-2 text-sm text-stone">
+                    <li>• Privacy controls (censor addresses/amounts)</li>
+                    <li>• Risk-only filtering for public sharing</li>
+                    <li>• Expiration dates for temporary access</li>
+                    <li>• One-click link generation and rotation</li>
+                  </ul>
+                </div>
+
+                {/* API Reference */}
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Settings className="w-5 h-5 text-ink" />
+                    <h3 className="text-lg font-semibold text-ink">API Endpoints</h3>
+                  </div>
+                  <p className="text-sm text-stone mb-4">
+                    Programmatic access to AllowanceGuard functionality:
+                  </p>
+                  <div className="space-y-2">
+                    {apiEndpoints.map((endpoint, index) => (
+                      <div key={index} className="flex items-center gap-3 text-sm">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-ink text-white">
+                          {endpoint.method}
+                        </span>
+                        <code className="font-mono text-ink">{endpoint.endpoint}</code>
+                        <span className="text-stone">{endpoint.description}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )
@@ -389,7 +469,7 @@ export default function DocsPage() {
       case 'revoking':
         return ['How to Revoke Approvals']
       case 'api':
-        return ['API Reference']
+        return ['Settings & Configuration']
       case 'troubleshooting':
         return ['Common Issues & Solutions']
       case 'faq':
