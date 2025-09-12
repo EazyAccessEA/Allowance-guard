@@ -29,6 +29,9 @@ export async function createSession(userId: number) {
      VALUES ($1,$2,NOW() + INTERVAL '${DAYS} days') RETURNING token`,
     [userId, token]
   )
+  if (!rows[0]) {
+    throw new Error('Failed to create session')
+  }
   return rows[0].token as string
 }
 
