@@ -77,7 +77,7 @@ export async function POST(req: Request) {
       await sendMail(email, 'Sign in to Allowance Guard', html)
     }
     
-    const response: any = { 
+    const response: { ok: boolean; message: string; magicLink?: string } = { 
       ok: true, 
       message: 'Magic link sent to your email' 
     }
