@@ -7,6 +7,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
+import ConnectButton from '@/components/ConnectButton'
 
 export default function SettingsPage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -223,9 +224,15 @@ export default function SettingsPage() {
                 <p className="text-sm opacity-90 mb-4">
                   Connect your wallet to access these settings and start monitoring your token approvals with custom alerts and policies.
                 </p>
-                <p className="text-sm opacity-75">
+                <p className="text-sm opacity-75 mb-6">
                   Your wallet connection is secure and only used to identify which settings apply to your addresses.
                 </p>
+                <div className="flex justify-center">
+                  <ConnectButton 
+                    variant="primary"
+                    className="bg-white text-ink hover:bg-white/90 transition-all duration-200 px-8 py-3 text-base font-medium rounded-lg"
+                  />
+                </div>
               </div>
             </div>
           </Container>
