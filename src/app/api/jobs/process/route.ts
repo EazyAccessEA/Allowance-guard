@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 import { claimPending, finishJob, JobRow } from '@/lib/jobs'
 import { scanWalletOnChain } from '@/lib/scanner'
 import { apiLogger } from '@/lib/logger'
+import { refreshRiskForWallet } from '@/lib/risk'
+import { enrichWallet } from '@/lib/enrich'
+import { driftCheckAndNotify } from '@/lib/drift'
+import { pool } from '@/lib/db'
 
 async function handle(job: JobRow) {
   if (job.type !== 'scan_wallet') throw new Error(`Unknown job type: ${job.type}`)
@@ -13,6 +17,18 @@ async function handle(job: JobRow) {
   for (const chainId of chains) {
     await scanWalletOnChain(wallet, chainId as 1|42161|8453)
   }
+  
+  // Post-scan: risk, enrich, drift
+  await refreshRiskForWallet(wallet)
+  await enrichWallet(wallet)
+  await driftCheckAndNotify(wallet)
+
+  // Update monitor's last_scan_at if it exists
+  await pool.query(
+    `UPDATE wallet_monitors SET last_scan_at=NOW(), updated_at=NOW()
+     WHERE wallet_address=$1`,
+    [wallet.toLowerCase()]
+  )
   
   apiLogger.info('Scan job completed', { jobId: job.id, wallet })
 }

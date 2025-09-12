@@ -2,6 +2,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import WalletManager from '@/components/WalletManager'
 import AllowanceTable from '@/components/AllowanceTable'
+import { useState, useEffect } from 'react'
 
 interface AppAreaProps {
   isConnected: boolean
@@ -31,6 +32,27 @@ interface AppAreaProps {
 export default function AppArea({
   isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress
 }: AppAreaProps) {
+  const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
+  const [monitorFreq, setMonitorFreq] = useState(720)
+
+  async function loadMonitor() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return
+    const r = await fetch(`/api/monitor?wallet=${target}`)
+    const j = await r.json()
+    if (j.monitor) { setMonitorOn(j.monitor.enabled); setMonitorFreq(j.monitor.freq_minutes) }
+  }
+  useEffect(() => { loadMonitor() }, [selectedWallet, connectedAddress])
+
+  async function saveMonitor() {
+    const target = selectedWallet || connectedAddress
+    if (!target) return alert('Select or connect a wallet first')
+    await fetch('/api/monitor', {
+      method:'POST', headers:{'content-type':'application/json'},
+      body: JSON.stringify({ wallet: target, enabled: monitorOn ?? true, freq_minutes: monitorFreq })
+    })
+  }
+
   if (!isConnected) return null
   return (
     <Section className="bg-white">
@@ -45,6 +67,37 @@ export default function AppArea({
                 onSelect={setSelectedWallet}
                 onSavedChange={() => {}}
               />
+            </div>
+
+            <div className="border border-line rounded-md p-6">
+              <h3 className="text-lg text-ink mb-3">Monitoring</h3>
+              <div className="space-y-3">
+                <label className="text-sm flex items-center gap-2">
+                  <input 
+                    type="checkbox" 
+                    checked={!!monitorOn} 
+                    onChange={e=>setMonitorOn(e.target.checked)} 
+                    className="rounded border-line"
+                  />
+                  Enable auto-rescan & drift alerts
+                </label>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm">Every</span>
+                  <input 
+                    type="number" 
+                    className="w-20 rounded border border-line px-2 py-1 text-sm" 
+                    value={monitorFreq} 
+                    onChange={e=>setMonitorFreq(Number(e.target.value||720))} 
+                  />
+                  <span className="text-sm">minutes</span>
+                </div>
+                <button 
+                  onClick={saveMonitor} 
+                  className="rounded border border-line px-3 py-2 text-sm hover:bg-mist transition-colors"
+                >
+                  Save
+                </button>
+              </div>
             </div>
 
             <div className="border border-line rounded-md p-6">
