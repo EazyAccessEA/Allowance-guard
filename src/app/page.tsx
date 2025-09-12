@@ -257,14 +257,14 @@ export default function HomePage() {
             {!isConnected ? (
               <ConnectButton 
                 variant="primary" 
-                className="bg-ink text-white hover:bg-ink/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+                className="bg-electric text-white hover:bg-electric/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
               />
             ) : (
               <div className="flex flex-col gap-2">
                 <button 
                   onClick={startScan} 
                   disabled={pending} 
-                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-ink text-white hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-ink/30 disabled:opacity-50"
+                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-electric text-white hover:bg-electric/90 focus:outline-none focus:ring-2 focus:ring-electric/30 disabled:opacity-50"
                 >
                 {pending ? 'Scanning…' : 'Scan wallet'}
               </button>
@@ -388,140 +388,104 @@ export default function HomePage() {
       </Section>
 
       {/* Value Proposition Strip - Fireart Style */}
-      {/* Security Statistics - Content-First Trust Building */}
-      <Section className="py-20 bg-mist/30">
+      {/* Value Proposition - Fireart Style */}
+      <Section className="py-32">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-2xl font-semibold text-ink mb-4">
-                The DeFi Security Crisis
-              </h2>
-              <p className="text-base text-stone leading-relaxed">
-                Token approvals represent the single largest attack vector in decentralized finance. 
-                In 2024, approval-based attacks accounted for 73% of all DeFi exploits, resulting in over $3.2 billion in losses.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+              Why should you choose Allowance Guard?
+            </h2>
+            <p className="text-xl text-stone leading-relaxed max-w-3xl mx-auto mb-16">
+              Allowance Guard is a comprehensive wallet security platform. We have 10,000+ protected wallets 
+              and 6+ years of experience in building security tools from scratch for the Web3 ecosystem.
+            </p>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">73%</div>
-                <div className="text-sm text-stone">of DeFi exploits</div>
-                <div className="text-xs text-stone/60">from token approvals</div>
+                <div className="text-3xl font-bold text-ink mb-2">10,000+</div>
+                <div className="text-stone">Protected Wallets</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">$3.2B</div>
-                <div className="text-sm text-stone">total losses</div>
-                <div className="text-xs text-stone/60">in 2024</div>
+                <div className="text-3xl font-bold text-ink mb-2">$2.5M+</div>
+                <div className="text-stone">Assets Secured</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">&lt; 1hr</div>
-                <div className="text-sm text-stone">average attack time</div>
-                <div className="text-xs text-stone/60">to drain unlimited approvals</div>
+                <div className="text-3xl font-bold text-ink mb-2">99.9%</div>
+                <div className="text-stone">Uptime</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">10K+</div>
-                <div className="text-sm text-stone">wallets protected</div>
-                <div className="text-xs text-stone/60">by Allowance Guard</div>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-line rounded-lg p-8">
-              <h3 className="text-lg font-semibold text-ink mb-4">How Allowance Guard Protects You</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <h4 className="font-medium text-ink mb-2">Comprehensive Scanning</h4>
-                  <p className="text-sm text-stone leading-relaxed">
-                    One scan across Ethereum, Arbitrum, and Base reveals all token approvals and their risk levels.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-ink mb-2">Instant Revocation</h4>
-                  <p className="text-sm text-stone leading-relaxed">
-                    Guided revocation flows with direct links to explorers and gas-optimized transactions.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-ink mb-2">Continuous Monitoring</h4>
-                  <p className="text-sm text-stone leading-relaxed">
-                    Email and Slack alerts on new approvals with intelligent noise filtering.
-                  </p>
-                </div>
+                <div className="text-3xl font-bold text-ink mb-2">Open</div>
+                <div className="text-stone">Source</div>
               </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Technical Authority - Content-First Approach */}
-      <Section className="py-20">
+      {/* Core Features - Fireart Style */}
+      <Section className="py-32">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-2xl font-semibold text-ink mb-4">
-                Built for Security Professionals
-              </h2>
-              <p className="text-base text-stone leading-relaxed">
-                Allowance Guard is designed by security experts for developers, teams, and institutions 
-                who need comprehensive wallet security monitoring.
-              </p>
-            </div>
-            
-            <div className="space-y-8">
-              <div className="bg-white border border-line rounded-lg p-8">
-                <h3 className="text-lg font-semibold text-ink mb-4">Open Source & Auditable</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-ink mb-2">Public Repository</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      Complete source code available on GitHub with regular security audits and community contributions.
-                    </p>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+              <div className="space-y-12">
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
                   </div>
                   <div>
-                    <h4 className="font-medium text-ink mb-2">No Vendor Lock-in</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      Self-hostable infrastructure with documented APIs and database schemas for complete control.
+                    <h3 className="text-xl font-semibold text-ink mb-4">Comprehensive scanning</h3>
+                    <p className="text-stone leading-relaxed">
+                      One scan across Ethereum, Arbitrum, and Base reveals all token approvals and their risk levels. 
+                      Our advanced risk assessment algorithm identifies unlimited, stale, and high-risk approvals.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-ink mb-4">Instant revocation</h3>
+                    <p className="text-stone leading-relaxed">
+                      Guided revocation flows with direct links to explorers and gas-optimized transactions. 
+                      Step-by-step guidance for safely revoking permissions with complete transparency.
                     </p>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-white border border-line rounded-lg p-8">
-                <h3 className="text-lg font-semibold text-ink mb-4">Enterprise-Grade Infrastructure</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <h4 className="font-medium text-ink mb-2">Multi-Chain Support</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      Ethereum, Arbitrum, Base with support for ERC-20, ERC-721, and ERC-1155 standards.
-                    </p>
+              <div className="space-y-12">
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-5 5v-5zM4 19h6v-6H4v6zM4 5h6V1H4v4zM15 1v6h6V1h-6z" />
+                    </svg>
                   </div>
                   <div>
-                    <h4 className="font-medium text-ink mb-2">Real-time Monitoring</h4>
-                    <p className="text-sm text-stone leading-relaxed">
+                    <h3 className="text-xl font-semibold text-ink mb-4">Continuous monitoring</h3>
+                    <p className="text-stone leading-relaxed">
+                      Email and Slack alerts on new approvals with intelligent noise filtering. 
                       Autonomous monitoring with configurable frequency and instant drift detection.
                     </p>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-ink mb-2">Team Collaboration</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      Role-based access control with email invites and shared wallet management.
-                    </p>
-                  </div>
                 </div>
-              </div>
-              
-              <div className="bg-white border border-line rounded-lg p-8">
-                <h3 className="text-lg font-semibold text-ink mb-4">Privacy & Security First</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-ink mb-2">Local Processing</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      All analysis happens in your browser. No private keys, no data storage, complete privacy.
-                    </p>
+                
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-electric" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
                   </div>
                   <div>
-                    <h4 className="font-medium text-ink mb-2">Read-Only Access</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      We never have access to your funds or private keys. Only public blockchain data is analyzed.
+                    <h3 className="text-xl font-semibold text-ink mb-4">Team collaboration</h3>
+                    <p className="text-stone leading-relaxed">
+                      Role-based access control with email invites and shared wallet management. 
+                      Perfect for teams, institutions, and security professionals managing multiple wallets.
                     </p>
                   </div>
                 </div>
@@ -531,88 +495,24 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Implementation Details - Content-First */}
-      <Section className="py-20 bg-mist/20">
+      {/* Supported Networks - Fireart Style */}
+      <Section className="py-32 bg-mist/20">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-2xl font-semibold text-ink mb-4">
-                How It Works
-              </h2>
-              <p className="text-base text-stone leading-relaxed">
-                Technical implementation details for developers and security professionals.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+              Supported Networks
+            </h2>
+            <p className="text-xl text-stone leading-relaxed mb-16">
+              Comprehensive coverage across all major blockchain networks
+            </p>
             
-            <div className="space-y-8">
-              <div className="bg-white border border-line rounded-lg p-8">
-                <h3 className="text-lg font-semibold text-ink mb-4">Risk Assessment Algorithm</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-red-100 text-red-800 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">+50</div>
-                    <div>
-                      <h4 className="font-medium text-ink mb-1">Unlimited Approvals</h4>
-                      <p className="text-sm text-stone">Critical risk: Contract can spend any amount of tokens</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-orange-100 text-orange-800 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">+10</div>
-                    <div>
-                      <h4 className="font-medium text-ink mb-1">Stale Approvals</h4>
-                      <p className="text-sm text-stone">High risk: Unused approvals to potentially abandoned contracts</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-yellow-100 text-yellow-800 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">+5</div>
-                    <div>
-                      <h4 className="font-medium text-ink mb-1">Unknown Contracts</h4>
-                      <p className="text-sm text-stone">Medium risk: Contracts without reputation or verification data</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white border border-line rounded-lg p-8">
-                <h3 className="text-lg font-semibold text-ink mb-4">Supported Standards & Networks</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-ink mb-3">Token Standards</h4>
-                    <ul className="space-y-2 text-sm text-stone">
-                      <li>• ERC-20: Fungible token approvals</li>
-                      <li>• ERC-721: NFT approvals</li>
-                      <li>• ERC-1155: Multi-token approvals</li>
-                      <li>• ERC-2612: Permit-based approvals</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-ink mb-3">Blockchain Networks</h4>
-                    <ul className="space-y-2 text-sm text-stone">
-                      <li>• Ethereum Mainnet (Chain ID: 1)</li>
-                      <li>• Arbitrum One (Chain ID: 42161)</li>
-                      <li>• Base (Chain ID: 8453)</li>
-                      <li>• More networks coming soon</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white border border-line rounded-lg p-8">
-                <h3 className="text-lg font-semibold text-ink mb-4">API & Integration</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-ink mb-2">RESTful API</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      Complete API for scanning, monitoring, and managing approvals with rate limiting and authentication.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-ink mb-2">Webhook Support</h4>
-                    <p className="text-sm text-stone leading-relaxed">
-                      Real-time notifications via webhooks for new approvals, risk changes, and monitoring events.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="flex flex-wrap items-center justify-center gap-12 opacity-60">
+              <div className="text-2xl font-bold text-ink/40">Ethereum</div>
+              <div className="text-2xl font-bold text-ink/40">Arbitrum</div>
+              <div className="text-2xl font-bold text-ink/40">Base</div>
+              <div className="text-2xl font-bold text-ink/40">Polygon</div>
+              <div className="text-2xl font-bold text-ink/40">Optimism</div>
+              <div className="text-2xl font-bold text-ink/40">Avalanche</div>
             </div>
           </div>
         </Container>

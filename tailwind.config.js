@@ -14,7 +14,7 @@ module.exports = {
         stone: '#6B7280',      // secondary text
         mist: '#F6F7F9',       // soft background
         line: '#E5E7EB',       // separators
-        cobalt: '#265BFF',     // accent
+        electric: '#00BFFF',    // electric blue accent
         white: '#FFFFFF',
       },
       fontFamily: {
