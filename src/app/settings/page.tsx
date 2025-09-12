@@ -163,9 +163,71 @@ export default function SettingsPage() {
         <Section>
           <Container className="text-center">
             <H1 className="mb-6">Settings</H1>
-            <p className="text-base text-stone max-w-reading mx-auto">
-              Connect your wallet to access settings and configure alerts.
+            <p className="text-base text-stone max-w-reading mx-auto mb-8">
+              Connect your wallet to access comprehensive settings and configure your security monitoring preferences.
             </p>
+            
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Email Alerts</h3>
+                  <p className="text-sm text-stone mb-3">
+                    Get notified when new approvals are detected on your wallets via Microsoft SMTP.
+                  </p>
+                  <ul className="text-sm text-stone space-y-1">
+                    <li>• Daily digest emails with risky approval summaries</li>
+                    <li>• Risk-only filtering to reduce notification noise</li>
+                    <li>• Customizable preferences per wallet address</li>
+                  </ul>
+                </div>
+
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Risk Policy Configuration</h3>
+                  <p className="text-sm text-stone mb-3">
+                    Configure what counts as alert-worthy for your specific needs.
+                  </p>
+                  <ul className="text-sm text-stone space-y-1">
+                    <li>• Set minimum risk score thresholds</li>
+                    <li>• Focus on unlimited approvals only</li>
+                    <li>• Include/exclude specific addresses</li>
+                  </ul>
+                </div>
+
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Slack Integration</h3>
+                  <p className="text-sm text-stone mb-3">
+                    Get daily digests directly in your Slack workspace.
+                  </p>
+                  <ul className="text-sm text-stone space-y-1">
+                    <li>• Webhook-based notifications</li>
+                    <li>• Rich formatting with approval details</li>
+                    <li>• Team collaboration features</li>
+                  </ul>
+                </div>
+
+                <div className="border border-line rounded-md p-6 bg-mist">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Public Share Links</h3>
+                  <p className="text-sm text-stone mb-3">
+                    Generate read-only links to share your wallet's approval status.
+                  </p>
+                  <ul className="text-sm text-stone space-y-1">
+                    <li>• Privacy controls (censor addresses/amounts)</li>
+                    <li>• Risk-only filtering for public sharing</li>
+                    <li>• Expiration dates for temporary access</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-ink text-white rounded-md p-6">
+                <h3 className="text-lg font-semibold mb-2">Ready to get started?</h3>
+                <p className="text-sm opacity-90 mb-4">
+                  Connect your wallet to access these settings and start monitoring your token approvals with custom alerts and policies.
+                </p>
+                <p className="text-sm opacity-75">
+                  Your wallet connection is secure and only used to identify which settings apply to your addresses.
+                </p>
+              </div>
+            </div>
           </Container>
         </Section>
         <Footer />
