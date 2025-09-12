@@ -6,7 +6,7 @@ const host = process.env.SMTP_HOST || 'smtp-mail.outlook.com'
 const port = Number(process.env.SMTP_PORT || 587)
 const user = process.env.SMTP_USER
 const pass = process.env.SMTP_PASS
-const fromEmail = process.env.ALERTS_FROM_EMAIL || 'no-reply@allowanceguard.com'
+const fromEmail = process.env.ALERTS_FROM_EMAIL || 'no_reply@allowanceguard.com'
 const fromName = process.env.ALERTS_FROM_NAME || 'Allowance Guard'
 
 // Legal footer template for all emails

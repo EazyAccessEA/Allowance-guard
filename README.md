@@ -224,7 +224,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Documentation**: [docs.allowanceguard.com](https://docs.allowanceguard.com)
 - **Issues**: [GitHub Issues](https://github.com/allowance-guard/allowance-guard/issues)
-- **Email**: support@allowanceguard.com
+- **Email**: legal.support@allowanceguard.com
 
 ## 🗺️ Roadmap
 

@@ -93,7 +93,7 @@ export default function ContactPage() {
     {
       title: 'Email Support',
       description: 'Get help via email within 24 hours',
-      contact: 'support@allowanceguard.com'
+      contact: 'legal.support@allowanceguard.com'
     },
     {
       title: 'Live Chat',

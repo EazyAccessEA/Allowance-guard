@@ -64,9 +64,9 @@ NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_production_project_id
 # Microsoft SMTP (Production)
 SMTP_HOST=smtp.office365.com
 SMTP_PORT=587
-SMTP_USER=no-reply@allowanceguard.com
+SMTP_USER=no_reply@allowanceguard.com
 SMTP_PASS=your_production_app_password
-ALERTS_FROM_EMAIL=no-reply@allowanceguard.com
+ALERTS_FROM_EMAIL=no_reply@allowanceguard.com
 ALERTS_FROM_NAME=Allowance Guard
 
 # Security
