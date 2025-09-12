@@ -1,6 +1,6 @@
 'use client'
 import { useAccount } from 'wagmi'
-import { useState, useEffect, useCallback } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -34,12 +34,6 @@ export default function HomePage() {
   const [, setJobId] = useState<number | null>(null)
   const [message, setMessage] = useState('')
 
-  // Team management state
-  const [teams, setTeams] = useState<Array<{id: number, name: string, role: string}>>([])
-  const [teamId, setTeamId] = useState<number | null>(null)
-  const [role, setRole] = useState<'owner'|'admin'|'editor'|'viewer'|'none'>('none')
-  const [me, setMe] = useState<{id: number, email: string, name?: string} | null>(null)
-  const [emailSignin, setEmailSignin] = useState('')
 
   async function fetchAllowances(addr: string, p = page, ps = pageSize) {
     const res = await fetch(`/api/allowances?wallet=${addr}&page=${p}&pageSize=${ps}`)
@@ -108,66 +102,6 @@ export default function HomePage() {
     }
   }
 
-  // Team management functions
-  async function sendLink() {
-    await fetch('/api/auth/magic/request', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: emailSignin, redirect: '/' })
-    })
-    alert('Check your email')
-  }
-
-  const loadTeams = useCallback(async () => {
-    if (!me) return
-    const r = await fetch('/api/teams')
-    const j = await r.json()
-    setTeams(j.teams || [])
-    if (!teamId && j.teams?.[0]) {
-      setTeamId(j.teams[0].id)
-      setRole(j.teams[0].role)
-    }
-  }, [me, teamId])
-
-  const loadTeamWallets = useCallback(async () => {
-    if (!teamId) return
-    const r = await fetch(`/api/teams/wallets?teamId=${teamId}`)
-    const j = await r.json()
-    if (j.wallets?.[0]) setSelectedWallet(j.wallets[0].wallet_address)
-  }, [teamId])
-
-  async function createTeam() {
-    const name = prompt('Team name?')
-    if (!name) return
-    const r = await fetch('/api/teams', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ name })
-    })
-    if (r.ok) location.reload()
-  }
-
-  async function addTeamWallet() {
-    if (!teamId || !selectedWallet) return
-    await fetch('/api/teams/wallets', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ teamId, wallet: selectedWallet })
-    })
-    alert('Added')
-  }
-
-  async function sendInvite() {
-    const email = (document.getElementById('inviteEmail') as HTMLInputElement)?.value
-    const roleSel = (document.getElementById('inviteRole') as HTMLSelectElement)?.value
-    if (!email || !roleSel) return
-    const r = await fetch('/api/teams/invite', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ teamId, email, role: roleSel })
-    })
-    alert(r.ok ? 'Invite sent' : 'Failed')
-  }
 
   const handlePage = async (newPage: number) => {
     setPage(newPage)
@@ -190,29 +124,6 @@ export default function HomePage() {
     }
   }
 
-  // Load user and teams on mount
-  useEffect(() => {
-    fetch('/api/auth/me').then(r => r.json()).then(({ user }) => {
-      setMe(user)
-      if (user) loadTeams()
-    })
-  }, [])
-
-  // Load teams when user changes
-  useEffect(() => {
-    loadTeams()
-  }, [loadTeams])
-
-  // Load team wallets when team changes
-  useEffect(() => {
-    loadTeamWallets()
-  }, [loadTeamWallets])
-
-  // Update role when team changes
-  useEffect(() => {
-    const t = teams.find(t => t.id === teamId)
-    if (t) setRole(t.role as 'owner'|'admin'|'editor'|'viewer'|'none')
-  }, [teamId, teams])
 
   return (
     <div className="min-h-screen bg-white text-ink">
@@ -285,107 +196,6 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Team Management Section */}
-      <Section className="py-8 bg-white border-b border-line">
-        <Container>
-          <div className="max-w-4xl">
-            {/* Simple sign-in widget */}
-            <div className="mt-4 flex items-center gap-2">
-              {me ? (
-                <>
-                  <span className="text-sm">Signed in as {me.email}</span>
-                  <button 
-                    onClick={() => fetch('/api/auth/signout', { method: 'POST' }).then(() => location.reload())} 
-                    className="rounded border px-2 py-1 text-xs hover:bg-mist transition-colors"
-                  >
-                    Sign out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <input 
-                    className="rounded border px-2 py-1 text-sm" 
-                    placeholder="your@email.com" 
-                    value={emailSignin} 
-                    onChange={e => setEmailSignin(e.target.value)} 
-                  />
-                  <button 
-                    onClick={sendLink} 
-                    className="rounded border px-2 py-1 text-sm hover:bg-mist transition-colors"
-                  >
-                    Email me a sign-in link
-                  </button>
-                </>
-              )}
-            </div>
-
-            {me && (
-              <section className="mt-4">
-                <div className="flex items-center gap-2">
-                  <select 
-                    className="rounded border px-2 py-1 text-sm" 
-                    value={teamId ?? ''} 
-                    onChange={e => setTeamId(Number(e.target.value))}
-                  >
-                    {teams.map(t => (
-                      <option key={t.id} value={t.id}>
-                        {t.name} ({t.role})
-                      </option>
-                    ))}
-                  </select>
-                  <button 
-                    onClick={createTeam} 
-                    className="rounded border px-2 py-1 text-xs hover:bg-mist transition-colors"
-                  >
-                    New team
-                  </button>
-                </div>
-              </section>
-            )}
-
-            {me && teamId && role !== 'viewer' && (
-              <div className="mt-2 flex gap-2">
-                <input 
-                  className="rounded border px-2 py-1 text-sm font-mono" 
-                  placeholder="0x… wallet" 
-                  value={selectedWallet ?? ''} 
-                  onChange={e => setSelectedWallet(e.target.value)} 
-                />
-                <button 
-                  onClick={addTeamWallet} 
-                  className="rounded border px-2 py-1 text-xs hover:bg-mist transition-colors"
-                >
-                  Add to team
-                </button>
-              </div>
-            )}
-
-            {me && teamId && ['owner','admin','editor'].includes(role) && (
-              <div className="mt-4">
-                <h3 className="text-sm font-semibold">Invite collaborator</h3>
-                <div className="mt-2 flex gap-2">
-                  <input 
-                    id="inviteEmail" 
-                    className="rounded border px-2 py-1 text-sm" 
-                    placeholder="collab@email.com" 
-                  />
-                  <select id="inviteRole" className="rounded border px-2 py-1 text-sm">
-                    <option value="viewer">viewer (read-only)</option>
-                    <option value="editor">editor</option>
-                    <option value="admin">admin</option>
-                  </select>
-                  <button 
-                    onClick={sendInvite} 
-                    className="rounded border px-2 py-1 text-xs hover:bg-mist transition-colors"
-                  >
-                    Send invite
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </Container>
-      </Section>
 
       {/* Value Proposition Strip - Fireart Style */}
       {/* Value Proposition - Fireart Style */}
@@ -584,7 +394,7 @@ export default function HomePage() {
           onPageSize={handlePageSize}
           onRefresh={handleRefresh}
           connectedAddress={connectedAddress}
-          canRevoke={role !== 'viewer'}
+          canRevoke={true}
         />
       )}
 
