@@ -17,7 +17,7 @@ export default function TermsPage() {
         <Container>
           <H1 className="mb-6">Terms of Service</H1>
           <p className="text-base text-stone mb-8">
-            <strong>Last updated:</strong> {new Date().toLocaleDateString()}
+            <strong>Last updated:</strong> {new Date().toLocaleDateString('en-US')}
           </p>
         </Container>
       </Section>

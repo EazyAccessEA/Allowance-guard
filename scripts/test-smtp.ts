@@ -5,8 +5,8 @@ import { testSMTPConnection, sendMail } from '../src/lib/mailer'
 
 // Load environment variables from .env.local
 // Note: Next.js automatically loads .env.local, but for standalone scripts we need to handle it
-const fs = require('fs')
-const path = require('path')
+import * as fs from 'fs'
+import * as path from 'path'
 
 // Simple env loader for .env.local
 function loadEnvFile() {

@@ -10,7 +10,7 @@ const nextConfig = {
     },
   },
   // Keep webpack config for production builds
-  webpack: (config: any) => {
+  webpack: (config: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
     return config
   }

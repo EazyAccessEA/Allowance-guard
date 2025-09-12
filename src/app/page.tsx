@@ -1,14 +1,12 @@
 'use client'
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
+import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1 } from '@/components/ui/Heading'
 import ConnectButton from '@/components/ConnectButton'
-import ValueStrip from '@/components/ValueStrip'
-import RiskExplainer from '@/components/RiskExplainer'
 import AppArea from '@/components/AppArea'
 
 export default function HomePage() {
@@ -46,14 +44,12 @@ export default function HomePage() {
       const res = await fetch('/api/scan', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ walletAddress: target, chains: ['eth','arb','base'] }) })
       const j = await res.json()
       if (!res.ok) throw new Error(j.error || 'Failed to queue')
-      // poll simplified or rely on job webhooks; then:
       await fetchAllowances(target, 1, pageSize)
     } finally {
       setPending(false)
     }
   }
 
-  // Pagination handlers
   const handlePage = async (newPage: number) => {
     setPage(newPage)
     if (selectedWallet) {
@@ -78,34 +74,211 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-ink">
       <Header isConnected={isConnected} />
-      {/* Hero */}
-      <Section>
-        <Container className="text-center">
-          <H1 className="mb-6">Find and neutralize risky token approvals</H1>
-          <p className="mx-auto max-w-reading text-lg text-stone mb-10">
+      
+      {/* Hero Section - Fireart Style with Background */}
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          style={{
+            backgroundImage: 'url(/AdobeStock_1559196964.jpeg)',
+            backgroundPosition: 'center center',
+            backgroundSize: 'cover'
+          }}
+        />
+        {/* Subtle overlay for better text readability */}
+        <div className="absolute inset-0 bg-white/80" />
+        
+        <Container className="relative text-center max-w-4xl z-10">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
+            Find and neutralize risky token approvals
+          </h1>
+          <p className="text-xl sm:text-2xl text-stone leading-relaxed mb-12 max-w-3xl mx-auto">
             A quiet dashboard to review, revoke, and monitor wallet permissions across chains.
           </p>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             {!isConnected ? (
-              <ConnectButton variant="primary" />
+              <ConnectButton 
+                variant="primary" 
+                className="bg-ink text-white hover:bg-ink/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+              />
             ) : (
-              <button onClick={startScan} disabled={pending} className="inline-flex items-center rounded-md px-5 py-3 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 bg-ink text-white hover:opacity-90 focus:ring-ink/30 disabled:opacity-50">
+              <button 
+                onClick={startScan} 
+                disabled={pending} 
+                className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-ink text-white hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-ink/30 disabled:opacity-50"
+              >
                 {pending ? 'Scanning…' : 'Scan wallet'}
               </button>
             )}
-            <a href="/docs" className="text-ink/70 text-sm hover:text-ink focus:outline-none focus:ring-2 focus:ring-ink/30 rounded">Learn more</a>
+            <Link 
+              href="/docs" 
+              className="text-stone hover:text-ink transition-colors duration-200 text-lg font-medium"
+            >
+              Learn more →
+            </Link>
           </div>
         </Container>
       </Section>
-      <div className="border-t border-line" />
 
-      {/* Value Strip */}
-      <ValueStrip />
+      {/* Value Proposition Strip - Fireart Style */}
+      <Section className="py-20 bg-mist/30">
+        <Container>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto mb-6 bg-ink/5 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-ink mb-4">Audit approvals</h3>
+              <p className="text-stone leading-relaxed">
+                One scan across supported chains reveals unlimited and risky allowances.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto mb-6 bg-ink/5 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-ink mb-4">Revoke cleanly</h3>
+              <p className="text-stone leading-relaxed">
+                Guided revocation flows with links to explorers and revoke utilities.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 mx-auto mb-6 bg-ink/5 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-5 5v-5zM4 19h6v-6H4v6zM4 5h6V1H4v4zM15 1v6h6V1h-6z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-ink mb-4">Stay ahead</h3>
+              <p className="text-stone leading-relaxed">
+                Email/Slack alerts on new or high-risk approvals. Noise controlled.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
 
-      {/* Risk Explainer */}
-      <RiskExplainer />
+      {/* Why Allowance Guard Section - Fireart Style */}
+      <Section className="py-24">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+                Why Allowance Guard?
+              </h2>
+              <div className="space-y-6 text-lg text-stone leading-relaxed">
+                <p>
+                  Token approvals are one of the most overlooked security risks in DeFi. 
+                  Most users unknowingly grant unlimited spending permissions to protocols, 
+                  creating massive attack vectors.
+                </p>
+                <p>
+                  Allowance Guard provides a comprehensive solution for monitoring, 
+                  analyzing, and managing these permissions across multiple chains, 
+                  helping users maintain control over their digital assets.
+                </p>
+              </div>
+            </div>
+            <div className="space-y-8">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-ink mb-2">10,000+</div>
+                <div className="text-stone">Wallets Protected</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-ink mb-2">$2.5M+</div>
+                <div className="text-stone">Assets Secured</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-ink mb-2">99.9%</div>
+                <div className="text-stone">Uptime</div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
 
-      {/* App Area */}
+      {/* Features Grid - Fireart Style */}
+      <Section className="py-24 bg-mist/20">
+        <Container>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-6">
+              Comprehensive Protection
+            </h2>
+            <p className="text-xl text-stone max-w-3xl mx-auto">
+              Everything you need to secure your wallet permissions across all major chains.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-2xl flex items-center justify-center shadow-subtle">
+                <svg className="w-8 h-8 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-ink mb-4">Unlimited Detection</h3>
+              <p className="text-stone leading-relaxed">
+                Identify unlimited allowances that pose the highest risk to your assets.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-2xl flex items-center justify-center shadow-subtle">
+                <svg className="w-8 h-8 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-ink mb-4">Cross-Chain</h3>
+              <p className="text-stone leading-relaxed">
+                Monitor approvals across Ethereum, Arbitrum, Base, and other major chains.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-2xl flex items-center justify-center shadow-subtle">
+                <svg className="w-8 h-8 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-5 5v-5zM4 19h6v-6H4v6zM4 5h6V1H4v4zM15 1v6h6V1h-6z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-ink mb-4">Smart Alerts</h3>
+              <p className="text-stone leading-relaxed">
+                Get notified about new approvals and high-risk changes via email or Slack.
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-2xl flex items-center justify-center shadow-subtle">
+                <svg className="w-8 h-8 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-ink mb-4">Revocation Guidance</h3>
+              <p className="text-stone leading-relaxed">
+                Step-by-step guidance for safely revoking permissions with direct links.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Social Proof / Logos Strip - Fireart Style */}
+      <Section className="py-16 bg-white">
+        <Container>
+          <div className="text-center mb-12">
+            <p className="text-stone text-lg">Trusted by security-conscious users across</p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-12 opacity-60">
+            <div className="text-2xl font-bold text-ink/40">Ethereum</div>
+            <div className="text-2xl font-bold text-ink/40">Arbitrum</div>
+            <div className="text-2xl font-bold text-ink/40">Base</div>
+            <div className="text-2xl font-bold text-ink/40">Polygon</div>
+            <div className="text-2xl font-bold text-ink/40">Optimism</div>
+            <div className="text-2xl font-bold text-ink/40">Avalanche</div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* App Area - Only show when connected */}
       {isConnected && (
         <AppArea
           isConnected={isConnected}

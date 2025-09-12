@@ -3,7 +3,6 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import Link from 'next/link'
 import { Shield, Eye, Settings, Zap, Lock, CheckCircle } from 'lucide-react'
@@ -142,30 +141,38 @@ export default function FeaturesPage() {
     <div className="min-h-screen bg-white text-ink">
       <Header isConnected={isConnected} />
       
-      <Section>
-        <Container>
-          <H1 className="mb-6">Features</H1>
-          <p className="text-base text-stone max-w-reading">
+      {/* Hero Section - Fireart Style */}
+      <Section className="py-24 sm:py-32">
+        <Container className="text-center max-w-4xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
+            Features
+          </h1>
+          <p className="text-xl sm:text-2xl text-stone leading-relaxed max-w-3xl mx-auto">
             Discover all the powerful features that make Allowance Guard the most comprehensive wallet security tool available.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
-
-      {/* Core Features */}
-      <Section>
+      {/* Core Features - Fireart Style */}
+      <Section className="py-24">
         <Container>
-          <H2 className="mb-6">Core Features</H2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Core Features
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Essential security features that protect your wallet across all major networks.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {coreFeatures.map((feature) => (
-              <div key={feature.title} className="border border-line rounded-md p-6">
-                <h3 className="text-lg text-ink mb-3">{feature.title}</h3>
-                <p className="text-base text-stone mb-4">{feature.description}</p>
-                <ul className="space-y-2">
+              <div key={feature.title} className="bg-white border border-line rounded-2xl p-8 shadow-subtle">
+                <h3 className="text-2xl font-semibold text-ink mb-4">{feature.title}</h3>
+                <p className="text-lg text-stone leading-relaxed mb-6">{feature.description}</p>
+                <ul className="space-y-3">
                   {feature.details.map((detail, index) => (
-                    <li key={index} className="text-base text-stone flex items-center">
-                      <CheckCircle className="w-4 h-4 text-ink mr-2" />
+                    <li key={index} className="text-base text-stone flex items-start">
+                      <CheckCircle className="w-5 h-5 text-cobalt mr-3 mt-0.5 flex-shrink-0" />
                       {detail}
                     </li>
                   ))}
@@ -176,19 +183,26 @@ export default function FeaturesPage() {
         </Container>
       </Section>
 
-      {/* Advanced Features */}
-      <Section className="bg-mist">
+      {/* Advanced Features - Fireart Style */}
+      <Section className="py-24 bg-mist/30">
         <Container>
-          <H2 className="mb-6">Advanced Features</H2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Advanced Features
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Powerful tools for advanced users and teams managing multiple wallets.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {advancedFeatures.map((feature) => (
-              <div key={feature.title} className="border border-line rounded-md p-6 bg-white">
-                <h3 className="text-lg text-ink mb-3">{feature.title}</h3>
-                <p className="text-base text-stone mb-4">{feature.description}</p>
-                <ul className="space-y-2">
+              <div key={feature.title} className="bg-white border border-line rounded-2xl p-8 shadow-subtle">
+                <h3 className="text-2xl font-semibold text-ink mb-4">{feature.title}</h3>
+                <p className="text-lg text-stone leading-relaxed mb-6">{feature.description}</p>
+                <ul className="space-y-3">
                   {feature.benefits.map((benefit, index) => (
                     <li key={index} className="text-base text-stone flex items-start">
-                      <div className="w-2 h-2 bg-ink rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-cobalt rounded-full mt-2 mr-3 flex-shrink-0"></div>
                       {benefit}
                     </li>
                   ))}
@@ -199,43 +213,54 @@ export default function FeaturesPage() {
         </Container>
       </Section>
 
-      {/* Supported Standards */}
-      <Section>
+      {/* Supported Standards - Fireart Style */}
+      <Section className="py-24">
         <Container>
-          <H2 className="mb-6">Supported Token Standards</H2>
-          <div className="border border-line rounded-md p-6 bg-mist">
-            <p className="text-base text-stone mb-6">
-              Allowance Guard supports all major Ethereum token standards:
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Supported Token Standards
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Allowance Guard supports all major Ethereum token standards with full compatibility.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {supportedStandards.map((standard) => (
-                <div key={standard.standard} className="border border-line rounded-md p-4 text-center bg-white">
-                  <h3 className="text-lg text-ink mb-2">{standard.standard}</h3>
-                  <p className="text-base text-stone mb-3">{standard.description}</p>
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white border border-line text-ink">
-                    <CheckCircle className="w-4 h-4 mr-1" />
-                    {standard.status}
-                  </span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {supportedStandards.map((standard) => (
+              <div key={standard.standard} className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-cobalt/10 rounded-2xl flex items-center justify-center">
+                  <CheckCircle className="w-8 h-8 text-cobalt" />
                 </div>
-              ))}
-            </div>
+                <h3 className="text-xl font-semibold text-ink mb-3">{standard.standard}</h3>
+                <p className="text-stone leading-relaxed mb-4">{standard.description}</p>
+                <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-cobalt/10 text-cobalt border border-cobalt/20">
+                  {standard.status}
+                </span>
+              </div>
+            ))}
           </div>
         </Container>
       </Section>
 
-      {/* Integration Options */}
-      <Section className="bg-mist">
+      {/* Integration Options - Fireart Style */}
+      <Section className="py-24 bg-mist/30">
         <Container>
-          <H2 className="mb-6">Integration Options</H2>
-          <div className="space-y-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Integration Options
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Seamlessly integrate Allowance Guard into your existing workflow.
+            </p>
+          </div>
+          <div className="space-y-8">
             {integrationOptions.map((integration) => (
-              <div key={integration.name} className="border border-line rounded-md p-6 bg-white">
-                <h3 className="text-lg text-ink mb-3">{integration.name}</h3>
-                <p className="text-base text-stone mb-4">{integration.description}</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div key={integration.name} className="bg-white border border-line rounded-2xl p-8 shadow-subtle">
+                <h3 className="text-2xl font-semibold text-ink mb-4">{integration.name}</h3>
+                <p className="text-lg text-stone leading-relaxed mb-6">{integration.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {integration.features.map((feature, index) => (
                     <div key={index} className="flex items-center text-base text-stone">
-                      <CheckCircle className="w-4 h-4 text-ink mr-2" />
+                      <CheckCircle className="w-5 h-5 text-cobalt mr-3 flex-shrink-0" />
                       {feature}
                     </div>
                   ))}
@@ -246,37 +271,44 @@ export default function FeaturesPage() {
         </Container>
       </Section>
 
-      {/* Performance Metrics */}
-      <Section>
+      {/* Performance Metrics - Fireart Style */}
+      <Section className="py-24">
         <Container>
-          <H2 className="mb-6">Performance & Reliability</H2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="border border-line rounded-md p-6 text-center">
-              <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-6 h-6" />
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Performance & Reliability
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Built for speed, security, and reliability with enterprise-grade infrastructure.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-cobalt/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Zap className="w-10 h-10 text-cobalt" />
               </div>
-              <h3 className="text-lg text-ink mb-2">Fast Scanning</h3>
-              <p className="text-base text-stone">
+              <h3 className="text-2xl font-semibold text-ink mb-4">Fast Scanning</h3>
+              <p className="text-lg text-stone leading-relaxed">
                 Scan thousands of approvals in seconds with our optimized blockchain queries.
               </p>
             </div>
             
-            <div className="border border-line rounded-md p-6 text-center">
-              <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-6 h-6" />
+            <div className="text-center">
+              <div className="w-20 h-20 bg-cobalt/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Shield className="w-10 h-10 text-cobalt" />
               </div>
-              <h3 className="text-lg text-ink mb-2">99.9% Uptime</h3>
-              <p className="text-base text-stone">
+              <h3 className="text-2xl font-semibold text-ink mb-4">99.9% Uptime</h3>
+              <p className="text-lg text-stone leading-relaxed">
                 Reliable service with enterprise-grade infrastructure and monitoring.
               </p>
             </div>
             
-            <div className="border border-line rounded-md p-6 text-center">
-              <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                <Lock className="w-6 h-6" />
+            <div className="text-center">
+              <div className="w-20 h-20 bg-cobalt/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Lock className="w-10 h-10 text-cobalt" />
               </div>
-              <h3 className="text-lg text-ink mb-2">Zero Trust</h3>
-              <p className="text-base text-stone">
+              <h3 className="text-2xl font-semibold text-ink mb-4">Zero Trust</h3>
+              <p className="text-lg text-stone leading-relaxed">
                 No data storage, no private key access, complete privacy protection.
               </p>
             </div>
@@ -284,71 +316,84 @@ export default function FeaturesPage() {
         </Container>
       </Section>
 
-      {/* Getting Started */}
-      <Section className="bg-mist">
+      {/* Getting Started - Fireart Style */}
+      <Section className="py-24 bg-mist/30">
         <Container>
-          <H2 className="mb-6">Ready to Get Started?</H2>
-          <div className="border border-line rounded-md p-6 bg-white">
-            <h3 className="text-lg text-ink mb-3">Start Protecting Your Wallet Today</h3>
-            <p className="text-base text-stone mb-6">
-              Join thousands of users who trust Allowance Guard to keep their wallets secure. 
-              It&apos;s free, private, and takes just minutes to set up.
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Ready to Get Started?
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Join thousands of users who trust Allowance Guard to keep their wallets secure.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link 
-                href="/" 
-                className="inline-flex items-center px-6 py-3 bg-ink text-white font-medium rounded-md hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-ink/30"
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                Start Scanning
-              </Link>
-              <a 
-                href="/docs" 
-                className="inline-flex items-center px-6 py-3 bg-white text-ink font-medium rounded-md border border-line hover:bg-mist transition focus:outline-none focus:ring-2 focus:ring-ink/30"
-              >
-                <Settings className="w-4 h-4 mr-2" />
-                View Documentation
-              </a>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white border border-line rounded-2xl p-8 shadow-subtle text-center">
+              <h3 className="text-2xl font-semibold text-ink mb-4">Start Protecting Your Wallet Today</h3>
+              <p className="text-lg text-stone leading-relaxed mb-8">
+                It&apos;s free, private, and takes just minutes to set up.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link 
+                  href="/" 
+                  className="inline-flex items-center px-8 py-4 bg-ink text-white font-medium rounded-lg hover:bg-ink/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ink/30"
+                >
+                  <Eye className="w-5 h-5 mr-2" />
+                  Start Scanning
+                </Link>
+                <a 
+                  href="/docs" 
+                  className="inline-flex items-center px-8 py-4 bg-white text-ink font-medium rounded-lg border border-line hover:bg-mist transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ink/30"
+                >
+                  <Settings className="w-5 h-5 mr-2" />
+                  View Documentation
+                </a>
+              </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Comparison */}
-      <Section>
+      {/* Why Choose - Fireart Style */}
+      <Section className="py-24">
         <Container>
-          <H2 className="mb-6">Why Choose Allowance Guard?</H2>
-          <div className="border border-line rounded-md p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg text-ink mb-2">Comprehensive</h3>
-                <p className="text-base text-stone">
-                  Supports all major networks and token standards with advanced risk analysis.
-                </p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Why Choose Allowance Guard?
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Three key advantages that make us the leading wallet security solution.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-cobalt/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-10 h-10 text-cobalt" />
               </div>
-              
-              <div className="text-center">
-                <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg text-ink mb-2">Private</h3>
-                <p className="text-base text-stone">
-                  Local processing ensures your data never leaves your browser.
-                </p>
+              <h3 className="text-2xl font-semibold text-ink mb-4">Comprehensive</h3>
+              <p className="text-lg text-stone leading-relaxed">
+                Supports all major networks and token standards with advanced risk analysis.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-20 h-20 bg-cobalt/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Lock className="w-10 h-10 text-cobalt" />
               </div>
-              
-              <div className="text-center">
-                <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h3 className="text-lg text-ink mb-2">Fast</h3>
-                <p className="text-base text-stone">
-                  Optimized for speed with real-time scanning and instant notifications.
-                </p>
+              <h3 className="text-2xl font-semibold text-ink mb-4">Private</h3>
+              <p className="text-lg text-stone leading-relaxed">
+                Local processing ensures your data never leaves your browser.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-20 h-20 bg-cobalt/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Zap className="w-10 h-10 text-cobalt" />
               </div>
+              <h3 className="text-2xl font-semibold text-ink mb-4">Fast</h3>
+              <p className="text-lg text-stone leading-relaxed">
+                Optimized for speed with real-time scanning and instant notifications.
+              </p>
             </div>
           </div>
         </Container>

@@ -62,28 +62,28 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="fireart-card bg-platinum max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white border border-line rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-large">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <Heart className="w-8 h-8 text-crimson fill-current" />
-            <h2 className="fireart-heading-3">Support Allowance Guard</h2>
+            <h2 className="text-2xl font-semibold text-ink">Support Allowance Guard</h2>
           </div>
           <button
             onClick={onClose}
-            className="fireart-button-ghost text-charcoal hover:text-obsidian"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-stone hover:text-ink hover:bg-mist transition-colors duration-200"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content */}
         <div className="space-y-6">
-          <p className="fireart-body text-charcoal">
+          <p className="text-base text-stone leading-relaxed">
             Help us maintain and improve Allowance Guard. Your support enables us to:
           </p>
           
-          <ul className="fireart-body text-charcoal space-y-3">
+          <ul className="text-base text-stone space-y-3 leading-relaxed">
             <li>• Keep the service free for all users</li>
             <li>• Add support for more blockchain networks</li>
             <li>• Improve security features and monitoring</li>
@@ -92,7 +92,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
           {/* Amount Selection */}
           <div>
-            <label className="block fireart-body font-medium text-obsidian mb-4">
+            <label className="block text-base font-medium text-ink mb-4">
               Select Amount
             </label>
             <div className="grid grid-cols-3 gap-3 mb-4">
@@ -103,10 +103,10 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                     setAmount(preset)
                     setCustomAmount('')
                   }}
-                  className={`p-3 fireart-body font-medium rounded-lg border transition-colors ${
+                  className={`p-3 text-base font-medium rounded-lg border transition-colors ${
                     amount === preset && !customAmount
                       ? 'border-crimson bg-red-50 text-crimson'
-                      : 'border-gray-200 hover:border-cobalt text-charcoal'
+                      : 'border-line hover:border-cobalt text-stone hover:text-ink'
                   }`}
                 >
                   ${preset}
@@ -115,7 +115,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
             </div>
             
             <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-charcoal" />
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stone" />
               <input
                 type="number"
                 placeholder="Custom amount"
@@ -124,7 +124,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   setCustomAmount(e.target.value)
                   if (e.target.value) setAmount(0)
                 }}
-                className="fireart-input pl-10"
+                className="w-full px-3 py-3 pl-10 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                 min="1"
                 max="10000"
                 step="0.01"
@@ -135,7 +135,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           {/* Optional Information */}
           <div className="space-y-4">
             <div>
-              <label className="block fireart-body font-medium text-obsidian mb-2">
+              <label className="block text-base font-medium text-ink mb-2">
                 Name (Optional)
               </label>
               <input
@@ -143,12 +143,12 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
-                className="fireart-input"
+                className="w-full px-3 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
               />
             </div>
 
             <div>
-              <label className="block fireart-body font-medium text-obsidian mb-2">
+              <label className="block text-base font-medium text-ink mb-2">
                 Email (Optional)
               </label>
               <input
@@ -156,15 +156,15 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="fireart-input"
+                className="w-full px-3 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
               />
-              <p className="fireart-caption mt-2">
+              <p className="text-sm text-stone mt-2">
                 We&apos;ll send you a thank you email and receipt
               </p>
             </div>
 
             <div>
-              <label className="block fireart-body font-medium text-obsidian mb-2">
+              <label className="block text-base font-medium text-ink mb-2">
                 Message (Optional)
               </label>
               <textarea
@@ -173,14 +173,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 placeholder="Leave us a message..."
                 rows={3}
                 maxLength={500}
-                className="fireart-input resize-none"
+                className="w-full px-3 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200 resize-none"
               />
             </div>
           </div>
 
           {error && (
-            <div className="fireart-card bg-red-50 border-red-200">
-              <p className="fireart-body text-crimson">{error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <p className="text-base text-crimson">{error}</p>
             </div>
           )}
 
@@ -188,14 +188,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           <div className="flex gap-4">
             <button
               onClick={onClose}
-              className="fireart-button-secondary flex-1"
+              className="flex-1 px-4 py-3 text-base font-medium text-ink border border-line rounded-lg hover:bg-mist transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
             >
               Cancel
             </button>
             <button
               onClick={handleDonate}
               disabled={isLoading}
-              className="fireart-button flex-1 bg-gradient-to-r from-crimson to-pink-500 hover:from-crimson-hover hover:to-pink-600"
+              className="flex-1 px-4 py-3 text-base font-medium text-white bg-gradient-to-r from-crimson to-pink-500 hover:from-crimson-hover hover:to-pink-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-crimson/30 disabled:opacity-50"
             >
               {isLoading ? 'Processing...' : `Donate $${customAmount || amount}`}
             </button>

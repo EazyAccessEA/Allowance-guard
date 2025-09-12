@@ -5,7 +5,6 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import { CheckCircle, AlertCircle, Mail } from 'lucide-react'
 
@@ -112,40 +111,59 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white text-ink">
       <Header isConnected={isConnected} />
       
-      <Section>
-        <Container>
-          <H1 className="mb-6">Contact Support</H1>
-          <p className="text-base text-stone max-w-reading">
+      {/* Hero Section - Fireart Style */}
+      <Section className="py-24 sm:py-32">
+        <Container className="text-center max-w-4xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
+            Contact Support
+          </h1>
+          <p className="text-xl sm:text-2xl text-stone leading-relaxed max-w-3xl mx-auto">
             We&apos;re here to help! Choose the best way to get in touch with our support team.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
-
-      {/* Contact Methods */}
-      <Section className="bg-mist">
+      {/* Contact Methods - Fireart Style */}
+      <Section className="py-20 bg-mist/30">
         <Container>
-          <H2 className="mb-6">Get in Touch</H2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Get in Touch
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Multiple ways to reach our support team for quick assistance.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {contactMethods.map((method) => (
-              <div key={method.title} className="border border-line rounded-md p-6 bg-white">
-                <h3 className="text-lg text-ink mb-3">{method.title}</h3>
-                <p className="text-base text-stone mb-3">{method.description}</p>
-                <p className="text-base font-medium text-ink">{method.contact}</p>
+              <div key={method.title} className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-white rounded-2xl flex items-center justify-center shadow-subtle">
+                  <Mail className="w-8 h-8 text-ink" />
+                </div>
+                <h3 className="text-xl font-semibold text-ink mb-4">{method.title}</h3>
+                <p className="text-stone leading-relaxed mb-4">{method.description}</p>
+                <p className="text-lg font-medium text-ink">{method.contact}</p>
               </div>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* Contact Form */}
-      <Section>
+      {/* Contact Form - Fireart Style */}
+      <Section className="py-24">
         <Container>
-          <H2 className="mb-6">Send us a Message</H2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Send us a Message
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Fill out the form below and we&apos;ll get back to you as soon as possible.
+            </p>
+          </div>
           
-          <div className="border border-line rounded-md p-8 bg-white">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white border border-line rounded-2xl p-8 shadow-subtle">
+              <form onSubmit={handleSubmit} className="space-y-6">
               {/* Basic Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -158,7 +176,7 @@ export default function ContactPage() {
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                    className="w-full px-4 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                     placeholder="Your full name"
                     required
                   />
@@ -173,7 +191,7 @@ export default function ContactPage() {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                    className="w-full px-4 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                     placeholder="your.email@example.com"
                     required
                   />
@@ -189,10 +207,10 @@ export default function ContactPage() {
                   {contactCategories.map((category) => (
                     <label
                       key={category.id}
-                      className={`relative cursor-pointer border-2 rounded-md p-4 transition-all ${
+                      className={`relative cursor-pointer border-2 rounded-lg p-6 transition-all ${
                         formData.category === category.id
-                          ? 'border-ink bg-mist'
-                          : 'border-line hover:border-ink/50'
+                          ? 'border-cobalt bg-cobalt/5'
+                          : 'border-line hover:border-cobalt/50'
                       }`}
                     >
                       <input
@@ -232,7 +250,7 @@ export default function ContactPage() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                  className="w-full px-4 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                   placeholder="Brief description of your issue"
                   required
                 />
@@ -249,7 +267,7 @@ export default function ContactPage() {
                   name="walletAddress"
                   value={formData.walletAddress}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                  className="w-full px-4 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                   placeholder="0x..."
                 />
                 <p className="text-sm text-stone mt-2">
@@ -268,7 +286,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={6}
-                  className="w-full px-4 py-3 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                  className="w-full px-4 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200 resize-none"
                   placeholder="Please provide as much detail as possible about your issue or question..."
                   required
                 />
@@ -276,10 +294,10 @@ export default function ContactPage() {
 
               {/* Status Message */}
               {message && (
-                <div className={`p-4 rounded-md flex items-center ${
+                <div className={`p-4 rounded-lg flex items-center ${
                   status === 'success' 
-                    ? 'bg-mist border border-line text-ink' 
-                    : 'bg-mist border border-line text-ink'
+                    ? 'bg-green-50 border border-green-200 text-green-800' 
+                    : 'bg-red-50 border border-red-200 text-red-800'
                 }`}>
                   {status === 'success' ? (
                     <CheckCircle className="w-5 h-5 mr-2" />
@@ -295,7 +313,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="inline-flex items-center rounded-md px-6 py-3 text-base font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 bg-ink text-white hover:opacity-90 focus:ring-ink/30 disabled:opacity-50"
+                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-ink text-white hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-ink/30 disabled:opacity-50"
                 >
                   {status === 'loading' ? (
                     <>
@@ -312,40 +330,50 @@ export default function ContactPage() {
                   )}
                 </button>
               </div>
-            </form>
+              </form>
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* FAQ Section */}
-      <Section className="bg-mist">
+      {/* FAQ Section - Fireart Style */}
+      <Section className="py-24 bg-mist/20">
         <Container>
-          <H2 className="mb-6">Frequently Asked Questions</H2>
-          <div className="border border-line rounded-md p-6 bg-white">
-            <div className="space-y-6">
-              <div>
-                <h4 className="text-base font-medium text-ink mb-2">How quickly will I get a response?</h4>
-                <p className="text-base text-stone">
-                  We typically respond within 24 hours for general questions, 12 hours for technical issues, and 2 hours for security concerns.
-                </p>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight mb-6">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-lg text-stone max-w-2xl mx-auto">
+              Quick answers to common questions about our support process.
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white border border-line rounded-2xl p-8 shadow-subtle">
+              <div className="space-y-8">
+                <div>
+                  <h4 className="text-xl font-semibold text-ink mb-4">How quickly will I get a response?</h4>
+                  <p className="text-lg text-stone leading-relaxed">
+                    We typically respond within 24 hours for general questions, 12 hours for technical issues, and 2 hours for security concerns.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-xl font-semibold text-ink mb-4">What information should I include?</h4>
+                  <p className="text-lg text-stone leading-relaxed">
+                    Please include your wallet address (if relevant), browser type, and detailed steps to reproduce any issues you&apos;re experiencing.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="text-xl font-semibold text-ink mb-4">Is my information secure?</h4>
+                  <p className="text-lg text-stone leading-relaxed">
+                    Yes, we take your privacy seriously. All communications are encrypted and we never share your personal information.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-base font-medium text-ink mb-2">What information should I include?</h4>
-                <p className="text-base text-stone">
-                  Please include your wallet address (if relevant), browser type, and detailed steps to reproduce any issues you&apos;re experiencing.
-                </p>
+              <div className="mt-8 pt-6 border-t border-line">
+                <a href="/faq" className="text-lg text-ink hover:text-cobalt font-medium transition-colors duration-200">
+                  View all FAQs →
+                </a>
               </div>
-              <div>
-                <h4 className="text-base font-medium text-ink mb-2">Is my information secure?</h4>
-                <p className="text-base text-stone">
-                  Yes, we take your privacy seriously. All communications are encrypted and we never share your personal information.
-                </p>
-              </div>
-            </div>
-            <div className="mt-6">
-              <a href="/faq" className="text-base text-ink hover:text-ink/70 font-medium">
-                View all FAQs →
-              </a>
             </div>
           </div>
         </Container>
