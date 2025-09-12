@@ -152,7 +152,7 @@ export default function FeaturesPage() {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.4) 100%)'
+            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.3) 100%)'
           }}
         />
         
