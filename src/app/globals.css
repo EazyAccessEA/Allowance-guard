@@ -24,44 +24,49 @@ w3m-modal-background {
   z-index: 9998 !important;
 }
 
-/* Enhanced AppKit modal styling to match Fireart design */
+/* Enhanced AppKit modal styling to match Fireart design tokens */
 w3m-modal {
-  --w3m-background-color: #0A0A0A !important;
-  --w3m-border-radius: 16px !important;
-  --w3m-box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  --w3m-background-color: var(--obsidian) !important; /* #1E1F23 */
+  --w3m-border-radius: 16px !important; /* card borderRadius */
+  --w3m-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1) !important; /* shadows.large */
 }
 
 /* Modal content styling */
 w3m-modal w3m-container {
-  background: #0A0A0A !important;
-  border-radius: 16px !important;
-  border: 1px solid #374151 !important;
+  background: var(--obsidian) !important; /* #1E1F23 */
+  border-radius: 16px !important; /* card borderRadius */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
 }
 
 /* Button styling within modal */
 w3m-modal w3m-button {
-  border-radius: 8px !important;
-  font-family: 'Inter', ui-sans-serif, system-ui !important;
-  font-weight: 500 !important;
-  transition: all 0.2s ease !important;
+  border-radius: 8px !important; /* button borderRadius */
+  font-family: var(--font-inter) !important;
+  font-weight: 500 !important; /* typography.fontWeight.medium */
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important; /* transitions.normal */
+  height: 44px !important; /* button.height */
+  padding: 12px 24px !important; /* button.padding */
 }
 
 w3m-modal w3m-button:hover {
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15) !important;
+  background: var(--obsidian-hover) !important; /* #25262B */
 }
 
 /* Input styling within modal */
 w3m-modal w3m-input {
-  border-radius: 8px !important;
-  border: 1px solid #374151 !important;
-  background: #1f2937 !important;
-  font-family: 'Inter', ui-sans-serif, system-ui !important;
+  border-radius: 8px !important; /* input borderRadius */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
+  background: var(--obsidian-hover) !important; /* #25262B */
+  font-family: var(--font-inter) !important;
+  height: 44px !important; /* input.height */
+  padding: 12px 16px !important; /* input.padding */
 }
 
 w3m-modal w3m-input:focus {
-  border-color: #2563EB !important;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+  border-color: var(--cobalt) !important; /* #2563EB */
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important; /* shadows.focus */
 }
 
 /* Typography within modal */
@@ -70,33 +75,35 @@ w3m-modal h2,
 w3m-modal h3,
 w3m-modal p,
 w3m-modal span {
-  font-family: 'Inter', ui-sans-serif, system-ui !important;
-  color: #F8FAFC !important;
+  font-family: var(--font-inter) !important;
+  color: var(--platinum) !important; /* #F8FAFC */
 }
 
 /* Wallet option styling */
 w3m-modal w3m-wallet-button {
-  border-radius: 8px !important;
-  border: 1px solid #374151 !important;
-  background: #1f2937 !important;
-  transition: all 0.2s ease !important;
+  border-radius: 8px !important; /* button borderRadius */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
+  background: var(--obsidian-hover) !important; /* #25262B */
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important; /* transitions.normal */
+  height: 44px !important; /* button.height */
 }
 
 w3m-modal w3m-wallet-button:hover {
-  background: #374151 !important;
-  border-color: #2563EB !important;
+  background: var(--charcoal-hover) !important; /* #475569 */
+  border-color: var(--cobalt) !important; /* #2563EB */
   transform: translateY(-1px) !important;
 }
 
 /* Close button styling */
 w3m-modal w3m-close-button {
-  border-radius: 8px !important;
-  background: #1f2937 !important;
-  border: 1px solid #374151 !important;
+  border-radius: 8px !important; /* button borderRadius */
+  background: var(--obsidian-hover) !important; /* #25262B */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important; /* transitions.normal */
 }
 
 w3m-modal w3m-close-button:hover {
-  background: #374151 !important;
+  background: var(--charcoal-hover) !important; /* #475569 */
 }
 
 :root {

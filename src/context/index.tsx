@@ -109,51 +109,52 @@ try {
     },
     themeMode: 'dark', // Match the new Reown-style dark theme
     themeVariables: {
-      // Core theme colors
-      '--w3m-color-mix': '#1f2937',
+      // Core theme colors - matching Fireart design tokens
+      '--w3m-color-mix': '#1E1F23', // obsidian
       '--w3m-color-mix-strength': 40,
-      '--w3m-accent': '#2563EB', // Cobalt blue to match our brand
-      '--w3m-accent-fill': '#1D4ED8', // Darker blue for filled states
+      '--w3m-accent': '#2563EB', // cobalt
+      '--w3m-accent-fill': '#1D4ED8', // cobalt-hover
       
-      // Border radius
-      '--w3m-border-radius-master': '12px',
-      '--w3m-border-radius-xs': '6px',
-      '--w3m-border-radius-s': '8px',
-      '--w3m-border-radius-m': '12px',
-      '--w3m-border-radius-l': '16px',
+      // Border radius - matching component tokens
+      '--w3m-border-radius-master': '8px', // button borderRadius
+      '--w3m-border-radius-xs': '4px',
+      '--w3m-border-radius-s': '6px',
+      '--w3m-border-radius-m': '8px',
+      '--w3m-border-radius-l': '12px',
+      '--w3m-border-radius-xl': '16px', // card borderRadius
       
-      // Typography
-      '--w3m-font-size-master': '14px',
-      '--w3m-font-size-xs': '12px',
-      '--w3m-font-size-s': '14px',
-      '--w3m-font-size-m': '16px',
-      '--w3m-font-size-l': '18px',
-      '--w3m-font-size-xl': '20px',
-      '--w3m-font-family': 'Inter, ui-sans-serif, system-ui',
+      // Typography - matching Fireart typography scale
+      '--w3m-font-size-master': '16px', // base fontSize
+      '--w3m-font-size-xs': '12px', // xs
+      '--w3m-font-size-s': '14px', // sm
+      '--w3m-font-size-m': '16px', // base
+      '--w3m-font-size-l': '18px', // lg
+      '--w3m-font-size-xl': '20px', // xl
+      '--w3m-font-family': 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
       
-      // Spacing
-      '--w3m-spacing-xs': '4px',
-      '--w3m-spacing-s': '8px',
+      // Spacing - matching Fireart spacing scale
+      '--w3m-spacing-xs': '4px', // xs
+      '--w3m-spacing-s': '8px', // sm
       '--w3m-spacing-m': '12px',
-      '--w3m-spacing-l': '16px',
-      '--w3m-spacing-xl': '20px',
-      '--w3m-spacing-xxl': '24px',
+      '--w3m-spacing-l': '16px', // md
+      '--w3m-spacing-xl': '24px', // lg
+      '--w3m-spacing-xxl': '32px', // xl
       
-      // Modal specific
+      // Modal specific - matching Fireart colors
       '--w3m-z-index': '9999',
-      '--w3m-background-color': '#0A0A0A', // Dark background
-      '--w3m-background-border-radius': '16px',
+      '--w3m-background-color': '#1E1F23', // obsidian
+      '--w3m-background-border-radius': '16px', // card borderRadius
       
-      // Button styling
-      '--w3m-button-border-radius': '8px',
-      '--w3m-button-hover-highlight': '#1f2937',
+      // Button styling - matching component tokens
+      '--w3m-button-border-radius': '8px', // button borderRadius
+      '--w3m-button-hover-highlight': '#25262B', // obsidianHover
       
-      // Input styling
-      '--w3m-input-border-radius': '8px',
-      '--w3m-input-border': '1px solid #374151',
+      // Input styling - matching component tokens
+      '--w3m-input-border-radius': '8px', // input borderRadius
+      '--w3m-input-border': '1px solid #64748B', // charcoal
       
-      // Overlay
-      '--w3m-overlay-background-color': 'rgba(0, 0, 0, 0.8)',
+      // Overlay - subtle Fireart-style
+      '--w3m-overlay-background-color': 'rgba(30, 31, 35, 0.8)', // obsidian with opacity
     }
   })
 } catch (error) {
