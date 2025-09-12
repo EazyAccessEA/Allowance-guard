@@ -50,14 +50,24 @@ export const ERC721_ABI: Abi = [
 
 // (Optional later) ERC721 "Approval" for single tokenId if you want per-token entries
 
-// Read ABIs for metadata
+// Read ABIs for metadata and allowance reading
 export const ERC20_READ_ABI: Abi = [
   { type:'function', name:'name', stateMutability:'view', inputs:[], outputs:[{type:'string'}] },
   { type:'function', name:'symbol', stateMutability:'view', inputs:[], outputs:[{type:'string'}] },
-  { type:'function', name:'decimals', stateMutability:'view', inputs:[], outputs:[{type:'uint8'}] }
+  { type:'function', name:'decimals', stateMutability:'view', inputs:[], outputs:[{type:'uint8'}] },
+  { type:'function', name:'allowance', stateMutability:'view',
+    inputs:[{name:'owner', type:'address'},{name:'spender', type:'address'}], outputs:[{type:'uint256'}] }
 ]
 
 export const ERC721_READ_ABI: Abi = [
   { type:'function', name:'name', stateMutability:'view', inputs:[], outputs:[{type:'string'}] },
-  { type:'function', name:'symbol', stateMutability:'view', inputs:[], outputs:[{type:'string'}] }
+  { type:'function', name:'symbol', stateMutability:'view', inputs:[], outputs:[{type:'string'}] },
+  { type:'function', name:'isApprovedForAll', stateMutability:'view',
+    inputs:[{name:'owner', type:'address'},{name:'operator', type:'address'}], outputs:[{type:'bool'}] }
+]
+
+// ERC1155 read (isApprovedForAll only)
+export const ERC1155_READ_ABI: Abi = [
+  { type:'function', name:'isApprovedForAll', stateMutability:'view',
+    inputs:[{name:'owner', type:'address'},{name:'operator', type:'address'}], outputs:[{type:'bool'}] }
 ]

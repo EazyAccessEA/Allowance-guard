@@ -20,7 +20,12 @@ export function useBulkRevoke(selectedWallet?: string | null) {
   async function revokeMany(rows: AllowanceRow[], onProgress?: (i:number, total:number)=>void) {
     for (let i = 0; i < rows.length; i++) {
       onProgress?.(i+1, rows.length)
-      try { await revoke(rows[i]) } catch { /* continue to next */ }
+      try { 
+        await revoke(rows[i]) 
+      } catch (e) { 
+        console.warn(`Failed to revoke row ${i}:`, e)
+        // continue to next 
+      }
     }
   }
   return { revokeMany }

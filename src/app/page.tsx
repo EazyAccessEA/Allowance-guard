@@ -10,6 +10,7 @@ import ConnectButton from '@/components/ConnectButton'
 import AppArea from '@/components/AppArea'
 import VideoBackground from '@/components/VideoBackground'
 import RotatingTypewriter from '@/components/RotatingTypewriter'
+import ActivityTimeline from '@/components/ActivityTimeline'
 
 export default function HomePage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -364,6 +365,15 @@ export default function HomePage() {
           onRefresh={handleRefresh}
           connectedAddress={connectedAddress}
         />
+      )}
+
+      {/* Activity Timeline - Only show when wallet is selected */}
+      {selectedWallet && (
+        <Section>
+          <Container>
+            <ActivityTimeline wallet={selectedWallet} />
+          </Container>
+        </Section>
       )}
 
       <Footer />

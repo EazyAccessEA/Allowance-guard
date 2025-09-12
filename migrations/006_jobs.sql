@@ -1,5 +1,9 @@
 -- Lightweight job queue (Vercel friendly: triggered by cron/API)
-CREATE TYPE job_status AS ENUM ('pending','running','succeeded','failed');
+DO $$ BEGIN
+    CREATE TYPE job_status AS ENUM ('pending','running','succeeded','failed');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 CREATE TABLE IF NOT EXISTS jobs (
   id            BIGSERIAL PRIMARY KEY,
