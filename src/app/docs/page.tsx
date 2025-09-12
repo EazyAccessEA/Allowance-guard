@@ -118,11 +118,14 @@ export default function DocsPage() {
   return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">What is AllowanceGuard?</h2>
+              <h2 id="overview" className="text-2xl font-semibold text-ink mb-4">Overview</h2>
+              <h3 id="what-is-allowanceguard" className="text-xl font-semibold text-ink mb-3">What is AllowanceGuard?</h3>
               <p className="text-base text-stone mb-6">
                 AllowanceGuard is a free and open source security platform that helps you discover, understand, and control every token approval associated with your wallets. It scans across multiple blockchain networks to identify risky permissions and provides tools to revoke them safely.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              <h3 id="key-features" className="text-xl font-semibold text-ink mb-3">Key Features</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="p-4 bg-mist border border-line rounded-md">
                   <div className="flex items-center gap-2 mb-2">
                     <Search className="w-4 h-4 text-ink" />
@@ -152,6 +155,15 @@ export default function DocsPage() {
                   <p className="text-sm text-stone">Instantly revoke risky approvals with gas optimization</p>
                 </div>
               </div>
+              
+              <h3 id="how-it-works" className="text-xl font-semibold text-ink mb-3">How It Works</h3>
+              <ol className="list-decimal list-inside space-y-2 text-base text-stone">
+                <li>Connect your wallet to AllowanceGuard</li>
+                <li>Scan your wallet for existing token approvals</li>
+                <li>Review risk scores and identify dangerous approvals</li>
+                <li>Revoke risky approvals with one click</li>
+                <li>Set up monitoring for ongoing protection</li>
+              </ol>
             </div>
           </div>
         )
@@ -160,36 +172,22 @@ export default function DocsPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">Quick Start Guide</h2>
+              <h2 id="getting-started" className="text-2xl font-semibold text-ink mb-4">Getting Started</h2>
           <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">1</div>
                   <div>
+                    <h3 id="connect-your-wallet" className="text-xl font-semibold text-ink mb-3">1. Connect Your Wallet</h3>
                     <h4 className="font-medium text-ink mb-1">Connect Your Wallet</h4>
                     <p className="text-sm text-stone">Click &quot;Connect Wallet&quot; and select your preferred wallet provider (MetaMask, WalletConnect, etc.)</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">2</div>
-                  <div>
-                    <h4 className="font-medium text-ink mb-1">Scan for Approvals</h4>
-                    <p className="text-sm text-stone">Click &quot;Scan wallet&quot; to discover all your token approvals across supported networks</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">3</div>
-                  <div>
-                    <h4 className="font-medium text-ink mb-1">Review Results</h4>
-                    <p className="text-sm text-stone">Examine your approvals, paying special attention to unlimited approvals and high-risk spenders</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">4</div>
-                  <div>
-                    <h4 className="font-medium text-ink mb-1">Revoke Risky Approvals</h4>
-                    <p className="text-sm text-stone">Use the &quot;Revoke&quot; button to set risky allowances to zero</p>
-                  </div>
-                </div>
+                <h3 id="scan-your-approvals" className="text-xl font-semibold text-ink mb-3">2. Scan Your Approvals</h3>
+                <p className="text-base text-stone mb-4">Click &quot;Scan wallet&quot; to discover all your token approvals across supported networks</p>
+                <h3 id="review-risk-scores" className="text-xl font-semibold text-ink mb-3">3. Review Risk Scores</h3>
+                <p className="text-base text-stone mb-4">Examine your approvals, paying special attention to unlimited approvals and high-risk spenders</p>
+                <h3 id="revoke-risky-approvals" className="text-xl font-semibold text-ink mb-3">4. Revoke Risky Approvals</h3>
+                <p className="text-base text-stone mb-4">Use the &quot;Revoke&quot; button to set risky allowances to zero</p>
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">5</div>
                   <div>
@@ -206,7 +204,7 @@ export default function DocsPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">Supported Networks</h2>
+              <h2 id="supported-networks" className="text-2xl font-semibold text-ink mb-4">Supported Networks</h2>
             <p className="text-base text-stone mb-6">
                 AllowanceGuard currently supports the following blockchain networks:
             </p>
@@ -231,7 +229,7 @@ export default function DocsPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">Risk Scoring System</h2>
+              <h2 id="risk-scoring-system" className="text-2xl font-semibold text-ink mb-4">Risk Scoring System</h2>
               <p className="text-base text-stone mb-6">
                 AllowanceGuard uses a comprehensive risk scoring system to help you prioritize which approvals need immediate attention:
               </p>
@@ -256,7 +254,7 @@ export default function DocsPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">Alerts & Notifications</h2>
+              <h2 id="alerts-notifications" className="text-2xl font-semibold text-ink mb-4">Alerts & Notifications</h2>
               <p className="text-base text-stone mb-6">
                 Stay informed about your wallet security with automated alerts:
               </p>
@@ -280,14 +278,14 @@ export default function DocsPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">Autonomous Monitoring</h2>
+              <h2 id="autonomous-monitoring" className="text-2xl font-semibold text-ink mb-4">Autonomous Monitoring</h2>
               <p className="text-base text-stone mb-6">
                 Enable continuous monitoring of your wallets with automatic rescans and instant drift detection. The system will alert you immediately when new approvals appear or existing ones change.
               </p>
               
-              <div className="space-y-6">
+          <div className="space-y-6">
                 <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">How It Works</h4>
+                  <h3 id="how-it-works" className="text-xl font-semibold text-ink mb-3">How It Works</h3>
                   <ol className="list-decimal list-inside space-y-1 text-sm text-stone">
                     <li>Enable monitoring for your wallet with a custom frequency (default: 12 hours)</li>
                     <li>System automatically rescans your wallet at the specified intervals</li>
@@ -298,7 +296,7 @@ export default function DocsPage() {
                 </div>
 
                 <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Drift Detection</h4>
+                  <h3 id="drift-detection" className="text-xl font-semibold text-ink mb-3">Drift Detection</h3>
                   <p className="text-sm text-stone mb-3">The system detects the following types of changes:</p>
                   <ul className="space-y-1 text-sm text-stone">
                     <li>• <strong>New Approvals:</strong> Previously unseen token approvals</li>
@@ -309,7 +307,7 @@ export default function DocsPage() {
                 </div>
 
                 <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">Configuration</h4>
+                  <h3 id="configuration" className="text-xl font-semibold text-ink mb-3">Configuration</h3>
                   <p className="text-sm text-stone mb-3">You can configure monitoring settings in the sidebar:</p>
                   <ul className="space-y-1 text-sm text-stone">
                     <li>• <strong>Enable/Disable:</strong> Turn monitoring on or off for each wallet</li>
@@ -326,7 +324,7 @@ export default function DocsPage() {
         return (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-semibold text-ink mb-4">Teams & Collaboration</h2>
+              <h2 id="teams-collaboration" className="text-2xl font-semibold text-ink mb-4">Teams & Collaboration</h2>
               <p className="text-base text-stone mb-6">
                 AllowanceGuard supports team collaboration with role-based access control. Create teams, invite members, and manage wallet access with different permission levels.
               </p>
@@ -487,8 +485,8 @@ export default function DocsPage() {
                     <li>• Rich formatting with approval details</li>
                     <li>• Team collaboration features</li>
                     <li>• Custom channel routing</li>
-                  </ul>
-                </div>
+            </ul>
+          </div>
 
                 {/* Public Sharing */}
                 <div className="border border-line rounded-md p-6 bg-mist">
@@ -505,10 +503,10 @@ export default function DocsPage() {
                     <li>• Expiration dates for temporary access</li>
                     <li>• One-click link generation and rotation</li>
                   </ul>
-                </div>
+          </div>
 
                 {/* API Reference */}
-                <div className="border border-line rounded-md p-6 bg-mist">
+          <div className="border border-line rounded-md p-6 bg-mist">
                   <div className="flex items-center gap-3 mb-3">
                     <Settings className="w-5 h-5 text-ink" />
                     <h3 className="text-lg font-semibold text-ink">API Endpoints</h3>
@@ -593,27 +591,71 @@ export default function DocsPage() {
   const getCurrentPageHeadings = () => {
     switch (activeSection) {
       case 'overview':
-        return ['What is AllowanceGuard?']
+        return [
+          { level: 2, text: 'Overview', id: 'overview' },
+          { level: 3, text: 'What is AllowanceGuard?', id: 'what-is-allowanceguard' },
+          { level: 3, text: 'Key Features', id: 'key-features' },
+          { level: 3, text: 'How It Works', id: 'how-it-works' }
+        ]
       case 'getting-started':
-        return ['Quick Start Guide']
+        return [
+          { level: 2, text: 'Getting Started', id: 'getting-started' },
+          { level: 3, text: 'Connect Your Wallet', id: 'connect-your-wallet' },
+          { level: 3, text: 'Scan Your Approvals', id: 'scan-your-approvals' },
+          { level: 3, text: 'Review Risk Scores', id: 'review-risk-scores' },
+          { level: 3, text: 'Revoke Risky Approvals', id: 'revoke-risky-approvals' }
+        ]
       case 'networks':
-        return ['Supported Networks']
+        return [
+          { level: 2, text: 'Supported Networks', id: 'supported-networks' }
+        ]
       case 'risk-scoring':
-        return ['Risk Scoring System']
+        return [
+          { level: 2, text: 'Risk Scoring System', id: 'risk-scoring-system' }
+        ]
       case 'alerts':
-        return ['Alerts & Notifications']
+        return [
+          { level: 2, text: 'Alerts & Notifications', id: 'alerts-notifications' }
+        ]
       case 'monitoring':
-        return ['Autonomous Monitoring']
+        return [
+          { level: 2, text: 'Autonomous Monitoring', id: 'autonomous-monitoring' },
+          { level: 3, text: 'How It Works', id: 'how-it-works' },
+          { level: 3, text: 'Drift Detection', id: 'drift-detection' },
+          { level: 3, text: 'Configuration', id: 'configuration' }
+        ]
       case 'teams':
-        return ['Teams & Collaboration']
+        return [
+          { level: 2, text: 'Teams & Collaboration', id: 'teams-collaboration' },
+          { level: 3, text: 'Team Roles', id: 'team-roles' },
+          { level: 3, text: 'Getting Started with Teams', id: 'getting-started-with-teams' },
+          { level: 3, text: 'Team Features', id: 'team-features' }
+        ]
       case 'revoking':
-        return ['How to Revoke Approvals']
+        return [
+          { level: 2, text: 'How to Revoke Approvals', id: 'how-to-revoke-approvals' },
+          { level: 3, text: 'Using the Dashboard', id: 'using-the-dashboard' },
+          { level: 3, text: 'Manual Revocation', id: 'manual-revocation' },
+          { level: 3, text: 'Bulk Operations', id: 'bulk-operations' }
+        ]
       case 'api':
-        return ['Settings & Configuration']
+        return [
+          { level: 2, text: 'Settings & Configuration', id: 'settings-configuration' },
+          { level: 3, text: 'API Endpoints', id: 'api-endpoints' },
+          { level: 3, text: 'Authentication', id: 'authentication' },
+          { level: 3, text: 'Rate Limits', id: 'rate-limits' }
+        ]
       case 'troubleshooting':
-        return ['Common Issues & Solutions']
+        return [
+          { level: 2, text: 'Common Issues & Solutions', id: 'common-issues-solutions' },
+          { level: 3, text: 'Connection Issues', id: 'connection-issues' },
+          { level: 3, text: 'Scan Problems', id: 'scan-problems' },
+          { level: 3, text: 'Revocation Failures', id: 'revocation-failures' }
+        ]
       case 'faq':
-        return ['Frequently Asked Questions']
+        return [
+          { level: 2, text: 'Frequently Asked Questions', id: 'frequently-asked-questions' }
+        ]
       default:
         return []
     }
@@ -691,15 +733,17 @@ export default function DocsPage() {
                     {getCurrentPageHeadings().map((heading, index) => (
                       <a
                         key={index}
-                        href={`#${heading.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="block text-sm text-stone hover:text-ink transition-colors duration-200"
+                        href={`#${heading.id}`}
+                        className={`block text-sm text-stone hover:text-ink transition-colors duration-200 ${
+                          heading.level === 3 ? 'ml-3' : ''
+                        }`}
                       >
-                        {heading}
+                        {heading.text}
                       </a>
                     ))}
                   </nav>
                 </div>
-              </div>
+          </div>
       </div>
           </div>
         </Container>
