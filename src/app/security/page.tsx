@@ -6,183 +6,13 @@ import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
-import { Shield, Lock, Eye, AlertTriangle, CheckCircle, Users, FileText, Zap, Globe, Database, Key, Clock, Target } from 'lucide-react'
+import { Shield, Lock, Eye, AlertTriangle, CheckCircle, Users, FileText, Zap, Database, Key, Clock, Target, Bell } from 'lucide-react'
 
 export default function SecurityPage() {
   const { isConnected } = useAccount()
 
-  const securityFeatures = [
-    {
-      icon: Key,
-      title: 'Read-Only Access',
-      description: 'We never have access to your private keys or wallet funds',
-      details: [
-        'No private key access',
-        'No seed phrase storage',
-        'No transaction signing',
-        'Local browser processing only'
-      ]
-    },
-    {
-      icon: Database,
-      title: 'Local Processing',
-      description: 'All analysis happens in your browser, not on our servers',
-      details: [
-        'Blockchain data fetched locally',
-        'Risk analysis in your browser',
-        'No data sent to our servers',
-        'Complete privacy protection'
-      ]
-    },
-    {
-      icon: Lock,
-      title: 'Encrypted Storage',
-      description: 'Any data we store is encrypted using industry standards',
-      details: [
-        'AES-256 encryption',
-        'Secure data transmission',
-        'Minimal data retention',
-        'Regular security audits'
-      ]
-    },
-    {
-      icon: FileText,
-      title: 'Open Source',
-      description: 'Our code is open source and auditable by the community',
-      details: [
-        'Public GitHub repository',
-        'Community code reviews',
-        'Transparent development',
-        'Regular security updates'
-      ]
-    }
-  ]
 
-  const threatProtection = [
-    {
-      icon: AlertTriangle,
-      threat: 'Unlimited Approvals',
-      description: 'Approvals that allow any amount to be taken from your wallet',
-      risk: 'Critical',
-      riskColor: 'bg-red-100 text-red-800 border-red-200',
-      protection: 'Immediate identification and revoke recommendations',
-      examples: ['ERC-20 approve(address, uint256(-1))', 'ERC-721 setApprovalForAll(address, true)']
-    },
-    {
-      icon: Clock,
-      threat: 'Stale Approvals',
-      description: 'Old approvals to contracts you no longer use or trust',
-      risk: 'High',
-      riskColor: 'bg-orange-100 text-orange-800 border-orange-200',
-      protection: 'Time-based analysis and cleanup suggestions',
-      examples: ['Unused DeFi protocols', 'Abandoned NFT marketplaces', 'Old gaming contracts']
-    },
-    {
-      icon: Target,
-      threat: 'Unknown Contracts',
-      description: 'Approvals to contracts with no reputation or verification data',
-      risk: 'Medium',
-      riskColor: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      protection: 'Contract verification and risk scoring',
-      examples: ['Unverified smart contracts', 'New protocols without audits', 'Experimental dApps']
-    },
-    {
-      icon: Zap,
-      threat: 'Large Amount Approvals',
-      description: 'Approvals for unusually large token amounts relative to your holdings',
-      risk: 'Medium',
-      riskColor: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      protection: 'Amount analysis and threshold warnings',
-      examples: ['Approvals exceeding 50% of holdings', 'Suspiciously round numbers', 'Amounts larger than typical usage']
-    },
-    {
-      icon: Users,
-      threat: 'Phishing & Social Engineering',
-      description: 'Malicious contracts disguised as legitimate services',
-      risk: 'High',
-      riskColor: 'bg-orange-100 text-orange-800 border-orange-200',
-      protection: 'Contract verification and community warnings',
-      examples: ['Fake airdrop contracts', 'Impersonated protocols', 'Malicious NFT collections']
-    },
-    {
-      icon: Globe,
-      threat: 'Cross-Chain Vulnerabilities',
-      description: 'Approvals that may be exploited across multiple networks',
-      risk: 'Medium',
-      riskColor: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      protection: 'Multi-network monitoring and bridge analysis',
-      examples: ['Bridge contract approvals', 'Cross-chain DeFi protocols', 'Multi-network tokens']
-    }
-  ]
 
-  const bestPractices = [
-    {
-      icon: Clock,
-      practice: 'Regular Scanning',
-      description: 'Scan your wallet at least weekly to catch new approvals',
-      frequency: 'Weekly',
-      tips: [
-        'Set up autonomous monitoring for automatic scans',
-        'Check after every DeFi interaction',
-        'Review approvals before major transactions'
-      ]
-    },
-    {
-      icon: AlertTriangle,
-      practice: 'Immediate Revocation',
-      description: 'Revoke unlimited approvals as soon as you find them',
-      frequency: 'Immediate',
-      tips: [
-        'Use bulk revocation for multiple approvals',
-        'Prioritize high-value tokens first',
-        'Keep some gas ETH for emergency revocations'
-      ]
-    },
-    {
-      icon: Target,
-      practice: 'Specific Amounts',
-      description: 'Use specific token amounts instead of unlimited approvals',
-      frequency: 'Always',
-      tips: [
-        'Only approve what you need for the transaction',
-        'Set reasonable spending limits',
-        'Review and adjust limits regularly'
-      ]
-    },
-    {
-      icon: Shield,
-      practice: 'Contract Verification',
-      description: 'Verify contract addresses before approving new dApps',
-      frequency: 'Before Approval',
-      tips: [
-        'Check official project websites',
-        'Verify contract addresses on Etherscan',
-        'Look for audit reports and community reviews'
-      ]
-    },
-    {
-      icon: Users,
-      practice: 'Team Security',
-      description: 'Use team features for shared wallet management',
-      frequency: 'Ongoing',
-      tips: [
-        'Assign appropriate roles to team members',
-        'Regular security reviews with your team',
-        'Monitor team wallet activity together'
-      ]
-    },
-    {
-      icon: Eye,
-      practice: 'Stay Informed',
-      description: 'Keep up with security best practices and threats',
-      frequency: 'Regularly',
-      tips: [
-        'Subscribe to security alerts',
-        'Follow DeFi security news',
-        'Join security-focused communities'
-      ]
-    }
-  ]
 
   const securityStats = [
     { label: 'DeFi Exploits from Approvals', value: '73%', description: 'In 2024' },
@@ -278,144 +108,393 @@ export default function SecurityPage() {
         </Container>
       </Section>
 
-      {/* Security Features */}
-      <Section className="py-20 bg-mist/30">
+      {/* Security Features - Fireart Style */}
+      <Section className="py-32 bg-mist/30">
         <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-ink mb-4">
-              How We Protect You
-            </h2>
-            <p className="text-base text-stone max-w-2xl mx-auto">
-              Our security-first approach ensures your wallet and data remain completely private and secure.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {securityFeatures.map((feature, index) => {
-              const IconComponent = feature.icon
-              return (
-                <div key={index} className="group">
-                  <div className="flex items-start gap-4 p-6 border border-line rounded-lg hover:border-ink/20 transition-colors duration-200 bg-white">
-                    <div className="w-12 h-12 bg-mist rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-ink/5 transition-colors duration-200">
-                      <IconComponent className="w-6 h-6 text-ink" />
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+                How We Protect You
+              </h2>
+              <p className="text-xl text-stone leading-relaxed">
+                Our security-first approach ensures your wallet and data remain completely private and secure.
+              </p>
+            </div>
+            
+            <div className="space-y-16">
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Key className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-ink mb-4">Read-Only Access</h3>
+                  <p className="text-lg text-stone leading-relaxed mb-6">
+                    We never have access to your private keys or wallet funds, ensuring your assets remain safe.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">No private key access</span>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-ink mb-2">{feature.title}</h3>
-                      <p className="text-base text-stone leading-relaxed mb-4">{feature.description}</p>
-                      <ul className="space-y-2">
-                        {feature.details.map((detail, detailIndex) => (
-                          <li key={detailIndex} className="text-sm text-stone flex items-start">
-                            <CheckCircle className="w-4 h-4 text-ink mr-2 mt-0.5 flex-shrink-0" />
-                            {detail}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">No seed phrase storage</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">No transaction signing</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Local browser processing only</span>
                     </div>
                   </div>
                 </div>
-              )
-            })}
+              </div>
+              
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Database className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-ink mb-4">Local Processing</h3>
+                  <p className="text-lg text-stone leading-relaxed mb-6">
+                    All analysis happens in your browser, not on our servers, for maximum privacy.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Blockchain data fetched locally</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Risk analysis in your browser</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">No data sent to our servers</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Complete privacy protection</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Lock className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-ink mb-4">Encrypted Storage</h3>
+                  <p className="text-lg text-stone leading-relaxed mb-6">
+                    Any minimal data we store is encrypted using industry standards.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">AES-256 encryption</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Secure data transmission</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Minimal data retention</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Regular security audits</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <FileText className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-semibold text-ink mb-4">Open Source & Auditable</h3>
+                  <p className="text-lg text-stone leading-relaxed mb-6">
+                    Our code is publicly available for community review, fostering transparency and trust.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Public GitHub repository</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Community code reviews</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Transparent development</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-5 h-5 text-electric flex-shrink-0" />
+                      <span className="text-stone">Regular security updates</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* Threat Protection */}
-      <Section className="py-20">
+      {/* Threat Protection - Fireart Style */}
+      <Section className="py-32">
         <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-ink mb-4">
-              Threats We Protect Against
-            </h2>
-            <p className="text-base text-stone max-w-2xl mx-auto">
-              Comprehensive protection against the most common and dangerous wallet security threats.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {threatProtection.map((threat, index) => {
-              const IconComponent = threat.icon
-              return (
-                <div key={index} className="group">
-                  <div className="p-6 border border-line rounded-lg hover:border-ink/20 transition-colors duration-200 bg-white">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-mist rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-ink/5 transition-colors duration-200">
-                        <IconComponent className="w-6 h-6 text-ink" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-semibold text-ink">{threat.threat}</h3>
-                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${threat.riskColor}`}>
-                            {threat.risk} Risk
-                          </span>
-                        </div>
-                        <p className="text-base text-stone leading-relaxed mb-3">{threat.description}</p>
-                        <p className="text-sm font-medium text-ink mb-3">Protection: {threat.protection}</p>
-                        {threat.examples && (
-                          <div className="mt-3">
-                            <p className="text-xs font-medium text-ink mb-2">Examples:</p>
-                            <ul className="space-y-1">
-                              {threat.examples.map((example, exampleIndex) => (
-                                <li key={exampleIndex} className="text-xs text-stone">• {example}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+                Threats We Protect Against
+              </h2>
+              <p className="text-xl text-stone leading-relaxed">
+                Comprehensive protection against the most common and dangerous wallet security threats.
+              </p>
+            </div>
+            
+            <div className="space-y-12">
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-4 mb-4">
+                    <h3 className="text-2xl font-semibold text-ink">Unlimited Approvals</h3>
+                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-red-50 text-red-700 border border-red-200">
+                      Critical Risk
+                    </span>
+                  </div>
+                  <p className="text-lg text-stone leading-relaxed mb-4">
+                    Approvals that allow any amount to be taken from your wallet, posing the highest security risk.
+                  </p>
+                  <p className="text-base font-medium text-ink mb-4">
+                    <strong>Protection:</strong> Immediate identification and revoke recommendations
+                  </p>
+                  <div className="bg-mist/50 rounded-lg p-4">
+                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
+                    <ul className="space-y-1 text-sm text-stone">
+                      <li>• ERC-20 approve(address, uint256(-1))</li>
+                      <li>• ERC-721 setApprovalForAll(address, true)</li>
+                    </ul>
                   </div>
                 </div>
-              )
-            })}
+              </div>
+              
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-4 mb-4">
+                    <h3 className="text-2xl font-semibold text-ink">Stale Approvals</h3>
+                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-orange-50 text-orange-700 border border-orange-200">
+                      High Risk
+                    </span>
+                  </div>
+                  <p className="text-lg text-stone leading-relaxed mb-4">
+                    Old approvals to contracts you no longer use or trust, increasing your attack surface.
+                  </p>
+                  <p className="text-base font-medium text-ink mb-4">
+                    <strong>Protection:</strong> Time-based analysis and cleanup suggestions
+                  </p>
+                  <div className="bg-mist/50 rounded-lg p-4">
+                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
+                    <ul className="space-y-1 text-sm text-stone">
+                      <li>• Unused DeFi protocols</li>
+                      <li>• Abandoned NFT marketplaces</li>
+                      <li>• Old gaming contracts</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Target className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-4 mb-4">
+                    <h3 className="text-2xl font-semibold text-ink">Unknown Contracts</h3>
+                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
+                      Medium Risk
+                    </span>
+                  </div>
+                  <p className="text-lg text-stone leading-relaxed mb-4">
+                    Approvals to contracts with no reputation or verification data, making risk assessment difficult.
+                  </p>
+                  <p className="text-base font-medium text-ink mb-4">
+                    <strong>Protection:</strong> Contract verification and risk scoring
+                  </p>
+                  <div className="bg-mist/50 rounded-lg p-4">
+                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
+                    <ul className="space-y-1 text-sm text-stone">
+                      <li>• Unverified smart contracts</li>
+                      <li>• New protocols without audits</li>
+                      <li>• Experimental dApps</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Zap className="w-8 h-8 text-electric" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-4 mb-4">
+                    <h3 className="text-2xl font-semibold text-ink">Large Amount Approvals</h3>
+                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
+                      Medium Risk
+                    </span>
+                  </div>
+                  <p className="text-lg text-stone leading-relaxed mb-4">
+                    Approvals for unusually large token amounts relative to your holdings, potentially risky.
+                  </p>
+                  <p className="text-base font-medium text-ink mb-4">
+                    <strong>Protection:</strong> Amount analysis and threshold warnings
+                  </p>
+                  <div className="bg-mist/50 rounded-lg p-4">
+                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
+                    <ul className="space-y-1 text-sm text-stone">
+                      <li>• Approvals exceeding 50% of holdings</li>
+                      <li>• Suspiciously round numbers</li>
+                      <li>• Amounts larger than typical usage</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* Best Practices */}
-      <Section className="py-20 bg-mist/30">
+      {/* Best Practices - Fireart Style */}
+      <Section className="py-32 bg-mist/30">
         <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-ink mb-4">
-              Security Best Practices
-            </h2>
-            <p className="text-base text-stone max-w-2xl mx-auto">
-              Follow these practices to maximize your wallet security and stay protected.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {bestPractices.map((practice, index) => {
-              const IconComponent = practice.icon
-              return (
-                <div key={index} className="group">
-                  <div className="p-6 border border-line rounded-lg hover:border-ink/20 transition-colors duration-200 bg-white">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-12 h-12 bg-mist rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-ink/5 transition-colors duration-200">
-                        <IconComponent className="w-6 h-6 text-ink" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-semibold text-ink">{practice.practice}</h3>
-                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-mist text-ink">
-                            {practice.frequency}
-                          </span>
-                        </div>
-                        <p className="text-base text-stone leading-relaxed mb-3">{practice.description}</p>
-                        {practice.tips && (
-                          <div className="mt-3">
-                            <p className="text-xs font-medium text-ink mb-2">Tips:</p>
-                            <ul className="space-y-1">
-                              {practice.tips.map((tip, tipIndex) => (
-                                <li key={tipIndex} className="text-xs text-stone">• {tip}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+                Security Best Practices
+              </h2>
+              <p className="text-xl text-stone leading-relaxed">
+                Follow these practices to maximize your wallet security and stay protected.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="space-y-8">
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-electric" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-xl font-semibold text-ink">Regular Scanning</h3>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
+                        Weekly
+                      </span>
                     </div>
+                    <p className="text-stone leading-relaxed">
+                      Scan your wallet at least weekly to catch new approvals and monitor existing ones.
+                    </p>
                   </div>
                 </div>
-              )
-            })}
+                
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <AlertTriangle className="w-6 h-6 text-electric" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-xl font-semibold text-ink">Immediate Revocation</h3>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
+                        Immediate
+                      </span>
+                    </div>
+                    <p className="text-stone leading-relaxed">
+                      Revoke unlimited or high-risk approvals as soon as you identify them.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Lock className="w-6 h-6 text-electric" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-xl font-semibold text-ink">Specific Amounts</h3>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
+                        Always
+                      </span>
+                    </div>
+                    <p className="text-stone leading-relaxed">
+                      Always use specific token amounts for approvals instead of granting unlimited access.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-8">
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-6 h-6 text-electric" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-xl font-semibold text-ink">Contract Verification</h3>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
+                        Before Approval
+                      </span>
+                    </div>
+                    <p className="text-stone leading-relaxed">
+                      Verify contract addresses and understand their purpose before approving new dApps.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Bell className="w-6 h-6 text-electric" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-xl font-semibold text-ink">Enable Monitoring</h3>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
+                        Recommended
+                      </span>
+                    </div>
+                    <p className="text-stone leading-relaxed">
+                      Set up email or Slack alerts to be notified of new approvals immediately.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-6">
+                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Users className="w-6 h-6 text-electric" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-3">
+                      <h3 className="text-xl font-semibold text-ink">Team Collaboration</h3>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
+                        For Teams
+                      </span>
+                    </div>
+                    <p className="text-stone leading-relaxed">
+                      Use team features to share wallet monitoring responsibilities and maintain security.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
@@ -434,8 +513,8 @@ export default function SecurityPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-ink/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Eye className="w-8 h-8 text-ink" />
+              <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Eye className="w-8 h-8 text-electric" />
               </div>
               <h3 className="text-xl font-semibold text-ink mb-3">Public Data Only</h3>
               <p className="text-base text-stone leading-relaxed">
@@ -444,8 +523,8 @@ export default function SecurityPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-ink/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Shield className="w-8 h-8 text-ink" />
+              <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Shield className="w-8 h-8 text-electric" />
               </div>
               <h3 className="text-xl font-semibold text-ink mb-3">Local Processing</h3>
               <p className="text-base text-stone leading-relaxed">
@@ -454,8 +533,8 @@ export default function SecurityPage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-ink/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <FileText className="w-8 h-8 text-ink" />
+              <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <FileText className="w-8 h-8 text-electric" />
               </div>
               <h3 className="text-xl font-semibold text-ink mb-3">Open Source</h3>
               <p className="text-base text-stone leading-relaxed">
