@@ -77,8 +77,8 @@ export default function Header({ isConnected }: HeaderProps) {
           </NavLink>
           {!isConnected && (
             <ConnectButton 
-              variant="light" 
-              className="h-ctl inline-flex items-center justify-center px-4 bg-white text-ink border border-line hover:bg-mist hover:border-ink/20 transition-all duration-200"
+              variant="primary" 
+              className="h-ctl inline-flex items-center justify-center px-4"
             />
           )}
         </nav>
@@ -87,8 +87,8 @@ export default function Header({ isConnected }: HeaderProps) {
         <div className="lg:hidden flex items-center gap-3">
           {!isConnected && (
             <ConnectButton 
-              variant="light" 
-              className="h-ctl inline-flex items-center justify-center px-4 bg-white text-ink border border-line hover:bg-mist"
+              variant="primary" 
+              className="h-ctl inline-flex items-center justify-center px-4"
             />
           )}
           <button
