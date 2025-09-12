@@ -49,32 +49,39 @@ export async function POST(req: Request) {
       [email.toLowerCase(), token, JSON.stringify({ redirect })]
     )
     
-    // Send email
-    const html = `
-      <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1a1a1a;">Sign in to Allowance Guard</h2>
-        <p>Click the button below to sign in to your account:</p>
-        <div style="text-align: center; margin: 30px 0;">
-          <a href="${url}" 
-             style="background: #1a1a1a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
-            Sign In
-          </a>
-        </div>
-        <p style="color: #666; font-size: 14px;">
-          This link will expire in 20 minutes. If you didn't request this, you can safely ignore this email.
-        </p>
-        <p style="color: #666; font-size: 12px;">
-          If the button doesn't work, copy and paste this link: ${url}
-        </p>
+    // Send email with branded template
+    const content = `
+      <h2>🔐 Sign in to Allowance Guard</h2>
+      <p>Click the button below to securely sign in to your account:</p>
+      
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${url}" class="button">Sign In Securely</a>
       </div>
+      
+      <div class="alert-box">
+        <p><strong>Security Note:</strong> This link will expire in 20 minutes for your security.</p>
+        <p>If you didn't request this sign-in link, you can safely ignore this email.</p>
+      </div>
+      
+      <p><strong>Having trouble?</strong> If the button doesn't work, copy and paste this link into your browser:</p>
+      <div class="address">${url}</div>
+      
+      <h2>What's Next?</h2>
+      <ul>
+        <li>Access your team dashboards and wallet monitoring</li>
+        <li>Manage token approvals and security settings</li>
+        <li>Invite team members and collaborate on security</li>
+        <li>Set up autonomous monitoring and alerts</li>
+      </ul>
     `
     
     // In development, log the magic link instead of sending email
     if (process.env.NODE_ENV === 'development') {
       console.log('🔗 Magic Link (Development Mode):', url)
       console.log('📧 Would send email to:', email)
+      console.log('📧 Email content preview:', content)
     } else {
-      await sendMail(email, 'Sign in to Allowance Guard', html)
+      await sendMail(email, '🔐 Sign in to Allowance Guard', content)
     }
     
     const response: { ok: boolean; message: string; magicLink?: string } = { 
