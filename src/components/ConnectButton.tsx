@@ -1,6 +1,7 @@
 'use client'
-import { useConnect } from 'wagmi'
-import { useMemo } from 'react'
+import { useAccount } from 'wagmi'
+import { useMemo, useState } from 'react'
+import { useAppKit } from '@reown/appkit/react'
 
 type Variant = 'primary' | 'light' | 'ghost'
 
@@ -11,7 +12,9 @@ export default function ConnectButton({
   variant?: Variant
   className?: string
 }) {
-  const { connectors, connect, isPending } = useConnect()
+  const { isConnected, address } = useAccount()
+  const { open } = useAppKit()
+  const [isConnecting, setIsConnecting] = useState(false)
 
   const styles = useMemo(() => {
     const base = 'inline-flex items-center rounded-md px-5 py-3 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2'
@@ -27,13 +30,35 @@ export default function ConnectButton({
     }
   }, [variant])
 
+  const handleConnect = async () => {
+    try {
+      setIsConnecting(true)
+      await open()
+    } catch (error) {
+      // Silently handle connection errors - they're often just user cancellation
+      console.warn('Connection cancelled or failed:', error)
+    } finally {
+      setIsConnecting(false)
+    }
+  }
+
+  // If already connected, show truncated address
+  if (isConnected && address) {
+    const truncatedAddress = `${address.slice(0, 6)}...${address.slice(-4)}`
+    return (
+      <div className={`${styles} ${className} cursor-default`}>
+        {truncatedAddress}
+      </div>
+    )
+  }
+
   return (
     <button
-      onClick={() => connect({ connector: connectors[0] })}
+      onClick={handleConnect}
       className={`${styles} ${className}`}
-      disabled={isPending}
+      disabled={isConnecting}
     >
-      {isPending ? 'Connecting…' : 'Connect Wallet'}
+      {isConnecting ? 'Connecting…' : 'Connect Wallet'}
     </button>
   )
 }

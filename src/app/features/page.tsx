@@ -1,15 +1,20 @@
-import Image from 'next/image'
+'use client'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import Container from '@/components/ui/Container'
+import Section from '@/components/ui/Section'
+import { H1, H2 } from '@/components/ui/Heading'
+import { useAccount } from 'wagmi'
 import Link from 'next/link'
-import { Shield, Eye, Mail, Settings, Zap, Lock, CheckCircle, AlertTriangle, Clock, Users, BarChart3, Bell, Coins, ImageIcon, Package, FileText } from 'lucide-react'
+import { Shield, Eye, Settings, Zap, Lock, CheckCircle } from 'lucide-react'
 
 export default function FeaturesPage() {
+  const { isConnected } = useAccount()
+
   const coreFeatures = [
     {
       title: 'Multi-Network Scanning',
       description: 'Scan your wallet across Ethereum, Arbitrum, and Base networks',
-      icon: Eye,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
       details: [
         'Ethereum mainnet support',
         'Arbitrum Layer 2 integration',
@@ -20,9 +25,6 @@ export default function FeaturesPage() {
     {
       title: 'Risk Assessment',
       description: 'Advanced algorithms analyze approval risks and provide actionable insights',
-      icon: AlertTriangle,
-      color: 'text-yellow-600',
-      bgColor: 'bg-yellow-50',
       details: [
         'Unlimited approval detection',
         'Stale approval identification',
@@ -33,9 +35,6 @@ export default function FeaturesPage() {
     {
       title: 'Real-Time Alerts',
       description: 'Get notified immediately when new risky approvals are detected',
-      icon: Bell,
-      color: 'text-red-600',
-      bgColor: 'bg-red-50',
       details: [
         'Email notifications',
         'Slack integration',
@@ -46,9 +45,6 @@ export default function FeaturesPage() {
     {
       title: 'Privacy Protection',
       description: 'Complete privacy with local processing and no data storage',
-      icon: Lock,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
       details: [
         'Local browser processing',
         'No private key access',
@@ -62,9 +58,6 @@ export default function FeaturesPage() {
     {
       title: 'Smart Filtering',
       description: 'Filter approvals by risk level, amount, or contract type',
-      icon: BarChart3,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
       benefits: [
         'Focus on high-risk approvals',
         'Hide safe, trusted contracts',
@@ -75,9 +68,6 @@ export default function FeaturesPage() {
     {
       title: 'Batch Operations',
       description: 'Revoke multiple approvals at once to save time and gas',
-      icon: Zap,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50',
       benefits: [
         'Bulk revocation support',
         'Gas-optimized transactions',
@@ -88,9 +78,6 @@ export default function FeaturesPage() {
     {
       title: 'Historical Tracking',
       description: 'Track approval changes over time to monitor your security',
-      icon: Clock,
-      color: 'text-indigo-600',
-      bgColor: 'bg-indigo-50',
       benefits: [
         'Approval history logs',
         'Change notifications',
@@ -101,9 +88,6 @@ export default function FeaturesPage() {
     {
       title: 'Team Collaboration',
       description: 'Share security insights with your team via Slack integration',
-      icon: Users,
-      color: 'text-teal-600',
-      bgColor: 'bg-teal-50',
       benefits: [
         'Shared Slack channels',
         'Team-wide notifications',
@@ -117,25 +101,21 @@ export default function FeaturesPage() {
     {
       standard: 'ERC-20',
       description: 'Fungible token approvals',
-      icon: Coins,
       status: 'Full Support'
     },
     {
       standard: 'ERC-721',
       description: 'NFT approvals',
-      icon: ImageIcon,
       status: 'Full Support'
     },
     {
       standard: 'ERC-1155',
       description: 'Multi-token approvals',
-      icon: Package,
       status: 'Full Support'
     },
     {
       standard: 'ERC-2612',
       description: 'Permit-based approvals',
-      icon: FileText,
       status: 'Full Support'
     }
   ]
@@ -144,289 +124,237 @@ export default function FeaturesPage() {
     {
       name: 'Email Alerts',
       description: 'Receive security notifications via email',
-      icon: Mail,
-      color: 'text-blue-600',
       features: ['Daily digests', 'Immediate alerts', 'Weekly summaries', 'Custom schedules']
     },
     {
       name: 'Slack Integration',
       description: 'Get real-time notifications in your workspace',
-      icon: Settings,
-      color: 'text-green-600',
       features: ['Webhook support', 'Team channels', 'Custom formatting', 'Rich notifications']
     },
     {
       name: 'API Access',
       description: 'Integrate with your own applications',
-      icon: Zap,
-      color: 'text-purple-600',
       features: ['RESTful API', 'Webhook endpoints', 'Rate limiting', 'Documentation']
     }
   ]
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
-          <div className="flex items-center justify-center">
-            <div className="relative w-12 h-12 mr-3">
-              <Image
-                src="/AG_Logo2.png"
-                alt="Allowance Guard"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <h1 className="text-2xl font-bold text-gray-900">Allowance Guard</h1>
-          </div>
-        </div>
-      </header>
-
-      {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <Shield className="w-8 h-8 text-blue-600 mr-3" />
-            <h1 className="text-3xl font-bold text-gray-900">Features</h1>
-          </div>
-          <p className="text-gray-600">
+    <div className="min-h-screen bg-white text-ink">
+      <Header isConnected={isConnected} />
+      
+      <Section>
+        <Container>
+          <H1 className="mb-6">Features</H1>
+          <p className="text-base text-stone max-w-reading">
             Discover all the powerful features that make Allowance Guard the most comprehensive wallet security tool available.
           </p>
-        </div>
+        </Container>
+      </Section>
 
-        {/* Core Features */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Core Features</h2>
+      <div className="border-t border-line" />
+
+      {/* Core Features */}
+      <Section>
+        <Container>
+          <H2 className="mb-6">Core Features</H2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {coreFeatures.map((feature) => {
-              const Icon = feature.icon
-              return (
-                <div key={feature.title} className={`${feature.bgColor} border border-gray-200 rounded-lg p-6`}>
-                  <div className="flex items-center mb-4">
-                    <Icon className={`w-6 h-6 ${feature.color} mr-3`} />
-                    <h3 className="text-lg font-semibold text-gray-900">{feature.title}</h3>
-                  </div>
-                  <p className="text-gray-600 mb-4">{feature.description}</p>
-                  <ul className="space-y-1">
-                    {feature.details.map((detail, index) => (
-                      <li key={index} className="text-sm text-gray-600 flex items-center">
-                        <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            })}
+            {coreFeatures.map((feature) => (
+              <div key={feature.title} className="border border-line rounded-md p-6">
+                <h3 className="text-lg text-ink mb-3">{feature.title}</h3>
+                <p className="text-base text-stone mb-4">{feature.description}</p>
+                <ul className="space-y-2">
+                  {feature.details.map((detail, index) => (
+                    <li key={index} className="text-base text-stone flex items-center">
+                      <CheckCircle className="w-4 h-4 text-ink mr-2" />
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </section>
+        </Container>
+      </Section>
 
-        {/* Advanced Features */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Advanced Features</h2>
+      {/* Advanced Features */}
+      <Section className="bg-mist">
+        <Container>
+          <H2 className="mb-6">Advanced Features</H2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {advancedFeatures.map((feature) => {
-              const Icon = feature.icon
-              return (
-                <div key={feature.title} className="bg-white border border-gray-200 rounded-lg p-6">
-                  <div className="flex items-center mb-4">
-                    <Icon className={`w-6 h-6 ${feature.color} mr-3`} />
-                    <h3 className="text-lg font-semibold text-gray-900">{feature.title}</h3>
-                  </div>
-                  <p className="text-gray-600 mb-4">{feature.description}</p>
-                  <ul className="space-y-2">
-                    {feature.benefits.map((benefit, index) => (
-                      <li key={index} className="text-sm text-gray-600 flex items-start">
-                        <div className={`w-2 h-2 ${feature.bgColor} rounded-full mt-2 mr-3 flex-shrink-0`}></div>
-                        {benefit}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            })}
+            {advancedFeatures.map((feature) => (
+              <div key={feature.title} className="border border-line rounded-md p-6 bg-white">
+                <h3 className="text-lg text-ink mb-3">{feature.title}</h3>
+                <p className="text-base text-stone mb-4">{feature.description}</p>
+                <ul className="space-y-2">
+                  {feature.benefits.map((benefit, index) => (
+                    <li key={index} className="text-base text-stone flex items-start">
+                      <div className="w-2 h-2 bg-ink rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        </section>
+        </Container>
+      </Section>
 
-        {/* Supported Standards */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Supported Token Standards</h2>
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 mb-6">
+      {/* Supported Standards */}
+      <Section>
+        <Container>
+          <H2 className="mb-6">Supported Token Standards</H2>
+          <div className="border border-line rounded-md p-6 bg-mist">
+            <p className="text-base text-stone mb-6">
               Allowance Guard supports all major Ethereum token standards:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {supportedStandards.map((standard) => {
-                const Icon = standard.icon
-                return (
-                  <div key={standard.standard} className="bg-white border border-gray-200 rounded-lg p-4 text-center">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Icon className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{standard.standard}</h3>
-                    <p className="text-sm text-gray-600 mb-3">{standard.description}</p>
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      <CheckCircle className="w-3 h-3 mr-1" />
-                      {standard.status}
-                    </span>
-                  </div>
-                )
-              })}
+              {supportedStandards.map((standard) => (
+                <div key={standard.standard} className="border border-line rounded-md p-4 text-center bg-white">
+                  <h3 className="text-lg text-ink mb-2">{standard.standard}</h3>
+                  <p className="text-base text-stone mb-3">{standard.description}</p>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white border border-line text-ink">
+                    <CheckCircle className="w-4 h-4 mr-1" />
+                    {standard.status}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
+        </Container>
+      </Section>
 
-        {/* Integration Options */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Integration Options</h2>
+      {/* Integration Options */}
+      <Section className="bg-mist">
+        <Container>
+          <H2 className="mb-6">Integration Options</H2>
           <div className="space-y-6">
-            {integrationOptions.map((integration) => {
-              const Icon = integration.icon
-              return (
-                <div key={integration.name} className="bg-white border border-gray-200 rounded-lg p-6">
-                  <div className="flex items-center mb-4">
-                    <Icon className={`w-6 h-6 ${integration.color} mr-3`} />
-                    <h3 className="text-lg font-semibold text-gray-900">{integration.name}</h3>
-                  </div>
-                  <p className="text-gray-600 mb-4">{integration.description}</p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                    {integration.features.map((feature, index) => (
-                      <div key={index} className="flex items-center text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
-                        {feature}
-                      </div>
-                    ))}
-                  </div>
+            {integrationOptions.map((integration) => (
+              <div key={integration.name} className="border border-line rounded-md p-6 bg-white">
+                <h3 className="text-lg text-ink mb-3">{integration.name}</h3>
+                <p className="text-base text-stone mb-4">{integration.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {integration.features.map((feature, index) => (
+                    <div key={index} className="flex items-center text-base text-stone">
+                      <CheckCircle className="w-4 h-4 text-ink mr-2" />
+                      {feature}
+                    </div>
+                  ))}
                 </div>
-              )
-            })}
-          </div>
-        </section>
-
-        {/* Performance Metrics */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Performance & Reliability</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="w-6 h-6 text-blue-600" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Fast Scanning</h3>
-              <p className="text-gray-600 text-sm">
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* Performance Metrics */}
+      <Section>
+        <Container>
+          <H2 className="mb-6">Performance & Reliability</H2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="border border-line rounded-md p-6 text-center">
+              <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg text-ink mb-2">Fast Scanning</h3>
+              <p className="text-base text-stone">
                 Scan thousands of approvals in seconds with our optimized blockchain queries.
               </p>
             </div>
             
-            <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-6 h-6 text-green-600" />
+            <div className="border border-line rounded-md p-6 text-center">
+              <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">99.9% Uptime</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="text-lg text-ink mb-2">99.9% Uptime</h3>
+              <p className="text-base text-stone">
                 Reliable service with enterprise-grade infrastructure and monitoring.
               </p>
             </div>
             
-            <div className="bg-white border border-gray-200 rounded-lg p-6 text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Lock className="w-6 h-6 text-purple-600" />
+            <div className="border border-line rounded-md p-6 text-center">
+              <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                <Lock className="w-6 h-6" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Zero Trust</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="text-lg text-ink mb-2">Zero Trust</h3>
+              <p className="text-base text-stone">
                 No data storage, no private key access, complete privacy protection.
               </p>
             </div>
           </div>
-        </section>
+        </Container>
+      </Section>
 
-        {/* Getting Started */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Ready to Get Started?</h2>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <div className="flex items-start">
-              <Shield className="w-6 h-6 text-blue-600 mr-3 mt-1" />
-              <div>
-                <h3 className="text-lg font-semibold text-blue-900 mb-3">Start Protecting Your Wallet Today</h3>
-                <p className="text-blue-800 mb-4">
-                  Join thousands of users who trust Allowance Guard to keep their wallets secure. 
-                  It&apos;s free, private, and takes just minutes to set up.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link 
-                    href="/" 
-                    className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-                  >
-                    <Eye className="w-4 h-4 mr-2" />
-                    Start Scanning
-                  </Link>
-                  <a 
-                    href="/docs" 
-                    className="inline-flex items-center px-4 py-2 bg-white hover:bg-gray-50 text-blue-600 font-medium rounded-lg border border-blue-200 transition-colors"
-                  >
-                    <Settings className="w-4 h-4 mr-2" />
-                    View Documentation
-                  </a>
-                </div>
-              </div>
+      {/* Getting Started */}
+      <Section className="bg-mist">
+        <Container>
+          <H2 className="mb-6">Ready to Get Started?</H2>
+          <div className="border border-line rounded-md p-6 bg-white">
+            <h3 className="text-lg text-ink mb-3">Start Protecting Your Wallet Today</h3>
+            <p className="text-base text-stone mb-6">
+              Join thousands of users who trust Allowance Guard to keep their wallets secure. 
+              It&apos;s free, private, and takes just minutes to set up.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link 
+                href="/" 
+                className="inline-flex items-center px-6 py-3 bg-ink text-white font-medium rounded-md hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-ink/30"
+              >
+                <Eye className="w-4 h-4 mr-2" />
+                Start Scanning
+              </Link>
+              <a 
+                href="/docs" 
+                className="inline-flex items-center px-6 py-3 bg-white text-ink font-medium rounded-md border border-line hover:bg-mist transition focus:outline-none focus:ring-2 focus:ring-ink/30"
+              >
+                <Settings className="w-4 h-4 mr-2" />
+                View Documentation
+              </a>
             </div>
           </div>
-        </section>
+        </Container>
+      </Section>
 
-        {/* Comparison */}
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Why Choose Allowance Guard?</h2>
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+      {/* Comparison */}
+      <Section>
+        <Container>
+          <H2 className="mb-6">Why Choose Allowance Guard?</H2>
+          <div className="border border-line rounded-md p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Comprehensive</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="text-lg text-ink mb-2">Comprehensive</h3>
+                <p className="text-base text-stone">
                   Supports all major networks and token standards with advanced risk analysis.
                 </p>
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Lock className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Lock className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Private</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="text-lg text-ink mb-2">Private</h3>
+                <p className="text-base text-stone">
                   Local processing ensures your data never leaves your browser.
                 </p>
               </div>
               
               <div className="text-center">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-6 h-6 text-purple-600" />
+                <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Fast</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="text-lg text-ink mb-2">Fast</h3>
+                <p className="text-base text-stone">
                   Optimized for speed with real-time scanning and instant notifications.
                 </p>
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </Container>
+      </Section>
 
-      {/* Footer */}
-      <footer className="bg-gray-50 border-t border-gray-200 mt-16">
-        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
-          <div className="text-center">
-            <p className="text-gray-600 text-sm">
-              © {new Date().getFullYear()} Allowance Guard. All rights reserved.
-            </p>
-            <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

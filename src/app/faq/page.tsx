@@ -1,22 +1,27 @@
-import Image from 'next/image'
-import { HelpCircle, Shield, AlertTriangle, Mail, Settings, Eye, Lock } from 'lucide-react'
+'use client'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import Container from '@/components/ui/Container'
+import Section from '@/components/ui/Section'
+import { H1, H2 } from '@/components/ui/Heading'
+import { useAccount } from 'wagmi'
+import { AlertTriangle, Mail, Eye, Lock } from 'lucide-react'
 
 export default function FAQPage() {
+  const { isConnected } = useAccount()
+
   const faqCategories = [
     {
       id: 'general',
       title: 'General Questions',
-      icon: HelpCircle,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
       questions: [
         {
           q: 'What is Allowance Guard?',
-          a: 'Allowance Guard is an enterprise-grade security platform that identifies and manages dangerous token approvals on your wallet. Using advanced blockchain analysis and risk assessment algorithms, it scans your wallet for risky permissions that could allow malicious contracts to drain your funds. Our platform has protected over 68,000 wallets and prevented over $200 million in potential losses.'
+          a: 'Allowance Guard is a security platform that identifies and manages dangerous token approvals on your wallet. Using blockchain analysis and risk assessment, it scans your wallet for risky permissions that could allow malicious contracts to drain your funds.'
         },
         {
           q: 'How does it work?',
-          a: 'Our platform uses advanced blockchain analysis to scan all token approvals associated with your wallet address across Ethereum, Arbitrum, and Base networks. We employ machine learning algorithms to assess risk factors including approval amounts, contract reputation, time since last interaction, and historical attack patterns. The system then provides actionable intelligence about which approvals pose immediate threats and should be revoked.'
+          a: 'Our platform uses blockchain analysis to scan all token approvals associated with your wallet address across Ethereum, Arbitrum, and Base networks. We assess risk factors including approval amounts, contract reputation, and time since last interaction.'
         },
         {
           q: 'Is it free to use?',
@@ -31,9 +36,6 @@ export default function FAQPage() {
     {
       id: 'security',
       title: 'Security & Privacy',
-      icon: Shield,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
       questions: [
         {
           q: 'Is my wallet safe?',
@@ -56,9 +58,6 @@ export default function FAQPage() {
     {
       id: 'technical',
       title: 'Technical Issues',
-      icon: Settings,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
       questions: [
         {
           q: 'Which wallets are supported?',
@@ -81,9 +80,6 @@ export default function FAQPage() {
     {
       id: 'alerts',
       title: 'Alerts & Notifications',
-      icon: Mail,
-      color: 'text-yellow-600',
-      bgColor: 'bg-yellow-50',
       questions: [
         {
           q: 'How do email alerts work?',
@@ -106,9 +102,6 @@ export default function FAQPage() {
     {
       id: 'troubleshooting',
       title: 'Troubleshooting',
-      icon: AlertTriangle,
-      color: 'text-red-600',
-      bgColor: 'bg-red-50',
       questions: [
         {
           q: 'My wallet won\'t connect',
@@ -127,164 +120,108 @@ export default function FAQPage() {
           a: 'Check your spam folder, verify your email address in preferences, and ensure alerts are enabled. Contact support if you continue having issues.'
         }
       ]
-    },
-    {
-      id: 'technical',
-      title: 'Technical Deep Dive',
-      icon: Settings,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-50',
-      questions: [
-        {
-          q: 'What is the difference between ERC-20, ERC-721, and ERC-1155 approvals?',
-          a: 'ERC-20 approvals allow contracts to transfer fungible tokens (like USDC, ETH), ERC-721 approvals control NFT transfers, and ERC-1155 approvals manage both fungible and non-fungible tokens in a single contract. Each standard has different security implications and attack vectors.'
-        },
-        {
-          q: 'How do you calculate risk scores?',
-          a: 'Our risk scoring algorithm considers multiple factors: approval amount (unlimited = highest risk), contract age and reputation, time since last interaction, historical attack patterns, and cross-referencing with known malicious addresses. Scores range from 0-100, with 80+ indicating immediate action required.'
-        },
-        {
-          q: 'What happens if a contract I approved gets compromised?',
-          a: 'If a previously trusted contract becomes compromised, it can immediately drain all approved tokens. This is why we recommend revoking approvals to unused contracts and setting specific amounts rather than unlimited approvals. Our monitoring system can detect when approved contracts are flagged as malicious.'
-        },
-        {
-          q: 'Can you detect approval phishing attacks?',
-          a: 'Yes, our system monitors for suspicious approval patterns including rapid successive approvals, approvals to newly created contracts, and approvals to contracts with no transaction history. We also cross-reference against known phishing databases and flag suspicious domains.'
-        }
-      ]
     }
   ]
 
   return (
-    <div className="min-h-screen bg-platinum">
-      {/* Header */}
-      <header className="bg-platinum border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
-          <div className="flex items-center justify-center">
-            <div className="relative w-12 h-12 mr-3">
-              <Image
-                src="/AG_Logo2.png"
-                alt="Allowance Guard"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <h1 className="fireart-heading-2 text-obsidian">Allowance Guard</h1>
-          </div>
-        </div>
-      </header>
-
-      {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <HelpCircle className="w-8 h-8 text-cobalt mr-3" />
-            <h1 className="fireart-heading-1 text-obsidian">Frequently Asked Questions</h1>
-          </div>
-          <p className="fireart-body-large text-charcoal">
+    <div className="min-h-screen bg-white text-ink">
+      <Header isConnected={isConnected} />
+      
+      <Section>
+        <Container>
+          <H1 className="mb-6">Frequently Asked Questions</H1>
+          <p className="text-base text-stone max-w-reading">
             Find answers to common questions about Allowance Guard and wallet security.
           </p>
-        </div>
+        </Container>
+      </Section>
 
-        {/* FAQ Categories */}
-        <div className="space-y-8">
-          {faqCategories.map((category) => {
-            const Icon = category.icon
-            return (
-              <section key={category.id} className="mb-12">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-cobalt-100 rounded-lg flex items-center justify-center mr-4">
-                    <Icon className="w-6 h-6 text-cobalt" />
-                  </div>
-                  <h2 className="fireart-heading-2 text-obsidian">{category.title}</h2>
-                </div>
-                
+      <div className="border-t border-line" />
+
+      <Section>
+        <Container>
+          <div className="space-y-12">
+            {faqCategories.map((category) => (
+              <section key={category.id}>
+                <H2 className="mb-6">{category.title}</H2>
                 <div className="space-y-4">
                   {category.questions.map((faq, index) => (
-                    <div key={index} className="fireart-card">
-                      <h3 className="fireart-heading-3 text-obsidian mb-3">{faq.q}</h3>
-                      <p className="fireart-body text-charcoal leading-relaxed">{faq.a}</p>
+                    <div key={index} className="border border-line rounded-md p-6">
+                      <h3 className="text-lg text-ink mb-3">{faq.q}</h3>
+                      <p className="text-base text-stone leading-relaxed">{faq.a}</p>
                     </div>
                   ))}
                 </div>
               </section>
-            )
-          })}
-        </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
 
-        {/* Quick Actions */}
-        <section className="mt-12 fireart-card bg-warm-gray">
-          <h2 className="fireart-heading-2 text-obsidian mb-4">Still Need Help?</h2>
-          <p className="fireart-body text-charcoal mb-6">
+      {/* Quick Actions */}
+      <Section className="bg-mist">
+        <Container>
+          <H2 className="mb-6">Still Need Help?</H2>
+          <p className="text-base text-stone mb-8 max-w-reading">
             Can&apos;t find the answer you&apos;re looking for? We&apos;re here to help.
           </p>
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <a 
               href="/contact" 
-              className="flex items-center p-4 fireart-card hover:shadow-medium transition-all"
+              className="flex items-center p-6 border border-line rounded-md bg-white hover:bg-mist transition-colors"
             >
-              <Mail className="w-5 h-5 text-cobalt mr-3" />
+              <Mail className="w-5 h-5 text-ink mr-3" />
               <div>
-                <h3 className="fireart-body font-medium text-obsidian">Contact Support</h3>
-                <p className="fireart-caption text-charcoal">Get personalized help</p>
+                <h3 className="text-base font-medium text-ink">Contact Support</h3>
+                <p className="text-sm text-stone">Get personalized help</p>
               </div>
             </a>
             
             <a 
               href="/docs" 
-              className="flex items-center p-4 fireart-card hover:shadow-medium transition-all"
+              className="flex items-center p-6 border border-line rounded-md bg-white hover:bg-mist transition-colors"
             >
-              <Eye className="w-5 h-5 text-emerald mr-3" />
+              <Eye className="w-5 h-5 text-ink mr-3" />
               <div>
-                <h3 className="fireart-body font-medium text-obsidian">Documentation</h3>
-                <p className="fireart-caption text-charcoal">Detailed guides</p>
+                <h3 className="text-base font-medium text-ink">Documentation</h3>
+                <p className="text-sm text-stone">Detailed guides</p>
               </div>
             </a>
             
             <a 
               href="/security" 
-              className="flex items-center p-4 fireart-card hover:shadow-medium transition-all"
+              className="flex items-center p-6 border border-line rounded-md bg-white hover:bg-mist transition-colors"
             >
-              <Lock className="w-5 h-5 text-amber mr-3" />
+              <Lock className="w-5 h-5 text-ink mr-3" />
               <div>
-                <h3 className="fireart-body font-medium text-obsidian">Security Info</h3>
-                <p className="fireart-caption text-charcoal">Safety measures</p>
+                <h3 className="text-base font-medium text-ink">Security Info</h3>
+                <p className="text-sm text-stone">Safety measures</p>
               </div>
             </a>
           </div>
-        </section>
+        </Container>
+      </Section>
 
-        {/* Security Notice */}
-        <section className="mt-8 fireart-card bg-gradient-to-br from-amber-50 to-amber-100 border-amber-200">
-          <div className="flex items-start">
-            <AlertTriangle className="w-6 h-6 text-amber mr-3 mt-1" />
-            <div>
-              <h3 className="fireart-heading-3 text-amber-800 mb-2">Important Security Reminder</h3>
-              <p className="fireart-body text-amber-700">
-                Allowance Guard is a security tool, but it cannot recover stolen funds. Always verify contract addresses, 
-                never share your private keys, and be cautious when interacting with new dApps. If you suspect your wallet 
-                has been compromised, revoke all approvals immediately and move your funds to a new wallet.
-              </p>
+      {/* Security Notice */}
+      <Section>
+        <Container>
+          <div className="border border-line rounded-md p-6 bg-mist">
+            <div className="flex items-start">
+              <AlertTriangle className="w-6 h-6 text-ink mr-3 mt-1" />
+              <div>
+                <h3 className="text-lg text-ink mb-2">Important Security Reminder</h3>
+                <p className="text-base text-stone">
+                  Allowance Guard is a security tool, but it cannot recover stolen funds. Always verify contract addresses, 
+                  never share your private keys, and be cautious when interacting with new dApps. If you suspect your wallet 
+                  has been compromised, revoke all approvals immediately and move your funds to a new wallet.
+                </p>
+              </div>
             </div>
           </div>
-        </section>
-      </main>
+        </Container>
+      </Section>
 
-      {/* Footer */}
-      <footer className="bg-warm-gray border-t border-gray-200 mt-16">
-        <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
-          <div className="text-center">
-            <p className="fireart-caption text-charcoal">
-              © {new Date().getFullYear()} Allowance Guard. All rights reserved.
-            </p>
-            <div className="mt-4 space-x-6">
-              <a href="/terms" className="fireart-caption text-cobalt hover:text-obsidian">Terms of Service</a>
-              <a href="/privacy" className="fireart-caption text-cobalt hover:text-obsidian">Privacy Policy</a>
-              <a href="/cookies" className="fireart-caption text-cobalt hover:text-obsidian">Cookie Policy</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

@@ -20,8 +20,11 @@ if (typeof window !== 'undefined') {
         message.includes('coinbase') || 
         message.includes('loadTelemetryScript') ||
         message.includes('WebSocket connection closed') ||
-        message.includes('Unauthorized: origin not allowed')) {
-      return // Suppress telemetry and WebSocket-related errors
+        message.includes('Unauthorized: origin not allowed') ||
+        message.includes('Proposal expired') ||
+        message.includes('Session expired') ||
+        message.includes('Connection request expired')) {
+      return // Suppress telemetry, WebSocket, and WalletConnect-related errors
     }
     originalConsoleError.apply(console, args)
   }
@@ -33,7 +36,10 @@ if (typeof window !== 'undefined') {
         event.message?.includes('loadTelemetryScript') ||
         event.error?.stack?.includes('coinbase') ||
         event.message?.includes('WebSocket connection closed') ||
-        event.message?.includes('Unauthorized: origin not allowed')) {
+        event.message?.includes('Unauthorized: origin not allowed') ||
+        event.message?.includes('Proposal expired') ||
+        event.message?.includes('Session expired') ||
+        event.message?.includes('Connection request expired')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -46,7 +52,10 @@ if (typeof window !== 'undefined') {
         event.reason?.stack?.includes('coinbase') ||
         event.reason?.message?.includes('loadTelemetryScript') ||
         event.reason?.message?.includes('WebSocket connection closed') ||
-        event.reason?.message?.includes('Unauthorized: origin not allowed')) {
+        event.reason?.message?.includes('Unauthorized: origin not allowed') ||
+        event.reason?.message?.includes('Proposal expired') ||
+        event.reason?.message?.includes('Session expired') ||
+        event.reason?.message?.includes('Connection request expired')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -62,7 +71,10 @@ if (typeof window !== 'undefined') {
         sourceStr.includes('coinbase') || 
         messageStr.includes('loadTelemetryScript') ||
         messageStr.includes('WebSocket connection closed') ||
-        messageStr.includes('Unauthorized: origin not allowed')) {
+        messageStr.includes('Unauthorized: origin not allowed') ||
+        messageStr.includes('Proposal expired') ||
+        messageStr.includes('Session expired') ||
+        messageStr.includes('Connection request expired')) {
       return true // Prevent default error handling
     }
     return false
@@ -122,7 +134,10 @@ class WalletErrorBoundary extends Component<
         error.stack?.includes('coinbase') ||
         error.message?.includes('loadTelemetryScript') ||
         error.message?.includes('WebSocket connection closed') ||
-        error.message?.includes('Unauthorized: origin not allowed')) {
+        error.message?.includes('Unauthorized: origin not allowed') ||
+        error.message?.includes('Proposal expired') ||
+        error.message?.includes('Session expired') ||
+        error.message?.includes('Connection request expired')) {
       return { hasError: false } // Don't show error boundary for these errors
     }
     return { hasError: true }
@@ -134,7 +149,10 @@ class WalletErrorBoundary extends Component<
         !error.stack?.includes('coinbase') &&
         !error.message?.includes('loadTelemetryScript') &&
         !error.message?.includes('WebSocket connection closed') &&
-        !error.message?.includes('Unauthorized: origin not allowed')) {
+        !error.message?.includes('Unauthorized: origin not allowed') &&
+        !error.message?.includes('Proposal expired') &&
+        !error.message?.includes('Session expired') &&
+        !error.message?.includes('Connection request expired')) {
       console.error('Wallet Error Boundary caught an error:', error, errorInfo)
     }
   }
