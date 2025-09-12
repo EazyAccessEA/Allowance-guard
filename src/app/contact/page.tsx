@@ -111,9 +111,21 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white text-ink">
       <Header isConnected={isConnected} />
       
-      {/* Hero Section - Fireart Style */}
-      <Section className="py-24 sm:py-32">
-        <Container className="text-center max-w-4xl">
+      {/* Hero Section - Fireart Style with Background */}
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          style={{
+            backgroundImage: 'url(/Web.jpeg)',
+            backgroundPosition: 'center center',
+            backgroundSize: 'cover'
+          }}
+        />
+        {/* Subtle overlay for better text readability */}
+        <div className="absolute inset-0 bg-white/80" />
+        
+        <Container className="relative text-center max-w-4xl z-10">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
             Contact Support
           </h1>

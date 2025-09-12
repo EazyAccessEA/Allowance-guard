@@ -107,8 +107,21 @@ export default function SecurityPage() {
     <div className="min-h-screen bg-white text-ink">
       <Header isConnected={isConnected} />
       
-      <Section>
-        <Container>
+      {/* Hero Section - Fireart Style with Background */}
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          style={{
+            backgroundImage: 'url(/Web.jpeg)',
+            backgroundPosition: 'center center',
+            backgroundSize: 'cover'
+          }}
+        />
+        {/* Subtle overlay for better text readability */}
+        <div className="absolute inset-0 bg-white/80" />
+        
+        <Container className="relative text-center max-w-4xl z-10">
           <H1 className="mb-6">Security & Privacy</H1>
           <p className="text-base text-stone max-w-reading mb-6">
             Learn how Allowance Guard protects your wallet and maintains your privacy while keeping you secure.
