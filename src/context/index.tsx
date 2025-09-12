@@ -141,7 +141,7 @@ try {
       '--w3m-spacing-xxl': '32px', // xl
       
       // Modal specific - matching Fireart colors
-      '--w3m-z-index': '9999',
+      '--w3m-z-index': 9999,
       '--w3m-background-color': '#1E1F23', // obsidian
       '--w3m-background-border-radius': '16px', // card borderRadius
       
