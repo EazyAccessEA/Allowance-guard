@@ -113,48 +113,16 @@ try {
       '--w3m-color-mix': '#1E1F23', // obsidian
       '--w3m-color-mix-strength': 40,
       '--w3m-accent': '#2563EB', // cobalt
-      '--w3m-accent-fill': '#1D4ED8', // cobalt-hover
       
       // Border radius - matching component tokens
       '--w3m-border-radius-master': '8px', // button borderRadius
-      '--w3m-border-radius-xs': '4px',
-      '--w3m-border-radius-s': '6px',
-      '--w3m-border-radius-m': '8px',
-      '--w3m-border-radius-l': '12px',
-      '--w3m-border-radius-xl': '16px', // card borderRadius
       
       // Typography - matching Fireart typography scale
       '--w3m-font-size-master': '16px', // base fontSize
-      '--w3m-font-size-xs': '12px', // xs
-      '--w3m-font-size-s': '14px', // sm
-      '--w3m-font-size-m': '16px', // base
-      '--w3m-font-size-l': '18px', // lg
-      '--w3m-font-size-xl': '20px', // xl
       '--w3m-font-family': 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
-      
-      // Spacing - matching Fireart spacing scale
-      '--w3m-spacing-xs': '4px', // xs
-      '--w3m-spacing-s': '8px', // sm
-      '--w3m-spacing-m': '12px',
-      '--w3m-spacing-l': '16px', // md
-      '--w3m-spacing-xl': '24px', // lg
-      '--w3m-spacing-xxl': '32px', // xl
       
       // Modal specific - matching Fireart colors
       '--w3m-z-index': 9999,
-      '--w3m-background-color': '#1E1F23', // obsidian
-      '--w3m-background-border-radius': '16px', // card borderRadius
-      
-      // Button styling - matching component tokens
-      '--w3m-button-border-radius': '8px', // button borderRadius
-      '--w3m-button-hover-highlight': '#25262B', // obsidianHover
-      
-      // Input styling - matching component tokens
-      '--w3m-input-border-radius': '8px', // input borderRadius
-      '--w3m-input-border': '1px solid #64748B', // charcoal
-      
-      // Overlay - subtle Fireart-style
-      '--w3m-overlay-background-color': 'rgba(30, 31, 35, 0.8)', // obsidian with opacity
     }
   })
 } catch (error) {
