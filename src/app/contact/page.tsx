@@ -122,7 +122,7 @@ export default function ContactPage() {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.55) 100%)'
+            background: 'linear-gradient(to right, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.45) 100%)'
           }}
         />
         
