@@ -16,7 +16,7 @@ Create `.env.production` with the following variables:
 ```bash
 # Application
 NODE_ENV=production
-NEXT_PUBLIC_APP_URL=https://allowanceguard.com
+NEXT_PUBLIC_APP_URL=https://www.allowanceguard.com
 
 # Database (Production PostgreSQL)
 DATABASE_URL=postgresql://username:password@your-production-host:5432/allowance_guard
@@ -42,7 +42,7 @@ ALERTS_FROM_NAME=Allowance Guard
 
 # Security
 NEXTAUTH_SECRET=your-super-secret-production-key-here
-NEXTAUTH_URL=https://allowanceguard.com
+NEXTAUTH_URL=https://www.allowanceguard.com
 
 # Monitoring (Optional)
 SENTRY_DSN=your_sentry_dsn_here

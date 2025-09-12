@@ -79,9 +79,9 @@ export default function HomePage() {
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
           style={{
-            backgroundImage: 'url(/AdobeStock_1559196964.jpeg)',
+            backgroundImage: 'url(/Dolphin_Home.jpeg)',
             backgroundPosition: 'center center',
             backgroundSize: 'cover'
           }}

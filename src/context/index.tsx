@@ -91,8 +91,8 @@ try {
     metadata: {
       name: 'Allowance Guard',
       description: 'Allowance monitoring & revocation',
-      url: 'https://allowanceguard.com',
-      icons: ['https://allowanceguard.com/icon.png']
+      url: 'https://www.allowanceguard.com',
+      icons: ['https://www.allowanceguard.com/icon.png']
     },
     features: { 
       analytics: false, // Disable analytics to prevent telemetry errors
