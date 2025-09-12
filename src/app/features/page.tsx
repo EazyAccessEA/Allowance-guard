@@ -6,7 +6,7 @@ import Section from '@/components/ui/Section'
 import { useAccount } from 'wagmi'
 import Link from 'next/link'
 import { Shield, Eye, Settings, Zap, Lock, CheckCircle } from 'lucide-react'
-import AnimatedBackground from '@/components/AnimatedBackground'
+import VideoBackground from '@/components/VideoBackground'
 
 export default function FeaturesPage() {
   const { isConnected } = useAccount()
@@ -144,10 +144,9 @@ export default function FeaturesPage() {
       
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        {/* Animated Background Images */}
-        <AnimatedBackground 
-          images={['/Dolphin_Home.jpeg', '/Web.jpeg', '/Face.jpeg', '/Celestial.jpeg', '/Butterfly.jpeg']}
-          delay={10000}
+        {/* Video Background */}
+        <VideoBackground 
+          videoSrc="/AllowanceGuard..mp4"
         />
         {/* Subtle overlay for better text readability */}
         <div className="absolute inset-0 bg-white/80" />

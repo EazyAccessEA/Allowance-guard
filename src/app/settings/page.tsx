@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import AnimatedBackground from '@/components/AnimatedBackground'
+import VideoBackground from '@/components/VideoBackground'
 
 export default function SettingsPage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -179,10 +179,9 @@ export default function SettingsPage() {
       
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        {/* Animated Background Images */}
-        <AnimatedBackground 
-          images={['/Dolphin_Home.jpeg', '/Web.jpeg', '/Face.jpeg', '/Celestial.jpeg', '/Butterfly.jpeg']}
-          delay={10000}
+        {/* Video Background */}
+        <VideoBackground 
+          videoSrc="/AllowanceGuard..mp4"
         />
         {/* Subtle overlay for better text readability */}
         <div className="absolute inset-0 bg-white/80" />
