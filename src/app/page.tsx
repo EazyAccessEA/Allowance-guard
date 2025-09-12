@@ -140,16 +140,17 @@ export default function HomePage() {
         />
         
         <Container className="relative text-left max-w-4xl z-10">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-ink leading-[1.1] tracking-tight mb-8">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-8 h-[2.2em] flex items-start">
             <RotatingTypewriter 
     staticPrefix="Find and "
     messages={[
-      "neutralize risky token approvals",
-      "revoke unlimited spending permissions", 
-      "secure your DeFi wallet approvals"
+      "neutralize risky token\napprovals instantly",
+      "revoke unlimited spending\npermissions safely", 
+      "secure your DeFi wallet\nfrom exploits",
+      "protect your wallet from\nmalicious contracts"
     ]}
-    typingSpeed={80}
-    deletingSpeed={40}
+    typingSpeed={200}
+    deletingSpeed={50}
     pauseTime={3000}
     className=""
   />          </h1>
@@ -169,8 +170,8 @@ export default function HomePage() {
                   disabled={pending} 
                   className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-ink text-white hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-ink/30 disabled:opacity-50"
                 >
-                  {pending ? 'Scanning…' : 'Scan wallet'}
-                </button>
+                {pending ? 'Scanning…' : 'Scan wallet'}
+              </button>
                 {message && (
                   <p className="text-sm text-stone">
                     {message}

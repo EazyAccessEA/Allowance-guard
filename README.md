@@ -1,6 +1,6 @@
 # Allowance Guard
 
-**Version 1.0.0** - Free & Open Source Token Approval Security Platform
+**Version 1.1.0** - Free & Open Source Token Approval Security Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)
