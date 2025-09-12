@@ -1,5 +1,5 @@
 import { clientFor } from './chains'
-import { readContract } from 'viem'
+import { readContract } from 'viem/actions'
 import { ERC20_READ_ABI, ERC721_READ_ABI, ERC1155_READ_ABI } from './abi'
 
 export async function readCurrentAllowance(params: {
@@ -9,7 +9,7 @@ export async function readCurrentAllowance(params: {
   token: `0x${string}`
   spender: `0x${string}`
 }): Promise<{ amount: bigint, isUnlimited: boolean }> {
-  const client = clientFor(params.chainId as any)
+  const client = clientFor(params.chainId as 1|42161|8453)
   if (params.standard === 'ERC20') {
     const amt = await readContract(client, {
       address: params.token, abi: ERC20_READ_ABI,

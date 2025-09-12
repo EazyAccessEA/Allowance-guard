@@ -3,7 +3,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2 } from '@/components/ui/Heading'
+import { H1 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
 import { useState } from 'react'
@@ -148,14 +148,14 @@ export default function DocsPage() {
                   <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">1</div>
                   <div>
                     <h4 className="font-medium text-ink mb-1">Connect Your Wallet</h4>
-                    <p className="text-sm text-stone">Click "Connect Wallet" and select your preferred wallet provider (MetaMask, WalletConnect, etc.)</p>
+                    <p className="text-sm text-stone">Click &quot;Connect Wallet&quot; and select your preferred wallet provider (MetaMask, WalletConnect, etc.)</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">2</div>
                   <div>
                     <h4 className="font-medium text-ink mb-1">Scan for Approvals</h4>
-                    <p className="text-sm text-stone">Click "Scan wallet" to discover all your token approvals across supported networks</p>
+                    <p className="text-sm text-stone">Click &quot;Scan wallet&quot; to discover all your token approvals across supported networks</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -169,7 +169,7 @@ export default function DocsPage() {
                   <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">4</div>
                   <div>
                     <h4 className="font-medium text-ink mb-1">Revoke Risky Approvals</h4>
-                    <p className="text-sm text-stone">Use the "Revoke" button to set risky allowances to zero</p>
+                    <p className="text-sm text-stone">Use the &quot;Revoke&quot; button to set risky allowances to zero</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -273,7 +273,7 @@ export default function DocsPage() {
                   <ol className="list-decimal list-inside space-y-1 text-sm text-stone">
                     <li>Connect your wallet and scan for approvals</li>
                     <li>Find the approval you want to revoke</li>
-                    <li>Click the "Revoke" button</li>
+                    <li>Click the &quot;Revoke&quot; button</li>
                     <li>Sign the transaction in your wallet</li>
                     <li>Pay the gas fee to complete the revocation</li>
                   </ol>
@@ -282,7 +282,7 @@ export default function DocsPage() {
                   <h4 className="font-medium text-ink mb-2">Important Notes</h4>
                   <ul className="space-y-1 text-sm text-stone">
                     <li>• Each revocation requires a separate transaction and gas fee</li>
-                    <li>• Revoking doesn't affect already deposited or staked tokens</li>
+                    <li>• Revoking doesn&apos;t affect already deposited or staked tokens</li>
                     <li>• Some dApps may require you to re-approve for continued functionality</li>
                     <li>• Revocation is preventative, not restorative for already stolen funds</li>
               </ul>
@@ -361,7 +361,7 @@ export default function DocsPage() {
                     <h3 className="text-lg font-semibold text-ink">Public Share Links</h3>
                   </div>
                   <p className="text-sm text-stone mb-4">
-                    Generate read-only links to share your wallet's approval status.
+                    Generate read-only links to share your wallet&apos;s approval status.
                   </p>
                   <ul className="space-y-2 text-sm text-stone">
                     <li>• Privacy controls (censor addresses/amounts)</li>
@@ -415,7 +415,7 @@ export default function DocsPage() {
                   <h4 className="font-medium text-ink mb-2">Revoke transaction fails</h4>
                   <ul className="space-y-1 text-sm text-stone">
                     <li>• Ensure you have sufficient gas tokens for the network</li>
-                    <li>• Check that the approval hasn't already been revoked</li>
+                    <li>• Check that the approval hasn&apos;t already been revoked</li>
                     <li>• Some contracts may require specific revocation methods</li>
                   </ul>
                 </div>

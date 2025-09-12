@@ -209,7 +209,7 @@ export default function SettingsPage() {
                 <div className="border border-line rounded-md p-6 bg-mist">
                   <h3 className="text-lg font-semibold text-ink mb-3">Public Share Links</h3>
                   <p className="text-sm text-stone mb-3">
-                    Generate read-only links to share your wallet's approval status.
+                    Generate read-only links to share your wallet&apos;s approval status.
                   </p>
                   <ul className="text-sm text-stone space-y-1">
                     <li>• Privacy controls (censor addresses/amounts)</li>

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 type Receipt = {
   id: number
@@ -28,13 +28,13 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
   const [items, setItems] = useState<Receipt[]>([])
   const [loading, setLoading] = useState(false)
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true)
     const r = await fetch(`/api/receipts?wallet=${wallet}`)
     const j = await r.json()
     setItems(j.receipts || [])
     setLoading(false)
-  }
+  }, [wallet])
 
   async function verify(id: number) {
     await fetch('/api/receipts/verify', {
@@ -45,7 +45,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
     await load()
   }
 
-  useEffect(() => { load() }, [wallet])
+  useEffect(() => { load() }, [load])
 
   return (
     <section className="mt-8">

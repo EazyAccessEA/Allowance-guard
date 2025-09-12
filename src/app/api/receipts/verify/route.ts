@@ -23,8 +23,8 @@ export async function POST(req: Request) {
     const ok = BigInt(amount) === 0n
     await setReceiptResult(Number(r.id), ok, BigInt(amount), ok ? undefined : 'Allowance not zero')
     return NextResponse.json({ ok, postAmount: amount.toString() })
-  } catch (e: any) {
-    await setReceiptResult(Number(r.id), false, null, e?.message || 'Read failed')
+  } catch (e: unknown) {
+    await setReceiptResult(Number(r.id), false, null, e instanceof Error ? e.message : 'Read failed')
     return NextResponse.json({ ok: false, error: 'Verify failed' }, { status: 500 })
   }
 }
