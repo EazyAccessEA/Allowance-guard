@@ -18,7 +18,7 @@ export default function CookiesPage() {
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         {/* Animated Background Images */}
         <AnimatedBackground 
-          images={['/Dolphin_Home.jpeg', '/Web.jpeg']}
+          images={['/Dolphin_Home.jpeg', '/Web.jpeg', '/Face.jpeg', '/Celestial.jpeg', '/Butterfly.jpeg']}
           delay={10000}
         />
         {/* Subtle overlay for better text readability */}
