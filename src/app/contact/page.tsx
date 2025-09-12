@@ -7,6 +7,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { useAccount } from 'wagmi'
 import { CheckCircle, AlertCircle, Mail } from 'lucide-react'
+import AnimatedBackground from '@/components/AnimatedBackground'
 
 export default function ContactPage() {
   const { isConnected } = useAccount()
@@ -111,16 +112,12 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white text-ink">
       <Header isConnected={isConnected} />
       
-      {/* Hero Section - Fireart Style with Background */}
+      {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-          style={{
-            backgroundImage: 'url(/Web.jpeg)',
-            backgroundPosition: 'center center',
-            backgroundSize: 'cover'
-          }}
+        {/* Animated Background Images */}
+        <AnimatedBackground 
+          images={['/Dolphin_Home.jpeg', '/Web.jpeg']}
+          delay={10000}
         />
         {/* Subtle overlay for better text readability */}
         <div className="absolute inset-0 bg-white/80" />
