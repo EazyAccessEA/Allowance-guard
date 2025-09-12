@@ -230,7 +230,7 @@ export default function SettingsPage() {
                 <div className="flex justify-center">
                   <ConnectButton 
                     variant="primary"
-                    className="bg-white text-ink hover:bg-white/90 transition-all duration-200 px-8 py-3 text-base font-medium rounded-lg"
+                    className="px-8 py-3 text-base font-medium rounded-lg"
                   />
                 </div>
               </div>
