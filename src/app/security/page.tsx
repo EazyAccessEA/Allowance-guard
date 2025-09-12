@@ -6,7 +6,6 @@ import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
-import { Shield, Lock, Eye, AlertTriangle, CheckCircle, Users, FileText, Zap, Database, Key, Clock, Target, Bell } from 'lucide-react'
 
 export default function SecurityPage() {
   const { isConnected } = useAccount()
@@ -14,50 +13,6 @@ export default function SecurityPage() {
 
 
 
-  const securityStats = [
-    { label: 'DeFi Exploits from Approvals', value: '73%', description: 'In 2024' },
-    { label: 'Total Losses', value: '$3.2B', description: 'From approval attacks' },
-    { label: 'Average Attack Time', value: '< 1 hour', description: 'To drain unlimited approvals' },
-    { label: 'Protected Wallets', value: '10,000+', description: 'Using Allowance Guard' }
-  ]
-
-  const emergencySteps = [
-    {
-      step: 1,
-      title: 'Revoke All Approvals',
-      description: 'Use Allowance Guard to identify and revoke all token approvals immediately',
-      urgency: 'Critical',
-      timeEstimate: '5-10 minutes'
-    },
-    {
-      step: 2,
-      title: 'Move Funds to New Wallet',
-      description: 'Transfer all assets to a freshly created wallet with new private keys',
-      urgency: 'Critical',
-      timeEstimate: '15-30 minutes'
-    },
-    {
-      step: 3,
-      title: 'Change All Passwords',
-      description: 'Update passwords for any connected services, exchanges, and accounts',
-      urgency: 'High',
-      timeEstimate: '30-60 minutes'
-    },
-    {
-      step: 4,
-      title: 'Report the Incident',
-      description: 'Contact relevant authorities, exchanges, and document the breach',
-      urgency: 'High',
-      timeEstimate: '1-2 hours'
-    },
-    {
-      step: 5,
-      title: 'Monitor for Further Activity',
-      description: 'Continue scanning for new suspicious approvals and transactions',
-      urgency: 'Medium',
-      timeEstimate: 'Ongoing'
-    }
-  ]
 
   return (
     <div className="min-h-screen bg-white text-ink">
@@ -74,545 +29,225 @@ export default function SecurityPage() {
         />
         
         <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Security & Privacy</H1>
-          <p className="text-base text-stone max-w-reading mb-8">
-            Learn how Allowance Guard protects your wallet and maintains your privacy while keeping you secure.
+          <H1 className="mb-6">Security First: Our Uncompromising Commitment to Your Safety</H1>
+          <p className="text-xl text-stone max-w-reading mb-8">
+            Allowance Guard is a non-custodial Web3 security platform designed exclusively to identify, assess, and mitigate token approval risks. We never hold your private keys, funds, or sensitive credentials.
           </p>
         </Container>
       </Section>
 
       <div className="border-t border-line" />
 
-      {/* Security Crisis Stats */}
+      {/* Our Security Commitment */}
       <Section className="py-20">
         <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-ink mb-4">
-              The DeFi Security Crisis
-            </h2>
-            <p className="text-base text-stone max-w-3xl mx-auto mb-12">
-              Token approvals represent the single largest attack vector in decentralized finance. 
-              In 2024, approval-based attacks accounted for 73% of all DeFi exploits, resulting in over $3.2 billion in losses.
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Our Security Commitment</h2>
+            <p className="text-lg text-stone leading-relaxed mb-12">
+              In the Web3 environment, security is not merely a feature but the foundational principle upon which all trust is built. The decentralized nature of blockchain technology, while revolutionary, introduces unique attack vectors that traditional security models cannot address. Token approvals represent the single largest attack surface in decentralized finance, with approval-based exploits accounting for 73% of all DeFi security incidents in 2024, resulting in over $3.2 billion in losses. Allowance Guard is engineered to the PuredgeOS 3.0 God-tier standard, incorporating foundational security principles that ensure the highest levels of protection, clarity, and performance. Our commitment to security is absolute and uncompromising.
             </p>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {securityStats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl font-bold text-ink mb-2">{stat.value}</div>
-                <div className="text-sm font-medium text-ink mb-1">{stat.label}</div>
-                <div className="text-xs text-stone">{stat.description}</div>
-              </div>
-            ))}
           </div>
         </Container>
       </Section>
 
-      {/* Security Features - Fireart Style */}
+      {/* How We Protect You and Your Data */}
       <Section className="py-32 bg-mist/30">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
-                How We Protect You
-              </h2>
-              <p className="text-xl text-stone leading-relaxed">
-                Our security-first approach ensures your wallet and data remain completely private and secure.
-              </p>
-            </div>
+            <h2 className="text-3xl font-semibold text-ink mb-12">How We Protect You and Your Data</h2>
             
-            <div className="space-y-20">
-              <div className="flex items-start gap-12">
-                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Key className="w-10 h-10 text-electric" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-3xl font-semibold text-ink mb-6">Read-Only Access</h3>
-                  <p className="text-xl text-stone leading-relaxed mb-8">
-                    We never have access to your private keys or wallet funds, ensuring your assets remain safe.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">No private key access</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">No seed phrase storage</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">No transaction signing</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Local browser processing only</span>
-                    </div>
-                  </div>
-                </div>
+            <div className="space-y-16">
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Encryption in Transit</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  All data transmission between your browser and Allowance Guard&apos;s servers is encrypted using TLS 1.3, the most current and secure version of the Transport Layer Security protocol. Every connection is mandated to enforce HTTPS, ensuring that all communications are protected by modern cryptographic standards. Our implementation uses perfect forward secrecy, meaning that even if our private keys were compromised, past communications would remain secure. All API endpoints require HTTPS, and we implement HTTP Strict Transport Security (HSTS) headers to prevent protocol downgrade attacks.
+                </p>
               </div>
-              
-              <div className="flex items-start gap-12">
-                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Database className="w-10 h-10 text-electric" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-3xl font-semibold text-ink mb-6">Local Processing</h3>
-                  <p className="text-xl text-stone leading-relaxed mb-8">
-                    All analysis happens in your browser, not on our servers, for maximum privacy.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Blockchain data fetched locally</span>
+
+                  <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Encryption at Rest</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Any user data that is persisted in our databases, including user preferences, cached allowance lists for performance optimization, and session information, is encrypted using industry-standard AES-256 encryption. This includes data stored in our PostgreSQL database, Redis cache, and any temporary storage systems. Database encryption keys are managed through a secure key management system and are rotated regularly. We maintain strict data retention policies, with most user data automatically purged after defined periods to minimize exposure.
+                </p>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Risk analysis in your browser</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">No data sent to our servers</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Complete privacy protection</span>
-                    </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Secure Infrastructure</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Allowance Guard is hosted on Vercel&apos;s secure cloud infrastructure, which provides enterprise-grade security features including DDoS protection, automated security scanning, and global CDN distribution. Our systems are hardened according to industry best practices, with regular security patches applied automatically. We implement comprehensive monitoring and logging systems that operate 24/7 to detect and respond to unauthorized access attempts, anomalous behavior, and potential security incidents. All infrastructure components are regularly audited and updated to maintain the highest security standards.
+                </p>
                   </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Wallet Connection Security</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Allowance Guard provides an explicit guarantee that the application never requests, receives, or stores a user&apos;s private keys, seed phrases, or any other sensitive credentials. All wallet connections are established through secure, industry-standard protocols such as WalletConnect or direct browser extension integration. All transactions are proposed to the user and must be signed directly within their own wallet application, such as MetaMask, Coinbase Wallet, or other supported wallet providers. We never have the ability to initiate transactions on behalf of users, ensuring that users maintain complete control over their funds at all times.
+                </p>
                 </div>
-              </div>
-              
-              <div className="flex items-start gap-12">
-                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Lock className="w-10 h-10 text-electric" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-3xl font-semibold text-ink mb-6">Encrypted Storage</h3>
-                  <p className="text-xl text-stone leading-relaxed mb-8">
-                    Any minimal data we store is encrypted using industry standards.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">AES-256 encryption</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Secure data transmission</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Minimal data retention</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Regular security audits</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-12">
-                <div className="w-20 h-20 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <FileText className="w-10 h-10 text-electric" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-3xl font-semibold text-ink mb-6">Open Source & Auditable</h3>
-                  <p className="text-xl text-stone leading-relaxed mb-8">
-                    Our code is publicly available for community review, fostering transparency and trust.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Public GitHub repository</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Community code reviews</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Transparent development</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <CheckCircle className="w-6 h-6 text-electric flex-shrink-0" />
-                      <span className="text-lg text-stone">Regular security updates</span>
-                    </div>
-                  </div>
-                </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Smart Contract Security</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Allowance Guard utilizes direct, well-audited standard function calls for token approval revocation, specifically the ERC-20 `approve(spender, 0)` function and ERC-721 `setApprovalForAll(spender, false)` function. These are the same functions used by all legitimate DeFi applications and have been extensively tested and audited by the broader Ethereum community. We do not deploy custom smart contracts that could introduce additional attack vectors. All revocation operations are executed through these standard, battle-tested functions, ensuring maximum security and compatibility across all token standards.
+                </p>
               </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Threat Protection - Fireart Style */}
+      {/* Our Privacy Principles */}
       <Section className="py-32">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
-                Threats We Protect Against
-              </h2>
-              <p className="text-xl text-stone leading-relaxed">
-                Comprehensive protection against the most common and dangerous wallet security threats.
-              </p>
-            </div>
+            <h2 className="text-3xl font-semibold text-ink mb-12">Our Privacy Principles</h2>
             
-            <div className="space-y-12">
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <AlertTriangle className="w-8 h-8 text-electric" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <h3 className="text-2xl font-semibold text-ink">Unlimited Approvals</h3>
-                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-red-50 text-red-700 border border-red-200">
-                      Critical Risk
-                    </span>
-                  </div>
-                  <p className="text-lg text-stone leading-relaxed mb-4">
-                    Approvals that allow any amount to be taken from your wallet, posing the highest security risk.
-                  </p>
-                  <p className="text-base font-medium text-ink mb-4">
-                    <strong>Protection:</strong> Immediate identification and revoke recommendations
-                  </p>
-                  <div className="bg-mist/50 rounded-lg p-4">
-                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
-                    <ul className="space-y-1 text-sm text-stone">
-                      <li>• ERC-20 approve(address, uint256(-1))</li>
-                      <li>• ERC-721 setApprovalForAll(address, true)</li>
-                    </ul>
-                  </div>
-                </div>
+            <div className="space-y-16">
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Data Minimization</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Allowance Guard operates on the principle of data minimization, collecting only the absolute minimum data required to provide our security services. This includes exclusively the public wallet address and on-chain allowance data that is already publicly available on the blockchain. We do not collect unnecessary personal information, browsing history, or any data unrelated to token approval security. Our data collection is purpose-limited and directly tied to the core functionality of identifying and managing token approval risks.
+                </p>
               </div>
-              
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-8 h-8 text-electric" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <h3 className="text-2xl font-semibold text-ink">Stale Approvals</h3>
-                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-orange-50 text-orange-700 border border-orange-200">
-                      High Risk
-                    </span>
-                  </div>
-                  <p className="text-lg text-stone leading-relaxed mb-4">
-                    Old approvals to contracts you no longer use or trust, increasing your attack surface.
-                  </p>
-                  <p className="text-base font-medium text-ink mb-4">
-                    <strong>Protection:</strong> Time-based analysis and cleanup suggestions
-                  </p>
-                  <div className="bg-mist/50 rounded-lg p-4">
-                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
-                    <ul className="space-y-1 text-sm text-stone">
-                      <li>• Unused DeFi protocols</li>
-                      <li>• Abandoned NFT marketplaces</li>
-                      <li>• Old gaming contracts</li>
-                    </ul>
-                  </div>
-                </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Data Usage and Non-Aggregation</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  We provide an absolute guarantee that user data is never sold, rented, or shared with third parties for advertising, marketing, or any commercial purposes. All collected data is used exclusively for providing and improving the core service functionality, including risk scoring algorithms, performance optimization, and security monitoring. We do not aggregate user data for analytics or create user profiles for any purpose beyond the direct provision of our security services. Our data usage is transparent, limited, and directly tied to the security functions that users explicitly request.
+                </p>
               </div>
-              
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Target className="w-8 h-8 text-electric" />
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Transparency and User Control</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Users maintain complete control over their data and can disconnect their wallet at any time, which immediately ceases all active data fetching and processing. We provide clear visibility into what data is being collected and how it is being used. Users can request a complete export of their data or request deletion of all stored information. Our privacy practices are documented transparently, and we regularly update our policies to reflect any changes in data handling practices. Users are notified of any significant changes to our privacy practices with adequate advance notice.
+                </p>
                 </div>
-                <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <h3 className="text-2xl font-semibold text-ink">Unknown Contracts</h3>
-                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
-                      Medium Risk
-                    </span>
-                  </div>
-                  <p className="text-lg text-stone leading-relaxed mb-4">
-                    Approvals to contracts with no reputation or verification data, making risk assessment difficult.
-                  </p>
-                  <p className="text-base font-medium text-ink mb-4">
-                    <strong>Protection:</strong> Contract verification and risk scoring
-                  </p>
-                  <div className="bg-mist/50 rounded-lg p-4">
-                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
-                    <ul className="space-y-1 text-sm text-stone">
-                      <li>• Unverified smart contracts</li>
-                      <li>• New protocols without audits</li>
-                      <li>• Experimental dApps</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Zap className="w-8 h-8 text-electric" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <h3 className="text-2xl font-semibold text-ink">Large Amount Approvals</h3>
-                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
-                      Medium Risk
-                  </span>
-                  </div>
-                  <p className="text-lg text-stone leading-relaxed mb-4">
-                    Approvals for unusually large token amounts relative to your holdings, potentially risky.
-                  </p>
-                  <p className="text-base font-medium text-ink mb-4">
-                    <strong>Protection:</strong> Amount analysis and threshold warnings
-                  </p>
-                  <div className="bg-mist/50 rounded-lg p-4">
-                    <p className="text-sm font-medium text-ink mb-2">Examples:</p>
-                    <ul className="space-y-1 text-sm text-stone">
-                      <li>• Approvals exceeding 50% of holdings</li>
-                      <li>• Suspiciously round numbers</li>
-                      <li>• Amounts larger than typical usage</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Best Practices - Fireart Style */}
+      {/* What Data We Collect and Why */}
       <Section className="py-32 bg-mist/30">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
-                Security Best Practices
-              </h2>
-              <p className="text-xl text-stone leading-relaxed">
-                Follow these practices to maximize your wallet security and stay protected.
+            <h2 className="text-3xl font-semibold text-ink mb-12">What Data We Collect and Why</h2>
+            
+            <div className="space-y-12">
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Public Wallet Address</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  We collect your public wallet address to fetch and display token allowances from the blockchain. This address is used to query blockchain data through our indexer or third-party APIs such as The Graph, Alchemy, or Infura. The wallet address is public information that is already visible on the blockchain and is necessary for the core functionality of identifying and displaying your token approvals. We do not associate this address with any personal information or create user profiles beyond the security analysis.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">On-Chain Allowance Data</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  The list of token approvals, including token contract addresses, spender addresses, and approval amounts, is retrieved from the blockchain via our indexer or third-party APIs. This data includes ERC-20 token approvals and ERC-721/ERC-1155 NFT approvals. This information is public data that exists on the blockchain; we simply organize, analyze, and present it in a user-friendly format. We cache this data temporarily for performance optimization but do not store it permanently or use it for any purpose beyond the security analysis you request.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="space-y-8">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-semibold text-ink">Regular Scanning</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
-                        Weekly
-                      </span>
-                    </div>
-                    <p className="text-stone leading-relaxed">
-                      Scan your wallet at least weekly to catch new approvals and monitor existing ones.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <AlertTriangle className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-semibold text-ink">Immediate Revocation</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
-                        Immediate
-                      </span>
-                    </div>
-                    <p className="text-stone leading-relaxed">
-                      Revoke unlimited or high-risk approvals as soon as you identify them.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Lock className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-semibold text-ink">Specific Amounts</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
-                        Always
-                      </span>
-                    </div>
-                    <p className="text-stone leading-relaxed">
-                      Always use specific token amounts for approvals instead of granting unlimited access.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Application Usage Telemetry</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  We collect anonymous usage data, including feature usage patterns, performance metrics, error reports, and application performance indicators. This data is collected solely to diagnose problems, improve application performance, and enhance user experience. All telemetry data is anonymized and aggregated, never tied to a user&apos;s public wallet address or any identifying information. This includes metrics such as page load times, feature adoption rates, and error frequencies, which help us optimize the application according to PuredgeOS clarity metrics and performance standards.
+                </p>
               </div>
-              
-              <div className="space-y-8">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-semibold text-ink">Contract Verification</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
-                        Before Approval
-                      </span>
-                    </div>
-                    <p className="text-stone leading-relaxed">
-                      Verify contract addresses and understand their purpose before approving new dApps.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Bell className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-semibold text-ink">Enable Monitoring</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
-                        Recommended
-                      </span>
-                    </div>
-                    <p className="text-stone leading-relaxed">
-                      Set up email or Slack alerts to be notified of new approvals immediately.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Users className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-xl font-semibold text-ink">Team Collaboration</h3>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-electric/10 text-electric">
-                        For Teams
-                      </span>
-                    </div>
-                    <p className="text-stone leading-relaxed">
-                      Use team features to share wallet monitoring responsibilities and maintain security.
-                    </p>
-                  </div>
-                </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">User Preferences and Settings</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  We store user preferences such as alert settings, monitoring configurations, team memberships, and notification preferences. This data is encrypted and stored securely to maintain your personalized experience across sessions. This includes email addresses for alert subscriptions, Slack webhook URLs for team notifications, and risk assessment preferences. All preference data is directly tied to the security services you explicitly configure and is not used for any other purpose.
+                </p>
               </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Privacy & Transparency */}
-      <Section className="py-20 bg-mist/30">
+      {/* Your Rights and Controls */}
+      <Section className="py-32">
         <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-ink mb-4">
-              Privacy & Transparency
-            </h2>
-            <p className="text-base text-stone max-w-2xl mx-auto">
-              Your privacy is our priority. We believe in complete transparency about how we handle your data.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Eye className="w-8 h-8 text-electric" />
-              </div>
-              <h3 className="text-xl font-semibold text-ink mb-3">Public Data Only</h3>
-              <p className="text-base text-stone leading-relaxed">
-                We only read public blockchain data that anyone can access. No private information is involved.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-12">Your Rights and Controls</h2>
             
-            <div className="text-center">
-              <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Shield className="w-8 h-8 text-electric" />
+            <div className="space-y-12">
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Data Control and Portability</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Given the nature of our product, the primary data we work with consists of on-chain transactions and approvals, which are immutable and publicly available on the blockchain. However, regarding the application itself and any data we store, you maintain complete control. You can discontinue use at any time by disconnecting your wallet, which immediately ceases all data collection and processing. You can request a complete export of any data we have stored about you, including preferences, settings, and cached information. You also have the right to request deletion of all stored data, with the exception of data required for legal compliance or security purposes.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-ink mb-3">Local Processing</h3>
-              <p className="text-base text-stone leading-relaxed">
-                All analysis happens in your browser. We don&apos;t send your data to our servers.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-electric/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <FileText className="w-8 h-8 text-electric" />
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Account Management</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  If you have created an account through our team features or email authentication, you can manage your account settings, update your preferences, and control your data through the application interface. You can modify alert settings, update team memberships, change notification preferences, and manage all aspects of your account without requiring assistance. For any questions about data handling, privacy practices, or account management, you can contact our security team at security@allowanceguard.com for prompt assistance.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-ink mb-3">Open Source</h3>
-              <p className="text-base text-stone leading-relaxed">
-                Our code is publicly available for community review and security audits.
-              </p>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Compliance and Legal Rights</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  We comply with applicable data protection laws and regulations, including GDPR, CCPA, and other relevant privacy frameworks. You have the right to access your data, correct inaccurate information, request data portability, and request deletion of your data. We will respond to all privacy-related requests within the timeframes required by applicable law. If you believe we have not handled your data in accordance with our privacy policy or applicable law, you have the right to lodge a complaint with the relevant supervisory authority.
+                </p>
+              </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Emergency Response */}
-      <Section className="py-20">
+      {/* Continuous Vigilance */}
+      <Section className="py-32 bg-mist/30">
         <Container>
-          <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-ink mb-4">
-              If Your Wallet is Compromised
-            </h2>
-            <p className="text-base text-stone max-w-2xl mx-auto">
-              Follow these steps immediately if you suspect your wallet has been compromised.
-            </p>
-          </div>
-          
-          <div className="space-y-6">
-            {emergencySteps.map((step, index) => (
-              <div key={index} className="group">
-                <div className="flex items-start gap-6 p-6 border border-line rounded-lg hover:border-ink/20 transition-colors duration-200 bg-white">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-ink text-white rounded-lg flex items-center justify-center text-lg font-bold">
-                      {step.step}
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-ink">{step.title}</h3>
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-                        step.urgency === 'Critical' ? 'bg-red-100 text-red-800 border border-red-200' :
-                        step.urgency === 'High' ? 'bg-orange-100 text-orange-800 border border-orange-200' :
-                        'bg-yellow-100 text-yellow-800 border border-yellow-200'
-                      }`}>
-                        {step.urgency}
-                      </span>
-                      <span className="text-xs text-stone">({step.timeEstimate})</span>
-                    </div>
-                    <p className="text-base text-stone leading-relaxed">{step.description}</p>
-                  </div>
-                </div>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-12">Continuous Vigilance</h2>
+            
+            <div className="space-y-12">
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Security Research and Responsible Disclosure</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  We maintain an active security research program and welcome responsible disclosure of potential vulnerabilities. Security researchers who identify security issues in our platform are encouraged to report them through our dedicated security contact at security@allowanceguard.com. We follow responsible disclosure practices, providing adequate time for remediation before public disclosure. We acknowledge and credit security researchers who help improve our platform&apos;s security through responsible disclosure.
+                </p>
               </div>
-            ))}
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Regular Security Audits and Testing</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  Our systems undergo regular penetration testing and security audits conducted by independent third-party security firms. These assessments cover all aspects of our platform, including web application security, infrastructure security, and data protection measures. All dependencies and third-party libraries are continuously monitored for newly disclosed vulnerabilities, and security updates are applied promptly. We maintain a comprehensive security monitoring program that operates 24/7 to detect and respond to potential security incidents.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Security Incident Response</h3>
+                <p className="text-lg text-stone leading-relaxed">
+                  We maintain a formal security incident response plan that outlines procedures for detecting, analyzing, and responding to security incidents. Our incident response team is trained to handle various types of security events, from minor vulnerabilities to major security breaches. In the event of a security incident that may affect user data or system integrity, we will notify affected users promptly and provide regular updates throughout the incident response process. We also maintain relationships with law enforcement and regulatory authorities as appropriate for security incident reporting.
+                </p>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* Contact Security */}
-      <Section className="py-20">
+      {/* Contact for Security Issues */}
+      <Section className="py-32">
         <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-2xl font-semibold text-ink mb-4">
-              Security Concerns?
-            </h2>
-            <p className="text-base text-stone leading-relaxed mb-8">
-              If you discover a security vulnerability or have concerns about our security practices, 
-              please contact us immediately. We take security seriously and respond to all reports promptly.
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Contact for Security Issues</h2>
+            <p className="text-xl text-stone leading-relaxed mb-12">
+              For security vulnerabilities, privacy concerns, or any security-related questions, please contact our dedicated security team.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="/contact" 
-                className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-ink text-white hover:bg-ink/90 focus:outline-none focus:ring-2 focus:ring-ink/30"
-              >
-                <AlertTriangle className="w-5 h-5 mr-2" />
-                Report Security Issue
-              </a>
-              <a 
-                href="/privacy" 
-                className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-white text-ink border border-line hover:bg-mist focus:outline-none focus:ring-2 focus:ring-ink/30"
-              >
-                <Shield className="w-5 h-5 mr-2" />
-                Privacy Policy
-              </a>
+            
+            <div className="bg-white border border-line rounded-lg p-8">
+              <h3 className="text-2xl font-semibold text-ink mb-4">Security Contact</h3>
+              <p className="text-lg text-stone mb-6">
+                Email: <a href="mailto:security@allowanceguard.com" className="text-electric hover:underline">security@allowanceguard.com</a>
+              </p>
+              <p className="text-base text-stone leading-relaxed">
+                We encourage responsible disclosure of security vulnerabilities. Please include detailed information about the issue, steps to reproduce it, and any potential impact. We will respond to all security reports within 24 hours and work with you to resolve any issues promptly and professionally.
+              </p>
             </div>
           </div>
         </Container>
