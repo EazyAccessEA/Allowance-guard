@@ -7,21 +7,36 @@ import { H1, H2 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
 import { useState } from 'react'
+import { 
+  FileText, 
+  Rocket, 
+  Globe, 
+  AlertTriangle, 
+  Mail, 
+  Lock, 
+  Settings, 
+  Wrench, 
+  HelpCircle,
+  Search,
+  Shield,
+  Bell,
+  Zap
+} from 'lucide-react'
 
 export default function DocsPage() {
   const { isConnected } = useAccount()
   const [activeSection, setActiveSection] = useState('overview')
 
   const menuItems = [
-    { id: 'overview', title: 'Overview', icon: '📋' },
-    { id: 'getting-started', title: 'Getting Started', icon: '🚀' },
-    { id: 'networks', title: 'Supported Networks', icon: '🌐' },
-    { id: 'risk-scoring', title: 'Risk Scoring', icon: '⚠️' },
-    { id: 'alerts', title: 'Alerts & Notifications', icon: '📧' },
-    { id: 'revoking', title: 'Revoking Approvals', icon: '🔒' },
-    { id: 'api', title: 'API Reference', icon: '⚙️' },
-    { id: 'troubleshooting', title: 'Troubleshooting', icon: '🔧' },
-    { id: 'faq', title: 'FAQ', icon: '❓' }
+    { id: 'overview', title: 'Overview', icon: FileText },
+    { id: 'getting-started', title: 'Getting Started', icon: Rocket },
+    { id: 'networks', title: 'Supported Networks', icon: Globe },
+    { id: 'risk-scoring', title: 'Risk Scoring', icon: AlertTriangle },
+    { id: 'alerts', title: 'Alerts & Notifications', icon: Mail },
+    { id: 'revoking', title: 'Revoking Approvals', icon: Lock },
+    { id: 'api', title: 'API Reference', icon: Settings },
+    { id: 'troubleshooting', title: 'Troubleshooting', icon: Wrench },
+    { id: 'faq', title: 'FAQ', icon: HelpCircle }
   ]
 
   const supportedNetworks = [
@@ -82,7 +97,7 @@ export default function DocsPage() {
   const renderContent = () => {
     switch (activeSection) {
       case 'overview':
-        return (
+  return (
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-semibold text-ink mb-4">What is AllowanceGuard?</h2>
@@ -91,19 +106,31 @@ export default function DocsPage() {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">🔍 Real-time Monitoring</h4>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Search className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">Real-time Monitoring</h4>
+                  </div>
                   <p className="text-sm text-stone">Track token approvals across Ethereum, Arbitrum, and Base</p>
                 </div>
                 <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">⚠️ Risk Assessment</h4>
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertTriangle className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">Risk Assessment</h4>
+                  </div>
                   <p className="text-sm text-stone">Advanced algorithms identify unlimited and stale approvals</p>
                 </div>
                 <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">📧 Email Alerts</h4>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Mail className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">Email Alerts</h4>
+                  </div>
                   <p className="text-sm text-stone">Get notified about risky approvals via Microsoft SMTP</p>
                 </div>
                 <div className="p-4 bg-mist border border-line rounded-md">
-                  <h4 className="font-medium text-ink mb-2">⚡ One-Click Revoke</h4>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="w-4 h-4 text-ink" />
+                    <h4 className="font-medium text-ink">One-Click Revoke</h4>
+                  </div>
                   <p className="text-sm text-stone">Instantly revoke risky approvals with gas optimization</p>
                 </div>
               </div>
@@ -116,7 +143,7 @@ export default function DocsPage() {
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-semibold text-ink mb-4">Quick Start Guide</h2>
-              <div className="space-y-6">
+          <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">1</div>
                   <div>
@@ -150,10 +177,10 @@ export default function DocsPage() {
                   <div>
                     <h4 className="font-medium text-ink mb-1">Set Up Alerts</h4>
                     <p className="text-sm text-stone">Configure email or Slack alerts to monitor for new risky approvals</p>
-                  </div>
-                </div>
-              </div>
+               </div>
             </div>
+          </div>
+        </div>
           </div>
         )
 
@@ -162,23 +189,23 @@ export default function DocsPage() {
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-semibold text-ink mb-4">Supported Networks</h2>
-              <p className="text-base text-stone mb-6">
+            <p className="text-base text-stone mb-6">
                 AllowanceGuard currently supports the following blockchain networks:
-              </p>
-              <div className="space-y-4">
-                {supportedNetworks.map((network) => (
+            </p>
+            <div className="space-y-4">
+              {supportedNetworks.map((network) => (
                   <div key={network.chainId} className="flex items-center justify-between p-4 bg-mist border border-line rounded-md">
-                    <div>
+              <div>
                       <h4 className="font-medium text-ink">{network.name}</h4>
-                      <p className="text-sm text-stone">Chain ID: {network.chainId}</p>
-                    </div>
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white border border-line text-ink">
-                      {network.status}
-                    </span>
-                  </div>
-                ))}
+                    <p className="text-sm text-stone">Chain ID: {network.chainId}</p>
               </div>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white border border-line text-ink">
+                    {network.status}
+                  </span>
             </div>
+              ))}
+            </div>
+          </div>
           </div>
         )
 
@@ -190,19 +217,19 @@ export default function DocsPage() {
               <p className="text-base text-stone mb-6">
                 AllowanceGuard uses a comprehensive risk scoring system to help you prioritize which approvals need immediate attention:
               </p>
-              <div className="space-y-4">
+          <div className="space-y-4">
                 {riskFactors.map((factor, index) => (
                   <div key={index} className="flex items-start gap-4 p-4 bg-mist border border-line rounded-md">
-                    <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">
+                  <div className="w-12 h-12 bg-ink text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-medium">
                       {factor.score}
-                    </div>
+        </div>
                     <div>
                       <h4 className="font-medium text-ink mb-1">{factor.factor}</h4>
                       <p className="text-sm text-stone">{factor.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+      </div>
+      </div>
+            ))}
+          </div>
             </div>
           </div>
         )
@@ -225,10 +252,10 @@ export default function DocsPage() {
                         <li key={fIndex}>• {feature}</li>
                       ))}
                     </ul>
-                  </div>
+          </div>
                 ))}
-              </div>
-            </div>
+        </div>
+    </div>
           </div>
         )
 
@@ -258,9 +285,9 @@ export default function DocsPage() {
                     <li>• Revoking doesn't affect already deposited or staked tokens</li>
                     <li>• Some dApps may require you to re-approve for continued functionality</li>
                     <li>• Revocation is preventative, not restorative for already stolen funds</li>
-                  </ul>
-                </div>
-              </div>
+              </ul>
+    </div>
+      </div>
             </div>
           </div>
         )
@@ -283,9 +310,9 @@ export default function DocsPage() {
                       <code className="text-sm font-mono text-ink">{endpoint.endpoint}</code>
                     </div>
                     <p className="text-sm text-stone">{endpoint.description}</p>
-                  </div>
-                ))}
-              </div>
+          </div>
+            ))}
+          </div>
             </div>
           </div>
         )
@@ -295,7 +322,7 @@ export default function DocsPage() {
           <div className="space-y-8">
             <div>
               <h2 className="text-2xl font-semibold text-ink mb-4">Common Issues & Solutions</h2>
-              <div className="space-y-4">
+          <div className="space-y-4">
                 <div className="border border-line rounded-md p-4 bg-mist">
                   <h4 className="font-medium text-ink mb-2">Scan shows no results</h4>
                   <ul className="space-y-1 text-sm text-stone">
@@ -318,7 +345,7 @@ export default function DocsPage() {
                     <li>• Verify your email address is correct</li>
                     <li>• Check your spam folder for alert emails</li>
                     <li>• Ensure your Slack webhook URL is valid</li>
-                  </ul>
+            </ul>
                 </div>
               </div>
             </div>
@@ -335,8 +362,8 @@ export default function DocsPage() {
                   <div key={index} className="border border-line rounded-md p-4 bg-mist">
                     <h4 className="font-medium text-ink mb-2">Q: {item.question}</h4>
                     <p className="text-sm text-stone">A: {item.answer}</p>
-                  </div>
-                ))}
+          </div>
+            ))}
               </div>
             </div>
           </div>
@@ -406,21 +433,24 @@ export default function DocsPage() {
                 <nav className="space-y-1">
                   <div className="mb-6">
                     <h3 className="text-sm font-semibold text-ink uppercase tracking-wide mb-3">Documentation</h3>
-                    {menuItems.map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => setActiveSection(item.id)}
-                        className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 text-sm ${
-                          activeSection === item.id
-                            ? 'bg-ink text-white'
-                            : 'text-stone hover:text-ink hover:bg-mist'
-                        }`}
-                      >
-                        <span className="mr-2">{item.icon}</span>
-                        {item.title}
-                      </button>
-                    ))}
-                  </div>
+                    {menuItems.map((item) => {
+                      const IconComponent = item.icon
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => setActiveSection(item.id)}
+                          className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 text-sm flex items-center ${
+                            activeSection === item.id
+                              ? 'bg-ink text-white'
+                              : 'text-stone hover:text-ink hover:bg-mist'
+                          }`}
+                        >
+                          <IconComponent className="w-4 h-4 mr-2" />
+                          {item.title}
+                        </button>
+                      )
+                    })}
+          </div>
                 </nav>
               </div>
             </div>
@@ -450,7 +480,7 @@ export default function DocsPage() {
                   </nav>
                 </div>
               </div>
-            </div>
+      </div>
           </div>
         </Container>
       </Section>
