@@ -84,17 +84,27 @@ export async function POST(req: Request) {
         status: res.status,
         statusText: res.statusText,
         response: text,
-        apiKey: apiKey ? `${apiKey.slice(0, 8)}...` : 'missing'
+        apiKey: apiKey ? `${apiKey.slice(0, 8)}...` : 'missing',
+        environment: process.env.COINBASE_COMMERCE_ENV || 'not set'
       })
       
       if (res.status === 401) {
         return NextResponse.json({ 
-          error: 'Coinbase Commerce authentication failed. Please check API key configuration.' 
+          error: 'Coinbase Commerce authentication failed. Please try again or use the card payment option.',
+          details: 'API key or environment configuration issue'
         }, { status: 502 })
       }
       
+      if (res.status === 422) {
+        return NextResponse.json({ 
+          error: 'Invalid payment amount or currency. Please check your input and try again.',
+          details: 'Validation error from Coinbase Commerce'
+        }, { status: 400 })
+      }
+      
       return NextResponse.json({ 
-        error: `Coinbase Commerce error: ${res.status} ${res.statusText}` 
+        error: `Payment service temporarily unavailable. Please try again or use the card payment option.`,
+        details: `Coinbase Commerce error: ${res.status} ${res.statusText}`
       }, { status: 502 })
     }
 

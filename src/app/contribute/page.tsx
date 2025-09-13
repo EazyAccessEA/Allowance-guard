@@ -20,6 +20,7 @@ export default function ContributePage() {
   const [loadingCard, setLoadingCard] = useState(false)
   const [loadingCrypto, setLoadingCrypto] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [message, setMessage] = useState<string | null>(null)
 
   // Convert amount to Stripe amount in cents (USD)
   const toMinorUnits = (val: string) => {
@@ -102,12 +103,17 @@ export default function ContributePage() {
       const { hosted_url } = await res.json()
       if (!hosted_url) throw new Error('No hosted URL returned from Coinbase')
       
+      // Show user feedback before redirect
+      setMessage('Redirecting to secure payment page...')
+      
+      // Add a small delay to show the message
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
       // Redirect the browser to Coinbase Hosted Checkout
-      // Note: You may see a 401 error in console from cca-lite.coinbase.com/metrics
-      // This is a known Coinbase Commerce issue and doesn't affect functionality
       window.location.href = hosted_url
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
+      const errorMessage = e instanceof Error ? e.message : 'Something went wrong. Please try again.'
+      setError(`${errorMessage} You can also try the card payment option below.`)
       setLoadingCrypto(false)
     }
   }
@@ -209,7 +215,7 @@ export default function ContributePage() {
                     onClick={handleCryptoContribute}
                     disabled={loadingCard || loadingCrypto}
                     className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-white border border-line hover:bg-mist rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed"
-                    title="Pay with ETH, USDC, BTC and more"
+                    title="Pay with ETH, USDC, BTC and more - Secured by Coinbase Commerce"
                   >
                     {loadingCrypto ? (
                       <>
@@ -231,6 +237,12 @@ export default function ContributePage() {
                   </div>
                 )}
 
+                {message && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p className="text-base text-cobalt">{message}</p>
+                  </div>
+                )}
+
                 <div className="text-center">
                   <p className="text-sm text-stone">
                     Minimum contribution is $1.00. Maximum is $10,000.
@@ -238,6 +250,12 @@ export default function ContributePage() {
                   <p className="text-xs text-stone mt-2">
                     Your payment is processed securely by Stripe or Coinbase Commerce. We never store your payment information.
                   </p>
+                  <div className="mt-3 flex items-center justify-center gap-2 text-xs text-stone">
+                    <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>SSL Encrypted & PCI Compliant</span>
+                  </div>
                 </div>
               </div>
             </div>
