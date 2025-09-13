@@ -19,7 +19,6 @@ import {
   Download,
   ExternalLink,
   CheckCircle,
-  AlertTriangle,
   HelpCircle
 } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
@@ -203,7 +202,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-semibold text-ink mb-4">Report a Security Vulnerability</h3>
               <p className="text-stone leading-relaxed mb-6">
-                If you've discovered a potential security flaw or bug within our application, please report it responsibly here. We treat these reports with the highest priority and confidentiality.
+                If you&apos;ve discovered a potential security flaw or bug within our application, please report it responsibly here. We treat these reports with the highest priority and confidentiality.
               </p>
               <div className="space-y-3">
                 <div className="flex items-center text-sm text-stone">
@@ -284,7 +283,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-semibold text-ink mb-4">Discord</h3>
               <p className="text-stone leading-relaxed mb-6">
-                Get real-time help from our community and developers. It's the best place for quick questions and discussions.
+                Get real-time help from our community and developers. It&apos;s the best place for quick questions and discussions.
               </p>
               <a 
                 href="https://discord.gg/allowanceguard"
@@ -326,7 +325,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-semibold text-ink mb-4">GitHub</h3>
               <p className="text-stone leading-relaxed mb-6">
-                Report technical bugs, view our open-source components, and contribute to the project's development.
+                Report technical bugs, view our open-source components, and contribute to the project&apos;s development.
               </p>
               <a 
                 href="https://github.com/AllowanceGuard"
@@ -351,7 +350,7 @@ export default function ContactPage() {
               Our Commitment to You
             </h2>
             <p className="text-lg text-stone max-w-2xl mx-auto">
-              We take your security and privacy seriously. Here's our commitment to you.
+              We take your security and privacy seriously. Here&apos;s our commitment to you.
             </p>
           </div>
           
