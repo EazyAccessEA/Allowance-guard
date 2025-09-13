@@ -103,6 +103,8 @@ export default function ContributePage() {
       if (!hosted_url) throw new Error('No hosted URL returned from Coinbase')
       
       // Redirect the browser to Coinbase Hosted Checkout
+      // Note: You may see a 401 error in console from cca-lite.coinbase.com/metrics
+      // This is a known Coinbase Commerce issue and doesn't affect functionality
       window.location.href = hosted_url
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')

@@ -80,8 +80,22 @@ export async function POST(req: Request) {
 
     if (!res.ok) {
       const text = await res.text()
-      console.error('Coinbase Commerce error:', text)
-      return NextResponse.json({ error: 'Failed to create Coinbase charge' }, { status: 502 })
+      console.error('Coinbase Commerce error:', {
+        status: res.status,
+        statusText: res.statusText,
+        response: text,
+        apiKey: apiKey ? `${apiKey.slice(0, 8)}...` : 'missing'
+      })
+      
+      if (res.status === 401) {
+        return NextResponse.json({ 
+          error: 'Coinbase Commerce authentication failed. Please check API key configuration.' 
+        }, { status: 502 })
+      }
+      
+      return NextResponse.json({ 
+        error: `Coinbase Commerce error: ${res.status} ${res.statusText}` 
+      }, { status: 502 })
     }
 
     const data = await res.json()
