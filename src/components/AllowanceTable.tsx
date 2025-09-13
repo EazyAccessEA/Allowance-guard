@@ -75,12 +75,13 @@ export default function AllowanceTable({
       <div className="text-center py-12">
         <p className="text-base text-stone mb-4">No allowances found for this wallet.</p>
         <p className="text-sm text-stone mb-6">Run a scan to check for token approvals across supported chains.</p>
-        <button 
+        <HexButton 
           onClick={onRefresh}
-          className="bg-ink text-white px-6 py-3 rounded-md font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-ink/30"
+          variant="primary"
+          size="md"
         >
           Run Scan
-        </button>
+        </HexButton>
       </div>
     )
   }

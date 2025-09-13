@@ -156,7 +156,7 @@ export default function ThankYouPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-cobalt to-electric hover:from-cobalt-hover hover:to-electric rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+                className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Home</span>

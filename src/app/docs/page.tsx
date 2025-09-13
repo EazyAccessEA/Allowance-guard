@@ -1068,7 +1068,7 @@ export default function DocsPage() {
                           onClick={() => setActiveSection(item.id)}
                           className={`w-full text-left px-3 py-2 rounded-md transition-colors duration-200 text-sm flex items-center ${
                             activeSection === item.id
-                              ? 'bg-ink text-white'
+                              ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white'
                               : 'text-stone hover:text-ink hover:bg-mist'
                           }`}
                         >

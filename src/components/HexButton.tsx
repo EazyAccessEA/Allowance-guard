@@ -19,11 +19,11 @@ export function HexButton({
   const baseClasses = 'rounded-full transition-all duration-200 font-medium inline-flex items-center justify-center border-2 focus:outline-none focus:ring-2 focus:ring-offset-2'
   
   const variantClasses = {
-    primary: 'bg-primary text-primary-foreground border-primary hover:bg-primary/90 hover:border-primary/90',
-    ghost: 'bg-transparent text-foreground border-border hover:bg-surface hover:border-border',
-    danger: 'bg-destructive text-destructive-foreground border-destructive hover:bg-destructive/90 hover:border-destructive/90',
-    warn: 'bg-warning text-foreground border-warning hover:bg-warning/90 hover:border-warning/90',
-    info: 'bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90 hover:border-secondary/90',
+    primary: 'bg-gradient-to-r from-blue-600 to-blue-500 text-white border-transparent hover:from-blue-700 hover:to-blue-600 focus:ring-blue-500/30',
+    ghost: 'bg-transparent text-ink border-line hover:bg-mist hover:border-line focus:ring-ink/20',
+    danger: 'bg-gradient-to-r from-red-600 to-red-500 text-white border-transparent hover:from-red-700 hover:to-red-600 focus:ring-red-500/30',
+    warn: 'bg-gradient-to-r from-amber-500 to-amber-400 text-white border-transparent hover:from-amber-600 hover:to-amber-500 focus:ring-amber-500/30',
+    info: 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white border-transparent hover:from-emerald-700 hover:to-emerald-600 focus:ring-emerald-500/30',
   }
   
   const sizeClasses = {
