@@ -11,7 +11,7 @@ export default function DonationButton() {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-crimson to-pink-500 hover:from-crimson-hover hover:to-pink-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-crimson/30"
+        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-cobalt to-electric hover:from-cobalt-hover hover:to-electric rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
       >
         <Heart className="w-4 h-4 fill-current" />
         <span>Support Us</span>

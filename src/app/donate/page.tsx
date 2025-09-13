@@ -133,7 +133,7 @@ export default function DonatePage() {
                 <button
                   onClick={handleDonate}
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-gradient-to-r from-crimson to-pink-500 hover:from-crimson-hover hover:to-pink-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-crimson/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-gradient-to-r from-cobalt to-electric hover:from-cobalt-hover hover:to-electric rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
