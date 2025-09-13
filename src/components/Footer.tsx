@@ -1,16 +1,67 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import DonationButton from '@/components/DonationButton'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+
+interface FooterSectionProps {
+  title: string
+  children: React.ReactNode
+  isOpen: boolean
+  onToggle: () => void
+}
+
+function FooterSection({ title, children, isOpen, onToggle }: FooterSectionProps) {
+  return (
+    <div className="border-b border-line/30 md:border-b-0">
+      <button
+        onClick={onToggle}
+        className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none"
+      >
+        <h3 className="text-lg font-semibold text-ink">{title}</h3>
+        <div className="md:hidden">
+          {isOpen ? (
+            <ChevronUp className="w-5 h-5 text-stone" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-stone" />
+          )}
+        </div>
+      </button>
+      <div className={`md:block ${isOpen ? 'block' : 'hidden'} pb-4 md:pb-0`}>
+        {children}
+      </div>
+    </div>
+  )
+}
 
 export default function Footer() {
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    product: false,
+    openSource: false,
+    support: false,
+    company: false,
+  })
+
+  const toggleSection = (section: string) => {
+    setOpenSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }))
+  }
+
   return (
     <footer className="bg-mist/30 border-t border-line/50">
       <Container className="py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 md:gap-12">
           {/* Product */}
-          <div>
-            <h3 className="text-lg font-semibold text-ink mb-6">Product</h3>
-            <ul className="space-y-4">
+          <FooterSection
+            title="Product"
+            isOpen={openSections.product}
+            onToggle={() => toggleSection('product')}
+          >
+            <ul className="space-y-4 mt-6 md:mt-6">
               <li>
                 <Link href="/features" className="text-stone hover:text-ink transition-colors duration-200">
                   Features
@@ -27,12 +78,15 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </FooterSection>
 
           {/* Open Source */}
-          <div>
-            <h3 className="text-lg font-semibold text-ink mb-6">Open Source</h3>
-            <ul className="space-y-4">
+          <FooterSection
+            title="Open Source"
+            isOpen={openSections.openSource}
+            onToggle={() => toggleSection('openSource')}
+          >
+            <ul className="space-y-4 mt-6 md:mt-6">
               <li>
                 <a 
                   href="https://github.com/allowanceguard/allowance-guard" 
@@ -59,12 +113,15 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </FooterSection>
 
           {/* Support & Contact */}
-          <div>
-            <h3 className="text-lg font-semibold text-ink mb-6">Support</h3>
-            <ul className="space-y-4">
+          <FooterSection
+            title="Support"
+            isOpen={openSections.support}
+            onToggle={() => toggleSection('support')}
+          >
+            <ul className="space-y-4 mt-6 md:mt-6">
               <li>
                 <Link href="/contact" className="text-stone hover:text-ink transition-colors duration-200">
                   Contact Us
@@ -89,12 +146,15 @@ export default function Footer() {
             <div className="mt-6">
               <DonationButton />
             </div>
-          </div>
+          </FooterSection>
 
           {/* Legal & Social */}
-          <div>
-            <h3 className="text-lg font-semibold text-ink mb-6">Company</h3>
-            <ul className="space-y-4">
+          <FooterSection
+            title="Company"
+            isOpen={openSections.company}
+            onToggle={() => toggleSection('company')}
+          >
+            <ul className="space-y-4 mt-6 md:mt-6">
               <li>
                 <Link href="/privacy" className="text-stone hover:text-ink transition-colors duration-200">
                   Privacy Policy
@@ -137,7 +197,7 @@ export default function Footer() {
                 </a>
               </div>
             </div>
-          </div>
+          </FooterSection>
         </div>
 
         {/* Bottom section */}
