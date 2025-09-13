@@ -82,7 +82,7 @@ export default function ContactPage() {
       <Header isConnected={isConnected} />
       
       {/* Hero Section - Clean Fireart Style */}
-      <Section className="relative py-32 sm:py-40 overflow-hidden">
+      <Section className="relative pt-20 pb-32 sm:pt-24 sm:pb-40 overflow-hidden">
         {/* Video Background */}
         <VideoBackground 
           videoSrc="/V3AG.mp4"

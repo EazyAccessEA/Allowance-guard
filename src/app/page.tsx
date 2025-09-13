@@ -130,7 +130,7 @@ export default function HomePage() {
       <Header isConnected={isConnected} />
       
       {/* Hero Section - Fireart Style with Animated Background */}
-      <Section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
+      <Section className="relative pt-20 pb-16 sm:pt-24 sm:pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
         {/* Video Background */}
         <VideoBackground 
           videoSrc="/V3AG.mp4"

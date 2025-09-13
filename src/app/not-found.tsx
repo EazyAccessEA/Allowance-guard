@@ -20,7 +20,7 @@ export default function NotFound() {
       <Header isConnected={false} />
       
       {/* Core Message Section */}
-      <Section className="relative py-24 sm:py-32">
+      <Section className="relative pt-20 pb-24 sm:pt-24 sm:pb-32">
         <Container className="relative text-center max-w-4xl z-10">
           {/* Logo - Prominently displayed for Security-First Sam */}
           <div className="mb-8">

@@ -117,7 +117,7 @@ export default function ContributePage() {
       <Header isConnected={isConnected} />
       
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
+      <Section className="relative pt-20 pb-24 sm:pt-24 sm:pb-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
         
         {/* Gradient overlay */}

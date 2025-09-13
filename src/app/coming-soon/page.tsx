@@ -10,7 +10,7 @@ export default function ComingSoonPage() {
     <div className="min-h-screen bg-white text-ink">
       <Header isConnected={false} />
       
-      <Section className="py-24 sm:py-32">
+      <Section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
         <Container className="text-center">
           <H1 className="mb-8">Coming Soon</H1>
           <p className="text-xl text-stone leading-relaxed mb-8 max-w-2xl mx-auto">
