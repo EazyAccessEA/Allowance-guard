@@ -209,10 +209,10 @@ export default function ThankYouPage() {
               <p className="text-sm text-stone">
                 Questions about your contribution? Contact us at{' '}
                 <a 
-                  href="mailto:legal.support@allowanceguard.com" 
+                  href="mailto:support@allowanceguard.com" 
                   className="text-cobalt hover:text-cobalt transition-colors duration-200"
                 >
-                  legal.support@allowanceguard.com
+                  support@allowanceguard.com
                 </a>
               </p>
             </div>

@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
+import { H1, H2 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import { 
   Search, 
@@ -94,56 +95,54 @@ export default function ContactPage() {
           }}
         />
         
-        <Container className="relative text-left max-w-5xl z-10">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light text-ink leading-[1.05] tracking-tight mb-8">
-            How Can We Help?
-          </h1>
-          <p className="text-xl sm:text-2xl text-stone leading-relaxed max-w-3xl font-light">
+        <Container className="relative text-left max-w-4xl z-10">
+          <H1 className="mb-6">How Can We Help?</H1>
+          <p className="text-lg text-stone leading-relaxed mb-8">
             Find the fastest path to a solution below.
           </p>
         </Container>
       </Section>
 
-      {/* Section 1: Quick Help Search - Clean Minimalist */}
-      <Section className="py-24 bg-white">
-        <Container className="max-w-4xl">
-          <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl font-light text-ink leading-tight mb-6">
-              Quick Help Search
-            </h2>
-            <p className="text-lg text-stone max-w-2xl mx-auto mb-12 font-light">
+      <div className="border-t border-line" />
+
+      {/* Section 1: Quick Help Search */}
+      <Section className="py-32">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <H2 className="mb-8">Quick Help Search</H2>
+            <p className="text-lg text-stone leading-relaxed mb-12">
               What do you need help with? Type a few keywords below.
             </p>
             
-            {/* Clean Search Input */}
+            {/* Search Input */}
             <div className="max-w-2xl mx-auto relative">
               <div className="relative">
-                <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 w-5 h-5 text-stone" />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-stone" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={handleSearchChange}
                   placeholder="e.g., 'transaction failed', 'risk score', 'revoke approval'"
-                  className="w-full pl-14 pr-6 py-5 text-lg border-0 border-b-2 border-stone/20 bg-transparent text-ink placeholder-stone focus:outline-none focus:border-cobalt transition-colors duration-300 font-light"
+                  className="w-full pl-12 pr-4 py-4 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                 />
               </div>
               
-              {/* Clean Search Results */}
+              {/* Search Results */}
               {searchQuery && (
-                <div className="mt-8 bg-white border border-stone/10 rounded-2xl shadow-sm max-h-96 overflow-y-auto">
+                <div className="mt-6 bg-white border border-line rounded-lg shadow-subtle max-h-96 overflow-y-auto">
                   {filteredFAQs.length > 0 ? (
-                    <div className="p-6 space-y-6">
+                    <div className="p-4 space-y-4">
                       {filteredFAQs.map((faq, index) => (
-                        <div key={index} className="border-b border-stone/10 pb-6 last:border-b-0 last:pb-0">
-                          <h4 className="text-lg font-medium text-ink mb-3">{faq.question}</h4>
-                          <p className="text-stone leading-relaxed font-light">{faq.answer}</p>
+                        <div key={index} className="border-b border-line/50 pb-4 last:border-b-0 last:pb-0">
+                          <h4 className="text-lg font-medium text-ink mb-2">{faq.question}</h4>
+                          <p className="text-stone leading-relaxed">{faq.answer}</p>
               </div>
             ))}
                     </div>
                   ) : (
-                    <div className="p-12 text-center">
-                      <HelpCircle className="w-12 h-12 text-stone/50 mx-auto mb-4" />
-                      <p className="text-stone font-light">No results found. Try different keywords or contact us directly.</p>
+                    <div className="p-8 text-center">
+                      <HelpCircle className="w-12 h-12 text-stone mx-auto mb-4" />
+                      <p className="text-stone">No results found. Try different keywords or contact us directly.</p>
                     </div>
                   )}
                 </div>
@@ -153,43 +152,41 @@ export default function ContactPage() {
         </Container>
       </Section>
 
-      {/* Section 2: Direct Contact Channels - Clean Grid */}
-      <Section className="py-32 bg-stone/5">
-        <Container className="max-w-6xl">
-          <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl font-light text-ink leading-tight mb-6">
-              Direct Lines of Communication
-            </h2>
-            <p className="text-lg text-stone max-w-2xl mx-auto font-light">
+      {/* Section 2: Direct Contact Channels */}
+      <Section className="py-32 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <H2 className="mb-8">Direct Lines of Communication</H2>
+            <p className="text-lg text-stone leading-relaxed mb-12">
               Purpose-driven channels to ensure your query reaches the right team with the right context.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Channel 1: Standard Support */}
-            <div className="bg-white border-0 rounded-3xl p-10 shadow-sm hover:shadow-md transition-all duration-300 group">
-              <div className="w-20 h-20 bg-cobalt/5 rounded-3xl flex items-center justify-center mb-8 group-hover:bg-cobalt/10 transition-colors duration-300">
-                <Mail className="w-10 h-10 text-cobalt" />
+            <div className="bg-white border border-line rounded-lg p-8 shadow-subtle hover:shadow-medium transition-all duration-200">
+              <div className="w-16 h-16 bg-cobalt/10 rounded-2xl flex items-center justify-center mb-6">
+                <Mail className="w-8 h-8 text-cobalt" />
               </div>
-              <h3 className="text-2xl font-light text-ink mb-6">General Support & Questions</h3>
-              <p className="text-stone leading-relaxed mb-8 font-light">
+              <h3 className="text-xl font-semibold text-ink mb-4">General Support & Questions</h3>
+              <p className="text-stone leading-relaxed mb-6">
                 For help using Allowance Guard, billing inquiries, or general feedback. Our team strives to respond within 24 hours.
               </p>
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 mb-6">
                 <div className="flex items-center text-sm text-stone">
-                  <Clock className="w-4 h-4 mr-3" />
-                  <span className="font-light">Response time: 24 hours</span>
+                  <Clock className="w-4 h-4 mr-2" />
+                  <span>Response time: 24 hours</span>
                 </div>
                 <div className="flex items-center text-sm text-stone">
-                  <CheckCircle className="w-4 h-4 mr-3" />
-                  <span className="font-light">support@allowanceguard.com</span>
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  <span>support@allowanceguard.com</span>
                 </div>
               </div>
               <a 
                 href="mailto:support@allowanceguard.com?subject=General Support Request"
-                className="inline-flex items-center justify-center w-full px-8 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-6 py-3 border border-cobalt text-cobalt rounded-lg font-medium hover:bg-cobalt hover:text-white transition-colors duration-200"
               >
-                <Mail className="w-5 h-5 mr-3" />
+                <Mail className="w-4 h-4 mr-2" />
                 Compose an email to Support
               </a>
             </div>
@@ -247,11 +244,11 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center text-sm text-stone">
                   <CheckCircle className="w-4 h-4 mr-3" />
-                  <span className="font-light">hello@allowanceguard.com</span>
+                  <span className="font-light">support@allowanceguard.com</span>
                 </div>
               </div>
               <a 
-                href="mailto:hello@allowanceguard.com?subject=Partnership Inquiry"
+                href="mailto:support@allowanceguard.com?subject=Partnership Inquiry"
                 className="inline-flex items-center justify-center w-full px-8 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
               >
                 <Users className="w-5 h-5 mr-3" />
