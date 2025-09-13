@@ -250,7 +250,7 @@ Content-Type: application/json`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-ink mb-6 mt-12">GET /jobs/{id}</h3>
+            <h3 className="text-2xl font-semibold text-ink mb-6 mt-12">GET /jobs/&#123;id&#125;</h3>
             <p className="text-lg text-stone leading-relaxed mb-6">
               Retrieves the status of a scan job.
             </p>
