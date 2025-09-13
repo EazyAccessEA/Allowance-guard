@@ -53,6 +53,24 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ContextProvider cookies={cookies}>{children}</ContextProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Suppress Coinbase Commerce metrics errors
+              (function() {
+                const originalError = console.error;
+                console.error = function(...args) {
+                  if (args[0] && typeof args[0] === 'string' && 
+                      (args[0].includes('cca-lite.coinbase.com/metrics') || 
+                       args[0].includes('Failed to load resource: the server responded with a status of 401'))) {
+                    return; // Suppress Coinbase Commerce metrics errors
+                  }
+                  originalError.apply(console, args);
+                };
+              })();
+            `
+          }}
+        />
       </body>
     </html>
   )
