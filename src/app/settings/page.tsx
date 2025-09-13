@@ -300,7 +300,7 @@ export default function SettingsPage() {
                 
                 <button
                   onClick={subscribe}
-                  className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                  className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
                 >
                   Subscribe to Alerts
                 </button>
@@ -377,7 +377,7 @@ export default function SettingsPage() {
                   
                   <button 
                     onClick={savePolicy} 
-                    className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                    className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
                   >
                     Save Policy
                   </button>
@@ -408,7 +408,7 @@ export default function SettingsPage() {
                 
                 <button 
                   onClick={addSlack} 
-                  className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                  className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
                 >
                   Add Webhook
                 </button>
@@ -477,7 +477,7 @@ export default function SettingsPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button 
                     onClick={generateShare} 
-                    className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                    className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
                   >
                     Generate / Rotate
                   </button>

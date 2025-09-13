@@ -18,9 +18,9 @@ export default function ConnectButton({
 
   const styles = useMemo(() => {
     const base = 'inline-flex items-center rounded-lg px-6 py-3 text-base font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
-    switch (variant) {
-      case 'primary':
-        return `${base} bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:from-blue-700 hover:to-blue-600 focus:ring-blue-500/30`
+        switch (variant) {
+          case 'primary':
+            return `${base} bg-cobalt text-white hover:bg-cobalt/90 focus:ring-cobalt/30`
       case 'light':
         return `${base} bg-white text-ink border border-line hover:bg-mist focus:ring-ink/20`
       case 'ghost':

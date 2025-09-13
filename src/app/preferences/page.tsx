@@ -266,7 +266,7 @@ export default function PreferencesPage() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 flex items-center disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-cobalt hover:bg-cobalt/90 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 flex items-center disabled:cursor-not-allowed"
             >
               {status === 'loading' ? (
                 <>

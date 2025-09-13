@@ -15,6 +15,7 @@ module.exports = {
         mist: '#F6F7F9',       // soft background
         line: '#E5E7EB',       // separators
         electric: '#00BFFF',    // electric blue accent
+        cobalt: '#2563EB',     // cobalt azure accent
         white: '#FFFFFF',
       },
       fontFamily: {

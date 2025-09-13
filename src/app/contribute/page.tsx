@@ -173,7 +173,7 @@ export default function ContributePage() {
                   <button
                     onClick={handleStripeContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-cobalt hover:bg-cobalt/90 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingCard ? (
                       <>
@@ -191,7 +191,7 @@ export default function ContributePage() {
                   <button
                     onClick={handleCryptoContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-white border border-line hover:bg-mist rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-white border border-line hover:bg-mist rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Pay with ETH, USDC, BTC and more"
                   >
                     {loadingCrypto ? (

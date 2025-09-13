@@ -19,7 +19,7 @@ export function HexButton({
   const baseClasses = 'rounded-full transition-all duration-200 font-medium inline-flex items-center justify-center border-2 focus:outline-none focus:ring-2 focus:ring-offset-2'
   
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-blue-600 to-blue-500 text-white border-transparent hover:from-blue-700 hover:to-blue-600 focus:ring-blue-500/30',
+    primary: 'bg-cobalt text-white border-transparent hover:bg-cobalt/90 focus:ring-cobalt/30',
     ghost: 'bg-transparent text-ink border-line hover:bg-mist hover:border-line focus:ring-ink/20',
     danger: 'bg-gradient-to-r from-red-600 to-red-500 text-white border-transparent hover:from-red-700 hover:to-red-600 focus:ring-red-500/30',
     warn: 'bg-gradient-to-r from-amber-500 to-amber-400 text-white border-transparent hover:from-amber-600 hover:to-amber-500 focus:ring-amber-500/30',
