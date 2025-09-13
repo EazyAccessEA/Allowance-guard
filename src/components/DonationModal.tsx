@@ -279,7 +279,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
             <button
               onClick={handleDonate}
               disabled={isLoading}
-              className="flex-1 px-4 py-3 text-base font-medium text-white bg-gradient-to-r from-cobalt to-electric hover:from-cobalt-hover hover:to-electric rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50"
+              className="flex-1 px-4 py-3 text-base font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50"
             >
                     {isLoading ? 'Processing...' : `Contribute $${customAmount || amount}`}
             </button>
