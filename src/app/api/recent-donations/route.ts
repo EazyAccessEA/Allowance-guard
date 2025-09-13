@@ -33,6 +33,6 @@ export async function GET() {
     ORDER BY created_at DESC
     LIMIT 200
   `
-  const { rows } = await db.execute(q as any)
+  const { rows } = await db.execute(q as unknown as any)
   return NextResponse.json(rows)
 }

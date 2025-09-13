@@ -97,7 +97,7 @@ export async function POST(req: Request) {
   } catch (e: unknown) {
     const errorMessage = e instanceof Error ? e.message : 'Unknown error'
     console.error('Coinbase create-charge error:', errorMessage)
-    if ((e as any).status === 429) {
+    if ((e as Error & { status?: number }).status === 429) {
       return NextResponse.json({ error: (e as Error).message }, { status: 429 })
     }
     return NextResponse.json({ error: 'Server error creating charge' }, { status: 500 })

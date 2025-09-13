@@ -20,7 +20,7 @@ export async function limitOrThrow(ip: string | null, bucket: string) {
   if (!success) {
     const secs = Math.max(1, Math.ceil((reset - Date.now()) / 1000))
     const err = new Error(`Too many requests. Try again in ${secs}s.`)
-    ;(err as any).status = 429
+    ;(err as Error & { status?: number }).status = 429
     throw err
   }
 }

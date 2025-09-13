@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ id: session.id })
   } catch (err) {
     console.error('Stripe Checkout Error:', err)
-    if ((err as any).status === 429) {
+    if ((err as Error & { status?: number }).status === 429) {
       return NextResponse.json({ error: (err as Error).message }, { status: 429 })
     }
     const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred'

@@ -24,7 +24,7 @@ export default async function Recent() {
     ORDER BY created_at DESC
     LIMIT 200
   `
-  const { rows } = await db.execute(q as any)
+  const { rows } = await db.execute(q as unknown as any)
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
@@ -45,17 +45,20 @@ export default async function Recent() {
           <tbody>
             {rows.length === 0 ? (
               <tr><td colSpan={7} className="px-4 py-6 text-center text-gray-500">No donations yet.</td></tr>
-            ) : rows.map((r: any, i: number) => (
-              <tr key={`${r.source}-${r.ref}-${i}`} className="border-t">
-                <td className="px-4 py-3 whitespace-nowrap">{when(r.created_at)}</td>
-                <td className="px-4 py-3 whitespace-nowrap">{money(r.amount_minor, r.currency)}</td>
-                <td className="px-4 py-3">{(r.currency || '').toUpperCase()}</td>
-                <td className="px-4 py-3">{r.source}</td>
-                <td className="px-4 py-3">{r.status}</td>
-                <td className="px-4 py-3">{r.email ?? '—'}</td>
-                <td className="px-4 py-3 font-mono">{r.ref}</td>
+            ) : rows.map((r: unknown, i: number) => {
+              const row = r as { created_at: string; amount_minor: number; currency: string; source: string; ref: string; status: string; email: string | null }
+              return (
+              <tr key={`${row.source}-${row.ref}-${i}`} className="border-t">
+                <td className="px-4 py-3 whitespace-nowrap">{when(row.created_at)}</td>
+                <td className="px-4 py-3 whitespace-nowrap">{money(row.amount_minor, row.currency)}</td>
+                <td className="px-4 py-3">{(row.currency || '').toUpperCase()}</td>
+                <td className="px-4 py-3">{row.source}</td>
+                <td className="px-4 py-3">{row.status}</td>
+                <td className="px-4 py-3">{row.email ?? '—'}</td>
+                <td className="px-4 py-3 font-mono">{row.ref}</td>
               </tr>
-            ))}
+              )
+            })}
           </tbody>
         </table>
       </div>
