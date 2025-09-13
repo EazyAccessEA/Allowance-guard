@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
     // Coinbase recommends idempotency key to avoid duplicate charges on retries
     const idempotencyKey =
-      (global as any).crypto?.randomUUID?.() ||
+      (global as { crypto?: { randomUUID?: () => string } }).crypto?.randomUUID?.() ||
       `${Date.now()}-${Math.random().toString(16).slice(2)}`
 
     // Build charge payload: fixed-price in fiat (mirrors your Stripe behavior)
@@ -84,8 +84,9 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ hosted_url: hosted, code })
-  } catch (e: any) {
-    console.error('Coinbase create-charge error:', e?.message || e)
+  } catch (e: unknown) {
+    const errorMessage = e instanceof Error ? e.message : 'Unknown error'
+    console.error('Coinbase create-charge error:', errorMessage)
     return NextResponse.json({ error: 'Server error creating charge' }, { status: 500 })
   }
 }
