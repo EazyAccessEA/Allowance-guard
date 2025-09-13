@@ -64,12 +64,12 @@ export async function GET(req: Request) {
 
   // Rows
   const fmt = (r: Record<string, unknown>) => ({
-    chain: r.chain_id,
-    token: r.token_symbol || r.token_name || r.token_address,
-    spender: r.spender_label || r.spender_address,
-    std: r.standard,
-    type: r.allowance_type,
-    amt: r.is_unlimited ? 'UNLIMITED' : r.amount,
+    chain: String(r.chain_id || ''),
+    token: String(r.token_symbol || r.token_name || r.token_address || ''),
+    spender: String(r.spender_label || r.spender_address || ''),
+    std: String(r.standard || ''),
+    type: String(r.allowance_type || ''),
+    amt: r.is_unlimited ? 'UNLIMITED' : String(r.amount || ''),
     badges: [r.is_unlimited ? 'UNLIMITED' : null, Array.isArray(r.risk_flags) && r.risk_flags.includes('STALE') ? 'STALE' : null].filter(Boolean).join(' ')
   })
   
