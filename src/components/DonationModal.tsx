@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { X, Heart, DollarSign } from 'lucide-react'
+import { X, Heart, DollarSign, CreditCard, Coins } from 'lucide-react'
 
 interface DonationModalProps {
   isOpen: boolean
@@ -10,12 +10,15 @@ interface DonationModalProps {
 
 const PRESET_AMOUNTS = [5, 10, 25, 50, 100]
 
+type PaymentMethod = 'stripe' | 'coinbase'
+
 export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const [amount, setAmount] = useState<number>(25)
   const [customAmount, setCustomAmount] = useState('')
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('stripe')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -33,37 +36,60 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         return
       }
 
-      // Convert to cents for Stripe
-      const amountInCents = Math.round(donationAmount * 100)
+      if (paymentMethod === 'stripe') {
+        // Stripe payment flow
+        const amountInCents = Math.round(donationAmount * 100)
 
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: amountInCents
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: amountInCents
+          })
         })
-      })
 
-      const data = await response.json()
+        const data = await response.json()
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create checkout session')
-      }
-
-      // Redirect to Stripe Checkout
-      const stripe = await import('@stripe/stripe-js')
-      const { loadStripe } = stripe
-      const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-      
-      const stripeInstance = await stripePromise
-      if (stripeInstance) {
-        const { error } = await stripeInstance.redirectToCheckout({
-          sessionId: data.id
-        })
-        
-        if (error) {
-          throw new Error(error.message)
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to create checkout session')
         }
+
+        // Redirect to Stripe Checkout
+        const stripe = await import('@stripe/stripe-js')
+        const { loadStripe } = stripe
+        const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+        
+        const stripeInstance = await stripePromise
+        if (stripeInstance) {
+          const { error } = await stripeInstance.redirectToCheckout({
+            sessionId: data.id
+          })
+          
+          if (error) {
+            throw new Error(error.message)
+          }
+        }
+      } else {
+        // Coinbase Commerce payment flow
+        const response = await fetch('/api/donate/create', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: donationAmount,
+            email: email || undefined,
+            name: name || undefined,
+            message: message || undefined
+          })
+        })
+
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to create donation')
+        }
+
+        // Redirect to Coinbase Commerce checkout
+        window.location.href = data.checkoutUrl
       }
 
     } catch (err) {
@@ -149,6 +175,44 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 max="10000"
                 step="0.01"
               />
+            </div>
+          </div>
+
+          {/* Payment Method Selection */}
+          <div>
+            <label className="block text-base font-medium text-ink mb-4">
+              Payment Method
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => setPaymentMethod('stripe')}
+                className={`p-4 text-base font-medium rounded-lg border transition-colors ${
+                  paymentMethod === 'stripe'
+                    ? 'border-electric bg-electric/10 text-electric'
+                    : 'border-line hover:border-electric text-stone hover:text-ink'
+                }`}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <CreditCard className="w-4 h-4" />
+                  <span>Credit/Debit Card</span>
+                </div>
+                <p className="text-xs text-stone mt-1">Via Stripe</p>
+              </button>
+              
+              <button
+                onClick={() => setPaymentMethod('coinbase')}
+                className={`p-4 text-base font-medium rounded-lg border transition-colors ${
+                  paymentMethod === 'coinbase'
+                    ? 'border-electric bg-electric/10 text-electric'
+                    : 'border-line hover:border-electric text-stone hover:text-ink'
+                }`}
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <Coins className="w-4 h-4" />
+                  <span>Cryptocurrency</span>
+                </div>
+                <p className="text-xs text-stone mt-1">Via Coinbase</p>
+              </button>
             </div>
           </div>
 

@@ -107,15 +107,15 @@ export default function ContributingPage() {
             
             <div className="space-y-12">
               <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">Secure Online Donations</h3>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Multiple Payment Options</h3>
                 <p className="text-lg text-stone leading-relaxed mb-8">
-                  We accept secure donations through Stripe, supporting all major credit and debit cards. All donations are processed securely and transparently with industry-standard encryption and fraud protection.
+                  We accept donations through two secure payment methods: Stripe for traditional credit and debit cards, and Coinbase Commerce for cryptocurrency payments. Both options provide industry-standard encryption and fraud protection, giving you flexibility in how you choose to support the project.
                 </p>
                 
                 <div className="bg-white border border-line rounded-lg p-8 text-center">
                   <h4 className="text-xl font-semibold text-ink mb-6">Make a Donation</h4>
                   <p className="text-base text-stone mb-8">
-                    Support Allowance Guard&apos;s development with a secure, one-time donation. All major credit and debit cards accepted.
+                    Support Allowance Guard&apos;s development with a secure donation. Choose between credit/debit cards or cryptocurrency payments.
                   </p>
                   <DonationButton />
                 </div>
@@ -124,7 +124,7 @@ export default function ContributingPage() {
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">Security and Verification</h3>
                 <p className="text-lg text-stone leading-relaxed">
-                  All donations are processed through Stripe, a PCI-compliant payment processor trusted by millions of businesses worldwide. Your payment information is encrypted and never stored on our servers. We will never ask for donations through unsolicited communications or direct messages.
+                  All donations are processed through trusted, secure payment processors. Stripe is a PCI-compliant payment processor trusted by millions of businesses worldwide, while Coinbase Commerce provides secure cryptocurrency payment processing. Your payment information is encrypted and never stored on our servers. We will never ask for donations through unsolicited communications or direct messages.
                 </p>
               </div>
 
