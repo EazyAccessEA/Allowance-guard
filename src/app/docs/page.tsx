@@ -222,15 +222,15 @@ export default function DocsPage() {
               {supportedNetworks.map((network) => (
                 <div key={network.chainId} className="flex items-center justify-between p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center">
-                      <Globe className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-cobalt" />
                     </div>
               <div>
                       <h4 className="text-lg font-semibold text-ink">{network.name}</h4>
                     <p className="text-sm text-stone">Chain ID: {network.chainId}</p>
               </div>
                   </div>
-                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-electric/10 text-electric border border-electric/20">
+                  <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-cobalt/10 text-cobalt border border-cobalt/20">
                     {network.status}
                   </span>
             </div>
@@ -478,8 +478,8 @@ export default function DocsPage() {
                   return (
                     <div key={index} className="border border-line rounded-lg p-6 bg-white">
                       <div className="flex items-start gap-4 mb-4">
-                        <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                          <IconComponent className="w-6 h-6 text-electric" />
+                        <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <IconComponent className="w-6 h-6 text-cobalt" />
                         </div>
                         <div>
                           <h4 className="text-lg font-semibold text-ink mb-2">{alert.type}</h4>
@@ -489,7 +489,7 @@ export default function DocsPage() {
                       <ul className="space-y-2 text-sm text-stone">
                         {alert.features.map((feature, fIndex) => (
                           <li key={fIndex} className="flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                            <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                             {feature}
                           </li>
                         ))}
@@ -513,8 +513,8 @@ export default function DocsPage() {
           <div className="space-y-6">
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Zap className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Zap className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h3 id="how-it-works" className="text-xl font-semibold text-ink mb-3">How It Works</h3>
@@ -531,8 +531,8 @@ export default function DocsPage() {
 
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Bell className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Bell className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h3 id="drift-detection" className="text-xl font-semibold text-ink mb-3">Drift Detection</h3>
@@ -549,8 +549,8 @@ export default function DocsPage() {
 
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Settings className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Settings className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h3 id="configuration" className="text-xl font-semibold text-ink mb-3">Configuration</h3>
@@ -559,15 +559,15 @@ export default function DocsPage() {
                   <p className="text-base text-stone mb-4 ml-16">You can configure monitoring settings in the sidebar:</p>
                   <ul className="space-y-2 text-base text-stone ml-16">
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                       <span><strong>Enable/Disable:</strong> Turn monitoring on or off for each wallet</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                       <span><strong>Frequency:</strong> Set rescan interval (minimum 30 minutes)</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                       <span><strong>Alerts:</strong> Configure email and Slack notification preferences</span>
                     </li>
                   </ul>
@@ -590,8 +590,8 @@ export default function DocsPage() {
               <div className="space-y-4 mb-6">
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Users className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Owner</h4>
@@ -601,8 +601,8 @@ export default function DocsPage() {
                 </div>
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Shield className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Admin</h4>
@@ -612,8 +612,8 @@ export default function DocsPage() {
                 </div>
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Settings className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Settings className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Editor</h4>
@@ -623,8 +623,8 @@ export default function DocsPage() {
                 </div>
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Search className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Search className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Viewer</h4>
@@ -647,8 +647,8 @@ export default function DocsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Users className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Shared Wallets</h4>
@@ -658,8 +658,8 @@ export default function DocsPage() {
                 </div>
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Email Invites</h4>
@@ -669,8 +669,8 @@ export default function DocsPage() {
                 </div>
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Shield className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Shield className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Role-Based Access</h4>
@@ -680,8 +680,8 @@ export default function DocsPage() {
                 </div>
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Bell className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Bell className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Team Monitoring</h4>
@@ -705,8 +705,8 @@ export default function DocsPage() {
               <div className="space-y-6">
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Lock className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Lock className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Using AllowanceGuard</h4>
@@ -722,8 +722,8 @@ export default function DocsPage() {
                 </div>
                 <div className="p-6 bg-white border border-line rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
-                    <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <AlertTriangle className="w-6 h-6 text-electric" />
+                    <div className="w-12 h-12 bg-cobalt/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <AlertTriangle className="w-6 h-6 text-cobalt" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-ink mb-2">Important Notes</h4>
@@ -731,19 +731,19 @@ export default function DocsPage() {
                   </div>
                   <ul className="space-y-2 text-base text-stone ml-16">
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                       <span>Each revocation requires a separate transaction and gas fee</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                       <span>Revoking doesn&apos;t affect already deposited or staked tokens</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                       <span>Some dApps may require you to re-approve for continued functionality</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 bg-electric rounded-full mt-2 flex-shrink-0"></span>
+                      <span className="w-1.5 h-1.5 bg-cobalt rounded-full mt-2 flex-shrink-0"></span>
                       <span>Revocation is preventative, not restorative for already stolen funds</span>
                     </li>
               </ul>

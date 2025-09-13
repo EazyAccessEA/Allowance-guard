@@ -165,7 +165,7 @@ export default function ContributePage() {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="25.00"
-                      className="w-full px-3 py-4 pl-10 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-electric/30 focus:border-electric transition-colors duration-200"
+                      className="w-full px-3 py-4 pl-10 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                     />
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export default function ContributePage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full px-3 py-4 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-electric/30 focus:border-electric transition-colors duration-200"
+                    className="w-full px-3 py-4 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
                   />
                 </div>
 

@@ -210,7 +210,7 @@ export default function ThankYouPage() {
                 Questions about your contribution? Contact us at{' '}
                 <a 
                   href="mailto:legal.support@allowanceguard.com" 
-                  className="text-electric hover:text-cobalt transition-colors duration-200"
+                  className="text-cobalt hover:text-cobalt transition-colors duration-200"
                 >
                   legal.support@allowanceguard.com
                 </a>

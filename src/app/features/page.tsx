@@ -144,7 +144,7 @@ export default function FeaturesPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 href="/" 
-                className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-electric text-white hover:bg-electric/90 focus:outline-none focus:ring-2 focus:ring-electric/30"
+                className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
               >
                 <Eye className="w-5 h-5 mr-2" />
                 Start Scanning

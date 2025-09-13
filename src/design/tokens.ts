@@ -9,8 +9,7 @@ export const colors = {
   sandstone: '#E4E2DD',       // Light background/text
   
   // Brand colors - Sophisticated accent system
-  cobalt: '#2563EB',          // Primary brand accent
-  electric: '#0EA5E9',        // Interactive highlights
+  cobalt: '#2563EB',          // Primary brand accent (single brand color)
   teal: '#00C2B2',            // Secondary accent
   warmGray: '#F1F5F9',        // Card backgrounds
   

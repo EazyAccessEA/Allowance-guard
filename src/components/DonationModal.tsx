@@ -188,8 +188,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 onClick={() => setPaymentMethod('stripe')}
                 className={`p-4 text-base font-medium rounded-lg border transition-colors ${
                   paymentMethod === 'stripe'
-                    ? 'border-electric bg-electric/10 text-electric'
-                    : 'border-line hover:border-electric text-stone hover:text-ink'
+                    ? 'border-cobalt bg-cobalt/10 text-cobalt'
+                    : 'border-line hover:border-cobalt text-stone hover:text-ink'
                 }`}
               >
                 <div className="flex items-center justify-center gap-2">
@@ -203,8 +203,8 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 onClick={() => setPaymentMethod('coinbase')}
                 className={`p-4 text-base font-medium rounded-lg border transition-colors ${
                   paymentMethod === 'coinbase'
-                    ? 'border-electric bg-electric/10 text-electric'
-                    : 'border-line hover:border-electric text-stone hover:text-ink'
+                    ? 'border-cobalt bg-cobalt/10 text-cobalt'
+                    : 'border-line hover:border-cobalt text-stone hover:text-ink'
                 }`}
               >
                 <div className="flex items-center justify-center gap-2">

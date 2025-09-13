@@ -243,7 +243,7 @@ export default function SecurityPage() {
             <div className="bg-white border border-line rounded-lg p-8">
               <h3 className="text-2xl font-semibold text-ink mb-4">Security Contact</h3>
               <p className="text-lg text-stone mb-6">
-                Email: <a href="mailto:security@allowanceguard.com" className="text-electric hover:underline">security@allowanceguard.com</a>
+                Email: <a href="mailto:security@allowanceguard.com" className="text-cobalt hover:underline">security@allowanceguard.com</a>
               </p>
               <p className="text-base text-stone leading-relaxed">
                 We encourage responsible disclosure of security vulnerabilities. Please include detailed information about the issue, steps to reproduce it, and any potential impact. We will respond to all security reports within 24 hours and work with you to resolve any issues promptly and professionally.

@@ -168,14 +168,14 @@ export default function HomePage() {
             {!isConnected ? (
               <ConnectButton 
                 variant="primary" 
-                className="bg-electric text-white hover:bg-electric/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+                className="bg-cobalt text-white hover:bg-cobalt/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
               />
             ) : (
               <div className="flex flex-col gap-2">
                 <button 
                   onClick={startScan} 
                   disabled={pending} 
-                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-electric text-white hover:bg-electric/90 focus:outline-none focus:ring-2 focus:ring-electric/30 disabled:opacity-50"
+                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50"
                 >
                 {pending ? 'Scanning…' : 'Scan wallet'}
               </button>
@@ -335,13 +335,13 @@ export default function HomePage() {
               {!isConnected ? (
                 <ConnectButton 
                   variant="primary" 
-                  className="bg-electric text-white hover:bg-electric/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+                  className="bg-cobalt text-white hover:bg-cobalt/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
                 />
               ) : (
                 <button 
                   onClick={startScan} 
                   disabled={pending} 
-                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-electric text-white hover:bg-electric/90 focus:outline-none focus:ring-2 focus:ring-electric/30 disabled:opacity-50"
+                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50"
                 >
                   {pending ? 'Scanning…' : 'Scan Your Wallet for Free'}
                 </button>

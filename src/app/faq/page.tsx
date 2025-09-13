@@ -211,7 +211,7 @@ export default function FAQPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
                 href="/contact" 
-                className="inline-flex items-center justify-center px-8 py-4 bg-electric text-white rounded-lg hover:bg-electric/90 transition-all duration-200 text-lg font-medium"
+                className="inline-flex items-center justify-center px-8 py-4 bg-cobalt text-white rounded-lg hover:bg-cobalt/90 transition-all duration-200 text-lg font-medium"
               >
                 Contact Support
               </a>

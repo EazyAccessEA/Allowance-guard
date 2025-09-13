@@ -117,7 +117,7 @@ w3m-modal w3m-close-button:hover {
   
   /* Brand Colors - Sophisticated accent system */
   --cobalt: #2563EB;          /* Primary brand accent */
-  --electric: #0EA5E9;        /* Interactive highlights */
+  --cobalt: #0EA5E9;        /* Interactive highlights */
   --teal: #00C2B2;            /* Secondary accent */
   --warm-gray: #F1F5F9;       /* Card backgrounds */
   
@@ -150,7 +150,7 @@ w3m-modal w3m-close-button:hover {
   --primary-foreground: #ffffff;
   --secondary: var(--teal);
   --secondary-foreground: #ffffff;
-  --accent: var(--electric);
+  --accent: var(--cobalt);
   --accent-foreground: #ffffff;
   --destructive: var(--crimson);
   --destructive-foreground: #ffffff;
@@ -431,7 +431,7 @@ button, a, input, select, textarea {
 }
 
 .fireart-badge-info {
-  background: var(--electric);
+  background: var(--cobalt);
   color: white;
 }
 
