@@ -2,7 +2,7 @@
 import Stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { headers as nextHeaders } from 'next/headers'
-import { limitOrThrow } from '@/src/lib/ratelimit'
+import { limitOrThrow } from '@/lib/ratelimit'
 import crypto from 'crypto'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {

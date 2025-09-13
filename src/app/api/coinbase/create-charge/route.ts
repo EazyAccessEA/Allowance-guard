@@ -1,7 +1,7 @@
 // /src/app/api/coinbase/create-charge/route.ts
 import { NextResponse } from 'next/server'
 import { headers as nextHeaders } from 'next/headers'
-import { limitOrThrow } from '@/src/lib/ratelimit'
+import { limitOrThrow } from '@/lib/ratelimit'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
