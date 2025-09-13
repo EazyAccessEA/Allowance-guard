@@ -112,8 +112,38 @@ export default function AppArea({
           <main className="lg:col-span-8 space-y-8">
             <div className="border border-line rounded-md">
               <div className="px-6 py-4 border-b border-line">
-                <h3 className="text-lg text-ink">Approvals</h3>
-                <p className="text-base text-stone">Review, then revoke in your preferred explorer/tool.</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg text-ink">Approvals</h3>
+                    <p className="text-base text-stone">Review, then revoke in your preferred explorer/tool.</p>
+                  </div>
+                  {(selectedWallet || connectedAddress) && (
+                    <div className="flex items-center gap-2">
+                      <a
+                        className="rounded border border-cobalt text-cobalt px-3 py-2 text-sm hover:bg-cobalt hover:text-white transition-colors duration-200"
+                        href={`/api/export/csv?wallet=${(selectedWallet || connectedAddress)!}&riskOnly=true`}
+                      >
+                        Export CSV
+                      </a>
+                      <a
+                        className="rounded border border-cobalt text-cobalt px-3 py-2 text-sm hover:bg-cobalt hover:text-white transition-colors duration-200"
+                        href={`/api/export/pdf?wallet=${(selectedWallet || connectedAddress)!}&riskOnly=true`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        Export PDF
+                      </a>
+                      <a
+                        className="rounded border border-cobalt text-cobalt px-3 py-2 text-sm hover:bg-cobalt hover:text-white transition-colors duration-200"
+                        href={`/report/${(selectedWallet || connectedAddress)!}`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        Printable Report
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
               <AllowanceTable
                 data={rows}
