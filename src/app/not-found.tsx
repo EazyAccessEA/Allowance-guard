@@ -11,7 +11,6 @@ import {
   Scan, 
   Mail, 
   ShieldAlert,
-  Search,
   MapPin
 } from 'lucide-react'
 
@@ -52,11 +51,10 @@ export default function NotFound() {
           <div className="mb-12">
             <div className="w-32 h-32 mx-auto bg-mist/30 rounded-2xl flex items-center justify-center">
               <div className="relative">
-                <Search className="w-16 h-16 text-stone" />
-                <MapPin className="w-8 h-8 text-crimson absolute -bottom-1 -right-1" />
+                <MapPin className="w-16 h-16 text-crimson" />
               </div>
             </div>
-            <p className="text-sm text-stone mt-4">Magnifying glass looking at a broken link</p>
+            <p className="text-sm text-stone mt-4">Missing page indicator</p>
           </div>
         </Container>
       </Section>
