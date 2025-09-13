@@ -19,7 +19,12 @@ interface AllowanceData {
   risk_flags?: string[]
 }
 
-export default function ReportPage({ params }: { params: { wallet: string } }) {
+export default async function ReportPage({ params }: { params: Promise<{ wallet: string }> }) {
+  const resolvedParams = await params
+  return <ReportPageClient wallet={resolvedParams.wallet} />
+}
+
+function ReportPageClient({ wallet }: { wallet: string }) {
   const [rows, setRows] = useState<AllowanceData[]>([])
   const [riskOnly, setRiskOnly] = useState(true)
   const [loading, setLoading] = useState(true)
@@ -27,7 +32,7 @@ export default function ReportPage({ params }: { params: { wallet: string } }) {
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const r = await fetch(`/api/allowances?wallet=${params.wallet}&riskOnly=${riskOnly}&page=1&pageSize=1000`)
+      const r = await fetch(`/api/allowances?wallet=${wallet}&riskOnly=${riskOnly}&page=1&pageSize=1000`)
       const j = await r.json()
       setRows(j.allowances || [])
     } catch (error) {
@@ -35,7 +40,7 @@ export default function ReportPage({ params }: { params: { wallet: string } }) {
       setRows([])
     }
     setLoading(false)
-  }, [params.wallet, riskOnly])
+  }, [wallet, riskOnly])
 
   useEffect(() => { 
     load() 
@@ -47,7 +52,7 @@ export default function ReportPage({ params }: { params: { wallet: string } }) {
         <div className="print:hidden mb-8">
           <H1 className="mb-2">Allowance Guard — Report</H1>
           <p className="text-stone text-sm">
-            Wallet: <span className="font-mono text-ink">{params.wallet}</span>
+            Wallet: <span className="font-mono text-ink">{wallet}</span>
           </p>
           <div className="mt-4 flex items-center gap-4">
             <label className="text-sm flex items-center gap-2">
@@ -75,7 +80,7 @@ export default function ReportPage({ params }: { params: { wallet: string } }) {
             <div className="print:block hidden mb-4">
               <h1 className="text-2xl font-bold text-ink">Allowance Guard — Report</h1>
               <p className="text-sm text-stone mt-1">
-                Wallet: <span className="font-mono">{params.wallet}</span>
+                Wallet: <span className="font-mono">{wallet}</span>
               </p>
               <p className="text-sm text-stone">
                 Generated: {new Date().toLocaleString()}
