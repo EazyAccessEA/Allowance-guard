@@ -84,7 +84,7 @@ export async function POST(req: Request) {
   const localAmountStr = data?.pricing?.local?.amount
   const localCurrency = (data?.pricing?.local?.currency || 'GBP').toUpperCase()
   const localAmountMinor = toMinorUnits(localAmountStr) ?? 0
-  const email = (data?.metadata?.email as string) || null
+  const email = ((data?.metadata as { email?: string })?.email) || null
 
   const status = extractStatusFromTimeline(data.timeline, ev.type.split(':')[1]) // use timeline if present, fallback to event type suffix
   const hostedUrl = data.hosted_url || null
