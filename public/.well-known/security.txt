@@ -1,0 +1,8 @@
+Contact: mailto:security@allowanceguard.com
+Contact: https://www.allowanceguard.com/contact
+Expires: 2025-12-31T23:59:59.000Z
+Encryption: https://www.allowanceguard.com/pgp-key.asc
+Acknowledgments: https://www.allowanceguard.com/security
+Policy: https://www.allowanceguard.com/security
+Preferred-Languages: en
+Canonical: https://www.allowanceguard.com/.well-known/security.txt

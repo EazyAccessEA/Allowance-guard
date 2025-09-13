@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120">
+  <!-- Icon -->
+  <circle cx="40" cy="60" r="24" stroke="#1D5FFF" stroke-width="4" fill="none"/>
+  <circle cx="40" cy="60" r="8" fill="#1D5FFF"/>
+  <!-- Text -->
+  <text x="80" y="70" font-family="Inter, Arial, sans-serif" font-size="36" fill="#0A0A0A" font-weight="600">EazyAccess</text>
+</svg>
