@@ -179,7 +179,7 @@ export default function ContributingPage() {
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">Community Advocacy</h3>
                 <p className="text-lg text-stone leading-relaxed">
-                  Your voice in the community is powerful social capital that helps spread awareness of Allowance Guard&apos;s mission. Share your positive experiences on Twitter, Reddit, Discord communities, and other platforms where Web3 users gather. Your advocacy helps other users discover the tools they need to protect their assets and contributes to building a more security-conscious ecosystem.
+                  Your voice in the community is powerful social capital that helps spread awareness of Allowance Guard&apos;s mission. Share your positive experiences on X, Reddit, Discord communities, and other platforms where Web3 users gather. Your advocacy helps other users discover the tools they need to protect their assets and contributes to building a more security-conscious ecosystem.
                 </p>
               </div>
 

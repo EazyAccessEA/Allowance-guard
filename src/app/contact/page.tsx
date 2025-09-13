@@ -12,7 +12,6 @@ import {
   Shield, 
   Users, 
   MessageCircle, 
-  Twitter, 
   Github, 
   Clock, 
   Lock,
@@ -297,22 +296,26 @@ export default function ContactPage() {
               </a>
             </div>
 
-            {/* Twitter/X */}
+            {/* X (formerly Twitter) */}
             <div className="bg-stone/5 border-0 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all duration-300 text-center group">
-              <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500/20 transition-colors duration-300">
-                <Twitter className="w-8 h-8 text-blue-600" />
+              <div className="w-16 h-16 bg-black/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-black/20 transition-colors duration-300">
+                <svg className="w-8 h-8 text-black" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
               </div>
-              <h3 className="text-xl font-light text-ink mb-4">Twitter/X</h3>
+              <h3 className="text-xl font-light text-ink mb-4">X</h3>
               <p className="text-stone leading-relaxed mb-8 font-light">
                 Follow us for the latest announcements, updates, and security tips.
               </p>
               <a 
-                href="https://twitter.com/AllowanceGuard"
+                href="https://x.com/AllowanceGuard"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center w-full px-6 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
               >
-                <Twitter className="w-5 h-5 mr-3" />
+                <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
                 Follow @AllowanceGuard
                 <ExternalLink className="w-4 h-4 ml-2" />
               </a>

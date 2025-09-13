@@ -924,7 +924,7 @@ export default function DocsPage() {
                 </div>
                 <div>
                   <h4 className="font-medium text-ink mb-2">Community Updates</h4>
-                  <p className="text-base text-stone">Follow us on Twitter for platform updates, security alerts, and community discussions. We regularly share security tips, new feature announcements, and important updates about the Web3 security landscape.</p>
+                  <p className="text-base text-stone">Follow us on X for platform updates, security alerts, and community discussions. We regularly share security tips, new feature announcements, and important updates about the Web3 security landscape.</p>
                 </div>
               </div>
             </div>

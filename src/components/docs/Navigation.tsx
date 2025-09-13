@@ -61,13 +61,13 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
             Discord Community
           </a>
           <a 
-            href="https://twitter.com/allowanceguard" 
+            href="https://x.com/allowanceguard" 
             target="_blank" 
             rel="noopener noreferrer"
             className="block px-3 py-2 text-sm text-ag-muted hover:text-ag-text hover:bg-ag-panel-hover transition-colors"
           >
-            <span className="mr-2">🐦</span>
-            Twitter Updates
+            <span className="mr-2">𝕏</span>
+            X Updates
           </a>
         </div>
       </div>
