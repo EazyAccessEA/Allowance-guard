@@ -30,7 +30,7 @@ export default function FAQPage() {
           <div className="max-w-4xl">
             <H1 className="mb-6">Frequently Asked Questions</H1>
             <p className="text-xl text-stone leading-relaxed mb-8">
-              Find immediate clarity below. If your question isn&apos;t answered, contact our team at support@allowanceguard.com. We are here to help.
+              Find immediate clarity below. If your question isn&apos;t answered, contact our team at legal.support@allowanceguard.com. We are here to help.
             </p>
           </div>
         </Container>
@@ -158,7 +158,7 @@ export default function FAQPage() {
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">I found a bug or have a feature request. How can I contribute?</h3>
                 <p className="text-lg text-stone leading-relaxed">
-                  We welcome community input. Please report bugs or suggest features on our GitHub repository. For general feedback, you can email us at support@allowanceguard.com. Financial contributions to support our work can be made via our contributing page. We review all bug reports and feature requests, and we prioritize security-related issues and improvements that benefit the broader community. We also welcome code contributions from developers who want to help improve the platform.
+                  We welcome community input. Please report bugs or suggest features on our GitHub repository. For general feedback, you can email us at legal.support@allowanceguard.com. Financial contributions to support our work can be made via our contributing page. We review all bug reports and feature requests, and we prioritize security-related issues and improvements that benefit the broader community. We also welcome code contributions from developers who want to help improve the platform.
                 </p>
               </div>
             </div>

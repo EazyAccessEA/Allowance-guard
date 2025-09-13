@@ -916,7 +916,7 @@ export default function DocsPage() {
               <div className="space-y-4">
                 <div>
                   <h4 className="font-medium text-ink mb-2">Technical Support</h4>
-                  <p className="text-base text-stone">For technical issues, feature requests, or general questions, contact our support team at support@allowanceguard.com. We typically respond within 24 hours and can help with wallet connection issues, transaction problems, or platform-specific questions.</p>
+                  <p className="text-base text-stone">For technical issues, feature requests, or general questions, contact our support team at legal.support@allowanceguard.com. We typically respond within 24 hours and can help with wallet connection issues, transaction problems, or platform-specific questions.</p>
                 </div>
                 <div>
                   <h4 className="font-medium text-ink mb-2">Bug Reports</h4>

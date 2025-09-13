@@ -128,10 +128,10 @@ export default function ThankYouPage() {
               <p className="text-sm text-stone">
                 Questions about your contribution? Contact us at{' '}
                 <a 
-                  href="mailto:support@allowanceguard.com" 
+                  href="mailto:legal.support@allowanceguard.com" 
                   className="text-electric hover:text-cobalt transition-colors duration-200"
                 >
-                  support@allowanceguard.com
+                  legal.support@allowanceguard.com
                 </a>
               </p>
             </div>
