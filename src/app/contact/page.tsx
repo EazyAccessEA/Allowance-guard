@@ -187,7 +187,7 @@ export default function ContactPage() {
               </div>
               <a 
                 href="mailto:support@allowanceguard.com?subject=General Support Request"
-                className="inline-flex items-center justify-center w-full px-8 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-8 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
               >
                 <Mail className="w-5 h-5 mr-3" />
                 Compose an email to Support
@@ -216,7 +216,7 @@ export default function ContactPage() {
               <div className="space-y-4">
                 <a 
                   href="mailto:security@allowanceguard.com?subject=Security Vulnerability Report"
-                  className="inline-flex items-center justify-center w-full px-8 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
+                  className="inline-flex items-center justify-center w-full px-8 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
                 >
                   <Shield className="w-5 h-5 mr-3" />
                   Compose an email to Security
@@ -252,7 +252,7 @@ export default function ContactPage() {
               </div>
               <a 
                 href="mailto:hello@allowanceguard.com?subject=Partnership Inquiry"
-                className="inline-flex items-center justify-center w-full px-8 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-8 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
               >
                 <Users className="w-5 h-5 mr-3" />
                 Compose an email to Business
@@ -288,7 +288,7 @@ export default function ContactPage() {
                 href="https://discord.gg/allowanceguard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-6 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-6 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
               >
                 <MessageCircle className="w-5 h-5 mr-3" />
                 Join our Discord Server
@@ -311,7 +311,7 @@ export default function ContactPage() {
                 href="https://x.com/AllowanceGuard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-6 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-6 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
               >
                 <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -334,7 +334,7 @@ export default function ContactPage() {
                 href="https://github.com/AllowanceGuard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-6 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-6 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
               >
                 <Github className="w-5 h-5 mr-3" />
                 View our GitHub
@@ -391,7 +391,7 @@ export default function ContactPage() {
               </p>
               <a 
                 href="/pgp-key.asc"
-                className="inline-flex items-center px-6 py-3 text-sm font-light text-cobalt border border-cobalt/20 rounded-2xl hover:bg-cobalt/5 transition-colors duration-300"
+                className="inline-flex items-center px-6 py-3 text-sm font-light text-cobalt border border-cobalt rounded-2xl hover:bg-cobalt hover:text-white transition-colors duration-300"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Download our PGP Key
