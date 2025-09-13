@@ -107,15 +107,15 @@ export default function ContributingPage() {
             
             <div className="space-y-12">
               <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">Direct Cryptocurrency Donations</h3>
+                <h3 className="text-2xl font-semibold text-ink mb-6">Secure Online Donations</h3>
                 <p className="text-lg text-stone leading-relaxed mb-8">
-                  We accept donations in multiple cryptocurrencies to accommodate different preferences and reduce transaction costs. All donations are processed securely and transparently through our integrated payment system.
+                  We accept secure donations through Stripe, supporting all major credit and debit cards. All donations are processed securely and transparently with industry-standard encryption and fraud protection.
                 </p>
                 
                 <div className="bg-white border border-line rounded-lg p-8 text-center">
                   <h4 className="text-xl font-semibold text-ink mb-6">Make a Donation</h4>
                   <p className="text-base text-stone mb-8">
-                    Support Allowance Guard&apos;s development with a secure, one-time donation. All major cryptocurrencies accepted.
+                    Support Allowance Guard&apos;s development with a secure, one-time donation. All major credit and debit cards accepted.
                   </p>
                   <DonationButton />
                 </div>
@@ -124,7 +124,7 @@ export default function ContributingPage() {
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">Security and Verification</h3>
                 <p className="text-lg text-stone leading-relaxed">
-                  The donation addresses provided through our official payment system are the ONLY legitimate donation addresses for Allowance Guard. Always verify that you are sending funds to addresses displayed on this official page. Never send funds to any address communicated via direct message, social media, or other unofficial channels. We will never ask for donations through unsolicited communications.
+                  All donations are processed through Stripe, a PCI-compliant payment processor trusted by millions of businesses worldwide. Your payment information is encrypted and never stored on our servers. We will never ask for donations through unsolicited communications or direct messages.
                 </p>
               </div>
 

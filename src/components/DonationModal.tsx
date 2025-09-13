@@ -33,25 +33,38 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         return
       }
 
-      const response = await fetch('/api/donate/create', {
+      // Convert to cents for Stripe
+      const amountInCents = Math.round(donationAmount * 100)
+
+      const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: donationAmount,
-          email: email || undefined,
-          name: name || undefined,
-          message: message || undefined
+          amount: amountInCents
         })
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create donation')
+        throw new Error(data.error || 'Failed to create checkout session')
       }
 
-      // Redirect to Coinbase Commerce checkout
-      window.location.href = data.checkoutUrl
+      // Redirect to Stripe Checkout
+      const stripe = await import('@stripe/stripe-js')
+      const { loadStripe } = stripe
+      const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+      
+      const stripeInstance = await stripePromise
+      if (stripeInstance) {
+        const { error } = await stripeInstance.redirectToCheckout({
+          sessionId: data.id
+        })
+        
+        if (error) {
+          throw new Error(error.message)
+        }
+      }
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
