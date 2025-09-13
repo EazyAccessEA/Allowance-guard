@@ -24,7 +24,7 @@ export default async function AdminCryptoDonationsPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
-      <h1 className="text-2xl font-semibold mb-6">Crypto Donations (Coinbase)</h1>
+      <h1 className="text-2xl font-semibold mb-6">Crypto Contributions (Coinbase)</h1>
 
       <section className="overflow-x-auto rounded-xl border">
         <table className="min-w-full text-sm">
@@ -42,7 +42,7 @@ export default async function AdminCryptoDonationsPage() {
             {rows.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-4 py-6 text-center text-gray-500">
-                  No crypto donations yet.
+                  No crypto contributions yet.
                 </td>
               </tr>
             ) : (

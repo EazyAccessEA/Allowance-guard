@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
     // Build charge payload: fixed-price in fiat (mirrors your Stripe behavior)
     const payload = {
-      name: 'Donation to Allowance Guard',
+      name: 'Contribution to Allowance Guard',
       description: 'Support the ongoing development and security of Allowance Guard.',
       pricing_type: 'fixed_price',
       local_price: {
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
         source: 'allowanceguard.com',
       },
       redirect_url: `${appUrl}/thank-you`,
-      cancel_url: `${appUrl}/donate`,
+      cancel_url: `${appUrl}/contribute`,
     }
 
     const res = await fetch(`${apiBase}/charges`, {

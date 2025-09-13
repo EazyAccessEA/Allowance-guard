@@ -164,7 +164,7 @@ export default function ThankYouPage() {
               
               {status === 'verified' && (
                 <Link
-                  href="/donate"
+                  href="/contribute"
                   className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-ink border border-line hover:bg-mist rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
                 >
                   <Heart className="w-4 h-4" />

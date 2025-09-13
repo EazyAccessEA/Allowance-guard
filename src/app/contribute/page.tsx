@@ -13,7 +13,7 @@ import { DollarSign, Heart, CreditCard, Coins } from 'lucide-react'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
-export default function DonatePage() {
+export default function ContributePage() {
   const { isConnected } = useAccount()
   const [amount, setAmount] = useState<string>('25.00')
   const [loadingCard, setLoadingCard] = useState(false)
@@ -31,7 +31,7 @@ export default function DonatePage() {
     return Math.round(num * 100)
   }
 
-  const handleStripeDonate = async () => {
+  const handleStripeContribute = async () => {
     setError(null)
 
     const minor = toMinorUnits(amount)
@@ -71,7 +71,7 @@ export default function DonatePage() {
     }
   }
 
-  const handleCryptoDonate = async () => {
+  const handleCryptoContribute = async () => {
     setError(null)
 
     const minor = toMinorUnits(amount)
@@ -171,7 +171,7 @@ export default function DonatePage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <button
-                    onClick={handleStripeDonate}
+                    onClick={handleStripeContribute}
                     disabled={loadingCard || loadingCrypto}
                     className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -189,7 +189,7 @@ export default function DonatePage() {
                   </button>
 
                   <button
-                    onClick={handleCryptoDonate}
+                    onClick={handleCryptoContribute}
                     disabled={loadingCard || loadingCrypto}
                     className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-white border border-line hover:bg-mist rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Pay with ETH, USDC, BTC and more"

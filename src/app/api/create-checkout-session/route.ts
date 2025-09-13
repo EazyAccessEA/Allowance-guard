@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   try {
     const { amount } = await req.json()
 
-    // Validate donation amount
+    // Validate contribution amount
     if (!amount || isNaN(amount) || amount < 100) {
       return NextResponse.json({ error: 'Invalid amount' }, { status: 400 })
     }
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         },
       ],
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/donate`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/contribute`,
     })
 
     return NextResponse.json({ id: session.id })

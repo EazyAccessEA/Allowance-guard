@@ -68,9 +68,9 @@ export default async function AdminDonationsPage({
     <main className="mx-auto max-w-6xl px-6 py-10">
       <header className="mb-8 flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold">Donations</h1>
+                <h1 className="text-2xl font-semibold">Contributions</h1>
           <p className="text-sm text-gray-600">
-            Recent donations with simple analytics. This page is dynamic and queries Neon directly.
+            Recent contributions with simple analytics. This page is dynamic and queries Neon directly.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -81,10 +81,10 @@ export default async function AdminDonationsPage({
             Download CSV
           </a>
           <Link
-            href="/donate"
+            href="/contribute"
             className="rounded-md bg-black px-3 py-2 text-white hover:opacity-90"
           >
-            Test Donation
+                  Test Contribution
           </Link>
         </div>
       </header>
@@ -103,7 +103,7 @@ export default async function AdminDonationsPage({
           </div>
         </div>
         <div className="rounded-xl border p-4">
-          <div className="text-xs text-gray-500">Average donation</div>
+                 <div className="text-xs text-gray-500">Average contribution</div>
           <div className="mt-1 text-2xl font-semibold">
             {byCurrency.length === 1
               ? formatMoney(Number(agg.avg_all), byCurrency[0].currency)
@@ -137,7 +137,7 @@ export default async function AdminDonationsPage({
             {!rows.rows || rows.rows.length === 0 ? (
               <tr>
                 <td colSpan={7} className="px-4 py-6 text-center text-gray-500">
-                  No donations yet.
+                         No contributions yet.
                 </td>
               </tr>
             ) : (
