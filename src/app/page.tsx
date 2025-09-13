@@ -130,7 +130,7 @@ export default function HomePage() {
       <Header isConnected={isConnected} />
       
       {/* Hero Section - Fireart Style with Animated Background */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
+      <Section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
         {/* Video Background */}
         <VideoBackground 
           videoSrc="/V3AG.mp4"
@@ -145,7 +145,7 @@ export default function HomePage() {
         
         <Container className="relative z-10">
           <div className="max-w-4xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-8 h-[2.2em]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-6 sm:mb-8 h-[2.2em]">
               <RotatingTypewriter 
                 staticPrefix="The power to "
                 messages={[
@@ -160,7 +160,7 @@ export default function HomePage() {
                 className=""
               />
             </h1>
-            <p className="text-xl sm:text-2xl text-stone leading-relaxed mb-12 max-w-3xl">
+            <p className="text-lg sm:text-xl lg:text-2xl text-stone leading-relaxed mb-8 sm:mb-10 lg:mb-12 max-w-3xl">
               A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
             </p>
           </div>
@@ -198,13 +198,13 @@ export default function HomePage() {
 
 
       {/* The Problem You Solve */}
-      <Section className="py-32">
+      <Section className="py-16 sm:py-24 lg:py-32">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-6 sm:mb-8">
               The Unseen Risk in Every Wallet
             </h2>
-            <p className="text-xl text-stone leading-relaxed">
+            <p className="text-lg sm:text-xl text-stone leading-relaxed">
               Token allowances are the hidden permissions you grant when interacting with DeFi protocols, NFT marketplaces, and dApps. These approvals allow smart contracts to move your tokens on your behalf, but they persist long after your interaction ends. Forgotten or malicious allowances become the primary attack vector for draining wallets, with approval-based exploits accounting for 73% of all DeFi security incidents in 2024, resulting in over $3.2 billion in losses. Every time you approve a token, you create a potential vulnerability that could be exploited months or years later.
             </p>
           </div>
@@ -212,31 +212,31 @@ export default function HomePage() {
       </Section>
 
       {/* How Allowance Guard Works */}
-      <Section className="py-32 bg-mist/30">
+      <Section className="py-16 sm:py-24 lg:py-32 bg-mist/30">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-16 text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-8 sm:mb-12 lg:mb-16 text-center">
               How Allowance Guard Works
             </h2>
             
-            <div className="space-y-16">
+            <div className="space-y-8 sm:space-y-12 lg:space-y-16">
               <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">1. Connect & Scan</h3>
-                <p className="text-lg text-stone leading-relaxed">
+                <h3 className="text-xl sm:text-2xl font-semibold text-ink mb-4 sm:mb-6">1. Connect & Scan</h3>
+                <p className="text-base sm:text-lg text-stone leading-relaxed">
                   Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control at all times. No permissions required, no custody risk, no trust assumptions.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">2. Analyze & Understand</h3>
-                <p className="text-lg text-stone leading-relaxed">
+                <h3 className="text-xl sm:text-2xl font-semibold text-ink mb-4 sm:mb-6">2. Analyze & Understand</h3>
+                <p className="text-base sm:text-lg text-stone leading-relaxed">
                   Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals. Our advanced risk intelligence identifies known malicious contracts, anomalous patterns, and high-risk spender addresses.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">3. Act & Secure</h3>
-                <p className="text-lg text-stone leading-relaxed">
+                <h3 className="text-xl sm:text-2xl font-semibold text-ink mb-4 sm:mb-6">3. Act & Secure</h3>
+                <p className="text-base sm:text-lg text-stone leading-relaxed">
                   Revoke with confidence. One-click revocation executes the transaction directly from your wallet to secure your assets immediately. Batch multiple revocations in a single transaction to save on gas fees and time.
                 </p>
               </div>
@@ -246,14 +246,14 @@ export default function HomePage() {
       </Section>
 
       {/* Key Features & Differentiators */}
-      <Section className="py-32">
+      <Section className="py-16 sm:py-24 lg:py-32">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-16 text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-8 sm:mb-12 lg:mb-16 text-center">
               Key Features & Differentiators
             </h2>
             
-            <div className="space-y-12">
+            <div className="space-y-8 sm:space-y-10 lg:space-y-12">
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">Non-Custodial Security</h3>
                 <p className="text-lg text-stone leading-relaxed">
@@ -287,16 +287,16 @@ export default function HomePage() {
       </Section>
 
       {/* Trust Indicators */}
-      <Section className="py-32 bg-mist/30">
+      <Section className="py-16 sm:py-24 lg:py-32 bg-mist/30">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-8">
                 Trust Indicators
               </h2>
             </div>
             
-            <div className="space-y-12">
+            <div className="space-y-8 sm:space-y-10 lg:space-y-12">
               <div className="text-center">
                 <h3 className="text-2xl font-semibold text-ink mb-6">Social Proof</h3>
                 <div className="bg-white border border-line rounded-lg p-8">
@@ -321,13 +321,13 @@ export default function HomePage() {
       </Section>
 
       {/* Final Call to Action */}
-      <Section className="py-32">
+      <Section className="py-16 sm:py-24 lg:py-32">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-ink leading-tight mb-8">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-6 sm:mb-8">
               Take Back Control of Your Wallet&apos;s Security
             </h2>
-            <p className="text-xl text-stone leading-relaxed mb-12">
+            <p className="text-lg sm:text-xl text-stone leading-relaxed mb-8 sm:mb-10 lg:mb-12">
               Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
             </p>
             
