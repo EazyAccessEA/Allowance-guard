@@ -11,7 +11,7 @@ function formatMoney(amountMinor: number, currency: string) {
   }).format((amountMinor || 0) / 100)
 }
 
-function formatDate(d: string) {
+function formatDate(d: string | Date) {
   return new Date(d).toLocaleString()
 }
 
