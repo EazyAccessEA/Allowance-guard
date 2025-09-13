@@ -68,7 +68,7 @@ export default function SharePage({ params }: { params: Promise<{ token: string 
                     <td className="font-mono">{r.amount}</td>
                     <td className="space-x-1">{r.badges.map((b, j) => (
                       <span key={j} className={`rounded px-2 py-0.5 text-xs ${
-                        b==='UNLIMITED' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-800'
+                        b==='UNLIMITED' ? 'bg-crimson/10 text-crimson' : 'bg-amber/10 text-amber'
                       }`}>{b}</span>
                     ))}</td>
                   </tr>

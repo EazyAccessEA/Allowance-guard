@@ -217,7 +217,7 @@ export default function ContactPage() {
               <div className="space-y-4">
                 <a 
                   href="mailto:security@allowanceguard.com?subject=Security Vulnerability Report"
-                  className="inline-flex items-center justify-center w-full px-8 py-4 bg-crimson text-white rounded-2xl font-light hover:bg-crimson/90 transition-colors duration-300"
+                  className="inline-flex items-center justify-center w-full px-8 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
                 >
                   <Shield className="w-5 h-5 mr-3" />
                   Compose an email to Security
@@ -253,7 +253,7 @@ export default function ContactPage() {
               </div>
               <a 
                 href="mailto:hello@allowanceguard.com?subject=Partnership Inquiry"
-                className="inline-flex items-center justify-center w-full px-8 py-4 bg-emerald text-white rounded-2xl font-light hover:bg-emerald/90 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-8 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
               >
                 <Users className="w-5 h-5 mr-3" />
                 Compose an email to Business
@@ -289,7 +289,7 @@ export default function ContactPage() {
                 href="https://discord.gg/allowanceguard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-6 py-4 bg-indigo-600 text-white rounded-2xl font-light hover:bg-indigo-700 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-6 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
               >
                 <MessageCircle className="w-5 h-5 mr-3" />
                 Join our Discord Server
@@ -310,7 +310,7 @@ export default function ContactPage() {
                 href="https://twitter.com/AllowanceGuard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-6 py-4 bg-blue-600 text-white rounded-2xl font-light hover:bg-blue-700 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-6 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
               >
                 <Twitter className="w-5 h-5 mr-3" />
                 Follow @AllowanceGuard
@@ -331,7 +331,7 @@ export default function ContactPage() {
                 href="https://github.com/AllowanceGuard"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-6 py-4 bg-gray-800 text-white rounded-2xl font-light hover:bg-gray-900 transition-colors duration-300"
+                className="inline-flex items-center justify-center w-full px-6 py-4 bg-cobalt text-white rounded-2xl font-light hover:bg-cobalt/90 transition-colors duration-300"
               >
                 <Github className="w-5 h-5 mr-3" />
                 View our GitHub
@@ -388,7 +388,7 @@ export default function ContactPage() {
               </p>
               <a 
                 href="/pgp-key.asc"
-                className="inline-flex items-center px-6 py-3 text-sm font-light text-crimson-600 border border-crimson-200 rounded-2xl hover:bg-crimson-50 transition-colors duration-300"
+                className="inline-flex items-center px-6 py-3 text-sm font-light text-cobalt border border-cobalt/20 rounded-2xl hover:bg-cobalt/5 transition-colors duration-300"
               >
                 <Download className="w-4 h-4 mr-2" />
                 Download our PGP Key

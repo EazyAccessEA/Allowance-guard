@@ -222,7 +222,7 @@ export default function UnsubscribePage() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors flex items-center"
+              className="px-6 py-3 bg-cobalt hover:bg-cobalt/90 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors flex items-center"
             >
               {status === 'loading' ? (
                 <>
