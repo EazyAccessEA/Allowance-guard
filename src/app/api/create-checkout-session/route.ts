@@ -23,7 +23,7 @@ export async function POST(req: Request) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'Donation to Allowance Guard',
+              name: 'Contribution to Allowance Guard',
             },
             unit_amount: amount,
           },

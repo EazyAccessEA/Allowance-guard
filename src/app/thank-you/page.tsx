@@ -36,7 +36,7 @@ export default function ThankYouPage() {
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Thank You for Your Support</H1>
           <p className="text-lg text-stone max-w-reading">
-            Your donation helps us keep Allowance Guard secure, sustainable, and free for everyone. Together, we&apos;re building a safer Web3 ecosystem.
+            Your contribution helps us keep Allowance Guard secure, sustainable, and free for everyone. Together, we&apos;re building a safer Web3 ecosystem.
           </p>
         </Container>
       </Section>
@@ -54,7 +54,7 @@ export default function ThankYouPage() {
 
             {/* Main Message */}
             <h2 className="text-3xl font-semibold text-ink mb-6">
-              Donation Successful
+              Contribution Successful
             </h2>
             <p className="text-lg text-stone leading-relaxed mb-8">
               Your contribution directly funds development, security audits, and infrastructure costs. We&apos;re grateful for your support in making Web3 security accessible to everyone.
@@ -88,13 +88,13 @@ export default function ThankYouPage() {
                 className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-ink border border-line hover:bg-mist rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
               >
                 <Heart className="w-4 h-4" />
-                <span>Make Another Donation</span>
+                <span>Make Another Contribution</span>
               </Link>
             </div>
 
             {/* Impact Section */}
             <div className="bg-gradient-to-r from-mist/30 to-warm-gray/30 border border-line rounded-2xl p-8">
-              <h3 className="text-xl font-semibold text-ink mb-6">How Your Donation Makes a Difference</h3>
+              <h3 className="text-xl font-semibold text-ink mb-6">How Your Contribution Makes a Difference</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                 <div className="space-y-2">
                   <h4 className="font-semibold text-ink">Development</h4>
@@ -126,7 +126,7 @@ export default function ThankYouPage() {
             {/* Additional Info */}
             <div className="mt-8 text-center">
               <p className="text-sm text-stone">
-                Questions about your donation? Contact us at{' '}
+                Questions about your contribution? Contact us at{' '}
                 <a 
                   href="mailto:support@allowanceguard.com" 
                   className="text-electric hover:text-cobalt transition-colors duration-200"

@@ -30,7 +30,7 @@ export default function ContributingPage() {
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Fuel the Mission: Support Allowance Guard&apos;s Development</H1>
           <p className="text-xl text-stone max-w-reading mb-8">
-            Allowance Guard is completely free to use and relies entirely on community donations to survive, improve, and expand. Your contribution directly funds the development of essential security infrastructure that protects the entire Web3 ecosystem.
+            Allowance Guard is completely free to use and relies entirely on community contributions to survive, improve, and expand. Your contribution directly funds the development of essential security infrastructure that protects the entire Web3 ecosystem.
           </p>
         </Container>
       </Section>
@@ -45,11 +45,11 @@ export default function ContributingPage() {
             
             <div className="space-y-8">
               <p className="text-lg text-stone leading-relaxed">
-                Your donation to Allowance Guard is not a payment for services rendered, but rather a contribution to a public good that benefits the entire Web3 ecosystem. Allowance Guard provides essential security infrastructure that protects millions of dollars in user funds by identifying and neutralizing dangerous token approvals before they can be exploited.
+                Your contribution to Allowance Guard is not a payment for services rendered, but rather a contribution to a public good that benefits the entire Web3 ecosystem. Allowance Guard provides essential security infrastructure that protects millions of dollars in user funds by identifying and neutralizing dangerous token approvals before they can be exploited.
               </p>
               
               <p className="text-lg text-stone leading-relaxed">
-                Every donation, regardless of size, directly translates into a safer Web3 for everyone. When you support Allowance Guard, you are investing in collective security. Your contribution enables us to maintain and improve the tools that prevent catastrophic losses from approval-based attacks, which accounted for 73% of all DeFi exploits in 2024, resulting in over $3.2 billion in losses.
+                Every contribution, regardless of size, directly translates into a safer Web3 for everyone. When you support Allowance Guard, you are investing in collective security. Your contribution enables us to maintain and improve the tools that prevent catastrophic losses from approval-based attacks, which accounted for 73% of all DeFi exploits in 2024, resulting in over $3.2 billion in losses.
               </p>
               
               <p className="text-lg text-stone leading-relaxed">
@@ -109,13 +109,13 @@ export default function ContributingPage() {
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">Multiple Payment Options</h3>
                 <p className="text-lg text-stone leading-relaxed mb-8">
-                  We accept donations through two secure payment methods: Stripe for traditional credit and debit cards, and Coinbase Commerce for cryptocurrency payments. Both options provide industry-standard encryption and fraud protection, giving you flexibility in how you choose to support the project.
+                  We accept contributions through two secure payment methods: Stripe for traditional credit and debit cards, and Coinbase Commerce for cryptocurrency payments. Both options provide industry-standard encryption and fraud protection, giving you flexibility in how you choose to support the project.
                 </p>
                 
                 <div className="bg-white border border-line rounded-lg p-8 text-center">
-                  <h4 className="text-xl font-semibold text-ink mb-6">Make a Donation</h4>
+                  <h4 className="text-xl font-semibold text-ink mb-6">Make a Contribution</h4>
                   <p className="text-base text-stone mb-8">
-                    Support Allowance Guard&apos;s development with a secure donation. Choose between credit/debit cards or cryptocurrency payments.
+                    Support Allowance Guard&apos;s development with a secure contribution. Choose between credit/debit cards or cryptocurrency payments.
                   </p>
                   <DonationButton />
                 </div>
@@ -124,14 +124,14 @@ export default function ContributingPage() {
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">Security and Verification</h3>
                 <p className="text-lg text-stone leading-relaxed">
-                  All donations are processed through trusted, secure payment processors. Stripe is a PCI-compliant payment processor trusted by millions of businesses worldwide, while Coinbase Commerce provides secure cryptocurrency payment processing. Your payment information is encrypted and never stored on our servers. We will never ask for donations through unsolicited communications or direct messages.
+                  All contributions are processed through trusted, secure payment processors. Stripe is a PCI-compliant payment processor trusted by millions of businesses worldwide, while Coinbase Commerce provides secure cryptocurrency payment processing. Your payment information is encrypted and never stored on our servers. We will never ask for contributions through unsolicited communications or direct messages.
                 </p>
               </div>
 
               <div>
                 <h3 className="text-2xl font-semibold text-ink mb-6">Recurring Contributions</h3>
                 <p className="text-lg text-stone leading-relaxed">
-                  For supporters who wish to provide ongoing support, we offer recurring donation options that allow you to contribute regularly to the project&apos;s sustainability. These recurring contributions help us maintain consistent development velocity and plan for long-term infrastructure investments.
+                  For supporters who wish to provide ongoing support, we offer recurring contribution options that allow you to contribute regularly to the project&apos;s sustainability. These recurring contributions help us maintain consistent development velocity and plan for long-term infrastructure investments.
                 </p>
               </div>
             </div>

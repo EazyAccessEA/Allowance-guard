@@ -29,16 +29,16 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     setError('')
 
     try {
-      const donationAmount = customAmount ? parseFloat(customAmount) : amount
+      const contributionAmount = customAmount ? parseFloat(customAmount) : amount
       
-      if (donationAmount < 1 || donationAmount > 10000) {
+      if (contributionAmount < 1 || contributionAmount > 10000) {
         setError('Please enter an amount between $1 and $10,000')
         return
       }
 
       if (paymentMethod === 'stripe') {
         // Stripe payment flow
-        const amountInCents = Math.round(donationAmount * 100)
+        const amountInCents = Math.round(contributionAmount * 100)
 
         const response = await fetch('/api/create-checkout-session', {
           method: 'POST',
@@ -75,7 +75,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            amount: donationAmount,
+            amount: contributionAmount,
             email: email || undefined,
             name: name || undefined,
             message: message || undefined
@@ -85,7 +85,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         const data = await response.json()
 
         if (!response.ok) {
-          throw new Error(data.error || 'Failed to create donation')
+          throw new Error(data.error || 'Failed to create contribution')
         }
 
         // Redirect to Coinbase Commerce checkout
@@ -119,7 +119,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         {/* Content */}
         <div className="space-y-6">
           <p className="text-base text-stone leading-relaxed">
-            Allowance Guard is <strong>100% free and open source</strong>. Your donations help us:
+            Allowance Guard is <strong>100% free and open source</strong>. Your contributions help us:
           </p>
           
           <ul className="text-base text-stone space-y-3 leading-relaxed">
@@ -281,7 +281,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               disabled={isLoading}
               className="flex-1 px-4 py-3 text-base font-medium text-white bg-gradient-to-r from-crimson to-pink-500 hover:from-crimson-hover hover:to-pink-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-crimson/30 disabled:opacity-50"
             >
-              {isLoading ? 'Processing...' : `Donate $${customAmount || amount}`}
+                    {isLoading ? 'Processing...' : `Contribute $${customAmount || amount}`}
             </button>
           </div>
         </div>

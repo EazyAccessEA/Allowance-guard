@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { apiLogger } from '@/lib/logger'
 // import { CommerceSDK } from 'commerce-node' // TODO: Fix API integration
 
-const DonationRequest = z.object({
+const ContributionRequest = z.object({
   amount: z.number().min(1).max(10000),
   email: z.string().email().optional(),
   name: z.string().optional(),
@@ -13,11 +13,11 @@ const DonationRequest = z.object({
 export async function POST(req: Request) {
   try {
     const json = await req.json().catch(() => ({}))
-    const parsed = DonationRequest.safeParse(json)
+    const parsed = ContributionRequest.safeParse(json)
     
     if (!parsed.success) {
-      apiLogger.warn('Invalid donation request', { errors: parsed.error.issues })
-      return NextResponse.json({ error: 'Invalid donation data' }, { status: 400 })
+      apiLogger.warn('Invalid contribution request', { errors: parsed.error.issues })
+      return NextResponse.json({ error: 'Invalid contribution data' }, { status: 400 })
     }
     
     const { amount, email } = parsed.data
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       hosted_url: 'https://allowanceguard.com/coming-soon' 
     }
     // const charge = await client.charges.create({
-    //   name: `Allowance Guard Donation - $${amount}`,
+    //   name: `Allowance Guard Contribution - $${amount}`,
     //   description: 'Support Allowance Guard development and maintenance',
     //   local_price: {
     //     amount: amount.toString(),
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     //   cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://allowanceguard.com'}`
     // })
     
-    apiLogger.info('Donation charge created', { 
+    apiLogger.info('Contribution charge created', { 
       chargeId: charge.id, 
       amount, 
       donorEmail: email || 'anonymous' 
@@ -63,9 +63,9 @@ export async function POST(req: Request) {
     })
     
   } catch (error) {
-    apiLogger.error('Donation creation failed', { 
+    apiLogger.error('Contribution creation failed', { 
       error: error instanceof Error ? error.message : 'Unknown error' 
     })
-    return NextResponse.json({ error: 'Donation creation failed' }, { status: 500 })
+    return NextResponse.json({ error: 'Contribution creation failed' }, { status: 500 })
   }
 }

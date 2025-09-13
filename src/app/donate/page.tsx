@@ -40,7 +40,7 @@ export default function DonatePage() {
     }
 
     if (minor > 1000000) { // $10,000 max
-      setError('Maximum donation is $10,000')
+      setError('Maximum contribution is $10,000')
       return
     }
 
@@ -105,7 +105,7 @@ export default function DonatePage() {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-crimson to-pink-500 rounded-full mb-4">
                   <Heart className="w-8 h-8 text-white fill-current" />
                 </div>
-                <h2 className="text-2xl font-semibold text-ink mb-2">Make a Donation</h2>
+                <h2 className="text-2xl font-semibold text-ink mb-2">Make a Contribution</h2>
                 <p className="text-base text-stone">
                   Enter an amount and checkout securely with Stripe
                 </p>
@@ -114,7 +114,7 @@ export default function DonatePage() {
               <div className="space-y-6">
                 <div>
                   <label className="block text-base font-medium text-ink mb-3" htmlFor="amount">
-                    Donation Amount
+                    Contribution Amount
                   </label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-stone" />
@@ -143,7 +143,7 @@ export default function DonatePage() {
                   ) : (
                     <>
                       <CreditCard className="w-5 h-5" />
-                      <span>Donate ${amount}</span>
+                      <span>Contribute ${amount}</span>
                     </>
                   )}
                 </button>
@@ -156,7 +156,7 @@ export default function DonatePage() {
 
                 <div className="text-center">
                   <p className="text-sm text-stone">
-                    Minimum donation is $1.00. Maximum is $10,000.
+                    Minimum contribution is $1.00. Maximum is $10,000.
                   </p>
                   <p className="text-xs text-stone mt-2">
                     Your payment is processed securely by Stripe. We never store your payment information.
@@ -167,7 +167,7 @@ export default function DonatePage() {
 
             {/* Additional Info */}
             <div className="mt-12 text-center">
-              <h3 className="text-xl font-semibold text-ink mb-4">How Your Donation Helps</h3>
+              <h3 className="text-xl font-semibold text-ink mb-4">How Your Contribution Helps</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                 <div className="bg-mist/30 rounded-lg p-6">
                   <h4 className="font-semibold text-ink mb-2">Development</h4>

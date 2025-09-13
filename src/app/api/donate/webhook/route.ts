@@ -39,7 +39,7 @@ export async function POST(req: Request) {
       const charge = event.data
       const metadata = charge.metadata
       
-      apiLogger.info('Donation confirmed', {
+      apiLogger.info('Contribution confirmed', {
         chargeId: charge.id,
         amount: charge.pricing.local.amount,
         currency: charge.pricing.local.currency,
