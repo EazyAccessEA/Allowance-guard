@@ -301,7 +301,7 @@ Content-Type: application/json`}
               </div>
               
               <div className="bg-white border border-line rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-ink mb-2">Low Risk (score < 10)</h4>
+                <h4 className="text-lg font-semibold text-ink mb-2">Low Risk (score &lt; 10)</h4>
                 <p className="text-stone">
                   Recent, limited allowances that are likely safe and actively used.
                 </p>
