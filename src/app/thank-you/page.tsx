@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
@@ -10,12 +10,58 @@ import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
-import { CheckCircle, Heart, ArrowLeft } from 'lucide-react'
+import { CheckCircle, Heart, ArrowLeft, Loader2, AlertCircle } from 'lucide-react'
+
+type PaymentStatus = 'idle' | 'verifying' | 'verified' | 'failed'
 
 export default function ThankYouPage() {
   const { isConnected } = useAccount()
   const params = useSearchParams()
   const sessionId = useMemo(() => params.get('session_id'), [params])
+  
+  const [status, setStatus] = useState<PaymentStatus>('idle')
+  const [amount, setAmount] = useState<number | null>(null)
+  const [currency, setCurrency] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const verify = async () => {
+      if (!sessionId) return
+      setStatus('verifying')
+      setError(null)
+      try {
+        const res = await fetch('/api/verify-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: sessionId }),
+        })
+        const data = await res.json()
+        if (!res.ok || !data.ok) throw new Error(data?.error || 'Verification failed')
+
+        if (data.payment_status === 'paid') {
+          setStatus('verified')
+          setAmount(data.amount_total ?? null)
+          setCurrency(data.currency ?? null)
+        } else {
+          setStatus('failed')
+          setError(`Payment status: ${data.payment_status}`)
+        }
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : 'Verification error'
+        setStatus('failed')
+        setError(errorMessage)
+      }
+    }
+    verify()
+  }, [sessionId])
+
+  const amountDisplay =
+    amount != null && currency
+      ? new Intl.NumberFormat(undefined, {
+          style: 'currency',
+          currency: (currency || 'usd').toUpperCase(),
+        }).format((amount || 0) / 100)
+      : null
 
   return (
     <div className="min-h-screen bg-white text-ink">
@@ -49,16 +95,49 @@ export default function ThankYouPage() {
           <div className="max-w-2xl mx-auto text-center">
             {/* Success Icon */}
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-emerald to-teal rounded-full mb-8">
-              <CheckCircle className="w-10 h-10 text-white fill-current" />
+              {status === 'verifying' ? (
+                <Loader2 className="w-10 h-10 text-white animate-spin" />
+              ) : status === 'failed' ? (
+                <AlertCircle className="w-10 h-10 text-white fill-current" />
+              ) : (
+                <CheckCircle className="w-10 h-10 text-white fill-current" />
+              )}
             </div>
 
             {/* Main Message */}
             <h2 className="text-3xl font-semibold text-ink mb-6">
-              Contribution Successful
+              {status === 'verifying' ? 'Verifying Your Contribution...' : 
+               status === 'failed' ? 'Contribution Verification Failed' : 
+               'Contribution Successful'}
             </h2>
             <p className="text-lg text-stone leading-relaxed mb-8">
-              Your contribution directly funds development, security audits, and infrastructure costs. We&apos;re grateful for your support in making Web3 security accessible to everyone.
+              {status === 'verifying' ? 'Please wait while we verify your payment...' :
+               status === 'failed' ? 'We encountered an issue verifying your contribution. Please contact support if you believe this is an error.' :
+               'Your contribution directly funds development, security audits, and infrastructure costs. We&apos;re grateful for your support in making Web3 security accessible to everyone.'}
             </p>
+
+            {/* Payment Status */}
+            {status === 'verified' && amountDisplay && (
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6 mb-8">
+                <p className="text-lg font-semibold text-emerald-800">
+                  Payment Confirmed: {amountDisplay}
+                </p>
+                <p className="text-sm text-emerald-700 mt-1">
+                  Your contribution has been successfully processed
+                </p>
+              </div>
+            )}
+
+            {status === 'failed' && error && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
+                <p className="text-lg font-semibold text-red-800">
+                  Verification Failed
+                </p>
+                <p className="text-sm text-red-700 mt-1">
+                  {error}
+                </p>
+              </div>
+            )}
 
             {/* Session ID Display */}
             {sessionId && (
@@ -83,13 +162,15 @@ export default function ThankYouPage() {
                 <span>Back to Home</span>
               </Link>
               
-              <Link
-                href="/donate"
-                className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-ink border border-line hover:bg-mist rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
-              >
-                <Heart className="w-4 h-4" />
-                <span>Make Another Contribution</span>
-              </Link>
+              {status === 'verified' && (
+                <Link
+                  href="/donate"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-ink border border-line hover:bg-mist rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+                >
+                  <Heart className="w-4 h-4" />
+                  <span>Make Another Contribution</span>
+                </Link>
+              )}
             </div>
 
             {/* Impact Section */}
