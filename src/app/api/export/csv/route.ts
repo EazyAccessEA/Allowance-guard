@@ -32,14 +32,14 @@ export async function GET(req: Request) {
     'standard','allowance_type','amount_raw','is_unlimited','risk_score','risk_flags','last_seen_block'
   ]
   
-  const esc = (v: any) => {
+  const esc = (v: unknown) => {
     const s = v == null ? '' : String(v)
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
   }
   
   const csv = [
     header.join(','),
-    ...rows.map((r: any) =>
+    ...rows.map((r: Record<string, unknown>) =>
       [
         wallet, r.chain_id, r.token_address, r.token_symbol || '', r.token_name || '',
         r.spender_address, r.spender_label || '',

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Container from '@/components/ui/Container'
 import { H1 } from '@/components/ui/Heading'
 
@@ -24,7 +24,7 @@ export default function ReportPage({ params }: { params: { wallet: string } }) {
   const [riskOnly, setRiskOnly] = useState(true)
   const [loading, setLoading] = useState(true)
 
-  async function load() {
+  const load = useCallback(async () => {
     setLoading(true)
     try {
       const r = await fetch(`/api/allowances?wallet=${params.wallet}&riskOnly=${riskOnly}&page=1&pageSize=1000`)
@@ -35,11 +35,11 @@ export default function ReportPage({ params }: { params: { wallet: string } }) {
       setRows([])
     }
     setLoading(false)
-  }
+  }, [params.wallet, riskOnly])
 
   useEffect(() => { 
     load() 
-  }, [riskOnly, params.wallet])
+  }, [load])
 
   return (
     <main className="min-h-screen bg-white">

@@ -2,7 +2,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import WalletManager from '@/components/WalletManager'
 import AllowanceTable from '@/components/AllowanceTable'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface AppAreaProps {
   isConnected: boolean
@@ -36,14 +36,15 @@ export default function AppArea({
   const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
   const [monitorFreq, setMonitorFreq] = useState(720)
 
-  async function loadMonitor() {
+  const loadMonitor = useCallback(async () => {
     const target = selectedWallet || connectedAddress
     if (!target) return
     const r = await fetch(`/api/monitor?wallet=${target}`)
     const j = await r.json()
     if (j.monitor) { setMonitorOn(j.monitor.enabled); setMonitorFreq(j.monitor.freq_minutes) }
-  }
-  useEffect(() => { loadMonitor() }, [selectedWallet, connectedAddress])
+  }, [selectedWallet, connectedAddress])
+  
+  useEffect(() => { loadMonitor() }, [loadMonitor])
 
   async function saveMonitor() {
     const target = selectedWallet || connectedAddress

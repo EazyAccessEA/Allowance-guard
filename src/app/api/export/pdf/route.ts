@@ -30,9 +30,9 @@ export async function GET(req: Request) {
 
   const doc = new PDFDocument({ size: 'A4', margin: 40 })
   const chunks: Buffer[] = []
-  let resolveCb: (v: any) => void
-  const stream = doc.on('data', (c: Buffer) => chunks.push(c)).on('end', () => resolveCb(true))
-  const done = new Promise(res => (resolveCb = res))
+  let resolveCb: (v: boolean) => void
+  doc.on('data', (c: Buffer) => chunks.push(c)).on('end', () => resolveCb(true))
+  const done = new Promise<boolean>(res => (resolveCb = res))
 
   // Header
   doc.fontSize(18).text('Allowance Guard — Report', { continued: false })
@@ -63,7 +63,7 @@ export async function GET(req: Request) {
   doc.moveTo(x0, doc.y).lineTo(555, doc.y).strokeColor('#ddd').stroke().moveDown(0.3)
 
   // Rows
-  const fmt = (r: any) => ({
+  const fmt = (r: Record<string, unknown>) => ({
     chain: r.chain_id,
     token: r.token_symbol || r.token_name || r.token_address,
     spender: r.spender_label || r.spender_address,
