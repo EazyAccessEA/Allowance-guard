@@ -6,7 +6,7 @@ import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import Link from 'next/link'
-import { Shield, Eye, Settings, Zap, Users, Bell, Globe, AlertTriangle } from 'lucide-react'
+import { Eye, Settings } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 
 export default function FeaturesPage() {
@@ -28,102 +28,83 @@ export default function FeaturesPage() {
         />
         
         <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Features</H1>
-          <p className="text-base text-stone max-w-reading mb-8">
-            Everything you need to secure your wallet. Free, open source, and built for privacy.
+          <H1 className="mb-6">Built for Clarity, Designed for Security</H1>
+          <p className="text-lg text-stone leading-relaxed mb-8">
+            Allowance Guard is engineered to solve one problem with ruthless efficiency: eliminating the hidden risk of token allowances. Every feature is designed to the PuredgeOS &apos;God-tier&apos; standard of clarity and performance, giving you unparalleled visibility and control over your wallet&apos;s permissions.
           </p>
         </Container>
       </Section>
 
       <div className="border-t border-line" />
 
-      {/* Core Features - Fireart Style */}
+      {/* Comprehensive Allowance Dashboard */}
       <Section className="py-32">
         <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-              <div className="space-y-12">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Multi-Network Support</h3>
-                    <p className="text-stone leading-relaxed">
-                      Scan across Ethereum, Arbitrum, and Base networks with unified results. 
-                      Comprehensive coverage ensures no approval goes unnoticed.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <AlertTriangle className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Advanced Risk Assessment</h3>
-                    <p className="text-stone leading-relaxed">
-                      Intelligent algorithms identify unlimited and stale approvals automatically. 
-                      Risk scoring helps prioritize the most critical security issues.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Bell className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Autonomous Monitoring</h3>
-                    <p className="text-stone leading-relaxed">
-                      Continuous monitoring with instant alerts when new approvals appear. 
-                      Email and Slack notifications keep you informed of changes.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-12">
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Users className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Team Collaboration</h3>
-                    <p className="text-stone leading-relaxed">
-                      Share wallet monitoring with role-based access control and invites. 
-                      Perfect for teams, institutions, and security professionals.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Zap className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">One-Click Revocation</h3>
-                    <p className="text-stone leading-relaxed">
-                      Revoke risky approvals instantly with gas-optimized transactions. 
-                      Direct links to explorers and guided revocation flows.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-6">
-                  <div className="w-12 h-12 bg-electric/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-6 h-6 text-electric" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Privacy First</h3>
-                    <p className="text-stone leading-relaxed">
-                      Local processing ensures your data never leaves your browser. 
-                      No private keys, no data storage, complete privacy protection.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Comprehensive Allowance Dashboard</h2>
+            <p className="text-lg text-stone leading-relaxed">
+              See every token approval your wallet has ever granted in one unified, clear view. Our system continuously indexes the blockchain to present a real-time ledger of all spenders, tokens, and amounts. The benefit for you is a complete audit of your wallet&apos;s security posture, transforming invisible risks into a manageable list. This eliminates the tedious and error-prone process of manually checking allowances on a block explorer.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Intelligent Risk Assessment */}
+      <Section className="py-32 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Intelligent Risk Assessment</h2>
+            <p className="text-lg text-stone leading-relaxed">
+              Each allowance is automatically evaluated by our heuristic-based risk engine. We analyze key threat vectors including unlimited approvals, interactions with known malicious contracts, anomalously large amounts, and unverified contract code. The benefit for you is prioritized action; you immediately see which allowances pose the greatest threat, so you can focus your attention where it matters most. This is proactive security, not passive observation.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Gas-Efficient Revocation */}
+      <Section className="py-32">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Gas-Efficient Revocation</h2>
+            <p className="text-lg text-stone leading-relaxed">
+              Execute revocations directly from the dashboard with a single click. For individual approvals, we construct the optimal approve(spender, 0) transaction. For multiple revokes, we leverage a custom, gas-optimized BatchRevoke smart contract to bundle actions and save significantly on network fees. The benefit for you is maximum security with minimal effort and cost. You reclaim control of your wallet with one action, executed securely through your own wallet provider.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Time Machine Simulation */}
+      <Section className="py-32 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Time Machine Simulation</h2>
+            <p className="text-lg text-stone leading-relaxed">
+              Plan your security strategy without committing on-chain transactions. Our Time Machine feature allows you to hypothetically revoke allowances and instantly see the resulting change to your overall risk profile. The benefit for you is confidence and education. You can experiment with different actions risk-free, understand the impact of your decisions, and optimize for security before spending any gas.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Non-Custodial Architecture */}
+      <Section className="py-32">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Non-Custodial by Design</h2>
+            <p className="text-lg text-stone leading-relaxed">
+              This is a fundamental architecture, not just a feature. Your connection is read-only for allowance data. All revocation transactions are proposed, signed, and broadcasted directly from your own wallet (MetaMask, WalletConnect, etc.). The benefit for you is absolute security and control. We never hold, nor can we ever access, your private keys, seed phrases, or assets. Your sovereignty is non-negotiable.
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Clarity-First User Experience */}
+      <Section className="py-32 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-semibold text-ink mb-8">Clarity-First User Experience</h2>
+            <p className="text-lg text-stone leading-relaxed">
+              Every interface element adheres to the PuredgeOS philosophy. This means intentional information hierarchy, purposeful microcopy written to an ~8th-grade reading level, accessible color contrasts, and immediate system feedback. The benefit for you is instant comprehension and zero cognitive overload. You are never left wondering what a term means, what an action will do, or what the state of the system is.
+            </p>
           </div>
         </Container>
       </Section>
