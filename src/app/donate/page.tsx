@@ -9,14 +9,15 @@ import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
-import { DollarSign, Heart, CreditCard } from 'lucide-react'
+import { DollarSign, Heart, CreditCard, Coins } from 'lucide-react'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
 export default function DonatePage() {
   const { isConnected } = useAccount()
   const [amount, setAmount] = useState<string>('25.00')
-  const [loading, setLoading] = useState(false)
+  const [loadingCard, setLoadingCard] = useState(false)
+  const [loadingCrypto, setLoadingCrypto] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   // Convert amount to Stripe amount in cents (USD)
@@ -30,7 +31,7 @@ export default function DonatePage() {
     return Math.round(num * 100)
   }
 
-  const handleDonate = async () => {
+  const handleStripeDonate = async () => {
     setError(null)
 
     const minor = toMinorUnits(amount)
@@ -45,7 +46,7 @@ export default function DonatePage() {
     }
 
     try {
-      setLoading(true)
+      setLoadingCard(true)
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -66,7 +67,45 @@ export default function DonatePage() {
       if (error) throw error
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
-      setLoading(false)
+      setLoadingCard(false)
+    }
+  }
+
+  const handleCryptoDonate = async () => {
+    setError(null)
+
+    const minor = toMinorUnits(amount)
+    if (!minor || minor < 100) {
+      setError('Please enter at least $1.00')
+      return
+    }
+
+    if (minor > 1000000) { // $10,000 max
+      setError('Maximum contribution is $10,000')
+      return
+    }
+
+    try {
+      setLoadingCrypto(true)
+      const res = await fetch('/api/coinbase/create-charge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: minor, currency: 'USD' }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data?.error || 'Failed to create crypto charge')
+      }
+
+      const { hosted_url } = await res.json()
+      if (!hosted_url) throw new Error('No hosted URL returned from Coinbase')
+      
+      // Redirect the browser to Coinbase Hosted Checkout
+      window.location.href = hosted_url
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.')
+      setLoadingCrypto(false)
     }
   }
 
@@ -107,7 +146,7 @@ export default function DonatePage() {
                 </div>
                 <h2 className="text-2xl font-semibold text-ink mb-2">Make a Contribution</h2>
                 <p className="text-base text-stone">
-                  Enter an amount and checkout securely with Stripe
+                  Enter an amount and choose your payment method
                 </p>
               </div>
 
@@ -130,23 +169,44 @@ export default function DonatePage() {
                   </div>
                 </div>
 
-                <button
-                  onClick={handleDonate}
-                  disabled={loading}
-                  className="w-full flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Redirecting to Stripe...</span>
-                    </>
-                  ) : (
-                    <>
-                      <CreditCard className="w-5 h-5" />
-                      <span>Contribute ${amount}</span>
-                    </>
-                  )}
-                </button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    onClick={handleStripeDonate}
+                    disabled={loadingCard || loadingCrypto}
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loadingCard ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Redirecting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="w-5 h-5" />
+                        <span>Card (Stripe)</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={handleCryptoDonate}
+                    disabled={loadingCard || loadingCrypto}
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-white border border-line hover:bg-mist rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    title="Pay with ETH, USDC, BTC and more"
+                  >
+                    {loadingCrypto ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-ink border-t-transparent rounded-full animate-spin" />
+                        <span>Opening...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Coins className="w-5 h-5" />
+                        <span>Crypto (Coinbase)</span>
+                      </>
+                    )}
+                  </button>
+                </div>
 
                 {error && (
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -159,7 +219,7 @@ export default function DonatePage() {
                     Minimum contribution is $1.00. Maximum is $10,000.
                   </p>
                   <p className="text-xs text-stone mt-2">
-                    Your payment is processed securely by Stripe. We never store your payment information.
+                    Your payment is processed securely by Stripe or Coinbase Commerce. We never store your payment information.
                   </p>
                 </div>
               </div>
