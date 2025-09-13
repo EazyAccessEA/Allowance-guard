@@ -70,7 +70,7 @@ export async function GET(req: Request) {
     std: r.standard,
     type: r.allowance_type,
     amt: r.is_unlimited ? 'UNLIMITED' : r.amount,
-    badges: [r.is_unlimited ? 'UNLIMITED' : null, (r.risk_flags||[]).includes('STALE') ? 'STALE' : null].filter(Boolean).join(' ')
+    badges: [r.is_unlimited ? 'UNLIMITED' : null, Array.isArray(r.risk_flags) && r.risk_flags.includes('STALE') ? 'STALE' : null].filter(Boolean).join(' ')
   })
   
   for (const r of rows) {

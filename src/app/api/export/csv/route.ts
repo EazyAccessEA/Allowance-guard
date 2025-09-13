@@ -44,7 +44,7 @@ export async function GET(req: Request) {
         wallet, r.chain_id, r.token_address, r.token_symbol || '', r.token_name || '',
         r.spender_address, r.spender_label || '',
         r.standard, r.allowance_type, r.amount, r.is_unlimited ? 'true' : 'false',
-        r.risk_score ?? 0, (r.risk_flags || []).join('|'), r.last_seen_block
+        r.risk_score ?? 0, Array.isArray(r.risk_flags) ? r.risk_flags.join('|') : '', r.last_seen_block
       ].map(esc).join(',')
     )
   ].join('\n')
