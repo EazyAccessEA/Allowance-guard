@@ -16,6 +16,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY 
 export default function ContributePage() {
   const { isConnected } = useAccount()
   const [amount, setAmount] = useState<string>('25.00')
+  const [email, setEmail] = useState('')
   const [loadingCard, setLoadingCard] = useState(false)
   const [loadingCrypto, setLoadingCrypto] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -50,7 +51,7 @@ export default function ContributePage() {
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: minor }),
+        body: JSON.stringify({ amount: minor, email }),
       })
 
       if (!res.ok) {
@@ -90,7 +91,7 @@ export default function ContributePage() {
       const res = await fetch('/api/coinbase/create-charge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: minor, currency: 'USD' }),
+        body: JSON.stringify({ amount: minor, currency: 'USD', email }),
       })
 
       if (!res.ok) {
@@ -167,6 +168,20 @@ export default function ContributePage() {
                       className="w-full px-3 py-4 pl-10 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-electric/30 focus:border-electric transition-colors duration-200"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-base font-medium text-ink mb-3" htmlFor="email">
+                    Email (for receipt / reference)
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="w-full px-3 py-4 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-electric/30 focus:border-electric transition-colors duration-200"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

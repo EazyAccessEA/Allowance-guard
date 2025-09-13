@@ -22,6 +22,7 @@ export const coinbaseDonations = pgTable('coinbase_donations', {
   hostedUrl:     text('hosted_url'),
   localAmount:   integer('local_amount').notNull(),
   localCurrency: text('local_currency').notNull(),
+  email:         text('email'),
   metadata:      jsonb('metadata'),
   createdAt:     timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   updatedAt:     timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),

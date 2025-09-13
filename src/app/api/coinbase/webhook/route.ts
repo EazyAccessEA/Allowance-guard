@@ -84,6 +84,7 @@ export async function POST(req: Request) {
   const localAmountStr = data?.pricing?.local?.amount
   const localCurrency = (data?.pricing?.local?.currency || 'GBP').toUpperCase()
   const localAmountMinor = toMinorUnits(localAmountStr) ?? 0
+  const email = (data?.metadata?.email as string) || null
 
   const status = extractStatusFromTimeline(data.timeline, ev.type.split(':')[1]) // use timeline if present, fallback to event type suffix
   const hostedUrl = data.hosted_url || null
@@ -93,9 +94,9 @@ export async function POST(req: Request) {
     // Upsert by charge_code: insert new or update status/metadata on subsequent events
     await db.execute(sql`
       INSERT INTO coinbase_donations (
-        charge_code, last_event_id, status, hosted_url, local_amount, local_currency, metadata, created_at, updated_at
+        charge_code, last_event_id, status, hosted_url, local_amount, local_currency, metadata, email, created_at, updated_at
       ) VALUES (
-        ${chargeCode}, ${lastEventId}, ${status}, ${hostedUrl}, ${localAmountMinor}, ${localCurrency}, ${JSON.stringify(data)}, NOW(), NOW()
+        ${chargeCode}, ${lastEventId}, ${status}, ${hostedUrl}, ${localAmountMinor}, ${localCurrency}, ${JSON.stringify(data)}, ${email}, NOW(), NOW()
       )
       ON CONFLICT (charge_code) DO UPDATE
       SET
@@ -108,6 +109,7 @@ export async function POST(req: Request) {
                         END,
         local_currency= EXCLUDED.local_currency,
         metadata      = EXCLUDED.metadata,
+        email         = COALESCE(EXCLUDED.email, coinbase_donations.email),
         updated_at    = NOW()
     `)
 

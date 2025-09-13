@@ -35,13 +35,14 @@ export default async function AdminCryptoDonationsPage() {
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Amount</th>
               <th className="px-4 py-3">Currency</th>
+              <th className="px-4 py-3">Email</th>
               <th className="px-4 py-3">Hosted</th>
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-gray-500">
+                <td colSpan={7} className="px-4 py-6 text-center text-gray-500">
                   No crypto contributions yet.
                 </td>
               </tr>
@@ -53,6 +54,7 @@ export default async function AdminCryptoDonationsPage() {
                   <td className="px-4 py-3">{r.status}</td>
                   <td className="px-4 py-3 whitespace-nowrap">{formatMoney(r.localAmount, r.localCurrency)}</td>
                   <td className="px-4 py-3">{r.localCurrency}</td>
+                  <td className="px-4 py-3">{r.email ?? '—'}</td>
                   <td className="px-4 py-3">
                     {r.hostedUrl ? (
                       <a className="text-blue-600 underline" href={r.hostedUrl} target="_blank" rel="noreferrer">
