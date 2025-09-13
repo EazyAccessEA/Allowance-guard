@@ -46,7 +46,7 @@ export default function IntegrationPage() {
             
             <h3 className="text-2xl font-semibold text-ink mb-6">Integration Flow</h3>
             <p className="text-lg text-stone leading-relaxed mb-8">
-              The standard integration flow is: 1) Your UI prompts the user to check allowances. 2) Your backend calls our allowances API endpoint for the user's address. 3) Your frontend displays the returned list of allowances with their risk scores. 4) When a user chooses to revoke, your frontend calls the appropriate token contract's approve method via the user's wallet.
+              The standard integration flow is: 1) Your UI prompts the user to check allowances. 2) Your backend calls our allowances API endpoint for the user&apos;s address. 3) Your frontend displays the returned list of allowances with their risk scores. 4) When a user chooses to revoke, your frontend calls the appropriate token contract&apos;s approve method via the user&apos;s wallet.
             </p>
           </div>
         </Container>
@@ -371,7 +371,7 @@ Risk Level:
             <div className="bg-white border border-line rounded-lg p-6">
               <h4 className="text-lg font-semibold text-ink mb-2">Integration Support</h4>
               <p className="text-stone mb-4">
-                We provide dedicated support for integration partners. Contact us at support@allowanceguard.com with "Integration Support" in the subject line for priority assistance.
+                We provide dedicated support for integration partners. Contact us at support@allowanceguard.com with &quot;Integration Support&quot; in the subject line for priority assistance.
               </p>
               <a 
                 href="mailto:support@allowanceguard.com?subject=Integration Support"
