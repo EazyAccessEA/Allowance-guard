@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import { createHmac, timingSafeEqual } from 'crypto'
 import { db } from '@/db'
-import { coinbaseDonations } from '@/db/schema'
+// import { coinbaseDonations } from '@/db/schema' // TODO: Implement when needed
 import { sql } from 'drizzle-orm'
 
 export const runtime = 'nodejs'
@@ -70,7 +70,7 @@ export async function POST(req: Request) {
   let payload: CoinbaseEventEnvelope
   try {
     payload = JSON.parse(raw)
-  } catch (e: unknown) {
+  } catch {
     return new NextResponse('Invalid JSON', { status: 400 })
   }
 

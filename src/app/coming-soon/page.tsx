@@ -14,7 +14,7 @@ export default function ComingSoonPage() {
         <Container className="text-center">
           <H1 className="mb-8">Coming Soon</H1>
           <p className="text-xl text-stone leading-relaxed mb-8 max-w-2xl mx-auto">
-            This feature is currently under development. We're working hard to bring you the best possible experience.
+            This feature is currently under development. We&apos;re working hard to bring you the best possible experience.
           </p>
           <Link 
             href="/"

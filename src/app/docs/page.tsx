@@ -43,12 +43,12 @@ export default function DocsPage() {
     { name: "Base", chainId: 8453, status: "Full Support" }
   ]
 
-  const riskFactors = [
-    { factor: "Unlimited Approvals", score: "+50", description: "Contract can spend any amount" },
-    { factor: "Stale Approvals", score: "+10", description: "Unused for extended periods" },
-    { factor: "High Value", score: "Variable", description: "Significant financial exposure" },
-    { factor: "Unknown Spenders", score: "Variable", description: "Unverified contracts" }
-  ]
+  // const riskFactors = [
+  //   { factor: "Unlimited Approvals", score: "+50", description: "Contract can spend any amount" },
+  //   { factor: "Stale Approvals", score: "+10", description: "Unused for extended periods" },
+  //   { factor: "High Value", score: "Variable", description: "Significant financial exposure" },
+  //   { factor: "Unknown Spenders", score: "Variable", description: "Unverified contracts" }
+  // ]
 
   const alertFeatures = [
     { type: "Email Alerts", description: "Daily digests via Microsoft SMTP", features: ["Risk-only filtering", "HTML templates", "Customizable preferences"] },
