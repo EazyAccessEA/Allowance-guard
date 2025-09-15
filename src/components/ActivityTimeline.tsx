@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
+import { explorerTx } from '@/lib/networks'
 
 type Receipt = {
   id: number
@@ -17,12 +18,6 @@ type Receipt = {
   verified_at?: string | null
 }
 
-function explorerFor(chainId: number) {
-  if (chainId === 1) return 'https://etherscan.io'
-  if (chainId === 42161) return 'https://arbiscan.io'
-  if (chainId === 8453) return 'https://basescan.org'
-  return ''
-}
 
 export default function ActivityTimeline({ wallet }: { wallet: string }) {
   const [items, setItems] = useState<Receipt[]>([])
@@ -54,8 +49,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
       {!loading && items.length === 0 && <div className="text-sm mt-2 text-stone">No recent revocations yet.</div>}
       <div className="mt-3 space-y-3">
         {items.map((r) => {
-          const ex = explorerFor(r.chain_id)
-          const url = ex ? `${ex}/tx/${r.tx_hash}` : '#'
+          const url = explorerTx(r.chain_id, r.tx_hash)
           const badge =
             r.status === 'verified' ? 'bg-emerald/10 text-emerald border border-emerald/20' :
             r.status === 'pending'  ? 'bg-cobalt/10 text-cobalt border border-cobalt/20' :

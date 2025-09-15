@@ -24,5 +24,5 @@ export async function cacheSet(key: string, val: unknown, ttlSec = 30) {
 export async function cacheDel(pattern: string) {
   if (!ready) return
   const it = client.scanIterator({ MATCH: pattern, COUNT: 100 })
-  for await (const k of it) await client.del(k as string)
+  for await (const k of it) await client.del(k as unknown as string)
 }

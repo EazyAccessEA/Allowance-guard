@@ -4,6 +4,8 @@ import { createClient } from 'redis'
 import { getBlockNumber } from 'viem/actions'
 import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
+import { clientFor } from '@/lib/chains'
+import { enabledChainIds } from '@/lib/networks'
 
 export const runtime = 'nodejs'
 
@@ -49,6 +51,18 @@ export async function GET() {
   } catch (e: unknown) { 
     out.ok = false
     out.checks.rpc = e instanceof Error ? e.message : 'Unknown error'
+  }
+
+  // Per-chain health checks
+  out.checks.chains = {}
+  for (const id of enabledChainIds()) {
+    try {
+      const bn = await getBlockNumber(clientFor(id))
+      out.checks.chains[id] = `ok:${bn}`
+    } catch (e: unknown) {
+      out.ok = false
+      out.checks.chains[id] = `fail:${e instanceof Error ? e.message?.slice(0,120) : 'Unknown error'}`
+    }
   }
 
   return NextResponse.json(out, { status: out.ok ? 200 : 503 })

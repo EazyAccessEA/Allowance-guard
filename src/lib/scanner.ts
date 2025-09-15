@@ -3,6 +3,7 @@ import { clientFor } from './chains'
 import { ERC20_Approval, ERC721_ApprovalForAll } from './abi'
 import { upsertAllowance } from './db'
 import { withRetry } from './retry'
+import { enabledChainIds } from './networks'
 
 const CHUNK = BigInt(50_000)  // adjust if RPC complains
 const UINT256_MAX = (BigInt(1) << BigInt(256)) - BigInt(1)
@@ -82,5 +83,12 @@ export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453) {
         lastSeenBlock: BigInt(log.blockNumber)
       })
     }
+  }
+}
+
+export async function scanWalletOnAllChains(wallet: string, chainIds?: Array<1|42161|8453>) {
+  const ids = (chainIds && chainIds.length) ? chainIds : enabledChainIds()
+  for (const id of ids) {
+    await scanWalletOnChain(wallet, id)
   }
 }

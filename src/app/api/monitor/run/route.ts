@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
 import { enqueueScan } from '@/lib/jobs'
-
-const CHAINS = [1, 42161, 8453]
+import { enabledChainIds } from '@/lib/networks'
 
 export async function POST() {
   // Pick monitors that are enabled and due
@@ -16,7 +15,7 @@ export async function POST() {
   `)
   const queued: Array<{wallet:string, jobId:number}> = []
   for (const r of rows) {
-    const jobId = await enqueueScan(r.wallet_address.toLowerCase(), CHAINS)
+    const jobId = await enqueueScan(r.wallet_address.toLowerCase(), enabledChainIds())
     queued.push({ wallet: r.wallet_address, jobId })
   }
   return NextResponse.json({ ok: true, queued })
