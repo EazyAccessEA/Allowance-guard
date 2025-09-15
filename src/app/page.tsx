@@ -145,7 +145,7 @@ export default function HomePage() {
         
         <Container className="relative z-10">
           <div className="max-w-4xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-6 sm:mb-8 h-[2.2em]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-8 sm:mb-8 h-[2.2em]">
               <RotatingTypewriter 
                 staticPrefix="The power to "
                 messages={[
