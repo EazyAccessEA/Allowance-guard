@@ -206,7 +206,11 @@ export default function Footer() {
             <div className="text-stone text-sm">
               © {new Date().getFullYear()} Allowance Guard. Open source & free for everyone.
             </div>
-            <div className="mt-4 md:mt-0">
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 md:mt-0">
+              {/* Support Us button - visible on mobile */}
+              <div className="md:hidden">
+                <DonationButton />
+              </div>
               <Link 
                 href="/newsletter" 
                 className="text-stone hover:text-ink transition-colors duration-200 text-sm"
