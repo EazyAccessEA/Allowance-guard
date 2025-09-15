@@ -130,7 +130,7 @@ export default function HomePage() {
       <Header isConnected={isConnected} />
       
       {/* Hero Section - Fireart Style with Animated Background */}
-      <Section className="relative pt-20 pb-16 sm:pt-24 sm:pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
+      <Section className="relative pt-20 pb-20 sm:pt-24 sm:pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
         {/* Video Background */}
         <VideoBackground 
           videoSrc="/V3AG.mp4"
@@ -160,7 +160,7 @@ export default function HomePage() {
                 className=""
               />
             </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl text-stone leading-relaxed mb-8 sm:mb-10 lg:mb-12 max-w-3xl">
+            <p className="text-lg sm:text-xl lg:text-2xl text-stone leading-relaxed mb-12 sm:mb-10 lg:mb-12 max-w-3xl">
               A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
             </p>
           </div>
