@@ -7,6 +7,7 @@ import { enrichWallet } from '@/lib/enrich'
 import { driftCheckAndNotify } from '@/lib/drift'
 import { pool } from '@/lib/db'
 import { withTimeout } from '@/lib/retry'
+import { cacheDel } from '@/lib/cache'
 import * as Sentry from '@sentry/nextjs'
 
 async function handle(job: JobRow) {
@@ -31,6 +32,9 @@ async function handle(job: JobRow) {
      WHERE wallet_address=$1`,
     [wallet.toLowerCase()]
   )
+  
+  // Invalidate cache after scan → risk → enrich operations
+  await cacheDel(`allow:${wallet.toLowerCase()}:*`)
   
   apiLogger.info('Scan job completed', { jobId: job.id, wallet })
 }

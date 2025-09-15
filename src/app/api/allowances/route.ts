@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
 import { withReq } from '@/lib/logger'
+import { cacheGet, cacheSet } from '@/lib/cache'
 
 export const runtime = 'nodejs'
 
@@ -18,6 +19,13 @@ export async function GET(req: Request) {
   if (!/^0x[a-f0-9]{40}$/.test(wallet)) {
     L.warn('allowances.fetch.invalid_wallet', { wallet })
     return NextResponse.json({ error: 'Invalid wallet' }, { status: 400 })
+  }
+
+  // Check cache first
+  const cacheKey = `allow:${wallet}:${riskOnly}:${page}:${pageSize}`
+  const cached = await cacheGet(cacheKey)
+  if (cached) {
+    return NextResponse.json(cached, { headers: { 'cache-control': 'private, max-age=15' } })
   }
 
   const offset = (page - 1) * pageSize
@@ -42,12 +50,17 @@ export async function GET(req: Request) {
 
     L.info('allowances.fetch.success', { wallet, count: rows.length, total: countRes.rows[0].total })
 
-    return NextResponse.json({ 
+    const payload = { 
       allowances: rows, 
       page, 
       pageSize, 
       total: countRes.rows[0].total 
-    })
+    }
+    
+    // Cache the result for 15 seconds
+    await cacheSet(cacheKey, payload, 15)
+    
+    return NextResponse.json(payload, { headers: { 'cache-control': 'private, max-age=15' } })
   } catch (error) {
     L.error('allowances.fetch.error', { 
       error: error instanceof Error ? error.message : 'Unknown error',

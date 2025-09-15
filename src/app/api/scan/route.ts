@@ -30,15 +30,18 @@ export async function POST(req: Request) {
     const addr = parsed.data.walletAddress.toLowerCase()
     const chains = parsed.data.chains.map(c => MAP[c])
     
-    // Check for recent scan to prevent duplicates
-    if (await hasRecentScan(addr)) {
-      L.info('scan.queue.duplicate', { wallet: addr })
-      return NextResponse.json({ ok: true, message: 'Scan already in progress' })
-    }
-    
     L.info('Enqueueing wallet scan', { address: addr, chains })
     
-    const jobId = await enqueueScan(addr, chains)
+    let jobId: number
+    try {
+      jobId = await enqueueScan(addr, chains)
+    } catch (e: any) {
+      if (String(e.message || '').includes('uniq_jobs_active_wallet')) {
+        L.info('scan.queue.duplicate', { wallet: addr })
+        return NextResponse.json({ ok: true, message: 'Scan already in progress' })
+      }
+      throw e
+    }
     
     L.info('scan.queue.ok', { wallet: addr, jobId })
     

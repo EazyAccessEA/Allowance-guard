@@ -36,5 +36,5 @@ export async function GET(_req: Request, { params }: { params: Promise<{ token: 
     risk_only: share.risk_only,
     expires_at: share.expires_at,
     items: data
-  })
+  }, { headers: { 'cache-control': 'public, max-age=60' } })
 }

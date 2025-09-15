@@ -1,6 +1,7 @@
 import { pool } from '@/lib/db'
 import { clientFor } from './chains'
 import { ERC20_READ_ABI, ERC721_READ_ABI } from './abi'
+import { cacheGet, cacheSet } from '@/lib/cache'
 
 const TTL_DAYS = 30 // refresh every ~month
 
@@ -11,12 +12,23 @@ function isFresh(updatedAt?: string | null) {
 
 export async function getTokenMeta(chainId: number, token: string) {
   token = token.toLowerCase()
+  
+  // Check cache first
+  const k = `meta:${chainId}:${token}`
+  const cached = await cacheGet(k)
+  if (cached) return cached
+  
   const { rows } = await pool.query(
     `SELECT standard, name, symbol, decimals, to_char(updated_at, 'YYYY-MM-DD"T"HH24:MI:SS"Z"') as updated_iso
        FROM token_metadata WHERE chain_id=$1 AND token_address=$2`,
     [chainId, token]
   )
-  return rows[0] || null
+  
+  const result = rows[0] || null
+  if (result) {
+    await cacheSet(k, result, 86400) // 1 day cache
+  }
+  return result
 }
 
 export async function saveTokenMeta(chainId: number, token: string, standard:'ERC20'|'ERC721'|'ERC1155'|'UNKNOWN', name:string|null, symbol:string|null, decimals:number|null) {
@@ -28,6 +40,9 @@ export async function saveTokenMeta(chainId: number, token: string, standard:'ER
                    decimals=EXCLUDED.decimals, updated_at=NOW()`,
     [chainId, token.toLowerCase(), standard, name, symbol, decimals]
   )
+  
+  // Update cache after saving to DB
+  await cacheSet(`meta:${chainId}:${token.toLowerCase()}`, { standard, name, symbol, decimals }, 86400)
 }
 
 export async function enrichTokenMeta(chainId: number, token: string, standardGuess?: string) {
@@ -76,12 +91,22 @@ export async function enrichTokenMeta(chainId: number, token: string, standardGu
 // --- Spender labels ---
 
 export async function getSpenderLabel(chainId: number, addr: string) {
+  // Check cache first
+  const ks = `label:${chainId}:${addr.toLowerCase()}`
+  const c2 = await cacheGet(ks)
+  if (c2) return c2
+  
   const { rows } = await pool.query(
     `SELECT label, trust, to_char(updated_at, 'YYYY-MM-DD"T"HH24:MI:SS"Z"') AS updated_iso
        FROM spender_labels WHERE chain_id=$1 AND address=$2`,
     [chainId, addr.toLowerCase()]
   )
-  return rows[0] || null
+  
+  const result = rows[0] || null
+  if (result) {
+    await cacheSet(ks, result, 86400) // 1 day cache
+  }
+  return result
 }
 
 export async function saveSpenderLabel(chainId: number, addr: string, label: string, trust:'official'|'curated'|'community'='community') {
@@ -92,4 +117,7 @@ export async function saveSpenderLabel(chainId: number, addr: string, label: str
      DO UPDATE SET label=EXCLUDED.label, trust=EXCLUDED.trust, updated_at=NOW()`,
     [chainId, addr.toLowerCase(), label, trust]
   )
+  
+  // Update cache after saving to DB
+  await cacheSet(`label:${chainId}:${addr.toLowerCase()}`, { label, trust }, 86400)
 }
