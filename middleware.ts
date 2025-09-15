@@ -36,7 +36,7 @@ export async function middleware(req: NextRequest) {
   let res: NextResponse | null = null
   for (const [prefix, cfg] of RATE_LIMIT_PATHS) {
     if (req.nextUrl.pathname.startsWith(prefix)) {
-      const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown'
+      const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
       const key = `${prefix}:${ip}`
       const now = Date.now()
       const rec = memoryBucket.get(key) || { reset: now + cfg.windowSec * 1000, count: 0 }

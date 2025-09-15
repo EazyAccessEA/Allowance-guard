@@ -21,3 +21,18 @@ export async function limitHit(key: string, windowSec: number, max: number) {
   const ttl = await client.ttl(bucket)
   return { allowed, remaining: Math.max(0, max - count), ttl }
 }
+
+export async function limitOrThrow(ip: string, endpoint: string) {
+  const limits: Record<string, { windowSec: number; max: number }> = {
+    'coinbase-charge': { windowSec: 60, max: 10 },
+    'stripe-checkout': { windowSec: 60, max: 10 },
+  }
+  
+  const config = limits[endpoint]
+  if (!config) return // no limit configured
+  
+  const result = await limitHit(`${endpoint}:${ip}`, config.windowSec, config.max)
+  if (!result.allowed) {
+    throw new Error('Rate limit exceeded')
+  }
+}
