@@ -71,25 +71,26 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
         }
       } else {
         // Coinbase Commerce payment flow
-        const response = await fetch('/api/donate/create', {
+        const amountInCents = Math.round(contributionAmount * 100)
+        
+        const response = await fetch('/api/coinbase/create-charge', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            amount: contributionAmount,
-            email: email || undefined,
-            name: name || undefined,
-            message: message || undefined
+            amount: amountInCents,
+            currency: 'USD',
+            email: email || undefined
           })
         })
 
         const data = await response.json()
 
         if (!response.ok) {
-          throw new Error(data.error || 'Failed to create contribution')
+          throw new Error(data.error || 'Failed to create crypto charge')
         }
 
         // Redirect to Coinbase Commerce checkout
-        window.location.href = data.checkoutUrl
+        window.location.href = data.hosted_url
       }
 
     } catch (err) {
