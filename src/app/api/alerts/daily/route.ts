@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { sendDailyDigests, sendSlackDigests } from '@/lib/alerts'
+import * as Sentry from '@sentry/nextjs'
 
 export const runtime = 'nodejs'
 
@@ -14,6 +15,7 @@ export async function GET() {
       slack: slackRes
     })
   } catch (error) {
+    Sentry.captureException(error)
     console.error('Daily digest error:', error)
     return NextResponse.json({ 
       ok: false, 
@@ -33,6 +35,7 @@ export async function POST() {
       slack: slackRes
     })
   } catch (error) {
+    Sentry.captureException(error)
     console.error('Daily digest error:', error)
     return NextResponse.json({ 
       ok: false, 

@@ -1,4 +1,16 @@
-type LogLevel = 'debug' | 'info' | 'warn' | 'error'
+export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
+
+function base(fields: Record<string, unknown>) { 
+  return { t: new Date().toISOString(), ...fields } 
+}
+
+export function log(level: LogLevel, msg: string, extra: Record<string, unknown> = {}) {
+  const obj = base({ lvl: level, msg, ...extra })
+  const line = JSON.stringify(obj)
+  if (level === 'error') console.error(line)
+  else if (level === 'warn') console.warn(line)
+  else console.log(line)
+}
 
 interface LogEntry {
   level: LogLevel
@@ -140,35 +152,8 @@ export function withReq(req: Request) {
   
   return {
     rid,
-    info: (msg: string, extra: Record<string, unknown> = {}) => {
-      const entry = {
-        level: 'info' as const,
-        message: msg,
-        data: { rid, ip, ...extra },
-        timestamp: new Date().toISOString(),
-        service: 'api'
-      }
-      console.info(`[${entry.timestamp}] [api] [INFO]`, msg, { rid, ip, ...extra })
-    },
-    warn: (msg: string, extra: Record<string, unknown> = {}) => {
-      const entry = {
-        level: 'warn' as const,
-        message: msg,
-        data: { rid, ip, ...extra },
-        timestamp: new Date().toISOString(),
-        service: 'api'
-      }
-      console.warn(`[${entry.timestamp}] [api] [WARN]`, msg, { rid, ip, ...extra })
-    },
-    error: (msg: string, extra: Record<string, unknown> = {}) => {
-      const entry = {
-        level: 'error' as const,
-        message: msg,
-        data: { rid, ip, ...extra },
-        timestamp: new Date().toISOString(),
-        service: 'api'
-      }
-      console.error(`[${entry.timestamp}] [api] [ERROR]`, msg, { rid, ip, ...extra })
-    },
+    info: (msg: string, extra: Record<string, unknown> = {}) => log('info', msg, { rid, ip, ...extra }),
+    warn: (msg: string, extra: Record<string, unknown> = {}) => log('warn', msg, { rid, ip, ...extra }),
+    error: (msg: string, extra: Record<string, unknown> = {}) => log('error', msg, { rid, ip, ...extra }),
   }
 }

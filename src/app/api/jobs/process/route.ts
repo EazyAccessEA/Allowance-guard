@@ -6,6 +6,8 @@ import { refreshRiskForWallet } from '@/lib/risk'
 import { enrichWallet } from '@/lib/enrich'
 import { driftCheckAndNotify } from '@/lib/drift'
 import { pool } from '@/lib/db'
+import { withTimeout } from '@/lib/retry'
+import * as Sentry from '@sentry/nextjs'
 
 async function handle(job: JobRow) {
   if (job.type !== 'scan_wallet') throw new Error(`Unknown job type: ${job.type}`)
@@ -15,7 +17,7 @@ async function handle(job: JobRow) {
   
   // Process chains sequentially (safe for RPC rate limits)
   for (const chainId of chains) {
-    await scanWalletOnChain(wallet, chainId as 1|42161|8453)
+    await withTimeout(scanWalletOnChain(wallet, chainId as 1|42161|8453), 60_000)
   }
   
   // Post-scan: risk, enrich, drift
@@ -46,6 +48,7 @@ export async function POST() {
         apiLogger.info('Job succeeded', { jobId: j.id })
       } catch (e: unknown) { 
         const errorMessage = e instanceof Error ? e.message : String(e)
+        Sentry.captureException(e)
         await finishJob(j.id, false, errorMessage)
         apiLogger.error('Job failed', { jobId: j.id, error: errorMessage })
       }
@@ -53,6 +56,7 @@ export async function POST() {
     
     return NextResponse.json({ ok: true, claimed: jobs.length, processed: done })
   } catch (error) {
+    Sentry.captureException(error)
     apiLogger.error('Job processor error', { error: error instanceof Error ? error.message : 'Unknown error' })
     return NextResponse.json({ error: 'Job processing failed' }, { status: 500 })
   }
