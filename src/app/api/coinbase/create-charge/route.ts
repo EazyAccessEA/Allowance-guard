@@ -62,7 +62,7 @@ export async function POST(req: Request) {
         source: 'allowanceguard.com',
         email: email || null,
       },
-      redirect_url: `${appUrl}/thank-you`,
+      redirect_url: `${appUrl}/thank-you?provider=coinbase&charge_id={CHARGE_ID}`,
       cancel_url: `${appUrl}/contribute`,
     }
 
