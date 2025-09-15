@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   // format: isUnlimited,amount,chain,token,spender → "1,9999999999,1,0x...,0x..."
   const cursor = searchParams.get('cursor')
   let cond = ''
-  let vals: any[] = [wallet, limit]
+  let vals: unknown[] = [wallet, limit]
 
   if (cursor) {
     const [isU, amt, chain, tok, sp] = cursor.split(',')
@@ -52,7 +52,7 @@ export async function GET(req: Request) {
       : null
 
     return NextResponse.json({ items: rows, nextCursor })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch allowances' }, { status: 500 })
   }
 }

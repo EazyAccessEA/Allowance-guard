@@ -10,13 +10,13 @@ client.on('error', () => {})
 let ready = false
 client.connect().then(()=>{ ready = true }).catch(()=>{})
 
-export async function cacheGet<T=any>(key: string): Promise<T | null> {
+export async function cacheGet<T=unknown>(key: string): Promise<T | null> {
   if (!ready) return null
   const s = await client.get(key)
   return s ? JSON.parse(s) as T : null
 }
 
-export async function cacheSet(key: string, val: any, ttlSec = 30) {
+export async function cacheSet(key: string, val: unknown, ttlSec = 30) {
   if (!ready) return
   await client.setEx(key, ttlSec, JSON.stringify(val))
 }

@@ -212,32 +212,52 @@ export default function HomePage() {
       </Section>
 
       {/* How Allowance Guard Works */}
-      <Section className="py-16 sm:py-24 lg:py-32 bg-mist/30">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-8 sm:mb-12 lg:mb-16 text-center">
-              How Allowance Guard Works
-            </h2>
+      <Section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Parallax background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50/30 via-transparent to-transparent"></div>
+        
+        {/* Floating elements for depth */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-100/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        
+        <Container className="relative z-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-800 leading-tight mb-6 tracking-tight">
+                How Allowance Guard Works
+              </h2>
+              <div className="w-24 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
+            </div>
             
-            <div className="space-y-8 sm:space-y-12 lg:space-y-16">
-              <div>
-                <h3 className="text-xl sm:text-2xl font-semibold text-ink mb-4 sm:mb-6">1. Connect & Scan</h3>
-                <p className="text-base sm:text-lg text-stone leading-relaxed">
-                  Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control at all times. No permissions required, no custody risk, no trust assumptions.
+            <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
+              <div className="text-center group">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                  <span className="text-2xl font-bold text-white">1</span>
+                </div>
+                <h3 className="text-2xl font-medium text-slate-800 mb-6">Connect & Scan</h3>
+                <p className="text-lg text-slate-600 leading-relaxed">
+                  Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control at all times.
                 </p>
               </div>
 
-              <div>
-                <h3 className="text-xl sm:text-2xl font-semibold text-ink mb-4 sm:mb-6">2. Analyze & Understand</h3>
-                <p className="text-base sm:text-lg text-stone leading-relaxed">
-                  Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals. Our advanced risk intelligence identifies known malicious contracts, anomalous patterns, and high-risk spender addresses.
+              <div className="text-center group">
+                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                  <span className="text-2xl font-bold text-white">2</span>
+                </div>
+                <h3 className="text-2xl font-medium text-slate-800 mb-6">Analyze & Understand</h3>
+                <p className="text-lg text-slate-600 leading-relaxed">
+                  Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
                 </p>
               </div>
 
-              <div>
-                <h3 className="text-xl sm:text-2xl font-semibold text-ink mb-4 sm:mb-6">3. Act & Secure</h3>
-                <p className="text-base sm:text-lg text-stone leading-relaxed">
-                  Revoke with confidence. One-click revocation executes the transaction directly from your wallet to secure your assets immediately. Batch multiple revocations in a single transaction to save on gas fees and time.
+              <div className="text-center group">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                  <span className="text-2xl font-bold text-white">3</span>
+                </div>
+                <h3 className="text-2xl font-medium text-slate-800 mb-6">Act & Secure</h3>
+                <p className="text-lg text-slate-600 leading-relaxed">
+                  Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.
                 </p>
               </div>
             </div>
@@ -246,73 +266,102 @@ export default function HomePage() {
       </Section>
 
       {/* Key Features & Differentiators */}
-      <Section className="py-16 sm:py-24 lg:py-32">
+      <Section className="py-24 sm:py-32 lg:py-40 bg-white">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-8 sm:mb-12 lg:mb-16 text-center">
-              Key Features & Differentiators
-            </h2>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-20">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-8">
+                Key Features & Differentiators
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Built with precision and purpose. Every feature serves a single goal: keeping your assets secure.
+              </p>
+            </div>
             
-            <div className="space-y-8 sm:space-y-10 lg:space-y-12">
-              <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">Non-Custodial Security</h3>
-                <p className="text-lg text-stone leading-relaxed">
-                  Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet with your explicit approval.
-                </p>
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
+              <div className="space-y-12">
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Non-Custodial Security</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet with your explicit approval.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Clarity-First Dashboard</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Designed to PuredgeOS &apos;God-tier&apos; standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">Clarity-First Dashboard</h3>
-                <p className="text-lg text-stone leading-relaxed">
-                  Designed to PuredgeOS &apos;God-tier&apos; standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
-                </p>
-              </div>
+              <div className="space-y-12">
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Advanced Risk Intelligence</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
+                    </p>
+                  </div>
+                </div>
 
-              <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">Advanced Risk Intelligence</h3>
-                <p className="text-lg text-stone leading-relaxed">
-                  Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-semibold text-ink mb-6">Gas-Efficient Revocation</h3>
-                <p className="text-lg text-stone leading-relaxed">
-                  Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
-                </p>
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Gas-Efficient Revocation</h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Trust Indicators */}
-      <Section className="py-16 sm:py-24 lg:py-32 bg-mist/30">
+      {/* Community & Transparency */}
+      <Section className="py-24 sm:py-32 lg:py-40 bg-gray-50">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-8">
-                Trust Indicators
+            <div className="text-center mb-20">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-8">
+                Built by the Community, for the Community
               </h2>
             </div>
             
-            <div className="space-y-8 sm:space-y-10 lg:space-y-12">
+            <div className="space-y-16">
               <div className="text-center">
-                <h3 className="text-2xl font-semibold text-ink mb-6">Social Proof</h3>
-                <div className="bg-white border border-line rounded-lg p-8">
-                  <p className="text-lg text-stone leading-relaxed italic mb-4">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-8">Trusted by Security Teams</h3>
+                <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100">
+                  <p className="text-xl text-gray-700 leading-relaxed italic mb-6">
                     &quot;Allowance Guard has become an essential tool in our security stack. The clarity and precision of their risk assessment has helped us identify and neutralize threats before they could impact our users.&quot;
                   </p>
-                  <p className="text-base text-ink font-medium">
+                  <p className="text-lg text-gray-900 font-medium">
                     — Security Team Lead, Major DeFi Protocol
                   </p>
                 </div>
               </div>
 
               <div className="text-center">
-                <h3 className="text-2xl font-semibold text-ink mb-6">Transparency Note</h3>
-                <p className="text-lg text-stone leading-relaxed">
-                  Open and transparent. Our methodology and smart contracts are publicly verifiable. All code is open source, all processes are documented, and all security practices are transparent.
+                <h3 className="text-2xl font-semibold text-gray-900 mb-8">Open Source & Transparent</h3>
+                <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                  Our methodology and smart contracts are publicly verifiable. All code is open source, all processes are documented, and all security practices are transparent.
                 </p>
               </div>
             </div>

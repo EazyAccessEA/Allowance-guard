@@ -39,8 +39,8 @@ export async function GET(req: Request) {
     
     const combined = Readable.from((async function* () {
       yield header
-      for await (const row of stream as any as AsyncIterable<any>) {
-        const esc = (v: any) => {
+      for await (const row of stream as unknown as AsyncIterable<Record<string, unknown>>) {
+        const esc = (v: unknown) => {
           const s = v == null ? '' : String(v)
           return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
         }
@@ -53,7 +53,7 @@ export async function GET(req: Request) {
       }
     })())
 
-    return new NextResponse(combined as any, {
+    return new NextResponse(combined as unknown as ReadableStream, {
       headers: {
         'content-type': 'text/csv; charset=utf-8',
         'content-disposition': `attachment; filename="allowances_${wallet}.csv"`,

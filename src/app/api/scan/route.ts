@@ -1,7 +1,7 @@
 // app/api/scan/route.ts
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { enqueueScan, hasRecentScan } from '@/lib/jobs'
+import { enqueueScan } from '@/lib/jobs'
 import { withReq } from '@/lib/logger'
 
 export const runtime = 'nodejs'
@@ -35,8 +35,8 @@ export async function POST(req: Request) {
     let jobId: number
     try {
       jobId = await enqueueScan(addr, chains)
-    } catch (e: any) {
-      if (String(e.message || '').includes('uniq_jobs_active_wallet')) {
+    } catch (e: unknown) {
+      if (e instanceof Error && String(e.message || '').includes('uniq_jobs_active_wallet')) {
         L.info('scan.queue.duplicate', { wallet: addr })
         return NextResponse.json({ ok: true, message: 'Scan already in progress' })
       }
