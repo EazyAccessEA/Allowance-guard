@@ -15,6 +15,18 @@ export type JobRow = {
   error: string | null
 }
 
+export async function hasRecentScan(wallet: string, minMinutes = 3) {
+  const { rows } = await pool.query(
+    `SELECT 1 FROM jobs
+      WHERE type='scan_wallet' AND status IN ('pending','running')
+        AND payload->>'wallet' = $1
+        AND created_at > NOW() - ($2 || ' minutes')::interval
+      LIMIT 1`,
+    [wallet.toLowerCase(), String(minMinutes)]
+  )
+  return !!rows[0]
+}
+
 export async function enqueueScan(wallet: string, chains: number[]) {
   const { rows } = await pool.query(
     `INSERT INTO jobs (type, payload) VALUES ('scan_wallet', $1) RETURNING id`,

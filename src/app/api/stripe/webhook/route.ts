@@ -5,6 +5,8 @@ import { db } from '@/db'
 import { sql } from 'drizzle-orm'            // keep this 'sql' from drizzle-orm
 import { notifySlackDonation } from '@/lib/notify'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
+import * as Sentry from '@sentry/nextjs'
+import { withReq } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -12,6 +14,7 @@ export const dynamic = 'force-dynamic'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-08-27.basil' })
 
 export async function POST(req: Request) {
+  const L = withReq(req)
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
   if (!webhookSecret) return new NextResponse('Missing STRIPE_WEBHOOK_SECRET', { status: 500 })
 
@@ -23,7 +26,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(rawBody, sig!, webhookSecret)
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'
-    console.error('❌ Webhook signature verification failed:', errorMessage)
+    L.error('stripe.webhook.signature_failed', { error: errorMessage })
     return new NextResponse(`Webhook Error: ${errorMessage}`, { status: 400 })
   }
 
@@ -68,7 +71,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: true })
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'
-    console.error('❌ Webhook handler failed:', errorMessage)
+    Sentry.captureException(err)
+    L.error('stripe.webhook.exception', { error: errorMessage })
     return new NextResponse('Webhook handler failed', { status: 500 })
   }
 }

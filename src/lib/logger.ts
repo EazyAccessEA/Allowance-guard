@@ -132,3 +132,43 @@ export function logScanOperation(operation: string, address: string, chainId: nu
     scanLogger.error(message, { error })
   }
 }
+
+// Enhanced logger with request ID support
+export function withReq(req: Request) {
+  const rid = (req.headers.get('x-request-id') || crypto.randomUUID()).toString()
+  const ip = (req.headers.get('x-forwarded-for') || '').split(',')[0] || null
+  
+  return {
+    rid,
+    info: (msg: string, extra: Record<string, unknown> = {}) => {
+      const entry = {
+        level: 'info' as const,
+        message: msg,
+        data: { rid, ip, ...extra },
+        timestamp: new Date().toISOString(),
+        service: 'api'
+      }
+      console.info(`[${entry.timestamp}] [api] [INFO]`, msg, { rid, ip, ...extra })
+    },
+    warn: (msg: string, extra: Record<string, unknown> = {}) => {
+      const entry = {
+        level: 'warn' as const,
+        message: msg,
+        data: { rid, ip, ...extra },
+        timestamp: new Date().toISOString(),
+        service: 'api'
+      }
+      console.warn(`[${entry.timestamp}] [api] [WARN]`, msg, { rid, ip, ...extra })
+    },
+    error: (msg: string, extra: Record<string, unknown> = {}) => {
+      const entry = {
+        level: 'error' as const,
+        message: msg,
+        data: { rid, ip, ...extra },
+        timestamp: new Date().toISOString(),
+        service: 'api'
+      }
+      console.error(`[${entry.timestamp}] [api] [ERROR]`, msg, { rid, ip, ...extra })
+    },
+  }
+}

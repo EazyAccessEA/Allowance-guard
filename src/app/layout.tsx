@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { headers } from 'next/headers'
 import ContextProvider from '@/context'
+import RpcStatusBanner from '@/components/RpcStatusBanner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -52,6 +53,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <RpcStatusBanner />
         <ContextProvider cookies={cookies}>{children}</ContextProvider>
         <script
           dangerouslySetInnerHTML={{
