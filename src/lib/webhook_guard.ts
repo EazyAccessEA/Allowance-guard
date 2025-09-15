@@ -9,7 +9,7 @@ export async function markProcessed(provider: 'stripe'|'coinbase', eventId: stri
   await pool.query(`INSERT INTO webhook_events (provider, event_id) VALUES ($1,$2) ON CONFLICT DO NOTHING`, [provider, eventId])
 }
 
-export async function auditWebhook(provider: string, action: string, subject: string | null, meta: any = {}) {
+export async function auditWebhook(provider: string, action: string, subject: string | null, meta: Record<string, unknown> = {}) {
   await pool.query(
     `INSERT INTO audit_logs (actor_type, actor_id, action, subject, meta, path)
      VALUES ('webhook', $1, $2, $3, $4, $5)`,

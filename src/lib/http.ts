@@ -1,6 +1,6 @@
 // lib/http.ts
 import { NextResponse } from 'next/server'
-import { ZodError } from 'zod'
+import { ZodError, ZodSchema } from 'zod'
 
 export function badRequest(msg = 'Bad request') {
   return NextResponse.json({ error: msg }, { status: 400 })
@@ -10,7 +10,7 @@ export function serverError() {
   return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
 }
 
-export function zodParse<T>(schema: any, data: unknown) {
+export function zodParse<T>(schema: ZodSchema<T>, data: unknown) {
   const res = schema.safeParse(data)
   if (!res.success) {
     const z = res.error as ZodError
