@@ -28,7 +28,7 @@ export default function RpcStatusBanner() {
     <div className="bg-amber-50 text-amber-800 text-sm px-3 py-2 border-b border-amber-200">
       <div className="max-w-7xl mx-auto flex items-center justify-center">
         <span className="font-medium">⚠️ Network is degraded (RPC problems).</span>
-        <span className="ml-2">Scans/reads may be slow; we'll retry automatically.</span>
+        <span className="ml-2">Scans/reads may be slow; we&apos;ll retry automatically.</span>
       </div>
     </div>
   )

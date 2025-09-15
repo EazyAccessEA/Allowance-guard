@@ -8,7 +8,7 @@ import { mainnet } from 'viem/chains'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const out: Record<string, unknown> = { ok: true, checks: {} }
+  const out: { ok: boolean; checks: Record<string, string> } = { ok: true, checks: {} }
 
   // DB check
   try { 

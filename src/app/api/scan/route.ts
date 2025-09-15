@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { enqueueScan, hasRecentScan } from '@/lib/jobs'
-import { apiLogger, withReq } from '@/lib/logger'
+import { withReq } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 

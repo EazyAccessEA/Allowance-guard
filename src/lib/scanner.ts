@@ -2,7 +2,7 @@
 import { clientFor } from './chains'
 import { ERC20_Approval, ERC721_ApprovalForAll } from './abi'
 import { upsertAllowance } from './db'
-import { withRetry, withTimeout } from './retry'
+import { withRetry } from './retry'
 
 const CHUNK = BigInt(50_000)  // adjust if RPC complains
 const UINT256_MAX = (BigInt(1) << BigInt(256)) - BigInt(1)
