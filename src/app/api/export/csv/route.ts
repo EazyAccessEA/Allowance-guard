@@ -48,7 +48,7 @@ export async function GET(req: Request) {
           wallet, row.chain_id, row.token_address, row.token_symbol || '', row.token_name || '',
           row.spender_address, row.spender_label || '', row.standard, row.allowance_type,
           row.amount, row.is_unlimited ? 'true' : 'false', row.risk_score ?? 0,
-          (row.risk_flags || []).join('|'), row.last_seen_block
+          (Array.isArray(row.risk_flags) ? row.risk_flags : []).join('|'), row.last_seen_block
         ].map(esc).join(',') + '\n'
       }
     })())
