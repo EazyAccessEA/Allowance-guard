@@ -1,26 +1,23 @@
-import { Ratelimit } from '@upstash/ratelimit'
-import { Redis } from '@upstash/redis'
+// lib/ratelimit.ts
+import { createClient } from 'redis'
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+const client = createClient({
+  url: process.env.REDIS_URL || undefined,
+  socket: process.env.REDIS_HOST ? { host: process.env.REDIS_HOST, port: Number(process.env.REDIS_PORT || 6379) } : undefined,
+  password: process.env.REDIS_PASSWORD || undefined,
+  database: Number(process.env.REDIS_DB || 0),
 })
+client.on('error', () => {}) // avoid crash on cold starts
+let ready = false
+client.connect().then(()=>{ ready = true }).catch(()=>{})
 
-// 5 requests / 60s per IP per endpoint
-export const limiter = new Ratelimit({
-  redis,
-  limiter: Ratelimit.fixedWindow(5, '60 s'),
-  analytics: false,
-  prefix: 'ag:rl:',
-})
-
-export async function limitOrThrow(ip: string | null, bucket: string) {
-  if (!ip) return // best effort
-  const { success, reset } = await limiter.limit(`${bucket}:${ip}`)
-  if (!success) {
-    const secs = Math.max(1, Math.ceil((reset - Date.now()) / 1000))
-    const err = new Error(`Too many requests. Try again in ${secs}s.`)
-    ;(err as Error & { status?: number }).status = 429
-    throw err
-  }
+export async function limitHit(key: string, windowSec: number, max: number) {
+  if (!ready) return { allowed: true, remaining: max, ttl: windowSec } // fallback if Redis not ready
+  const now = Math.floor(Date.now()/1000)
+  const bucket = `rl:${key}:${Math.floor(now / windowSec)}`
+  const count = await client.incr(bucket)
+  if (count === 1) await client.expire(bucket, windowSec)
+  const allowed = count <= max
+  const ttl = await client.ttl(bucket)
+  return { allowed, remaining: Math.max(0, max - count), ttl }
 }

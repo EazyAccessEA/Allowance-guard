@@ -4,6 +4,7 @@ import { headers } from 'next/headers'
 import { db } from '@/db'
 import { sql } from 'drizzle-orm'            // keep this 'sql' from drizzle-orm
 import { notifySlackDonation } from '@/lib/notify'
+import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -27,6 +28,11 @@ export async function POST(req: Request) {
   }
 
   try {
+    // Check for replay attacks
+    if (await alreadyProcessed('stripe', event.id)) {
+      return NextResponse.json({ ok: true, replay: true })
+    }
+
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session
 
@@ -51,11 +57,14 @@ export async function POST(req: Request) {
       `)
 
       await notifySlackDonation({ amount, currency, email, sessionId: session.id })
+      await auditWebhook('stripe', 'checkout.session.completed', session.id, { amount, currency, email })
       console.log('✅ Donation recorded:', { session_id: session.id, event_id: event.id, amount, currency, email })
     } else {
       console.log(`ℹ️ Unhandled event: ${event.type}`)
     }
 
+    // Mark event as processed
+    await markProcessed('stripe', event.id)
     return NextResponse.json({ received: true })
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'

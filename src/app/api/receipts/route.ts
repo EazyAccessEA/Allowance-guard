@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createReceipt, listReceipts } from '@/lib/receipts'
 import { z } from 'zod'
+import { auditUser } from '@/lib/audit'
 
 const Create = z.object({
   wallet: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
@@ -31,5 +32,13 @@ export async function POST(req: Request) {
     standard: parsed.data.standard, allowanceType: parsed.data.allowanceType,
     preAmount: parsed.data.preAmount, txHash: parsed.data.txHash
   })
+  
+  // Audit the revoke action
+  await auditUser('revoke', null, parsed.data.txHash, {
+    wallet: parsed.data.wallet, chainId: parsed.data.chainId,
+    token: parsed.data.token, spender: parsed.data.spender,
+    pre: parsed.data.preAmount
+  }, req.headers.get('x-forwarded-for') || null, '/api/receipts')
+  
   return NextResponse.json({ ok: true, id })
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
+import { auditUser } from '@/lib/audit'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
@@ -32,5 +33,12 @@ export async function POST(req: Request) {
     (body.chains || []).map((n: number)=>Number(n))
   ]
   await pool.query(q, vals)
+  
+  // Audit the policy update
+  await auditUser('policy.update', null, wallet, {
+    min_risk_score: body.min_risk_score,
+    unlimited_only: body.unlimited_only
+  }, req.headers.get('x-forwarded-for') || null, '/api/policy')
+  
   return NextResponse.json({ ok: true })
 }

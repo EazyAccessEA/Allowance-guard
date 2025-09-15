@@ -5,6 +5,7 @@ import { createHmac, timingSafeEqual } from 'crypto'
 import { db } from '@/db'
 // import { coinbaseDonations } from '@/db/schema' // TODO: Implement when needed
 import { sql } from 'drizzle-orm'
+import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -80,6 +81,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: true }) // nothing actionable
   }
 
+  // Check for replay attacks
+  const eventId = ev?.id || payload.id
+  if (!eventId) return NextResponse.json({ error: 'No event id' }, { status: 400 })
+  if (await alreadyProcessed('coinbase', eventId)) {
+    return NextResponse.json({ ok: true, replay: true })
+  }
+
   const chargeCode = data.code
   const localAmountStr = data?.pricing?.local?.amount
   const localCurrency = (data?.pricing?.local?.currency || 'GBP').toUpperCase()
@@ -113,6 +121,8 @@ export async function POST(req: Request) {
         updated_at    = NOW()
     `)
 
+    await auditWebhook('coinbase', ev?.type || 'unknown', chargeCode, { timeline: data.timeline })
+    await markProcessed('coinbase', eventId)
     console.log('✅ Coinbase upsert', { chargeCode, status, lastEventId })
     return NextResponse.json({ received: true })
   } catch (e: unknown) {

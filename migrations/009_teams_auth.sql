@@ -27,7 +27,11 @@ CREATE TABLE IF NOT EXISTS magic_links (
 );
 
 -- Teams & membership
-CREATE TYPE team_role AS ENUM ('owner','admin','editor','viewer');
+DO $$ BEGIN
+    CREATE TYPE team_role AS ENUM ('owner','admin','editor','viewer');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 CREATE TABLE IF NOT EXISTS teams (
   id           BIGSERIAL PRIMARY KEY,
