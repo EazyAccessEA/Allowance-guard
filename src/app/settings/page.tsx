@@ -1,7 +1,6 @@
 'use client'
 import { useAccount } from 'wagmi'
 import { useState, useEffect, useCallback } from 'react'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
@@ -235,7 +234,6 @@ export default function SettingsPage() {
             </div>
           </Container>
         </Section>
-        <Footer />
       </div>
     )
   }
@@ -527,7 +525,6 @@ export default function SettingsPage() {
         </Container>
       </Section>
 
-      <Footer />
     </div>
   )
 }

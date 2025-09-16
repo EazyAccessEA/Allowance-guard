@@ -2,7 +2,6 @@ import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import Footer from '@/components/Footer'
 
 export default function ComingSoonPage() {
   return (
@@ -23,7 +22,6 @@ export default function ComingSoonPage() {
         </Container>
       </Section>
 
-      <Footer />
     </div>
   )
 }

@@ -1,5 +1,4 @@
 'use client'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
@@ -249,7 +248,6 @@ export default function SecurityPage() {
         </Container>
       </Section>
 
-      <Footer />
     </div>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 
@@ -114,7 +113,6 @@ export default function SignInPage() {
         </Container>
       </Section>
       
-      <Footer />
     </div>
   )
 }

@@ -1,6 +1,5 @@
 'use client'
 
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
@@ -471,7 +470,6 @@ Content-Type: application/json`}
         </Container>
       </Section>
 
-      <Footer />
     </div>
   )
 }
