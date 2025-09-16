@@ -144,12 +144,12 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="https://slack.allowanceguard.com" 
+                  href="https://discord.gg/allowanceguard" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-stone hover:text-ink transition-colors duration-200"
                 >
-                  Slack Community
+                  Discord Community
                 </a>
               </li>
             </ul>
