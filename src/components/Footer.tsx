@@ -144,7 +144,7 @@ export default function Footer() {
               </li>
               <li>
                 <a 
-                  href="https://discord.gg/allowanceguard" 
+                  href="https://discord.gg/DsJ4Pa94" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-stone hover:text-ink transition-colors duration-200"
