@@ -10,7 +10,7 @@ import { enabledChainIds } from '@/lib/networks'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const out: { ok: boolean; checks: Record<string, string | Record<string, string>> } = { ok: true, checks: {} }
+  const out: { ok: boolean; checks: Record<string, any> } = { ok: true, checks: {} }
 
   // DB check
   try { 
