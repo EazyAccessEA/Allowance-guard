@@ -23,7 +23,7 @@ const disabledSet = new Set(
 export const CHAINS: Record<number, ChainCfg> = {
   1: {
     id: 1, name: 'Ethereum', symbol: 'ETH',
-    rpcs: envList('ETHEREUM_RPC_URLS', [
+    rpcs: envList('ETHEREUM_RPC_URL', [
       'https://eth.llamarpc.com',
       'https://rpc.ankr.com/eth',
       'https://cloudflare-eth.com'
@@ -33,7 +33,7 @@ export const CHAINS: Record<number, ChainCfg> = {
   },
   42161: {
     id: 42161, name: 'Arbitrum', symbol: 'ETH',
-    rpcs: envList('ARBITRUM_RPC_URLS', [
+    rpcs: envList('ARBITRUM_RPC_URL', [
       'https://arb1.arbitrum.io/rpc',
       'https://rpc.ankr.com/arbitrum'
     ]),
@@ -42,7 +42,7 @@ export const CHAINS: Record<number, ChainCfg> = {
   },
   8453: {
     id: 8453, name: 'Base', symbol: 'ETH',
-    rpcs: envList('BASE_RPC_URLS', [
+    rpcs: envList('BASE_RPC_URL', [
       'https://mainnet.base.org',
       'https://rpc.ankr.com/base'
     ]),

@@ -3,19 +3,15 @@
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useMemo, useEffect, useState } from 'react'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
 import { CheckCircle, Heart, ArrowLeft, Loader2, AlertCircle } from 'lucide-react'
 
 type PaymentStatus = 'idle' | 'verifying' | 'verified' | 'failed'
 
 export default function ThankYouPage() {
-  const { isConnected } = useAccount()
   const params = useSearchParams()
   const sessionId = useMemo(() => params.get('session_id'), [params])
   
@@ -65,7 +61,6 @@ export default function ThankYouPage() {
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
@@ -204,6 +199,20 @@ export default function ThankYouPage() {
               </div>
             </div>
 
+            {/* Contributing Link */}
+            <div className="mt-8 text-center">
+              <p className="text-sm text-stone">
+                Learn how contributions are used in our{' '}
+                <Link 
+                  href="/docs/contributing" 
+                  className="underline text-cobalt hover:text-cobalt/80 transition-colors duration-200"
+                >
+                  Contributing
+                </Link>{' '}
+                page.
+              </p>
+            </div>
+
             {/* Additional Info */}
             <div className="mt-8 text-center">
               <p className="text-sm text-stone">
@@ -219,8 +228,6 @@ export default function ThankYouPage() {
           </div>
         </Container>
       </Section>
-
-      <Footer />
     </div>
   )
 }

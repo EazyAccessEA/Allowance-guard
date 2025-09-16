@@ -4,6 +4,8 @@ import './globals.css'
 import { headers } from 'next/headers'
 import ContextProvider from '@/context'
 import RpcStatusBanner from '@/components/RpcStatusBanner'
+import HeaderWrapper from '@/components/HeaderWrapper'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,8 +16,10 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Allowance Guard',
-  description: 'Monitor & revoke risky token approvals',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
+  title: { default: 'Allowance Guard', template: '%s · Allowance Guard' },
+  description: 'Open-source, free tool to view and revoke token approvals safely.',
+  robots: { index: true, follow: true },
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -27,18 +31,18 @@ export const metadata: Metadata = {
     ]
   },
   manifest: '/site.webmanifest',
-  robots: 'index, follow',
   openGraph: {
     title: 'Allowance Guard',
-    description: 'Monitor & revoke risky token approvals',
+    description: 'Open-source, free tool to view and revoke token approvals safely.',
+    url: '/',
+    siteName: 'Allowance Guard',
     type: 'website',
-    locale: 'en_US',
-    siteName: 'Allowance Guard'
   },
+  alternates: { canonical: '/' },
   twitter: {
     card: 'summary_large_image',
     title: 'Allowance Guard',
-    description: 'Monitor & revoke risky token approvals'
+    description: 'Open-source, free tool to view and revoke token approvals safely.'
   }
 }
 
@@ -52,9 +56,14 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
-        <ContextProvider cookies={cookies}>{children}</ContextProvider>
+        <ContextProvider cookies={cookies}>
+          <HeaderWrapper />
+          <main id="main" className="flex-1">{children}</main>
+          <Footer />
+        </ContextProvider>
         <script
           dangerouslySetInnerHTML={{
             __html: `

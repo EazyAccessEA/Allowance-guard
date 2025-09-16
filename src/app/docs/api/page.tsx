@@ -1,19 +1,15 @@
 'use client'
 
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
 
 export default function APIPage() {
-  const { isConnected } = useAccount()
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">

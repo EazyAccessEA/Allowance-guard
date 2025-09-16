@@ -89,12 +89,22 @@ export default function Footer() {
             <ul className="space-y-4 mt-6 md:mt-6">
               <li>
                 <a 
-                  href="https://github.com/allowanceguard/allowance-guard" 
+                  href="https://github.com/EazyAccessEA/Allowance-guard" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-stone hover:text-ink transition-colors duration-200"
                 >
                   GitHub Repository
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://github.com/EazyAccessEA/Allowance-guard/issues" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-stone hover:text-ink transition-colors duration-200"
+                >
+                  Report Issues
                 </a>
               </li>
               <li>
@@ -185,7 +195,7 @@ export default function Footer() {
                   </svg>
                 </a>
                 <a 
-                  href="https://github.com/allowanceguard" 
+                  href="https://github.com/EazyAccessEA/Allowance-guard" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-stone hover:text-ink transition-colors duration-200"
@@ -202,22 +212,17 @@ export default function Footer() {
 
         {/* Bottom section */}
         <div className="mt-16 pt-8 border-t border-line/50">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-stone text-sm">
-              © {new Date().getFullYear()} Allowance Guard. Open source & free for everyone.
-            </div>
-            <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 md:mt-0">
-              {/* Support Us button - visible on mobile */}
-              <div className="md:hidden">
-                <DonationButton />
-              </div>
-              <Link 
-                href="/newsletter" 
-                className="text-stone hover:text-ink transition-colors duration-200 text-sm"
-              >
-                Subscribe to our newsletter →
-              </Link>
-            </div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="max-w-2xl text-stone text-sm">
+              Open-source and free to use. Maintained by a small independent team and funded by
+              <Link className="underline ml-1 hover:text-ink transition-colors duration-200" href="/docs/contributing">donations and grants</Link>. No VC, no token.
+            </p>
+            <nav className="flex items-center gap-4">
+              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/docs/contributing">Support</Link>
+              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/contribute">Supporters</Link>
+              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/privacy">Privacy</Link>
+              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/terms">Terms</Link>
+            </nav>
           </div>
         </div>
       </Container>

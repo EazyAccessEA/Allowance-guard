@@ -1,14 +1,14 @@
 {
   "name": "allowance-guard",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Secure token approval monitoring and management platform",
   "private": true,
   "author": "Allowance Guard Team",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "homepage": "https://www.allowanceguard.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/allowance-guard/allowance-guard"
+    "url": "https://github.com/EazyAccessEA/Allowance-guard"
   },
   "keywords": [
     "defi",

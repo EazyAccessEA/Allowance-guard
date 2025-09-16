@@ -11,7 +11,8 @@ export default function RpcStatusBanner() {
       try { 
         const r = await fetch('/api/healthz', { cache: 'no-store' })
         const j = await r.json()
-        setBad(!j.ok || String(j.checks?.rpc || '').startsWith('fail'))
+        setBad(String(j.checks?.rpc || '').startsWith('fail') || 
+               Object.values(j.checks?.chains || {}).some((status: unknown) => String(status).startsWith('fail')))
       } catch { 
         setBad(true) 
       }

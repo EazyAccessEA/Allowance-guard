@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
-import { createClient } from 'redis'
+import { cacheHealthCheck } from '@/lib/cache'
 import { getBlockNumber } from 'viem/actions'
 import { createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
@@ -10,7 +10,7 @@ import { enabledChainIds } from '@/lib/networks'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const out: { ok: boolean; checks: Record<string, any> } = { ok: true, checks: {} }
+  const out: { ok: boolean; checks: Record<string, string | Record<string, string>> } = { ok: true, checks: {} }
 
   // DB check
   try { 
@@ -21,30 +21,20 @@ export async function GET() {
     out.checks.db = e instanceof Error ? e.message : 'Unknown error'
   }
 
-  // Redis check (best-effort)
+  // Cache check (using database-based cache)
   try {
-    const url = process.env.REDIS_URL
-    const r = url ? createClient({ url }) : createClient({ 
-      socket: { 
-        host: process.env.REDIS_HOST || 'localhost', 
-        port: Number(process.env.REDIS_PORT || 6379) 
-      }, 
-      password: process.env.REDIS_PASSWORD || undefined 
-    })
-    await r.connect()
-    const pong = await r.ping()
-    await r.disconnect()
-    out.checks.redis = pong === 'PONG' ? 'ok' : 'fail'
+    const cacheResult = await cacheHealthCheck()
+    out.checks.cache = cacheResult.ok ? 'ok' : cacheResult.message
   } catch (e: unknown) { 
-    out.ok = false
-    out.checks.redis = e instanceof Error ? e.message : 'Unknown error'
+    // Don't fail overall health check for cache issues
+    out.checks.cache = e instanceof Error ? e.message : 'Unknown error'
   }
 
   // RPC check (Ethereum mainnet as sentinel)
   try {
     const client = createPublicClient({
       chain: mainnet,
-      transport: http(process.env.ETH_RPC_URL || 'https://eth.llamarpc.com')
+      transport: http(process.env.ETHEREUM_RPC_URL || 'https://eth.llamarpc.com')
     })
     const n = await getBlockNumber(client)
     out.checks.rpc = `ok:${n}`
@@ -54,16 +44,17 @@ export async function GET() {
   }
 
   // Per-chain health checks
-  out.checks.chains = {}
+  const chainChecks: Record<string, string> = {}
   for (const id of enabledChainIds()) {
     try {
       const bn = await getBlockNumber(clientFor(id))
-      out.checks.chains[id] = `ok:${bn}`
+      chainChecks[id] = `ok:${bn}`
     } catch (e: unknown) {
       out.ok = false
-      out.checks.chains[id] = `fail:${e instanceof Error ? e.message?.slice(0,120) : 'Unknown error'}`
+      chainChecks[id] = `fail:${e instanceof Error ? e.message?.slice(0,120) : 'Unknown error'}`
     }
   }
+  out.checks.chains = chainChecks
 
   return NextResponse.json(out, { status: out.ok ? 200 : 503 })
 }

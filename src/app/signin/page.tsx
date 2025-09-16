@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
@@ -66,7 +65,6 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header isConnected={false} />
       
       <Section className="py-24">
         <Container>

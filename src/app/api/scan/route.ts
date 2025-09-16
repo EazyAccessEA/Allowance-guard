@@ -1,9 +1,10 @@
 // app/api/scan/route.ts
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { z } from 'zod'
 import { enqueueScan } from '@/lib/jobs'
 import { withReq } from '@/lib/logger'
 import { enabledChainIds } from '@/lib/networks'
+import { scanRateLimit } from '@/lib/rate-limit'
 
 export const runtime = 'nodejs'
 
@@ -16,6 +17,12 @@ const MAP: Record<string, 1|42161|8453> = { eth: 1, arb: 42161, base: 8453 }
 
 export async function POST(req: Request) {
   const L = withReq(req)
+  
+  // Apply rate limiting
+  const rateLimitResponse = scanRateLimit(req as NextRequest)
+  if (rateLimitResponse instanceof NextResponse) {
+    return rateLimitResponse
+  }
   
   try {
     L.info('scan.queue.start', { path: '/api/scan' })

@@ -1,7 +1,6 @@
 'use client'
 import { useAccount } from 'wagmi'
 import { useState, useEffect, useCallback } from 'react'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
@@ -160,7 +159,6 @@ export default function SettingsPage() {
   if (!isConnected) {
     return (
       <div className="min-h-screen bg-white text-ink">
-        <Header isConnected={isConnected} />
         <Section>
           <Container className="text-center">
             <H1 className="mb-6">Settings</H1>
@@ -244,7 +242,6 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">

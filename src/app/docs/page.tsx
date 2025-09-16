@@ -1,10 +1,8 @@
 'use client'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
 import { useState } from 'react'
 import { 
@@ -25,7 +23,6 @@ import {
 } from 'lucide-react'
 
 export default function DocsPage() {
-  const { isConnected } = useAccount()
   const [activeSection, setActiveSection] = useState('overview')
 
   const menuItems = [
@@ -1028,7 +1025,6 @@ export default function DocsPage() {
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">

@@ -3,6 +3,9 @@ import { useState, useMemo } from 'react'
 import { useBulkRevoke } from '@/hooks/useBulkRevoke'
 import { HexButton } from './HexButton'
 import { HexBadge } from './HexBadge'
+import dynamic from 'next/dynamic'
+
+const SupportNudge = dynamic(() => import('@/components/SupportNudge'), { ssr: false })
 
 type Row = {
   chain_id: number
@@ -38,6 +41,7 @@ export default function AllowanceTable({
   const [sel, setSel] = useState<Record<string, boolean>>({})
   const [busy, setBusy] = useState(false)
   const [progress, setProgress] = useState<string | null>(null)
+  const [showNudge, setShowNudge] = useState(false)
   const { revokeMany } = useBulkRevoke(selectedWallet)
   
   const revokeAllowed =
@@ -68,6 +72,7 @@ export default function AllowanceTable({
     setBusy(false)
     setProgress(null)
     await onRefresh()
+    setShowNudge(true)
   }
 
   if (!data?.length) {
@@ -86,6 +91,16 @@ export default function AllowanceTable({
     )
   }
 
+  // Add empty state with guidance for filtered results
+  const hasFilteredResults = data.length === 0 && selectedRows.length === 0
+  if (hasFilteredResults) {
+    return (
+      <div className="mt-6 rounded border border-line p-4 text-sm text-stone">
+        No approvals found matching this filter. Try disabling &quot;Risky only&quot; or scan another wallet.
+      </div>
+    )
+  }
+
   return (
     <div className="mt-4">
       <div className="mb-4 flex items-center gap-3">
@@ -95,22 +110,25 @@ export default function AllowanceTable({
           disabled={busy || !selectedRows.length || !revokeAllowed || !canRevoke} 
           size="sm"
           title={!canRevoke ? 'View-only access' : !revokeAllowed ? 'Connect the selected wallet to revoke' : ''}
+          aria-label={`Revoke ${selectedRows.length} selected token approvals`}
         >
           {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
         </HexButton>
       </div>
       <div className="overflow-x-auto border-2 border-ag-line">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm" role="table" aria-label="Token allowances">
           <thead className="bg-ag-panel">
             <tr>
-              <th className="px-4 py-3 text-left font-medium text-ag-text"></th>
-              <th className="px-4 py-3 text-left font-medium text-ag-text">Chain</th>
-              <th className="px-4 py-3 text-left font-medium text-ag-text">Token</th>
-              <th className="px-4 py-3 text-left font-medium text-ag-text">Spender</th>
-              <th className="px-4 py-3 text-left font-medium text-ag-text">Std</th>
-              <th className="px-4 py-3 text-left font-medium text-ag-text">Type</th>
-              <th className="px-4 py-3 text-left font-medium text-ag-text">Amount</th>
-              <th className="px-4 py-3 text-left font-medium text-ag-text">Badges</th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">
+                <span className="sr-only">Select</span>
+              </th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Chain</th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Token</th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Spender</th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Std</th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Type</th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Amount</th>
+              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Badges</th>
             </tr>
           </thead>
           <tbody className="divide-y-2 divide-ag-line">
@@ -170,6 +188,7 @@ export default function AllowanceTable({
           </tbody>
         </table>
       </div>
+      {showNudge && <SupportNudge when="after-revoke" />}
     </div>
   )
 }

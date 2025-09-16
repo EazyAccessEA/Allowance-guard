@@ -1,170 +1,178 @@
 'use client'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
 
 export default function PrivacyPage() {
-  const { isConnected } = useAccount()
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
+      <VideoBackground videoSrc="/V3AG.mp4" />
       
-      {/* Hero Section - Fireart Style with Animated Background */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
-        {/* Video Background */}
-        <VideoBackground 
-          videoSrc="/V3AG.mp4"
-        />
-        {/* Gradient overlay for better text readability - 10% left, 45% right */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        
-        <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Privacy Policy</H1>
-          <p className="text-base text-stone mb-8">
-            <strong>Last updated:</strong> {new Date().toLocaleDateString('en-US')}
-          </p>
-        </Container>
-      </Section>
-
-      <div className="border-t border-line" />
-
-      <Section>
+      {/* Hero Section */}
+      <Section className="relative py-20">
         <Container>
-          <div className="max-w-reading">
-            <div className="space-y-8">
-              <section>
-                <H2 className="mb-4">1. Information We Collect</H2>
-                <p className="text-base text-stone mb-4">
-                  Allowance Guard is designed with privacy in mind. We collect minimal information necessary to provide our service:
-                </p>
-                <ul className="space-y-2 text-base text-stone">
-                  <li>• <strong>Wallet Addresses:</strong> Public blockchain addresses you choose to scan</li>
-                  <li>• <strong>Email Addresses:</strong> Only if you subscribe to alerts (optional)</li>
-                  <li>• <strong>Usage Data:</strong> Basic analytics to improve our service</li>
-                  <li>• <strong>Technical Data:</strong> Browser information and IP addresses for security</li>
-                </ul>
-              </section>
-
-              <section>
-                <H2 className="mb-4">2. What We Do NOT Collect</H2>
-                <p className="text-base text-stone mb-4">
-                  We explicitly do not collect or store:
-                </p>
-                <ul className="space-y-2 text-base text-stone">
-                  <li>• <strong>Private Keys:</strong> We never have access to your private keys</li>
-                  <li>• <strong>Seed Phrases:</strong> We never request or store seed phrases</li>
-                  <li>• <strong>Transaction Data:</strong> We don&apos;t store your transaction history</li>
-                  <li>• <strong>Personal Information:</strong> No names, addresses, or personal details</li>
-                </ul>
-              </section>
-
-              <section>
-                <H2 className="mb-4">3. How We Use Your Information</H2>
-                <p className="text-base text-stone mb-4">
-                  We use collected information solely to:
-                </p>
-                <ul className="space-y-2 text-base text-stone">
-                  <li>• Provide wallet scanning and analysis services</li>
-                  <li>• Send security alerts (if you subscribe)</li>
-                  <li>• Improve our service functionality</li>
-                  <li>• Ensure security and prevent abuse</li>
-                  <li>• Comply with legal obligations</li>
-                </ul>
-              </section>
-
-              <section>
-                <H2 className="mb-4">4. Data Storage and Security</H2>
-                <p className="text-base text-stone mb-4">
-                  <strong>Local Processing:</strong> All wallet scanning is performed locally in your browser. We don&apos;t store your approval data on our servers.
-                </p>
-                <p className="text-base text-stone mb-4">
-                  <strong>Encryption:</strong> Any data we do store is encrypted using industry-standard methods.
-                </p>
-                <p className="text-base text-stone mb-4">
-                  <strong>Retention:</strong> We retain minimal data only as long as necessary to provide our service.
-                </p>
-              </section>
-
-              <section>
-                <H2 className="mb-4">5. Third-Party Services</H2>
-                <p className="text-base text-stone mb-4">
-                  We may use third-party services for:
-                </p>
-                <ul className="space-y-2 text-base text-stone">
-                  <li>• <strong>Blockchain Data:</strong> RPC providers to fetch blockchain information</li>
-                  <li>• <strong>Email Services:</strong> To send security alerts (if subscribed)</li>
-                  <li>• <strong>Analytics:</strong> Anonymous usage statistics to improve our service</li>
-                </ul>
-                <p className="text-base text-stone mb-4">
-                  These services have their own privacy policies and we ensure they meet our privacy standards.
-                </p>
-              </section>
-
-              <section>
-                <H2 className="mb-4">6. Your Rights</H2>
-                <p className="text-base text-stone mb-4">
-                  You have the right to:
-                </p>
-                <ul className="space-y-2 text-base text-stone">
-                  <li>• <strong>Access:</strong> Request information about data we have about you</li>
-                  <li>• <strong>Correction:</strong> Correct any inaccurate information</li>
-                  <li>• <strong>Deletion:</strong> Request deletion of your data</li>
-                  <li>• <strong>Portability:</strong> Export your data in a standard format</li>
-                  <li>• <strong>Opt-out:</strong> Unsubscribe from emails at any time</li>
-                </ul>
-              </section>
-
-              <section>
-                <H2 className="mb-4">7. Cookies and Tracking</H2>
-                <p className="text-base text-stone mb-4">
-                  We use minimal cookies for essential functionality:
-                </p>
-                <ul className="space-y-2 text-base text-stone">
-                  <li>• <strong>Essential Cookies:</strong> Required for basic site functionality</li>
-                  <li>• <strong>Preference Cookies:</strong> Remember your settings</li>
-                  <li>• <strong>Analytics Cookies:</strong> Anonymous usage statistics</li>
-                </ul>
-                <p className="text-base text-stone mb-4">
-                  You can control cookie settings through your browser. See our Cookie Policy for more details.
-                </p>
-              </section>
-
-              <section>
-                <H2 className="mb-4">8. International Users</H2>
-                <p className="text-base text-stone mb-4">
-                  Our service is available globally. If you&apos;re in the European Union, you have additional rights under GDPR. If you&apos;re in California, you have rights under CCPA.
-                </p>
-              </section>
-
-              <section>
-                <H2 className="mb-4">9. Changes to This Policy</H2>
-                <p className="text-base text-stone mb-4">
-                  We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new policy on this page and updating the &quot;Last updated&quot; date.
-                </p>
-              </section>
-
-              <section>
-                <H2 className="mb-4">10. Contact Us</H2>
-                <p className="text-base text-stone mb-4">
-                  If you have any questions about this Privacy Policy or our data practices, please contact us through our support channels.
-                </p>
-              </section>
-            </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <H1 className="text-4xl md:text-5xl font-bold mb-6">
+              Privacy Policy
+            </H1>
+            <p className="text-xl text-stone max-w-2xl mx-auto">
+              Your privacy is fundamental to our mission. We believe in transparency and minimal data collection.
+            </p>
           </div>
         </Container>
       </Section>
 
-      <Footer />
+      {/* Privacy Content */}
+      <Section className="py-16">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <div className="prose prose-lg max-w-none">
+              
+              {/* Introduction */}
+              <div className="mb-12">
+                <H2 className="text-2xl font-semibold mb-4">Our Privacy Commitment</H2>
+                <p className="text-stone leading-relaxed">
+                  Allowance Guard is built with privacy-first principles. We don&apos;t sell your data, 
+                  don&apos;t track your on-chain activity beyond scans you explicitly trigger, and 
+                  maintain minimal server logs for security purposes only.
+                </p>
+              </div>
+
+              {/* Data Collection */}
+              <div className="mb-12">
+                <H2 className="text-2xl font-semibold mb-4">Data We Collect</H2>
+                <div className="space-y-6">
+                  <div className="border-l-4 border-cobalt pl-6">
+                    <h3 className="text-lg font-medium mb-2">Wallet Addresses</h3>
+                    <p className="text-stone">
+                      Only when you explicitly scan a wallet. Used solely to fetch token allowances 
+                      from blockchain networks. Not stored permanently.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-4 border-cobalt pl-6">
+                    <h3 className="text-lg font-medium mb-2">Email Addresses</h3>
+                    <p className="text-stone">
+                      Only if you subscribe to alerts or make donations. Used exclusively for 
+                      notifications and receipts. Never shared with third parties.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-4 border-cobalt pl-6">
+                    <h3 className="text-lg font-medium mb-2">Technical Logs</h3>
+                    <p className="text-stone">
+                      Minimal server logs (IP addresses, request IDs) for security and abuse prevention. 
+                      Automatically purged after 30 days.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Data Usage */}
+              <div className="mb-12">
+                <H2 className="text-2xl font-semibold mb-4">How We Use Your Data</H2>
+                <ul className="space-y-3 text-stone">
+                  <li className="flex items-start">
+                    <span className="text-cobalt mr-3">•</span>
+                    <span>Process wallet scans to display token allowances</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cobalt mr-3">•</span>
+                    <span>Send email alerts about risky approvals (if subscribed)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cobalt mr-3">•</span>
+                    <span>Provide donation receipts and confirmations</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-cobalt mr-3">•</span>
+                    <span>Monitor for abuse and security threats</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Your Rights */}
+              <div className="mb-12">
+                <H2 className="text-2xl font-semibold mb-4">Your Privacy Rights</H2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-ag-panel p-6 rounded-lg">
+                    <h3 className="text-lg font-medium mb-3">Access & Control</h3>
+                    <p className="text-stone text-sm">
+                      Use the app without creating an account. All wallet scans are processed 
+                      without requiring personal information.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-ag-panel p-6 rounded-lg">
+                    <h3 className="text-lg font-medium mb-3">Email Management</h3>
+                    <p className="text-stone text-sm">
+                      Unsubscribe from emails anytime using the link in any email. 
+                      No questions asked.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-ag-panel p-6 rounded-lg">
+                    <h3 className="text-lg font-medium mb-3">Data Deletion</h3>
+                    <p className="text-stone text-sm">
+                      Request deletion of your email data by contacting us at 
+                      legal.support@allowanceguard.com
+                    </p>
+                  </div>
+                  
+                  <div className="bg-ag-panel p-6 rounded-lg">
+                    <h3 className="text-lg font-medium mb-3">Transparency</h3>
+                    <p className="text-stone text-sm">
+                      This is open source software. You can review exactly how your data 
+                      is processed in our codebase.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Third Parties */}
+              <div className="mb-12">
+                <H2 className="text-2xl font-semibold mb-4">Third-Party Services</H2>
+                <p className="text-stone mb-4">
+                  We use minimal third-party services, all with strong privacy protections:
+                </p>
+                <ul className="space-y-2 text-stone">
+                  <li>• <strong>Vercel:</strong> Hosting and CDN (privacy-focused)</li>
+                  <li>• <strong>Neon Database:</strong> Data storage (encrypted, EU-based)</li>
+                  <li>• <strong>Microsoft SMTP:</strong> Email delivery (enterprise-grade security)</li>
+                  <li>• <strong>Alchemy/Infura:</strong> Blockchain data (no personal data shared)</li>
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <div className="mb-12">
+                <H2 className="text-2xl font-semibold mb-4">Questions About Privacy?</H2>
+                <div className="bg-ag-panel p-6 rounded-lg">
+                  <p className="text-stone mb-4">
+                    We&apos;re committed to transparency. If you have questions about our privacy practices 
+                    or want to exercise your rights, contact us:
+                  </p>
+                  <p className="text-cobalt font-medium">
+                    legal.support@allowanceguard.com
+                  </p>
+                </div>
+              </div>
+
+              {/* Last Updated */}
+              <div className="text-center text-sm text-stone border-t pt-8">
+                <p>Last updated: {new Date().toLocaleDateString()}</p>
+                <p className="mt-2">
+                  This privacy policy may be updated to reflect changes in our practices. 
+                  We&apos;ll notify users of significant changes via email.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </Container>
+      </Section>
     </div>
   )
 }

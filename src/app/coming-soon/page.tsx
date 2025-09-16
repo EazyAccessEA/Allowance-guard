@@ -2,13 +2,11 @@ import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export default function ComingSoonPage() {
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={false} />
       
       <Section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
         <Container className="text-center">

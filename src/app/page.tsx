@@ -2,8 +2,6 @@
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
 import Link from 'next/link'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import ConnectButton from '@/components/ConnectButton'
@@ -127,7 +125,6 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative pt-20 pb-20 sm:pt-24 sm:pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
@@ -429,8 +426,6 @@ export default function HomePage() {
           </Container>
         </Section>
       )}
-
-      <Footer />
     </div>
   )
 }

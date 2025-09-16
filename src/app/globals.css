@@ -753,3 +753,37 @@ appkit-button::part(button):focus {
     padding-bottom: 1px;
   }
 }
+
+/* Accessibility improvements */
+:focus-visible { 
+  outline: 2px solid #2563eb; 
+  outline-offset: 2px; 
+}
+
+/* Ensure skip link is properly styled */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only:focus {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  z-index: 50;
+}

@@ -1,21 +1,16 @@
 'use client'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import { useAccount } from 'wagmi'
 import Link from 'next/link'
 import { Eye, Settings } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 
 export default function FeaturesPage() {
-  const { isConnected } = useAccount()
 
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
@@ -160,8 +155,6 @@ export default function FeaturesPage() {
           </div>
         </Container>
       </Section>
-
-      <Footer />
     </div>
   )
 }

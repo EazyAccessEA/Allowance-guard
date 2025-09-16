@@ -1,20 +1,19 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { loadStripe } from '@stripe/stripe-js'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import { useAccount } from 'wagmi'
 import VideoBackground from '@/components/VideoBackground'
 import { DollarSign, Heart, CreditCard, Coins } from 'lucide-react'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
 export default function ContributePage() {
-  const { isConnected } = useAccount()
+  const searchParams = useSearchParams()
+  const cancelled = searchParams.get('cancelled') === 'true'
   const [amount, setAmount] = useState<string>('25.00')
   const [email, setEmail] = useState('')
   const [loadingCard, setLoadingCard] = useState(false)
@@ -120,7 +119,6 @@ export default function ContributePage() {
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section */}
       <Section className="relative pt-20 pb-24 sm:pt-24 sm:pb-32 overflow-hidden">
@@ -143,6 +141,27 @@ export default function ContributePage() {
       </Section>
 
       <div className="border-t border-line" />
+
+      {/* Cancelled Message */}
+      {cancelled && (
+        <Section className="py-8">
+          <Container>
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+                <p className="text-sm text-amber-800">
+                  No worries — the app is free forever. If you change your mind, see{' '}
+                  <a 
+                    href="/docs/contributing" 
+                    className="underline hover:text-amber-900 transition-colors duration-200"
+                  >
+                    how to support
+                  </a>.
+                </p>
+              </div>
+            </div>
+          </Container>
+        </Section>
+      )}
 
       {/* Donation Form */}
       <Section className="py-32">
@@ -293,8 +312,6 @@ export default function ContributePage() {
           </div>
         </Container>
       </Section>
-
-      <Footer />
     </div>
   )
 }

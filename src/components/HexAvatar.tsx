@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 interface HexAvatarProps {
@@ -27,15 +28,16 @@ export function HexAvatar({
   
   return (
     <div className={cn(
-      'hex-clip bg-ag-panel border-2 border-ag-line flex items-center justify-center font-semibold text-ag-text',
+      'hex-clip bg-ag-panel border-2 border-ag-line flex items-center justify-center font-semibold text-ag-text relative',
       sizeClasses[size],
       className
     )}>
       {src ? (
-        <img 
+        <Image 
           src={src} 
           alt={alt}
-          className="w-full h-full object-cover hex-clip"
+          fill
+          className="object-cover hex-clip"
         />
       ) : (
         <span>{fallback}</span>

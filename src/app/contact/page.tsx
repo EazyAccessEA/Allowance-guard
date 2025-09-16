@@ -1,12 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import { useAccount } from 'wagmi'
 import { 
   Search, 
   Mail, 
@@ -57,7 +54,6 @@ const faqData = [
 ]
 
 export default function ContactPage() {
-  const { isConnected } = useAccount()
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredFAQs, setFilteredFAQs] = useState(faqData)
 
@@ -79,7 +75,6 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <Header isConnected={isConnected} />
       
       {/* Hero Section - Clean Fireart Style */}
       <Section className="relative pt-20 pb-32 sm:pt-24 sm:pb-40 overflow-hidden">
@@ -328,7 +323,7 @@ export default function ContactPage() {
                 Report technical bugs, view our open-source components, and contribute to the project&apos;s development.
               </p>
               <a 
-                href="https://github.com/AllowanceGuard"
+                href="https://github.com/EazyAccessEA/Allowance-guard"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center w-full px-6 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
@@ -397,8 +392,6 @@ export default function ContactPage() {
           </div>
         </Container>
       </Section>
-
-      <Footer />
     </div>
   )
 }
