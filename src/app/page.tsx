@@ -9,6 +9,7 @@ import AppArea from '@/components/AppArea'
 import VideoBackground from '@/components/VideoBackground'
 import RotatingTypewriter from '@/components/RotatingTypewriter'
 import ActivityTimeline from '@/components/ActivityTimeline'
+import { Shield } from 'lucide-react'
 
 export default function HomePage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -192,7 +193,6 @@ export default function HomePage() {
           </div>
         </Container>
       </Section>
-
 
       {/* The Problem You Solve */}
       <Section className="py-16 sm:py-24 lg:py-32">
@@ -426,6 +426,79 @@ export default function HomePage() {
           </Container>
         </Section>
       )}
+
+      {/* Trust Banner - Apple Style - Above Footer */}
+      <Section className="py-12 sm:py-16 bg-gray-50/50">
+        <Container>
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <Shield className="w-5 h-5 text-emerald-600" />
+              <p className="text-sm sm:text-base text-stone font-medium tracking-wide">
+                Trusted by security-conscious users across
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16">
+              {/* Ethereum */}
+              <div className="flex items-center gap-3 text-sm text-stone font-medium group">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+                  <span className="text-white text-sm font-bold">Ξ</span>
+                </div>
+                <span className="text-stone group-hover:text-ink transition-colors duration-300">Ethereum</span>
+              </div>
+              
+              {/* Arbitrum */}
+              <div className="flex items-center gap-3 text-sm text-stone font-medium group">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+                  <span className="text-white text-sm font-bold">A</span>
+                </div>
+                <span className="text-stone group-hover:text-ink transition-colors duration-300">Arbitrum</span>
+              </div>
+              
+              {/* Base */}
+              <div className="flex items-center gap-3 text-sm text-stone font-medium group">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+                  <span className="text-white text-sm font-bold">B</span>
+                </div>
+                <span className="text-stone group-hover:text-ink transition-colors duration-300">Base</span>
+              </div>
+              
+              {/* Polygon - Coming Soon */}
+              <div className="flex items-center gap-3 text-sm text-stone/60 font-medium group">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center shadow-sm">
+                  <span className="text-gray-500 text-sm font-bold">P</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-stone/60">Polygon</span>
+                  <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-2 py-1 rounded-full">Soon</span>
+                </div>
+              </div>
+              
+              {/* Optimism - Coming Soon */}
+              <div className="flex items-center gap-3 text-sm text-stone/60 font-medium group">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center shadow-sm">
+                  <span className="text-gray-500 text-sm font-bold">O</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-stone/60">Optimism</span>
+                  <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-2 py-1 rounded-full">Soon</span>
+                </div>
+              </div>
+              
+              {/* Avalanche - Coming Soon */}
+              <div className="flex items-center gap-3 text-sm text-stone/60 font-medium group">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center shadow-sm">
+                  <span className="text-gray-500 text-sm font-bold">A</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-stone/60">Avalanche</span>
+                  <span className="text-xs text-emerald-600 font-medium bg-emerald-50 px-2 py-1 rounded-full">Soon</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
     </div>
   )
 }
