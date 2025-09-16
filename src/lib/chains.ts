@@ -32,8 +32,6 @@ function makeTransport(endpoints: RpcEndpoint[]): Transport {
         timeout: ep.timeoutMs ?? 12_000,
         batch: true,
         retryCount: 0,     // we'll own retry policy outside
-        onFetchResponse: () => { /* success clears ban */ if (!notBanned(ep.url)) ban.delete(ep.url) },
-        onFetchError: () => { punish(ep.url) },  // mark as bad
       })
     )
   return fallback(sorted, { rank: true, retryCount: 0 })
@@ -50,4 +48,14 @@ export function clientFor(id: 1|42161|8453): PublicClient {
   const c = createPublicClient({ chain, transport: t })
   cache.set(id, c)
   return c
+}
+
+// Circuit breaker helper - call this when RPC calls fail
+export function markRpcFailed(url: string) {
+  punish(url)
+}
+
+// Circuit breaker helper - call this when RPC calls succeed
+export function markRpcSuccess(url: string) {
+  if (!notBanned(url)) ban.delete(url)
 }
