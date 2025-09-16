@@ -1,17 +1,19 @@
 'use client'
 
+import { BookOpen, Rocket, Zap, Wrench, Shield, HelpCircle, MessageCircle } from 'lucide-react'
+
 interface NavigationProps {
   activeSection: string
   onSectionChange: (section: string) => void
 }
 
 const sections = [
-  { id: 'overview', label: 'Overview', icon: '📖' },
-  { id: 'quickstart', label: 'Quick Start', icon: 'rocket' },
-  { id: 'features', label: 'Features', icon: 'zap' },
-  { id: 'api', label: 'API Reference', icon: 'wrench' },
-  { id: 'security', label: 'Security', icon: '🔒' },
-  { id: 'faq', label: 'FAQ', icon: '❓' },
+  { id: 'overview', label: 'Overview', icon: BookOpen },
+  { id: 'quickstart', label: 'Quick Start', icon: Rocket },
+  { id: 'features', label: 'Features', icon: Zap },
+  { id: 'api', label: 'API Reference', icon: Wrench },
+  { id: 'security', label: 'Security', icon: Shield },
+  { id: 'faq', label: 'FAQ', icon: HelpCircle },
 ]
 
 export function Navigation({ activeSection, onSectionChange }: NavigationProps) {
@@ -31,7 +33,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
                 : 'text-ag-muted hover:text-ag-text hover:bg-ag-panel-hover'
             }`}
           >
-            <span className="mr-2">{section.icon}</span>
+            <section.icon className="inline w-4 h-4 mr-2" />
             {section.label}
           </button>
         ))}
@@ -57,7 +59,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
             rel="noopener noreferrer"
             className="block px-3 py-2 text-sm text-ag-muted hover:text-ag-text hover:bg-ag-panel-hover transition-colors"
           >
-            <span className="mr-2">💬</span>
+            <MessageCircle className="inline w-4 h-4 mr-2" />
             Discord Community
           </a>
           <a 
