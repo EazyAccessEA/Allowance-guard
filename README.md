@@ -91,13 +91,13 @@ This project implements multiple security layers:
 
 ## 📖 Documentation
 
-- [API Documentation](/docs/api)
-- [Integration Guide](/docs/integration)
-- [Contributing Guidelines](/docs/contributing)
+- [API Documentation](https://www.allowanceguard.com/docs/api)
+- [Integration Guide](https://www.allowanceguard.com/docs/integration)
+- [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing)
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](/docs/contributing) for details.
+We welcome contributions! Please see our [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing) for details.
 
 ### Development Setup
 
@@ -109,7 +109,7 @@ We welcome contributions! Please see our [Contributing Guidelines](/docs/contrib
 
 ## 📄 License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE) file for details.
 
 ## ⚠️ Disclaimer
 
@@ -119,7 +119,7 @@ This software is provided "as is" without warranty. Use at your own risk. The au
 
 - **Issues**: [GitHub Issues](https://github.com/EazyAccessEA/Allowance-guard/issues)
 - **Email**: legal.support@allowanceguard.com
-- **Documentation**: [Project Docs](/docs)
+- **Documentation**: [Project Docs](https://www.allowanceguard.com/docs)
 
 ---
 
