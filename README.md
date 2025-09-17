@@ -91,9 +91,9 @@ This project implements multiple security layers:
 
 ## 📖 Documentation
 
+- [User Documentation](https://www.allowanceguard.com/docs)
 - [API Documentation](https://www.allowanceguard.com/docs/api)
 - [Integration Guide](https://www.allowanceguard.com/docs/integration)
-- [Testing Framework](https://www.allowanceguard.com/docs/testing)
 - [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing)
 
 ## 🤝 Contributing
@@ -110,7 +110,7 @@ We welcome contributions! Please see our [Contributing Guidelines](https://www.a
 
 ### Testing
 
-Allowance Guard includes a comprehensive testing framework:
+Allowance Guard includes a comprehensive testing framework for developers:
 
 ```bash
 # Run E2E tests
@@ -130,7 +130,7 @@ pnpm playwright test tests/scan.spec.ts
 - ✅ Payment flow testing
 - ✅ User workflow testing
 
-See [Testing Documentation](https://www.allowanceguard.com/docs/testing) for detailed information.
+See `TESTING_POLICY.md` in the repository for detailed testing documentation.
 
 ## 📄 License
 
