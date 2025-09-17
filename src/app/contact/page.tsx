@@ -174,11 +174,12 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center text-sm text-stone">
                   <CheckCircle className="w-4 h-4 mr-2" />
-                  <span className="cursor-pointer" 
-                        onClick={() => window.location.href = 'mailto:support@allowanceguard.com?subject=General Support Request'}
-                        title="Click to send email">
-                    {obfuscateEmail('support@allowanceguard.com')}
-                  </span>
+                  <span 
+                    className="cursor-pointer hover:text-cobalt transition-colors duration-200" 
+                    onClick={() => window.location.href = 'mailto:support@allowanceguard.com?subject=General Support Request'}
+                    title="Click to send email"
+                    dangerouslySetInnerHTML={{ __html: obfuscateEmail('support@allowanceguard.com') }}
+                  />
                 </div>
               </div>
               <a 
@@ -206,11 +207,12 @@ export default function ContactPage() {
                       </div>
                 <div className="flex items-center text-sm text-stone">
                   <Lock className="w-4 h-4 mr-3" />
-                  <span className="font-light cursor-pointer" 
-                        onClick={() => window.location.href = 'mailto:security@allowanceguard.com?subject=Security Vulnerability Report'}
-                        title="Click to send email">
-                    {obfuscateEmail('security@allowanceguard.com')}
-                  </span>
+                  <span 
+                    className="font-light cursor-pointer hover:text-cobalt transition-colors duration-200" 
+                    onClick={() => window.location.href = 'mailto:security@allowanceguard.com?subject=Security Vulnerability Report'}
+                    title="Click to send email"
+                    dangerouslySetInnerHTML={{ __html: obfuscateEmail('security@allowanceguard.com') }}
+                  />
                 </div>
               </div>
               <div className="space-y-4">
