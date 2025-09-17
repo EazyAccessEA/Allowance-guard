@@ -1,5 +1,9 @@
 import nodemailer from 'nodemailer'
 import { emailLogger } from './logger'
+// Email service configuration - supports Postmark or SMTP
+const postmarkToken = process.env.POSTMARK_SERVER_TOKEN
+
+
 
 // Microsoft SMTP Configuration from .env.local
 const host = process.env.SMTP_HOST || 'smtp-mail.outlook.com'
@@ -42,27 +46,104 @@ export function createEmailHTML(content: string, recipientEmail: string): string
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Allowance Guard Alert</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; padding: 0; background-color: #f9fafb; }
-    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
-    .header { background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%); color: white; padding: 30px 20px; text-align: center; }
-    .content { padding: 30px 20px; }
-    .footer { background-color: #f9fafb; padding: 20px; }
-    h1 { margin: 0; font-size: 24px; font-weight: 600; }
-    h2 { color: #1e40af; font-size: 20px; margin-top: 30px; margin-bottom: 15px; }
-    p { margin-bottom: 15px; }
-    .alert-box { background-color: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px; margin: 20px 0; }
-    .success-box { background-color: #d1fae5; border: 1px solid #10b981; border-radius: 8px; padding: 15px; margin: 20px 0; }
-    .button { display: inline-block; background-color: #1e40af; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: 500; margin: 10px 0; }
-    .button:hover { background-color: #1d4ed8; }
-    .button-danger { background-color: #dc2626; }
-    .button-danger:hover { background-color: #b91c1c; }
-    .address { font-family: 'Courier New', monospace; background-color: #f3f4f6; padding: 8px; border-radius: 4px; word-break: break-all; }
+    body { 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      line-height: 1.6; 
+      color: #1E1F23; 
+      margin: 0; 
+      padding: 0; 
+      background-color: #ffffff;
+    }
+    .container { 
+      max-width: 600px; 
+      margin: 0 auto; 
+      background-color: #ffffff; 
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .header { 
+      background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%); 
+      color: white; 
+      padding: 40px 20px; 
+      text-align: center; 
+    }
+    .content { 
+      padding: 40px 30px; 
+      background-color: #ffffff;
+    }
+    .footer { 
+      background-color: #F8FAFC; 
+      padding: 30px; 
+      border-top: 1px solid #E2E8F0;
+    }
+    h1 { 
+      margin: 0; 
+      font-size: 28px; 
+      font-weight: 700; 
+      color: #ffffff;
+      letter-spacing: -0.025em;
+    }
+    h2 { 
+      color: #2563EB; 
+      font-size: 22px; 
+      margin-top: 30px; 
+      margin-bottom: 15px; 
+      font-weight: 600;
+    }
+    p { 
+      margin-bottom: 16px; 
+      color: #374151;
+      font-size: 16px;
+    }
+    .alert-box { 
+      background-color: #FEF3C7; 
+      border: 1px solid #F59E0B; 
+      border-radius: 12px; 
+      padding: 20px; 
+      margin: 24px 0; 
+    }
+    .success-box { 
+      background-color: #D1FAE5; 
+      border: 1px solid #10B981; 
+      border-radius: 12px; 
+      padding: 20px; 
+      margin: 24px 0; 
+    }
+    .button { 
+      display: inline-block; 
+      background-color: #2563EB; 
+      color: white; 
+      padding: 14px 28px; 
+      text-decoration: none; 
+      border-radius: 8px; 
+      font-weight: 600; 
+      margin: 16px 0; 
+      transition: background-color 0.2s ease;
+    }
+    .button:hover { 
+      background-color: #1D4ED8; 
+    }
+    .button-danger { 
+      background-color: #DC2626; 
+    }
+    .button-danger:hover { 
+      background-color: #B91C1C; 
+    }
+    .address { 
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; 
+      background-color: #F1F5F9; 
+      padding: 12px; 
+      border-radius: 8px; 
+      word-break: break-all; 
+      font-size: 14px;
+      border: 1px solid #E2E8F0;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🛡️ Allowance Guard</h1>
+      <img src="https://www.allowanceguard.com/AG_Logo2.png" alt="Allowance Guard" style="width: 80px; height: 80px; margin: 0 auto 20px auto; display: block;">
+      <h1>Allowance Guard</h1>
       <p style="margin: 10px 0 0 0; opacity: 0.9;">Security alerts for your token approvals</p>
     </div>
     
@@ -80,6 +161,19 @@ export function createEmailHTML(content: string, recipientEmail: string): string
 }
 
 export function getTransport() {
+  // Priority: Postmark > SMTP > Log-only fallback
+  
+  if (postmarkToken) {
+    emailLogger.info('Using Postmark email service')
+    return nodemailer.createTransport({
+      service: 'postmark',
+      auth: {
+        user: postmarkToken,
+        pass: postmarkToken
+      }
+    }) as nodemailer.Transporter
+  }
+  
   if (!host || !user || !pass) {
     emailLogger.warn('SMTP configuration missing, using log-only transport')
     // Dev fallback: log-only transport

@@ -25,7 +25,8 @@ if (typeof window !== 'undefined') {
         message.includes('Session expired') ||
         message.includes('Connection request expired') ||
         message.includes('Origin') && message.includes('not found on Allowlist') ||
-        message.includes('update configuration on cloud.reown.com')) {
+        message.includes('update configuration on cloud.reown.com') ||
+        message.includes('cca-lite.coinbase.com/metrics')) {
       return // Suppress telemetry, WebSocket, and WalletConnect-related errors
     }
     originalConsoleError.apply(console, args)
@@ -43,7 +44,8 @@ if (typeof window !== 'undefined') {
         event.message?.includes('Session expired') ||
         event.message?.includes('Connection request expired') ||
         (event.message?.includes('Origin') && event.message?.includes('not found on Allowlist')) ||
-        event.message?.includes('update configuration on cloud.reown.com')) {
+        event.message?.includes('update configuration on cloud.reown.com') ||
+        event.message?.includes('cca-lite.coinbase.com/metrics')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -61,7 +63,8 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('Session expired') ||
         event.reason?.message?.includes('Connection request expired') ||
         (event.reason?.message?.includes('Origin') && event.reason?.message?.includes('not found on Allowlist')) ||
-        event.reason?.message?.includes('update configuration on cloud.reown.com')) {
+        event.reason?.message?.includes('update configuration on cloud.reown.com') ||
+        event.reason?.message?.includes('cca-lite.coinbase.com/metrics')) {
       event.preventDefault()
       event.stopPropagation()
       return false

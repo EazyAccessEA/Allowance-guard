@@ -1,4 +1,8 @@
 {
+  "regions": ["lhr1"],
+  "functions": {
+    "app/**/route.ts": { "maxDuration": 60 }
+  },
   "headers": [
     {
       "source": "/api/alerts/daily",

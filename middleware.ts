@@ -9,13 +9,14 @@ const ORIGIN = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') || 'http://lo
 /** Very tight CSP. Extend connect-src for your RPCs/analytics if needed. */
 const CSP = [
   "default-src 'self'",
-  "img-src 'self' data:",
+  "img-src 'self' data: blob: https:",
   "style-src 'self' 'unsafe-inline'", // Next injects inline styles
-  "script-src 'self'",                // avoid 'unsafe-eval' if possible
-  `connect-src 'self' ${new URL(ORIGIN).origin} https://eth.llamarpc.com https://polygon-rpc.com https://arb1.arbitrum.io https://mainnet.optimism.io https://mainnet.base.org`,
-  "font-src 'self' data:",
+  "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live", // Allow Next.js and Vercel
+  `connect-src 'self' ${new URL(ORIGIN).origin} https://eth.llamarpc.com https://polygon-rpc.com https://arb1.arbitrum.io https://mainnet.optimism.io https://mainnet.base.org https: wss:`,
+  "font-src 'self' data: https://fonts.gstatic.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
+  "form-action 'self'",
 ].join('; ')
 
 const RATE_LIMIT_PATHS = new Map<string, { windowSec: number; max: number }>([
