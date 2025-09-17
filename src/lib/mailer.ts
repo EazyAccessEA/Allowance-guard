@@ -60,6 +60,16 @@ export function createEmailHTML(content: string, recipientEmail: string): string
       background-color: #ffffff; 
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
+    .top-border { 
+      height: 4px; 
+      background-color: #2563EB; 
+      width: 100%; 
+    }
+    .bottom-border { 
+      height: 4px; 
+      background-color: #2563EB; 
+      width: 100%; 
+    }
     .header { 
       background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%); 
       color: white; 
@@ -141,6 +151,7 @@ export function createEmailHTML(content: string, recipientEmail: string): string
 </head>
 <body>
   <div class="container">
+    <div class="top-border"></div>
     <div class="header">
       <img src="https://www.allowanceguard.com/AG_Logo2.png" alt="Allowance Guard" style="width: 80px; height: 80px; margin: 0 auto 20px auto; display: block;">
       <h1>Allowance Guard</h1>
@@ -154,6 +165,7 @@ export function createEmailHTML(content: string, recipientEmail: string): string
     <div class="footer">
       ${LEGAL_FOOTER.replace(/\{\{EMAIL\}\}/g, recipientEmail)}
     </div>
+    <div class="bottom-border"></div>
   </div>
 </body>
 </html>
