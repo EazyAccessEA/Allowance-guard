@@ -212,7 +212,7 @@ pnpm test:e2e`}
                 <div className="bg-gray-50 border border-line rounded-lg p-4">
                   <h4 className="font-medium text-ink mb-2">Local Development</h4>
                   <pre className="text-sm text-gray-800">
-{`# Set environment variables
+                    {`# Set environment variables
 export NEXT_PUBLIC_E2E=1
 export E2E_FAKE_PAYMENTS=1
 export E2E_FAKE_EMAIL=1
@@ -230,7 +230,7 @@ pnpm playwright test tests/scan.spec.ts`}
                 <div className="bg-gray-50 border border-line rounded-lg p-4">
                   <h4 className="font-medium text-ink mb-2">Using Test Script</h4>
                   <pre className="text-sm text-gray-800">
-{`# Run the convenience script
+                    {`# Run the convenience script
 ./scripts/test-e2e.sh`}
                   </pre>
                 </div>
@@ -313,7 +313,7 @@ pnpm playwright test tests/scan.spec.ts`}
               <h3 id="github-actions" className="text-xl font-semibold text-ink mb-4">GitHub Actions Workflow</h3>
               <div className="bg-gray-50 border border-line rounded-lg p-6 mb-6">
                 <pre className="text-sm text-gray-800 overflow-x-auto">
-{`name: E2E
+                  {`name: E2E
 on:
   pull_request:
   push:
@@ -424,7 +424,7 @@ jobs:
               <h3 id="debug-mode" className="text-xl font-semibold text-ink mb-4">Debug Mode</h3>
               <div className="bg-gray-50 border border-line rounded-lg p-6 mb-6">
                 <pre className="text-sm text-gray-800">
-{`# Run tests in debug mode
+                  {`# Run tests in debug mode
 pnpm playwright test --debug
 
 # Run specific test in debug mode
