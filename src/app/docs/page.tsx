@@ -18,7 +18,8 @@ import {
   Shield,
   Bell,
   Zap,
-  Users
+  Users,
+  TestTube
 } from 'lucide-react'
 
 export default function DocsPage() {
@@ -30,6 +31,7 @@ export default function DocsPage() {
     { id: 'core-concepts', title: 'Core Concepts', icon: Shield },
     { id: 'usage-guides', title: 'Usage Guides', icon: Wrench },
     { id: 'advanced-topics', title: 'Advanced Topics', icon: Settings },
+    { id: 'testing', title: 'Testing Framework', icon: TestTube },
     { id: 'troubleshooting', title: 'Troubleshooting', icon: HelpCircle }
   ]
 
@@ -120,6 +122,7 @@ export default function DocsPage() {
                 <p><strong>Core Concepts:</strong> How We Calculate Risk Scores • The Revocation Process Explained • Data Privacy and Security</p>
                 <p><strong>Usage Guides:</strong> How to Interpret Your Allowance Dashboard • How to Revoke a Single Allowance • How to Batch Revoke Allowances</p>
                 <p><strong>Advanced Topics:</strong> Allowance Guard&apos;s Architecture • Smart Contract Integration • API Reference (Public)</p>
+                <p><strong>Testing Framework:</strong> E2E Testing Setup • Testing Policies • CI/CD Integration • Troubleshooting</p>
                 <p><strong>Support & Troubleshooting:</strong> Common Issues and Solutions • Glossary of Terms • Getting Help</p>
               </div>
               
@@ -849,6 +852,100 @@ export default function DocsPage() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'testing':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 id="testing" className="text-2xl font-semibold text-ink mb-4">Testing Framework</h2>
+              <p className="text-lg text-stone leading-relaxed mb-8">
+                Allowance Guard implements a comprehensive testing strategy to ensure reliability, security, and accessibility. Our testing framework covers everything from individual components to full user workflows.
+              </p>
+              
+              <h3 id="testing-overview" className="text-xl font-semibold text-ink mb-4">Testing Overview</h3>
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-white border border-line rounded-lg p-6">
+                  <h4 className="text-lg font-semibold text-ink mb-3">End-to-End Testing</h4>
+                  <p className="text-base text-stone mb-4">Full application testing with Playwright, covering user workflows, API endpoints, and accessibility compliance.</p>
+                  <ul className="text-sm text-stone space-y-1">
+                    <li>• Wallet connection and scanning</li>
+                    <li>• Payment processing flows</li>
+                    <li>• Export functionality</li>
+                    <li>• Accessibility compliance</li>
+                  </ul>
+                </div>
+                <div className="bg-white border border-line rounded-lg p-6">
+                  <h4 className="text-lg font-semibold text-ink mb-3">Test Mode Features</h4>
+                  <p className="text-base text-stone mb-4">Sophisticated mocking capabilities ensure tests run reliably without external dependencies.</p>
+                  <ul className="text-sm text-stone space-y-1">
+                    <li>• Fake payment processing</li>
+                    <li>• Mocked email sending</li>
+                    <li>• Test data seeding</li>
+                    <li>• Environment-based controls</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h3 id="running-tests" className="text-xl font-semibold text-ink mb-4">Running Tests</h3>
+              <div className="bg-gray-50 border border-line rounded-lg p-6 mb-6">
+                <pre className="text-sm text-gray-800 overflow-x-auto">
+{`# Set environment variables
+export NEXT_PUBLIC_E2E=1
+export E2E_FAKE_PAYMENTS=1
+export E2E_FAKE_EMAIL=1
+
+# Run all E2E tests
+pnpm test:e2e
+
+# Run with UI
+pnpm test:e2e:ui
+
+# Run specific test file
+pnpm playwright test tests/scan.spec.ts`}
+                </pre>
+              </div>
+
+              <h3 id="testing-policies" className="text-xl font-semibold text-ink mb-4">Testing Policies</h3>
+              <div className="space-y-4">
+                <div className="bg-white border border-line rounded-lg p-6">
+                  <h4 className="font-semibold text-ink mb-3">Quality Standards</h4>
+                  <ul className="space-y-2 text-sm text-stone">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span>Minimum 80% code coverage for new features</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span>All API endpoints must have integration tests</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span>Critical user flows require E2E tests</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                      <span>Accessibility tests for all UI components</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h4 className="font-semibold text-blue-800 mb-3">📚 Detailed Testing Documentation</h4>
+                <p className="text-sm text-blue-700 mb-4">
+                  For comprehensive testing information, including setup guides, policies, CI/CD integration, and troubleshooting, visit our dedicated testing documentation.
+                </p>
+                <a 
+                  href="/docs/testing" 
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  <TestTube className="w-4 h-4" />
+                  View Testing Documentation
+                </a>
               </div>
             </div>
           </div>

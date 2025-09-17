@@ -93,6 +93,7 @@ This project implements multiple security layers:
 
 - [API Documentation](https://www.allowanceguard.com/docs/api)
 - [Integration Guide](https://www.allowanceguard.com/docs/integration)
+- [Testing Framework](https://www.allowanceguard.com/docs/testing)
 - [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing)
 
 ## 🤝 Contributing
@@ -106,6 +107,30 @@ We welcome contributions! Please see our [Contributing Guidelines](https://www.a
 3. Make your changes
 4. Add tests if applicable
 5. Submit a pull request
+
+### Testing
+
+Allowance Guard includes a comprehensive testing framework:
+
+```bash
+# Run E2E tests
+pnpm test:e2e
+
+# Run E2E tests with UI
+pnpm test:e2e:ui
+
+# Run specific test file
+pnpm playwright test tests/scan.spec.ts
+```
+
+**Test Coverage:**
+- ✅ End-to-End testing with Playwright
+- ✅ Accessibility testing (WCAG 2.0 AA)
+- ✅ API endpoint testing
+- ✅ Payment flow testing
+- ✅ User workflow testing
+
+See [Testing Documentation](https://www.allowanceguard.com/docs/testing) for detailed information.
 
 ## 📄 License
 
