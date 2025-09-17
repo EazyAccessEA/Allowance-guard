@@ -174,11 +174,15 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center text-sm text-stone">
                   <CheckCircle className="w-4 h-4 mr-2" />
-                  <span>support@allowanceguard.com</span>
+                  <span className="cursor-pointer" 
+                        onClick={() => window.location.href = 'mailto:support@allowanceguard.com?subject=General Support Request'}
+                        title="Click to send email">
+                    {obfuscateEmail('support@allowanceguard.com')}
+                  </span>
                 </div>
               </div>
               <a 
-                href="mailto:support@allowanceguard.com?subject=General Support Request"
+                href={createObfuscatedMailtoLink('support@allowanceguard.com', 'General Support Request')}
                 className="inline-flex items-center justify-center w-full px-6 py-3 border border-cobalt text-cobalt rounded-lg font-medium hover:bg-cobalt hover:text-white transition-colors duration-200"
               >
                 <Mail className="w-4 h-4 mr-2" />
@@ -202,12 +206,16 @@ export default function ContactPage() {
                       </div>
                 <div className="flex items-center text-sm text-stone">
                   <Lock className="w-4 h-4 mr-3" />
-                  <span className="font-light">security@allowanceguard.com</span>
+                  <span className="font-light cursor-pointer" 
+                        onClick={() => window.location.href = 'mailto:security@allowanceguard.com?subject=Security Vulnerability Report'}
+                        title="Click to send email">
+                    {obfuscateEmail('security@allowanceguard.com')}
+                  </span>
                 </div>
               </div>
               <div className="space-y-4">
                 <a 
-                  href="mailto:security@allowanceguard.com?subject=Security Vulnerability Report"
+                  href={createObfuscatedMailtoLink('security@allowanceguard.com', 'Security Vulnerability Report')}
                   className="inline-flex items-center justify-center w-full px-8 py-4 border border-cobalt text-cobalt rounded-2xl font-light hover:bg-cobalt hover:text-white transition-colors duration-300"
                 >
                   <Shield className="w-5 h-5 mr-3" />

@@ -198,7 +198,7 @@ export default function HomePage() {
       </Section>
 
       {/* The Problem You Solve */}
-      <Section className="py-16 sm:py-24 lg:py-32 bg-black">
+      <Section className="py-16 sm:py-24 lg:py-32 bg-stone">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight mb-6 sm:mb-8">
