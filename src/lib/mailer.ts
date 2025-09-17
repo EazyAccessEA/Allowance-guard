@@ -213,6 +213,12 @@ export function getTransport() {
 }
 
 export async function sendMail(to: string, subject: string, html: string, text?: string) {
+  // E2E fake email mode
+  if (process.env.E2E_FAKE_EMAIL === '1') {
+    console.log('[E2E_FAKE_EMAIL]', { to, subject })
+    return { ok: true, id: 'fake' }
+  }
+
   const transporter = getTransport()
   
   try {

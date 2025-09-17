@@ -1,0 +1,24 @@
+name: E2E
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_E2E: "1"
+      E2E_FAKE_PAYMENTS: "1"
+      E2E_FAKE_EMAIL: "1"
+      # If your app needs DB:
+      DATABASE_URL: ${{ secrets.DATABASE_URL_CI }}
+      # If using Redis in tests, add REDIS_URL too (or skip redis paths)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 18, cache: 'pnpm' }
+      - run: corepack enable
+      - run: pnpm i --frozen-lockfile
+      - run: npx playwright install --with-deps
+      - run: pnpm build
+      - run: pnpm -s playwright test

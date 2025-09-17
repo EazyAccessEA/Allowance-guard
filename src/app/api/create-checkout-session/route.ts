@@ -11,6 +11,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: Request) {
   try {
+    // E2E fake payments mode
+    if (process.env.E2E_FAKE_PAYMENTS === '1') {
+      return NextResponse.json({ id: 'cs_test_fake' })
+    }
+
     const h = await nextHeaders()
     const ip = h.get('x-forwarded-for')?.split(',')[0] || h.get('x-real-ip') || 'unknown'
     await limitOrThrow(ip, 'stripe-checkout')

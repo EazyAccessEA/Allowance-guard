@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import ConnectButton from '@/components/ConnectButton'
+import TestConnect from '@/components/TestConnect'
 import AppArea from '@/components/AppArea'
 import VideoBackground from '@/components/VideoBackground'
 import RotatingTypewriter from '@/components/RotatingTypewriter'
@@ -163,10 +164,13 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
             {!isConnected ? (
-              <ConnectButton 
-                variant="primary" 
-                className="bg-cobalt text-white hover:bg-cobalt/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
-              />
+              <div className="flex flex-col gap-2">
+                <ConnectButton 
+                  variant="primary" 
+                  className="bg-cobalt text-white hover:bg-cobalt/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+                />
+                <TestConnect onConnect={(a) => setSelectedWallet(a)} />
+              </div>
             ) : (
               <div className="flex flex-col gap-2">
                 <button 

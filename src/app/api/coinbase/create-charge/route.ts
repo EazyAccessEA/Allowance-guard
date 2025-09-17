@@ -21,6 +21,16 @@ function toDecimalString(minor: number) {
 
 export async function POST(req: Request) {
   try {
+    // E2E fake payments mode
+    if (process.env.E2E_FAKE_PAYMENTS === '1') {
+      const { amount } = await req.json()
+      await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/support/record`, {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ provider:'coinbase', providerId:'fake', status:'pending', currency:'USD', amountUsd:Number(amount||10) })
+      }).catch(()=>{})
+      return NextResponse.json({ hosted_url: '/success?provider=coinbase&charge_id=fake', code: 'fake' })
+    }
+
     const h = await nextHeaders()
     const ip = h.get('x-forwarded-for')?.split(',')[0] || h.get('x-real-ip') || 'unknown'
     await limitOrThrow(ip, 'coinbase-charge')
