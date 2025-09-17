@@ -10,13 +10,7 @@ import {
   Play, 
   CheckCircle, 
   AlertTriangle, 
-  Code, 
-  Database,
-  Mail,
-  CreditCard,
-  Globe,
-  Settings,
-  FileText
+  Settings
 } from 'lucide-react'
 
 export default function TestingPage() {

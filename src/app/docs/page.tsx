@@ -19,7 +19,8 @@ import {
   Bell,
   Zap,
   Users,
-  TestTube
+  TestTube,
+  CheckCircle
 } from 'lucide-react'
 
 export default function DocsPage() {
