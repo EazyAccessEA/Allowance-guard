@@ -198,13 +198,13 @@ export default function HomePage() {
       </Section>
 
       {/* The Problem You Solve */}
-      <Section className="py-16 sm:py-24 lg:py-32">
+      <Section className="py-16 sm:py-24 lg:py-32 bg-black">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-6 sm:mb-8">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight mb-6 sm:mb-8">
               The Unseen Risk in Every Wallet
             </h2>
-            <p className="text-lg sm:text-xl text-stone leading-relaxed">
+            <p className="text-lg sm:text-xl text-white leading-relaxed">
               Token allowances are the hidden permissions you grant when interacting with DeFi protocols, NFT marketplaces, and dApps. These approvals allow smart contracts to move your tokens on your behalf, but they persist long after your interaction ends. Forgotten or malicious allowances become the primary attack vector for draining wallets, with approval-based exploits accounting for 73% of all DeFi security incidents in 2024, resulting in over $3.2 billion in losses. Every time you approve a token, you create a potential vulnerability that could be exploited months or years later.
             </p>
           </div>
