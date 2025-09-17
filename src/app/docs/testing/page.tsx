@@ -171,7 +171,7 @@ export default function TestingPage() {
               <h3 id="installation" className="text-xl font-semibold text-ink mb-4">Installation & Setup</h3>
               <div className="bg-gray-50 border border-line rounded-lg p-6 mb-6">
                 <pre className="text-sm text-gray-800 overflow-x-auto">
-{`# Install Playwright and accessibility testing tools
+                  {`# Install Playwright and accessibility testing tools
 pnpm add -D @playwright/test @axe-core/playwright
 
 # Install browser dependencies
