@@ -51,62 +51,78 @@ export function createObfuscatedMailtoLink(email: string, subject?: string): str
 }
 
 /**
- * React component for displaying obfuscated email addresses
- * Automatically deobfuscates on click/hover for better UX
+ * Multiple obfuscation methods for different use cases
  */
-export function ObfuscatedEmail({ 
-  email, 
-  subject, 
-  className = '',
-  children 
-}: { 
-  email: string
-  subject?: string
-  className?: string
-  children?: React.ReactNode
-}) {
-  const [isRevealed, setIsRevealed] = React.useState(false)
-  const [isClient, setIsClient] = React.useState(false)
+
+/**
+ * HTML entity obfuscation - converts characters to HTML entities
+ */
+export function obfuscateEmailHTML(email: string): string {
+  return email
+    .split('')
+    .map(char => {
+      const code = char.charCodeAt(0)
+      return `&#${code};`
+    })
+    .join('')
+}
+
+/**
+ * JavaScript string concatenation obfuscation
+ */
+export function obfuscateEmailJS(email: string): string {
+  const [local, domain] = email.split('@')
+  return `'${local}' + String.fromCharCode(64) + '${domain}'`
+}
+
+/**
+ * Base64 obfuscation
+ */
+export function obfuscateEmailBase64(email: string): string {
+  return btoa(email)
+}
+
+/**
+ * Hexadecimal obfuscation
+ */
+export function obfuscateEmailHex(email: string): string {
+  return email
+    .split('')
+    .map(char => {
+      const code = char.charCodeAt(0)
+      return `\\x${code.toString(16).padStart(2, '0')}`
+    })
+    .join('')
+}
+
+/**
+ * Unicode escape obfuscation
+ */
+export function obfuscateEmailUnicode(email: string): string {
+  return email
+    .split('')
+    .map(char => {
+      const code = char.charCodeAt(0)
+      return `\\u${code.toString(16).padStart(4, '0')}`
+    })
+    .join('')
+}
+
+/**
+ * Mixed obfuscation - combines multiple methods
+ */
+export function obfuscateEmailMixed(email: string): string {
+  const [local, domain] = email.split('@')
+  const methods = [
+    () => `${local}@${domain}`, // Plain
+    () => `${local}&#64;${domain}`, // HTML entities for @
+    () => `${local}${String.fromCharCode(64)}${domain}`, // Char code for @
+    () => `${local}%40${domain}`, // URL encoding for @
+  ]
   
-  React.useEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  const handleClick = () => {
-    setIsRevealed(true)
-    // Create mailto link with deobfuscated email
-    const mailtoLink = `mailto:${email}${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`
-    window.location.href = mailtoLink
-  }
-
-  const handleMouseEnter = () => {
-    setIsRevealed(true)
-  }
-
-  const handleMouseLeave = () => {
-    setIsRevealed(false)
-  }
-
-  if (!isClient) {
-    // Server-side rendering: show obfuscated version
-    return (
-      <span className={className}>
-        {children || obfuscateEmail(email)}
-      </span>
-    )
-  }
-
-  return (
-    <span 
-      className={`cursor-pointer ${className}`}
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      title="Click to send email"
-    >
-      {children || (isRevealed ? email : obfuscateEmail(email))}
-    </span>
-  )
+  // Use different method based on email hash for consistency
+  const hash = email.split('').reduce((a, b) => a + b.charCodeAt(0), 0)
+  return methods[hash % methods.length]()
 }
 
 /**
