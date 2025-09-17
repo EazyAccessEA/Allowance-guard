@@ -18,6 +18,7 @@ import {
   CheckCircle,
   HelpCircle
 } from 'lucide-react'
+import { obfuscateEmail, createObfuscatedMailtoLink } from '@/lib/email-obfuscation'
 import VideoBackground from '@/components/VideoBackground'
 
 const faqData = [
