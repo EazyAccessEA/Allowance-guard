@@ -2,23 +2,43 @@ import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
 import { sendMail } from '@/lib/mailer'
 import { randomBytes } from 'crypto'
+import { 
+  recordLoginAttempt, 
+  checkAccountLockout
+} from '@/lib/auth-enhanced'
+import { getDeviceInfo } from '@/lib/device-detection'
 
 export async function POST(req: Request) {
   try {
     const { email, redirect = '/' } = await req.json().catch(() => ({}))
     
+    // Get device info for security tracking
+    const deviceInfo = await getDeviceInfo()
+    
     // Validate email
     if (!email || typeof email !== 'string') {
+      await recordLoginAttempt(email || '', deviceInfo.ip, deviceInfo.userAgent, false, 'invalid_email')
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
     
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      await recordLoginAttempt(email, deviceInfo.ip, deviceInfo.userAgent, false, 'invalid_email_format')
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 })
     }
     
     // Validate redirect URL
     if (typeof redirect !== 'string' || !redirect.startsWith('/')) {
+      await recordLoginAttempt(email, deviceInfo.ip, deviceInfo.userAgent, false, 'invalid_redirect')
       return NextResponse.json({ error: 'Invalid redirect URL' }, { status: 400 })
+    }
+    
+    // Check account lockout
+    const lockoutStatus = await checkAccountLockout(email)
+    if (lockoutStatus.locked) {
+      await recordLoginAttempt(email, deviceInfo.ip, deviceInfo.userAgent, false, 'account_locked')
+      return NextResponse.json({ 
+        error: 'Account temporarily locked due to too many failed attempts. Please try again later.' 
+      }, { status: 429 })
     }
     
     // Check for existing unexpired magic links (rate limiting)
@@ -30,6 +50,7 @@ export async function POST(req: Request) {
     )
     
     if (existing.rows.length > 0) {
+      await recordLoginAttempt(email, deviceInfo.ip, deviceInfo.userAgent, false, 'rate_limited')
       return NextResponse.json({ 
         error: 'Magic link already sent. Please check your email or wait a few minutes.' 
       }, { status: 429 })
@@ -42,11 +63,20 @@ export async function POST(req: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
     const url = `${baseUrl}/api/auth/magic/verify?token=${token}&redirect=${encodeURIComponent(redirect)}`
     
-    // Store magic link in database
+    // Store magic link in database with device info
     await pool.query(
       `INSERT INTO magic_links (email, token, purpose, meta, expires_at)
        VALUES ($1,$2,'signin',$3, NOW() + INTERVAL '20 minutes')`,
-      [email.toLowerCase(), token, JSON.stringify({ redirect })]
+      [email.toLowerCase(), token, JSON.stringify({ 
+        redirect, 
+        device: {
+          fingerprint: deviceInfo.fingerprint,
+          name: deviceInfo.name,
+          type: deviceInfo.type,
+          browser: deviceInfo.browser,
+          os: deviceInfo.os
+        }
+      })]
     )
     
     // Send email with branded template
@@ -83,6 +113,9 @@ export async function POST(req: Request) {
     } else {
       await sendMail(email, '🔐 Sign in to Allowance Guard', content)
     }
+    
+    // Record successful magic link request
+    await recordLoginAttempt(email, deviceInfo.ip, deviceInfo.userAgent, true)
     
     const response: { ok: boolean; message: string; magicLink?: string } = { 
       ok: true, 

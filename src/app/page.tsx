@@ -274,8 +274,27 @@ export default function HomePage() {
       </Section>
 
       {/* Key Features & Differentiators */}
-      <Section className="py-24 sm:py-32 lg:py-40 bg-white">
-        <Container>
+      <Section className="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          style={{
+            backgroundImage: 'url(/AllowanceGuard_BG.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
+        
+        {/* Gradient Glass Overlay */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.95) 100%)',
+            backdropFilter: 'blur(1px)'
+          }}
+        />
+        
+        <Container className="relative z-10">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-20">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-8">

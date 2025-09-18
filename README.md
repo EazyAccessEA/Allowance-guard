@@ -1,6 +1,6 @@
 # Allowance Guard
 
-**Version 1.8.0** - Open Source Token Approval Security Platform
+**Version 1.9.0** - Open Source Token Approval Security Platform
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)
@@ -19,6 +19,9 @@ Allowance Guard is an open source security platform for monitoring and managing 
 - **⚡ One-Click Revoke**: Instantly revoke risky approvals
 - **📊 Analytics**: Comprehensive reporting and risk scoring
 - **🔍 Error Monitoring**: Real-time error tracking with Rollbar
+- **🔐 Enhanced Security**: 2FA, device management, and session tracking
+- **🛡️ Advanced Authentication**: Magic link with device fingerprinting
+- **📱 Device Management**: Trust and manage authorized devices
 - **🔓 Open Source**: Full source code available
 
 ## 🚀 Quick Start
@@ -72,14 +75,24 @@ Copy `production.env.example` to `.env.local` and configure:
 
 ## 🔒 Security
 
-This project implements multiple security layers:
+This project implements enterprise-grade security features:
 
+### Core Security Features
+- **🔐 Two-Factor Authentication (2FA)**: TOTP-based 2FA with backup codes
+- **📱 Device Management**: Trust and manage authorized devices
+- **🔍 Session Tracking**: Monitor active sessions across devices
+- **🛡️ Device Fingerprinting**: Advanced device identification and tracking
+- **📊 Security Event Logging**: Comprehensive audit trail
+- **🔒 Account Lockout Protection**: Rate limiting and brute force protection
+
+### Technical Security
 - Input validation and sanitization
 - Rate limiting on API endpoints
 - CSRF protection
 - Security headers
 - Environment variable protection
 - No sensitive data in source code
+- Magic link authentication with enhanced security
 
 **⚠️ CRITICAL SECURITY NOTICE**: 
 - This is open source software provided for educational purposes
@@ -99,6 +112,7 @@ This project implements multiple security layers:
 - [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing)
 - [Rollbar Error Monitoring Setup](ROLLBAR_SETUP.md)
 - [Vercel Deployment Guide](VERCEL_ROLLBAR_SETUP.md)
+- [Security Features Guide](SECURITY_FEATURES.md)
 
 ## 🤝 Contributing
 

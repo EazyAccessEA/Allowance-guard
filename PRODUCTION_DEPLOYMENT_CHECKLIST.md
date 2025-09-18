@@ -1,8 +1,15 @@
-# Production Deployment Checklist - Day 21
+# Production Deployment Checklist - v1.9.0 Security Release
 
 ## 🚀 Launch Readiness & Production Deploy
 
-This checklist ensures all systems are ready for production deployment of Allowance Guard.
+This checklist ensures all systems are ready for production deployment of Allowance Guard v1.9.0 with enhanced security features.
+
+### 🔐 New Security Features in v1.9.0
+- **Two-Factor Authentication (2FA)**: TOTP-based 2FA with backup codes
+- **Device Management**: Trust and manage authorized devices
+- **Session Tracking**: Monitor active sessions across devices
+- **Security Event Logging**: Comprehensive audit trail
+- **Enhanced Authentication**: Device-aware magic link authentication
 
 ---
 
@@ -92,7 +99,29 @@ vercel env add NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN production
 
 ---
 
-## 2. Vercel Configuration
+## 2. Database Migration & Security Setup
+
+### ✅ Database Migration for Security Features
+- [ ] Run database migration: `npm run migrate`
+- [ ] Verify new security tables are created:
+  - `trusted_devices` table
+  - `security_events` table  
+  - `login_attempts` table
+  - Enhanced `users` table with 2FA columns
+  - Enhanced `sessions` table with device tracking
+- [ ] Confirm all existing data is preserved
+- [ ] Test security features in staging environment
+
+### ✅ Security Features Verification
+- [ ] 2FA setup and verification working
+- [ ] Device management functionality working
+- [ ] Session tracking and management working
+- [ ] Security event logging working
+- [ ] Enhanced authentication flows working
+
+---
+
+## 3. Vercel Configuration
 
 ### ✅ vercel.json Setup
 
@@ -111,7 +140,7 @@ vercel env add NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN production
 
 ---
 
-## 3. Email Deliverability
+## 4. Email Deliverability
 
 ### ✅ Postmark Setup (Recommended)
 
@@ -136,7 +165,7 @@ vercel env add NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN production
 
 ---
 
-## 4. Webhook Configuration
+## 5. Webhook Configuration
 
 ### ✅ Stripe Webhooks
 
@@ -161,7 +190,7 @@ stripe trigger checkout.session.completed \
 
 ---
 
-## 5. Database & Backups
+## 6. Database & Backups
 
 ### ✅ Neon Database
 
@@ -179,7 +208,7 @@ stripe trigger checkout.session.completed \
 
 ---
 
-## 6. Deployment
+## 7. Deployment
 
 ### ✅ Vercel Deployment
 
@@ -195,7 +224,7 @@ vercel --prod
 
 ---
 
-## 7. Smoke Testing
+## 8. Smoke Testing
 
 ### ✅ Automated Smoke Test
 
@@ -223,7 +252,7 @@ vercel --prod
 
 ---
 
-## 8. Final Checks (Definition of Done)
+## 9. Final Checks (Definition of Done)
 
 ### ✅ Green Deploy
 - [ ] Vercel build succeeded
@@ -262,7 +291,7 @@ vercel --prod
 
 ---
 
-## 9. Post-Deployment Monitoring
+## 10. Post-Deployment Monitoring
 
 ### ✅ Monitoring Setup
 
@@ -285,7 +314,7 @@ vercel --prod
 
 ---
 
-## 10. Ops Monitoring Setup
+## 11. Ops Monitoring Setup
 
 ### ✅ Ops Environment Variables
 
@@ -316,7 +345,7 @@ vercel --prod
 
 ---
 
-## 11. Documentation
+## 12. Documentation
 
 ### ✅ Documentation Updated
 

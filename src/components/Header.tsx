@@ -75,6 +75,9 @@ export default function Header({ isConnected }: HeaderProps) {
           <NavLink href="/settings" current={pathname === '/settings'}>
             Settings
           </NavLink>
+          <NavLink href="/security" current={pathname === '/security'}>
+            Security
+          </NavLink>
           {!isConnected && (
             <ConnectButton 
               variant="primary" 
@@ -122,6 +125,12 @@ export default function Header({ isConnected }: HeaderProps) {
             className="nav-link text-base font-medium text-stone hover:text-ink"
           >
             <span className="leading-ctl">Settings</span>
+          </Link>
+          <Link
+            href="/security"
+            className="nav-link text-base font-medium text-stone hover:text-ink"
+          >
+            <span className="leading-ctl">Security</span>
           </Link>
         </Container>
       </div>
