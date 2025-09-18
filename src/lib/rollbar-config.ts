@@ -17,7 +17,7 @@ export const rollbarClientConfig = {
   },
   // Filter out development noise
   filter: {
-    filter: (payload: unknown) => {
+    filter: () => {
       // Don't send errors in development unless explicitly enabled
       if (process.env.NODE_ENV === 'development' && !process.env.ROLLBAR_DEBUG) {
         return false;
@@ -37,7 +37,7 @@ export const rollbarServerConfig = {
   root: process.cwd(),
   // Filter out development noise
   filter: {
-    filter: (payload: unknown) => {
+    filter: () => {
       // Don't send errors in development unless explicitly enabled
       if (process.env.NODE_ENV === 'development' && !process.env.ROLLBAR_DEBUG) {
         return false;

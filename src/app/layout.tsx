@@ -7,6 +7,7 @@ import RpcStatusBanner from '@/components/RpcStatusBanner'
 import HeaderWrapper from '@/components/HeaderWrapper'
 import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
+import PerformanceDashboard from '@/components/PerformanceDashboard'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -65,6 +66,7 @@ export default async function RootLayout({
             <HeaderWrapper />
             <main id="main" className="flex-1">{children}</main>
             <Footer />
+            <PerformanceDashboard />
           </ContextProvider>
         </RollbarProvider>
         <script
