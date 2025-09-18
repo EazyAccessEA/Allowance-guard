@@ -1,17 +1,19 @@
 # Vercel Environment Variables Setup for Rollbar
 
+> ⚠️ **SECURITY WARNING**: This file contains placeholder tokens only. Never commit real access tokens to your repository. Always use environment variables for sensitive data.
+
 ## Environment Variables to Add in Vercel
 
 You need to add these environment variables in your Vercel dashboard:
 
 ### 1. Server-side Access Token
 - **Variable Name**: `ROLLBAR_ACCESS_TOKEN`
-- **Value**: `5d447f90f4c94766a4ddf5e5d13a605551ee2a2fb14fe3216b2125ce33976501fa62c258fd0e6e8cfc68b34b3f0416b3`
+- **Value**: `YOUR_SERVER_ACCESS_TOKEN_HERE`
 - **Environment**: Production, Preview, Development
 
 ### 2. Client-side Access Token
 - **Variable Name**: `NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN`
-- **Value**: `601af65f62b7494fb5e6734a1df9b5f8cb892bcad5697d70c9dbd49ad6df51216e5b030bce8b3f4dae853df2e04af472`
+- **Value**: `YOUR_CLIENT_ACCESS_TOKEN_HERE`
 - **Environment**: Production, Preview, Development
 
 ## How to Add Environment Variables in Vercel
@@ -52,8 +54,8 @@ For local development, create a `.env.local` file in your project root:
 
 ```bash
 # .env.local
-ROLLBAR_ACCESS_TOKEN=5d447f90f4c94766a4ddf5e5d13a605551ee2a2fb14fe3216b2125ce33976501fa62c258fd0e6e8cfc68b34b3f0416b3
-NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN=601af65f62b7494fb5e6734a1df9b5f8cb892bcad5697d70c9dbd49ad6df51216e5b030bce8b3f4dae853df2e04af472
+ROLLBAR_ACCESS_TOKEN=your_server_access_token_here
+NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN=your_client_access_token_here
 ```
 
 ## Security Notes
