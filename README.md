@@ -19,9 +19,7 @@ Allowance Guard is an open source security platform for monitoring and managing 
 - **⚡ One-Click Revoke**: Instantly revoke risky approvals
 - **📊 Analytics**: Comprehensive reporting and risk scoring
 - **🔍 Error Monitoring**: Real-time error tracking with Rollbar
-- **🔐 Enhanced Security**: 2FA, device management, and session tracking
-- **🛡️ Advanced Authentication**: Magic link with device fingerprinting
-- **📱 Device Management**: Trust and manage authorized devices
+- **🛡️ Wallet Security**: Comprehensive security dashboard for connected wallets
 - **🔓 Open Source**: Full source code available
 
 ## 🚀 Quick Start
@@ -75,15 +73,14 @@ Copy `production.env.example` to `.env.local` and configure:
 
 ## 🔒 Security
 
-This project implements enterprise-grade security features:
+This project implements wallet-focused security features:
 
-### Core Security Features
-- **🔐 Two-Factor Authentication (2FA)**: TOTP-based 2FA with backup codes
-- **📱 Device Management**: Trust and manage authorized devices
-- **🔍 Session Tracking**: Monitor active sessions across devices
-- **🛡️ Device Fingerprinting**: Advanced device identification and tracking
-- **📊 Security Event Logging**: Comprehensive audit trail
-- **🔒 Account Lockout Protection**: Rate limiting and brute force protection
+### Wallet Security Features
+- **🛡️ Wallet Security Dashboard**: Comprehensive security overview for connected wallets
+- **📊 Risk Assessment**: Real-time risk scoring based on token allowances
+- **⚠️ High-Risk Detection**: Identify and flag dangerous token approvals
+- **🔍 Security Monitoring**: Continuous monitoring of wallet security status
+- **📈 Security Analytics**: Detailed security metrics and trends
 
 ### Technical Security
 - Input validation and sanitization
@@ -92,7 +89,7 @@ This project implements enterprise-grade security features:
 - Security headers
 - Environment variable protection
 - No sensitive data in source code
-- Magic link authentication with enhanced security
+- Wallet-only authentication (no email/password required)
 
 **⚠️ CRITICAL SECURITY NOTICE**: 
 - This is open source software provided for educational purposes
@@ -112,7 +109,6 @@ This project implements enterprise-grade security features:
 - [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing)
 - [Rollbar Error Monitoring Setup](ROLLBAR_SETUP.md)
 - [Vercel Deployment Guide](VERCEL_ROLLBAR_SETUP.md)
-- [Security Features Guide](SECURITY_FEATURES.md)
 
 ## 🤝 Contributing
 
