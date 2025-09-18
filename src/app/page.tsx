@@ -176,10 +176,17 @@ export default function HomePage() {
                 <button 
                   onClick={startScan} 
                   disabled={pending} 
-                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50"
+                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-wait"
                 >
-                {pending ? 'Scanning…' : 'Scan wallet'}
-              </button>
+                  {pending ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
+                      Scanning wallet...
+                    </>
+                  ) : (
+                    'Scan wallet'
+                  )}
+                </button>
                 {message && (
                   <p className="text-sm text-stone">
                     {message}
@@ -390,9 +397,16 @@ export default function HomePage() {
                 <button 
                   onClick={startScan} 
                   disabled={pending} 
-                  className="inline-flex items-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50"
+                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-wait"
                 >
-                  {pending ? 'Scanning…' : 'Scan Your Wallet for Free'}
+                  {pending ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
+                      Scanning wallet...
+                    </>
+                  ) : (
+                    'Scan Your Wallet for Free'
+                  )}
                 </button>
               )}
               <p className="text-sm text-stone">

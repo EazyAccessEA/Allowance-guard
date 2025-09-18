@@ -3,6 +3,7 @@ import { useState, useMemo } from 'react'
 import { useBulkRevoke } from '@/hooks/useBulkRevoke'
 import { HexButton } from './HexButton'
 import { HexBadge } from './HexBadge'
+import { FireartTableSkeleton } from './SkeletonLoader'
 import dynamic from 'next/dynamic'
 
 const SupportNudge = dynamic(() => import('@/components/SupportNudge'), { ssr: false })
@@ -30,13 +31,15 @@ export default function AllowanceTable({
   onRefresh,
   selectedWallet,
   connectedAddress,
-  canRevoke = true
+  canRevoke = true,
+  loading = false
 }: {
   data: Row[]
   onRefresh: () => Promise<void>
   selectedWallet: string | null
   connectedAddress: string | undefined
   canRevoke?: boolean
+  loading?: boolean
 }) {
   const [sel, setSel] = useState<Record<string, boolean>>({})
   const [busy, setBusy] = useState(false)
@@ -101,6 +104,18 @@ export default function AllowanceTable({
     )
   }
 
+  if (loading) {
+    return (
+      <div className="mt-4">
+        <div className="mb-4 flex items-center gap-3">
+          <div className="h-9 w-24 bg-stone/20 rounded-full animate-pulse" />
+          <div className="h-9 w-32 bg-stone/20 rounded-full animate-pulse" />
+        </div>
+        <FireartTableSkeleton rows={5} />
+      </div>
+    )
+  }
+
   return (
     <div className="mt-4">
       <div className="mb-4 flex items-center gap-3">
@@ -109,10 +124,12 @@ export default function AllowanceTable({
           onClick={handleBulk} 
           disabled={busy || !selectedRows.length || !revokeAllowed || !canRevoke} 
           size="sm"
+          loading={busy}
+          loadingText={`Revoking… ${progress ?? ''}`}
           title={!canRevoke ? 'View-only access' : !revokeAllowed ? 'Connect the selected wallet to revoke' : ''}
           aria-label={`Revoke ${selectedRows.length} selected token approvals`}
         >
-          {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
+          {`Revoke Selected (${selectedRows.length})`}
         </HexButton>
       </div>
       <div className="overflow-x-auto border-2 border-ag-line">

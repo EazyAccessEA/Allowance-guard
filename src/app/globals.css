@@ -368,7 +368,7 @@ button, a, input, select, textarea {
 }
 
 .fireart-button-ghost {
-  background: #000000;
+  background: #211616;
   color: white;
   border: none;
 }
@@ -786,4 +786,138 @@ appkit-button::part(button):focus {
   border: 1px solid #e5e7eb;
   border-radius: 0.25rem;
   z-index: 50;
+}
+
+/* Fireart Loading Animations */
+@keyframes fireart-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fireart-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes fireart-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes fireart-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fireart-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fireart Animation Classes */
+.fireart-pulse {
+  animation: fireart-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.fireart-bounce {
+  animation: fireart-bounce 1s infinite;
+}
+
+.fireart-shake {
+  animation: fireart-shake 0.5s ease-in-out;
+}
+
+.fireart-slide-up {
+  animation: fireart-slide-up 0.3s ease-out;
+}
+
+.fireart-fade-in {
+  animation: fireart-fade-in 0.2s ease-out;
+}
+
+/* Enhanced Button Interactions */
+.fireart-button:active {
+  transform: translateY(0) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+.fireart-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Loading State Enhancements */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Success/Error State Animations */
+.success-checkmark {
+  animation: fireart-bounce 0.6s ease-in-out;
+}
+
+.error-shake {
+  animation: fireart-shake 0.5s ease-in-out;
+}
+
+/* Smooth Transitions for All Interactive Elements */
+button, input, select, textarea, a {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus States */
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Disabled States */
+button:disabled, input:disabled, select:disabled, textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }

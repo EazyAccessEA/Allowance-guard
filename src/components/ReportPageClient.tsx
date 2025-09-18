@@ -69,7 +69,14 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
         </div>
 
         {loading ? (
-          <div className="mt-8 text-stone">Loading allowances...</div>
+          <div className="mt-8">
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className="w-12 h-12 border-4 border-cobalt border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-stone">Loading allowances...</p>
+              </div>
+            </div>
+          </div>
         ) : (
           <>
             <div className="print:block hidden mb-4">

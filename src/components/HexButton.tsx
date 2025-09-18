@@ -2,11 +2,15 @@
 
 import React from 'react'
 import { cn } from '@/lib/utils'
+import { LoadingSpinner } from './LoadingSpinner'
 
 interface HexButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'ghost' | 'danger' | 'warn' | 'info'
   size?: 'sm' | 'md' | 'lg'
   children: React.ReactNode
+  loading?: boolean
+  loadingText?: string
+  loadingSpinnerSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }
 
 export function HexButton({ 
@@ -14,6 +18,10 @@ export function HexButton({
   size = 'md', 
   className, 
   children, 
+  loading = false,
+  loadingText,
+  loadingSpinnerSize = 'sm',
+  disabled,
   ...props 
 }: HexButtonProps) {
   const baseClasses = 'rounded-full transition-all duration-200 font-medium inline-flex items-center justify-center border-2 focus:outline-none focus:ring-2 focus:ring-offset-2'
@@ -32,17 +40,33 @@ export function HexButton({
     lg: 'px-8 py-4 text-lg min-h-[52px]',
   }
   
+  const isDisabled = disabled || loading
+
   return (
     <button
       className={cn(
         baseClasses,
         variantClasses[variant],
         sizeClasses[size],
+        loading && 'cursor-wait',
+        isDisabled && 'opacity-50 cursor-not-allowed',
         className
       )}
+      disabled={isDisabled}
       {...props}
     >
-      {children}
+      {loading ? (
+        <div className="flex items-center">
+          <LoadingSpinner 
+            size={loadingSpinnerSize} 
+            color="white" 
+            className="mr-2" 
+          />
+          <span>{loadingText || 'Loading...'}</span>
+        </div>
+      ) : (
+        children
+      )}
     </button>
   )
 }
