@@ -224,10 +224,11 @@ vercel --prod
 - [ ] App loads fast in production
 - [ ] No critical errors in logs
 
-### ✅ Cron Routes Live
+### ✅ Cron Routes Live (via cron-jobs.org)
 - [ ] `/api/jobs/process` runs every 5 minutes
 - [ ] `/api/monitor/run` runs every 30 minutes
 - [ ] `/api/alerts/daily` runs at 08:05 Europe/London
+- [ ] `/api/alerts/health` runs every 10 minutes
 
 ### ✅ Region Configuration
 - [ ] `lhr1/dub1/cdg1` selected in vercel.json
@@ -272,10 +273,44 @@ vercel --prod
 - [ ] Email delivery failure alerts
 - [ ] Webhook failure alerts
 - [ ] Performance degradation alerts
+- [ ] Ops monitoring alerts (Slack + email)
+- [ ] Cost threshold warnings
+- [ ] Health degradation alerts
 
 ---
 
-## 10. Documentation
+## 10. Ops Monitoring Setup
+
+### ✅ Ops Environment Variables
+
+- [ ] `SLACK_WEBHOOK_URL` configured with working webhook
+- [ ] `OPS_ALERT_EMAIL` set to ops team email
+- [ ] `OPS_DASH_TOKEN` set to secure random token
+- [ ] `OPS_DB_WARN_GB=1.0` (adjust based on Neon limits)
+- [ ] `OPS_RPC_WARN_DAY=75000` (adjust based on RPC provider limits)
+- [ ] `OPS_EMAIL_WARN_DAY=500` (adjust based on email provider limits)
+
+### ✅ Ops Monitoring Testing
+
+- [ ] Health check endpoint responds correctly
+- [ ] Daily alert endpoint works (combines user digests + ops)
+- [ ] Ops metrics endpoint requires token authentication
+- [ ] Slack webhook receives test messages
+- [ ] Email alerts work as fallback
+- [ ] Ops dashboard accessible with correct token
+
+### ✅ Cost Monitoring
+
+- [ ] Database size tracking active
+- [ ] RPC usage counters working
+- [ ] Email volume tracking active
+- [ ] Scan activity monitoring working
+- [ ] Threshold warnings configured
+- [ ] Daily reports include cost metrics
+
+---
+
+## 11. Documentation
 
 ### ✅ Documentation Updated
 

@@ -5,6 +5,7 @@ import { enqueueScan } from '@/lib/jobs'
 import { withReq } from '@/lib/logger'
 import { enabledChainIds } from '@/lib/networks'
 import { scanRateLimit } from '@/lib/rate-limit'
+import { incrScan } from '@/lib/metrics'
 
 export const runtime = 'nodejs'
 
@@ -39,6 +40,9 @@ export async function POST(req: Request) {
     const chains = parsed.data.chains?.length 
       ? parsed.data.chains.map(c => MAP[c])
       : enabledChainIds()
+    
+    // Increment scan counter
+    await incrScan()
     
     L.info('Enqueueing wallet scan', { address: addr, chains })
     

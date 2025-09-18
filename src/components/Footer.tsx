@@ -217,12 +217,6 @@ export default function Footer() {
               Open-source and free to use. Maintained by a small independent team and funded by
               <Link className="underline ml-1 hover:text-ink transition-colors duration-200" href="/docs/contributing">donations and grants</Link>. No VC, no token.
             </p>
-            <nav className="flex items-center gap-4">
-              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/docs/contributing">Support</Link>
-              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/contribute">Supporters</Link>
-              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/privacy">Privacy</Link>
-              <Link className="underline text-stone hover:text-ink transition-colors duration-200 text-sm" href="/terms">Terms</Link>
-            </nav>
           </div>
         </div>
       </Container>

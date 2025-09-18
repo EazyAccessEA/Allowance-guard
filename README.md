@@ -1,6 +1,6 @@
 # Allowance Guard
 
-**Version 1.6.0** - Open Source Token Approval Security Platform
+**Version 1.8.0** - Open Source Token Approval Security Platform
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)

@@ -12,10 +12,17 @@ Since we're using Vercel's Hobby plan which has limitations on cron jobs, we use
 - **URL**: `https://www.allowanceguard.com/api/alerts/daily`
 - **Method**: `GET` or `POST`
 - **Schedule**: `5 8 * * *` (Daily at 8:05 AM UTC)
-- **Purpose**: Send daily email and Slack digests to subscribed users
+- **Purpose**: Send daily email and Slack digests to subscribed users + ops monitoring
 - **Response**: JSON with sent counts and status
 
-### 2. Job Processing
+### 2. Health Monitoring
+- **URL**: `https://www.allowanceguard.com/api/alerts/health`
+- **Method**: `GET`
+- **Schedule**: `*/10 * * * *` (Every 10 minutes)
+- **Purpose**: Monitor system health and send alerts if degraded
+- **Response**: JSON with health status
+
+### 3. Job Processing
 - **URL**: `https://www.allowanceguard.com/api/jobs/process`
 - **Method**: `GET` or `POST`
 - **Schedule**: `*/5 * * * *` (Every 5 minutes)
@@ -39,6 +46,15 @@ Schedule: 5 8 * * *
 Timeout: 300 seconds
 ```
 
+#### Health Monitoring Job
+```
+Title: Allowance Guard Health Monitoring
+URL: https://www.allowanceguard.com/api/alerts/health
+Method: GET
+Schedule: */10 * * * *
+Timeout: 60 seconds
+```
+
 #### Job Processing Job
 ```
 Title: Allowance Guard Job Processing
@@ -50,7 +66,7 @@ Timeout: 300 seconds
 
 ### Advanced Settings
 
-- **Timeout**: Set to 300 seconds (5 minutes) for both jobs
+- **Timeout**: Set to 300 seconds (5 minutes) for daily alerts and job processing, 60 seconds for health monitoring
 - **Retry**: Enable retry on failure (3 attempts)
 - **Notifications**: Configure email notifications for failures
 - **Logging**: Enable detailed logging for monitoring
@@ -70,7 +86,35 @@ Timeout: 300 seconds
   "slack": {
     "sent": 3,
     "failed": 0
+  },
+  "ops": {
+    "db_gb": "0.45",
+    "rpc_total": 1250,
+    "emails_sent": 15,
+    "scans": 8
   }
+}
+```
+
+### Health Monitoring Endpoint
+```typescript
+// GET /api/alerts/health
+{
+  "ok": true,
+  "health": {
+    "ok": true,
+    "checks": {
+      "db": "ok",
+      "cache": "ok",
+      "rpc": "ok:18500000",
+      "chains": {
+        "1": "ok:18500000",
+        "42161": "ok:18500000",
+        "8453": "ok:18500000"
+      }
+    }
+  },
+  "timestamp": "2024-12-19T08:00:00.000Z"
 }
 ```
 

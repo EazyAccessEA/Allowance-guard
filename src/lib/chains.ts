@@ -2,6 +2,7 @@
 import { createPublicClient, http, fallback, type Transport, type PublicClient, type Chain } from 'viem'
 import { mainnet, arbitrum, base } from 'viem/chains'
 import { CHAINS, type RpcEndpoint } from './networks'
+import { incrRpc } from '@/lib/metrics'
 
 // simple in-memory circuit breaker (prod: use Redis if you want cross-instance sharing)
 const ban: Map<string, number> = new Map() // key: url -> unix ms expiry
@@ -18,7 +19,7 @@ function punish(url: string, ms = 60_000) {
   ban.set(url, now + add)
 }
 
-function makeTransport(endpoints: RpcEndpoint[]): Transport {
+function makeTransport(endpoints: RpcEndpoint[], chainId: number): Transport {
   // order by (not banned first) then by weight desc
   const sorted = endpoints
     .slice()
@@ -32,6 +33,10 @@ function makeTransport(endpoints: RpcEndpoint[]): Transport {
         timeout: ep.timeoutMs ?? 12_000,
         batch: true,
         retryCount: 0,     // we'll own retry policy outside
+        onFetchResponse: async () => { 
+          if (!notBanned(ep.url)) ban.delete(ep.url); 
+          await incrRpc(chainId) 
+        },
       })
     )
   return fallback(sorted, { rank: true, retryCount: 0 })
@@ -44,15 +49,16 @@ export function clientFor(id: 1|42161|8453): PublicClient {
   const hit = cache.get(id); if (hit) return hit
   const cfg = CHAINS[id]
   const chain = MAP[id]
-  const t = makeTransport(cfg.rpcs)
+  const t = makeTransport(cfg.rpcs, id)
   const c = createPublicClient({ chain, transport: t })
   cache.set(id, c)
   return c
 }
 
 // Circuit breaker helper - call this when RPC calls fail
-export function markRpcFailed(url: string) {
+export async function markRpcFailed(url: string, chainId: number) {
   punish(url)
+  await incrRpc(chainId)
 }
 
 // Circuit breaker helper - call this when RPC calls succeed

@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import { emailLogger } from './logger'
+import { incrEmail } from '@/lib/metrics'
 // Email service configuration - supports Postmark or SMTP
 const postmarkToken = process.env.POSTMARK_SERVER_TOKEN
 
@@ -242,6 +243,9 @@ export async function sendMail(to: string, subject: string, html: string, text?:
       subject: subject,
       from: fromEmail
     })
+    
+    // Increment email counter
+    await incrEmail()
     
     return info
   } catch (error) {

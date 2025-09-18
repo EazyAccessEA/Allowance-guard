@@ -9,21 +9,26 @@ export default function TermsPage() {
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      <VideoBackground videoSrc="/V3AG.mp4" />
       
       {/* Hero Section */}
-      <Section className="relative py-20">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <H1 className="text-4xl md:text-5xl font-bold mb-6">
-              Terms of Use
-            </H1>
-            <p className="text-xl text-stone max-w-2xl mx-auto">
-              Clear, straightforward terms for using Allowance Guard. No legal jargon, just honest expectations.
-            </p>
-          </div>
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
+        <VideoBackground videoSrc="/V3AG.mp4" />
+        <div 
+          className="absolute inset-0 z-10"
+          style={{
+            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+          }}
+        />
+        
+        <Container className="relative text-left max-w-4xl z-10">
+          <H1 className="mb-6">Terms of Use</H1>
+          <p className="text-xl text-stone max-w-reading mb-8">
+            Clear, straightforward terms for using Allowance Guard. No legal jargon, just honest expectations.
+          </p>
         </Container>
       </Section>
+
+      <div className="border-t border-line" />
 
       {/* Terms Content */}
       <Section className="py-16">
