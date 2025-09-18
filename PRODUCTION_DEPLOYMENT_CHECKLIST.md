@@ -63,6 +63,10 @@ DISABLED_CHAINS=
 
 # ——— Security ———
 BETTER_AUTH_SECRET=<32+ char random>
+
+# ——— Error Monitoring (Rollbar) ———
+ROLLBAR_ACCESS_TOKEN=<server_access_token>
+NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN=<client_access_token>
 ```
 
 ### Vercel Environment Variables
@@ -82,6 +86,8 @@ vercel env add ETHEREUM_RPC_URLS production
 vercel env add ARBITRUM_RPC_URLS production
 vercel env add BASE_RPC_URLS production
 vercel env add BETTER_AUTH_SECRET production
+vercel env add ROLLBAR_ACCESS_TOKEN production
+vercel env add NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN production
 ```
 
 ---

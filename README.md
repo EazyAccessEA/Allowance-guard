@@ -18,6 +18,7 @@ Allowance Guard is an open source security platform for monitoring and managing 
 - **🔗 Wallet Management**: Save and monitor multiple wallet addresses
 - **⚡ One-Click Revoke**: Instantly revoke risky approvals
 - **📊 Analytics**: Comprehensive reporting and risk scoring
+- **🔍 Error Monitoring**: Real-time error tracking with Rollbar
 - **🔓 Open Source**: Full source code available
 
 ## 🚀 Quick Start
@@ -29,6 +30,7 @@ Allowance Guard is an open source security platform for monitoring and managing 
 - SMTP service for email notifications
 - RPC endpoints for blockchain access
 - WalletConnect project
+- Rollbar account (free) for error monitoring
 
 ### Installation
 
@@ -95,6 +97,8 @@ This project implements multiple security layers:
 - [API Documentation](https://www.allowanceguard.com/docs/api)
 - [Integration Guide](https://www.allowanceguard.com/docs/integration)
 - [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing)
+- [Rollbar Error Monitoring Setup](ROLLBAR_SETUP.md)
+- [Vercel Deployment Guide](VERCEL_ROLLBAR_SETUP.md)
 
 ## 🤝 Contributing
 

@@ -1,6 +1,28 @@
-# Sentry Setup Guide
+# Error Monitoring Setup Guide
 
-## Getting Your Sentry Auth Token
+> ⚠️ **DEPRECATED**: This project has migrated from Sentry to Rollbar for error monitoring.
+
+## Current Error Monitoring: Rollbar
+
+This project now uses **Rollbar** for error monitoring instead of Sentry. Rollbar provides:
+- Free tier with 5,000 errors/month
+- No authentication hassles
+- Better developer experience
+- Automatic error tracking
+
+### Setup Instructions
+
+See the following files for current setup:
+- [ROLLBAR_SETUP.md](ROLLBAR_SETUP.md) - General Rollbar setup
+- [VERCEL_ROLLBAR_SETUP.md](VERCEL_ROLLBAR_SETUP.md) - Vercel deployment setup
+
+---
+
+## Legacy Sentry Information (Deprecated)
+
+The following information is kept for reference only. Sentry is no longer used in this project.
+
+### Getting Your Sentry Auth Token
 
 To fix the "No auth token provided" warnings, you need to:
 
