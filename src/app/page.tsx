@@ -167,7 +167,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-2">
                 <ConnectButton 
                   variant="primary" 
-                  className="bg-cobalt text-white hover:bg-cobalt/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+                  className="bg-black text-white hover:bg-gray-800 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
                 />
                 <TestConnect onConnect={(a) => setSelectedWallet(a)} />
               </div>
@@ -176,7 +176,7 @@ export default function HomePage() {
                 <button 
                   onClick={startScan} 
                   disabled={pending} 
-                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-wait"
+                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500/30 disabled:opacity-50 disabled:cursor-wait"
                 >
                   {pending ? (
                     <>
@@ -205,9 +205,9 @@ export default function HomePage() {
       </Section>
 
       {/* The Problem You Solve */}
-      <Section className="py-16 sm:py-24 lg:py-32 bg-stone">
+      <Section className="py-16 sm:py-24 lg:py-32 relative">
         <Container>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto glass-black rounded-2xl p-8 sm:p-12">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight mb-6 sm:mb-8">
               The Unseen Risk in Every Wallet
             </h2>
@@ -217,7 +217,6 @@ export default function HomePage() {
           </div>
         </Container>
       </Section>
-
       {/* How Allowance Guard Works */}
       <Section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Parallax background */}
@@ -391,13 +390,13 @@ export default function HomePage() {
               {!isConnected ? (
                 <ConnectButton 
                   variant="primary" 
-                  className="bg-cobalt text-white hover:bg-cobalt/90 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
+                  className="bg-black text-white hover:bg-gray-800 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
                 />
               ) : (
                 <button 
                   onClick={startScan} 
                   disabled={pending} 
-                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-cobalt text-white hover:bg-cobalt/90 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-wait"
+                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500/30 disabled:opacity-50 disabled:cursor-wait"
                 >
                   {pending ? (
                     <>
