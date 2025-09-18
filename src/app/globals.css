@@ -1,3 +1,920 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Theano+Didot:wght@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure AppKit modal appears on top of all other elements */
+w3m-modal {
+  z-index: 9999 !important;
+}
+
+w3m-modal-background {
+  z-index: 9998 !important;
+}
+
+/* Additional AppKit z-index overrides */
+[data-w3m-modal] {
+  z-index: 9999 !important;
+}
+
+[data-w3m-modal-background] {
+  z-index: 9998 !important;
+}
+
+/* Enhanced AppKit modal styling to match Fireart design tokens */
+w3m-modal {
+  --w3m-background-color: var(--obsidian) !important; /* #1E1F23 */
+  --w3m-border-radius: 16px !important; /* card borderRadius */
+  --w3m-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1) !important; /* shadows.large */
+}
+
+/* Modal content styling */
+w3m-modal w3m-container {
+  background: var(--obsidian) !important; /* #1E1F23 */
+  border-radius: 16px !important; /* card borderRadius */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
+}
+
+/* Button styling within modal */
+w3m-modal w3m-button {
+  border-radius: 8px !important; /* button borderRadius */
+  font-family: var(--font-inter) !important;
+  font-weight: 500 !important; /* typography.fontWeight.medium */
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important; /* transitions.normal */
+  height: 44px !important; /* button.height */
+  padding: 12px 24px !important; /* button.padding */
+}
+
+w3m-modal w3m-button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15) !important;
+  background: var(--obsidian-hover) !important; /* #25262B */
+}
+
+/* Input styling within modal */
+w3m-modal w3m-input {
+  border-radius: 8px !important; /* input borderRadius */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
+  background: var(--obsidian-hover) !important; /* #25262B */
+  font-family: var(--font-inter) !important;
+  height: 44px !important; /* input.height */
+  padding: 12px 16px !important; /* input.padding */
+}
+
+w3m-modal w3m-input:focus {
+  border-color: var(--cobalt) !important; /* #2563EB */
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important; /* shadows.focus */
+}
+
+/* Typography within modal */
+w3m-modal h1,
+w3m-modal h2,
+w3m-modal h3,
+w3m-modal p,
+w3m-modal span {
+  font-family: var(--font-inter) !important;
+  color: var(--platinum) !important; /* #F8FAFC */
+}
+
+/* Wallet option styling */
+w3m-modal w3m-wallet-button {
+  border-radius: 8px !important; /* button borderRadius */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
+  background: var(--obsidian-hover) !important; /* #25262B */
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important; /* transitions.normal */
+  height: 44px !important; /* button.height */
+}
+
+w3m-modal w3m-wallet-button:hover {
+  background: var(--charcoal-hover) !important; /* #475569 */
+  border-color: var(--cobalt) !important; /* #2563EB */
+  transform: translateY(-1px) !important;
+}
+
+/* Close button styling */
+w3m-modal w3m-close-button {
+  border-radius: 8px !important; /* button borderRadius */
+  background: var(--obsidian-hover) !important; /* #25262B */
+  border: 1px solid var(--charcoal) !important; /* #64748B */
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important; /* transitions.normal */
+}
+
+w3m-modal w3m-close-button:hover {
+  background: var(--charcoal-hover) !important; /* #475569 */
+}
+
+:root {
+  /* PureEdgeOS 4.0 - Fireart Studio Design Tokens */
+  
+  /* Core Colors - Fireart-inspired palette */
+  --obsidian: #1E1F23;        /* Primary dark background */
+  --platinum: #F8FAFC;        /* Ultra-light backgrounds */
+  --charcoal: #64748B;        /* Subtle text and borders */
+  --sandstone: #E4E2DD;       /* Light background/text */
+  
+  /* Brand Colors - Sophisticated accent system */
+  --cobalt: #2563EB;          /* Primary brand accent */
+  --cobalt: #0EA5E9;        /* Interactive highlights */
+  --teal: #00C2B2;            /* Secondary accent */
+  --warm-gray: #F1F5F9;       /* Card backgrounds */
+  
+  /* Semantic Colors */
+  --emerald: #10B981;         /* Success states */
+  --amber: #F59E0B;           /* Warning states */
+  --crimson: #EF4444;         /* Error states */
+  --navy: #121D2B;            /* Alternate dark background */
+  
+  /* Interactive States */
+  --cobalt-hover: #1D4ED8;
+  --cobalt-active: #1E40AF;
+  --teal-hover: #00A896;
+  --teal-active: #008B7A;
+  --emerald-hover: #059669;
+  --emerald-active: #047857;
+  --amber-hover: #D97706;
+  --amber-active: #B45309;
+  --crimson-hover: #DC2626;
+  --crimson-active: #B91C1C;
+  
+  /* Legacy compatibility */
+  --background: var(--platinum);
+  --foreground: var(--obsidian);
+  --muted: var(--charcoal);
+  --muted-foreground: var(--charcoal);
+  --border: #E5E7EB;
+  --input: var(--warm-gray);
+  --primary: var(--cobalt);
+  --primary-foreground: #ffffff;
+  --secondary: var(--teal);
+  --secondary-foreground: #ffffff;
+  --accent: var(--cobalt);
+  --accent-foreground: #ffffff;
+  --destructive: var(--crimson);
+  --destructive-foreground: #ffffff;
+  --success: var(--emerald);
+  --warning: var(--amber);
+  --ring: var(--cobalt);
+  --radius: 0.5rem; /* 8px - Fireart standard */
+  
+  /* Fireart Typography System */
+  --font-satoshi: 'Satoshi', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
+  --font-theano-didot: 'Theano Didot', 'Times New Roman', serif;
+  --font-heading: 'Theano Didot', 'Times New Roman', serif;
+  
+  /* Fireart Spacing System (8px grid) */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+  --space-4xl: 6rem;      /* 96px */
+  
+  /* Fireart Motion Tokens */
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 200ms;
+  --motion-duration-slow: 300ms;
+  --motion-easing-natural: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Fireart Shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  --shadow-focus-danger: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  --shadow-focus-warn: 0 0 0 3px rgba(245, 158, 11, 0.1);
+  --shadow-focus-info: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  
+  /* Accessibility Tokens */
+  --a11y-focus-ring: 3px;
+  --a11y-target-min: 44px; /* Fireart standard */
+  --a11y-contrast-min: 4.5;
+}
+
+.dark {
+  /* Dark mode support (optional) - same as light mode for consistency */
+  --background: #1a1d29;
+  --foreground: #f8fafc;
+  --muted: #94a3b8;
+  --muted-foreground: #64748b;
+  --border: #334155;
+  --input: #2d3142;
+  --primary: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --secondary: #10b981;
+  --secondary-foreground: #ffffff;
+  --accent: #06b6d4;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --ring: #8b5cf6;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  transition: background-color var(--motion-duration-base) var(--motion-easing-gentle), 
+              color var(--motion-duration-base) var(--motion-easing-gentle);
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* AG Hex System Components */
+@layer components {
+  /* All components now use hex utilities from hex.css */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* PuredgeOS Focus styles - WCAG 2.2 AA compliant */
+*:focus-visible {
+  outline: var(--a11y-focus-ring) solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Ensure minimum touch target size */
+button, a, input, select, textarea {
+  min-height: var(--a11y-target-min);
+  min-width: var(--a11y-target-min);
+}
+
+/* Selection styles */
+::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fireart Studio Component Styles */
+.fireart-card {
+  background: var(--platinum);
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-subtle);
+  transition: all var(--motion-duration-base) var(--motion-easing-natural);
+}
+
+.fireart-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+.fireart-button {
+  background: #000000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 16px;
+  min-height: 44px;
+  transition: all var(--motion-duration-base) var(--motion-easing-natural);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.025em;
+}
+
+.fireart-button:hover {
+  background: #1f1f1f;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-medium);
+}
+
+.fireart-button:active {
+  transform: translateY(0);
+  background: #333333;
+}
+
+.fireart-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fireart-button-secondary {
+  background: #000000;
+  color: white;
+  border: 1px solid #000000;
+}
+
+.fireart-button-secondary:hover {
+  background: #1f1f1f;
+  color: white;
+}
+
+.fireart-button-ghost {
+  background: #211616;
+  color: white;
+  border: none;
+}
+
+.fireart-button-ghost:hover {
+  background: #1f1f1f;
+  color: white;
+}
+
+.fireart-input {
+  background: var(--platinum);
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  color: var(--obsidian);
+  min-height: 44px;
+  transition: all var(--motion-duration-base) var(--motion-easing-natural);
+  width: 100%;
+}
+
+.fireart-input:focus {
+  outline: none;
+  border-color: var(--cobalt);
+  box-shadow: var(--shadow-focus);
+}
+
+.fireart-input::placeholder {
+  color: var(--charcoal);
+}
+
+.fireart-badge {
+  background: var(--warm-gray);
+  color: var(--obsidian);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-family: var(--font-inter);
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.025em;
+}
+
+.fireart-badge-success {
+  background: var(--emerald);
+  color: white;
+}
+
+.fireart-badge-warning {
+  background: var(--amber);
+  color: white;
+}
+
+.fireart-badge-danger {
+  background: var(--crimson);
+  color: white;
+}
+
+.fireart-badge-info {
+  background: var(--cobalt);
+  color: white;
+}
+
+/* Fireart Typography Classes */
+.fireart-heading-1 {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--obsidian);
+}
+
+.fireart-heading-2 {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--obsidian);
+}
+
+.fireart-heading-3 {
+  font-family: var(--font-heading);
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: var(--obsidian);
+}
+
+.fireart-body {
+  font-family: var(--font-inter);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--obsidian);
+}
+
+.fireart-body-large {
+  font-family: var(--font-inter);
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.625;
+  color: var(--obsidian);
+}
+
+.fireart-caption {
+  font-family: var(--font-inter);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.375;
+  color: var(--charcoal);
+  letter-spacing: 0.025em;
+}
+
+.fireart-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--obsidian);
+}
+
+/* Fireart Animation Classes */
+.fireart-fade-in {
+  animation: fireartFadeIn var(--motion-duration-slow) var(--motion-easing-natural);
+}
+
+.fireart-slide-up {
+  animation: fireartSlideUp var(--motion-duration-base) var(--motion-easing-natural);
+}
+
+.fireart-scale-in {
+  animation: fireartScaleIn var(--motion-duration-base) var(--motion-easing-natural);
+}
+
+.fireart-bounce-subtle {
+  animation: fireartBounceSubtle var(--motion-duration-slow) var(--motion-easing-bounce);
+}
+
+@keyframes fireartFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fireartSlideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes fireartScaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes fireartBounceSubtle {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Smooth background image transitions */
+@keyframes fadeInOut {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.4; }
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .fireart-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .fireart-input {
+    padding: 10px 14px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+  
+  .fireart-heading-1 {
+    font-size: 2.25rem;
+  }
+  
+  .fireart-heading-2 {
+    font-size: 1.875rem;
+  }
+  
+  .fireart-heading-3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Continuous scroll animation for Getting Started section */
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll-horizontal 45s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Smooth horizontal scroll on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .animate-scroll {
+    animation: none;
+  }
+}
+
+/* AppKit Button Styling - Fix dark on dark issue */
+appkit-button {
+  --w3m-accent: #2563eb !important;
+  --w3m-accent-fill: #ffffff !important;
+  --w3m-background: #ffffff !important;
+  --w3m-background-border-radius: 8px !important;
+  --w3m-button-border-radius: 8px !important;
+  --w3m-font-family: system-ui, -apple-system, sans-serif !important;
+  --w3m-font-size-master: 14px !important;
+  --w3m-font-weight-medium: 500 !important;
+  --w3m-text-big: #1f2937 !important;
+  --w3m-text-secondary: #6b7280 !important;
+  --w3m-overlay-background: rgba(0, 0, 0, 0.5) !important;
+  --w3m-overlay-backdrop-filter: blur(8px) !important;
+}
+
+appkit-button::part(button) {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+  min-height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+appkit-button::part(button):hover {
+  background: #1f1f1f !important;
+}
+
+appkit-button::part(button):active {
+  background: #333333 !important;
+}
+
+appkit-button::part(button):focus {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+}
+
+/* AA contrast safety net for buttons on mid-tone backgrounds */
+.btn-contrast { 
+  color: #FFFFFF; 
+  background-color: #000000; 
+  border: 1px solid #000000; 
+}
+.btn-contrast:hover { 
+  background-color: #1f1f1f; 
+}
+
+/* Header Alignment Utilities - Fireart Style */
+.h-header { height: 64px; }                 /* header bar */
+.h-ctl    { height: 40px; }                 /* buttons, links, toggles */
+.leading-ctl { line-height: 40px; }         /* text inside ctl */
+.nav-link { display: inline-flex; align-items: center; height: 40px; }
+
+/* Print Styles for Reports */
+@media print {
+  .print\:hidden { display: none !important; }
+  .print\:block { display: block !important; }
+  body { 
+    color: #111; 
+    background: white;
+    font-size: 12px;
+  }
+  table { 
+    page-break-inside: auto; 
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr { 
+    page-break-inside: avoid; 
+    page-break-after: auto; 
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 4px 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+  .font-mono {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+  }
+  .text-xs {
+    font-size: 10px;
+  }
+  .text-sm {
+    font-size: 11px;
+  }
+  .py-2 {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .pr-4 {
+    padding-right: 8px;
+  }
+  .mb-4 {
+    margin-bottom: 8px;
+  }
+  .mt-4 {
+    margin-top: 8px;
+  }
+  .mt-8 {
+    margin-top: 16px;
+  }
+  .border-b {
+    border-bottom: 1px solid #ddd;
+  }
+  .border-line {
+    border-color: #ddd;
+  }
+  .text-stone {
+    color: #666;
+  }
+  .text-ink {
+    color: #111;
+  }
+  .bg-crimson\/10 {
+    background-color: #fef2f2;
+  }
+  .text-crimson {
+    color: #dc2626;
+  }
+  .bg-amber\/10 {
+    background-color: #fffbeb;
+  }
+  .text-amber {
+    color: #d97706;
+  }
+  .rounded {
+    border-radius: 2px;
+  }
+  .px-2 {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .py-0\.5 {
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+}
+
+/* Accessibility improvements */
+:focus-visible { 
+  outline: 2px solid #2563eb; 
+  outline-offset: 2px; 
+}
+
+/* Ensure skip link is properly styled */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only:focus {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+  z-index: 50;
+}
+
+/* Fireart Loading Animations */
+@keyframes fireart-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fireart-bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes fireart-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes fireart-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fireart-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fireart Animation Classes */
+.fireart-pulse {
+  animation: fireart-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.fireart-bounce {
+  animation: fireart-bounce 1s infinite;
+}
+
+.fireart-shake {
+  animation: fireart-shake 0.5s ease-in-out;
+}
+
+.fireart-slide-up {
+  animation: fireart-slide-up 0.3s ease-out;
+}
+
+.fireart-fade-in {
+  animation: fireart-fade-in 0.2s ease-out;
+}
+
+/* Enhanced Button Interactions */
+.fireart-button:active {
+  transform: translateY(0) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+.fireart-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Loading State Enhancements */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Success/Error State Animations */
+.success-checkmark {
+  animation: fireart-bounce 0.6s ease-in-out;
+}
+
+.error-shake {
+  animation: fireart-shake 0.5s ease-in-out;
+}
+
+/* Smooth Transitions for All Interactive Elements */
+button, input, select, textarea, a {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus States */
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
 /* Disabled States */
 button:disabled, input:disabled, select:disabled, textarea:disabled {
   opacity: 0.5;
