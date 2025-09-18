@@ -4,7 +4,7 @@
 
 // Client-side configuration for React components
 export const rollbarClientConfig = {
-  accessToken: process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN || 'YOUR_CLIENT_ACCESS_TOKEN_HERE',
+  accessToken: process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN || '',
   environment: process.env.NODE_ENV || 'development',
   captureUncaught: true,
   captureUnhandledRejections: true,
@@ -29,7 +29,7 @@ export const rollbarClientConfig = {
 
 // Server-side configuration for API routes and server-side code
 export const rollbarServerConfig = {
-  accessToken: process.env.ROLLBAR_ACCESS_TOKEN || 'YOUR_SERVER_ACCESS_TOKEN_HERE',
+  accessToken: process.env.ROLLBAR_ACCESS_TOKEN || '',
   environment: process.env.NODE_ENV || 'development',
   captureUncaught: true,
   captureUnhandledRejections: true,

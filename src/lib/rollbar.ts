@@ -7,13 +7,13 @@ import { rollbarServerConfig, rollbarClientConfig } from './rollbar-config'
 // Server-side Rollbar instance (for API routes and server-side code)
 const rollbar = new Rollbar({
   ...rollbarServerConfig,
-  enabled: !!process.env.ROLLBAR_ACCESS_TOKEN && process.env.ROLLBAR_ACCESS_TOKEN !== 'YOUR_SERVER_ACCESS_TOKEN_HERE',
+  enabled: !!process.env.ROLLBAR_ACCESS_TOKEN,
 })
 
 // Client-side Rollbar instance (for browser/React components)
 export const rollbarClient = typeof window !== 'undefined' ? new Rollbar({
   ...rollbarClientConfig,
-  enabled: !!process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN && process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN !== 'YOUR_CLIENT_ACCESS_TOKEN_HERE',
+  enabled: !!process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN,
 }) : null
 
 export default rollbar
