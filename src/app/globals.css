@@ -946,3 +946,12 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
 }
+
+.glass-black-full {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}

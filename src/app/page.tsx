@@ -206,8 +206,10 @@ export default function HomePage() {
 
       {/* The Problem You Solve */}
       <Section className="py-16 sm:py-24 lg:py-32 relative">
-        <Container>
-          <div className="max-w-4xl mx-auto glass-black rounded-2xl p-8 sm:p-12">
+        {/* Full-width glass background */}
+        <div className="absolute inset-0 glass-black-full"></div>
+        <Container className="relative z-10">
+          <div className="max-w-4xl mx-auto p-8 sm:p-12">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight mb-6 sm:mb-8">
               The Unseen Risk in Every Wallet
             </h2>
