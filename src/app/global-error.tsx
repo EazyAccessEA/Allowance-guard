@@ -2,7 +2,7 @@
 
 import NextError from 'next/error'
 import { useEffect } from 'react'
-import { rollbarClient } from '@/lib/rollbar'
+import { reportClientError } from '@/lib/rollbar'
 
 export default function GlobalError({
   error,
@@ -11,11 +11,7 @@ export default function GlobalError({
   reset: () => void
 }) {
   useEffect(() => {
-    if (rollbarClient) {
-      rollbarClient.error(error)
-    } else {
-      console.error('Global error:', error)
-    }
+    reportClientError(error)
   }, [error])
 
   return (

@@ -1,21 +1,19 @@
-import Rollbar from 'rollbar'
+// Official Rollbar SDK integration for Next.js
+// Documentation: https://docs.rollbar.com/docs/react
 
-// Initialize Rollbar
+import Rollbar from 'rollbar'
+import { rollbarServerConfig, rollbarClientConfig } from './rollbar-config'
+
+// Server-side Rollbar instance (for API routes and server-side code)
 const rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_ACCESS_TOKEN || '',
-  environment: process.env.NODE_ENV || 'development',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  enabled: !!process.env.ROLLBAR_ACCESS_TOKEN,
+  ...rollbarServerConfig,
+  enabled: !!process.env.ROLLBAR_ACCESS_TOKEN && process.env.ROLLBAR_ACCESS_TOKEN !== 'YOUR_SERVER_ACCESS_TOKEN_HERE',
 })
 
-// Client-side Rollbar (for browser)
+// Client-side Rollbar instance (for browser/React components)
 export const rollbarClient = typeof window !== 'undefined' ? new Rollbar({
-  accessToken: process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN || '',
-  environment: process.env.NODE_ENV || 'development',
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  enabled: !!process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN,
+  ...rollbarClientConfig,
+  enabled: !!process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN && process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN !== 'YOUR_CLIENT_ACCESS_TOKEN_HERE',
 }) : null
 
 export default rollbar
@@ -42,5 +40,30 @@ export const reportInfo = (message: string, context?: Record<string, unknown>) =
     rollbar.info(message, context)
   } else {
     console.info('Info (Rollbar not configured):', message, context)
+  }
+}
+
+// Client-side helper functions
+export const reportClientError = (error: Error, context?: Record<string, unknown>) => {
+  if (rollbarClient) {
+    rollbarClient.error(error, context)
+  } else {
+    console.error('Client Error (Rollbar not configured):', error, context)
+  }
+}
+
+export const reportClientWarning = (message: string, context?: Record<string, unknown>) => {
+  if (rollbarClient) {
+    rollbarClient.warning(message, context)
+  } else {
+    console.warn('Client Warning (Rollbar not configured):', message, context)
+  }
+}
+
+export const reportClientInfo = (message: string, context?: Record<string, unknown>) => {
+  if (rollbarClient) {
+    rollbarClient.info(message, context)
+  } else {
+    console.info('Client Info (Rollbar not configured):', message, context)
   }
 }

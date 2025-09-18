@@ -6,6 +6,7 @@ import ContextProvider from '@/context'
 import RpcStatusBanner from '@/components/RpcStatusBanner'
 import HeaderWrapper from '@/components/HeaderWrapper'
 import Footer from '@/components/Footer'
+import RollbarProvider from '@/components/RollbarProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -59,11 +60,13 @@ export default async function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
-        <ContextProvider cookies={cookies}>
-          <HeaderWrapper />
-          <main id="main" className="flex-1">{children}</main>
-          <Footer />
-        </ContextProvider>
+        <RollbarProvider>
+          <ContextProvider cookies={cookies}>
+            <HeaderWrapper />
+            <main id="main" className="flex-1">{children}</main>
+            <Footer />
+          </ContextProvider>
+        </RollbarProvider>
         <script
           dangerouslySetInnerHTML={{
             __html: `
