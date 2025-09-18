@@ -1,15 +1,15 @@
-# Production Deployment Checklist - v1.9.0 Security Release
+# Production Deployment Checklist - v1.9.0 Wallet-First Security
 
 ## 🚀 Launch Readiness & Production Deploy
 
-This checklist ensures all systems are ready for production deployment of Allowance Guard v1.9.0 with enhanced security features.
+This checklist ensures all systems are ready for production deployment of Allowance Guard v1.9.0 with simplified wallet-first authentication.
 
-### 🔐 New Security Features in v1.9.0
-- **Two-Factor Authentication (2FA)**: TOTP-based 2FA with backup codes
-- **Device Management**: Trust and manage authorized devices
-- **Session Tracking**: Monitor active sessions across devices
-- **Security Event Logging**: Comprehensive audit trail
-- **Enhanced Authentication**: Device-aware magic link authentication
+### 🎯 New Features in v1.9.0
+- **Wallet-Only Authentication**: Connect wallet → Immediate access to everything
+- **Wallet Security Dashboard**: Real-time risk assessment and security monitoring
+- **Simplified User Flow**: No more confusing magic link authentication
+- **Integrated Security**: Security dashboard accessible immediately after wallet connection
+- **DeFi-Native Experience**: Intuitive flow for crypto users
 
 ---
 
@@ -69,7 +69,7 @@ BASE_RPC_URLS=https://mainnet.base.org,https://rpc.ankr.com/base
 DISABLED_CHAINS=
 
 # ——— Security ———
-BETTER_AUTH_SECRET=<32+ char random>
+# No additional security environment variables needed for wallet-only auth
 
 # ——— Error Monitoring (Rollbar) ———
 ROLLBAR_ACCESS_TOKEN=<server_access_token>
@@ -92,32 +92,31 @@ vercel env add COINBASE_COMMERCE_WEBHOOK_SECRET production
 vercel env add ETHEREUM_RPC_URLS production
 vercel env add ARBITRUM_RPC_URLS production
 vercel env add BASE_RPC_URLS production
-vercel env add BETTER_AUTH_SECRET production
+# vercel env add BETTER_AUTH_SECRET production  # Not needed for wallet-only auth
 vercel env add ROLLBAR_ACCESS_TOKEN production
 vercel env add NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN production
 ```
 
 ---
 
-## 2. Database Migration & Security Setup
+## 2. Database Migration & Cleanup
 
-### ✅ Database Migration for Security Features
+### ✅ Database Migration for Simplified Auth
 - [ ] Run database migration: `npm run migrate`
-- [ ] Verify new security tables are created:
-  - `trusted_devices` table
-  - `security_events` table  
-  - `login_attempts` table
-  - Enhanced `users` table with 2FA columns
-  - Enhanced `sessions` table with device tracking
+- [ ] Verify authentication tables are removed:
+  - `trusted_devices` table removed
+  - `security_events` table removed
+  - `login_attempts` table removed
+  - Authentication columns removed from `users` and `sessions` tables
 - [ ] Confirm all existing data is preserved
-- [ ] Test security features in staging environment
+- [ ] Test wallet security features in staging environment
 
-### ✅ Security Features Verification
-- [ ] 2FA setup and verification working
-- [ ] Device management functionality working
-- [ ] Session tracking and management working
-- [ ] Security event logging working
-- [ ] Enhanced authentication flows working
+### ✅ Wallet Security Features Verification
+- [ ] Wallet connection working properly
+- [ ] Security dashboard displaying correctly
+- [ ] Risk assessment calculations working
+- [ ] Security metrics updating in real-time
+- [ ] Tab navigation between Allowances and Security working
 
 ---
 

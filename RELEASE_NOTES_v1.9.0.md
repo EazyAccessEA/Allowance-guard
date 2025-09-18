@@ -2,235 +2,174 @@
 
 **Release Date:** September 18, 2025  
 **Version:** 1.9.0  
-**Codename:** "Security Fortress"
+**Codename:** "Wallet-First Security"
 
 ## 🚀 Major Features
 
-### 🔐 **Enterprise-Grade Security System**
-- **Two-Factor Authentication (2FA)**: TOTP-based 2FA with backup codes
-- **Device Management**: Trust and manage authorized devices
-- **Session Tracking**: Monitor active sessions across devices
-- **Device Fingerprinting**: Advanced device identification and tracking
-- **Security Event Logging**: Comprehensive audit trail
-- **Account Lockout Protection**: Rate limiting and brute force protection
+### 🎯 **Simplified Authentication Flow**
+- **Wallet-Only Authentication**: Connect wallet → Immediate access to everything
+- **No Email/Password Required**: Eliminates confusing magic link authentication
+- **DeFi-Native Experience**: Intuitive flow for crypto users
+- **Instant Access**: No separate authentication steps needed
 
-### 🛡️ **Enhanced Authentication**
-- **Magic Link with Device Tracking**: Enhanced magic link authentication
-- **Device Trust System**: Automatic and manual device trust management
-- **Cross-Device Session Management**: View and control all active sessions
-- **Security Dashboard**: Comprehensive security settings interface
-- **Real-time Security Monitoring**: Live security event tracking
+### 🛡️ **Wallet Security Dashboard**
+- **Security Score**: Real-time risk assessment based on token allowances
+- **Risk Overview**: Total allowances and high-risk allowance counts
+- **Security Monitoring**: Continuous wallet security status tracking
+- **Best Practices**: Built-in security tips and recommendations
+- **Quick Actions**: Refresh scans and view detailed reports
 
-### 📊 **Advanced Security Monitoring**
-- **Security Event Logging**: All security events are logged with full context
-- **Login Attempt Monitoring**: Track and prevent brute force attacks
-- **Device Access Tracking**: Monitor device access patterns
-- **Security Analytics**: Comprehensive security metrics and reporting
-- **Automated Security Alerts**: Real-time notifications for security events
+### 📊 **Enhanced User Experience**
+- **Tabbed Interface**: Clean separation between Token Allowances and Security
+- **Integrated Security**: Security dashboard accessible immediately after wallet connection
+- **Simplified Navigation**: Removed confusing security links and pages
+- **Streamlined Flow**: Connect wallet → Scan allowances → View security → Take action
 
 ## 🛠️ Technical Improvements
 
-### **Database Enhancements**
-- **Enhanced Users Table**: Added 2FA support with encrypted secrets
-- **Trusted Devices Table**: Comprehensive device management
-- **Security Events Table**: Complete audit trail
-- **Login Attempts Table**: Brute force protection
-- **Session Enhancement**: Device tracking in all sessions
+### **Database Cleanup**
+- **Removed Authentication Tables**: Cleaned up unused 2FA, device management, and session tables
+- **Simplified Schema**: Removed complex authentication-related columns
+- **Migration 015**: Clean removal of authentication infrastructure
+- **Optimized Performance**: Reduced database complexity and improved query performance
 
-### **API Security**
-- **New Security Endpoints**: Complete 2FA and device management APIs
-- **Enhanced Authentication**: Device-aware magic link verification
-- **Rate Limiting**: Advanced rate limiting for security endpoints
-- **Input Validation**: Comprehensive input validation and sanitization
-- **Error Handling**: Secure error handling without information leakage
+### **API Simplification**
+- **Removed Auth Endpoints**: Eliminated magic link, 2FA, and device management APIs
+- **Streamlined Routes**: Cleaner API structure focused on wallet operations
+- **Reduced Complexity**: Fewer endpoints to maintain and secure
+- **Better Performance**: Faster API responses without authentication overhead
 
-### **Frontend Security**
-- **Security Settings Dashboard**: Complete security management interface
-- **2FA Setup Wizard**: User-friendly 2FA configuration
-- **Device Management UI**: Intuitive device trust management
-- **Session Monitoring**: Real-time session tracking interface
-- **Security Event Viewer**: Comprehensive security activity display
+### **Frontend Improvements**
+- **WalletSecurity Component**: New wallet-focused security dashboard
+- **Tabbed Interface**: Clean separation of Token Allowances and Security features
+- **Simplified Navigation**: Removed confusing security links and pages
+- **Better UX**: Intuitive wallet-first user experience
 
 ## 🔧 **New Components**
 
-### **Core Libraries**
-- `lib/auth-enhanced.ts` - Enhanced authentication with device tracking
-- `lib/device-detection.ts` - Device fingerprinting and identification
-- Enhanced security middleware and validation
+### **WalletSecurity.tsx**
+- **Security Dashboard**: Comprehensive wallet security overview
+- **Risk Assessment**: Real-time security scoring based on token allowances
+- **Security Metrics**: Total allowances, high-risk counts, and security status
+- **Quick Actions**: Refresh security scans and view detailed reports
+- **Best Practices**: Built-in security tips and recommendations
+- **Address Management**: Show/hide wallet address with copy functionality
 
-### **API Endpoints**
-- `POST /api/auth/2fa/setup` - Setup 2FA with QR code generation
-- `POST /api/auth/2fa/verify` - Verify 2FA token and enable 2FA
-- `POST /api/auth/2fa/disable` - Disable 2FA with verification
-- `GET /api/auth/devices` - List trusted devices
-- `DELETE /api/auth/devices/[id]` - Remove trusted device
-- `GET /api/auth/sessions` - List active sessions
-- `DELETE /api/auth/sessions/[id]` - Terminate specific session
+## 🔒 **Security Enhancements**
 
-### **Frontend Components**
-- `TwoFactorSetup.tsx` - Complete 2FA setup wizard
-- `SecuritySettings.tsx` - Comprehensive security dashboard
-- Enhanced authentication flows with device tracking
+### **Wallet-Focused Security**
+- **Risk-Based Scoring**: Security assessment based on actual token allowances
+- **Real-time Monitoring**: Continuous security status tracking
+- **High-Risk Detection**: Automatic identification of dangerous approvals
+- **Security Analytics**: Comprehensive security metrics and trends
+- **Best Practice Guidance**: Built-in security recommendations
 
-### **Database Migrations**
-- `014_enhanced_auth.sql` - Complete security system migration
-- Enhanced session tracking
-- Device management tables
-- Security event logging
+### **Simplified Security Model**
+- **No Complex Authentication**: Eliminates authentication attack vectors
+- **Wallet-Based Access**: Leverages existing wallet security
+- **Reduced Attack Surface**: Fewer endpoints and complexity
+- **Better User Experience**: No authentication friction
 
 ## 📋 **Configuration**
 
-### **New Environment Variables**
-```bash
-# Enhanced Security (already configured)
-# No new environment variables required
-# All security features use existing infrastructure
-```
+### **Removed Components**
+- Magic link authentication system
+- 2FA setup and management
+- Device management and tracking
+- Session management
+- Email-based security settings
 
-### **Database Schema Updates**
-- Enhanced users table with 2FA support
-- New trusted_devices table
-- New security_events table
-- New login_attempts table
-- Enhanced sessions table with device tracking
+### **Database Changes**
+- Removed authentication-related tables
+- Cleaned up unused columns
+- Simplified schema for better performance
 
 ## 🎯 **Use Cases**
 
+### **For DeFi Users**
+- **Immediate Access**: Connect wallet and start securing allowances instantly
+- **No Setup Required**: No email verification or complex authentication
+- **Familiar Flow**: Standard wallet connection process
+- **Quick Security Check**: See security status immediately
+
 ### **For Security-Conscious Users**
-- Enable 2FA for enhanced account protection
-- Manage trusted devices and remove unauthorized access
-- Monitor active sessions across all devices
-- Review security events and account activity
-- Set up device trust for seamless access
-
-### **For Enterprise Deployments**
-- Comprehensive audit trail for compliance
-- Device management for corporate environments
-- Session monitoring for security teams
-- Advanced authentication for sensitive operations
-- Security event logging for incident response
-
-### **For Developers**
-- Enhanced security APIs for custom integrations
-- Device tracking for analytics and security
-- Comprehensive security event logging
-- Advanced authentication flows
-- Security dashboard for user management
+- **Risk Assessment**: Understand wallet security at a glance
+- **Actionable Insights**: Clear recommendations for improving security
+- **Continuous Monitoring**: Real-time security status updates
+- **Best Practices**: Built-in security education
 
 ## 🔄 **Backward Compatibility**
 
-- **100% backward compatible** with existing functionality
-- **Enhanced magic link authentication** - no changes to user experience
-- **Optional 2FA** - users can choose to enable enhanced security
-- **Preserved existing sessions** - all current sessions remain valid
-- **No breaking changes** to existing APIs or interfaces
+### **Breaking Changes**
+- **Authentication System**: Complete removal of magic link authentication
+- **Security Settings**: Moved from separate pages to integrated dashboard
+- **API Endpoints**: Removed authentication-related endpoints
 
-## 📚 **Documentation**
+### **Migration Path**
+- **Existing Users**: Will need to reconnect wallets (no data loss)
+- **Bookmarks**: Update any bookmarked security pages
+- **API Integrations**: Remove authentication-related API calls
 
-### **New Documentation**
-- `SECURITY_FEATURES.md` - Comprehensive security features guide
-- Enhanced security documentation in README
-- Security best practices guide
-- Device management documentation
+## 📚 **Documentation Updates**
 
-### **Updated Documentation**
-- `README.md` - Updated with security features
-- `PRODUCTION_DEPLOYMENT_CHECKLIST.md` - Enhanced with security requirements
-- API documentation with new security endpoints
-- User documentation with security features
+### **Updated Guides**
+- **README.md**: Updated to reflect wallet-only authentication
+- **Security Documentation**: Simplified to focus on wallet security
+- **API Documentation**: Removed authentication endpoints
+- **User Guides**: Updated to reflect new simplified flow
 
 ## 🧪 **Testing**
 
-### **New Test Coverage**
-- 2FA setup and verification testing
-- Device management functionality testing
-- Session tracking and management testing
-- Security event logging testing
-- Enhanced authentication flow testing
+### **Unit Testing**
+- **Jest + React Testing Library**: Complete testing framework setup
+- **Component Tests**: Tests for new WalletSecurity component
+- **Utility Tests**: Tests for address formatting and other utilities
+- **API Tests**: Tests for simplified API structure
 
-### **Security Testing**
-- Brute force protection testing
-- Device fingerprinting accuracy testing
-- Session security testing
-- 2FA security validation
-- Rate limiting effectiveness testing
+### **Integration Testing**
+- **Wallet Connection Flow**: End-to-end wallet connection testing
+- **Security Dashboard**: Complete security dashboard functionality
+- **Tab Navigation**: Tab switching and content loading
 
 ## 🚀 **Deployment**
 
-### **Database Migration**
-- Run `npm run migrate` to apply security enhancements
-- All existing data is preserved
-- New security features are immediately available
-- No downtime required for deployment
+### **Production Ready**
+- **Build Optimization**: Successful production build
+- **Database Migration**: Clean migration to simplified schema
+- **Environment Variables**: No new variables required
+- **Rollbar Integration**: Error monitoring for production
 
-### **Environment Setup**
-- No new environment variables required
-- All security features use existing infrastructure
-- Enhanced error monitoring with Rollbar
-- Production-ready security configurations
+### **Performance Improvements**
+- **Faster Load Times**: Reduced authentication overhead
+- **Simplified Architecture**: Fewer components and complexity
+- **Better Caching**: Optimized for wallet-based operations
+- **Reduced Bundle Size**: Removed unused authentication code
 
-## 🔮 **Future Roadmap**
+## 🎉 **What's Next**
 
-### **Planned Security Enhancements**
-- Biometric authentication support
-- Hardware security key integration
-- Advanced threat detection
-- Security analytics dashboard
-- Automated security recommendations
+### **Immediate Benefits**
+- **Simplified User Experience**: No more authentication confusion
+- **Better Performance**: Faster, more responsive application
+- **Easier Maintenance**: Reduced complexity and fewer moving parts
+- **DeFi-Native**: Aligns with user expectations
 
-### **Security Monitoring Expansion**
-- Real-time threat detection
-- Advanced anomaly detection
-- Security incident response automation
-- Compliance reporting features
-- Security metrics and analytics
-
-## 🐛 **Bug Fixes**
-
-- Fixed device detection accuracy
-- Improved session management reliability
-- Enhanced error handling in security flows
-- Better device fingerprinting consistency
-- Improved 2FA setup user experience
-
-## 📊 **Performance Metrics**
-
-- **Enhanced security** with minimal performance impact
-- **Improved user experience** with seamless device management
-- **Better security monitoring** with comprehensive event logging
-- **Reduced security risks** with advanced authentication
-- **Increased user confidence** with enterprise-grade security
-
-## 🔒 **Security Improvements**
-
-### **Authentication Security**
-- **2FA Protection**: TOTP-based two-factor authentication
-- **Device Trust**: Advanced device management and trust system
-- **Session Security**: Comprehensive session tracking and management
-- **Brute Force Protection**: Advanced rate limiting and account lockout
-- **Audit Trail**: Complete security event logging
-
-### **Data Protection**
-- **Encrypted Storage**: All sensitive data is encrypted
-- **Secure Transmission**: All data transmission is secured
-- **Access Control**: Proper access controls and permissions
-- **Privacy Protection**: User privacy is maintained throughout
-- **Compliance Ready**: Enterprise-grade security compliance
-
-## 🎉 **Conclusion**
-
-Allowance Guard v1.9.0 introduces enterprise-grade security features that transform the platform into a security-first application. The new 2FA system, device management, and comprehensive security monitoring provide users with the tools they need to protect their accounts and data.
-
-This release represents a significant advancement in security maturity, providing enterprise-level security features while maintaining the simplicity and ease of use that users expect from Allowance Guard.
-
-The enhanced security system is designed to grow with user needs, providing both basic security for casual users and advanced security features for power users and enterprise deployments.
+### **Future Enhancements**
+- **Advanced Risk Scoring**: More sophisticated risk assessment algorithms
+- **Security Recommendations**: AI-powered security suggestions
+- **Multi-Wallet Support**: Enhanced multi-wallet security management
+- **Real-time Alerts**: Push notifications for security events
 
 ---
 
-**Full Changelog:** [View all changes](https://github.com/EazyAccessEA/Allowance-guard/compare/v1.8.0...v1.9.0)
+## 📞 **Support**
 
-**Download:** [Get the latest release](https://github.com/EazyAccessEA/Allowance-guard/releases/tag/v1.9.0)
+For questions or issues with this release:
+- **Documentation**: [Allowance Guard Docs](https://www.allowanceguard.com/docs)
+- **Issues**: [GitHub Issues](https://github.com/EazyAccessEA/Allowance-guard/issues)
+- **Community**: [Discord/Telegram] (links in documentation)
 
-**Documentation:** [Read the security guide](SECURITY_FEATURES.md)
+---
 
-**Security Features:** [Comprehensive security documentation](SECURITY_FEATURES.md)
+**Thank you for using Allowance Guard!** 🛡️
+
+*This release represents a major simplification focused on providing the best possible experience for DeFi users while maintaining robust security features.*
