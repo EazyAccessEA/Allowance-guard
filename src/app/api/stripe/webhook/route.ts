@@ -5,7 +5,7 @@ import { db } from '@/db'
 import { sql } from 'drizzle-orm'            // keep this 'sql' from drizzle-orm
 import { notifySlackDonation } from '@/lib/notify'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
-import * as Sentry from '@sentry/nextjs'
+import { reportError } from '@/lib/rollbar'
 import { withReq } from '@/lib/logger'
 
 export const runtime = 'nodejs'
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: true })
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error'
-    Sentry.captureException(err)
+    reportError(err instanceof Error ? err : new Error(String(err)), { eventId: event?.id })
     L.error('stripe.webhook.exception', { error: errorMessage })
     return new NextResponse('Webhook handler failed', { status: 500 })
   }

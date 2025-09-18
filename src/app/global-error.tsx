@@ -1,8 +1,8 @@
 'use client'
 
-import * as Sentry from '@sentry/nextjs'
 import NextError from 'next/error'
 import { useEffect } from 'react'
+import { rollbarClient } from '@/lib/rollbar'
 
 export default function GlobalError({
   error,
@@ -11,7 +11,11 @@ export default function GlobalError({
   reset: () => void
 }) {
   useEffect(() => {
-    Sentry.captureException(error)
+    if (rollbarClient) {
+      rollbarClient.error(error)
+    } else {
+      console.error('Global error:', error)
+    }
   }, [error])
 
   return (

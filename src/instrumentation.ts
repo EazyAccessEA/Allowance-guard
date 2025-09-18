@@ -1,13 +1,7 @@
-import * as Sentry from '@sentry/nextjs'
+import { reportError } from '@/lib/rollbar'
 
 export async function register() {
-  if (process.env.NEXT_RUNTIME === 'nodejs') {
-    await import('../sentry.server.config')
-  }
-
-  if (process.env.NEXT_RUNTIME === 'edge') {
-    await import('../sentry.edge.config')
-  }
+  // Rollbar is initialized in the rollbar.ts file
 }
 
 export function onRequestError(
@@ -24,5 +18,9 @@ export function onRequestError(
     routePath: string
   }
 ) {
-  Sentry.captureRequestError(err, request, requestContext)
+  if (err instanceof Error) {
+    reportError(err, { request, requestContext })
+  } else {
+    reportError(new Error(String(err)), { request, requestContext })
+  }
 }
