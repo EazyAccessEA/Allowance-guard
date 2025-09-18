@@ -68,7 +68,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
               <div className="mt-3 flex items-center gap-3">
                 <a href={url} target="_blank" rel="noopener noreferrer" className="underline text-xs text-cobalt hover:text-cobalt-hover">View on explorer</a>
                 {r.status !== 'verified' && (
-                  <button onClick={() => verify(r.id)} className="rounded border border-line bg-white px-2 py-1 text-xs text-ink hover:bg-mist transition-colors">Verify now</button>
+                  <button onClick={() => verify(r.id)} className="rounded border border-black bg-black text-white px-2 py-1 text-xs hover:bg-gray-800 transition-colors">Verify now</button>
                 )}
                 {r.error && <span className="text-xs text-crimson">Error: {r.error}</span>}
               </div>

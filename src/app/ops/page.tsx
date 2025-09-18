@@ -42,7 +42,7 @@ export default function OpsPage() {
       <div className="mt-3 flex gap-2">
         <input className="rounded border px-2 py-1 text-sm w-80" placeholder="OPS_DASH_TOKEN"
                value={token} onChange={e=>setToken(e.target.value)} />
-        <button onClick={()=>{ localStorage.setItem('ops_token', token); load() }} className="rounded border px-3 py-1 text-sm">Load</button>
+        <button onClick={()=>{ localStorage.setItem('ops_token', token); load() }} className="rounded border border-black bg-black text-white px-3 py-1 text-sm hover:bg-gray-800">Load</button>
       </div>
 
       <section className="mt-6">

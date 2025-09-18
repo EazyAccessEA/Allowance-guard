@@ -18,14 +18,14 @@ Since we're using Vercel's Hobby plan which has limitations on cron jobs, we use
 ### 2. Health Monitoring
 - **URL**: `https://www.allowanceguard.com/api/alerts/health`
 - **Method**: `GET`
-- **Schedule**: `*/10 * * * *` (Every 10 minutes)
+- **Schedule**: `*/60 * * * *` (Every 60 minutes)
 - **Purpose**: Monitor system health and send alerts if degraded
 - **Response**: JSON with health status
 
 ### 3. Job Processing
 - **URL**: `https://www.allowanceguard.com/api/jobs/process`
 - **Method**: `GET` or `POST`
-- **Schedule**: `*/5 * * * *` (Every 5 minutes)
+- **Schedule**: `*/30 * * * *` (Every 30 minutes)
 - **Purpose**: Process queued wallet scan jobs
 - **Response**: JSON with processed job counts
 

@@ -321,7 +321,7 @@ button, a, input, select, textarea {
 }
 
 .fireart-button {
-  background: var(--cobalt);
+  background: #000000;
   color: white;
   border: none;
   border-radius: 8px;
@@ -340,14 +340,14 @@ button, a, input, select, textarea {
 }
 
 .fireart-button:hover {
-  background: var(--cobalt-hover);
+  background: #1f1f1f;
   transform: translateY(-1px);
   box-shadow: var(--shadow-medium);
 }
 
 .fireart-button:active {
   transform: translateY(0);
-  background: var(--cobalt-active);
+  background: #333333;
 }
 
 .fireart-button:disabled {
@@ -357,25 +357,25 @@ button, a, input, select, textarea {
 }
 
 .fireart-button-secondary {
-  background: transparent;
-  color: var(--cobalt);
-  border: 1px solid var(--cobalt);
+  background: #000000;
+  color: white;
+  border: 1px solid #000000;
 }
 
 .fireart-button-secondary:hover {
-  background: var(--cobalt);
+  background: #1f1f1f;
   color: white;
 }
 
 .fireart-button-ghost {
-  background: transparent;
-  color: var(--charcoal);
+  background: #000000;
+  color: white;
   border: none;
 }
 
 .fireart-button-ghost:hover {
-  background: var(--warm-gray);
-  color: var(--obsidian);
+  background: #1f1f1f;
+  color: white;
 }
 
 .fireart-input {
@@ -620,7 +620,7 @@ appkit-button {
 }
 
 appkit-button::part(button) {
-  background: #2563eb !important;
+  background: #000000 !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: 8px !important;
@@ -636,11 +636,11 @@ appkit-button::part(button) {
 }
 
 appkit-button::part(button):hover {
-  background: #1d4ed8 !important;
+  background: #1f1f1f !important;
 }
 
 appkit-button::part(button):active {
-  background: #1e40af !important;
+  background: #333333 !important;
 }
 
 appkit-button::part(button):focus {
@@ -650,12 +650,12 @@ appkit-button::part(button):focus {
 
 /* AA contrast safety net for buttons on mid-tone backgrounds */
 .btn-contrast { 
-  color: #0A0A0A; 
-  background-color: #FFFFFF; 
-  border: 1px solid #E5E7EB; 
+  color: #FFFFFF; 
+  background-color: #000000; 
+  border: 1px solid #000000; 
 }
 .btn-contrast:hover { 
-  background-color: #F6F7F9; 
+  background-color: #1f1f1f; 
 }
 
 /* Header Alignment Utilities - Fireart Style */

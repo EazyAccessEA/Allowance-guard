@@ -228,7 +228,7 @@ vercel --prod
 - [ ] `/api/jobs/process` runs every 5 minutes
 - [ ] `/api/monitor/run` runs every 30 minutes
 - [ ] `/api/alerts/daily` runs at 08:05 Europe/London
-- [ ] `/api/alerts/health` runs every 10 minutes
+- [ ] `/api/alerts/health` runs every 60 minutes
 
 ### ✅ Region Configuration
 - [ ] `lhr1/dub1/cdg1` selected in vercel.json
