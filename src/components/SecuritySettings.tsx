@@ -209,6 +209,20 @@ export default function SecuritySettings() {
         <p className="text-gray-600">Manage your account security and trusted devices</p>
       </div>
 
+      {/* Security Notice */}
+      <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+        <div className="flex items-start">
+          <AlertTriangle className="w-5 h-5 text-amber-600 mr-3 mt-0.5 flex-shrink-0" />
+          <div>
+            <h3 className="text-sm font-medium text-amber-800 mb-1">Security Notice</h3>
+            <p className="text-sm text-amber-700">
+              This page contains sensitive security settings. Only make changes if you understand the implications. 
+              Keep your 2FA backup codes safe and never share them with anyone.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {error && (
         <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
           <div className="flex items-center">
