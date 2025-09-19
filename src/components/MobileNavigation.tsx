@@ -177,20 +177,9 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
               {/* Navigation Content */}
               <div className="flex-1 overflow-y-auto">
-                <div className="p-6 space-y-6">
-                  {/* Connect Wallet - Priority Section */}
-                  <div className="bg-gradient-to-r from-blue-50 to-teal-50 rounded-xl p-4 border border-blue-200">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <h3 className="mobbin-heading-4 text-gray-900 mb-1">Connect Your Wallet</h3>
-                        <p className="mobbin-caption text-gray-600">
-                          {isConnected ? 'Wallet connected and ready' : 'Connect to start managing approvals'}
-                        </p>
-                      </div>
-                      {isConnected && (
-                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                      )}
-                    </div>
+                <div className="p-6 space-y-4">
+                  {/* Connect Wallet - Simple and Clear */}
+                  <div className="text-center py-8">
                     <div onClick={() => setIsOpen(false)}>
                       <ConnectButton 
                         variant={isConnected ? "secondary" : "primary"}
@@ -198,108 +187,45 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                         size="lg"
                       />
                     </div>
+                    {isConnected && (
+                      <p className="text-sm text-green-600 mt-2">✓ Wallet Connected</p>
+                    )}
                   </div>
 
-                  {/* Navigation */}
-                  <div>
-                    <h3 className="mobbin-heading-4 text-gray-900 mb-3 flex items-center gap-2">
-                      <Home className="w-4 h-4" />
-                      Navigation
-                    </h3>
-                    <div className="space-y-2">
-                      {navigationItems.map((item, index) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          className={`group flex items-center gap-4 p-4 rounded-xl transition-all duration-200 mobbin-focus-ring hover:scale-[1.01] ${
-                            pathname === item.href
-                              ? 'bg-blue-50 text-blue-600 border border-blue-200 shadow-sm'
-                              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                          }`}
-                          onClick={() => setIsOpen(false)}
-                          style={{ animationDelay: `${index * 50}ms` }}
-                        >
-                          <div className={`p-3 rounded-lg transition-colors duration-200 ${
+                  {/* Simple Navigation */}
+                  <div className="space-y-2">
+                    {navigationItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`block p-4 rounded-lg transition-all duration-200 ${
+                          pathname === item.href
+                            ? 'bg-blue-50 text-blue-600 border border-blue-200'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`p-2 rounded-lg ${
                             pathname === item.href
                               ? 'bg-blue-100 text-blue-600'
-                              : 'bg-gray-100 text-gray-500 group-hover:bg-blue-50 group-hover:text-blue-600'
+                              : 'bg-gray-100 text-gray-600'
                           }`}>
                             {item.icon}
                           </div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2">
-                              <span className="mobbin-body font-medium">{item.label}</span>
-                              {item.badge && (
-                                <Badge variant="success" size="sm" className="text-xs">
-                                  {item.badge}
-                                </Badge>
-                              )}
-                            </div>
-                            <div className="mobbin-caption text-gray-500">{item.description}</div>
-                          </div>
-                          <ChevronRight className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
-                        </Link>
-                      ))}
-                    </div>
+                          <span className="font-medium">{item.label}</span>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-
                 </div>
               </div>
 
-              {/* Footer */}
-              <div className="p-6 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white">
-                <div className="space-y-4">
-                  {/* App Info */}
-                  <div className="text-center">
-                    <div className="flex items-center justify-center gap-3 mb-4">
-                      <Badge variant="secondary" size="sm" className="flex items-center gap-1">
-                        <Github className="w-3 h-3" />
-                        Open Source
-                      </Badge>
-                      <Badge variant="success" size="sm" className="flex items-center gap-1">
-                        <Heart className="w-3 h-3" />
-                        Free Forever
-                      </Badge>
-                    </div>
-                    <p className="mobbin-caption text-gray-500 mb-2">
-                      Built with ❤️ for the DeFi community
-                    </p>
-                    <p className="mobbin-caption text-gray-500">
-                      © 2024 Allowance Guard
-                    </p>
-                  </div>
-
-                  {/* Support Call-to-Action */}
-                  <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Star className="w-5 h-5 text-blue-600" />
-                      <div>
-                        <p className="mobbin-body font-medium text-blue-700">Love Allowance Guard?</p>
-                        <p className="mobbin-caption text-blue-600">Support our mission to secure DeFi</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        className="flex-1"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <Heart className="w-4 h-4 mr-2" />
-                        Support Us
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className="flex-1"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <Github className="w-4 h-4 mr-2" />
-                        Star on GitHub
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+              {/* Simple Footer */}
+              <div className="p-6 border-t border-gray-200 text-center">
+                <p className="text-sm text-gray-500">
+                  © 2024 Allowance Guard
+                </p>
               </div>
             </div>
           </div>
