@@ -41,7 +41,7 @@ export default function Hero({
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="mobbin-display-1 text-text-primary mb-6 sm:mb-8 md:mb-10 lg:mb-12">
           <span className="block sm:inline">The power to</span>{' '}
-          <span className="block sm:inline text-primary-600">
+          <span className="block sm:inline text-primary-600 min-h-[1.2em] flex items-start">
             <RotatingTypewriter 
               staticPrefix=""
               messages={[
@@ -53,7 +53,7 @@ export default function Hero({
               typingSpeed={80}
               deletingSpeed={60}
               pauseTime={2500}
-              className=""
+              className="inline-block"
             />
           </span>
         </h1>

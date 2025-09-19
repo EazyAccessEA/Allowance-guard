@@ -175,7 +175,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
         <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300"
+            className="fixed inset-0 bg-black/40 backdrop-blur-lg transition-all duration-300"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />

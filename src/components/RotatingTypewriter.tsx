@@ -30,9 +30,20 @@ export default function RotatingTypewriter({
   useEffect(() => {
     if (!isInitialized && messages.length > 0) {
       setIsInitialized(true)
-      // Start typing the first message immediately
-      setDisplayedText('')
+      // Start with the first message to prevent layout shift
+      setDisplayedText(messages[0])
     }
+  }, [isInitialized, messages.length])
+
+  useEffect(() => {
+    if (!isInitialized || messages.length === 0) return
+
+    // Start the animation cycle after a brief delay to show the first message
+    const startDelay = setTimeout(() => {
+      setIsPaused(true) // Start with pause to show first message
+    }, 1000) // 1 second delay to show first message
+
+    return () => clearTimeout(startDelay)
   }, [isInitialized, messages.length])
 
   useEffect(() => {
