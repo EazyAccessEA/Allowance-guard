@@ -15,9 +15,13 @@ export const rollbarClientConfig = {
     dom: true,
     navigation: true,
   },
-  // Filter out development noise
+  // Filter out development noise and missing tokens
   filter: {
     filter: () => {
+      // Don't send errors if no access token is configured
+      if (!process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN) {
+        return false;
+      }
       // Don't send errors in development unless explicitly enabled
       if (process.env.NODE_ENV === 'development' && !process.env.ROLLBAR_DEBUG) {
         return false;
@@ -35,9 +39,13 @@ export const rollbarServerConfig = {
   captureUnhandledRejections: true,
   // Server-specific options
   root: process.cwd(),
-  // Filter out development noise
+  // Filter out development noise and missing tokens
   filter: {
     filter: () => {
+      // Don't send errors if no access token is configured
+      if (!process.env.ROLLBAR_ACCESS_TOKEN) {
+        return false;
+      }
       // Don't send errors in development unless explicitly enabled
       if (process.env.NODE_ENV === 'development' && !process.env.ROLLBAR_DEBUG) {
         return false;

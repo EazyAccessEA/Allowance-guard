@@ -57,7 +57,7 @@ export default async function RootLayout({
   const cookies = headersList.get('cookie')
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
