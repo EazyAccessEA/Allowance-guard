@@ -197,19 +197,19 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
           <div 
             ref={menuRef}
             id="mobile-menu"
-            className="fixed right-0 top-0 h-full w-full max-w-sm bg-background-primary shadow-2xl transform transition-transform duration-300 ease-out"
+            className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl transform transition-transform duration-300 ease-out"
             style={{ transform: isOpen ? 'translateX(0)' : 'translateX(100%)' }}
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-border-primary bg-gradient-to-r from-primary-50 to-secondary-50">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-teal-50">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
                     <Shield className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h2 id="mobile-menu-title" className="mobbin-heading-3 text-text-primary">Allowance Guard</h2>
-                    <p className="mobbin-caption text-text-tertiary">Secure Token Approvals</p>
+                    <h2 id="mobile-menu-title" className="mobbin-heading-3 text-gray-900">Allowance Guard</h2>
+                    <p className="mobbin-caption text-gray-600">Secure Token Approvals</p>
                   </div>
                 </div>
                 <Button
@@ -258,7 +258,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
                   {/* Quick Actions */}
                   <div>
-                    <h3 className="mobbin-heading-4 text-text-primary mb-3 flex items-center gap-2">
+                    <h3 className="mobbin-heading-4 text-gray-900 mb-3 flex items-center gap-2">
                       <Zap className="w-4 h-4" />
                       Quick Actions
                     </h3>
@@ -285,7 +285,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
                   {/* Navigation */}
                   <div>
-                    <h3 className="mobbin-heading-4 text-text-primary mb-3 flex items-center gap-2">
+                    <h3 className="mobbin-heading-4 text-gray-900 mb-3 flex items-center gap-2">
                       <Home className="w-4 h-4" />
                       Navigation
                     </h3>
@@ -296,16 +296,16 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                           href={item.href}
                           className={`group flex items-center gap-4 p-4 rounded-xl transition-all duration-200 mobbin-focus-ring hover:scale-[1.01] ${
                             pathname === item.href
-                              ? 'bg-primary-50 text-primary-600 border border-primary-200 shadow-sm'
-                              : 'text-text-secondary hover:text-text-primary hover:bg-background-secondary'
+                              ? 'bg-blue-50 text-blue-600 border border-blue-200 shadow-sm'
+                              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                           }`}
                           onClick={() => setIsOpen(false)}
                           style={{ animationDelay: `${index * 50}ms` }}
                         >
                           <div className={`p-3 rounded-lg transition-colors duration-200 ${
                             pathname === item.href
-                              ? 'bg-primary-100 text-primary-600'
-                              : 'bg-background-secondary text-text-tertiary group-hover:bg-primary-50 group-hover:text-primary-600'
+                              ? 'bg-blue-100 text-blue-600'
+                              : 'bg-gray-100 text-gray-500 group-hover:bg-blue-50 group-hover:text-blue-600'
                           }`}>
                             {item.icon}
                           </div>
@@ -318,7 +318,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                                 </Badge>
                               )}
                             </div>
-                            <div className="mobbin-caption text-text-tertiary">{item.description}</div>
+                            <div className="mobbin-caption text-gray-500">{item.description}</div>
                           </div>
                           <ChevronRight className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
                         </Link>
@@ -328,7 +328,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
                   {/* External Links */}
                   <div>
-                    <h3 className="mobbin-heading-4 text-text-primary mb-3 flex items-center gap-2">
+                    <h3 className="mobbin-heading-4 text-gray-900 mb-3 flex items-center gap-2">
                       <Globe className="w-4 h-4" />
                       Community & Resources
                     </h3>
@@ -359,7 +359,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
               </div>
 
               {/* Footer */}
-              <div className="p-6 border-t border-border-primary bg-gradient-to-r from-background-secondary/50 to-background-primary/50">
+              <div className="p-6 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white">
                 <div className="space-y-4">
                   {/* App Info */}
                   <div className="text-center">
@@ -373,21 +373,21 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                         Free Forever
                       </Badge>
                     </div>
-                    <p className="mobbin-caption text-text-tertiary mb-2">
+                    <p className="mobbin-caption text-gray-500 mb-2">
                       Built with ❤️ for the DeFi community
                     </p>
-                    <p className="mobbin-caption text-text-tertiary">
+                    <p className="mobbin-caption text-gray-500">
                       © 2024 Allowance Guard
                     </p>
                   </div>
 
                   {/* Support Call-to-Action */}
-                  <div className="p-4 bg-primary-50 rounded-xl border border-primary-200">
+                  <div className="p-4 bg-blue-50 rounded-xl border border-blue-200">
                     <div className="flex items-center gap-3 mb-3">
-                      <Star className="w-5 h-5 text-primary-600" />
+                      <Star className="w-5 h-5 text-blue-600" />
                       <div>
-                        <p className="mobbin-body font-medium text-primary-700">Love Allowance Guard?</p>
-                        <p className="mobbin-caption text-primary-600">Support our mission to secure DeFi</p>
+                        <p className="mobbin-body font-medium text-blue-700">Love Allowance Guard?</p>
+                        <p className="mobbin-caption text-blue-600">Support our mission to secure DeFi</p>
                       </div>
                     </div>
                     <div className="flex gap-2">
