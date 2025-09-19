@@ -1,9 +1,24 @@
+'use client'
+
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
 import WalletManager from '@/components/WalletManager'
 import AllowanceTable from '@/components/AllowanceTable'
 import WalletSecurity from '@/components/WalletSecurity'
 import { useState, useEffect, useCallback } from 'react'
+import { 
+  Shield, 
+  Eye, 
+  Download, 
+  FileText, 
+  Settings, 
+  AlertTriangle,
+  CheckCircle,
+  RefreshCw
+} from 'lucide-react'
 
 interface AppAreaProps {
   isConnected: boolean
@@ -58,80 +73,213 @@ export default function AppArea({
   }
 
   if (!isConnected) return null
-  return (
-    <Section className="bg-white">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <aside className="lg:col-span-4 space-y-8">
-            <div className="border border-line rounded-md p-6">
-              <h3 className="text-lg text-ink mb-3">Wallets</h3>
-              <p className="text-base text-stone mb-4">Manage addresses you want to scan and monitor.</p>
-              <WalletManager
-                selected={selectedWallet}
-                onSelect={setSelectedWallet}
-                onSavedChange={() => {}}
-              />
-            </div>
 
-            <div className="border border-line rounded-md p-6">
-              <h3 className="text-lg text-ink mb-3">Monitoring</h3>
-              <div className="space-y-3">
-                <label className="text-sm flex items-center gap-2">
+  const currentWallet = selectedWallet || connectedAddress
+  const riskyCount = rows.filter(r => r.is_unlimited || (r.risk_flags||[]).includes('STALE')).length
+  const unlimitedCount = rows.filter(r => r.is_unlimited).length
+
+  return (
+    <Section className="bg-background-light">
+      <Container>
+        {/* Dashboard Header */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-3xl font-bold text-text-primary mb-2">Security Dashboard</h2>
+              <p className="text-text-secondary">Monitor and manage your wallet&apos;s token approvals</p>
+            </div>
+            <Button
+              onClick={onRefresh}
+              variant="secondary"
+              size="sm"
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Refresh
+            </Button>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary-accent/10 rounded-lg flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-primary-accent" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-text-secondary">Total Allowances</p>
+                    <p className="text-2xl font-bold text-text-primary">{total}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-semantic-danger/10 rounded-lg flex items-center justify-center">
+                    <AlertTriangle className="w-5 h-5 text-semantic-danger" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-text-secondary">High Risk</p>
+                    <p className="text-2xl font-bold text-semantic-danger">{riskyCount}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-semantic-warning/10 rounded-lg flex items-center justify-center">
+                    <AlertTriangle className="w-5 h-5 text-semantic-warning" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-text-secondary">Unlimited</p>
+                    <p className="text-2xl font-bold text-semantic-warning">{unlimitedCount}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-semantic-success/10 rounded-lg flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-semantic-success" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-text-secondary">Safe</p>
+                    <p className="text-2xl font-bold text-semantic-success">{total - riskyCount}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Sidebar */}
+          <aside className="lg:col-span-4 space-y-6">
+            {/* Wallet Manager */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="w-5 h-5" />
+                  Wallet Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-text-secondary mb-4">
+                  Manage addresses you want to scan and monitor.
+                </p>
+                <WalletManager
+                  selected={selectedWallet}
+                  onSelect={setSelectedWallet}
+                  onSavedChange={() => {}}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Monitoring Settings */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Eye className="w-5 h-5" />
+                  Monitoring
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-3">
                   <input 
                     type="checkbox" 
                     checked={!!monitorOn} 
                     onChange={e=>setMonitorOn(e.target.checked)} 
-                    className="rounded border-line"
+                    className="rounded border-border-default text-primary-accent focus:ring-primary-accent"
                   />
-                  Enable auto-rescan & drift alerts
-                </label>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">Every</span>
-                  <input 
-                    type="number" 
-                    className="w-20 rounded border border-line px-2 py-1 text-sm" 
-                    value={monitorFreq} 
-                    onChange={e=>setMonitorFreq(Number(e.target.value||720))} 
-                  />
-                  <span className="text-sm">minutes</span>
+                  <label className="text-sm font-medium text-text-primary">
+                    Enable auto-rescan & drift alerts
+                  </label>
                 </div>
-                <button 
-                  onClick={saveMonitor} 
-                  className="rounded border border-line px-3 py-2 text-sm hover:bg-mist transition-colors"
+                
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-text-secondary">Every</span>
+                  <Input
+                    type="number"
+                    value={monitorFreq}
+                    onChange={e => setMonitorFreq(Number(e.target.value) || 720)}
+                    className="w-20 h-8"
+                    inputSize="sm"
+                  />
+                  <span className="text-sm text-text-secondary">minutes</span>
+                </div>
+                
+                <Button 
+                  onClick={saveMonitor}
+                  variant="secondary"
+                  size="sm"
+                  className="w-full"
                 >
-                  Save
-                </button>
-              </div>
-            </div>
+                  Save Settings
+                </Button>
+              </CardContent>
+            </Card>
 
-            <div className="border border-line rounded-md p-6">
-              <h3 className="text-lg text-ink mb-3">Tips</h3>
-              <p className="text-base text-stone">
-                Unlimited approvals are the #1 drain vector. Revoke them first.
-              </p>
-            </div>
+            {/* Security Tips */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="w-5 h-5" />
+                  Security Tips
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-semantic-danger rounded-full mt-2 flex-shrink-0" />
+                    <p className="text-sm text-text-secondary">
+                      <strong>Unlimited approvals</strong> are the #1 drain vector. Revoke them first.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-semantic-warning rounded-full mt-2 flex-shrink-0" />
+                    <p className="text-sm text-text-secondary">
+                      <strong>Stale approvals</strong> to inactive contracts should be cleaned up.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-semantic-info rounded-full mt-2 flex-shrink-0" />
+                    <p className="text-sm text-text-secondary">
+                      <strong>Regular monitoring</strong> helps catch new approvals quickly.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </aside>
 
-          <main className="lg:col-span-8 space-y-8">
+          {/* Main Content */}
+          <main className="lg:col-span-8">
             {/* Tab Navigation */}
-            <div className="border-b border-line">
-              <nav className="flex space-x-8">
+            <div className="mb-6">
+              <nav className="flex space-x-1 bg-background-light p-1 rounded-lg border border-border-default">
                 <button
                   onClick={() => setActiveTab('allowances')}
-                  className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                     activeTab === 'allowances'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'bg-white text-primary-accent shadow-sm'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-white/50'
                   }`}
                 >
                   Token Allowances
                 </button>
                 <button
                   onClick={() => setActiveTab('security')}
-                  className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                     activeTab === 'security'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'bg-white text-primary-accent shadow-sm'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-white/50'
                   }`}
                 >
                   Security Dashboard
@@ -141,74 +289,106 @@ export default function AppArea({
 
             {/* Tab Content */}
             {activeTab === 'allowances' && (
-              <div className="border border-line rounded-md">
-                <div className="px-6 py-4 border-b border-line">
+              <Card>
+                <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg text-ink">Approvals</h3>
-                      <p className="text-base text-stone">Review, then revoke in your preferred explorer/tool.</p>
+                      <CardTitle>Token Approvals</CardTitle>
+                      <p className="text-sm text-text-secondary mt-1">
+                        Review and manage your token allowances across all chains.
+                      </p>
                     </div>
-                    {(selectedWallet || connectedAddress) && (
+                    {currentWallet && (
                       <div className="flex items-center gap-2">
-                        <a
-                          className="rounded border border-cobalt text-cobalt px-3 py-2 text-sm hover:bg-cobalt hover:text-white transition-colors duration-200"
-                          href={`/api/export/csv?wallet=${(selectedWallet || connectedAddress)!}&riskOnly=true`}
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          className="flex items-center gap-2"
+                          onClick={() => window.open(`/api/export/csv?wallet=${currentWallet}&riskOnly=true`, '_blank')}
                         >
-                          Export CSV
-                        </a>
-                        <a
-                          className="rounded border border-cobalt text-cobalt px-3 py-2 text-sm hover:bg-cobalt hover:text-white transition-colors duration-200"
-                          href={`/api/export/pdf?wallet=${(selectedWallet || connectedAddress)!}&riskOnly=true`}
-                          target="_blank" 
-                          rel="noopener noreferrer"
+                          <Download className="w-4 h-4" />
+                          CSV
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          className="flex items-center gap-2"
+                          onClick={() => window.open(`/api/export/pdf?wallet=${currentWallet}&riskOnly=true`, '_blank')}
                         >
-                          Export PDF
-                        </a>
-                        <a
-                          className="rounded border border-cobalt text-cobalt px-3 py-2 text-sm hover:bg-cobalt hover:text-white transition-colors duration-200"
-                          href={`/report/${(selectedWallet || connectedAddress)!}`}
-                          target="_blank" 
-                          rel="noopener noreferrer"
+                          <FileText className="w-4 h-4" />
+                          PDF
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          className="flex items-center gap-2"
+                          onClick={() => window.open(`/report/${currentWallet}`, '_blank')}
                         >
-                          Printable Report
-                        </a>
+                          <Eye className="w-4 h-4" />
+                          Report
+                        </Button>
                       </div>
                     )}
                   </div>
-                </div>
-                <AllowanceTable
-                  data={rows}
-                  selectedWallet={selectedWallet}
-                  connectedAddress={connectedAddress}
-                  onRefresh={onRefresh}
-                  canRevoke={canRevoke}
-                />
-                {/* Pagination */}
-                {total > 0 && (
-                  <div className="px-6 py-4 border-t border-line flex items-center justify-between">
-                    <div className="text-base text-stone">
-                      Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
+                </CardHeader>
+                <CardContent>
+                  <AllowanceTable
+                    data={rows}
+                    selectedWallet={selectedWallet}
+                    connectedAddress={connectedAddress}
+                    onRefresh={onRefresh}
+                    canRevoke={canRevoke}
+                  />
+                  
+                  {/* Pagination */}
+                  {total > 0 && (
+                    <div className="mt-6 pt-6 border-t border-border-default flex items-center justify-between">
+                      <div className="text-sm text-text-secondary">
+                        Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Button
+                          onClick={() => onPage(page - 1)}
+                          disabled={page <= 1}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          Previous
+                        </Button>
+                        <Button
+                          onClick={() => onPage(page + 1)}
+                          disabled={page >= Math.ceil(total / pageSize)}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          Next
+                        </Button>
+                        <select
+                          value={pageSize}
+                          onChange={(e) => onPageSize(Number(e.target.value))}
+                          className="border border-border-default rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary-accent/20"
+                        >
+                          {[10,25,50,100].map(n => <option key={n} value={n}>{n}/page</option>)}
+                        </select>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <button onClick={() => onPage(page - 1)} disabled={page <= 1} className="text-ink/70 hover:text-ink text-base focus:outline-none focus:ring-2 focus:ring-ink/30 rounded">Prev</button>
-                      <button onClick={() => onPage(page + 1)} disabled={page >= Math.ceil(total / pageSize)} className="text-ink/70 hover:text-ink text-base focus:outline-none focus:ring-2 focus:ring-ink/30 rounded">Next</button>
-                      <select
-                        value={pageSize}
-                        onChange={(e) => onPageSize(Number(e.target.value))}
-                        className="border border-line rounded px-2 py-1 text-base focus:outline-none focus:ring-2 focus:ring-ink/30"
-                      >
-                        {[10,25,50,100].map(n => <option key={n} value={n}>{n}/page</option>)}
-                      </select>
-                    </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </CardContent>
+              </Card>
             )}
 
             {activeTab === 'security' && (
-              <div className="border border-line rounded-md">
-                <WalletSecurity />
-              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Security Dashboard</CardTitle>
+                  <p className="text-sm text-text-secondary mt-1">
+                    Comprehensive security analysis and monitoring for your wallet.
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <WalletSecurity />
+                </CardContent>
+              </Card>
             )}
           </main>
         </div>

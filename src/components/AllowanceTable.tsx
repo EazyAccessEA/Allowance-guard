@@ -1,10 +1,17 @@
 'use client'
 import { useState, useMemo } from 'react'
 import { useBulkRevoke } from '@/hooks/useBulkRevoke'
-import { HexButton } from './HexButton'
-import { HexBadge } from './HexBadge'
+import { Button } from '@/components/ui/Button'
+import { Badge } from '@/components/ui/Badge'
 import { FireartTableSkeleton } from './SkeletonLoader'
 import dynamic from 'next/dynamic'
+import { 
+  AlertTriangle, 
+  CheckCircle, 
+  Clock, 
+  Shield,
+  Zap
+} from 'lucide-react'
 
 const SupportNudge = dynamic(() => import('@/components/SupportNudge'), { ssr: false })
 
@@ -24,6 +31,15 @@ type Row = {
   last_seen_block: string
   risk_score: number
   risk_flags: string[]
+}
+
+const chainNames: Record<number, string> = {
+  1: 'Ethereum',
+  8453: 'Base',
+  42161: 'Arbitrum',
+  137: 'Polygon',
+  10: 'Optimism',
+  43114: 'Avalanche'
 }
 
 export default function AllowanceTable({
@@ -55,9 +71,11 @@ export default function AllowanceTable({
   function keyOf(r: Row) {
     return `${r.chain_id}:${r.token_address}:${r.spender_address}:${r.allowance_type}`
   }
+  
   function toggle(r: Row) {
     const k = keyOf(r); setSel(s => ({ ...s, [k]: !s[k] }))
   }
+  
   const selectedRows = useMemo(() => data.filter(r => sel[keyOf(r)]), [sel, data])
   const risky = useMemo(() => data.filter(r => r.is_unlimited || (r.risk_flags||[]).includes('STALE')), [data])
 
@@ -81,35 +99,29 @@ export default function AllowanceTable({
   if (!data?.length) {
     return (
       <div className="text-center py-12">
-        <p className="text-base text-stone mb-4">No allowances found for this wallet.</p>
-        <p className="text-sm text-stone mb-6">Run a scan to check for token approvals across supported chains.</p>
-        <HexButton 
+        <div className="w-16 h-16 bg-background-light rounded-full flex items-center justify-center mx-auto mb-4">
+          <Shield className="w-8 h-8 text-text-muted" />
+        </div>
+        <h3 className="text-lg font-semibold text-text-primary mb-2">No allowances found</h3>
+        <p className="text-text-secondary mb-6 max-w-md mx-auto">
+          This wallet has no token approvals. Run a scan to check for allowances across supported chains.
+        </p>
+        <Button 
           onClick={onRefresh}
           variant="primary"
-          size="md"
         >
-          Run Scan
-        </HexButton>
-      </div>
-    )
-  }
-
-  // Add empty state with guidance for filtered results
-  const hasFilteredResults = data.length === 0 && selectedRows.length === 0
-  if (hasFilteredResults) {
-    return (
-      <div className="mt-6 rounded border border-line p-4 text-sm text-stone">
-        No approvals found matching this filter. Try disabling &quot;Risky only&quot; or scan another wallet.
+          Run Security Scan
+        </Button>
       </div>
     )
   }
 
   if (loading) {
     return (
-      <div className="mt-4">
-        <div className="mb-4 flex items-center gap-3">
-          <div className="h-9 w-24 bg-stone/20 rounded-full animate-pulse" />
-          <div className="h-9 w-32 bg-stone/20 rounded-full animate-pulse" />
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="h-9 w-24 bg-background-light rounded-full animate-pulse" />
+          <div className="h-9 w-32 bg-background-light rounded-full animate-pulse" />
         </div>
         <FireartTableSkeleton rows={5} />
       </div>
@@ -117,94 +129,164 @@ export default function AllowanceTable({
   }
 
   return (
-    <div className="mt-4">
-      <div className="mb-4 flex items-center gap-3">
-        <HexButton onClick={selectRisky} size="sm" variant="ghost">Select risky</HexButton>
-        <HexButton 
-          onClick={handleBulk} 
-          disabled={busy || !selectedRows.length || !revokeAllowed || !canRevoke} 
-          size="sm"
-          loading={busy}
-          loadingText={`Revoking… ${progress ?? ''}`}
-          title={!canRevoke ? 'View-only access' : !revokeAllowed ? 'Connect the selected wallet to revoke' : ''}
-          aria-label={`Revoke ${selectedRows.length} selected token approvals`}
-        >
-          {`Revoke Selected (${selectedRows.length})`}
-        </HexButton>
+    <div className="space-y-4">
+      {/* Action Bar */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Button 
+            onClick={selectRisky} 
+            variant="secondary" 
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <AlertTriangle className="w-4 h-4" />
+            Select Risky ({risky.length})
+          </Button>
+          <Button 
+            onClick={handleBulk} 
+            disabled={busy || !selectedRows.length || !revokeAllowed || !canRevoke} 
+            variant="primary"
+            size="sm"
+            loading={busy}
+            className="flex items-center gap-2"
+            title={!canRevoke ? 'View-only access' : !revokeAllowed ? 'Connect the selected wallet to revoke' : ''}
+          >
+            <Zap className="w-4 h-4" />
+            {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
+          </Button>
+        </div>
+        
+        {selectedRows.length > 0 && (
+          <Badge variant="info" className="flex items-center gap-1">
+            <CheckCircle className="w-3 h-3" />
+            {selectedRows.length} selected
+          </Badge>
+        )}
       </div>
-      <div className="overflow-x-auto border-2 border-ag-line">
-        <table className="w-full text-sm" role="table" aria-label="Token allowances">
-          <thead className="bg-ag-panel">
-            <tr>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">
-                <span className="sr-only">Select</span>
-              </th>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Chain</th>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Token</th>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Spender</th>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Std</th>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Type</th>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Amount</th>
-              <th scope="col" className="px-4 py-3 text-left font-medium text-ag-text">Badges</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y-2 divide-ag-line">
-            {data.map((r, i) => (
-              <tr key={i} className="hover:bg-ag-panel-hover transition-colors">
-                <td className="px-4 py-3">
-                  <input 
-                    type="checkbox" 
-                    checked={!!sel[keyOf(r)]} 
-                    onChange={() => toggle(r)}
-                    className="border-ag-line text-ag-brand focus:ring-ag-brand"
-                  />
-                </td>
-                <td className="px-4 py-3 font-medium text-ag-text">{r.chain_id}</td>
-                <td className="px-4 py-3 font-mono text-ag-muted">
-                  {r.token_symbol ? (
-                    <span className="font-sans">{r.token_symbol}</span>
-                  ) : r.token_name ? (
-                    <span className="font-sans">{r.token_name}</span>
-                  ) : (
-                    r.token_address
-                  )}
-                </td>
-                <td className="px-4 py-3 font-mono text-ag-muted">
-                  {r.spender_label ? (
-                    <span className="font-sans">
-                      {r.spender_label}
-                      {r.spender_trust && <span className="ml-2 rounded bg-gray-100 px-1.5 py-0.5 text-[11px] uppercase tracking-wide text-gray-600">{r.spender_trust}</span>}
-                    </span>
-                  ) : (
-                    r.spender_address
-                  )}
-                </td>
-                <td className="px-4 py-3 text-ag-muted">{r.standard}</td>
-                <td className="px-4 py-3 text-ag-muted">{r.allowance_type}</td>
-                <td className="px-4 py-3 font-mono text-ag-text">
-                  {(() => {
-                    if (r.is_unlimited) return '∞'
-                    if (r.token_decimals != null) {
-                      const amountBigInt = BigInt(r.amount)
-                      const zeroBigInt = BigInt(0)
-                      const displayAmount = amountBigInt === zeroBigInt ? '0' :
-                        Number((amountBigInt / BigInt(10 ** r.token_decimals)).toString())
-                      return displayAmount
-                    }
-                    return r.amount
-                  })()}
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex gap-2">
-                    {r.is_unlimited && <HexBadge variant="danger" size="sm">UNLIMITED</HexBadge>}
-                    {r.risk_flags?.includes('STALE') && <HexBadge variant="warn" size="sm">STALE</HexBadge>}
-                  </div>
-                </td>
+
+      {/* Table */}
+      <div className="border border-border-default rounded-lg overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm" role="table" aria-label="Token allowances">
+            <thead className="bg-background-light border-b border-border-default">
+              <tr>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">
+                  <span className="sr-only">Select</span>
+                </th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Chain</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Token</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Spender</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Standard</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Amount</th>
+                <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Risk</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border-default">
+              {data.map((r, i) => (
+                <tr key={i} className="hover:bg-background-light/50 transition-colors">
+                  <td className="px-4 py-3">
+                    <input 
+                      type="checkbox" 
+                      checked={!!sel[keyOf(r)]} 
+                      onChange={() => toggle(r)}
+                      className="rounded border-border-default text-primary-accent focus:ring-primary-accent"
+                    />
+                  </td>
+                  
+                  <td className="px-4 py-3">
+                    <Badge variant="secondary" className="text-xs">
+                      {chainNames[r.chain_id] || `Chain ${r.chain_id}`}
+                    </Badge>
+                  </td>
+                  
+                  <td className="px-4 py-3">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-text-primary">
+                        {r.token_symbol || r.token_name || 'Unknown'}
+                      </span>
+                      <span className="text-xs text-text-muted font-mono">
+                        {r.token_address.slice(0, 6)}...{r.token_address.slice(-4)}
+                      </span>
+                    </div>
+                  </td>
+                  
+                  <td className="px-4 py-3">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-text-primary">
+                        {r.spender_label || 'Unknown Contract'}
+                      </span>
+                      <span className="text-xs text-text-muted font-mono">
+                        {r.spender_address.slice(0, 6)}...{r.spender_address.slice(-4)}
+                      </span>
+                      {r.spender_trust && (
+                        <Badge 
+                          variant={r.spender_trust === 'official' ? 'success' : 'secondary'} 
+                          className="text-xs mt-1 w-fit"
+                        >
+                          {r.spender_trust}
+                        </Badge>
+                      )}
+                    </div>
+                  </td>
+                  
+                  <td className="px-4 py-3">
+                    <Badge variant="outline" className="text-xs">
+                      {r.standard}
+                    </Badge>
+                  </td>
+                  
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      {r.is_unlimited ? (
+                        <Badge variant="danger" className="text-xs">
+                          ∞ Unlimited
+                        </Badge>
+                      ) : (
+                        <span className="font-mono text-text-primary">
+                          {(() => {
+                            if (r.token_decimals != null) {
+                              const amountBigInt = BigInt(r.amount)
+                              const zeroBigInt = BigInt(0)
+                              const displayAmount = amountBigInt === zeroBigInt ? '0' :
+                                Number((amountBigInt / BigInt(10 ** r.token_decimals)).toString())
+                              return displayAmount
+                            }
+                            return r.amount
+                          })()}
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  
+                  <td className="px-4 py-3">
+                    <div className="flex gap-1">
+                      {r.is_unlimited && (
+                        <Badge variant="danger" className="text-xs flex items-center gap-1">
+                          <AlertTriangle className="w-3 h-3" />
+                          High Risk
+                        </Badge>
+                      )}
+                      {r.risk_flags?.includes('STALE') && (
+                        <Badge variant="warning" className="text-xs flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          Stale
+                        </Badge>
+                      )}
+                      {!r.is_unlimited && !r.risk_flags?.includes('STALE') && (
+                        <Badge variant="success" className="text-xs flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" />
+                          Safe
+                        </Badge>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+      
       {showNudge && <SupportNudge when="after-revoke" />}
     </div>
   )
