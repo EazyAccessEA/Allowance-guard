@@ -327,7 +327,6 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                       ))}
                     </div>
                   </div>
-                </div>
 
                   {/* External Links */}
                   <div>
