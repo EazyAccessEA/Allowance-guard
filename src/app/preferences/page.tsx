@@ -76,7 +76,7 @@ export default function PreferencesPage() {
             <div className="relative w-12 h-12 mr-3">
               <Image
                 src="/AG_Logo2.png"
-                alt="Allowance Guard"
+                alt=""
                 fill
                 className="object-contain"
               />

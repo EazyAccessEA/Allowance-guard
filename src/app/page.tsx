@@ -288,7 +288,7 @@ export default function HomePage() {
                   {pending ? 'Scanning...' : 'Scan Your Wallet'}
                 </Button>
               )}
-              <p className="text-sm text-text-muted">
+              <p className="text-sm text-text-tertiary">
                 No sign-up required. No email. Just connect and scan.
               </p>
             </div>

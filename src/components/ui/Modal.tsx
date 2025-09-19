@@ -137,7 +137,7 @@ const Modal: React.FC<ModalProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={onClose}
-                  className="h-8 w-8 text-text-muted hover:text-text-primary"
+                  className="h-8 w-8 text-text-tertiary hover:text-text-primary"
                   aria-label="Close modal"
                 >
                   <svg

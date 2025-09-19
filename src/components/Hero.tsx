@@ -91,7 +91,7 @@ export default function Hero({
                 {isScanning ? 'Scanning...' : 'Scan Your Wallet'}
               </Button>
               {scanMessage && (
-                <p className="text-sm text-stone">
+                <p className="text-sm text-text-tertiary">
                   {scanMessage}
                 </p>
               )}

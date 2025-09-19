@@ -100,7 +100,7 @@ export default function AllowanceTable({
     return (
       <div className="text-center py-12" role="region" aria-label="No allowances found">
         <div className="w-16 h-16 bg-background-light rounded-full flex items-center justify-center mx-auto mb-4" aria-hidden="true">
-          <Shield className="w-8 h-8 text-text-muted" />
+          <Shield className="w-8 h-8 text-text-tertiary" />
         </div>
         <h3 className="mobbin-heading-3 text-text-primary mb-2">No allowances found</h3>
         <p className="mobbin-body text-text-secondary mb-6 max-w-md mx-auto">

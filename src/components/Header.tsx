@@ -65,7 +65,7 @@ export default function Header({ isConnected }: HeaderProps) {
             <div className="relative w-8 h-8 sm:w-10 sm:h-10">
               <Image
                 src="/AG_Logo2.png"
-                alt="Allowance Guard"
+                alt="Allowance Guard Logo"
                 fill
                 className="object-contain transition-transform duration-200 group-hover:scale-105"
                 priority

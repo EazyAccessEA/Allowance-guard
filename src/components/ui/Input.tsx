@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 // Professional input variants following design system
 const inputVariants = cva(
   // Base styles - clean, minimal, accessible
-  'flex w-full border border-border-default bg-white px-3 py-2 text-sm text-text-primary placeholder:text-text-muted transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50',
+  'flex w-full border border-border-default bg-white px-3 py-2 text-sm text-text-primary placeholder:text-text-tertiary transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -75,7 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary">
               {leftIcon}
             </div>
           )}
@@ -93,14 +93,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
           
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary">
               {rightIcon}
             </div>
           )}
         </div>
         
         {description && !error && (
-          <p className="mt-1 text-xs text-text-muted">
+          <p className="mt-1 text-xs text-text-tertiary">
             {description}
           </p>
         )}
