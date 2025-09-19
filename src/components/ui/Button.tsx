@@ -8,12 +8,12 @@ import { getAccessibilityClasses, keyboardNavigation } from '@/lib/accessibility
 // Mobbin-Inspired Button Variants
 const buttonVariants = cva(
   // Base styles - Mobbin-inspired interactions and states
-  'inline-flex items-center justify-center rounded-base font-button transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-98 hover:transition-all hover:duration-150',
+  'inline-flex items-center justify-center rounded-base font-button mobbin-focus-ring mobbin-button-press transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         // Primary: Mobbin-inspired primary with systematic color scale
-        primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-lg',
+        primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-lg mobbin-hover-lift',
         
         // Secondary: Mobbin-inspired secondary with subtle background
         secondary: 'border border-primary-200 bg-primary-50 text-primary-700 hover:bg-primary-100 hover:border-primary-300 active:bg-primary-200 shadow-sm',
