@@ -423,3 +423,5 @@ export default function MobileNavigation({ isConnected }: MobileNavigationProps)
     </>
   )
 }
+
+export default MobileNavigation
