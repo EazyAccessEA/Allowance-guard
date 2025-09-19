@@ -12,15 +12,8 @@ import {
   Shield, 
   Settings, 
   FileText, 
-  Users, 
-  ExternalLink,
   ChevronRight,
   Home,
-  Zap,
-  Lock,
-  Globe,
-  Github,
-  MessageCircle,
   Star,
   Heart
 } from 'lucide-react'
@@ -89,68 +82,28 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
   const navigationItems = [
     {
-      href: '/',
-      label: 'Home',
-      icon: <Home className="w-5 h-5" />,
-      description: 'Main dashboard',
+      href: '/docs',
+      label: 'Documentation',
+      icon: <FileText className="w-5 h-5" />,
+      description: 'Learn how to use Allowance Guard',
+      badge: null
+    },
+    {
+      href: '/settings',
+      label: 'Settings',
+      icon: <Settings className="w-5 h-5" />,
+      description: 'Configure your preferences',
       badge: null
     },
     {
       href: '/features',
       label: 'Features',
       icon: <Shield className="w-5 h-5" />,
-      description: 'Security features',
-      badge: null
-    },
-    {
-      href: '/contact',
-      label: 'Support',
-      icon: <Users className="w-5 h-5" />,
-      description: 'Get help',
+      description: 'Explore our security features',
       badge: null
     }
   ]
 
-  const quickActions = [
-    {
-      href: '/scan',
-      label: 'Quick Scan',
-      icon: <Zap className="w-5 h-5" />,
-      description: 'Scan your wallet for approvals',
-      color: 'text-semantic-warning-600 bg-semantic-warning-50'
-    },
-    {
-      href: '/security',
-      label: 'Security Check',
-      icon: <Lock className="w-5 h-5" />,
-      description: 'Review security recommendations',
-      color: 'text-semantic-error-600 bg-semantic-error-50'
-    }
-  ]
-
-  const externalLinks = [
-    {
-      href: 'https://github.com/EazyAccessEA/Allowance-guard',
-      label: 'GitHub',
-      icon: <Github className="w-5 h-5" />,
-      description: 'View source code',
-      color: 'text-neutral-600 bg-neutral-50'
-    },
-    {
-      href: 'https://discord.gg/DsJ4Pa94',
-      label: 'Discord',
-      icon: <MessageCircle className="w-5 h-5" />,
-      description: 'Join our community',
-      color: 'text-blue-600 bg-blue-50'
-    },
-    {
-      href: 'https://allowanceguard.com',
-      label: 'Website',
-      icon: <Globe className="w-5 h-5" />,
-      description: 'Visit our main website',
-      color: 'text-primary-600 bg-primary-50'
-    }
-  ]
 
   return (
     <>
@@ -184,8 +137,13 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
           <div 
             ref={menuRef}
             id="mobile-menu"
-            className="fixed inset-0 h-full w-full bg-white shadow-2xl transform transition-transform duration-300 ease-out"
-            style={{ transform: isOpen ? 'translateX(0)' : 'translateX(100%)' }}
+            className="fixed top-1/2 left-1/2 h-[75vh] w-[80vw] max-w-md bg-white shadow-2xl rounded-xl transition-all duration-300 ease-out"
+            style={{ 
+              transform: isOpen 
+                ? 'translate(-50%, -50%) scale(1)' 
+                : 'translate(-50%, -50%) scale(0.8)',
+              opacity: isOpen ? 1 : 0
+            }}
           >
             <div className="flex flex-col h-full">
               {/* Header */}
@@ -241,33 +199,6 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     </div>
                   </div>
 
-                  {/* Quick Actions */}
-                  <div>
-                    <h3 className="mobbin-heading-4 text-gray-900 mb-3 flex items-center gap-2">
-                      <Zap className="w-4 h-4" />
-                      Quick Actions
-                    </h3>
-                    <div className="grid grid-cols-1 gap-3">
-                      {quickActions.map((action) => (
-                        <Link
-                          key={action.href}
-                          href={action.href}
-                          className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-200 mobbin-focus-ring hover:scale-[1.02] ${action.color}`}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          <div className="p-3 rounded-lg bg-white/50">
-                            {action.icon}
-                          </div>
-                          <div className="flex-1">
-                            <div className="mobbin-body font-medium">{action.label}</div>
-                            <div className="mobbin-caption opacity-80">{action.description}</div>
-                          </div>
-                          <ChevronRight className="w-4 h-4 opacity-60" />
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-
                   {/* Navigation */}
                   <div>
                     <h3 className="mobbin-heading-4 text-gray-900 mb-3 flex items-center gap-2">
@@ -311,35 +242,6 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     </div>
                   </div>
 
-                  {/* External Links */}
-                  <div>
-                    <h3 className="mobbin-heading-4 text-gray-900 mb-3 flex items-center gap-2">
-                      <Globe className="w-4 h-4" />
-                      Community & Resources
-                    </h3>
-                    <div className="space-y-2">
-                      {externalLinks.map((link, index) => (
-                        <a
-                          key={link.href}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`group flex items-center gap-4 p-4 rounded-xl transition-all duration-200 mobbin-focus-ring hover:scale-[1.01] ${link.color}`}
-                          onClick={() => setIsOpen(false)}
-                          style={{ animationDelay: `${(index + navigationItems.length) * 50}ms` }}
-                        >
-                          <div className="p-3 rounded-lg bg-white/50">
-                            {link.icon}
-                          </div>
-                          <div className="flex-1">
-                            <div className="mobbin-body font-medium">{link.label}</div>
-                            <div className="mobbin-caption opacity-80">{link.description}</div>
-                          </div>
-                          <ExternalLink className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
-                        </a>
-                      ))}
-                    </div>
-                  </div>
                 </div>
               </div>
 
