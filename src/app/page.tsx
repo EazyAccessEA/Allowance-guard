@@ -1,14 +1,12 @@
 'use client'
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
-import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import ConnectButton from '@/components/ConnectButton'
-import TestConnect from '@/components/TestConnect'
+import { Button } from '@/components/ui/Button'
+import Hero from '@/components/Hero'
+import StatisticsSection from '@/components/StatisticsSection'
 import AppArea from '@/components/AppArea'
-import VideoBackground from '@/components/VideoBackground'
-import RotatingTypewriter from '@/components/RotatingTypewriter'
 import ActivityTimeline from '@/components/ActivityTimeline'
 
 export default function HomePage() {
@@ -32,7 +30,6 @@ export default function HomePage() {
   const [pending, setPending] = useState(false)
   const [, setJobId] = useState<number | null>(null)
   const [message, setMessage] = useState('')
-
 
   async function fetchAllowances(addr: string, p = page, ps = pageSize) {
     const res = await fetch(`/api/allowances?wallet=${addr}&page=${p}&pageSize=${ps}`)
@@ -101,7 +98,6 @@ export default function HomePage() {
     }
   }
 
-
   const handlePage = async (newPage: number) => {
     setPage(newPage)
     if (selectedWallet) {
@@ -123,235 +119,134 @@ export default function HomePage() {
     }
   }
 
-
   return (
-    <div className="min-h-screen bg-white text-ink">
-      
-      {/* Hero Section - Fireart Style with Animated Background */}
-      <Section className="relative pt-20 pb-20 sm:pt-24 sm:pb-24 lg:pt-32 lg:pb-32 overflow-hidden">
-        {/* Video Background */}
-        <VideoBackground 
-          videoSrc="/V3AG.mp4"
-        />
-        {/* Gradient overlay for better text readability - 10% left, 45% right */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        
-        <Container className="relative z-10">
-          <div className="max-w-4xl">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-[1.1] tracking-tight mb-8 sm:mb-8 h-[2.2em]">
-              <RotatingTypewriter 
-                staticPrefix="The power to "
-                messages={[
-                  "see every\nhidden connection clearly.",
-                  "instantly revoke\nany risky approval.",
-                  "find and cut off\nsilent threats.",
-                  "control who has access\nto your funds."
-                ]}
-                typingSpeed={50}
-                deletingSpeed={50}
-                pauseTime={3000}
-                className=""
-              />
-            </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl text-stone leading-relaxed mb-12 sm:mb-10 lg:mb-12 max-w-3xl">
-              A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-            {!isConnected ? (
-              <div className="flex flex-col gap-2">
-                <ConnectButton 
-                  variant="primary" 
-                  className="bg-black text-white hover:bg-gray-800 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
-                />
-                <TestConnect onConnect={(a) => setSelectedWallet(a)} />
-              </div>
-            ) : (
-              <div className="flex flex-col gap-2">
-                <button 
-                  onClick={startScan} 
-                  disabled={pending} 
-                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500/30 disabled:opacity-50 disabled:cursor-wait"
-                >
-                  {pending ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
-                      Scanning wallet...
-                    </>
-                  ) : (
-                    'Scan wallet'
-                  )}
-                </button>
-                {message && (
-                  <p className="text-sm text-stone">
-                    {message}
-                  </p>
-                )}
-              </div>
-            )}
-            <Link 
-              href="/docs" 
-              className="text-stone hover:text-ink transition-colors duration-200 text-lg font-medium flex items-center h-12"
-            >
-              Learn more →
-            </Link>
-          </div>
-        </Container>
-      </Section>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <Hero
+        isConnected={isConnected}
+        onScan={startScan}
+        isScanning={pending}
+        scanMessage={message}
+        onWalletSelect={setSelectedWallet}
+      />
 
-      {/* The Problem You Solve */}
-      <Section className="py-16 sm:py-24 lg:py-32 relative">
-        {/* Full-width glass background */}
-        <div className="absolute inset-0 glass-black-full"></div>
-        <Container className="relative z-10">
-          <div className="max-w-4xl mx-auto p-8 sm:p-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight mb-6 sm:mb-8">
-              The Unseen Risk in Every Wallet
+      {/* Statistics Section */}
+      <StatisticsSection />
+
+      {/* How It Works Section */}
+      <Section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <Container>
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+              How Allowance Guard Works
             </h2>
-            <p className="text-lg sm:text-xl text-white leading-relaxed">
-              Token allowances are the hidden permissions you grant when interacting with DeFi protocols, NFT marketplaces, and dApps. These approvals allow smart contracts to move your tokens on your behalf, but they persist long after your interaction ends. Forgotten or malicious allowances become the primary attack vector for draining wallets, with approval-based exploits accounting for 73% of all DeFi security incidents in 2024, resulting in over $3.2 billion in losses. Every time you approve a token, you create a potential vulnerability that could be exploited months or years later.
+            <p className="text-xl text-text-secondary leading-relaxed">
+              Three simple steps to secure your wallet and protect your assets.
             </p>
           </div>
-        </Container>
-      </Section>
-      {/* How Allowance Guard Works */}
-      <Section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Parallax background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50/30 via-transparent to-transparent"></div>
-        
-        {/* Floating elements for depth */}
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-100/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-        
-        <Container className="relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-slate-800 leading-tight mb-6 tracking-tight">
-                How Allowance Guard Works
-              </h2>
-              <div className="w-24 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto"></div>
+
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-primary-accent">1</span>
+              </div>
+              <h3 className="text-xl font-semibold text-text-primary mb-4">Connect & Scan</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control.
+              </p>
             </div>
-            
-            <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
-              <div className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                  <span className="text-2xl font-bold text-white">1</span>
-                </div>
-                <h3 className="text-2xl font-medium text-slate-800 mb-6">Connect & Scan</h3>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control at all times.
-                </p>
-              </div>
 
-              <div className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                  <span className="text-2xl font-bold text-white">2</span>
-                </div>
-                <h3 className="text-2xl font-medium text-slate-800 mb-6">Analyze & Understand</h3>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
-                </p>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-semantic-info/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-semantic-info">2</span>
               </div>
+              <h3 className="text-xl font-semibold text-text-primary mb-4">Analyze & Understand</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
+              </p>
+            </div>
 
-              <div className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                  <span className="text-2xl font-bold text-white">3</span>
-                </div>
-                <h3 className="text-2xl font-medium text-slate-800 mb-6">Act & Secure</h3>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.
-                </p>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-semantic-success/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-semantic-success">3</span>
               </div>
+              <h3 className="text-xl font-semibold text-text-primary mb-4">Act & Secure</h3>
+              <p className="text-text-secondary leading-relaxed">
+                Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.
+              </p>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Key Features & Differentiators */}
-      <Section className="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-          style={{
-            backgroundImage: 'url(/AllowanceGuard_BG.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        />
-        
-        {/* Gradient Glass Overlay */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.95) 100%)',
-            backdropFilter: 'blur(1px)'
-          }}
-        />
-        
-        <Container className="relative z-10">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-8">
-                Key Features & Differentiators
+      {/* Features Section */}
+      <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+                Built for Security & Clarity
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Built with precision and purpose. Every feature serves a single goal: keeping your assets secure.
+              <p className="text-xl text-text-secondary leading-relaxed">
+                Every feature is designed with one goal: keeping your assets secure.
               </p>
             </div>
             
-            <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
-              <div className="space-y-12">
-                <div className="flex gap-6">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+            <div className="grid lg:grid-cols-2 gap-12">
+              <div className="space-y-8">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-accent/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Non-Custodial Security</h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet with your explicit approval.
+                    <h3 className="text-xl font-semibold text-text-primary mb-3">Non-Custodial Security</h3>
+                    <p className="text-text-secondary leading-relaxed">
+                      Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-6">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-semantic-info/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-semantic-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Clarity-First Dashboard</h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      Designed to PuredgeOS &apos;God-tier&apos; standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
+                    <h3 className="text-xl font-semibold text-text-primary mb-3">Clarity-First Dashboard</h3>
+                    <p className="text-text-secondary leading-relaxed">
+                      Designed to enterprise standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-12">
-                <div className="flex gap-6">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+              <div className="space-y-8">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-semantic-warning/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-semantic-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Advanced Risk Intelligence</h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <h3 className="text-xl font-semibold text-text-primary mb-3">Advanced Risk Intelligence</h3>
+                    <p className="text-text-secondary leading-relaxed">
                       Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-6">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
-                    <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-semantic-success/10 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-semantic-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Gas-Efficient Revocation</h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <h3 className="text-xl font-semibold text-text-primary mb-3">Gas-Efficient Revocation</h3>
+                    <p className="text-text-secondary leading-relaxed">
                       Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
                     </p>
                   </div>
@@ -362,74 +257,39 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Community & Transparency */}
-      <Section className="py-24 sm:py-32 lg:py-40 bg-gray-50">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-20">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-8">
-                Built by the Community, for the Community
-              </h2>
-            </div>
-            
-            <div className="space-y-16">
-              <div className="text-center">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-8">Trusted by Security Teams</h3>
-                <div className="bg-white rounded-2xl p-12 shadow-sm border border-gray-100">
-                  <p className="text-xl text-gray-700 leading-relaxed italic mb-6">
-                    &quot;Allowance Guard has become an essential tool in our security stack. The clarity and precision of their risk assessment has helped us identify and neutralize threats before they could impact our users.&quot;
-                  </p>
-                  <p className="text-lg text-gray-900 font-medium">
-                    — Security Team Lead, Major DeFi Protocol
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-8">Open Source & Transparent</h3>
-                <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-                  Our methodology and smart contracts are publicly verifiable. All code is open source, all processes are documented, and all security practices are transparent.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Final Call to Action */}
-      <Section className="py-16 sm:py-24 lg:py-32">
+      {/* Final CTA Section */}
+      <Section className="py-16 sm:py-20 lg:py-24 bg-white">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-ink leading-tight mb-6 sm:mb-8">
-              Take Back Control of Your Wallet&apos;s Security
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+              Ready to Secure Your Wallet?
             </h2>
-            <p className="text-lg sm:text-xl text-stone leading-relaxed mb-8 sm:mb-10 lg:mb-12">
+            <p className="text-xl text-text-secondary leading-relaxed mb-8">
               Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {!isConnected ? (
-                <ConnectButton 
+                <Button 
                   variant="primary" 
-                  className="bg-black text-white hover:bg-gray-800 transition-all duration-200 px-8 py-4 text-lg font-medium rounded-lg"
-                />
-              ) : (
-                <button 
-                  onClick={startScan} 
-                  disabled={pending} 
-                  className="inline-flex items-center justify-center rounded-lg px-8 py-4 text-lg font-medium transition-all duration-200 bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500/30 disabled:opacity-50 disabled:cursor-wait"
+                  size="lg"
+                  className="w-full sm:w-auto"
                 >
-                  {pending ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
-                      Scanning wallet...
-                    </>
-                  ) : (
-                    'Scan Your Wallet for Free'
-                  )}
-                </button>
+                  Connect Wallet to Start
+                </Button>
+              ) : (
+                <Button
+                  onClick={startScan}
+                  disabled={pending}
+                  loading={pending}
+                  variant="primary"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                >
+                  {pending ? 'Scanning...' : 'Scan Your Wallet'}
+                </Button>
               )}
-              <p className="text-sm text-stone">
+              <p className="text-sm text-text-muted">
                 No sign-up required. No email. Just connect and scan.
               </p>
             </div>
@@ -464,21 +324,21 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* Trust Section - Clean Design */}
-      <Section className="py-12 sm:py-16 bg-white">
+      {/* Trust Section */}
+      <Section className="py-12 sm:py-16 bg-background-light">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-base text-stone font-medium mb-6">
+            <p className="text-base text-text-secondary font-medium mb-6">
               Trusted by security-conscious users across
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16">
-              <span className="text-lg text-stone font-medium">Ethereum</span>
-              <span className="text-lg text-stone font-medium">Arbitrum</span>
-              <span className="text-lg text-stone font-medium">Base</span>
-              <span className="text-lg text-stone font-medium">Polygon</span>
-              <span className="text-lg text-stone font-medium">Optimism</span>
-              <span className="text-lg text-stone font-medium">Avalanche</span>
+              <span className="text-lg text-text-secondary font-medium">Ethereum</span>
+              <span className="text-lg text-text-secondary font-medium">Arbitrum</span>
+              <span className="text-lg text-text-secondary font-medium">Base</span>
+              <span className="text-lg text-text-secondary font-medium">Polygon</span>
+              <span className="text-lg text-text-secondary font-medium">Optimism</span>
+              <span className="text-lg text-text-secondary font-medium">Avalanche</span>
             </div>
           </div>
         </Container>
