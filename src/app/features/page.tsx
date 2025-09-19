@@ -117,9 +117,15 @@ export default function FeaturesPage() {
       </Section>
 
       {/* Technical Specifications - Mobbin Style */}
-      <Section className="py-32 bg-background-tertiary">
+      <Section className="py-32 bg-background-tertiary tech-data-bg relative">
+        {/* Technical Data Flow Background Elements */}
+        <div className="hex-pattern" />
+        <div className="data-flow-lines" />
+        <div className="data-points" />
+        <div className="tech-panel" />
+        
         <Container>
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto relative z-10">
             <div className="text-center mb-16 mobbin-fade-in">
               <h2 className="mobbin-display-2 text-text-primary leading-tight mb-8">
                 Built for security professionals

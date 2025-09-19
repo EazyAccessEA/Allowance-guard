@@ -26,15 +26,9 @@ export default function Hero({
   onWalletSelect 
 }: HeroProps) {
   return (
-    <Section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden tech-data-bg">
+    <Section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
       {/* Video Background */}
       <VideoBackground videoSrc="/V3AG.mp4" />
-      
-      {/* Technical Data Flow Background Elements */}
-      <div className="hex-pattern" />
-      <div className="data-flow-lines" />
-      <div className="data-points" />
-      <div className="tech-panel" />
       
       {/* Gradient overlay for better text readability */}
       <div 
