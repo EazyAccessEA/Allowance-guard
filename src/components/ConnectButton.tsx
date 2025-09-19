@@ -13,7 +13,7 @@ export default function ConnectButton({
   className = '',
 }: {
   variant?: Variant
-  size?: 'sm' | 'default' | 'lg'
+  size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl' | '2xl'
   className?: string
 }) {
   const { isConnected, address } = useAccount()

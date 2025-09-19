@@ -118,7 +118,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           buttonVariants({ variant, size, fullWidth }),
           getAccessibilityClasses({
             focus: 'ring',
-            touchTarget: 'large',
             reducedMotion: true,
           }),
           className

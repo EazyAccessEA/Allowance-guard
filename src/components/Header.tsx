@@ -114,7 +114,6 @@ export default function Header({ isConnected }: HeaderProps) {
               <ConnectButton 
                 variant="primary" 
                 size="sm"
-                className="text-xs px-3 py-1.5"
               />
             )}
             
