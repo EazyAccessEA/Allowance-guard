@@ -237,7 +237,17 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  /* Mobbin-Inspired Gradient Background */
+  background: linear-gradient(135deg, 
+    #F8FAFC 0%,     /* primary-50 */
+    #F1F5F9 25%,    /* secondary-100 */
+    #E2E8F0 50%,    /* secondary-200 */
+    #F0FDFA 75%,    /* primary-50 */
+    #F8FAFC 100%    /* primary-50 */
+  );
+  background-attachment: fixed;
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -246,6 +256,7 @@ body {
               color var(--motion-duration-base) var(--motion-easing-gentle);
   font-size: 16px;
   font-weight: 400;
+  min-height: 100vh;
 }
 
 /* AG Hex System Components */
@@ -553,8 +564,35 @@ button, a, input, select, textarea {
   100% { opacity: 0.4; }
 }
 
-/* Responsive utilities */
+/* Mobbin-Inspired Gradient Animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Mobbin-Inspired Mobile Optimizations */
 @media (max-width: 640px) {
+  /* Mobile-optimized gradient background */
+  body {
+    background: linear-gradient(180deg, 
+      #F8FAFC 0%,     /* primary-50 */
+      #F1F5F9 30%,    /* secondary-100 */
+      #E2E8F0 60%,    /* secondary-200 */
+      #F0FDFA 85%,    /* primary-50 */
+      #F8FAFC 100%    /* primary-50 */
+    );
+    background-attachment: scroll; /* Better performance on mobile */
+    background-size: 200% 200%; /* Smaller size for mobile */
+    animation: gradientShiftMobile 25s ease infinite; /* Slower animation for mobile */
+  }
+  
   .fireart-button {
     padding: 10px 20px;
     font-size: 14px;
@@ -575,6 +613,35 @@ button, a, input, select, textarea {
   
   .fireart-heading-3 {
     font-size: 1.5rem;
+  }
+}
+
+/* Mobile-specific gradient animation */
+@keyframes gradientShiftMobile {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 641px) and (max-width: 1024px) {
+  body {
+    background: linear-gradient(135deg, 
+      #F8FAFC 0%,     /* primary-50 */
+      #F1F5F9 20%,    /* secondary-100 */
+      #E2E8F0 40%,    /* secondary-200 */
+      #F0FDFA 60%,    /* primary-50 */
+      #F1F5F9 80%,    /* secondary-100 */
+      #F8FAFC 100%    /* primary-50 */
+    );
+    background-size: 300% 300%;
+    animation: gradientShift 22s ease infinite;
   }
 }
 
@@ -600,6 +667,88 @@ button, a, input, select, textarea {
 @media (hover: none) and (pointer: coarse) {
   .animate-scroll {
     animation: none;
+  }
+}
+
+/* Mobbin-Inspired Accessibility & Performance Optimizations */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none !important;
+    background: linear-gradient(135deg, 
+      #F8FAFC 0%,     /* primary-50 */
+      #F1F5F9 50%,    /* secondary-100 */
+      #F8FAFC 100%    /* primary-50 */
+    ) !important;
+  }
+  
+  .gradientShift,
+  .gradientShiftMobile {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+}
+
+/* Dark mode support for gradient background */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, 
+      #0F172A 0%,     /* secondary-900 */
+      #1E293B 25%,    /* secondary-800 */
+      #334155 50%,    /* secondary-700 */
+      #1E293B 75%,    /* secondary-800 */
+      #0F172A 100%    /* secondary-900 */
+    );
+    background-attachment: fixed;
+    background-size: 400% 400%;
+    animation: gradientShiftDark 20s ease infinite;
+    color: #F8FAFC;
+  }
+}
+
+@keyframes gradientShiftDark {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Mobile dark mode optimizations */
+@media (prefers-color-scheme: dark) and (max-width: 640px) {
+  body {
+    background: linear-gradient(180deg, 
+      #0F172A 0%,     /* secondary-900 */
+      #1E293B 30%,    /* secondary-800 */
+      #334155 60%,    /* secondary-700 */
+      #1E293B 85%,    /* secondary-800 */
+      #0F172A 100%    /* secondary-900 */
+    );
+    background-attachment: scroll;
+    background-size: 200% 200%;
+    animation: gradientShiftMobileDark 25s ease infinite;
+  }
+}
+
+@keyframes gradientShiftMobileDark {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }
 

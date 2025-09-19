@@ -9,52 +9,38 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Professional Design System Colors
-        primary: '#00C2B3',         // Serum Teal
-        'sandstone-fog': '#F9FAFB', // Background Light
-        'obsidian-graphite': '#111827', // Background Dark
-        'slate-700': '#374151',     // Neutral Text
-        'slate-200': '#E5E7EB',     // Borders
-        'solar-red': '#EF4444',     // Danger
-        'botanical-green': '#22C55E', // Success
-        'sky-500': '#0EA5E9',       // Info
-        
-        // Enhanced Design System Semantic Colors - Sketch-Inspired
-        background: {
-          light: '#F9FAFB',
-          dark: '#111827'
-        },
-        text: {
-          primary: '#374151',
-          secondary: '#6B7280',
-          muted: '#9CA3AF'
-        },
-        border: {
-          DEFAULT: '#E5E7EB',
-          focus: '#00C2B3'
-        },
-        danger: '#EF4444',
-        success: '#22C55E',
-        info: '#0EA5E9',
-        warning: '#F59E0B',
-        
-        // Enhanced Semantic Colors - Sketch-Inspired
-        semantic: {
-          danger: '#EF4444',
-          'danger-light': '#FEE2E2',
-          'danger-dark': '#DC2626',
-          success: '#22C55E',
-          'success-light': '#DCFCE7',
-          'success-dark': '#16A34A',
-          info: '#0EA5E9',
-          'info-light': '#DBEAFE',
-          'info-dark': '#0284C7',
-          warning: '#F59E0B',
-          'warning-light': '#FEF3C7',
-          'warning-dark': '#D97706',
+        // Mobbin-Inspired Primary Color Scale (9-step)
+        primary: {
+          50: '#F0FDFA',
+          100: '#CCFBF1',
+          200: '#99F6E4',
+          300: '#5EEAD4',
+          400: '#2DD4BF',
+          500: '#00C2B3',  // Base Serum Teal
+          600: '#00A896',
+          700: '#008B7A',
+          800: '#006B5F',
+          900: '#004B44',
+          // Legacy support
+          accent: '#00C2B3',
+          foreground: '#FFFFFF',
         },
         
-        // Sketch-Inspired Neutral Palette
+        // Mobbin-Inspired Secondary Color Scale (9-step)
+        secondary: {
+          50: '#F8FAFC',
+          100: '#F1F5F9',
+          200: '#E2E8F0',
+          300: '#CBD5E1',
+          400: '#94A3B8',
+          500: '#64748B',
+          600: '#475569',
+          700: '#334155',
+          800: '#1E293B',
+          900: '#0F172A',
+        },
+        
+        // Mobbin-Inspired Neutral Color Scale (9-step)
         neutral: {
           50: '#FAFAFA',
           100: '#F5F5F5',
@@ -68,6 +54,90 @@ module.exports = {
           900: '#171717',
         },
         
+        // Mobbin-Inspired Background System
+        background: {
+          primary: '#FFFFFF',
+          secondary: '#F8FAFC',
+          tertiary: '#F1F5F9',
+          inverse: '#0F172A',
+          // Legacy support
+          light: '#F9FAFB',
+          dark: '#111827',
+          white: '#FFFFFF',
+        },
+        
+        // Mobbin-Inspired Text System
+        text: {
+          primary: '#0F172A',
+          secondary: '#475569',
+          tertiary: '#94A3B8',
+          inverse: '#FFFFFF',
+          // Legacy support
+          muted: '#9CA3AF',
+        },
+        
+        // Mobbin-Inspired Border System
+        border: {
+          primary: '#E2E8F0',
+          secondary: '#CBD5E1',
+          tertiary: '#F1F5F9',
+          focus: '#00C2B3',
+          // Legacy support
+          DEFAULT: '#E5E7EB',
+        },
+        
+        // Mobbin-Inspired Semantic Color System
+        semantic: {
+          success: {
+            50: '#F0FDF4',
+            100: '#DCFCE7',
+            200: '#BBF7D0',
+            300: '#86EFAC',
+            400: '#4ADE80',
+            500: '#22C55E',
+            600: '#16A34A',
+            700: '#15803D',
+            800: '#166534',
+            900: '#14532D',
+          },
+          warning: {
+            50: '#FFFBEB',
+            100: '#FEF3C7',
+            200: '#FDE68A',
+            300: '#FCD34D',
+            400: '#FBBF24',
+            500: '#F59E0B',
+            600: '#D97706',
+            700: '#B45309',
+            800: '#92400E',
+            900: '#78350F',
+          },
+          error: {
+            50: '#FEF2F2',
+            100: '#FEE2E2',
+            200: '#FECACA',
+            300: '#FCA5A5',
+            400: '#F87171',
+            500: '#EF4444',
+            600: '#DC2626',
+            700: '#B91C1C',
+            800: '#991B1B',
+            900: '#7F1D1D',
+          },
+          info: {
+            50: '#F0F9FF',
+            100: '#E0F2FE',
+            200: '#BAE6FD',
+            300: '#7DD3FC',
+            400: '#38BDF8',
+            500: '#0EA5E9',
+            600: '#0284C7',
+            700: '#0369A1',
+            800: '#075985',
+            900: '#0C4A6E',
+          },
+        },
+        
         // Legacy support
         ink: '#0A0A0A',
         stone: '#6B7280',
@@ -75,6 +145,10 @@ module.exports = {
         line: '#E5E7EB',
         cobalt: '#2563EB',
         white: '#FFFFFF',
+        danger: '#EF4444',
+        success: '#22C55E',
+        info: '#0EA5E9',
+        warning: '#F59E0B',
       },
       fontFamily: {
         // Design System Typography

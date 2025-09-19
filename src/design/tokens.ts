@@ -3,51 +3,154 @@
 
 export const designTokens = {
   colors: {
-    // Primary Brand
+    // Mobbin-Inspired Primary Color Scale (9-step)
     primary: {
-      accent: '#00C2B3', // Serum Teal
+      50: '#F0FDFA',   // Lightest teal
+      100: '#CCFBF1',  // Very light teal
+      200: '#99F6E4',  // Light teal
+      300: '#5EEAD4',  // Medium light teal
+      400: '#2DD4BF',  // Medium teal
+      500: '#00C2B3',  // Base Serum Teal (brand color)
+      600: '#00A896',  // Medium dark teal
+      700: '#008B7A',  // Dark teal
+      800: '#006B5F',  // Very dark teal
+      900: '#004B44',  // Darkest teal
+      // Legacy support
+      accent: '#00C2B3',
       foreground: '#FFFFFF',
     },
     
-    // Backgrounds
+    // Mobbin-Inspired Secondary Color Scale (9-step)
+    secondary: {
+      50: '#F8FAFC',   // Lightest slate
+      100: '#F1F5F9',  // Very light slate
+      200: '#E2E8F0',  // Light slate
+      300: '#CBD5E1',  // Medium light slate
+      400: '#94A3B8',  // Medium slate
+      500: '#64748B',  // Base slate
+      600: '#475569',  // Medium dark slate
+      700: '#334155',  // Dark slate
+      800: '#1E293B',  // Very dark slate
+      900: '#0F172A',  // Darkest slate
+    },
+    
+    // Mobbin-Inspired Neutral Color Scale (9-step)
+    neutral: {
+      50: '#FAFAFA',   // Lightest neutral
+      100: '#F5F5F5',  // Very light neutral
+      200: '#E5E5E5',  // Light neutral
+      300: '#D4D4D4',  // Medium light neutral
+      400: '#A3A3A3',  // Medium neutral
+      500: '#737373',  // Base neutral
+      600: '#525252',  // Medium dark neutral
+      700: '#404040',  // Dark neutral
+      800: '#262626',  // Very dark neutral
+      900: '#171717',  // Darkest neutral
+    },
+    
+    // Mobbin-Inspired Background System
     background: {
-      light: '#F9FAFB',     // Sandstone Fog
-      dark: '#111827',      // Obsidian Graphite
+      primary: '#FFFFFF',     // White background
+      secondary: '#F8FAFC',   // Light background
+      tertiary: '#F1F5F9',    // Muted background
+      inverse: '#0F172A',     // Dark background
+      // Legacy support
+      light: '#F9FAFB',
+      dark: '#111827',
       white: '#FFFFFF',
     },
     
-    // Text Colors
+    // Mobbin-Inspired Text System
     text: {
-      primary: '#374151',   // Slate Gray 700
-      secondary: '#6B7280', // Gray 500
-      muted: '#9CA3AF',     // Gray 400
-      inverse: '#FFFFFF',
+      primary: '#0F172A',     // Darkest text
+      secondary: '#475569',   // Medium text
+      tertiary: '#94A3B8',    // Muted text
+      inverse: '#FFFFFF',     // Light text
+      // Legacy support
+      muted: '#9CA3AF',
     },
     
-    // Borders
+    // Mobbin-Inspired Border System
     border: {
-      default: '#E5E7EB',   // Slate Gray 200
-      focus: '#00C2B3',     // Serum Teal
-      muted: '#F3F4F6',     // Gray 100
+      primary: '#E2E8F0',     // Primary border
+      secondary: '#CBD5E1',   // Secondary border
+      tertiary: '#F1F5F9',    // Tertiary border
+      focus: '#00C2B3',       // Focus border (Serum Teal)
+      // Legacy support
+      default: '#E5E7EB',
+      muted: '#F3F4F6',
     },
     
-    // Enhanced Semantic Colors - Sketch-Inspired
+    // Mobbin-Inspired Semantic Color System
     semantic: {
-      // Primary semantic colors
-      danger: '#EF4444',    // Solar Red
-      success: '#22C55E',   // Botanical Green
-      info: '#0EA5E9',      // Sky 500
-      warning: '#F59E0B',   // Amber 500
+      // Success Color Scale (9-step)
+      success: {
+        50: '#F0FDF4',   // Lightest green
+        100: '#DCFCE7',  // Very light green
+        200: '#BBF7D0',  // Light green
+        300: '#86EFAC',  // Medium light green
+        400: '#4ADE80',  // Medium green
+        500: '#22C55E',  // Base green
+        600: '#16A34A',  // Medium dark green
+        700: '#15803D',  // Dark green
+        800: '#166534',  // Very dark green
+        900: '#14532D',  // Darkest green
+        // Legacy support
+        light: '#DCFCE7',
+        dark: '#16A34A',
+      },
       
-      // Enhanced semantic variants for better accessibility
-      dangerLight: '#FEE2E2',   // Lighter danger for backgrounds
-      dangerDark: '#DC2626',    // Darker danger for hover states
-      successLight: '#DCFCE7',  // Lighter success for backgrounds
-      successDark: '#16A34A',   // Darker success for hover states
-      infoLight: '#DBEAFE',     // Lighter info for backgrounds
-      infoDark: '#0284C7',      // Darker info for hover states
-      warningLight: '#FEF3C7',  // Lighter warning for backgrounds
-      warningDark: '#D97706',   // Darker warning for hover states
+      // Warning Color Scale (9-step)
+      warning: {
+        50: '#FFFBEB',   // Lightest amber
+        100: '#FEF3C7',  // Very light amber
+        200: '#FDE68A',  // Light amber
+        300: '#FCD34D',  // Medium light amber
+        400: '#FBBF24',  // Medium amber
+        500: '#F59E0B',  // Base amber
+        600: '#D97706',  // Medium dark amber
+        700: '#B45309',  // Dark amber
+        800: '#92400E',  // Very dark amber
+        900: '#78350F',  // Darkest amber
+        // Legacy support
+        light: '#FEF3C7',
+        dark: '#D97706',
+      },
+      
+      // Error Color Scale (9-step)
+      error: {
+        50: '#FEF2F2',   // Lightest red
+        100: '#FEE2E2',  // Very light red
+        200: '#FECACA',  // Light red
+        300: '#FCA5A5',  // Medium light red
+        400: '#F87171',  // Medium red
+        500: '#EF4444',  // Base red
+        600: '#DC2626',  // Medium dark red
+        700: '#B91C1C',  // Dark red
+        800: '#991B1B',  // Very dark red
+        900: '#7F1D1D',  // Darkest red
+        // Legacy support
+        danger: '#EF4444',
+        light: '#FEE2E2',
+        dark: '#DC2626',
+      },
+      
+      // Info Color Scale (9-step)
+      info: {
+        50: '#F0F9FF',   // Lightest blue
+        100: '#E0F2FE',  // Very light blue
+        200: '#BAE6FD',  // Light blue
+        300: '#7DD3FC',  // Medium light blue
+        400: '#38BDF8',  // Medium blue
+        500: '#0EA5E9',  // Base blue
+        600: '#0284C7',  // Medium dark blue
+        700: '#0369A1',  // Dark blue
+        800: '#075985',  // Very dark blue
+        900: '#0C4A6E',  // Darkest blue
+        // Legacy support
+        light: '#DBEAFE',
+        dark: '#0284C7',
+      },
     },
     
     // Enhanced Semantic Backgrounds - Sketch-Inspired
@@ -62,20 +165,6 @@ export const designTokens = {
       successSubtle: '#F7FEF7',
       infoSubtle: '#F7FBFF',
       warningSubtle: '#FFFDF7',
-    },
-    
-    // Sketch-Inspired Neutral Palette
-    neutral: {
-      50: '#FAFAFA',   // Lightest neutral
-      100: '#F5F5F5',  // Very light neutral
-      200: '#E5E5E5',  // Light neutral
-      300: '#D4D4D4',  // Medium light neutral
-      400: '#A3A3A3',  // Medium neutral
-      500: '#737373',  // Base neutral
-      600: '#525252',  // Medium dark neutral
-      700: '#404040',  // Dark neutral
-      800: '#262626',  // Very dark neutral
-      900: '#171717',  // Darkest neutral
     },
   },
   
