@@ -26,7 +26,7 @@ const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, 
   const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
-    let timer
+    let timer: NodeJS.Timeout
     const currentMessage = messages[currentMessageIndex]
     
     // Split message into two parts: first two words and the rest
