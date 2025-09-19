@@ -26,8 +26,11 @@ if (typeof window !== 'undefined') {
         message.includes('Connection request expired') ||
         message.includes('Origin') && message.includes('not found on Allowlist') ||
         message.includes('update configuration on cloud.reown.com') ||
-        message.includes('cca-lite.coinbase.com/metrics')) {
-      return // Suppress telemetry, WebSocket, and WalletConnect-related errors
+        message.includes('cca-lite.coinbase.com/metrics') ||
+        message.includes('w3m-router-container') ||
+        message.includes('scheduled an update') ||
+        message.includes('change-in-update')) {
+      return // Suppress telemetry, WebSocket, WalletConnect, and AppKit update cycle errors
     }
     originalConsoleError.apply(console, args)
   }
@@ -98,7 +101,7 @@ const metadata = {
   icons: ['https://www.allowanceguard.com/icon.png']
 }
 
-// Initialize AppKit following official documentation pattern
+// Initialize AppKit with optimized configuration to prevent update cycles
 if (projectId) {
   createAppKit({
     adapters: [wagmiAdapter],
@@ -129,7 +132,13 @@ if (projectId) {
       
       // Modal specific - matching Fireart colors
       '--w3m-z-index': 9999,
-    }
+    },
+    // Optimize AppKit to prevent inefficient update cycles
+    enableNetworkSwitching: false, // Disable network switching to reduce state changes
+    enableAccountView: true, // Keep account view enabled
+    enableExplorer: true, // Keep explorer enabled
+    // Add stability options
+    enableWalletFeatures: false, // Disable additional wallet features that cause updates
   })
 } else {
   console.error('WalletConnect Project ID is missing. Wallet connection will not work.')
