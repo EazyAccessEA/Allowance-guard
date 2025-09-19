@@ -6,6 +6,7 @@ import { H1 } from '@/components/ui/Heading'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import VideoBackground from '@/components/VideoBackground'
+import RotatingTypewriter from '@/components/RotatingTypewriter'
 import ConnectButton from '@/components/ConnectButton'
 import TestConnect from '@/components/TestConnect'
 
@@ -38,10 +39,23 @@ export default function Hero({
       />
       
       <Container className="relative text-left max-w-4xl z-10">
-        <H1 className="mb-6">Take Control of Your Token Approvals</H1>
+        <H1 className="mb-6 h-[2.2em]">
+          <RotatingTypewriter 
+            staticPrefix="The power to "
+            messages={[
+              "see every\nhidden connection clearly.",
+              "instantly revoke\nany risky approval.",
+              "find and cut off\nsilent threats.",
+              "control who has access\nto your funds."
+            ]}
+            typingSpeed={50}
+            deletingSpeed={50}
+            pauseTime={3000}
+            className=""
+          />
+        </H1>
         <p className="text-lg text-stone leading-relaxed mb-8">
-          Discover, analyze, and revoke hidden token allowances across all chains. 
-          Secure your wallet in under 60 seconds with our free, non-custodial security tool.
+          A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
         </p>
 
         {/* CTA Section */}
