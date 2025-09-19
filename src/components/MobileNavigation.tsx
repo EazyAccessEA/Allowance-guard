@@ -29,7 +29,7 @@ interface MobileNavigationProps {
   isConnected: boolean
 }
 
-export default function MobileNavigation({ isConnected }: MobileNavigationProps) {
+function MobileNavigation({ isConnected }: MobileNavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const pathname = usePathname()
