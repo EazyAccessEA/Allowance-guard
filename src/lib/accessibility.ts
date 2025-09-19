@@ -272,7 +272,7 @@ export const animationAccessibility = {
 }
 
 // Export all utilities
-export default {
+const accessibilityUtils = {
   getAccessibilityClasses,
   keyboardNavigation,
   ariaHelpers,
@@ -281,3 +281,5 @@ export default {
   tableAccessibility,
   animationAccessibility
 }
+
+export default accessibilityUtils
