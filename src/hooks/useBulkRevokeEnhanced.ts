@@ -1,7 +1,7 @@
 'use client'
 import { useState, useCallback } from 'react'
 import { useRevoke } from './useRevoke'
-import { auditUserAction } from '@/lib/audit-enhanced'
+// Audit logging will be handled server-side via API calls
 
 type AllowanceRow = {
   chain_id: number
@@ -116,23 +116,34 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
 
               const txHash = await revoke(row)
               
-              // Audit the successful revocation
-              await auditUserAction(
-                'bulk_revoke_success',
-                selectedWallet,
-                `${row.chain_id}:${row.token_address}:${row.spender_address}`,
-                {
-                  chainId: row.chain_id,
-                  tokenAddress: row.token_address,
-                  spenderAddress: row.spender_address,
-                  standard: row.standard,
-                  amount: row.amount,
-                  isUnlimited: row.is_unlimited,
-                  txHash,
-                  batchIndex: globalIndex,
-                  totalRows
-                }
-              )
+              // Audit the successful revocation via API
+              try {
+                await fetch('/api/audit/log', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    action: 'bulk_revoke_success',
+                    actorType: 'user',
+                    actorId: selectedWallet,
+                    subject: `${row.chain_id}:${row.token_address}:${row.spender_address}`,
+                    category: 'data_modification',
+                    severity: 'low',
+                    meta: {
+                      chainId: row.chain_id,
+                      tokenAddress: row.token_address,
+                      spenderAddress: row.spender_address,
+                      standard: row.standard,
+                      amount: row.amount,
+                      isUnlimited: row.is_unlimited,
+                      txHash,
+                      batchIndex: globalIndex,
+                      totalRows
+                    }
+                  })
+                })
+              } catch (auditError) {
+                console.warn('Failed to log audit event:', auditError)
+              }
 
               success++
               totalTransactions++
@@ -141,23 +152,34 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
             } catch (error) {
               const errorMessage = error instanceof Error ? error.message : 'Unknown error'
               
-              // Audit the failed revocation
-              await auditUserAction(
-                'bulk_revoke_failed',
-                selectedWallet,
-                `${row.chain_id}:${row.token_address}:${row.spender_address}`,
-                {
-                  chainId: row.chain_id,
-                  tokenAddress: row.token_address,
-                  spenderAddress: row.spender_address,
-                  standard: row.standard,
-                  amount: row.amount,
-                  isUnlimited: row.is_unlimited,
-                  error: errorMessage,
-                  batchIndex: globalIndex,
-                  totalRows
-                }
-              )
+              // Audit the failed revocation via API
+              try {
+                await fetch('/api/audit/log', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    action: 'bulk_revoke_failed',
+                    actorType: 'user',
+                    actorId: selectedWallet,
+                    subject: `${row.chain_id}:${row.token_address}:${row.spender_address}`,
+                    category: 'data_modification',
+                    severity: 'medium',
+                    meta: {
+                      chainId: row.chain_id,
+                      tokenAddress: row.token_address,
+                      spenderAddress: row.spender_address,
+                      standard: row.standard,
+                      amount: row.amount,
+                      isUnlimited: row.is_unlimited,
+                      error: errorMessage,
+                      batchIndex: globalIndex,
+                      totalRows
+                    }
+                  })
+                })
+              } catch (auditError) {
+                console.warn('Failed to log audit event:', auditError)
+              }
 
               errors.push({ row, error: errorMessage })
               failed++
@@ -187,25 +209,36 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
       setProgress(finalProgress)
       onProgress?.(finalProgress)
 
-      // Audit the bulk operation completion
-      await auditUserAction(
-        'bulk_revoke_completed',
-        selectedWallet,
-        `bulk_revoke_${Date.now()}`,
-        {
-          totalRows,
-          success,
-          failed,
-          totalTransactions,
-          totalGasUsed: totalGasUsed.toString(),
-          duration: Date.now() - startTime,
-          errors: errors.map(e => ({ 
-            token: e.row.token_address, 
-            spender: e.row.spender_address, 
-            error: e.error 
-          }))
-        }
-      )
+      // Audit the bulk operation completion via API
+      try {
+        await fetch('/api/audit/log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'bulk_revoke_completed',
+            actorType: 'user',
+            actorId: selectedWallet,
+            subject: `bulk_revoke_${Date.now()}`,
+            category: 'data_modification',
+            severity: 'low',
+            meta: {
+              totalRows,
+              success,
+              failed,
+              totalTransactions,
+              totalGasUsed: totalGasUsed.toString(),
+              duration: Date.now() - startTime,
+              errors: errors.map(e => ({ 
+                token: e.row.token_address, 
+                spender: e.row.spender_address, 
+                error: e.error 
+              }))
+            }
+          })
+        })
+      } catch (auditError) {
+        console.warn('Failed to log audit event:', auditError)
+      }
 
       const finalResult: BulkRevokeResult = {
         success,
@@ -221,17 +254,28 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error'
       
-      // Audit the bulk operation failure
-      await auditUserAction(
-        'bulk_revoke_error',
-        selectedWallet,
-        `bulk_revoke_error_${Date.now()}`,
-        {
-          totalRows: rows.length,
-          error: errorMessage,
-          duration: Date.now() - startTime
-        }
-      )
+      // Audit the bulk operation failure via API
+      try {
+        await fetch('/api/audit/log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'bulk_revoke_error',
+            actorType: 'user',
+            actorId: selectedWallet,
+            subject: `bulk_revoke_error_${Date.now()}`,
+            category: 'data_modification',
+            severity: 'high',
+            meta: {
+              totalRows: rows.length,
+              error: errorMessage,
+              duration: Date.now() - startTime
+            }
+          })
+        })
+      } catch (auditError) {
+        console.warn('Failed to log audit event:', auditError)
+      }
 
       throw error
     } finally {

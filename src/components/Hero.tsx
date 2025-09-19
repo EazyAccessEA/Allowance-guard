@@ -39,7 +39,7 @@ export default function Hero({
       />
       
       <Container className="relative text-left max-w-4xl z-10">
-        <H1 className="mb-4 sm:mb-6 h-[2.2em] text-3xl sm:text-4xl lg:text-5xl">
+        <H1 className="mb-8 sm:mb-12 h-[2.2em] text-3xl sm:text-4xl lg:text-5xl">
           <RotatingTypewriter 
             staticPrefix="The power to "
             messages={[
@@ -54,7 +54,7 @@ export default function Hero({
             className=""
           />
         </H1>
-        <p className="text-base sm:text-lg text-stone leading-relaxed mb-6 sm:mb-8">
+        <p className="text-base sm:text-lg text-stone leading-relaxed mb-8 sm:mb-10">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
         </p>
 

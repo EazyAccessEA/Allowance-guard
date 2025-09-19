@@ -12,6 +12,7 @@ import {
   DashboardSkeleton, 
   StatsCard
 } from '@/components/EnhancedLoadingStates'
+import BulkRevokePanel from '@/components/BulkRevokePanel'
 import { useState, useEffect, useCallback } from 'react'
 import { 
   Shield, 
@@ -57,6 +58,7 @@ export default function AppArea({
   const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
   const [monitorFreq, setMonitorFreq] = useState(720)
   const [activeTab, setActiveTab] = useState<'allowances' | 'security'>('allowances')
+  const [selectedRows, setSelectedRows] = useState<typeof rows>([])
 
   const loadMonitor = useCallback(async () => {
     const target = selectedWallet || connectedAddress
@@ -274,56 +276,68 @@ export default function AppArea({
 
             {/* Tab Content */}
             {activeTab === 'allowances' && (
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle>Token Approvals</CardTitle>
-                      <p className="text-sm text-text-secondary mt-1">
-                        Review and manage your token allowances across all chains.
-                      </p>
-                    </div>
-                    {currentWallet && (
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          className="flex items-center gap-2"
-                          onClick={() => window.open(`/api/export/csv?wallet=${currentWallet}&riskOnly=true`, '_blank')}
-                        >
-                          <Download className="w-4 h-4" />
-                          CSV
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          className="flex items-center gap-2"
-                          onClick={() => window.open(`/api/export/pdf?wallet=${currentWallet}&riskOnly=true`, '_blank')}
-                        >
-                          <FileText className="w-4 h-4" />
-                          PDF
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          className="flex items-center gap-2"
-                          onClick={() => window.open(`/report/${currentWallet}`, '_blank')}
-                        >
-                          <Eye className="w-4 h-4" />
-                          Report
-                        </Button>
+              <div className="space-y-6">
+                {/* Bulk Revoke Panel */}
+                <BulkRevokePanel
+                  data={rows}
+                  selectedRows={selectedRows}
+                  onSelectionChange={setSelectedRows}
+                  onRefresh={onRefresh}
+                  selectedWallet={selectedWallet}
+                  connectedAddress={connectedAddress}
+                  canRevoke={canRevoke}
+                />
+
+                <Card>
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle>Token Approvals</CardTitle>
+                        <p className="text-sm text-text-secondary mt-1">
+                          Review and manage your token allowances across all chains.
+                        </p>
                       </div>
-                    )}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <AllowanceTable
-                    data={rows}
-                    selectedWallet={selectedWallet}
-                    connectedAddress={connectedAddress}
-                    onRefresh={onRefresh}
-                    canRevoke={canRevoke}
-                  />
+                      {currentWallet && (
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            className="flex items-center gap-2"
+                            onClick={() => window.open(`/api/export/csv?wallet=${currentWallet}&riskOnly=true`, '_blank')}
+                          >
+                            <Download className="w-4 h-4" />
+                            CSV
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            className="flex items-center gap-2"
+                            onClick={() => window.open(`/api/export/pdf?wallet=${currentWallet}&riskOnly=true`, '_blank')}
+                          >
+                            <FileText className="w-4 h-4" />
+                            PDF
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            className="flex items-center gap-2"
+                            onClick={() => window.open(`/report/${currentWallet}`, '_blank')}
+                          >
+                            <Eye className="w-4 h-4" />
+                            Report
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <AllowanceTable
+                      data={rows}
+                      selectedWallet={selectedWallet}
+                      connectedAddress={connectedAddress}
+                      onRefresh={onRefresh}
+                      canRevoke={canRevoke}
+                    />
                   
                   {/* Pagination */}
                   {total > 0 && (
@@ -358,8 +372,9 @@ export default function AppArea({
                       </div>
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             )}
 
             {activeTab === 'security' && (
