@@ -24,6 +24,7 @@ import {
   Star,
   Heart
 } from 'lucide-react'
+import Image from 'next/image'
 
 interface MobileNavigationProps {
   isConnected: boolean
@@ -91,35 +92,21 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
       href: '/',
       label: 'Home',
       icon: <Home className="w-5 h-5" />,
-      description: 'Return to the main dashboard',
+      description: 'Main dashboard',
       badge: null
     },
     {
       href: '/features',
       label: 'Features',
       icon: <Shield className="w-5 h-5" />,
-      description: 'Explore our security features',
-      badge: 'New'
-    },
-    {
-      href: '/docs',
-      label: 'Documentation',
-      icon: <FileText className="w-5 h-5" />,
-      description: 'Learn how to use Allowance Guard',
-      badge: null
-    },
-    {
-      href: '/settings',
-      label: 'Settings',
-      icon: <Settings className="w-5 h-5" />,
-      description: 'Configure your preferences',
+      description: 'Security features',
       badge: null
     },
     {
       href: '/contact',
       label: 'Support',
       icon: <Users className="w-5 h-5" />,
-      description: 'Get help and support',
+      description: 'Get help',
       badge: null
     }
   ]
@@ -204,8 +191,14 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-teal-50">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 flex items-center justify-center">
+                    <Image 
+                      src="/AG_Logo.png" 
+                      alt="Allowance Guard Logo" 
+                      width={40} 
+                      height={40}
+                      className="rounded-lg"
+                    />
                   </div>
                   <div>
                     <h2 id="mobile-menu-title" className="mobbin-heading-3 text-gray-900">Allowance Guard</h2>
@@ -226,35 +219,27 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
               {/* Navigation Content */}
               <div className="flex-1 overflow-y-auto">
                 <div className="p-6 space-y-6">
-                  {/* Connection Status */}
-                  {isConnected ? (
-                    <div className="p-4 bg-semantic-success-50 rounded-xl border border-semantic-success-200">
-                      <div className="flex items-center gap-3">
-                        <div className="w-3 h-3 bg-semantic-success-500 rounded-full animate-pulse" />
-                        <div>
-                          <p className="mobbin-body font-medium text-semantic-success-700">Wallet Connected</p>
-                          <p className="mobbin-caption text-semantic-success-600">Ready to scan and manage approvals</p>
-                        </div>
+                  {/* Connect Wallet - Priority Section */}
+                  <div className="bg-gradient-to-r from-blue-50 to-teal-50 rounded-xl p-4 border border-blue-200">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="mobbin-heading-4 text-gray-900 mb-1">Connect Your Wallet</h3>
+                        <p className="mobbin-caption text-gray-600">
+                          {isConnected ? 'Wallet connected and ready' : 'Connect to start managing approvals'}
+                        </p>
                       </div>
+                      {isConnected && (
+                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                      )}
                     </div>
-                  ) : (
-                    <div className="p-4 bg-semantic-warning-50 rounded-xl border border-semantic-warning-200">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-3 h-3 bg-semantic-warning-500 rounded-full animate-pulse" />
-                        <div>
-                          <p className="mobbin-body font-medium text-semantic-warning-700">Wallet Not Connected</p>
-                          <p className="mobbin-caption text-semantic-warning-600">Connect to start managing approvals</p>
-                        </div>
-                      </div>
-                      <div onClick={() => setIsOpen(false)}>
-                        <ConnectButton 
-                          variant="primary" 
-                          className="w-full"
-                          size="sm"
-                        />
-                      </div>
+                    <div onClick={() => setIsOpen(false)}>
+                      <ConnectButton 
+                        variant={isConnected ? "secondary" : "primary"}
+                        className="w-full"
+                        size="lg"
+                      />
                     </div>
-                  )}
+                  </div>
 
                   {/* Quick Actions */}
                   <div>
