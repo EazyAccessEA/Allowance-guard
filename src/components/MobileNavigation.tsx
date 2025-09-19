@@ -160,8 +160,8 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     />
                   </div>
                   <div>
-                    <h2 id="mobile-menu-title" className="mobbin-heading-3 text-gray-900">Allowance Guard</h2>
-                    <p className="mobbin-caption text-gray-600">Secure Token Approvals</p>
+                    <h2 id="mobile-menu-title" className="mobbin-heading-1 text-gray-900">Allowance Guard</h2>
+                    <p className="mobbin-body text-gray-600">Secure Token Approvals</p>
                   </div>
                 </div>
                 <Button
@@ -183,11 +183,11 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     <ConnectButton 
                       variant={isConnected ? "secondary" : "primary"}
                       size="lg"
-                      className="w-full text-lg py-4"
+                      className="w-full text-xl py-6"
                     />
                   </div>
                   {isConnected && (
-                    <p className="text-green-600 mt-3 text-sm">✓ Wallet Connected</p>
+                    <p className="text-green-600 mt-4 mobbin-body">✓ Wallet Connected</p>
                   )}
                 </div>
 
@@ -197,31 +197,31 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`block p-6 rounded-2xl text-center transition-all duration-200 ${
+                      className={`block p-8 rounded-2xl text-center transition-all duration-200 ${
                         pathname === item.href
                           ? 'bg-blue-50 text-blue-600 border-2 border-blue-200'
                           : 'text-gray-700 hover:bg-gray-50 border-2 border-transparent'
                       }`}
                       onClick={() => setIsOpen(false)}
                     >
-                      <div className="flex items-center justify-center gap-4">
-                        <div className="text-2xl flex items-center justify-center">
-                          {React.cloneElement(item.icon, { className: "w-6 h-6" })}
+                      <div className="flex items-center justify-center gap-6">
+                        <div className="text-3xl flex items-center justify-center">
+                          {React.cloneElement(item.icon, { className: "w-8 h-8" })}
                         </div>
-                        <span className="text-xl font-medium">{item.label}</span>
+                        <span className="mobbin-heading-3 font-semibold">{item.label}</span>
                       </div>
                     </Link>
                   )) : (
                     <div className="text-center text-gray-500 py-8">
-                      No navigation items available
+                      <p className="mobbin-body">No navigation items available</p>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Simple Footer */}
-              <div className="p-6 border-t border-gray-200 text-center">
-                <p className="text-sm text-gray-500">
+              <div className="p-8 border-t border-gray-200 text-center">
+                <p className="mobbin-body-small text-gray-500">
                   © 2024 Allowance Guard
                 </p>
               </div>
