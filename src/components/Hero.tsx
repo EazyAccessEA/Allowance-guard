@@ -40,19 +40,22 @@ export default function Hero({
       
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium tracking-[-0.02em] text-ink mb-6 sm:mb-8 md:mb-10 lg:mb-12 leading-tight">
-          <RotatingTypewriter 
-            staticPrefix="The power to "
-            messages={[
-              "see every hidden\nconnection clearly.",
-              "instantly revoke\nany risky approval.",
-              "find and cut off\nsilent threats.",
-              "control who has access\nto your funds."
-            ]}
-            typingSpeed={80}
-            deletingSpeed={60}
-            pauseTime={2500}
-            className=""
-          />
+          The power to{' '}
+          <span className="inline-block">
+            <RotatingTypewriter 
+              staticPrefix=""
+              messages={[
+                "see every hidden\nconnection clearly.",
+                "instantly revoke\nany risky approval.",
+                "find and cut off\nsilent threats.",
+                "control who has access\nto your funds."
+              ]}
+              typingSpeed={80}
+              deletingSpeed={60}
+              pauseTime={2500}
+              className=""
+            />
+          </span>
         </h1>
         <p className="text-sm sm:text-base md:text-lg text-stone leading-relaxed mb-6 sm:mb-8 md:mb-10">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.

@@ -93,6 +93,17 @@ export default function RotatingTypewriter({
     ))
   }
 
+  // Fallback if component fails to initialize
+  if (!isInitialized && messages.length > 0) {
+    return (
+      <span className={className}>
+        {staticPrefix}
+        {renderText(messages[0])}
+        <span className="animate-pulse">|</span>
+      </span>
+    )
+  }
+
   return (
     <span className={className}>
       {staticPrefix}
