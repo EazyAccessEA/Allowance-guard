@@ -194,7 +194,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
                   {/* Simple Navigation */}
                   <div className="space-y-2">
-                    {navigationItems.map((item) => (
+                    {navigationItems && navigationItems.length > 0 ? navigationItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
@@ -216,7 +216,11 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                           <span className="font-medium">{item.label}</span>
                         </div>
                       </Link>
-                    ))}
+                    )) : (
+                      <div className="text-center text-gray-500 py-4">
+                        No navigation items available
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
