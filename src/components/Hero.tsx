@@ -20,10 +20,11 @@ interface MultiLineTypewriterProps {
 
 const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, className }: MultiLineTypewriterProps) => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
-  const [currentText, setCurrentText] = useState('')
-  const [currentLine, setCurrentLine] = useState(1)
+  const [firstLine, setFirstLine] = useState('')
+  const [secondLine, setSecondLine] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const [currentLine, setCurrentLine] = useState(1) // 1 for first line, 2 for second line
 
   useEffect(() => {
     let timer: NodeJS.Timeout
@@ -31,8 +32,8 @@ const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, 
     
     // Split message into two parts: first two words and the rest
     const words = currentMessage.split(/\s+/)
-    const firstLine = words.slice(0, 2).join(' ')
-    const secondLine = words.slice(2).join(' ')
+    const targetFirstLine = words.slice(0, 2).join(' ')
+    const targetSecondLine = words.slice(2).join(' ')
     
     if (isPaused) {
       timer = setTimeout(() => {
@@ -41,9 +42,13 @@ const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, 
       }, pauseTime)
     } else if (isDeleting) {
       // Deleting phase
-      if (currentText.length > 0) {
+      if (secondLine.length > 0) {
         timer = setTimeout(() => {
-          setCurrentText(currentText.substring(0, currentText.length - 1))
+          setSecondLine(secondLine.substring(0, secondLine.length - 1))
+        }, deletingSpeed)
+      } else if (firstLine.length > 0) {
+        timer = setTimeout(() => {
+          setFirstLine(firstLine.substring(0, firstLine.length - 1))
         }, deletingSpeed)
       } else {
         // Move to next message when deletion is complete
@@ -53,44 +58,34 @@ const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, 
       }
     } else {
       // Typing phase
-      const targetText = currentLine === 1 ? firstLine : secondLine
-      
-      if (currentText.length < targetText.length) {
-        timer = setTimeout(() => {
-          setCurrentText(targetText.substring(0, currentText.length + 1))
-        }, typingSpeed)
-      } else if (currentLine === 1) {
-        // Move to second line
-        setCurrentLine(2)
-        setCurrentText('')
+      if (currentLine === 1) {
+        if (firstLine.length < targetFirstLine.length) {
+          timer = setTimeout(() => {
+            setFirstLine(targetFirstLine.substring(0, firstLine.length + 1))
+          }, typingSpeed)
+        } else {
+          // Move to second line
+          setCurrentLine(2)
+        }
       } else {
-        // Finished typing both lines, pause before deleting
-        setIsPaused(true)
+        if (secondLine.length < targetSecondLine.length) {
+          timer = setTimeout(() => {
+            setSecondLine(targetSecondLine.substring(0, secondLine.length + 1))
+          }, typingSpeed)
+        } else {
+          // Finished typing both lines, pause before deleting
+          setIsPaused(true)
+        }
       }
     }
 
     return () => clearTimeout(timer)
-  }, [currentMessageIndex, currentText, isDeleting, isPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
-
-  // Format the text based on current line
-  const formatText = () => {
-    if (currentLine === 1) {
-      return <span>{currentText}</span>
-    } else {
-      const words = messages[currentMessageIndex].split(/\s+/)
-      const firstLine = words.slice(0, 2).join(' ')
-      return (
-        <>
-          <span className="block">{firstLine}</span>
-          <span>{currentText}</span>
-        </>
-      )
-    }
-  }
+  }, [currentMessageIndex, firstLine, secondLine, isDeleting, isPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
 
   return (
     <span className={className}>
-      {formatText()}
+      <span className="block">{firstLine}</span>
+      <span className="block">{secondLine}</span>
       <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-600 animate-pulse" />
     </span>
   )
@@ -127,7 +122,7 @@ export default function Hero({
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-4 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <span className="text-text-primary">The power to </span>
-          <span className="text-primary-600 inline-block min-h-[1.2em]">
+          <span className="text-primary-600 inline-block min-h-[2.4em]">
             <MultiLineTypewriter 
               messages={[
                 "see every hidden connection clearly",
