@@ -1,6 +1,40 @@
 // Core Web Vitals Performance Monitoring
 // Implements PuredgeOS performance standards and telemetry
 
+// Type definitions for Performance API extensions
+interface LayoutShiftEntry extends PerformanceEntry {
+  hadRecentInput?: boolean;
+  value?: number;
+}
+
+interface LargestContentfulPaintEntry extends PerformanceEntry {
+  renderTime?: number;
+}
+
+interface FirstInputEntry extends PerformanceEntry {
+  processingStart?: number;
+}
+
+interface EventTimingEntry extends PerformanceEntry {
+  processingStart?: number;
+  processingEnd?: number;
+}
+
+interface NavigatorConnection {
+  effectiveType?: string;
+  downlink?: number;
+}
+
+interface NavigatorWithConnection extends Navigator {
+  connection?: NavigatorConnection;
+}
+
+interface WindowWithRollbar extends Window {
+  rollbarClient?: {
+    warning: (message: string, data: unknown) => void;
+  };
+}
+
 export interface CoreWebVitals {
   lcp: number | null // Largest Contentful Paint (ms)
   inp: number | null // Interaction to Next Paint (ms) 
@@ -100,7 +134,7 @@ class PerformanceMonitor {
     try {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries()
-        const lastEntry = entries[entries.length - 1] as PerformanceEntry & { renderTime?: number }
+        const lastEntry = entries[entries.length - 1] as LargestContentfulPaintEntry
         
         if (lastEntry) {
           this.vitals.lcp = lastEntry.renderTime || lastEntry.startTime
@@ -119,7 +153,7 @@ class PerformanceMonitor {
     try {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries()
-        const lastEntry = entries[entries.length - 1] as PerformanceEntry & { processingStart?: number, processingEnd?: number }
+        const lastEntry = entries[entries.length - 1] as EventTimingEntry
         
         if (lastEntry && lastEntry.processingStart && lastEntry.processingEnd) {
           this.vitals.inp = lastEntry.processingEnd - lastEntry.processingStart
@@ -139,7 +173,7 @@ class PerformanceMonitor {
       let clsValue = 0
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          const layoutShiftEntry = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number }
+          const layoutShiftEntry = entry as LayoutShiftEntry
           if (!layoutShiftEntry.hadRecentInput) {
             clsValue += layoutShiftEntry.value || 0
           }
@@ -159,10 +193,10 @@ class PerformanceMonitor {
     try {
       const observer = new PerformanceObserver((list) => {
         const entries = list.getEntries()
-        const firstEntry = entries[0] as PerformanceEntry & { processingStart?: number, startTime?: number }
+        const firstEntry = entries[0] as FirstInputEntry
         
         if (firstEntry && firstEntry.processingStart) {
-          this.vitals.fid = firstEntry.processingStart - firstEntry.startTime!
+          this.vitals.fid = firstEntry.processingStart - firstEntry.startTime
         }
       })
 
@@ -244,7 +278,7 @@ class PerformanceMonitor {
   private getConnectionInfo() {
     if (!('connection' in navigator)) return 'unknown'
     
-    const connection = (navigator as unknown as { connection?: { effectiveType?: string; downlink?: number } }).connection
+    const connection = (navigator as NavigatorWithConnection).connection
     return connection ? `${connection.effectiveType}-${connection.downlink}Mbps` : 'unknown'
   }
 
@@ -315,8 +349,8 @@ class PerformanceMonitor {
       console.warn('Performance issues detected:', issues)
       
       // Send to error monitoring
-      if (typeof window !== 'undefined' && (window as unknown as { rollbarClient?: { warning: (message: string, data: unknown) => void } }).rollbarClient) {
-        (window as unknown as { rollbarClient: { warning: (message: string, data: unknown) => void } }).rollbarClient.warning('Performance budget exceeded', {
+      if (typeof window !== 'undefined' && (window as WindowWithRollbar).rollbarClient) {
+        (window as WindowWithRollbar).rollbarClient!.warning('Performance budget exceeded', {
           issues,
           metrics
         })

@@ -1,138 +1,146 @@
-// PureEdgeOS 4.0 - Fireart Studio Design Tokens
-// Enterprise-grade minimalism with sophisticated aesthetics
+// Design System Tokens
+// Professional design system following the Serum Teal theme specification
 
-export const colors = {
-  // Core colors - Fireart-inspired palette
-  obsidian: '#1E1F23',        // Primary dark background
-  platinum: '#F8FAFC',        // Ultra-light backgrounds
-  charcoal: '#64748B',        // Subtle text and borders
-  sandstone: '#E4E2DD',       // Light background/text
+export const designTokens = {
+  colors: {
+    // Primary Brand
+    primary: {
+      accent: '#00C2B3', // Serum Teal
+      foreground: '#FFFFFF',
+    },
+    
+    // Backgrounds
+    background: {
+      light: '#F9FAFB',     // Sandstone Fog
+      dark: '#111827',      // Obsidian Graphite
+      white: '#FFFFFF',
+    },
+    
+    // Text Colors
+    text: {
+      primary: '#374151',   // Slate Gray 700
+      secondary: '#6B7280', // Gray 500
+      muted: '#9CA3AF',     // Gray 400
+      inverse: '#FFFFFF',
+    },
+    
+    // Borders
+    border: {
+      default: '#E5E7EB',   // Slate Gray 200
+      focus: '#00C2B3',     // Serum Teal
+      muted: '#F3F4F6',     // Gray 100
+    },
+    
+    // Semantic Colors
+    semantic: {
+      danger: '#EF4444',    // Solar Red
+      success: '#22C55E',   // Botanical Green
+      info: '#0EA5E9',      // Sky 500
+      warning: '#F59E0B',   // Amber 500
+    },
+    
+    // Semantic Backgrounds
+    semanticBg: {
+      danger: '#FEF2F2',
+      success: '#F0FDF4',
+      info: '#F0F9FF',
+      warning: '#FFFBEB',
+    },
+  },
   
-  // Brand colors - Sophisticated accent system
-  cobalt: '#2563EB',          // Primary brand accent (single brand color)
-  teal: '#00C2B2',            // Secondary accent
-  warmGray: '#F1F5F9',        // Card backgrounds
+  typography: {
+    fonts: {
+      heading: ['Satoshi', 'Inter', 'system-ui', 'sans-serif'],
+      body: ['Inter', 'system-ui', 'sans-serif'],
+      mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
+    },
+    
+    sizes: {
+      xs: { size: '0.75rem', lineHeight: '1.25rem', weight: '500' },   // 12px
+      sm: { size: '0.875rem', lineHeight: '1.375rem', weight: '400' }, // 14px  
+      base: { size: '1rem', lineHeight: '1.5rem', weight: '400' },     // 16px
+      lg: { size: '1.125rem', lineHeight: '1.625rem', weight: '400' }, // 18px
+      xl: { size: '1.25rem', lineHeight: '1.75rem', weight: '600' },   // 20px
+      '2xl': { size: '1.5rem', lineHeight: '2rem', weight: '600' },    // 24px
+      '3xl': { size: '1.875rem', lineHeight: '2.25rem', weight: '700' }, // 30px
+      '4xl': { size: '2.25rem', lineHeight: '2.5rem', weight: '700' },  // 36px
+      '5xl': { size: '3rem', lineHeight: '1.1', weight: '700' },        // 48px
+      '6xl': { size: '3.75rem', lineHeight: '1.1', weight: '700' },     // 60px
+    },
+    
+    letterSpacing: {
+      heading: '-0.005em', // -0.5% for headings
+      body: '0',           // Default for body
+    },
+  },
   
-  // Semantic colors
-  emerald: '#10B981',         // Success states
-  amber: '#F59E0B',           // Warning states
-  crimson: '#EF4444',         // Error states
-  navy: '#121D2B',            // Alternate dark background
+  spacing: {
+    xs: '0.5rem',   // 8px
+    sm: '1rem',     // 16px
+    md: '2rem',     // 32px
+    lg: '4rem',     // 64px
+    xl: '8rem',     // 128px
+  },
   
-  // Interactive states
-  cobaltHover: '#1D4ED8',
-  cobaltActive: '#1E40AF',
-  tealHover: '#00A896',
-  tealActive: '#008B7A',
-  emeraldHover: '#059669',
-  emeraldActive: '#047857',
-  amberHover: '#D97706',
-  amberActive: '#B45309',
-  crimsonHover: '#DC2626',
-  crimsonActive: '#B91C1C',
+  layout: {
+    containerMaxWidth: '1200px',
+    navbarHeight: '4rem',
+    cardPadding: '1.5rem',
+    mobileMargin: '1rem',
+  },
   
-  // Neutral variants
-  obsidianHover: '#25262B',
-  platinumHover: '#F1F5F9',
-  charcoalHover: '#475569',
-  sandstoneHover: '#F0F0ED',
-} as const
-
-export const spacing = {
-  xs: '0.25rem',    // 4px
-  sm: '0.5rem',     // 8px
-  md: '1rem',       // 16px
-  lg: '1.5rem',     // 24px
-  xl: '2rem',       // 32px
-  '2xl': '3rem',    // 48px
-  '3xl': '4rem',    // 64px
-  '4xl': '6rem',    // 96px
-} as const
-
-export const typography = {
-  fontFamily: {
-    // Fireart-inspired typography system
-    satoshi: ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-    inter: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-    mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Monaco', 'Consolas', 'monospace'],
+  borderRadius: {
+    sm: '0.125rem',   // 2px
+    base: '0.5rem',   // 8px
+    md: '0.75rem',    // 12px
+    lg: '1rem',       // 16px
+    xl: '1.5rem',     // 24px
+    full: '9999px',
   },
-  fontSize: {
-    // Fireart-style typography scale with generous spacing
-    xs: ['0.75rem', { lineHeight: '1.25rem', letterSpacing: '0.025em' }],
-    sm: ['0.875rem', { lineHeight: '1.375rem', letterSpacing: '0.025em' }],
-    base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '0' }],
-    lg: ['1.125rem', { lineHeight: '1.625rem', letterSpacing: '0' }],
-    xl: ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '0' }],
-    '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
-    '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.025em' }],
-    '4xl': ['2.25rem', { lineHeight: '2.5rem', letterSpacing: '-0.025em' }],
-    '5xl': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
-    '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
+  
+  shadows: {
+    subtle: '0 1px 3px rgba(0, 0, 0, 0.1)',
+    medium: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    large: '0 10px 15px rgba(0, 0, 0, 0.1)',
+    focus: '0 0 0 3px rgba(0, 194, 179, 0.1)',
+    focusDanger: '0 0 0 3px rgba(239, 68, 68, 0.1)',
+    focusSuccess: '0 0 0 3px rgba(34, 197, 94, 0.1)',
+    focusInfo: '0 0 0 3px rgba(14, 165, 233, 0.1)',
   },
-  fontWeight: {
-    normal: '400',
-    medium: '500',
-    semibold: '600',
-    bold: '700',
+  
+  motion: {
+    durations: {
+      fast: '150ms',
+      base: '250ms',
+      slow: '500ms',
+    },
+    
+    easings: {
+      ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      easeIn: 'cubic-bezier(0.4, 0, 1, 1)',
+      easeOut: 'cubic-bezier(0, 0, 0.2, 1)',
+      easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    },
   },
 } as const
 
-export const shadows = {
-  // Fireart-inspired subtle shadows
-  subtle: '0 1px 3px rgba(0, 0, 0, 0.1)',
-  medium: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  large: '0 10px 15px rgba(0, 0, 0, 0.1)',
-  focus: '0 0 0 3px rgba(37, 99, 235, 0.1)',
-  focusDanger: '0 0 0 3px rgba(239, 68, 68, 0.1)',
-  focusWarn: '0 0 0 3px rgba(245, 158, 11, 0.1)',
-  focusInfo: '0 0 0 3px rgba(16, 185, 129, 0.1)',
-} as const
+// Export individual token categories for easier importing
+export const colors = designTokens.colors
+export const typography = designTokens.typography
+export const spacing = designTokens.spacing
+export const layout = designTokens.layout
+export const borderRadius = designTokens.borderRadius
+export const shadows = designTokens.shadows
+export const motion = designTokens.motion
 
-export const transitions = {
-  // Fireart-style natural timing functions
-  fast: '150ms cubic-bezier(0.4, 0, 0.2, 1)',
-  normal: '200ms cubic-bezier(0.4, 0, 0.2, 1)',
-  slow: '300ms cubic-bezier(0.4, 0, 0.2, 1)',
-  bounce: '300ms cubic-bezier(0.68, -0.55, 0.265, 1.55)',
-} as const
-
-// Fireart-inspired component tokens
-export const components = {
-  button: {
-    height: '44px',
-    padding: '12px 24px',
-    borderRadius: '8px',
-    fontSize: '16px',
-    fontWeight: '500',
-  },
-  card: {
-    padding: '24px',
-    borderRadius: '16px',
-    shadow: shadows.subtle,
-  },
-  input: {
-    height: '44px',
-    padding: '12px 16px',
-    borderRadius: '8px',
-    border: '1px solid',
-  },
-} as const
-
-// Risk levels for allowance scoring - updated with new colors
-export const riskLevels = {
-  low: {
-    color: colors.emerald,
-    label: 'Low Risk',
-    description: 'Standard allowance with normal usage patterns',
-  },
-  medium: {
-    color: colors.amber,
-    label: 'Medium Risk', 
-    description: 'Unusual patterns or high amounts detected',
-  },
-  high: {
-    color: colors.crimson,
-    label: 'High Risk',
-    description: 'Unlimited allowance or suspicious activity',
-  },
-} as const
+// Utility function to get design token values
+export function getToken(path: string): string | number {
+  const keys = path.split('.')
+  let value: unknown = designTokens
+  
+  for (const key of keys) {
+    value = (value as Record<string, unknown>)?.[key]
+  }
+  
+  return (typeof value === 'string' || typeof value === 'number') ? value : ''
+}

@@ -56,6 +56,7 @@
     "@upstash/redis": "^1.35.3",
     "@wagmi/core": "^2.20.3",
     "autoprefixer": "^10.4.21",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "coinbase-commerce-node": "^1.0.4",
     "commerce-node": "^1.5.0",
