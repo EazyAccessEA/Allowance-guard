@@ -91,7 +91,7 @@ export default function MobileNavigation({ isConnected }: MobileNavigationProps)
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden h-10 w-10"
+        className="lg:hidden h-10 w-10 mobbin-focus-ring"
         aria-label="Open navigation menu"
       >
         <Menu className="h-5 w-5" />
@@ -102,76 +102,76 @@ export default function MobileNavigation({ isConnected }: MobileNavigationProps)
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-background-dark/75 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
           
           {/* Menu Panel */}
-          <div className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-xl">
+          <div className="fixed right-0 top-0 h-full w-full max-w-sm bg-background-primary shadow-xl">
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-border-default">
-                <h2 className="text-lg font-semibold text-text-primary">Menu</h2>
+              <div className="flex items-center justify-between p-6 border-b border-border-primary">
+                <h2 className="mobbin-heading-3 text-text-primary">Menu</h2>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsOpen(false)}
-                  className="h-8 w-8"
+                  className="h-10 w-10 mobbin-focus-ring"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-5 w-5" />
                 </Button>
               </div>
 
               {/* Navigation Items */}
               <div className="flex-1 overflow-y-auto">
-                <div className="p-4 space-y-2">
+                <div className="p-6 space-y-3">
                   {navigationItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 p-3 rounded-lg transition-colors duration-150 ${
+                      className={`flex items-center gap-4 p-4 rounded-lg transition-all duration-150 mobbin-focus-ring ${
                         pathname?.startsWith(item.href)
-                          ? 'bg-primary-accent/10 text-primary-accent'
-                          : 'text-text-secondary hover:text-text-primary hover:bg-background-light'
+                          ? 'bg-primary-50 text-primary-600 border border-primary-200'
+                          : 'text-text-secondary hover:text-text-primary hover:bg-background-secondary'
                       }`}
                       onClick={() => setIsOpen(false)}
                     >
-                      <div className={`p-2 rounded-lg ${
+                      <div className={`p-3 rounded-lg ${
                         pathname?.startsWith(item.href)
-                          ? 'bg-primary-accent/20'
-                          : 'bg-background-light'
+                          ? 'bg-primary-100 text-primary-600'
+                          : 'bg-background-secondary text-text-tertiary'
                       }`}>
                         {item.icon}
                       </div>
                       <div className="flex-1">
-                        <div className="font-medium">{item.label}</div>
-                        <div className="text-sm text-text-muted">{item.description}</div>
+                        <div className="mobbin-body font-medium">{item.label}</div>
+                        <div className="mobbin-caption text-text-tertiary">{item.description}</div>
                       </div>
                     </Link>
                   ))}
                 </div>
 
                 {/* External Links */}
-                <div className="px-4 py-2">
-                  <div className="text-xs font-medium text-text-muted uppercase tracking-wide mb-2">
+                <div className="px-6 py-4">
+                  <div className="mobbin-caption font-medium text-text-tertiary uppercase tracking-wide mb-3">
                     External Links
                   </div>
-                  <div className="space-y-1">
+                  <div className="space-y-2">
                     {externalLinks.map((link) => (
                       <a
                         key={link.href}
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-3 rounded-lg text-text-secondary hover:text-text-primary hover:bg-background-light transition-colors duration-150"
+                        className="flex items-center gap-4 p-4 rounded-lg text-text-secondary hover:text-text-primary hover:bg-background-secondary transition-all duration-150 mobbin-focus-ring"
                         onClick={() => setIsOpen(false)}
                       >
-                        <div className="p-2 rounded-lg bg-background-light">
+                        <div className="p-3 rounded-lg bg-background-secondary text-text-tertiary">
                           {link.icon}
                         </div>
                         <div className="flex-1">
-                          <div className="font-medium">{link.label}</div>
-                          <div className="text-sm text-text-muted">{link.description}</div>
+                          <div className="mobbin-body font-medium">{link.label}</div>
+                          <div className="mobbin-caption text-text-tertiary">{link.description}</div>
                         </div>
                       </a>
                     ))}
@@ -180,25 +180,25 @@ export default function MobileNavigation({ isConnected }: MobileNavigationProps)
               </div>
 
               {/* Footer */}
-              <div className="p-4 border-t border-border-default space-y-4">
+              <div className="p-6 border-t border-border-primary space-y-6">
                 {/* Connection Status */}
                 {isConnected ? (
-                  <div className="flex items-center justify-between p-3 bg-semantic-success/10 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-semantic-success rounded-full" />
-                      <span className="text-sm font-medium text-text-primary">Wallet Connected</span>
+                  <div className="flex items-center justify-between p-4 bg-semantic-success-50 rounded-lg border border-semantic-success-200">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 bg-semantic-success-500 rounded-full" />
+                      <span className="mobbin-body font-medium text-text-primary">Wallet Connected</span>
                     </div>
                     <Badge variant="success" size="sm">Connected</Badge>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div onClick={() => setIsOpen(false)}>
                       <ConnectButton 
                         variant="primary" 
                         className="w-full"
                       />
                     </div>
-                    <p className="text-xs text-text-muted text-center">
+                    <p className="mobbin-caption text-text-tertiary text-center">
                       Connect your wallet to start scanning
                     </p>
                   </div>
@@ -206,11 +206,11 @@ export default function MobileNavigation({ isConnected }: MobileNavigationProps)
 
                 {/* App Info */}
                 <div className="text-center">
-                  <div className="flex items-center justify-center gap-2 mb-2">
+                  <div className="flex items-center justify-center gap-3 mb-4">
                     <Badge variant="secondary" size="sm">Open Source</Badge>
                     <Badge variant="success" size="sm">Free Forever</Badge>
                   </div>
-                  <p className="text-xs text-text-muted">
+                  <p className="mobbin-caption text-text-tertiary">
                     © 2024 Allowance Guard
                   </p>
                 </div>
