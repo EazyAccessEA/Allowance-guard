@@ -138,11 +138,11 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
           <div 
             ref={menuRef}
             id="mobile-menu"
-            className="fixed top-1/2 left-1/2 h-[75vh] w-[80vw] max-w-md bg-white shadow-2xl rounded-xl transition-all duration-300 ease-out"
+            className="fixed inset-0 h-full w-full bg-white shadow-2xl transition-all duration-300 ease-out"
             style={{ 
               transform: isOpen 
-                ? 'translate(-50%, -50%) scale(1)' 
-                : 'translate(-50%, -50%) scale(0.8)',
+                ? 'translateX(0)' 
+                : 'translateX(100%)',
               opacity: isOpen ? 1 : 0
             }}
           >
