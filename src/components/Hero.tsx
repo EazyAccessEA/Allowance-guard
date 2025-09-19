@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
@@ -8,88 +7,7 @@ import Section from '@/components/ui/Section'
 import VideoBackground from '@/components/VideoBackground'
 import ConnectButton from '@/components/ConnectButton'
 import TestConnect from '@/components/TestConnect'
-
-// New MultiLineTypewriter component
-interface MultiLineTypewriterProps {
-  messages: string[]
-  typingSpeed: number
-  deletingSpeed: number
-  pauseTime: number
-  className?: string
-}
-
-const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, className }: MultiLineTypewriterProps) => {
-  const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
-  const [firstLine, setFirstLine] = useState('')
-  const [secondLine, setSecondLine] = useState('')
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
-  const [currentLine, setCurrentLine] = useState(1) // 1 for first line, 2 for second line
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout
-    const currentMessage = messages[currentMessageIndex]
-    
-    // Split message into two parts: first two words and the rest
-    const words = currentMessage.split(/\s+/)
-    const targetFirstLine = words.slice(0, 2).join(' ')
-    const targetSecondLine = words.slice(2).join(' ')
-    
-    if (isPaused) {
-      timer = setTimeout(() => {
-        setIsPaused(false)
-        setIsDeleting(true)
-      }, pauseTime)
-    } else if (isDeleting) {
-      // Deleting phase
-      if (secondLine.length > 0) {
-        timer = setTimeout(() => {
-          setSecondLine(secondLine.substring(0, secondLine.length - 1))
-        }, deletingSpeed)
-      } else if (firstLine.length > 0) {
-        timer = setTimeout(() => {
-          setFirstLine(firstLine.substring(0, firstLine.length - 1))
-        }, deletingSpeed)
-      } else {
-        // Move to next message when deletion is complete
-        setIsDeleting(false)
-        setCurrentLine(1)
-        setCurrentMessageIndex((prevIndex) => (prevIndex + 1) % messages.length)
-      }
-    } else {
-      // Typing phase
-      if (currentLine === 1) {
-        if (firstLine.length < targetFirstLine.length) {
-          timer = setTimeout(() => {
-            setFirstLine(targetFirstLine.substring(0, firstLine.length + 1))
-          }, typingSpeed)
-        } else {
-          // Move to second line
-          setCurrentLine(2)
-        }
-      } else {
-        if (secondLine.length < targetSecondLine.length) {
-          timer = setTimeout(() => {
-            setSecondLine(targetSecondLine.substring(0, secondLine.length + 1))
-          }, typingSpeed)
-        } else {
-          // Finished typing both lines, pause before deleting
-          setIsPaused(true)
-        }
-      }
-    }
-
-    return () => clearTimeout(timer)
-  }, [currentMessageIndex, firstLine, secondLine, isDeleting, isPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
-
-  return (
-    <span className={className}>
-      <span className="block">{firstLine}</span>
-      <span className="block">{secondLine}</span>
-      <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-600 animate-pulse" />
-    </span>
-  )
-}
+import { MultiLineTypewriter } from '@/components/MultiLineTypewriter'
 
 interface HeroProps {
   isConnected: boolean
@@ -121,21 +39,29 @@ export default function Hero({
       
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-4 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
-          <span className="text-text-primary">The power to </span>
-          <span className="text-primary-600 inline-block min-h-[2.4em]">
-            <MultiLineTypewriter 
-              messages={[
-                "see every hidden connection clearly",
-                "instantly revoke any risky approval",
-                "find and cut off silent threats",
-                "control who has access to funds"
-              ]}
-              typingSpeed={90}
-              deletingSpeed={70}
-              pauseTime={2500}
-              className="inline-block"
-            />
-          </span>
+          <MultiLineTypewriter
+            messages={[
+              "see every hidden connection clearly",
+              "instantly revoke any risky approval",
+              "find and cut off silent threats",
+              "control who has access to funds"
+            ]}
+            typingSpeed={90}
+            deletingSpeed={70}
+            pauseTime={2500}
+            onRender={(firstLine, secondLine) => (
+              <>
+                <span className="block">
+                  <span className="text-text-primary">The power to </span>
+                  <span className="text-primary-600">{firstLine}</span>
+                </span>
+                <span className="block text-primary-600">
+                  {secondLine}
+                  <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-600 animate-pulse" />
+                </span>
+              </>
+            )}
+          />
         </h1>
         <p className="mobbin-body-large text-text-secondary leading-relaxed mb-6 sm:mb-8 md:mb-10">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
