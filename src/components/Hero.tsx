@@ -10,7 +10,15 @@ import ConnectButton from '@/components/ConnectButton'
 import TestConnect from '@/components/TestConnect'
 
 // New MultiLineTypewriter component
-const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, className }) => {
+interface MultiLineTypewriterProps {
+  messages: string[]
+  typingSpeed: number
+  deletingSpeed: number
+  pauseTime: number
+  className?: string
+}
+
+const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, className }: MultiLineTypewriterProps) => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
   const [currentText, setCurrentText] = useState('')
   const [currentLine, setCurrentLine] = useState(1)
