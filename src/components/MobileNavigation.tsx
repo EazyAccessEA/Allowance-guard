@@ -175,53 +175,44 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 </Button>
               </div>
 
-              {/* Navigation Content */}
-              <div className="flex-1 overflow-y-auto">
-                <div className="p-6 space-y-4">
-                  {/* Connect Wallet - Simple and Clear */}
-                  <div className="text-center py-8">
-                    <div onClick={() => setIsOpen(false)}>
-                      <ConnectButton 
-                        variant={isConnected ? "secondary" : "primary"}
-                        className="w-full"
-                        size="lg"
-                      />
-                    </div>
-                    {isConnected && (
-                      <p className="text-sm text-green-600 mt-2">✓ Wallet Connected</p>
-                    )}
-                  </div>
+              {/* Navigation Content - Centered and Simple */}
+              <div className="flex-1 flex flex-col justify-center px-8">
+                {/* Connect Wallet - Prominent */}
+                <div className="mb-16 text-center">
+                  <ConnectButton 
+                    variant={isConnected ? "secondary" : "primary"}
+                    size="lg"
+                    className="w-full text-lg py-4"
+                    onClick={() => setIsOpen(false)}
+                  />
+                  {isConnected && (
+                    <p className="text-green-600 mt-3 text-sm">✓ Wallet Connected</p>
+                  )}
+                </div>
 
-                  {/* Simple Navigation */}
-                  <div className="space-y-2">
-                    {navigationItems && navigationItems.length > 0 ? navigationItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={`block p-4 rounded-lg transition-all duration-200 ${
-                          pathname === item.href
-                            ? 'bg-blue-50 text-blue-600 border border-blue-200'
-                            : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                        onClick={() => setIsOpen(false)}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`p-2 rounded-lg ${
-                            pathname === item.href
-                              ? 'bg-blue-100 text-blue-600'
-                              : 'bg-gray-100 text-gray-600'
-                          }`}>
-                            {item.icon}
-                          </div>
-                          <span className="font-medium">{item.label}</span>
-                        </div>
-                      </Link>
-                    )) : (
-                      <div className="text-center text-gray-500 py-4">
-                        No navigation items available
+                {/* Simple Navigation - Large Touch Targets */}
+                <div className="space-y-6">
+                  {navigationItems && navigationItems.length > 0 ? navigationItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`block p-6 rounded-2xl text-center transition-all duration-200 ${
+                        pathname === item.href
+                          ? 'bg-blue-50 text-blue-600 border-2 border-blue-200'
+                          : 'text-gray-700 hover:bg-gray-50 border-2 border-transparent'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="flex items-center justify-center gap-4">
+                        <div className="text-2xl">{item.icon}</div>
+                        <span className="text-xl font-medium">{item.label}</span>
                       </div>
-                    )}
-                  </div>
+                    </Link>
+                  )) : (
+                    <div className="text-center text-gray-500 py-8">
+                      No navigation items available
+                    </div>
+                  )}
                 </div>
               </div>
 
