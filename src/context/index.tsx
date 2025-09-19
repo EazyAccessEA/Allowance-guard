@@ -90,50 +90,7 @@ if (typeof window !== 'undefined') {
   }
 }
 
-// Initialize the AppKit modal once with comprehensive error handling
-try {
-  createAppKit({
-    adapters: [wagmiAdapter],
-    projectId: projectId!,
-    networks: [mainnet, arbitrum, base],
-    defaultNetwork: mainnet,
-    metadata: {
-      name: 'Allowance Guard',
-      description: 'Allowance monitoring & revocation',
-      url: 'https://www.allowanceguard.com',
-      icons: ['https://www.allowanceguard.com/icon.png']
-    },
-    features: { 
-      analytics: false, // Disable analytics to prevent telemetry errors
-      email: false,
-      socials: false,
-      onramp: false,
-      swaps: false
-    },
-    themeMode: 'dark', // Match the new Reown-style dark theme
-    themeVariables: {
-      // Core theme colors - matching Fireart design tokens
-      '--w3m-color-mix': '#1E1F23', // obsidian
-      '--w3m-color-mix-strength': 40,
-      '--w3m-accent': '#2563EB', // cobalt
-      
-      // Border radius - matching component tokens
-      '--w3m-border-radius-master': '8px', // button borderRadius
-      
-      // Typography - matching Fireart typography scale
-      '--w3m-font-size-master': '16px', // base fontSize
-      '--w3m-font-family': 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
-      
-      // Modal specific - matching Fireart colors
-      '--w3m-z-index': 9999,
-    }
-  })
-} catch (error) {
-  // Silently handle AppKit initialization errors
-  if (process.env.NODE_ENV === 'development') {
-    console.warn('AppKit initialization warning:', error)
-  }
-}
+// AppKit configuration will be created inline to avoid TypeScript issues
 
 // Error Boundary for wallet-related errors
 class WalletErrorBoundary extends Component<
@@ -196,6 +153,57 @@ class WalletErrorBoundary extends Component<
   }
 }
 
+// AppKit Provider Component
+function AppKitProvider({ children }: { children: ReactNode }) {
+  // Initialize AppKit within React component
+  React.useEffect(() => {
+    try {
+      createAppKit({
+        adapters: [wagmiAdapter],
+        projectId: projectId!,
+        networks: [mainnet, arbitrum, base],
+        defaultNetwork: mainnet,
+        metadata: {
+          name: 'Allowance Guard',
+          description: 'Allowance monitoring & revocation',
+          url: 'https://www.allowanceguard.com',
+          icons: ['https://www.allowanceguard.com/icon.png']
+        },
+        features: { 
+          analytics: false, // Disable analytics to prevent telemetry errors
+          email: false,
+          socials: false,
+          onramp: false,
+          swaps: false
+        },
+        themeMode: 'dark', // Match the new Reown-style dark theme
+        themeVariables: {
+          // Core theme colors - matching Fireart design tokens
+          '--w3m-color-mix': '#1E1F23', // obsidian
+          '--w3m-color-mix-strength': 40,
+          '--w3m-accent': '#2563EB', // cobalt
+          
+          // Border radius - matching component tokens
+          '--w3m-border-radius-master': '8px', // button borderRadius
+          
+          // Typography - matching Fireart typography scale
+          '--w3m-font-size-master': '16px', // base fontSize
+          '--w3m-font-family': 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
+          
+          // Modal specific - matching Fireart colors
+          '--w3m-z-index': 9999,
+        }
+      })
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('AppKit initialization warning:', error)
+      }
+    }
+  }, [])
+
+  return <>{children}</>
+}
+
 export default function ContextProvider({
   children,
   cookies
@@ -211,7 +219,11 @@ export default function ContextProvider({
   return (
     <WalletErrorBoundary>
       <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <AppKitProvider>
+            {children}
+          </AppKitProvider>
+        </QueryClientProvider>
       </WagmiProvider>
     </WalletErrorBoundary>
   )

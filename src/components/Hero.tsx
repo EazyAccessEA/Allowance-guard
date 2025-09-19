@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { H1 } from '@/components/ui/Heading'
+// H1 component not used - using native h1 for better responsive control
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import VideoBackground from '@/components/VideoBackground'
@@ -39,7 +39,7 @@ export default function Hero({
       />
       
       <Container className="relative text-left max-w-4xl z-10">
-        <H1 className="mb-8 sm:mb-12 h-[2.2em] text-3xl sm:text-4xl lg:text-5xl">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium tracking-[-0.02em] text-ink mb-6 sm:mb-8 md:mb-10 lg:mb-12 leading-tight">
           <RotatingTypewriter 
             staticPrefix="The power to "
             messages={[
@@ -53,13 +53,13 @@ export default function Hero({
             pauseTime={2500}
             className=""
           />
-        </H1>
-        <p className="text-base sm:text-lg text-stone leading-relaxed mb-8 sm:mb-10">
+        </h1>
+        <p className="text-sm sm:text-base md:text-lg text-stone leading-relaxed mb-6 sm:mb-8 md:mb-10">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
         </p>
 
         {/* CTA Section - Mobile Optimized */}
-        <div className="flex flex-col gap-4 mb-6 sm:mb-8">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
           {!isConnected ? (
             <div className="flex flex-col gap-4">
               <ConnectButton 
