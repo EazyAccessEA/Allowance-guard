@@ -3,29 +3,34 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
+import { Badge } from '@/components/ui/Badge'
 import DonationButton from '@/components/DonationButton'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp, Heart, Shield, Code, Users } from 'lucide-react'
 
 interface FooterSectionProps {
   title: string
   children: React.ReactNode
   isOpen: boolean
   onToggle: () => void
+  icon?: React.ReactNode
 }
 
-function FooterSection({ title, children, isOpen, onToggle }: FooterSectionProps) {
+function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectionProps) {
   return (
-    <div className="border-b border-line/30 md:border-b-0">
+    <div className="border-b border-border-default/30 md:border-b-0">
       <button
         onClick={onToggle}
         className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none"
       >
-        <h3 className="text-lg font-semibold text-ink">{title}</h3>
+        <h3 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+          {icon}
+          {title}
+        </h3>
         <div className="md:hidden">
           {isOpen ? (
-            <ChevronUp className="w-5 h-5 text-stone" />
+            <ChevronUp className="w-5 h-5 text-text-secondary" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-stone" />
+            <ChevronDown className="w-5 h-5 text-text-secondary" />
           )}
         </div>
       </button>
@@ -52,29 +57,36 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-mist/30 border-t border-line/50">
-      <Container className="py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 md:gap-12">
+    <footer className="bg-background-light border-t border-border-default">
+      <Container className="py-16">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Product */}
           <FooterSection
             title="Product"
+            icon={<Shield className="w-5 h-5 text-primary-accent" />}
             isOpen={openSections.product}
             onToggle={() => toggleSection('product')}
           >
-            <ul className="space-y-4 mt-6 md:mt-6">
+            <ul className="space-y-3 mt-6 md:mt-6">
               <li>
-                <Link href="/features" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/features" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/docs" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Documentation
                 </Link>
               </li>
               <li>
-                <Link href="/security" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/security" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Security
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                  FAQ
                 </Link>
               </li>
             </ul>
@@ -83,17 +95,21 @@ export default function Footer() {
           {/* Open Source */}
           <FooterSection
             title="Open Source"
+            icon={<Code className="w-5 h-5 text-primary-accent" />}
             isOpen={openSections.openSource}
             onToggle={() => toggleSection('openSource')}
           >
-            <ul className="space-y-4 mt-6 md:mt-6">
+            <ul className="space-y-3 mt-6 md:mt-6">
               <li>
                 <a 
                   href="https://github.com/EazyAccessEA/Allowance-guard" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-stone hover:text-ink transition-colors duration-200"
+                  className="text-text-secondary hover:text-text-primary transition-colors duration-150 flex items-center gap-2"
                 >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
                   GitHub Repository
                 </a>
               </li>
@@ -102,23 +118,23 @@ export default function Footer() {
                   href="https://github.com/EazyAccessEA/Allowance-guard/issues" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-stone hover:text-ink transition-colors duration-200"
+                  className="text-text-secondary hover:text-text-primary transition-colors duration-150"
                 >
                   Report Issues
                 </a>
               </li>
               <li>
-                <Link href="/docs/api" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/docs/api" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   API Reference
                 </Link>
               </li>
               <li>
-                <Link href="/docs/integration" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/docs/integration" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Integration Guide
                 </Link>
               </li>
               <li>
-                <Link href="/docs/contributing" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/docs/contributing" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Contributing Guide
                 </Link>
               </li>
@@ -128,18 +144,14 @@ export default function Footer() {
           {/* Support & Contact */}
           <FooterSection
             title="Support"
+            icon={<Users className="w-5 h-5 text-primary-accent" />}
             isOpen={openSections.support}
             onToggle={() => toggleSection('support')}
           >
-            <ul className="space-y-4 mt-6 md:mt-6">
+            <ul className="space-y-3 mt-6 md:mt-6">
               <li>
-                <Link href="/contact" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/contact" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-stone hover:text-ink transition-colors duration-200">
-                  FAQ
                 </Link>
               </li>
               <li>
@@ -147,8 +159,11 @@ export default function Footer() {
                   href="https://discord.gg/DsJ4Pa94" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-stone hover:text-ink transition-colors duration-200"
+                  className="text-text-secondary hover:text-text-primary transition-colors duration-150 flex items-center gap-2"
                 >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                  </svg>
                   Discord Community
                 </a>
               </li>
@@ -160,23 +175,24 @@ export default function Footer() {
 
           {/* Legal & Social */}
           <FooterSection
-            title="Company"
+            title="Legal"
+            icon={<Shield className="w-5 h-5 text-primary-accent" />}
             isOpen={openSections.company}
             onToggle={() => toggleSection('company')}
           >
-            <ul className="space-y-4 mt-6 md:mt-6">
+            <ul className="space-y-3 mt-6 md:mt-6">
               <li>
-                <Link href="/privacy" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/privacy" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/terms" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="text-stone hover:text-ink transition-colors duration-200">
+                <Link href="/cookies" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Cookie Policy
                 </Link>
               </li>
@@ -187,7 +203,7 @@ export default function Footer() {
                   href="https://twitter.com/allowanceguard" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-stone hover:text-ink transition-colors duration-200"
+                  className="text-text-secondary hover:text-primary-accent transition-colors duration-150"
                 >
                   <span className="sr-only">Twitter</span>
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -198,7 +214,7 @@ export default function Footer() {
                   href="https://github.com/EazyAccessEA/Allowance-guard" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-stone hover:text-ink transition-colors duration-200"
+                  className="text-text-secondary hover:text-primary-accent transition-colors duration-150"
                 >
                   <span className="sr-only">GitHub</span>
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -211,12 +227,33 @@ export default function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="mt-16 pt-8 border-t border-line/50">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="max-w-2xl text-stone text-sm">
-              Open-source and free to use. Maintained by a small independent team and funded by
-              <Link className="underline ml-1 hover:text-ink transition-colors duration-200" href="/docs/contributing">donations and grants</Link>. No VC, no token.
-            </p>
+        <div className="mt-16 pt-8 border-t border-border-default">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-3">
+                <Badge variant="secondary" className="flex items-center gap-1">
+                  <Heart className="w-3 h-3 text-semantic-danger" />
+                  Open Source
+                </Badge>
+                <Badge variant="success" className="flex items-center gap-1">
+                  <Shield className="w-3 h-3" />
+                  Free Forever
+                </Badge>
+              </div>
+              <p className="text-text-secondary text-sm max-w-2xl">
+                Open-source and free to use. Maintained by a small independent team and funded by{' '}
+                <Link className="text-primary-accent hover:text-primary-accent/80 transition-colors duration-150" href="/docs/contributing">
+                  donations and grants
+                </Link>
+                . No VC, no token.
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-4 text-sm text-text-secondary">
+              <span>© 2024 Allowance Guard</span>
+              <span>•</span>
+              <span>Built with ❤️ for Web3 security</span>
+            </div>
           </div>
         </div>
       </Container>
