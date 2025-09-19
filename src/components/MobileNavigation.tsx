@@ -126,19 +126,19 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[100] lg:hidden" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
+          {/* Backdrop - Fully Obscured */}
           <div 
-            className="fixed inset-0 bg-black/40 backdrop-blur-lg transition-all duration-300"
+            className="fixed inset-0 bg-black/90 backdrop-blur-sm transition-all duration-300 z-[101]"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
           
-          {/* Menu Panel */}
+          {/* Menu Panel - 100% vh and vw */}
           <div 
             ref={menuRef}
             id="mobile-menu"
-            className="fixed inset-0 h-full w-full bg-white shadow-2xl transition-all duration-300 ease-out"
+            className="fixed inset-0 h-screen w-screen bg-white shadow-2xl transition-all duration-300 ease-out z-[102]"
             style={{ 
               transform: isOpen 
                 ? 'translateX(0)' 

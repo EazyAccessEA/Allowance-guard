@@ -46,8 +46,8 @@ export default function Hero({
               "find and cut off silent threats",
               "control who has access to funds"
             ]}
-            typingSpeed={90}
-            deletingSpeed={70}
+            typingSpeed={110}
+            deletingSpeed={80}
             pauseTime={2500}
             onRender={(firstLine, secondLine) => (
               <>
