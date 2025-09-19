@@ -40,8 +40,8 @@ export default function Hero({
       
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="mobbin-display-1 text-text-primary mb-6 sm:mb-8 md:mb-10 lg:mb-12">
-          <div className="text-text-primary">The power to</div>
-          <div className="text-primary-600 h-[2.4em] flex items-start">
+          <span className="text-text-primary">The power to </span>
+          <span className="text-primary-600 h-[2.4em] flex items-start">
             <RotatingTypewriter 
               staticPrefix=""
               messages={[
@@ -55,7 +55,7 @@ export default function Hero({
               pauseTime={2500}
               className="inline-block"
             />
-          </div>
+          </span>
         </h1>
         <p className="mobbin-body-large text-text-secondary leading-relaxed mb-6 sm:mb-8 md:mb-10">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
