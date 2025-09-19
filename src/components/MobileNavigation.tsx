@@ -83,6 +83,13 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
   const navigationItems = [
     {
+      href: '/',
+      label: 'Home',
+      icon: <Home className="w-5 h-5" />,
+      description: 'Return to homepage',
+      badge: null
+    },
+    {
       href: '/docs',
       label: 'Documentation',
       icon: <FileText className="w-5 h-5" />,
@@ -175,10 +182,10 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 </Button>
               </div>
 
-              {/* Navigation Content - Centered and Simple */}
-              <div className="flex-1 flex flex-col justify-center px-8">
+              {/* Navigation Content - Full Height Layout */}
+              <div className="flex-1 flex flex-col px-8 py-8 overflow-y-auto">
                 {/* Connect Wallet - Prominent */}
-                <div className="mb-16 text-center">
+                <div className="mb-8 text-center">
                   <div onClick={() => setIsOpen(false)}>
                     <ConnectButton 
                       variant={isConnected ? "secondary" : "primary"}
@@ -192,21 +199,21 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 </div>
 
                 {/* Simple Navigation - Large Touch Targets */}
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {navigationItems && navigationItems.length > 0 ? navigationItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`block p-8 rounded-2xl text-center transition-all duration-200 ${
+                      className={`block p-6 rounded-2xl transition-all duration-200 ${
                         pathname === item.href
                           ? 'bg-blue-50 text-blue-600 border-2 border-blue-200'
                           : 'text-gray-700 hover:bg-gray-50 border-2 border-transparent'
                       }`}
                       onClick={() => setIsOpen(false)}
                     >
-                      <div className="flex items-center justify-center gap-6">
-                        <div className="text-3xl flex items-center justify-center">
-                          {React.cloneElement(item.icon, { className: "w-8 h-8" })}
+                      <div className="flex items-center gap-4">
+                        <div className="text-2xl flex items-center justify-center">
+                          {React.cloneElement(item.icon, { className: "w-6 h-6" })}
                         </div>
                         <span className="mobbin-heading-3 font-semibold">{item.label}</span>
                       </div>
@@ -217,6 +224,9 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     </div>
                   )}
                 </div>
+
+                {/* Spacer to push footer down */}
+                <div className="flex-1" />
               </div>
 
               {/* Simple Footer */}
