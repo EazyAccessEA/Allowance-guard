@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { Button } from '@/components/ui/Button'
+import ConnectButton from '@/components/ConnectButton'
 import Hero from '@/components/Hero'
 import StatisticsSection from '@/components/StatisticsSection'
 import AppArea from '@/components/AppArea'
@@ -270,13 +271,11 @@ export default function HomePage() {
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {!isConnected ? (
-                <Button 
+                <ConnectButton 
                   variant="primary" 
                   size="lg"
                   className="w-full sm:w-auto"
-                >
-                  Connect Wallet to Start
-                </Button>
+                />
               ) : (
                 <Button
                   onClick={startScan}
