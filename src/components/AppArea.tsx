@@ -13,6 +13,7 @@ import {
   StatsCard
 } from '@/components/EnhancedLoadingStates'
 import BulkRevokePanel from '@/components/BulkRevokePanel'
+import { DataVisualizationDashboard } from '@/components/DataVisualizationDashboard'
 import { useState, useEffect, useCallback } from 'react'
 import { 
   Shield, 
@@ -57,7 +58,7 @@ export default function AppArea({
 }: AppAreaProps) {
   const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
   const [monitorFreq, setMonitorFreq] = useState(720)
-  const [activeTab, setActiveTab] = useState<'allowances' | 'security'>('allowances')
+  const [activeTab, setActiveTab] = useState<'allowances' | 'security' | 'analytics'>('allowances')
   const [selectedRows, setSelectedRows] = useState<typeof rows>([])
 
   const loadMonitor = useCallback(async () => {
@@ -271,6 +272,16 @@ export default function AppArea({
                 >
                   Security Dashboard
                 </button>
+                <button
+                  onClick={() => setActiveTab('analytics')}
+                  className={`flex-1 py-3 px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 ${
+                    activeTab === 'analytics'
+                      ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                  }`}
+                >
+                  Analytics
+                </button>
               </nav>
             </div>
 
@@ -389,6 +400,14 @@ export default function AppArea({
                   <WalletSecurity />
                 </CardContent>
               </Card>
+            )}
+
+            {activeTab === 'analytics' && (
+              <DataVisualizationDashboard 
+                data={rows}
+                loading={loading}
+                onRefresh={onRefresh}
+              />
             )}
           </main>
         </div>
