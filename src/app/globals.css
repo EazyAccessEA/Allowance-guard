@@ -257,6 +257,10 @@ body {
   font-size: 16px;
   font-weight: 400;
   min-height: 100vh;
+  
+  /* Accessibility Enhancements */
+  color: #1E293B; /* Ensure sufficient contrast */
+  line-height: 1.6; /* Improved readability */
 }
 
 /* AG Hex System Components */
@@ -1842,4 +1846,1289 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* ========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ======================================== */
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Skip Links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  font-weight: 600;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Enhanced Focus States */
+.focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Touch Target Optimization */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --primary-500: #0000FF;
+    --primary-600: #0000CC;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --background-primary: #FFFFFF;
+    --background-secondary: #F5F5F5;
+    --border-primary: #000000;
+  }
+  
+  .mobbin-card {
+    border: 2px solid currentColor;
+  }
+  
+  .mobbin-button {
+    border: 2px solid currentColor;
+  }
+  
+  .mobbin-focus-ring:focus {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .mobbin-hover-lift:hover,
+  .mobbin-hover-scale:hover,
+  .mobbin-hover-glow:hover,
+  .mobbin-hover-slide:hover,
+  .mobbin-hover-rotate:hover,
+  .mobbin-hover-bounce:hover,
+  .mobbin-hover-fade:hover,
+  .mobbin-hover-color:hover {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+  
+  .mobbin-fade-in,
+  .mobbin-slide-in-left,
+  .mobbin-slide-in-right,
+  .mobbin-scale-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Color Blind Friendly Enhancements */
+.color-blind-friendly {
+  /* Use patterns, shapes, and text labels in addition to color */
+}
+
+.color-blind-friendly::before {
+  content: attr(data-label);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+/* Keyboard Navigation Enhancements */
+.keyboard-navigation {
+  /* Ensure all interactive elements are keyboard accessible */
+}
+
+.keyboard-navigation button:focus,
+.keyboard-navigation a:focus,
+.keyboard-navigation input:focus,
+.keyboard-navigation select:focus,
+.keyboard-navigation textarea:focus {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ARIA Live Regions */
+.live-region {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Form Accessibility */
+.form-field {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-label.required::after {
+  content: " *";
+  color: #DC2626;
+  font-weight: bold;
+}
+
+.form-error {
+  color: #DC2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.form-error::before {
+  content: "⚠";
+  font-size: 1rem;
+}
+
+.form-help {
+  color: #6B7280;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Table Accessibility */
+.accessible-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.accessible-table th {
+  background-color: #F9FAFB;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.accessible-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.accessible-table tbody tr:hover {
+  background-color: #F9FAFB;
+}
+
+/* Loading States with Accessibility */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #E5E7EB;
+  border-radius: 50%;
+  border-top-color: #3B82F6;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.loading-spinner[aria-label] {
+  /* Screen reader will announce the loading state */
+}
+
+/* Error States with Accessibility */
+.error-state {
+  border: 2px solid #DC2626;
+  background-color: #FEF2F2;
+  color: #DC2626;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.error-state::before {
+  content: "⚠ Error: ";
+  font-weight: bold;
+}
+
+/* Success States with Accessibility */
+.success-state {
+  border: 2px solid #059669;
+  background-color: #F0FDF4;
+  color: #059669;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.success-state::before {
+  content: "✓ Success: ";
+  font-weight: bold;
+}
+
+/* Warning States with Accessibility */
+.warning-state {
+  border: 2px solid #D97706;
+  background-color: #FFFBEB;
+  color: #D97706;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.warning-state::before {
+  content: "⚠ Warning: ";
+  font-weight: bold;
+}
+
+/* Info States with Accessibility */
+.info-state {
+  border: 2px solid #2563EB;
+  background-color: #EFF6FF;
+  color: #2563EB;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.info-state::before {
+  content: "ℹ Info: ";
+  font-weight: bold;
+}
+
+/* ========================================
+   BEST-IN-CLASS MOBILE MENU ANIMATIONS
+   ======================================== */
+
+/* Mobile Menu Slide-in Animation */
+@keyframes mobileMenuSlideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes mobileMenuSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Mobile Menu Backdrop Animation */
+@keyframes mobileMenuBackdropIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes mobileMenuBackdropOut {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Mobile Menu Item Stagger Animation */
+@keyframes mobileMenuItemIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Mobile Menu Hover Effects */
+.mobile-menu-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.mobile-menu-item:hover::before {
+  left: 100%;
+}
+
+/* Mobile Menu Icon Animations */
+@keyframes mobileMenuIconRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes mobileMenuIconRotateBack {
+  from {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Mobile Menu Pulse Animation for Notifications */
+@keyframes mobileMenuPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Mobile Menu Ripple Effect */
+@keyframes mobileMenuRipple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.mobile-menu-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.3);
+  transform: translate(-50%, -50%);
+  animation: mobileMenuRipple 0.6s ease-out;
+}
+
+/* Mobile Menu Glow Effect */
+@keyframes mobileMenuGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.4);
+  }
+}
+
+/* Mobile Menu Bounce Animation */
+@keyframes mobileMenuBounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+/* Mobile Menu Shake Animation */
+@keyframes mobileMenuShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(2px);
+  }
+}
+
+/* Mobile Menu Scale Animation */
+@keyframes mobileMenuScale {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Fade Animation */
+@keyframes mobileMenuFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Slide Up Animation */
+@keyframes mobileMenuSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Rotation Animation */
+@keyframes mobileMenuRotate {
+  from {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* Mobile Menu Elastic Animation */
+@keyframes mobileMenuElastic {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile Menu Wobble Animation */
+@keyframes mobileMenuWobble {
+  0% {
+    transform: translateX(0%);
+  }
+  15% {
+    transform: translateX(-25%) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(20%) rotate(3deg);
+  }
+  45% {
+    transform: translateX(-15%) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(10%) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-5%) rotate(-1deg);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* Mobile Menu Flip Animation */
+@keyframes mobileMenuFlip {
+  0% {
+    transform: perspective(400px) rotateY(0);
+  }
+  40% {
+    transform: perspective(400px) rotateY(-90deg);
+  }
+  60% {
+    transform: perspective(400px) rotateY(-90deg);
+  }
+  100% {
+    transform: perspective(400px) rotateY(0);
+  }
+}
+
+/* Mobile Menu Zoom Animation */
+@keyframes mobileMenuZoom {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile Menu Slide Down Animation */
+@keyframes mobileMenuSlideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Hinge Animation */
+@keyframes mobileMenuHinge {
+  0% {
+    transform: rotate(0);
+    transform-origin: top left;
+  }
+  20%, 60% {
+    transform: rotate(80deg);
+    transform-origin: top left;
+  }
+  40% {
+    transform: rotate(60deg);
+    transform-origin: top left;
+  }
+  80% {
+    transform: rotate(60deg) translateY(0);
+    transform-origin: top left;
+  }
+  100% {
+    transform: translateY(700px);
+  }
+}
+
+/* Mobile Menu Jack Animation */
+@keyframes mobileMenuJack {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Mobile Menu Flash Animation */
+@keyframes mobileMenuFlash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+/* Mobile Menu Jello Animation */
+@keyframes mobileMenuJello {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* Mobile Menu Light Speed Animation */
+@keyframes mobileMenuLightSpeed {
+  0% {
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+  }
+  60% {
+    transform: skewX(20deg);
+    opacity: 1;
+  }
+  80% {
+    transform: skewX(-5deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Roll Animation */
+@keyframes mobileMenuRoll {
+  0% {
+    transform: translateX(-100%) rotate(-120deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+/* Mobile Menu Swing Animation */
+@keyframes mobileMenuSwing {
+  20% {
+    transform: rotate3d(0, 0, 1, 15deg);
+  }
+  40% {
+    transform: rotate3d(0, 0, 1, -10deg);
+  }
+  60% {
+    transform: rotate3d(0, 0, 1, 5deg);
+  }
+  80% {
+    transform: rotate3d(0, 0, 1, -5deg);
+  }
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+}
+
+/* Mobile Menu Tada Animation */
+@keyframes mobileMenuTada {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  10%, 20% {
+    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+  }
+  30%, 50%, 70%, 90% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+  }
+  40%, 60%, 80% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* Mobile Menu Rubber Band Animation */
+@keyframes mobileMenuRubberBand {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* Mobile Menu Heart Beat Animation */
+@keyframes mobileMenuHeartBeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.3);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.3);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile Menu Head Shake Animation */
+@keyframes mobileMenuHeadShake {
+  0% {
+    transform: translateX(0);
+  }
+  6.5% {
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+  18.5% {
+    transform: translateX(5px) rotateY(7deg);
+  }
+  31.5% {
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+  43.5% {
+    transform: translateX(2px) rotateY(3deg);
+  }
+  50% {
+    transform: translateX(0);
+  }
+}
+
+/* Mobile Menu Pulse Grow Animation */
+@keyframes mobileMenuPulseGrow {
+  to {
+    transform: scale(1.1);
+  }
+}
+
+/* Mobile Menu Pulse Shrink Animation */
+@keyframes mobileMenuPulseShrink {
+  to {
+    transform: scale(0.95);
+  }
+}
+
+/* Mobile Menu Push Animation */
+@keyframes mobileMenuPush {
+  50% {
+    transform: scale(0.8);
+  }
+}
+
+/* Mobile Menu Pop Animation */
+@keyframes mobileMenuPop {
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Mobile Menu Rotate In Animation */
+@keyframes mobileMenuRotateIn {
+  from {
+    transform: rotate(-200deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Rotate In Down Left Animation */
+@keyframes mobileMenuRotateInDownLeft {
+  from {
+    transform: rotate3d(0, 0, 1, -45deg);
+    transform-origin: left bottom;
+    opacity: 0;
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 0deg);
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Rotate In Down Right Animation */
+@keyframes mobileMenuRotateInDownRight {
+  from {
+    transform: rotate3d(0, 0, 1, 45deg);
+    transform-origin: right bottom;
+    opacity: 0;
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 0deg);
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Rotate In Up Left Animation */
+@keyframes mobileMenuRotateInUpLeft {
+  from {
+    transform: rotate3d(0, 0, 1, 45deg);
+    transform-origin: left bottom;
+    opacity: 0;
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 0deg);
+    transform-origin: left bottom;
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Rotate In Up Right Animation */
+@keyframes mobileMenuRotateInUpRight {
+  from {
+    transform: rotate3d(0, 0, 1, -45deg);
+    transform-origin: right bottom;
+    opacity: 0;
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 0deg);
+    transform-origin: right bottom;
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Zoom In Animation */
+@keyframes mobileMenuZoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Mobile Menu Zoom In Down Animation */
+@keyframes mobileMenuZoomInDown {
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* Mobile Menu Zoom In Left Animation */
+@keyframes mobileMenuZoomInLeft {
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(-1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* Mobile Menu Zoom In Right Animation */
+@keyframes mobileMenuZoomInRight {
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(1000px, 0, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* Mobile Menu Zoom In Up Animation */
+@keyframes mobileMenuZoomInUp {
+  from {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 1000px, 0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0);
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
+  }
+}
+
+/* Mobile Menu Slide In Down Animation */
+@keyframes mobileMenuSlideInDown {
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Slide In Left Animation */
+@keyframes mobileMenuSlideInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Slide In Right Animation */
+@keyframes mobileMenuSlideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Slide In Up Animation */
+@keyframes mobileMenuSlideInUp {
+  from {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Down Animation */
+@keyframes mobileMenuFadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Down Big Animation */
+@keyframes mobileMenuFadeInDownBig {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -2000px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Left Animation */
+@keyframes mobileMenuFadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Left Big Animation */
+@keyframes mobileMenuFadeInLeftBig {
+  from {
+    opacity: 0;
+    transform: translate3d(-2000px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Right Animation */
+@keyframes mobileMenuFadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Right Big Animation */
+@keyframes mobileMenuFadeInRightBig {
+  from {
+    opacity: 0;
+    transform: translate3d(2000px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Up Animation */
+@keyframes mobileMenuFadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Up Big Animation */
+@keyframes mobileMenuFadeInUpBig {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 2000px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Top Left Animation */
+@keyframes mobileMenuFadeInTopLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Top Right Animation */
+@keyframes mobileMenuFadeInTopRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, -100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Bottom Left Animation */
+@keyframes mobileMenuFadeInBottomLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Fade In Bottom Right Animation */
+@keyframes mobileMenuFadeInBottomRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Bounce In Animation */
+@keyframes mobileMenuBounceIn {
+  from, 20%, 40%, 60%, 80%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* Mobile Menu Bounce In Down Animation */
+@keyframes mobileMenuBounceInDown {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0) scaleY(3);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0) scaleY(0.9);
+  }
+  75% {
+    transform: translate3d(0, -10px, 0) scaleY(0.95);
+  }
+  90% {
+    transform: translate3d(0, 5px, 0) scaleY(0.985);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Bounce In Left Animation */
+@keyframes mobileMenuBounceInLeft {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: translate3d(-3000px, 0, 0) scaleX(3);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(25px, 0, 0) scaleX(0.9);
+  }
+  75% {
+    transform: translate3d(-10px, 0, 0) scaleX(0.95);
+  }
+  90% {
+    transform: translate3d(5px, 0, 0) scaleX(0.985);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Bounce In Right Animation */
+@keyframes mobileMenuBounceInRight {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: translate3d(3000px, 0, 0) scaleX(3);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(-25px, 0, 0) scaleX(0.9);
+  }
+  75% {
+    transform: translate3d(10px, 0, 0) scaleX(0.95);
+  }
+  90% {
+    transform: translate3d(-5px, 0, 0) scaleX(0.985);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile Menu Bounce In Up Animation */
+@keyframes mobileMenuBounceInUp {
+  from, 60%, 75%, 90%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0) scaleY(3);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -25px, 0) scaleY(0.9);
+  }
+  75% {
+    transform: translate3d(0, 10px, 0) scaleY(0.95);
+  }
+  90% {
+    transform: translate3d(0, -5px, 0) scaleY(0.985);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }

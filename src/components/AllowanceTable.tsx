@@ -98,8 +98,8 @@ export default function AllowanceTable({
 
   if (!data?.length) {
     return (
-      <div className="text-center py-12">
-        <div className="w-16 h-16 bg-background-light rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="text-center py-12" role="region" aria-label="No allowances found">
+        <div className="w-16 h-16 bg-background-light rounded-full flex items-center justify-center mx-auto mb-4" aria-hidden="true">
           <Shield className="w-8 h-8 text-text-muted" />
         </div>
         <h3 className="mobbin-heading-3 text-text-primary mb-2">No allowances found</h3>
@@ -109,6 +109,7 @@ export default function AllowanceTable({
         <Button 
           onClick={onRefresh}
           variant="primary"
+          aria-label="Run security scan to check for token approvals"
         >
           Run Security Scan
         </Button>
@@ -118,12 +119,14 @@ export default function AllowanceTable({
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <div className="flex items-center gap-3">
+      <div className="space-y-4" role="region" aria-label="Loading token approvals">
+        <div className="flex items-center gap-3" aria-hidden="true">
           <div className="h-9 w-24 bg-background-light rounded-full animate-pulse" />
           <div className="h-9 w-32 bg-background-light rounded-full animate-pulse" />
         </div>
-        <FireartTableSkeleton rows={5} />
+        <div aria-live="polite" aria-label="Loading token approvals data">
+          <FireartTableSkeleton rows={5} />
+        </div>
       </div>
     )
   }
@@ -131,15 +134,16 @@ export default function AllowanceTable({
   return (
     <div className="space-y-4">
       {/* Action Bar */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between" role="toolbar" aria-label="Token approval actions">
         <div className="flex items-center gap-3">
           <Button 
             onClick={selectRisky} 
             variant="secondary" 
             size="sm"
             className="flex items-center gap-2"
+            aria-label={`Select ${risky.length} risky token approvals`}
           >
-            <AlertTriangle className="w-4 h-4" />
+            <AlertTriangle className="w-4 h-4" aria-hidden="true" />
             Select Risky ({risky.length})
           </Button>
           <Button 
@@ -149,29 +153,37 @@ export default function AllowanceTable({
             size="sm"
             loading={busy}
             className="flex items-center gap-2"
-            title={!canRevoke ? 'View-only access' : !revokeAllowed ? 'Connect the selected wallet to revoke' : ''}
+            aria-label={busy ? `Revoking ${progress ?? ''}` : `Revoke ${selectedRows.length} selected approvals`}
+            aria-describedby={!canRevoke ? 'view-only-access' : !revokeAllowed ? 'connect-wallet-to-revoke' : undefined}
           >
-            <Zap className="w-4 h-4" />
+            <Zap className="w-4 h-4" aria-hidden="true" />
             {busy ? `Revoking… ${progress ?? ''}` : `Revoke Selected (${selectedRows.length})`}
           </Button>
         </div>
         
         {selectedRows.length > 0 && (
-          <Badge variant="info" className="flex items-center gap-1">
-            <CheckCircle className="w-3 h-3" />
+          <Badge variant="info" className="flex items-center gap-1" role="status" aria-live="polite">
+            <CheckCircle className="w-3 h-3" aria-hidden="true" />
             {selectedRows.length} selected
           </Badge>
         )}
+      </div>
+      
+      {/* Hidden descriptions for screen readers */}
+      <div className="sr-only">
+        <div id="view-only-access">View-only access: Cannot revoke approvals</div>
+        <div id="connect-wallet-to-revoke">Connect the selected wallet to revoke approvals</div>
       </div>
 
       {/* Table */}
       <div className="border border-border-primary rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full mobbin-body-small" role="table" aria-label="Token allowances">
+          <table className="w-full mobbin-body-small accessible-table" role="table" aria-label="Token allowances">
+            <caption className="sr-only">Token approval allowances with risk assessment and management options</caption>
             <thead className="bg-background-secondary border-b border-border-primary">
               <tr>
                 <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">
-                  <span className="sr-only">Select</span>
+                  <span className="sr-only">Select for bulk action</span>
                 </th>
                 <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Chain</th>
                 <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Token</th>
@@ -190,6 +202,7 @@ export default function AllowanceTable({
                       checked={!!sel[keyOf(r)]} 
                       onChange={() => toggle(r)}
                       className="rounded border-border-primary text-primary-500 focus:ring-primary-500"
+                      aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval for ${r.spender_label || 'Unknown Contract'}`}
                     />
                   </td>
                   
