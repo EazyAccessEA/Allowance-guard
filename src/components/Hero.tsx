@@ -50,8 +50,8 @@ export default function Hero({
                 "find and\ncut off silent threats.",
                 "control who\nhas access to your funds."
               ]}
-              typingSpeed={80}
-              deletingSpeed={60}
+              typingSpeed={90}
+              deletingSpeed={70}
               pauseTime={2500}
               className="inline-block"
             />
