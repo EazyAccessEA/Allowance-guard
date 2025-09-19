@@ -1,14 +1,92 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-// H1 component not used - using native h1 for better responsive control
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import VideoBackground from '@/components/VideoBackground'
-import RotatingTypewriter from '@/components/RotatingTypewriter'
 import ConnectButton from '@/components/ConnectButton'
 import TestConnect from '@/components/TestConnect'
+
+// New MultiLineTypewriter component
+const MultiLineTypewriter = ({ messages, typingSpeed, deletingSpeed, pauseTime, className }) => {
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
+  const [currentText, setCurrentText] = useState('')
+  const [currentLine, setCurrentLine] = useState(1)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    let timer
+    const currentMessage = messages[currentMessageIndex]
+    
+    // Split message into two parts: first two words and the rest
+    const words = currentMessage.split(/\s+/)
+    const firstLine = words.slice(0, 2).join(' ')
+    const secondLine = words.slice(2).join(' ')
+    
+    if (isPaused) {
+      timer = setTimeout(() => {
+        setIsPaused(false)
+        setIsDeleting(true)
+      }, pauseTime)
+    } else if (isDeleting) {
+      // Deleting phase
+      if (currentText.length > 0) {
+        timer = setTimeout(() => {
+          setCurrentText(currentText.substring(0, currentText.length - 1))
+        }, deletingSpeed)
+      } else {
+        // Move to next message when deletion is complete
+        setIsDeleting(false)
+        setCurrentLine(1)
+        setCurrentMessageIndex((prevIndex) => (prevIndex + 1) % messages.length)
+      }
+    } else {
+      // Typing phase
+      const targetText = currentLine === 1 ? firstLine : secondLine
+      
+      if (currentText.length < targetText.length) {
+        timer = setTimeout(() => {
+          setCurrentText(targetText.substring(0, currentText.length + 1))
+        }, typingSpeed)
+      } else if (currentLine === 1) {
+        // Move to second line
+        setCurrentLine(2)
+        setCurrentText('')
+      } else {
+        // Finished typing both lines, pause before deleting
+        setIsPaused(true)
+      }
+    }
+
+    return () => clearTimeout(timer)
+  }, [currentMessageIndex, currentText, isDeleting, isPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
+
+  // Format the text based on current line
+  const formatText = () => {
+    if (currentLine === 1) {
+      return <span>{currentText}</span>
+    } else {
+      const words = messages[currentMessageIndex].split(/\s+/)
+      const firstLine = words.slice(0, 2).join(' ')
+      return (
+        <>
+          <span className="block">{firstLine}</span>
+          <span>{currentText}</span>
+        </>
+      )
+    }
+  }
+
+  return (
+    <span className={className}>
+      {formatText()}
+      <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-600 animate-pulse" />
+    </span>
+  )
+}
 
 interface HeroProps {
   isConnected: boolean
@@ -41,14 +119,13 @@ export default function Hero({
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-4 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <span className="text-text-primary">The power to </span>
-          <span className="text-primary-600 inline-block w-[20ch]">
-            <RotatingTypewriter 
-              staticPrefix=""
+          <span className="text-primary-600 inline-block min-h-[1.2em]">
+            <MultiLineTypewriter 
               messages={[
-                "see every\nhidden connection clearly.",
-                "instantly revoke\nany risky approval.",
-                "find and\ncut off silent threats.",
-                "control who\nhas access to funds."
+                "see every hidden connection clearly",
+                "instantly revoke any risky approval",
+                "find and cut off silent threats",
+                "control who has access to funds"
               ]}
               typingSpeed={90}
               deletingSpeed={70}
