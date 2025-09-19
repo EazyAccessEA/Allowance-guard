@@ -3,7 +3,7 @@
 import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
-import { getAccessibilityClasses, screenReaderAnnouncements } from '@/lib/accessibility'
+import { getAccessibilityClasses, ariaHelpers } from '@/lib/accessibility'
 
 // Enhanced alert variants following Sketch-inspired design system
 const alertVariants = cva(
@@ -59,7 +59,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     React.useEffect(() => {
       if (announceToScreenReader && (title || children)) {
         const message = title ? `${title}: ${children}` : children
-        screenReaderAnnouncements.announce(message as string, priority)
+        ariaHelpers.announce(message as string, priority)
       }
     }, [announceToScreenReader, title, children, priority])
     

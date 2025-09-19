@@ -31,7 +31,6 @@ interface MobileNavigationProps {
 
 function MobileNavigation({ isConnected }: MobileNavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState<string | null>(null)
   const pathname = usePathname()
   const menuRef = useRef<HTMLDivElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
@@ -39,7 +38,6 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
   // Close menu on route change
   useEffect(() => {
     setIsOpen(false)
-    setActiveSection(null)
   }, [pathname])
 
   // Prevent body scroll and manage focus when menu is open
