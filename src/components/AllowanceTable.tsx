@@ -102,8 +102,8 @@ export default function AllowanceTable({
         <div className="w-16 h-16 bg-background-light rounded-full flex items-center justify-center mx-auto mb-4">
           <Shield className="w-8 h-8 text-text-muted" />
         </div>
-        <h3 className="text-lg font-semibold text-text-primary mb-2">No allowances found</h3>
-        <p className="text-text-secondary mb-6 max-w-md mx-auto">
+        <h3 className="mobbin-heading-3 text-text-primary mb-2">No allowances found</h3>
+        <p className="mobbin-body text-text-secondary mb-6 max-w-md mx-auto">
           This wallet has no token approvals. Run a scan to check for allowances across supported chains.
         </p>
         <Button 
@@ -165,10 +165,10 @@ export default function AllowanceTable({
       </div>
 
       {/* Table */}
-      <div className="border border-border-default rounded-lg overflow-hidden">
+      <div className="border border-border-primary rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm" role="table" aria-label="Token allowances">
-            <thead className="bg-background-light border-b border-border-default">
+          <table className="w-full mobbin-body-small" role="table" aria-label="Token allowances">
+            <thead className="bg-background-secondary border-b border-border-primary">
               <tr>
                 <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">
                   <span className="sr-only">Select</span>
@@ -181,15 +181,15 @@ export default function AllowanceTable({
                 <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary">Risk</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border-default">
+            <tbody className="divide-y divide-border-primary">
               {data.map((r, i) => (
-                <tr key={i} className="hover:bg-background-light/50 transition-colors">
+                <tr key={i} className="hover:bg-background-secondary/50 transition-colors">
                   <td className="px-4 py-3">
                     <input 
                       type="checkbox" 
                       checked={!!sel[keyOf(r)]} 
                       onChange={() => toggle(r)}
-                      className="rounded border-border-default text-primary-accent focus:ring-primary-accent"
+                      className="rounded border-border-primary text-primary-500 focus:ring-primary-500"
                     />
                   </td>
                   
@@ -204,7 +204,7 @@ export default function AllowanceTable({
                       <span className="font-medium text-text-primary">
                         {r.token_symbol || r.token_name || 'Unknown'}
                       </span>
-                      <span className="text-xs text-text-muted font-mono">
+                      <span className="mobbin-caption text-text-tertiary font-mono">
                         {r.token_address.slice(0, 6)}...{r.token_address.slice(-4)}
                       </span>
                     </div>
@@ -215,7 +215,7 @@ export default function AllowanceTable({
                       <span className="font-medium text-text-primary">
                         {r.spender_label || 'Unknown Contract'}
                       </span>
-                      <span className="text-xs text-text-muted font-mono">
+                      <span className="mobbin-caption text-text-tertiary font-mono">
                         {r.spender_address.slice(0, 6)}...{r.spender_address.slice(-4)}
                       </span>
                       {r.spender_trust && (

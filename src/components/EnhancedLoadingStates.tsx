@@ -12,20 +12,20 @@ export function DashboardSkeleton() {
     <div className="space-y-6">
       {/* Header Skeleton */}
       <div className="animate-pulse">
-        <div className="h-8 bg-neutral-borders/30 rounded-lg w-64 mb-2" />
-        <div className="h-4 bg-neutral-borders/20 rounded w-96" />
+        <div className="h-8 bg-neutral-200 rounded-lg w-64 mb-2" />
+        <div className="h-4 bg-neutral-100 rounded w-96" />
       </div>
 
       {/* Stats Grid Skeleton */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, i) => (
           <Card key={i}>
-            <CardContent className="p-4">
-              <div className="animate-pulse flex items-center gap-3">
-                <div className="w-10 h-10 bg-neutral-borders/20 rounded-lg" />
+            <CardContent className="p-6">
+              <div className="animate-pulse flex items-center gap-4">
+                <div className="w-12 h-12 bg-neutral-100 rounded-lg" />
                 <div className="flex-1">
-                  <div className="h-3 bg-neutral-borders/20 rounded w-16 mb-2" />
-                  <div className="h-6 bg-neutral-borders/30 rounded w-12" />
+                  <div className="h-3 bg-neutral-100 rounded w-16 mb-2" />
+                  <div className="h-6 bg-neutral-200 rounded w-12" />
                 </div>
               </div>
             </CardContent>
@@ -248,20 +248,21 @@ export function StatsCard({
   }
 
   return (
-    <Card className={className}>
-      <CardContent className="p-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary-accent/10 rounded-lg flex items-center justify-center">
+    <Card className={`mobbin-card hover:shadow-md transition-all duration-200 ${className}`}>
+      <CardContent className="p-6">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center border border-primary-200">
             {icon}
           </div>
           <div className="flex-1">
-            <p className="text-sm text-neutral-text">{title}</p>
-            <div className="flex items-center gap-2">
-              <p className="text-2xl font-bold text-neutral-text">{value}</p>
+            <p className="mobbin-caption text-text-tertiary mb-1">{title}</p>
+            <div className="flex items-center gap-3">
+              <p className="mobbin-heading-2 text-text-primary">{value}</p>
               {trend && trendValue && (
                 <Badge 
                   variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'secondary'}
                   size="sm"
+                  className="mobbin-caption"
                 >
                   {trend === 'up' ? '↗' : trend === 'down' ? '↘' : '→'} {trendValue}
                 </Badge>

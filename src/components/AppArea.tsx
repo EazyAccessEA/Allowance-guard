@@ -101,10 +101,10 @@ export default function AppArea({
       <Container>
         {/* Dashboard Header */}
         <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">Security Dashboard</h2>
-              <p className="text-text-secondary">Monitor and manage your wallet&apos;s token approvals</p>
+              <h2 className="mobbin-heading-1 text-text-primary mb-2">Security Dashboard</h2>
+              <p className="mobbin-body text-text-secondary">Monitor and manage your wallet&apos;s token approvals</p>
             </div>
             <Button
               onClick={onRefresh}
@@ -118,7 +118,7 @@ export default function AppArea({
           </div>
 
           {/* Quick Stats - Mobile Optimized */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
             <StatsCard
               title="Total Allowances"
               value={total}
@@ -152,13 +152,13 @@ export default function AppArea({
             {/* Wallet Manager */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 mobbin-heading-4">
                   <Settings className="w-5 h-5" />
                   Wallet Management
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-text-secondary mb-4">
+                <p className="mobbin-body-small text-text-secondary mb-4">
                   Manage addresses you want to scan and monitor.
                 </p>
                 <WalletManager
@@ -172,7 +172,7 @@ export default function AppArea({
             {/* Monitoring Settings */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 mobbin-heading-4">
                   <Eye className="w-5 h-5" />
                   Monitoring
                 </CardTitle>
@@ -185,13 +185,13 @@ export default function AppArea({
                     onChange={e=>setMonitorOn(e.target.checked)} 
                     className="rounded border-border-default text-primary-accent focus:ring-primary-accent"
                   />
-                  <label className="text-sm font-medium text-text-primary">
+                  <label className="mobbin-body-small font-medium text-text-primary">
                     Enable auto-rescan & drift alerts
                   </label>
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-text-secondary">Every</span>
+                  <span className="mobbin-body-small text-text-secondary">Every</span>
                   <Input
                     type="number"
                     value={monitorFreq}
@@ -199,7 +199,7 @@ export default function AppArea({
                     className="w-20 h-8"
                     inputSize="sm"
                   />
-                  <span className="text-sm text-text-secondary">minutes</span>
+                  <span className="mobbin-body-small text-text-secondary">minutes</span>
                 </div>
                 
                 <Button 
@@ -216,28 +216,28 @@ export default function AppArea({
             {/* Security Tips */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 mobbin-heading-4">
                   <Shield className="w-5 h-5" />
                   Security Tips
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-semantic-danger rounded-full mt-2 flex-shrink-0" />
-                    <p className="text-sm text-text-secondary">
+                    <div className="w-2 h-2 bg-semantic-error-500 rounded-full mt-2 flex-shrink-0" />
+                    <p className="mobbin-body-small text-text-secondary">
                       <strong>Unlimited approvals</strong> are the #1 drain vector. Revoke them first.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-semantic-warning rounded-full mt-2 flex-shrink-0" />
-                    <p className="text-sm text-text-secondary">
+                    <div className="w-2 h-2 bg-semantic-warning-500 rounded-full mt-2 flex-shrink-0" />
+                    <p className="mobbin-body-small text-text-secondary">
                       <strong>Stale approvals</strong> to inactive contracts should be cleaned up.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-semantic-info rounded-full mt-2 flex-shrink-0" />
-                    <p className="text-sm text-text-secondary">
+                    <div className="w-2 h-2 bg-semantic-info-500 rounded-full mt-2 flex-shrink-0" />
+                    <p className="mobbin-body-small text-text-secondary">
                       <strong>Regular monitoring</strong> helps catch new approvals quickly.
                     </p>
                   </div>
@@ -249,24 +249,24 @@ export default function AppArea({
           {/* Main Content */}
           <main className="lg:col-span-8">
             {/* Tab Navigation */}
-            <div className="mb-6">
-              <nav className="flex space-x-1 bg-background-light p-1 rounded-lg border border-border-default">
+            <div className="mb-8">
+              <nav className="flex space-x-1 bg-background-secondary p-1 rounded-lg border border-border-primary">
                 <button
                   onClick={() => setActiveTab('allowances')}
-                  className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
+                  className={`flex-1 py-3 px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 ${
                     activeTab === 'allowances'
-                      ? 'bg-white text-primary-accent shadow-sm'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-white/50'
+                      ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
                   }`}
                 >
                   Token Allowances
                 </button>
                 <button
                   onClick={() => setActiveTab('security')}
-                  className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
+                  className={`flex-1 py-3 px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 ${
                     activeTab === 'security'
-                      ? 'bg-white text-primary-accent shadow-sm'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-white/50'
+                      ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
                   }`}
                 >
                   Security Dashboard
@@ -292,8 +292,8 @@ export default function AppArea({
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div>
-                        <CardTitle>Token Approvals</CardTitle>
-                        <p className="text-sm text-text-secondary mt-1">
+                        <CardTitle className="mobbin-heading-3">Token Approvals</CardTitle>
+                        <p className="mobbin-body-small text-text-secondary mt-2">
                           Review and manage your token allowances across all chains.
                         </p>
                       </div>
@@ -341,8 +341,8 @@ export default function AppArea({
                   
                   {/* Pagination */}
                   {total > 0 && (
-                    <div className="mt-6 pt-6 border-t border-border-default flex items-center justify-between">
-                      <div className="text-sm text-text-secondary">
+                    <div className="mt-8 pt-6 border-t border-border-primary flex items-center justify-between">
+                      <div className="mobbin-body-small text-text-secondary">
                         Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
                       </div>
                       <div className="flex items-center gap-3">
@@ -365,7 +365,7 @@ export default function AppArea({
                         <select
                           value={pageSize}
                           onChange={(e) => onPageSize(Number(e.target.value))}
-                          className="border border-border-default rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary-accent/20"
+                          className="border border-border-primary rounded-md px-3 py-1 mobbin-body-small focus:outline-none focus:ring-2 focus:ring-primary-500/20"
                         >
                           {[10,25,50,100].map(n => <option key={n} value={n}>{n}/page</option>)}
                         </select>
@@ -380,8 +380,8 @@ export default function AppArea({
             {activeTab === 'security' && (
               <Card>
                 <CardHeader>
-                  <CardTitle>Security Dashboard</CardTitle>
-                  <p className="text-sm text-text-secondary mt-1">
+                  <CardTitle className="mobbin-heading-3">Security Dashboard</CardTitle>
+                  <p className="mobbin-body-small text-text-secondary mt-2">
                     Comprehensive security analysis and monitoring for your wallet.
                   </p>
                 </CardHeader>
