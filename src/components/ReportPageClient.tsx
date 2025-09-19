@@ -46,7 +46,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
       <Container className="py-8">
         <div className="print:hidden mb-8">
           <H1 className="mb-2">Allowance Guard — Report</H1>
-          <p className="text-stone text-sm">
+          <p className="text-text-tertiary text-sm">
             Wallet: <span className="font-mono text-ink">{wallet}</span>
           </p>
           <div className="mt-4 flex items-center gap-4">
@@ -73,7 +73,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <div className="w-12 h-12 border-4 border-cobalt border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-stone">Loading allowances...</p>
+                <p className="text-text-tertiary">Loading allowances...</p>
               </div>
             </div>
           </div>
@@ -81,13 +81,13 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
           <>
             <div className="print:block hidden mb-4">
               <h1 className="text-2xl font-bold text-ink">Allowance Guard — Report</h1>
-              <p className="text-sm text-stone mt-1">
+              <p className="text-sm text-text-tertiary mt-1">
                 Wallet: <span className="font-mono">{wallet}</span>
               </p>
-              <p className="text-sm text-stone">
+              <p className="text-sm text-text-tertiary">
                 Generated: {new Date().toLocaleString()}
               </p>
-              <p className="text-sm text-stone">
+              <p className="text-sm text-text-tertiary">
                 Filter: {riskOnly ? 'Risky approvals only' : 'All approvals'}
               </p>
             </div>
@@ -108,7 +108,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
                 <tbody>
                   {rows.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-stone">
+                      <td colSpan={7} className="py-8 text-center text-text-tertiary">
                         No allowances found
                       </td>
                     </tr>
@@ -148,7 +148,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
               </table>
             </section>
 
-            <section className="print:block hidden mt-8 text-[10px] text-stone border-t border-line pt-4">
+            <section className="print:block hidden mt-8 text-[10px] text-text-tertiary border-t border-line pt-4">
               <p>Generated {new Date().toLocaleString()} • www.allowanceguard.com</p>
               <p className="mt-1">Tip: Revoke UNLIMITED approvals first for better security.</p>
             </section>

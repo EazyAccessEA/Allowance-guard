@@ -28,8 +28,16 @@ export default function VideoBackground({
       muted
       playsInline
       preload="metadata"
+      aria-label="Allowance Guard background animation"
     >
       <source src={videoSrc} type="video/mp4" />
+      <track
+        kind="captions"
+        srcLang="en"
+        label="English"
+        src=""
+        default
+      />
       Your browser does not support the video tag.
     </video>
   )

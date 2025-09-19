@@ -45,8 +45,8 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
   return (
     <section className="mt-8">
       <h2 className="text-base font-semibold text-ink">Activity</h2>
-      {loading && <div className="text-sm mt-2 text-stone">Loading…</div>}
-      {!loading && items.length === 0 && <div className="text-sm mt-2 text-stone">No recent revocations yet.</div>}
+      {loading && <div className="text-sm mt-2 text-text-tertiary">Loading…</div>}
+      {!loading && items.length === 0 && <div className="text-sm mt-2 text-text-tertiary">No recent revocations yet.</div>}
       <div className="mt-3 space-y-3">
         {items.map((r) => {
           const url = explorerTx(r.chain_id, r.tx_hash)
@@ -60,7 +60,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
                 <div className="font-medium text-ink">Revoke • chain {r.chain_id} • {r.standard}</div>
                 <span className={`rounded px-2 py-0.5 text-xs font-medium ${badge}`}>{r.status.toUpperCase()}</span>
               </div>
-              <div className="mt-2 text-xs text-stone">
+              <div className="mt-2 text-xs text-text-tertiary">
                 <div>Token: <span className="font-mono text-ink">{r.token_address}</span></div>
                 <div>Spender: <span className="font-mono text-ink">{r.spender_address}</span></div>
                 <div>Pre: <span className="font-mono text-ink">{r.pre_amount}</span>{r.post_amount!=null && <> • Post: <span className="font-mono text-ink">{r.post_amount}</span></>}</div>
@@ -72,7 +72,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
                 )}
                 {r.error && <span className="text-xs text-crimson">Error: {r.error}</span>}
               </div>
-              <div className="mt-2 text-[11px] text-stone">At {new Date(r.created_at).toLocaleString()}</div>
+              <div className="mt-2 text-[11px] text-text-tertiary">At {new Date(r.created_at).toLocaleString()}</div>
             </div>
           )
         })}

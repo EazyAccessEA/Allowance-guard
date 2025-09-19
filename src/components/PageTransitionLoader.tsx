@@ -72,7 +72,7 @@ export function FireartLoadingOverlay({
           </div>
         )}
         
-        <p className="text-sm text-stone">
+        <p className="text-sm text-text-tertiary">
           Please wait while we process your request...
         </p>
       </div>

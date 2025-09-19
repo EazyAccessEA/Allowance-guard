@@ -172,7 +172,7 @@ export function LoadingOverlay({
           <div className="w-12 h-12 bg-gradient-to-r from-cobalt to-emerald rounded-full flex items-center justify-center mx-auto mb-4">
             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
           </div>
-          <p className="text-stone font-medium">{message}</p>
+          <p className="text-text-tertiary font-medium">{message}</p>
         </div>
       </div>
     </div>

@@ -102,7 +102,7 @@ export function LoadingText({
       {showSpinner && (
         <LoadingSpinner size={spinnerSize} color="cobalt" className="mr-2" />
       )}
-      <span className="text-stone animate-pulse">{text}</span>
+      <span className="text-text-tertiary animate-pulse">{text}</span>
     </div>
   )
 }
