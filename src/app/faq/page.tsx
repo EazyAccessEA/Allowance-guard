@@ -25,7 +25,7 @@ export default function FAQPage() {
           <div className="max-w-4xl">
             <h1 className="mobbin-display-1 text-text-primary mb-6 mobbin-fade-in">Frequently Asked Questions</h1>
             <p className="mobbin-body-large text-text-secondary leading-relaxed mb-8 mobbin-fade-in mobbin-stagger-1">
-              Find immediate clarity below. If your question isn&apos;t answered, contact our team at support@allowanceguard.com. We are here to help.
+              Find immediate clarity below. If your question isn&apos;t answered, contact our team at legal.support@allowanceguard.com. We are here to help.
             </p>
           </div>
         </Container>
