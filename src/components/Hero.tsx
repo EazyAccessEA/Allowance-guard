@@ -41,14 +41,14 @@ export default function Hero({
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="mobbin-display-1 text-text-primary mb-6 sm:mb-8 md:mb-10 lg:mb-12">
           <span className="block sm:inline">The power to</span>{' '}
-          <span className="block sm:inline text-primary-600 min-h-[1.2em] flex items-start">
+          <span className="block sm:inline text-primary-600 h-[2.4em] flex items-start">
             <RotatingTypewriter 
               staticPrefix=""
               messages={[
-                "see every hidden connection clearly.",
-                "instantly revoke any risky approval.",
-                "find and cut off silent threats.",
-                "control who has access to your funds."
+                "see every hidden\nconnection clearly.",
+                "instantly revoke any\nrisky approval.",
+                "find and cut off\nsilent threats.",
+                "control who has\naccess to your funds."
               ]}
               typingSpeed={80}
               deletingSpeed={60}
