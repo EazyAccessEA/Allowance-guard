@@ -134,11 +134,11 @@ if (projectId) {
       '--w3m-z-index': 9999,
     },
     // Optimize AppKit to prevent inefficient update cycles
-    enableNetworkSwitching: false, // Disable network switching to reduce state changes
+    enableNetworkSwitch: false, // Disable network switching to reduce state changes
     enableAccountView: true, // Keep account view enabled
     enableExplorer: true, // Keep explorer enabled
     // Add stability options
-    enableWalletFeatures: false, // Disable additional wallet features that cause updates
+    enableWalletFeatures: false // Disable additional wallet features that cause updates
   })
 } else {
   console.error('WalletConnect Project ID is missing. Wallet connection will not work.')
