@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { accessibilityTokens } from '@/lib/accessibility'
+// Screen reader only component doesn't need accessibility tokens import
 
 export interface ScreenReaderOnlyProps {
   children: React.ReactNode
@@ -16,7 +16,7 @@ const ScreenReaderOnly: React.FC<ScreenReaderOnlyProps> = ({
   return (
     <span 
       className={cn(
-        accessibilityTokens.srOnly,
+        'sr-only',
         className
       )}
     >
