@@ -15,7 +15,8 @@ import {
   ChevronRight,
   Home,
   Star,
-  Heart
+  Heart,
+  Github
 } from 'lucide-react'
 import Image from 'next/image'
 
