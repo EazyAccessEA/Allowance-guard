@@ -103,7 +103,7 @@ class WalletErrorBoundary extends Component<
   }
 
   static getDerivedStateFromError(error: Error) {
-    // Check if it's a telemetry or WebSocket-related error
+    // Check if it's a telemetry, WebSocket, or AppKit-related error
     if (error.message?.includes('telemetry') || 
         error.stack?.includes('coinbase') ||
         error.message?.includes('loadTelemetryScript') ||
@@ -111,14 +111,18 @@ class WalletErrorBoundary extends Component<
         error.message?.includes('Unauthorized: origin not allowed') ||
         error.message?.includes('Proposal expired') ||
         error.message?.includes('Session expired') ||
-        error.message?.includes('Connection request expired')) {
+        error.message?.includes('Connection request expired') ||
+        error.message?.includes('WalletConnect') ||
+        error.message?.includes('AppKit') ||
+        error.message?.includes('projectId') ||
+        error.stack?.includes('@reown/appkit')) {
       return { hasError: false } // Don't show error boundary for these errors
     }
     return { hasError: true }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Only log non-telemetry and non-WebSocket errors
+    // Only log non-telemetry, non-WebSocket, and non-AppKit errors
     if (!error.message?.includes('telemetry') && 
         !error.stack?.includes('coinbase') &&
         !error.message?.includes('loadTelemetryScript') &&
@@ -126,7 +130,11 @@ class WalletErrorBoundary extends Component<
         !error.message?.includes('Unauthorized: origin not allowed') &&
         !error.message?.includes('Proposal expired') &&
         !error.message?.includes('Session expired') &&
-        !error.message?.includes('Connection request expired')) {
+        !error.message?.includes('Connection request expired') &&
+        !error.message?.includes('WalletConnect') &&
+        !error.message?.includes('AppKit') &&
+        !error.message?.includes('projectId') &&
+        !error.stack?.includes('@reown/appkit')) {
       console.error('Wallet Error Boundary caught an error:', error, errorInfo)
     }
   }
@@ -157,10 +165,16 @@ class WalletErrorBoundary extends Component<
 function AppKitProvider({ children }: { children: ReactNode }) {
   // Initialize AppKit within React component
   React.useEffect(() => {
+    // Check if projectId is available
+    if (!projectId) {
+      console.error('WalletConnect Project ID is missing. Wallet connection will not work.')
+      return
+    }
+
     try {
       createAppKit({
         adapters: [wagmiAdapter],
-        projectId: projectId!,
+        projectId: projectId,
         networks: [mainnet, arbitrum, base],
         defaultNetwork: mainnet,
         metadata: {
@@ -195,9 +209,8 @@ function AppKitProvider({ children }: { children: ReactNode }) {
         }
       })
     } catch (error) {
-      if (process.env.NODE_ENV === 'development') {
-        console.warn('AppKit initialization warning:', error)
-      }
+      console.error('AppKit initialization failed:', error)
+      // Don't throw the error to prevent the error boundary from catching it
     }
   }, [])
 
