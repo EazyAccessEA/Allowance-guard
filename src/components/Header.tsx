@@ -25,15 +25,15 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`relative px-3 py-2 text-sm font-medium transition-all duration-150 rounded-base
+      className={`relative px-4 py-2 mobbin-body-small font-medium transition-all duration-150 rounded-base
         ${current 
-          ? 'text-primary bg-primary/5' 
-          : 'text-text-secondary hover:text-text-primary hover:bg-background-light'
+          ? 'text-primary-600 bg-primary-50 border border-primary-200' 
+          : 'text-text-secondary hover:text-text-primary hover:bg-background-secondary hover:border-border-primary'
         }`}
     >
       <span className="relative z-10">{children}</span>
       {current && (
-        <div className="absolute inset-0 bg-primary/10 rounded-base" />
+        <div className="absolute inset-0 bg-primary-100 rounded-base" />
       )}
     </Link>
   )
@@ -52,10 +52,10 @@ export default function Header({ isConnected }: HeaderProps) {
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b transition-all duration-200
-        ${scrolled ? 'border-border-default shadow-subtle' : 'border-transparent'}`}
+      className={`sticky top-0 z-50 bg-background-primary/95 backdrop-blur-md border-b transition-all duration-200
+        ${scrolled ? 'border-border-primary shadow-sm' : 'border-transparent'}`}
     >
-      <div className="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mobbin-container">
         <div className="h-16 flex items-center justify-between">
           {/* Logo Section */}
           <Link 
@@ -72,17 +72,17 @@ export default function Header({ isConnected }: HeaderProps) {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-semibold text-text-primary leading-tight">
+              <span className="mobbin-heading-4 text-text-primary leading-tight">
                 Allowance Guard
               </span>
-              <span className="text-xs text-text-muted leading-tight hidden sm:block">
+              <span className="mobbin-caption text-text-tertiary leading-tight hidden sm:block">
                 Secure Token Approvals
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-2">
             <NavLink href="/docs" current={pathname?.startsWith('/docs') ?? false}>
               Documentation
             </NavLink>

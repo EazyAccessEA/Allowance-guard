@@ -39,16 +39,16 @@ export default function Hero({
       />
       
       <Container className="relative text-left max-w-4xl z-10">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium tracking-[-0.02em] text-ink mb-6 sm:mb-8 md:mb-10 lg:mb-12 leading-tight">
-          The power to{' '}
-          <span className="inline-block">
+        <h1 className="mobbin-display-1 text-text-primary mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+          <span className="block sm:inline">The power to</span>{' '}
+          <span className="block sm:inline text-primary-600">
             <RotatingTypewriter 
               staticPrefix=""
               messages={[
-                "see every hidden\nconnection clearly.",
-                "instantly revoke\nany risky approval.",
-                "find and cut off\nsilent threats.",
-                "control who has access\nto your funds."
+                "see every hidden connection clearly.",
+                "instantly revoke any risky approval.",
+                "find and cut off silent threats.",
+                "control who has access to your funds."
               ]}
               typingSpeed={80}
               deletingSpeed={60}
@@ -57,7 +57,7 @@ export default function Hero({
             />
           </span>
         </h1>
-        <p className="text-sm sm:text-base md:text-lg text-stone leading-relaxed mb-6 sm:mb-8 md:mb-10">
+        <p className="mobbin-body-large text-text-secondary leading-relaxed mb-6 sm:mb-8 md:mb-10">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
         </p>
 
@@ -94,17 +94,17 @@ export default function Hero({
         </div>
 
         {/* Trust Indicators - Mobile Optimized */}
-        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 text-sm text-stone">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mobbin-body-small text-text-secondary">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-semantic-success rounded-full flex-shrink-0" />
+            <div className="w-2 h-2 bg-semantic-success-500 rounded-full flex-shrink-0" />
             <span>No private keys required</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-semantic-success rounded-full flex-shrink-0" />
+            <div className="w-2 h-2 bg-semantic-success-500 rounded-full flex-shrink-0" />
             <span>Read-only access</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-semantic-success rounded-full flex-shrink-0" />
+            <div className="w-2 h-2 bg-semantic-success-500 rounded-full flex-shrink-0" />
             <span>100% free</span>
           </div>
         </div>
@@ -113,7 +113,7 @@ export default function Hero({
         <div className="mt-6 sm:mt-8">
           <Link 
             href="/docs" 
-            className="inline-flex items-center text-primary-accent hover:text-primary-accent/80 font-medium transition-colors duration-150"
+            className="inline-flex items-center text-primary-600 hover:text-primary-700 mobbin-button transition-colors duration-150"
           >
             Learn how it works
             <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
