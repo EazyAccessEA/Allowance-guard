@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 interface MultiLineTypewriterProps {
   messages: string[]
   typingSpeed: number
   deletingSpeed: number
   pauseTime: number
-  onRender: (firstLine: string, secondLine: string) => JSX.Element
+  onRender: (firstLine: string, secondLine: string) => React.ReactElement
 }
 
 export const MultiLineTypewriter = ({
