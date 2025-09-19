@@ -24,14 +24,26 @@ export default function RotatingTypewriter({
   const [isDeleting, setIsDeleting] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [isPostDeletionPaused, setIsPostDeletionPaused] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
+
+  // Initialize the component
+  useEffect(() => {
+    if (!isInitialized && messages.length > 0) {
+      setIsInitialized(true)
+      // Start typing the first message immediately
+      setDisplayedText('')
+    }
+  }, [isInitialized, messages.length])
 
   useEffect(() => {
+    if (!isInitialized || messages.length === 0) return
+
     // Handle post-deletion pause
     if (isPostDeletionPaused) {
       const postDeletionTimeout = setTimeout(() => {
         setIsPostDeletionPaused(false)
         setCurrentMessageIndex((prev) => (prev + 1) % messages.length)
-      }, 3000) // 3-second pause after deletion
+      }, 2000) // 2-second pause after deletion
       return () => clearTimeout(postDeletionTimeout)
     }
 
@@ -69,7 +81,7 @@ export default function RotatingTypewriter({
     }, speed)
 
     return () => clearTimeout(timeout)
-  }, [displayedText, isDeleting, isPaused, isPostDeletionPaused, currentMessageIndex, messages, typingSpeed, deletingSpeed, pauseTime])
+  }, [displayedText, isDeleting, isPaused, isPostDeletionPaused, currentMessageIndex, messages, typingSpeed, deletingSpeed, pauseTime, isInitialized])
 
   // Split displayed text by line breaks and render with <br> tags
   const renderText = (text: string) => {

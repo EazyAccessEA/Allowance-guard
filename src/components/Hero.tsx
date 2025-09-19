@@ -43,14 +43,14 @@ export default function Hero({
           <RotatingTypewriter 
             staticPrefix="The power to "
             messages={[
-              "see every\nhidden connection clearly.",
+              "see every hidden\nconnection clearly.",
               "instantly revoke\nany risky approval.",
               "find and cut off\nsilent threats.",
               "control who has access\nto your funds."
             ]}
-            typingSpeed={50}
-            deletingSpeed={50}
-            pauseTime={3000}
+            typingSpeed={80}
+            deletingSpeed={60}
+            pauseTime={2500}
             className=""
           />
         </H1>
