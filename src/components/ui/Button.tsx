@@ -4,37 +4,47 @@ import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-// Professional button variants following design system
+// Enhanced button variants following Sketch-inspired design system
 const buttonVariants = cva(
-  // Base styles - quiet, restrained, sharp
-  'inline-flex items-center justify-center rounded-base text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-98',
+  // Base styles - Sketch-inspired interactions and states
+  'inline-flex items-center justify-center rounded-base text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-98 hover:transition-all hover:duration-150',
   {
     variants: {
       variant: {
-        // Primary: Solid Serum Teal, white text
-        primary: 'bg-primary text-white hover:bg-primary/90 shadow-subtle hover:shadow-medium',
+        // Primary: Solid Serum Teal with Sketch-inspired states
+        primary: 'bg-primary text-white hover:bg-semantic-success-dark shadow-subtle hover:shadow-medium active:bg-semantic-success-dark active:shadow-large',
         
-        // Secondary: White background, Serum Teal border
-        secondary: 'border border-primary bg-white text-primary hover:bg-primary/5 shadow-subtle',
+        // Secondary: White background with enhanced hover states
+        secondary: 'border border-primary bg-white text-primary hover:bg-semantic-success-light hover:border-semantic-success-dark shadow-subtle active:bg-semantic-success-light',
         
-        // Ghost: Transparent, used in modals or under tooltips
-        ghost: 'hover:bg-slate-100 text-text-primary',
+        // Ghost: Enhanced with better hover states
+        ghost: 'hover:bg-neutral-100 text-text-primary active:bg-neutral-200',
         
-        // Destructive: Solar Red for dangerous actions
-        destructive: 'bg-semantic-danger text-white hover:bg-semantic-danger/90 shadow-subtle hover:shadow-medium',
+        // Destructive: Enhanced danger states
+        destructive: 'bg-semantic-danger text-white hover:bg-semantic-danger-dark shadow-subtle hover:shadow-medium active:bg-semantic-danger-dark active:shadow-large',
         
-        // Outline: Border only
-        outline: 'border border-border-default bg-white hover:bg-slate-50 text-text-primary shadow-subtle',
+        // Outline: Enhanced with better contrast
+        outline: 'border border-border-default bg-white hover:bg-neutral-50 hover:border-neutral-300 text-text-primary shadow-subtle active:bg-neutral-100',
         
-        // Link: Text-only button
-        link: 'text-primary underline-offset-4 hover:underline',
+        // Link: Enhanced with better focus states
+        link: 'text-primary underline-offset-4 hover:underline hover:text-semantic-info-dark focus:text-semantic-info-dark',
+        
+        // Sketch-inspired additional variants
+        success: 'bg-semantic-success text-white hover:bg-semantic-success-dark shadow-subtle hover:shadow-medium active:bg-semantic-success-dark',
+        warning: 'bg-semantic-warning text-white hover:bg-semantic-warning-dark shadow-subtle hover:shadow-medium active:bg-semantic-warning-dark',
+        info: 'bg-semantic-info text-white hover:bg-semantic-info-dark shadow-subtle hover:shadow-medium active:bg-semantic-info-dark',
       },
       size: {
-        sm: 'h-9 px-3 text-xs',
-        default: 'h-10 px-4 py-2',
-        lg: 'h-11 px-8 text-lg',
-        xl: 'h-12 px-10 text-lg',
-        icon: 'h-10 w-10',
+        // Sketch-inspired size variants with better touch targets
+        xs: 'h-8 px-2 text-xs',           // Extra small for compact layouts
+        sm: 'h-9 px-3 text-xs',           // Small for secondary actions
+        default: 'h-10 px-4 py-2',        // Default size
+        lg: 'h-11 px-8 text-lg',          // Large for primary actions
+        xl: 'h-12 px-10 text-lg',         // Extra large for hero CTAs
+        '2xl': 'h-14 px-12 text-xl',      // 2XL for display buttons
+        icon: 'h-10 w-10',                // Square icon button
+        'icon-sm': 'h-8 w-8',             // Small icon button
+        'icon-lg': 'h-12 w-12',           // Large icon button
       },
       fullWidth: {
         true: 'w-full',

@@ -4,18 +4,21 @@ import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-// Professional alert variants following design system
+// Enhanced alert variants following Sketch-inspired design system
 const alertVariants = cva(
-  // Base styles - semantic background color, icon-less (per design system)
-  'relative w-full rounded-base border px-4 py-3 text-sm transition-all duration-150 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
+  // Base styles - Sketch-inspired interactions and states
+  'relative w-full rounded-base border px-4 py-3 text-sm transition-all duration-150 hover:transition-all hover:duration-150 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
   {
     variants: {
       variant: {
-        default: 'bg-background-light border-border-default text-text-primary',
-        success: 'bg-semanticBg-success border-semantic-success/20 text-semantic-success',
-        danger: 'bg-semanticBg-danger border-semantic-danger/20 text-semantic-danger',
-        warning: 'bg-semanticBg-warning border-semantic-warning/20 text-semantic-warning',
-        info: 'bg-semanticBg-info border-semantic-info/20 text-semantic-info',
+        default: 'bg-background-light border-border-default text-text-primary hover:border-neutral-300',
+        success: 'bg-semantic-success-light border-semantic-success/20 text-semantic-success hover:border-semantic-success/40 hover:bg-semantic-success-light/80',
+        danger: 'bg-semantic-danger-light border-semantic-danger/20 text-semantic-danger hover:border-semantic-danger/40 hover:bg-semantic-danger-light/80',
+        warning: 'bg-semantic-warning-light border-semantic-warning/20 text-semantic-warning hover:border-semantic-warning/40 hover:bg-semantic-warning-light/80',
+        info: 'bg-semantic-info-light border-semantic-info/20 text-semantic-info hover:border-semantic-info/40 hover:bg-semantic-info-light/80',
+        // Sketch-inspired additional variants
+        subtle: 'bg-neutral-50 border-neutral-200 text-neutral-700 hover:border-neutral-300 hover:bg-neutral-100',
+        accent: 'bg-primary/5 border-primary/20 text-primary hover:border-primary/40 hover:bg-primary/10',
       },
     },
     defaultVariants: {
@@ -122,9 +125,9 @@ export const Toast: React.FC<ToastProps> = ({
   }
 
   return (
-    <div className={cn('fixed z-50 max-w-sm animate-slide-in', positionClasses[position])}>
+    <div className={cn('fixed z-50 max-w-sm animate-sketch-slide-up', positionClasses[position])}>
       <Alert
-        className={cn('shadow-large', className)}
+        className={cn('shadow-large hover:shadow-xl transition-shadow duration-150', className)}
         onDismiss={onDismiss}
         {...props}
       />

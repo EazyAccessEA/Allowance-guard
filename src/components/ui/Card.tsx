@@ -4,26 +4,33 @@ import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-// Professional card variants following design system
+// Enhanced card variants following Sketch-inspired design system
 const cardVariants = cva(
-  // Base styles - clean, minimal, with subtle elevation
-  'rounded-base border border-border-default bg-white text-text-primary shadow-subtle transition-all duration-150',
+  // Base styles - Sketch-inspired interactions and states
+  'rounded-base border border-border-default bg-white text-text-primary shadow-subtle transition-all duration-150 hover:transition-all hover:duration-150',
   {
     variants: {
       variant: {
-        default: 'border-border-default',
-        elevated: 'shadow-medium hover:shadow-large',
-        outlined: 'border-2 border-border-default shadow-none',
-        ghost: 'border-none shadow-none bg-transparent',
+        default: 'border-border-default hover:border-neutral-300',
+        elevated: 'shadow-medium hover:shadow-large active:shadow-medium',
+        outlined: 'border-2 border-border-default shadow-none hover:border-neutral-400',
+        ghost: 'border-none shadow-none bg-transparent hover:bg-neutral-50',
+        // Sketch-inspired additional variants
+        success: 'border-semantic-success-light bg-semantic-success-light/10 hover:border-semantic-success hover:bg-semantic-success-light/20',
+        warning: 'border-semantic-warning-light bg-semantic-warning-light/10 hover:border-semantic-warning hover:bg-semantic-warning-light/20',
+        danger: 'border-semantic-danger-light bg-semantic-danger-light/10 hover:border-semantic-danger hover:bg-semantic-danger-light/20',
+        info: 'border-semantic-info-light bg-semantic-info-light/10 hover:border-semantic-info hover:bg-semantic-info-light/20',
       },
       size: {
-        sm: 'p-4',
-        default: 'p-6', // 1.5rem as per design system
-        lg: 'p-8',
-        xl: 'p-10',
+        xs: 'p-3',           // Extra small for compact layouts
+        sm: 'p-4',           // Small for secondary content
+        default: 'p-6',      // Default size
+        lg: 'p-8',           // Large for primary content
+        xl: 'p-10',          // Extra large for hero content
+        '2xl': 'p-12',       // 2XL for display content
       },
       interactive: {
-        true: 'cursor-pointer hover:shadow-medium hover:border-primary/20 transition-all duration-150',
+        true: 'cursor-pointer hover:shadow-medium hover:border-primary/20 active:shadow-subtle active:scale-98 transition-all duration-150',
         false: '',
       },
     },
