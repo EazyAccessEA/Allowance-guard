@@ -197,7 +197,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
           <div 
             ref={menuRef}
             id="mobile-menu"
-            className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-2xl transform transition-transform duration-300 ease-out"
+            className="fixed inset-0 h-full w-full bg-white shadow-2xl transform transition-transform duration-300 ease-out"
             style={{ transform: isOpen ? 'translateX(0)' : 'translateX(100%)' }}
           >
             <div className="flex flex-col h-full">
