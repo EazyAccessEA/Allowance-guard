@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
@@ -179,12 +179,13 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
               <div className="flex-1 flex flex-col justify-center px-8">
                 {/* Connect Wallet - Prominent */}
                 <div className="mb-16 text-center">
-                  <ConnectButton 
-                    variant={isConnected ? "secondary" : "primary"}
-                    size="lg"
-                    className="w-full text-lg py-4"
-                    onClick={() => setIsOpen(false)}
-                  />
+                  <div onClick={() => setIsOpen(false)}>
+                    <ConnectButton 
+                      variant={isConnected ? "secondary" : "primary"}
+                      size="lg"
+                      className="w-full text-lg py-4"
+                    />
+                  </div>
                   {isConnected && (
                     <p className="text-green-600 mt-3 text-sm">✓ Wallet Connected</p>
                   )}
@@ -204,7 +205,9 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                       onClick={() => setIsOpen(false)}
                     >
                       <div className="flex items-center justify-center gap-4">
-                        <div className="text-2xl">{item.icon}</div>
+                        <div className="text-2xl flex items-center justify-center">
+                          {React.cloneElement(item.icon, { className: "w-6 h-6" })}
+                        </div>
                         <span className="text-xl font-medium">{item.label}</span>
                       </div>
                     </Link>
