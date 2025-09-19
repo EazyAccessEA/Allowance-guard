@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react'
-import { focusManagement } from '@/lib/accessibility'
+import { ariaHelpers } from '@/lib/accessibility'
 
 export interface FocusTrapProps {
   children: React.ReactNode
@@ -19,7 +19,7 @@ const FocusTrap: React.FC<FocusTrapProps> = ({
   useEffect(() => {
     if (!active || !containerRef.current) return
     
-    const cleanup = focusManagement.trapFocus(containerRef.current)
+    const cleanup = ariaHelpers.focus.trap(containerRef.current)
     
     return cleanup
   }, [active])
