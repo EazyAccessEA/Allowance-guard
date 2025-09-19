@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { accessibilityTokens } from '@/lib/accessibility'
+// SkipLink component doesn't need accessibility tokens import
 
 export interface SkipLinkProps {
   href: string
@@ -19,7 +19,7 @@ const SkipLink: React.FC<SkipLinkProps> = ({
     <a
       href={href}
       className={cn(
-        accessibilityTokens.skipLink,
+        'skip-link',
         className
       )}
     >
