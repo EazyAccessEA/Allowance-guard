@@ -170,28 +170,104 @@ export const designTokens = {
   
   typography: {
     fonts: {
+      // Mobbin-Inspired Font System
       heading: ['Satoshi', 'Inter', 'system-ui', 'sans-serif'],
       body: ['Inter', 'system-ui', 'sans-serif'],
       mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
-      // Sketch-inspired additional font weights
       display: ['Satoshi', 'Inter', 'system-ui', 'sans-serif'], // For large displays
+      // Mobbin-inspired additional font families
+      caption: ['Inter', 'system-ui', 'sans-serif'], // For small text
+      button: ['Inter', 'system-ui', 'sans-serif'], // For buttons and CTAs
     },
     
-    // Enhanced Typography Scale - Sketch-Inspired
+    // Mobbin-Inspired Typography Scale (Systematic 8px-based scale)
     sizes: {
-      xs: { size: '0.75rem', lineHeight: '1.25rem', weight: '500', letterSpacing: '0.025em' },   // 12px
-      sm: { size: '0.875rem', lineHeight: '1.375rem', weight: '400', letterSpacing: '0.01em' }, // 14px  
-      base: { size: '1rem', lineHeight: '1.5rem', weight: '400', letterSpacing: '0' },     // 16px
-      lg: { size: '1.125rem', lineHeight: '1.625rem', weight: '400', letterSpacing: '-0.01em' }, // 18px
-      xl: { size: '1.25rem', lineHeight: '1.75rem', weight: '600', letterSpacing: '-0.01em' },   // 20px
-      '2xl': { size: '1.5rem', lineHeight: '2rem', weight: '600', letterSpacing: '-0.02em' },    // 24px
-      '3xl': { size: '1.875rem', lineHeight: '2.25rem', weight: '700', letterSpacing: '-0.025em' }, // 30px
-      '4xl': { size: '2.25rem', lineHeight: '2.5rem', weight: '700', letterSpacing: '-0.03em' },  // 36px
-      '5xl': { size: '3rem', lineHeight: '1.1', weight: '700', letterSpacing: '-0.035em' },        // 48px
-      '6xl': { size: '3.75rem', lineHeight: '1.1', weight: '700', letterSpacing: '-0.04em' },     // 60px
-      // Sketch-inspired additional sizes
-      '7xl': { size: '4.5rem', lineHeight: '1.05', weight: '800', letterSpacing: '-0.045em' },    // 72px
-      '8xl': { size: '6rem', lineHeight: '1', weight: '800', letterSpacing: '-0.05em' },          // 96px
+      // Mobile-first approach with systematic scaling
+      xs: { 
+        size: '0.75rem',      // 12px - Mobile captions
+        lineHeight: '1.25rem', // 20px
+        weight: '500', 
+        letterSpacing: '0.025em',
+        mobile: { size: '0.75rem', lineHeight: '1.25rem' }
+      },
+      sm: { 
+        size: '0.875rem',     // 14px - Mobile body
+        lineHeight: '1.375rem', // 22px
+        weight: '400', 
+        letterSpacing: '0.01em',
+        mobile: { size: '0.875rem', lineHeight: '1.375rem' }
+      },
+      base: { 
+        size: '1rem',         // 16px - Base body
+        lineHeight: '1.5rem', // 24px
+        weight: '400', 
+        letterSpacing: '0',
+        mobile: { size: '0.875rem', lineHeight: '1.375rem' }
+      },
+      lg: { 
+        size: '1.125rem',     // 18px - Large body
+        lineHeight: '1.625rem', // 26px
+        weight: '400', 
+        letterSpacing: '-0.01em',
+        mobile: { size: '1rem', lineHeight: '1.5rem' }
+      },
+      xl: { 
+        size: '1.25rem',      // 20px - Small headings
+        lineHeight: '1.75rem', // 28px
+        weight: '600', 
+        letterSpacing: '-0.01em',
+        mobile: { size: '1.125rem', lineHeight: '1.625rem' }
+      },
+      '2xl': { 
+        size: '1.5rem',       // 24px - Medium headings
+        lineHeight: '2rem',   // 32px
+        weight: '600', 
+        letterSpacing: '-0.02em',
+        mobile: { size: '1.25rem', lineHeight: '1.75rem' }
+      },
+      '3xl': { 
+        size: '1.875rem',     // 30px - Large headings
+        lineHeight: '2.25rem', // 36px
+        weight: '700', 
+        letterSpacing: '-0.025em',
+        mobile: { size: '1.5rem', lineHeight: '2rem' }
+      },
+      '4xl': { 
+        size: '2.25rem',      // 36px - XL headings
+        lineHeight: '2.5rem', // 40px
+        weight: '700', 
+        letterSpacing: '-0.03em',
+        mobile: { size: '1.875rem', lineHeight: '2.25rem' }
+      },
+      '5xl': { 
+        size: '3rem',         // 48px - Display headings
+        lineHeight: '1.1',    // 52.8px
+        weight: '700', 
+        letterSpacing: '-0.035em',
+        mobile: { size: '2.25rem', lineHeight: '2.5rem' }
+      },
+      '6xl': { 
+        size: '3.75rem',      // 60px - Large display
+        lineHeight: '1.1',    // 66px
+        weight: '700', 
+        letterSpacing: '-0.04em',
+        mobile: { size: '2.5rem', lineHeight: '1.2' }
+      },
+      // Mobbin-inspired additional sizes
+      '7xl': { 
+        size: '4.5rem',       // 72px - Hero headings
+        lineHeight: '1.05',   // 75.6px
+        weight: '800', 
+        letterSpacing: '-0.045em',
+        mobile: { size: '3rem', lineHeight: '1.1' }
+      },
+      '8xl': { 
+        size: '6rem',         // 96px - Massive display
+        lineHeight: '1',      // 96px
+        weight: '800', 
+        letterSpacing: '-0.05em',
+        mobile: { size: '3.75rem', lineHeight: '1.1' }
+      },
     },
     
     // Enhanced Letter Spacing - Sketch-Inspired
@@ -215,27 +291,44 @@ export const designTokens = {
     },
   },
   
-  // Enhanced Spacing System - Sketch-Inspired 8pt Grid
+  // Mobbin-Inspired Spacing System (Systematic 4px/8px Grid)
   spacing: {
-    // Base 8pt grid system
+    // Base 4px grid system (Mobbin's systematic approach)
     '0': '0',           // 0px
+    '0.5': '0.125rem',  // 2px
     '1': '0.25rem',     // 4px
+    '1.5': '0.375rem',  // 6px
     '2': '0.5rem',      // 8px
+    '2.5': '0.625rem',  // 10px
     '3': '0.75rem',     // 12px
+    '3.5': '0.875rem',  // 14px
     '4': '1rem',        // 16px
     '5': '1.25rem',     // 20px
     '6': '1.5rem',      // 24px
+    '7': '1.75rem',     // 28px
     '8': '2rem',        // 32px
+    '9': '2.25rem',     // 36px
     '10': '2.5rem',     // 40px
+    '11': '2.75rem',    // 44px
     '12': '3rem',       // 48px
+    '14': '3.5rem',     // 56px
     '16': '4rem',       // 64px
+    '18': '4.5rem',     // 72px
     '20': '5rem',       // 80px
     '24': '6rem',       // 96px
+    '28': '7rem',       // 112px
     '32': '8rem',       // 128px
+    '36': '9rem',       // 144px
     '40': '10rem',      // 160px
+    '44': '11rem',      // 176px
     '48': '12rem',      // 192px
+    '52': '13rem',      // 208px
     '56': '14rem',      // 224px
+    '60': '15rem',      // 240px
     '64': '16rem',      // 256px
+    '72': '18rem',      // 288px
+    '80': '20rem',      // 320px
+    '96': '24rem',      // 384px
     
     // Legacy semantic spacing (maintained for compatibility)
     xs: '0.5rem',   // 8px
@@ -245,11 +338,57 @@ export const designTokens = {
     xl: '8rem',     // 128px
   },
   
+  // Mobbin-Inspired Layout System
   layout: {
+    // Container System
     containerMaxWidth: '1200px',
-    navbarHeight: '4rem',
-    cardPadding: '1.5rem',
-    mobileMargin: '1rem',
+    containerMaxWidthNarrow: '800px',
+    containerMaxWidthWide: '1400px',
+    
+    // Navigation System
+    navbarHeight: '4rem',        // 64px
+    navbarHeightMobile: '3.5rem', // 56px
+    sidebarWidth: '16rem',       // 256px
+    sidebarWidthCollapsed: '4rem', // 64px
+    
+    // Card System
+    cardPadding: '1.5rem',       // 24px
+    cardPaddingSmall: '1rem',    // 16px
+    cardPaddingLarge: '2rem',    // 32px
+    cardGap: '1rem',             // 16px
+    cardGapLarge: '1.5rem',      // 24px
+    
+    // Mobile System
+    mobileMargin: '1rem',        // 16px
+    mobilePadding: '1rem',       // 16px
+    mobileGap: '0.75rem',        // 12px
+    
+    // Grid System
+    gridColumns: 12,
+    gridGap: '1rem',             // 16px
+    gridGapLarge: '1.5rem',      // 24px
+    
+    // Breakpoints (Mobbin-inspired)
+    breakpoints: {
+      xs: '320px',   // Mobile small
+      sm: '640px',   // Mobile large
+      md: '768px',   // Tablet
+      lg: '1024px',  // Desktop small
+      xl: '1280px',  // Desktop large
+      '2xl': '1536px' // Desktop extra large
+    },
+    
+    // Z-Index System
+    zIndex: {
+      dropdown: 1000,
+      sticky: 1020,
+      fixed: 1030,
+      modalBackdrop: 1040,
+      modal: 1050,
+      popover: 1060,
+      tooltip: 1070,
+      toast: 1080
+    }
   },
   
   borderRadius: {

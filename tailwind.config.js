@@ -151,25 +151,27 @@ module.exports = {
         warning: '#F59E0B',
       },
       fontFamily: {
-        // Design System Typography
+        // Mobbin-Inspired Typography System
         'heading': ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui'], // For headings
         'sans': ['Inter', 'ui-sans-serif', 'system-ui'], // For body text
+        'display': ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui'], // For large displays
+        'caption': ['Inter', 'ui-sans-serif', 'system-ui'], // For small text
+        'button': ['Inter', 'ui-sans-serif', 'system-ui'], // For buttons and CTAs
       },
       fontSize: {
-        // Enhanced Typography Scale - Sketch-Inspired
-        'xs': ['0.75rem', { lineHeight: '1.25rem', fontWeight: '500', letterSpacing: '0.025em' }], // 12px
-        'sm': ['0.875rem', { lineHeight: '1.375rem', fontWeight: '400', letterSpacing: '0.01em' }], // 14px
-        'base': ['1rem', { lineHeight: '1.5rem', fontWeight: '400', letterSpacing: '0' }], // 16px
-        'lg': ['1.125rem', { lineHeight: '1.625rem', fontWeight: '400', letterSpacing: '-0.01em' }], // 18px
-        'xl': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600', letterSpacing: '-0.01em' }], // 20px
-        '2xl': ['1.5rem', { lineHeight: '2rem', fontWeight: '600', letterSpacing: '-0.02em' }], // 24px
-        '3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '700', letterSpacing: '-0.025em' }], // 30px
-        '4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700', letterSpacing: '-0.03em' }], // 36px
-        '5xl': ['3rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.035em' }], // 48px
-        '6xl': ['3.75rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.04em' }], // 60px
-        // Sketch-inspired additional sizes
-        '7xl': ['4.5rem', { lineHeight: '1.05', fontWeight: '800', letterSpacing: '-0.045em' }], // 72px
-        '8xl': ['6rem', { lineHeight: '1', fontWeight: '800', letterSpacing: '-0.05em' }], // 96px
+        // Mobbin-Inspired Typography Scale (Mobile-first with systematic scaling)
+        'xs': ['0.75rem', { lineHeight: '1.25rem', fontWeight: '500', letterSpacing: '0.025em' }], // 12px - Mobile captions
+        'sm': ['0.875rem', { lineHeight: '1.375rem', fontWeight: '400', letterSpacing: '0.01em' }], // 14px - Mobile body
+        'base': ['1rem', { lineHeight: '1.5rem', fontWeight: '400', letterSpacing: '0' }], // 16px - Base body
+        'lg': ['1.125rem', { lineHeight: '1.625rem', fontWeight: '400', letterSpacing: '-0.01em' }], // 18px - Large body
+        'xl': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600', letterSpacing: '-0.01em' }], // 20px - Small headings
+        '2xl': ['1.5rem', { lineHeight: '2rem', fontWeight: '600', letterSpacing: '-0.02em' }], // 24px - Medium headings
+        '3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '700', letterSpacing: '-0.025em' }], // 30px - Large headings
+        '4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700', letterSpacing: '-0.03em' }], // 36px - XL headings
+        '5xl': ['3rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.035em' }], // 48px - Display headings
+        '6xl': ['3.75rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.04em' }], // 60px - Large display
+        '7xl': ['4.5rem', { lineHeight: '1.05', fontWeight: '800', letterSpacing: '-0.045em' }], // 72px - Hero headings
+        '8xl': ['6rem', { lineHeight: '1', fontWeight: '800', letterSpacing: '-0.05em' }], // 96px - Massive display
       },
       letterSpacing: {
         // Enhanced Letter Spacing - Sketch-Inspired
@@ -180,25 +182,42 @@ module.exports = {
         'button': '0.01em',      // +1% for buttons
       },
       spacing: {
-        // Enhanced Spacing System - Sketch-Inspired 8pt Grid
+        // Mobbin-Inspired 4px/8px Grid System
         '0': '0',           // 0px
+        '0.5': '0.125rem',  // 2px
         '1': '0.25rem',     // 4px
+        '1.5': '0.375rem',  // 6px
         '2': '0.5rem',      // 8px
+        '2.5': '0.625rem',  // 10px
         '3': '0.75rem',     // 12px
+        '3.5': '0.875rem',  // 14px
         '4': '1rem',        // 16px
         '5': '1.25rem',     // 20px
         '6': '1.5rem',      // 24px
+        '7': '1.75rem',     // 28px
         '8': '2rem',        // 32px
+        '9': '2.25rem',     // 36px
         '10': '2.5rem',     // 40px
+        '11': '2.75rem',    // 44px
         '12': '3rem',       // 48px
+        '14': '3.5rem',     // 56px
         '16': '4rem',       // 64px
+        '18': '4.5rem',     // 72px
         '20': '5rem',       // 80px
         '24': '6rem',       // 96px
+        '28': '7rem',       // 112px
         '32': '8rem',       // 128px
+        '36': '9rem',       // 144px
         '40': '10rem',      // 160px
+        '44': '11rem',      // 176px
         '48': '12rem',      // 192px
+        '52': '13rem',      // 208px
         '56': '14rem',      // 224px
+        '60': '15rem',      // 240px
         '64': '16rem',      // 256px
+        '72': '18rem',      // 288px
+        '80': '20rem',      // 320px
+        '96': '24rem',      // 384px
         
         // Legacy semantic spacing (maintained for compatibility)
         'xs': '0.5rem',  // 8px

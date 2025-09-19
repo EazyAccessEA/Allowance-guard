@@ -446,65 +446,205 @@ button, a, input, select, textarea {
   color: white;
 }
 
-/* Fireart Typography Classes */
-.fireart-heading-1 {
+/* Mobbin-Inspired Typography Classes */
+.mobbin-display-1 {
   font-family: var(--font-heading);
-  font-size: 3rem;
+  font-size: 4.5rem; /* 72px */
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  color: var(--obsidian);
+}
+
+.mobbin-display-2 {
+  font-family: var(--font-heading);
+  font-size: 3.75rem; /* 60px */
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.04em;
   color: var(--obsidian);
 }
 
-.fireart-heading-2 {
+.mobbin-heading-1 {
   font-family: var(--font-heading);
-  font-size: 2.25rem;
+  font-size: 3rem; /* 48px */
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--obsidian);
+}
+
+.mobbin-heading-2 {
+  font-family: var(--font-heading);
+  font-size: 2.25rem; /* 36px */
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: var(--obsidian);
 }
 
-.fireart-heading-3 {
+.mobbin-heading-3 {
   font-family: var(--font-heading);
-  font-size: 1.875rem;
-  font-weight: 600;
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.025em;
   color: var(--obsidian);
 }
 
-.fireart-body {
-  font-family: var(--font-inter);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
+.mobbin-heading-4 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: -0.02em;
   color: var(--obsidian);
 }
 
-.fireart-body-large {
+.mobbin-body-large {
   font-family: var(--font-inter);
-  font-size: 1.125rem;
+  font-size: 1.125rem; /* 18px */
   font-weight: 400;
   line-height: 1.625;
+  letter-spacing: -0.01em;
   color: var(--obsidian);
 }
 
-.fireart-caption {
+.mobbin-body {
   font-family: var(--font-inter);
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.375;
-  color: var(--charcoal);
-  letter-spacing: 0.025em;
-}
-
-.fireart-mono {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 16px */
   font-weight: 400;
   line-height: 1.5;
   color: var(--obsidian);
+}
+
+.mobbin-body-small {
+  font-family: var(--font-inter);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 400;
+  line-height: 1.375;
+  letter-spacing: 0.01em;
+  color: var(--obsidian);
+}
+
+.mobbin-caption {
+  font-family: var(--font-inter);
+  font-size: 0.75rem; /* 12px */
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.025em;
+  color: var(--charcoal);
+}
+
+.mobbin-button {
+  font-family: var(--font-inter);
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--obsidian);
+}
+
+.mobbin-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--obsidian);
+}
+
+/* Legacy Fireart Typography Classes (for backward compatibility) */
+.fireart-heading-1 { @apply mobbin-heading-1; }
+.fireart-heading-2 { @apply mobbin-heading-2; }
+.fireart-heading-3 { @apply mobbin-heading-3; }
+.fireart-body { @apply mobbin-body; }
+.fireart-body-large { @apply mobbin-body-large; }
+.fireart-caption { @apply mobbin-caption; }
+.fireart-mono { @apply mobbin-mono; }
+
+/* Mobbin-Inspired Layout Utility Classes */
+.mobbin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.mobbin-container-narrow {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.mobbin-container-wide {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.mobbin-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+}
+
+.mobbin-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.mobbin-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.mobbin-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.mobbin-card {
+  background: var(--platinum);
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-subtle);
+  transition: all var(--motion-duration-base) var(--motion-easing-natural);
+}
+
+.mobbin-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+.mobbin-card-small {
+  padding: 1rem;
+}
+
+.mobbin-card-large {
+  padding: 2rem;
+}
+
+/* Mobile-responsive grid adjustments */
+@media (max-width: 768px) {
+  .mobbin-grid-2,
+  .mobbin-grid-3,
+  .mobbin-grid-4 {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .mobbin-container,
+  .mobbin-container-narrow,
+  .mobbin-container-wide {
+    padding: 0 1rem;
+  }
+  
+  .mobbin-card {
+    padding: 1rem;
+  }
 }
 
 /* Fireart Animation Classes */
@@ -592,6 +732,25 @@ button, a, input, select, textarea {
     background-size: 200% 200%; /* Smaller size for mobile */
     animation: gradientShiftMobile 25s ease infinite; /* Slower animation for mobile */
   }
+  
+  /* Mobbin-Inspired Mobile Typography Optimizations */
+  .text-5xl { font-size: 2.25rem !important; line-height: 2.5rem !important; } /* 36px */
+  .text-6xl { font-size: 2.5rem !important; line-height: 1.2 !important; } /* 40px */
+  .text-7xl { font-size: 3rem !important; line-height: 1.1 !important; } /* 48px */
+  .text-8xl { font-size: 3.75rem !important; line-height: 1.1 !important; } /* 60px */
+  
+  /* Mobile-optimized heading sizes */
+  h1 { font-size: 2.25rem !important; line-height: 2.5rem !important; }
+  h2 { font-size: 1.875rem !important; line-height: 2.25rem !important; }
+  h3 { font-size: 1.5rem !important; line-height: 2rem !important; }
+  h4 { font-size: 1.25rem !important; line-height: 1.75rem !important; }
+  h5 { font-size: 1.125rem !important; line-height: 1.625rem !important; }
+  h6 { font-size: 1rem !important; line-height: 1.5rem !important; }
+  
+  /* Mobile-optimized body text */
+  p { font-size: 0.875rem !important; line-height: 1.375rem !important; }
+  .text-lg { font-size: 1rem !important; line-height: 1.5rem !important; }
+  .text-xl { font-size: 1.125rem !important; line-height: 1.625rem !important; }
   
   .fireart-button {
     padding: 10px 20px;
