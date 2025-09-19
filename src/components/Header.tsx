@@ -4,9 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { Button } from '@/components/ui/Button'
+// Button component not used in this file anymore
 import { Badge } from '@/components/ui/Badge'
 import ConnectButton from '@/components/ConnectButton'
+import MobileNavigation from '@/components/MobileNavigation'
 
 interface HeaderProps {
   isConnected: boolean
@@ -41,7 +42,6 @@ function NavLink({
 export default function Header({ isConnected }: HeaderProps) {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4)
@@ -49,20 +49,6 @@ export default function Header({ isConnected }: HeaderProps) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-
-  useEffect(() => {
-    // Close mobile menu when route changes
-    setMobileMenuOpen(false)
-  }, [pathname])
-
-  // Close mobile menu when clicking outside
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      const handleClickOutside = () => setMobileMenuOpen(false)
-      document.addEventListener('click', handleClickOutside)
-      return () => document.removeEventListener('click', handleClickOutside)
-    }
-  }, [mobileMenuOpen])
 
   return (
     <header
@@ -132,86 +118,10 @@ export default function Header({ isConnected }: HeaderProps) {
               />
             )}
             
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation()
-                setMobileMenuOpen(!mobileMenuOpen)
-              }}
-              className="h-9 w-9"
-              aria-label="Toggle navigation menu"
-            >
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
-            </Button>
+            <MobileNavigation isConnected={isConnected} />
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-border-default bg-white animate-slide-in">
-            <div className="px-4 py-3 space-y-1">
-              <Link
-                href="/docs"
-                className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-background-light rounded-base transition-colors duration-150"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Documentation
-              </Link>
-              <Link
-                href="/settings"
-                className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-background-light rounded-base transition-colors duration-150"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Settings
-              </Link>
-              <Link
-                href="/features"
-                className="block px-3 py-2 text-base font-medium text-text-secondary hover:text-text-primary hover:bg-background-light rounded-base transition-colors duration-150"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Features
-              </Link>
-              
-              {/* Mobile Connection Status */}
-              {isConnected && (
-                <div className="pt-3 mt-3 border-t border-border-default">
-                  <div className="flex items-center justify-between px-3 py-2">
-                    <span className="text-sm text-text-secondary">Wallet Status</span>
-                    <Badge variant="success" size="sm">
-                      Connected
-                    </Badge>
-                  </div>
-                  <div className="px-3">
-                    <ConnectButton variant="ghost" size="sm" className="w-full justify-start" />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </header>
   )

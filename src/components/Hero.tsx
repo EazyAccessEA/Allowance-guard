@@ -26,7 +26,7 @@ export default function Hero({
   onWalletSelect 
 }: HeroProps) {
   return (
-    <Section className="relative py-24 sm:py-32 overflow-hidden">
+    <Section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
       {/* Video Background */}
       <VideoBackground videoSrc="/V3AG.mp4" />
       
@@ -39,7 +39,7 @@ export default function Hero({
       />
       
       <Container className="relative text-left max-w-4xl z-10">
-        <H1 className="mb-6 h-[2.2em]">
+        <H1 className="mb-4 sm:mb-6 h-[2.2em] text-3xl sm:text-4xl lg:text-5xl">
           <RotatingTypewriter 
             staticPrefix="The power to "
             messages={[
@@ -54,14 +54,14 @@ export default function Hero({
             className=""
           />
         </H1>
-        <p className="text-lg text-stone leading-relaxed mb-8">
+        <p className="text-base sm:text-lg text-stone leading-relaxed mb-6 sm:mb-8">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
         </p>
 
-        {/* CTA Section */}
-        <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+        {/* CTA Section - Mobile Optimized */}
+        <div className="flex flex-col gap-4 mb-6 sm:mb-8">
           {!isConnected ? (
-            <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="flex flex-col gap-4">
               <ConnectButton 
                 variant="primary" 
                 size="lg"
@@ -70,7 +70,7 @@ export default function Hero({
               <TestConnect onConnect={onWalletSelect} />
             </div>
           ) : (
-            <div className="flex flex-col items-start gap-4">
+            <div className="flex flex-col gap-4">
               <Button
                 onClick={onScan}
                 disabled={isScanning}
@@ -90,24 +90,24 @@ export default function Hero({
           )}
         </div>
 
-        {/* Trust Indicators */}
-        <div className="flex flex-col sm:flex-row items-start gap-6 text-sm text-stone">
+        {/* Trust Indicators - Mobile Optimized */}
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 text-sm text-stone">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-semantic-success rounded-full" />
+            <div className="w-2 h-2 bg-semantic-success rounded-full flex-shrink-0" />
             <span>No private keys required</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-semantic-success rounded-full" />
+            <div className="w-2 h-2 bg-semantic-success rounded-full flex-shrink-0" />
             <span>Read-only access</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-semantic-success rounded-full" />
+            <div className="w-2 h-2 bg-semantic-success rounded-full flex-shrink-0" />
             <span>100% free</span>
           </div>
         </div>
 
         {/* Learn More Link */}
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           <Link 
             href="/docs" 
             className="inline-flex items-center text-primary-accent hover:text-primary-accent/80 font-medium transition-colors duration-150"

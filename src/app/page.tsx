@@ -312,6 +312,7 @@ export default function HomePage() {
           onRefresh={handleRefresh}
           connectedAddress={connectedAddress}
           canRevoke={true}
+          loading={pending}
         />
       )}
 

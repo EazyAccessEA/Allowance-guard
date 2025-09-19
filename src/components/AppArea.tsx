@@ -8,6 +8,10 @@ import { Input } from '@/components/ui/Input'
 import WalletManager from '@/components/WalletManager'
 import AllowanceTable from '@/components/AllowanceTable'
 import WalletSecurity from '@/components/WalletSecurity'
+import { 
+  DashboardSkeleton, 
+  StatsCard
+} from '@/components/EnhancedLoadingStates'
 import { useState, useEffect, useCallback } from 'react'
 import { 
   Shield, 
@@ -44,10 +48,11 @@ interface AppAreaProps {
   onRefresh: () => Promise<void>
   connectedAddress: string | undefined
   canRevoke?: boolean
+  loading?: boolean
 }
 
 export default function AppArea({
-  isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress, canRevoke = true
+  isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress, canRevoke = true, loading = false
 }: AppAreaProps) {
   const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
   const [monitorFreq, setMonitorFreq] = useState(720)
@@ -78,84 +83,64 @@ export default function AppArea({
   const riskyCount = rows.filter(r => r.is_unlimited || (r.risk_flags||[]).includes('STALE')).length
   const unlimitedCount = rows.filter(r => r.is_unlimited).length
 
+  // Show loading state
+  if (loading) {
+    return (
+      <Section className="bg-background-light">
+        <Container>
+          <DashboardSkeleton />
+        </Container>
+      </Section>
+    )
+  }
+
   return (
     <Section className="bg-background-light">
       <Container>
         {/* Dashboard Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
             <div>
-              <h2 className="text-3xl font-bold text-text-primary mb-2">Security Dashboard</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-text-primary mb-2">Security Dashboard</h2>
               <p className="text-text-secondary">Monitor and manage your wallet&apos;s token approvals</p>
             </div>
             <Button
               onClick={onRefresh}
               variant="secondary"
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 w-full sm:w-auto"
             >
               <RefreshCw className="w-4 h-4" />
               Refresh
             </Button>
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary-accent/10 rounded-lg flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-primary-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-text-secondary">Total Allowances</p>
-                    <p className="text-2xl font-bold text-text-primary">{total}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-semantic-danger/10 rounded-lg flex items-center justify-center">
-                    <AlertTriangle className="w-5 h-5 text-semantic-danger" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-text-secondary">High Risk</p>
-                    <p className="text-2xl font-bold text-semantic-danger">{riskyCount}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-semantic-warning/10 rounded-lg flex items-center justify-center">
-                    <AlertTriangle className="w-5 h-5 text-semantic-warning" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-text-secondary">Unlimited</p>
-                    <p className="text-2xl font-bold text-semantic-warning">{unlimitedCount}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-semantic-success/10 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="w-5 h-5 text-semantic-success" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-text-secondary">Safe</p>
-                    <p className="text-2xl font-bold text-semantic-success">{total - riskyCount}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Quick Stats - Mobile Optimized */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+            <StatsCard
+              title="Total Allowances"
+              value={total}
+              icon={<Shield className="w-5 h-5 text-primary-accent" />}
+              loading={loading}
+            />
+            <StatsCard
+              title="High Risk"
+              value={riskyCount}
+              icon={<AlertTriangle className="w-5 h-5 text-semantic-danger" />}
+              loading={loading}
+            />
+            <StatsCard
+              title="Unlimited"
+              value={unlimitedCount}
+              icon={<AlertTriangle className="w-5 h-5 text-semantic-warning" />}
+              loading={loading}
+            />
+            <StatsCard
+              title="Safe"
+              value={total - riskyCount}
+              icon={<CheckCircle className="w-5 h-5 text-semantic-success" />}
+              loading={loading}
+            />
           </div>
         </div>
 
