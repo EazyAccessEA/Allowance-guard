@@ -3,6 +3,7 @@
 import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
+import { getAccessibilityClasses, keyboardNavigation } from '@/lib/accessibility'
 
 // Enhanced button variants following Sketch-inspired design system
 const buttonVariants = cva(
@@ -65,6 +66,15 @@ export interface ButtonProps
   loading?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
+  // Accessibility enhancements
+  ariaLabel?: string
+  ariaDescribedBy?: string
+  ariaExpanded?: boolean
+  ariaPressed?: boolean
+  ariaControls?: string
+  // Keyboard navigation
+  onEnter?: () => void
+  onEscape?: () => void
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -78,13 +88,50 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     rightIcon, 
     children, 
     disabled,
+    // Accessibility props
+    ariaLabel,
+    ariaDescribedBy,
+    ariaExpanded,
+    ariaPressed,
+    ariaControls,
+    onEnter,
+    onEscape,
     ...props 
   }, ref) => {
+    // Enhanced keyboard navigation
+    const keyboardHandlers = {
+      ...keyboardNavigation.onEnter(() => {
+        if (onEnter && !disabled && !loading) {
+          onEnter()
+        }
+      }),
+      ...keyboardNavigation.onEscape(() => {
+        if (onEscape && !disabled && !loading) {
+          onEscape()
+        }
+      }),
+    }
+    
     return (
       <button
-        className={cn(buttonVariants({ variant, size, fullWidth, className }))}
+        className={cn(
+          buttonVariants({ variant, size, fullWidth }),
+          getAccessibilityClasses({
+            focus: 'ring',
+            touchTarget: 'large',
+            reducedMotion: true,
+          }),
+          className
+        )}
         ref={ref}
         disabled={disabled || loading}
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedBy}
+        aria-expanded={ariaExpanded}
+        aria-pressed={ariaPressed}
+        aria-controls={ariaControls}
+        aria-busy={loading}
+        {...keyboardHandlers}
         {...props}
       >
         {loading && (

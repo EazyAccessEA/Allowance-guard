@@ -3,6 +3,7 @@
 import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
+import { getAccessibilityClasses, screenReaderAnnouncements } from '@/lib/accessibility'
 
 // Enhanced alert variants following Sketch-inspired design system
 const alertVariants = cva(
@@ -33,15 +34,50 @@ export interface AlertProps
   title?: string
   icon?: React.ReactNode
   onDismiss?: () => void
+  // Accessibility enhancements
+  ariaLabel?: string
+  ariaDescribedBy?: string
+  announceToScreenReader?: boolean
+  priority?: 'polite' | 'assertive'
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  ({ className, variant, title, icon, onDismiss, children, ...props }, ref) => {
+  ({ 
+    className, 
+    variant, 
+    title, 
+    icon, 
+    onDismiss, 
+    children,
+    ariaLabel,
+    ariaDescribedBy,
+    announceToScreenReader = false,
+    priority = 'polite',
+    ...props 
+  }, ref) => {
+    // Announce to screen reader if requested
+    React.useEffect(() => {
+      if (announceToScreenReader && (title || children)) {
+        const message = title ? `${title}: ${children}` : children
+        screenReaderAnnouncements.announce(message as string, priority)
+      }
+    }, [announceToScreenReader, title, children, priority])
+    
     return (
       <div
         ref={ref}
-        className={cn(alertVariants({ variant }), className)}
+        className={cn(
+          alertVariants({ variant }),
+          getAccessibilityClasses({
+            focus: 'ring',
+            reducedMotion: true,
+          }),
+          className
+        )}
         role="alert"
+        aria-label={ariaLabel}
+        aria-describedby={ariaDescribedBy}
+        aria-live={announceToScreenReader ? priority : undefined}
         {...props}
       >
         {icon && <div className="shrink-0">{icon}</div>}
