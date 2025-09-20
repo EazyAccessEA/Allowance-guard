@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/Button'
 
 type Variant = 'primary' | 'secondary' | 'ghost'
 
-export default function ConnectButton({
+// Inner component that uses AppKit hook
+function ConnectButtonInner({
   variant = 'primary',
   size = 'default',
   className = '',
@@ -18,28 +19,12 @@ export default function ConnectButton({
 }) {
   const { isConnected, address } = useAccount()
   const [isConnecting, setIsConnecting] = useState(false)
-  const [appKitReady, setAppKitReady] = useState(false)
   
-  // Always call the hook, but handle errors gracefully
-  let appKit = null
-  try {
-    appKit = useAppKit()
-    if (appKit && !appKitReady) {
-      setAppKitReady(true)
-    }
-  } catch (error) {
-    // AppKit not initialized yet, will show loading state
-    if (appKitReady) {
-      setAppKitReady(false)
-    }
-  }
+  // Call the hook normally - if AppKit isn't initialized, it will throw an error
+  // We'll handle this at the component level by wrapping the entire component
+  const appKit = useAppKit()
 
   const handleConnect = async () => {
-    if (!appKit?.open) {
-      console.warn('AppKit not ready for connection')
-      return
-    }
-    
     try {
       setIsConnecting(true)
       await appKit.open()
@@ -75,19 +60,6 @@ export default function ConnectButton({
     )
   }
 
-  // Show loading state if AppKit isn't ready
-  if (!appKitReady || !appKit) {
-    return (
-      <Button
-        variant={variant}
-        size={size}
-        disabled
-        className={className}
-      >
-        Loading...
-      </Button>
-    )
-  }
 
   return (
     <Button
@@ -100,4 +72,27 @@ export default function ConnectButton({
       {isConnecting ? 'Connecting...' : 'Connect Wallet'}
     </Button>
   )
+}
+
+// Wrapper component that handles AppKit initialization errors
+export default function ConnectButton(props: {
+  variant?: Variant
+  size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl' | '2xl'
+  className?: string
+}) {
+  try {
+    return <ConnectButtonInner {...props} />
+  } catch (error) {
+    // AppKit not initialized yet, show loading state
+    return (
+      <Button
+        variant={props.variant || 'primary'}
+        size={props.size || 'default'}
+        disabled
+        className={props.className || ''}
+      >
+        Loading...
+      </Button>
+    )
+  }
 }
