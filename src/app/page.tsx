@@ -131,9 +131,6 @@ export default function HomePage() {
         onWalletSelect={setSelectedWallet}
       />
 
-      {/* Statistics Section */}
-      <StatisticsSection />
-
       {/* How It Works Section */}
       <Section className="py-16 sm:py-20 lg:py-24 bg-white">
         <Container>
@@ -179,6 +176,9 @@ export default function HomePage() {
           </div>
         </Container>
       </Section>
+
+      {/* Statistics Section */}
+      <StatisticsSection />
 
       {/* Features Section */}
       <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
