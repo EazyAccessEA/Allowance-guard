@@ -25,7 +25,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`relative px-4 py-2 mobbin-body-small font-medium transition-all duration-150 rounded-base
+      className={`relative px-3 py-2 mobbin-body-small font-medium transition-all duration-150 rounded-base
         ${current 
           ? 'text-primary-600 bg-primary-50 border border-primary-200' 
           : 'text-text-secondary hover:text-text-primary hover:bg-background-secondary hover:border-border-primary'
@@ -56,11 +56,11 @@ export default function Header({ isConnected }: HeaderProps) {
         ${scrolled ? 'border-border-primary shadow-sm' : 'border-transparent'}`}
     >
       <div className="mobbin-container">
-        <div className="h-16 flex items-center justify-between min-h-[4rem]">
+        <div className="h-16 flex items-center justify-between min-h-[4rem] px-4 sm:px-6">
           {/* Logo Section */}
           <Link 
             href="/" 
-            className="flex items-center gap-3 group transition-all duration-150 hover:opacity-80"
+            className="flex items-center gap-4 group transition-all duration-150 hover:opacity-80 flex-shrink-0"
           >
             <div className="relative w-8 h-8 sm:w-10 sm:h-10">
               <Image
@@ -82,7 +82,7 @@ export default function Header({ isConnected }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-2">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 flex-1 justify-center max-w-md">
             <NavLink href="/docs" current={pathname?.startsWith('/docs') ?? false}>
               Documentation
             </NavLink>
@@ -95,7 +95,7 @@ export default function Header({ isConnected }: HeaderProps) {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             {isConnected ? (
               <Badge variant="success" size="sm">
                 Connected
@@ -106,7 +106,7 @@ export default function Header({ isConnected }: HeaderProps) {
           </div>
 
           {/* Mobile Actions */}
-          <div className="lg:hidden flex items-center gap-2 min-w-[120px] justify-end">
+          <div className="lg:hidden flex items-center gap-3 flex-shrink-0">
             <MobileNavigation isConnected={isConnected} />
           </div>
         </div>
