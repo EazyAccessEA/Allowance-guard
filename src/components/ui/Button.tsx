@@ -8,36 +8,36 @@ import { getAccessibilityClasses, keyboardNavigation } from '@/lib/accessibility
 // Mobbin-Inspired Button Variants
 const buttonVariants = cva(
   // Base styles - Mobbin-inspired interactions and states
-  'inline-flex items-center justify-center rounded-base font-button mobbin-focus-ring mobbin-button-press transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-base font-button mobbin-focus-ring mobbin-button-press transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        // Primary: Mobbin-inspired primary with systematic color scale
-        primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-lg mobbin-hover-lift',
+        // Primary: High contrast primary with systematic color scale
+        primary: 'bg-primary-700 text-white hover:bg-primary-800 active:bg-primary-900 shadow-sm hover:shadow-md active:shadow-lg mobbin-hover-lift',
         
-        // Secondary: Mobbin-inspired secondary with subtle background
-        secondary: 'border border-primary-200 bg-primary-50 text-primary-700 hover:bg-primary-100 hover:border-primary-300 active:bg-primary-200 shadow-sm',
+        // Secondary: High contrast secondary with subtle background
+        secondary: 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400 active:bg-primary-200 shadow-sm',
         
-        // Ghost: Mobbin-inspired ghost with neutral colors
-        ghost: 'hover:bg-neutral-100 text-neutral-700 active:bg-neutral-200',
+        // Ghost: High contrast ghost with neutral colors
+        ghost: 'hover:bg-neutral-100 text-neutral-800 active:bg-neutral-200',
         
         // Destructive: Mobbin-inspired danger with systematic color scale
         destructive: 'bg-semantic-error-500 text-white hover:bg-semantic-error-600 active:bg-semantic-error-700 shadow-sm hover:shadow-md active:shadow-lg',
         
-        // Outline: Mobbin-inspired outline with better contrast
-        outline: 'border border-neutral-300 bg-white hover:bg-neutral-50 hover:border-neutral-400 text-neutral-700 shadow-sm active:bg-neutral-100',
+        // Outline: High contrast outline with better contrast
+        outline: 'border border-neutral-400 bg-white hover:bg-neutral-50 hover:border-neutral-500 text-neutral-800 shadow-sm active:bg-neutral-100',
         
-        // Link: Mobbin-inspired link with primary colors
-        link: 'text-primary-600 underline-offset-4 hover:underline hover:text-primary-700 focus:text-primary-700',
+        // Link: High contrast link with primary colors
+        link: 'text-primary-700 underline-offset-4 hover:underline hover:text-primary-800 focus:text-primary-800',
         
         // Mobbin-inspired semantic variants
         success: 'bg-semantic-success-500 text-white hover:bg-semantic-success-600 active:bg-semantic-success-700 shadow-sm hover:shadow-md active:shadow-lg',
         warning: 'bg-semantic-warning-500 text-white hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm hover:shadow-md active:shadow-lg',
         info: 'bg-semantic-info-500 text-white hover:bg-semantic-info-600 active:bg-semantic-info-700 shadow-sm hover:shadow-md active:shadow-lg',
         
-        // Mobbin-inspired additional variants
-        subtle: 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300',
-        accent: 'bg-primary-100 text-primary-800 hover:bg-primary-200 active:bg-primary-300',
+        // High contrast additional variants
+        subtle: 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300',
+        accent: 'bg-primary-100 text-primary-900 hover:bg-primary-200 active:bg-primary-300',
       },
       size: {
         // Mobbin-inspired size variants with systematic scaling

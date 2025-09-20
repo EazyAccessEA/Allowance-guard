@@ -53,11 +53,11 @@ export default function Hero({
               <>
                 <span className="block">
                   <span className="text-text-primary">The power to </span>
-                  <span className="text-primary-600">{firstLine}</span>
+                  <span className="text-primary-700">{firstLine}</span>
                 </span>
-                <span className="block text-primary-600">
+                <span className="block text-primary-700">
                   {secondLine}
-                  <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-600 animate-pulse" />
+                  <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-700 animate-pulse" />
                 </span>
               </>
             )}
