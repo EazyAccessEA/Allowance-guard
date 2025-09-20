@@ -37,17 +37,17 @@ export const MultiLineTypewriter = ({
           [Symbol.toPrimitive]: () => id,
           valueOf: () => id,
           toString: () => id.toString()
-        } as NodeJS.Timeout
+        } as unknown as NodeJS.Timeout
       } else {
         timer = setTimeout(callback, delay)
       }
     }
     
-    // Mobile performance optimization - reduce animation speed for TBT
+    // Mobile performance optimization - faster animation like Fireart
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-    const mobileTypingSpeed = typingSpeed * 3 // Much slower for mobile TBT
-    const mobileDeletingSpeed = deletingSpeed * 3
-    const mobilePauseTime = pauseTime * 0.3
+    const mobileTypingSpeed = typingSpeed * 0.7 // Faster for mobile like Fireart
+    const mobileDeletingSpeed = deletingSpeed * 0.5
+    const mobilePauseTime = pauseTime * 0.8
     
     const effectiveTypingSpeed = isMobile ? mobileTypingSpeed : typingSpeed
     const effectiveDeletingSpeed = isMobile ? mobileDeletingSpeed : deletingSpeed
