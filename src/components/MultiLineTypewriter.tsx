@@ -22,6 +22,7 @@ export const MultiLineTypewriter = ({
   const [secondLine, setSecondLine] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
+  const [isDeletingPaused, setIsDeletingPaused] = useState(false)
   const [currentLine, setCurrentLine] = useState(1)
 
   useEffect(() => {
@@ -78,8 +79,13 @@ export const MultiLineTypewriter = ({
         }, effectiveDeletingSpeed)
       } else {
         setIsDeleting(false)
-        setCurrentLine(1)
-        setCurrentMessageIndex((prev) => (prev + 1) % messages.length)
+        setIsDeletingPaused(true)
+        // Add pause after deletion before moving to next message
+        scheduleUpdate(() => {
+          setIsDeletingPaused(false)
+          setCurrentLine(1)
+          setCurrentMessageIndex((prev) => (prev + 1) % messages.length)
+        }, 1000) // 1 second pause after deletion
       }
     } else {
       if (currentLine === 1) {
@@ -111,7 +117,7 @@ export const MultiLineTypewriter = ({
         }
       }
     }
-  }, [currentMessageIndex, firstLine, secondLine, isDeleting, isPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
+  }, [currentMessageIndex, firstLine, secondLine, isDeleting, isPaused, isDeletingPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
 
   return onRender(firstLine, secondLine)
 }
