@@ -74,6 +74,29 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.rollbar.com" />
         <link rel="dns-prefetch" href="https://www.allowanceguard.com" />
+        
+        {/* Critical CSS inlining to reduce render blocking */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Critical above-the-fold styles */
+            body { margin: 0; font-family: Inter, system-ui, sans-serif; }
+            .min-h-screen { min-height: 100vh; }
+            .flex { display: flex; }
+            .flex-col { flex-direction: column; }
+            .flex-1 { flex: 1; }
+            .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+            .focus\\:not-sr-only:focus { position: static; width: auto; height: auto; padding: 0.5rem; margin: 0; overflow: visible; clip: auto; white-space: normal; }
+            .focus\\:absolute:focus { position: absolute; }
+            .focus\\:top-2:focus { top: 0.5rem; }
+            .focus\\:left-2:focus { left: 0.5rem; }
+            .bg-white { background-color: white; }
+            .border { border-width: 1px; }
+            .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+            .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+            .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+            .z-50 { z-index: 50; }
+          `
+        }} />
       </head>
       <body className={`${inter.className} ${jetbrainsMono.className} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>

@@ -1,6 +1,20 @@
 /* Fonts moved to layout.tsx for better performance */
 /* Theano Didot font import removed to fix MIME type errors */
 
+/* Critical CSS - Above the fold styles */
+@layer base {
+  html {
+    font-family: Inter, system-ui, sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
