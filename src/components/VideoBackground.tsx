@@ -16,15 +16,15 @@ export default function VideoBackground({
   useEffect(() => {
     const video = videoRef.current
     if (video && !hasError) {
-      video.play().catch((error) => {
-        console.warn('Video autoplay failed:', error)
+      video.play().catch(() => {
+        // Silently handle autoplay failures
         setHasError(true)
       })
     }
   }, [hasError])
 
-  const handleError = () => {
-    console.warn('Video failed to load:', videoSrc)
+  const handleError = (event: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+    // Silently handle video loading errors to prevent console spam
     setHasError(true)
   }
 
