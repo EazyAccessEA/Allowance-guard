@@ -8,7 +8,6 @@ import VideoBackground from '@/components/VideoBackground'
 import ConnectButton from '@/components/ConnectButton'
 import TestConnect from '@/components/TestConnect'
 import { MultiLineTypewriter } from '@/components/MultiLineTypewriter'
-import { StaticHeroText } from '@/components/StaticHeroText'
 
 interface HeroProps {
   isConnected: boolean

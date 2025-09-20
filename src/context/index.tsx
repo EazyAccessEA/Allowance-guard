@@ -11,7 +11,7 @@ import React, { type ReactNode, useMemo, Component, ErrorInfo, useState, useEffe
 const queryClient = new QueryClient()
 
 // TBT Optimization: Defer AppKit initialization
-let deferredAppKit: any = null
+let deferredAppKit: unknown = null
 let isInitializing = false
 
 const initializeAppKit = () => {
@@ -314,7 +314,7 @@ class WalletErrorBoundary extends Component<
 
 // AppKit Provider Component - TBT Optimized with deferred initialization
 function AppKitProvider({ children }: { children: ReactNode }) {
-  const [appKit, setAppKit] = useState<any>(null)
+  const [appKit, setAppKit] = useState<unknown>(null)
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
