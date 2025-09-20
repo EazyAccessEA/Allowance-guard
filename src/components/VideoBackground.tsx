@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 interface VideoBackgroundProps {
   videoSrc: string
@@ -11,13 +11,35 @@ export default function VideoBackground({
   className = "absolute inset-0 w-full h-full object-cover"
 }: VideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
     const video = videoRef.current
-    if (video) {
-      video.play().catch(console.error)
+    if (video && !hasError) {
+      video.play().catch((error) => {
+        console.warn('Video autoplay failed:', error)
+        setHasError(true)
+      })
     }
-  }, [])
+  }, [hasError])
+
+  const handleError = () => {
+    console.warn('Video failed to load:', videoSrc)
+    setHasError(true)
+  }
+
+  // If video fails to load, return a fallback background
+  if (hasError) {
+    return (
+      <div 
+        className={className}
+        style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        }}
+        aria-label="Allowance Guard background"
+      />
+    )
+  }
 
   return (
     <video
@@ -28,6 +50,7 @@ export default function VideoBackground({
       muted
       playsInline
       preload="metadata"
+      onError={handleError}
       aria-label="Allowance Guard background animation"
     >
       <source src={videoSrc} type="video/mp4" />
