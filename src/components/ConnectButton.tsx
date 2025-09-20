@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/Button'
 
 type Variant = 'primary' | 'secondary' | 'ghost'
 
-// Inner component that uses AppKit hook
-function ConnectButtonInner({
+// ConnectButton component using AppKit per Reown documentation
+export default function ConnectButton({
   variant = 'primary',
   size = 'default',
   className = '',
@@ -20,14 +20,13 @@ function ConnectButtonInner({
   const { isConnected, address } = useAccount()
   const [isConnecting, setIsConnecting] = useState(false)
   
-  // Call the hook normally - if AppKit isn't initialized, it will throw an error
-  // We'll handle this at the component level by wrapping the entire component
-  const appKit = useAppKit()
+  // Use AppKit hook per Reown documentation
+  const { open } = useAppKit()
 
   const handleConnect = async () => {
     try {
       setIsConnecting(true)
-      await appKit.open()
+      await open()
     } catch (error) {
       // Silently handle connection errors - they're often just user cancellation
       console.warn('Connection cancelled or failed:', error)
@@ -72,27 +71,4 @@ function ConnectButtonInner({
       {isConnecting ? 'Connecting...' : 'Connect Wallet'}
     </Button>
   )
-}
-
-// Wrapper component that handles AppKit initialization errors
-export default function ConnectButton(props: {
-  variant?: Variant
-  size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl' | '2xl'
-  className?: string
-}) {
-  try {
-    return <ConnectButtonInner {...props} />
-  } catch (error) {
-    // AppKit not initialized yet, show loading state
-    return (
-      <Button
-        variant={props.variant || 'primary'}
-        size={props.size || 'default'}
-        disabled
-        className={props.className || ''}
-      >
-        Loading...
-      </Button>
-    )
-  }
 }

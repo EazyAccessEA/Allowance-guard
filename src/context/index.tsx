@@ -128,10 +128,11 @@ const metadata = {
   icons: ['https://www.allowanceguard.com/icon.png']
 }
 
-// Initialize AppKit with optimized configuration to prevent update cycles
+// Initialize AppKit with proper configuration per Reown docs
 if (projectId) {
   try {
-    createAppKit({
+    // Create the modal per Reown documentation
+    const modal = createAppKit({
       adapters: [wagmiAdapter],
       projectId: projectId,
       networks: [mainnet, arbitrum, base],
