@@ -586,6 +586,11 @@ button, a, input, select, textarea {
   padding: 0 1rem;
 }
 
+/* Prevent layout shift on mobile */
+header {
+  contain: layout style;
+}
+
 .mobbin-container-narrow {
   max-width: 800px;
   margin: 0 auto;

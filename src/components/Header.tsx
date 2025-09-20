@@ -56,7 +56,7 @@ export default function Header({ isConnected }: HeaderProps) {
         ${scrolled ? 'border-border-primary shadow-sm' : 'border-transparent'}`}
     >
       <div className="mobbin-container">
-        <div className="h-16 flex items-center justify-between">
+        <div className="h-16 flex items-center justify-between min-h-[4rem]">
           {/* Logo Section */}
           <Link 
             href="/" 
@@ -106,7 +106,7 @@ export default function Header({ isConnected }: HeaderProps) {
           </div>
 
           {/* Mobile Actions */}
-          <div className="lg:hidden flex items-center gap-2">
+          <div className="lg:hidden flex items-center gap-2 min-w-[120px] justify-end">
             {!isConnected && (
               <ConnectButton 
                 variant="primary" 
