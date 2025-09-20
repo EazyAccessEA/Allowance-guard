@@ -12,7 +12,21 @@ module.exports = {
     preflight: true,
     container: false,
     accessibility: true,
+    // Disable unused core plugins
+    float: false,
+    clear: false,
+    skew: false,
+    caretColor: false,
+    sepia: false,
   },
+  // Optimize CSS purging
+  safelist: [
+    // Keep essential classes that might be dynamically generated
+    'animate-scroll',
+    'brand-logos-mobile',
+    'mobbin-hover-lift',
+    'mobbin-focus-ring',
+  ],
   // Optimize for production
   future: {
     hoverOnlyWhenSupported: true,

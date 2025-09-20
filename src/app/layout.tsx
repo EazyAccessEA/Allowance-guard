@@ -74,6 +74,9 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.rollbar.com" />
         <link rel="dns-prefetch" href="https://www.allowanceguard.com" />
+        <link rel="dns-prefetch" href="https://vercel.com" />
+        <link rel="dns-prefetch" href="https://reown.com" />
+        <link rel="dns-prefetch" href="https://wagmi.sh" />
         
         {/* Preload critical resources */}
         <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />

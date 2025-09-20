@@ -65,6 +65,12 @@ const nextConfig = {
     optimizeCss: false, // Disabled due to build issues, but keep for future
     // Enable modern JavaScript for better performance
     esmExternals: true,
+    // Modern JavaScript optimizations
+    modernBuild: true,
+    // Reduce bundle size
+    bundlePagesRouterDependencies: true,
+    // Optimize server components
+    serverComponentsExternalPackages: ['@reown/appkit', 'wagmi'],
   },
   
   // Image optimization
@@ -107,6 +113,15 @@ const nextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+          },
+          // Performance headers
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          },
+          {
+            key: 'Vary',
+            value: 'Accept-Encoding'
           }
         ]
       }

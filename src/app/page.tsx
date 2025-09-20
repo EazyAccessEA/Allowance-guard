@@ -345,8 +345,8 @@ export default function HomePage() {
             </p>
             
             {/* Desktop: Scrolling animation */}
-            <div className="hidden md:block relative overflow-hidden">
-              <div className="flex items-center gap-12 lg:gap-20 animate-scroll">
+            <div className="hidden md:block relative overflow-hidden h-12">
+              <div className="flex items-center gap-12 lg:gap-20 animate-scroll h-12">
                 {/* First set of logos */}
                 <div className="flex items-center gap-12 lg:gap-20 flex-shrink-0">
                   {/* Ethereum */}
@@ -488,7 +488,7 @@ export default function HomePage() {
             </div>
 
             {/* Mobile: Static layout with horizontal scroll */}
-            <div className="md:hidden brand-logos-mobile px-4">
+            <div className="md:hidden brand-logos-mobile px-4 h-10">
               {/* Ethereum */}
               <div className="flex items-center">
                 <Image
