@@ -87,8 +87,9 @@ export class LighthouseMonitor {
     let clsValue = 0
     const clsObserver = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (!(entry as any).hadRecentInput) {
-          clsValue += (entry as any).value
+        const layoutShiftEntry = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number }
+        if (!layoutShiftEntry.hadRecentInput) {
+          clsValue += layoutShiftEntry.value || 0
         }
       }
       this.metrics.cls = clsValue
@@ -123,11 +124,14 @@ export class LighthouseMonitor {
   private reportLongTask(duration: number) {
     // Report long tasks to analytics
     if (typeof window !== 'undefined' && 'gtag' in window) {
-      (window as any).gtag('event', 'long_task', {
-        event_category: 'Performance',
-        event_label: 'TBT',
-        value: Math.round(duration)
-      })
+      const gtag = (window as { gtag?: (event: string, action: string, params: Record<string, unknown>) => void }).gtag
+      if (gtag) {
+        gtag('event', 'long_task', {
+          event_category: 'Performance',
+          event_label: 'TBT',
+          value: Math.round(duration)
+        })
+      }
     }
   }
 

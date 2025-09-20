@@ -32,12 +32,7 @@ self.onmessage = (event: MessageEvent<TypewriterMessage>) => {
   if (type === 'ANIMATE') {
     const {
       currentMessage,
-      currentLine,
-      isDeleting,
-      isPaused,
-      typingSpeed,
-      deletingSpeed,
-      pauseTime
+      typingSpeed
     } = payload
 
     const words = currentMessage.split(/\s+/)
