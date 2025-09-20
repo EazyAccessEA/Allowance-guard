@@ -107,13 +107,6 @@ export default function Header({ isConnected }: HeaderProps) {
 
           {/* Mobile Actions */}
           <div className="lg:hidden flex items-center gap-2 min-w-[120px] justify-end">
-            {!isConnected && (
-              <ConnectButton 
-                variant="primary" 
-                size="sm"
-              />
-            )}
-            
             <MobileNavigation isConnected={isConnected} />
           </div>
         </div>
