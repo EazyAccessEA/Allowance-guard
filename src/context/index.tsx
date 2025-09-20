@@ -132,7 +132,7 @@ const metadata = {
 if (projectId) {
   try {
     // Create the modal per Reown documentation
-    const modal = createAppKit({
+    createAppKit({
       adapters: [wagmiAdapter],
       projectId: projectId,
       networks: [mainnet, arbitrum, base],
