@@ -97,12 +97,9 @@ export default function Header({ isConnected }: HeaderProps) {
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-3">
             {isConnected ? (
-              <div className="flex items-center gap-3">
-                <Badge variant="success" size="sm">
-                  Connected
-                </Badge>
-                <ConnectButton variant="ghost" />
-              </div>
+              <Badge variant="success" size="sm">
+                Connected
+              </Badge>
             ) : (
               <ConnectButton variant="primary" />
             )}
