@@ -4,10 +4,20 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import VideoBackground from '@/components/VideoBackground'
+import dynamic from 'next/dynamic'
 import ConnectButton from '@/components/ConnectButton'
 import TestConnect from '@/components/TestConnect'
-import { MultiLineTypewriter } from '@/components/MultiLineTypewriter'
+
+// Dynamic imports for non-critical components
+const VideoBackground = dynamic(() => import('@/components/VideoBackground'), {
+  ssr: false,
+  loading: () => null
+})
+
+const MultiLineTypewriter = dynamic(() => import('@/components/MultiLineTypewriter').then(mod => ({ default: mod.MultiLineTypewriter })), {
+  ssr: false,
+  loading: () => <span className="text-primary-700">see every hidden connection clearly</span>
+})
 
 interface HeroProps {
   isConnected: boolean

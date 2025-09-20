@@ -5,15 +5,32 @@ import Section from '@/components/ui/Section'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import WalletManager from '@/components/WalletManager'
-import AllowanceTable from '@/components/AllowanceTable'
-import WalletSecurity from '@/components/WalletSecurity'
+import dynamic from 'next/dynamic'
 import { 
   DashboardSkeleton, 
   StatsCard
 } from '@/components/EnhancedLoadingStates'
-import BulkRevokePanel from '@/components/BulkRevokePanel'
-import { DataVisualizationDashboard } from '@/components/DataVisualizationDashboard'
+
+// Dynamic imports for heavy components
+const WalletManager = dynamic(() => import('@/components/WalletManager'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32 w-full" />
+})
+
+const AllowanceTable = dynamic(() => import('@/components/AllowanceTable'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64 w-full" />
+})
+
+const WalletSecurity = dynamic(() => import('@/components/WalletSecurity'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-48 w-full" />
+})
+
+const BulkRevokePanel = dynamic(() => import('@/components/BulkRevokePanel'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32 w-full" />
+})
+
+const DataVisualizationDashboard = dynamic(() => import('@/components/DataVisualizationDashboard').then(mod => ({ default: mod.DataVisualizationDashboard })), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />
+})
 import { useState, useEffect, useCallback } from 'react'
 import { 
   Shield, 
