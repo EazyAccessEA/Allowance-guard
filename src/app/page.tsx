@@ -333,9 +333,17 @@ export default function HomePage() {
               Trusted by security-conscious users across
             </p>
             
-            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16">
-              {/* Ethereum - using text since no logo provided */}
-              <span className="text-lg text-text-secondary font-medium">Ethereum</span>
+            <div className="flex items-center justify-center gap-4 sm:gap-6 lg:gap-8 overflow-x-auto px-4 sm:px-0">
+              {/* Ethereum */}
+              <div className="flex items-center">
+                <Image
+                  src="/ethereum.jpeg"
+                  alt="Ethereum"
+                  width={120}
+                  height={30}
+                  className="h-7 w-auto"
+                />
+              </div>
               
               {/* Arbitrum */}
               <div className="flex items-center">
