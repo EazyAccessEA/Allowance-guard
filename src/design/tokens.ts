@@ -64,7 +64,7 @@ export const designTokens = {
     text: {
       primary: '#0F172A',     // Darkest text
       secondary: '#475569',   // Medium text
-      tertiary: '#94A3B8',    // Muted text
+      tertiary: '#64748B',    // Muted text (darker for better contrast)
       inverse: '#FFFFFF',     // Light text
       // Legacy support
       muted: '#9CA3AF',
@@ -282,10 +282,10 @@ export const designTokens = {
     // Sketch-Inspired Font Weights
     weights: {
       light: '300',
-      normal: '400',
-      medium: '500',
-      semibold: '600',
-      bold: '700',
+    normal: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
       extrabold: '800',
       black: '900',
     },
@@ -401,11 +401,11 @@ export const designTokens = {
   },
   
   shadows: {
-    subtle: '0 1px 3px rgba(0, 0, 0, 0.1)',
-    medium: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    large: '0 10px 15px rgba(0, 0, 0, 0.1)',
+  subtle: '0 1px 3px rgba(0, 0, 0, 0.1)',
+  medium: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  large: '0 10px 15px rgba(0, 0, 0, 0.1)',
     focus: '0 0 0 3px rgba(0, 194, 179, 0.1)',
-    focusDanger: '0 0 0 3px rgba(239, 68, 68, 0.1)',
+  focusDanger: '0 0 0 3px rgba(239, 68, 68, 0.1)',
     focusSuccess: '0 0 0 3px rgba(34, 197, 94, 0.1)',
     focusInfo: '0 0 0 3px rgba(14, 165, 233, 0.1)',
   },

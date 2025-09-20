@@ -70,7 +70,7 @@ module.exports = {
         text: {
           primary: '#0F172A',
           secondary: '#475569',
-          tertiary: '#94A3B8',
+          tertiary: '#64748B',  // Darker for better contrast
           inverse: '#FFFFFF',
           // Legacy support
           muted: '#9CA3AF',

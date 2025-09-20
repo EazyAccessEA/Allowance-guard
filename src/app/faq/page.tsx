@@ -236,7 +236,7 @@ export default function FAQPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mobbin-fade-in">
               <a 
                 href="/contact" 
-                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-all duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-primary-700 text-white rounded-lg hover:bg-primary-800 transition-all duration-200"
               >
                 Contact Support
               </a>

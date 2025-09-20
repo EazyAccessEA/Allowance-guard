@@ -163,7 +163,7 @@ export default function ContactPage() {
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1">
               <div className="p-8">
                 <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mb-6">
-                  <Mail className="w-8 h-8 text-primary-500" />
+                  <Mail className="w-8 h-8 text-primary-700" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">General Support & Questions</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -177,7 +177,7 @@ export default function ContactPage() {
                   <div className="flex items-center mobbin-caption text-text-tertiary">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     <span 
-                      className="cursor-pointer hover:text-primary-500 transition-colors duration-200" 
+                      className="cursor-pointer hover:text-primary-700 transition-colors duration-200" 
                       onClick={() => window.location.href = 'mailto:support@allowanceguard.com?subject=General Support Request'}
                       title="Click to send email"
                       dangerouslySetInnerHTML={{ __html: obfuscateEmail('support@allowanceguard.com') }}
@@ -186,7 +186,7 @@ export default function ContactPage() {
                 </div>
                 <a 
                   href={createObfuscatedMailtoLink('support@allowanceguard.com', 'General Support Request')}
-                  className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-500 text-primary-500 rounded-lg hover:bg-primary-500 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
                 >
                   <Mail className="w-4 h-4 mr-2" />
                   Compose an email to Support
@@ -288,7 +288,7 @@ export default function ContactPage() {
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
               <div className="p-8">
                 <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MessageCircle className="w-8 h-8 text-primary-500" />
+                  <MessageCircle className="w-8 h-8 text-primary-700" />
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">Discord</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
@@ -298,7 +298,7 @@ export default function ContactPage() {
                   href="https://discord.gg/allowanceguard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-500 text-primary-500 rounded-lg hover:bg-primary-500 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Join our Discord Server
@@ -323,7 +323,7 @@ export default function ContactPage() {
                   href="https://x.com/AllowanceGuard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-500 text-primary-500 rounded-lg hover:bg-primary-500 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
                 >
                   <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -348,7 +348,7 @@ export default function ContactPage() {
                   href="https://github.com/EazyAccessEA/Allowance-guard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-500 text-primary-500 rounded-lg hover:bg-primary-500 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
                 >
                   <Github className="w-4 h-4 mr-2" />
                   View our GitHub
@@ -411,7 +411,7 @@ export default function ContactPage() {
                 </p>
                 <a 
                   href="/pgp-key.asc"
-                  className="inline-flex items-center px-6 py-3 mobbin-caption font-medium mobbin-hover-lift mobbin-focus-ring text-primary-500 border border-primary-500 rounded-lg hover:bg-primary-500 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center px-6 py-3 mobbin-caption font-medium mobbin-hover-lift mobbin-focus-ring text-primary-700 border border-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Download our PGP Key

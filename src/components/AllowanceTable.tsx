@@ -201,7 +201,7 @@ export default function AllowanceTable({
                       type="checkbox" 
                       checked={!!sel[keyOf(r)]} 
                       onChange={() => toggle(r)}
-                      className="rounded border-border-primary text-primary-500 focus:ring-primary-500"
+                      className="rounded border-border-primary text-primary-700 focus:ring-primary-700"
                       aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval for ${r.spender_label || 'Unknown Contract'}`}
                     />
                   </td>
