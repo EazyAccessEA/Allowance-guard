@@ -44,7 +44,7 @@ export default function Hero({
       
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-4 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
-          <div className="min-h-[4.5em] sm:min-h-[4em] md:min-h-[3.5em] flex flex-col justify-center">
+          <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] flex flex-col justify-center">
             <MultiLineTypewriter
             messages={[
               "see every hidden connection clearly",
@@ -52,7 +52,7 @@ export default function Hero({
               "find and cut off silent threats",
               "control who has access to funds"
             ]}
-            typingSpeed={300}
+            typingSpeed={250}
             deletingSpeed={50}
             pauseTime={5000}
             onRender={(firstLine, secondLine) => (
