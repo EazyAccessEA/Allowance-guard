@@ -68,7 +68,8 @@ const nextConfig = {
   },
   
   // Server external packages (moved from experimental)
-  serverExternalPackages: ['@reown/appkit', 'wagmi'],
+  // Note: @reown/appkit and wagmi are handled by transpilePackages
+  serverExternalPackages: [],
   
   // Image optimization
   images: {
