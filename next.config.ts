@@ -88,10 +88,6 @@ const nextConfig = {
     esmExternals: true,
     // Advanced performance features
     webpackBuildWorker: true,
-    // Reduce bundle size
-    bundlePagesRouterDependencies: true,
-    // Optimize server components
-    serverComponentsExternalPackages: ['@reown/appkit', 'wagmi'],
   },
   
   // Server external packages (moved from experimental)
