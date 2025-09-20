@@ -18,14 +18,20 @@ export default function ConnectButton({
 }) {
   const { isConnected, address } = useAccount()
   const [isConnecting, setIsConnecting] = useState(false)
+  const [appKitReady, setAppKitReady] = useState(false)
   
-  // Safely get AppKit hook with error handling
+  // Always call the hook, but handle errors gracefully
   let appKit = null
   try {
     appKit = useAppKit()
+    if (appKit && !appKitReady) {
+      setAppKitReady(true)
+    }
   } catch (error) {
     // AppKit not initialized yet, will show loading state
-    console.warn('AppKit not ready:', error)
+    if (appKitReady) {
+      setAppKitReady(false)
+    }
   }
 
   const handleConnect = async () => {
@@ -70,7 +76,7 @@ export default function ConnectButton({
   }
 
   // Show loading state if AppKit isn't ready
-  if (!appKit) {
+  if (!appKitReady || !appKit) {
     return (
       <Button
         variant={variant}
