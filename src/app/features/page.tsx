@@ -22,8 +22,8 @@ export default function FeaturesPage() {
           }}
         />
         
-        <Container className="relative z-10">
-          <div className="max-w-4xl">
+        <Container className="relative text-left max-w-4xl z-10">
+          <div>
             <H1 className="mb-6">Built for Clarity, Designed for Security</H1>
             <p className="text-base text-stone max-w-reading mb-8">
               Allowance Guard is engineered to solve one problem with ruthless efficiency: eliminating the hidden risk of token allowances. Every feature is designed to the PuredgeOS &apos;God-tier&apos; standard of clarity and performance, giving you unparalleled visibility and control over your wallet&apos;s permissions.
@@ -113,7 +113,7 @@ export default function FeaturesPage() {
       {/* Call to Action */}
       <Section className="py-32">
         <Container>
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-left">
             <H2 className="mb-8">Ready to Secure Your Wallet?</H2>
             <p className="text-base text-stone max-w-reading mb-12">
               Start scanning your allowances and take control of your wallet&apos;s security today.
