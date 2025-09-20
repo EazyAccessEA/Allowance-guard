@@ -370,7 +370,7 @@ export default function HomePage() {
                     <Image
                       src="/ethereum-logo-landscape-purple.svg"
                       alt="Ethereum"
-                      width={120}
+                      width={140}
                       height={32}
                       className="h-8 w-auto"
                     />
@@ -439,7 +439,7 @@ export default function HomePage() {
                     <Image
                       src="/ethereum-logo-landscape-purple.svg"
                       alt="Ethereum"
-                      width={120}
+                      width={140}
                       height={32}
                       className="h-8 w-auto"
                     />
@@ -511,7 +511,7 @@ export default function HomePage() {
                   src="/ethereum-logo-landscape-purple.svg"
                   alt="Ethereum"
                   width={120}
-                  height={30}
+                  height={28}
                   className="h-7 w-auto"
                 />
               </div>
