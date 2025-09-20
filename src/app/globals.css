@@ -3169,3 +3169,43 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
 .animate-scroll:hover {
   animation-play-state: paused;
 }
+
+/* Mobile-optimized logo behavior */
+@media (max-width: 768px) {
+  .animate-scroll {
+    animation: none;
+  }
+  
+  /* Static layout for mobile with horizontal scroll */
+  .brand-logos-mobile {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .brand-logos-mobile::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .brand-logos-mobile > * {
+    flex-shrink: 0;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .animate-scroll {
+    animation: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll {
+    animation: none;
+  }
+}

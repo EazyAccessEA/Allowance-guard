@@ -344,10 +344,11 @@ export default function HomePage() {
               Trusted by security-conscious users across
             </p>
             
-            <div className="relative overflow-hidden">
-              <div className="flex items-center gap-12 sm:gap-16 lg:gap-20 animate-scroll">
+            {/* Desktop: Scrolling animation */}
+            <div className="hidden md:block relative overflow-hidden">
+              <div className="flex items-center gap-12 lg:gap-20 animate-scroll">
                 {/* First set of logos */}
-                <div className="flex items-center gap-12 sm:gap-16 lg:gap-20 flex-shrink-0">
+                <div className="flex items-center gap-12 lg:gap-20 flex-shrink-0">
                   {/* Ethereum */}
                   <div className="flex items-center">
                     <Image
@@ -416,7 +417,7 @@ export default function HomePage() {
                 </div>
                 
                 {/* Duplicate set for seamless loop */}
-                <div className="flex items-center gap-12 sm:gap-16 lg:gap-20 flex-shrink-0">
+                <div className="flex items-center gap-12 lg:gap-20 flex-shrink-0">
                   {/* Ethereum */}
                   <div className="flex items-center">
                     <Image
@@ -483,6 +484,75 @@ export default function HomePage() {
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Mobile: Static layout with horizontal scroll */}
+            <div className="md:hidden brand-logos-mobile px-4">
+              {/* Ethereum */}
+              <div className="flex items-center">
+                <Image
+                  src="/ethereum-logo-landscape-black.svg"
+                  alt="Ethereum"
+                  width={120}
+                  height={30}
+                  className="h-7 w-auto"
+                />
+              </div>
+              
+              {/* Arbitrum */}
+              <div className="flex items-center">
+                <Image
+                  src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
+                  alt="Arbitrum"
+                  width={120}
+                  height={30}
+                  className="h-7 w-auto"
+                />
+              </div>
+              
+              {/* Base */}
+              <div className="flex items-center">
+                <Image
+                  src="/Base_lockup_2color.svg"
+                  alt="Base"
+                  width={70}
+                  height={18}
+                  className="h-5 w-auto"
+                />
+              </div>
+              
+              {/* Polygon */}
+              <div className="flex items-center">
+                <Image
+                  src="/Polygon Primary Dark.svg"
+                  alt="Polygon"
+                  width={100}
+                  height={20}
+                  className="h-6 w-auto"
+                />
+              </div>
+              
+              {/* Optimism */}
+              <div className="flex items-center">
+                <Image
+                  src="/OPTIMISM-B.svg"
+                  alt="Optimism"
+                  width={100}
+                  height={14}
+                  className="h-4 w-auto"
+                />
+              </div>
+              
+              {/* Avalanche */}
+              <div className="flex items-center">
+                <Image
+                  src="/AvalancheLogo_Horizontal_4C_Primary.svg"
+                  alt="Avalanche"
+                  width={120}
+                  height={22}
+                  className="h-6 w-auto"
+                />
               </div>
             </div>
           </div>
