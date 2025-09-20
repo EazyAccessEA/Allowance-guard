@@ -36,7 +36,8 @@ export default function VideoBackground({
         style={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
         }}
-        aria-label="Allowance Guard background"
+        role="presentation"
+        aria-hidden="true"
       />
     )
   }
