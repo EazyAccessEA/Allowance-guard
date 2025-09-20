@@ -26,8 +26,13 @@ export default function Hero({
 }: HeroProps) {
   return (
     <Section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
-      {/* Video Background */}
-      <VideoBackground videoSrc="/V3AG.mp4" />
+      {/* Video Background - Hidden on mobile for performance */}
+      <div className="hidden md:block">
+        <VideoBackground videoSrc="/V3AG.mp4" />
+      </div>
+      
+      {/* Mobile gradient background for performance */}
+      <div className="md:hidden absolute inset-0 bg-gradient-to-br from-primary-50 to-secondary-100" />
       
       {/* Gradient overlay for better text readability */}
       <div 

@@ -78,16 +78,35 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://reown.com" />
         <link rel="dns-prefetch" href="https://wagmi.sh" />
         
-        {/* Preload critical resources */}
+        {/* Preload critical resources for mobile performance */}
         <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />
         <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
         <link rel="preload" href="/_next/static/chunks/webpack.js" as="script" />
         
+        {/* Critical mobile optimizations */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        
+        {/* Preload critical fonts */}
+        <link rel="preload" href="/_next/static/media/inter-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/_next/static/media/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        
         {/* Critical CSS inlining to reduce render blocking */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            /* Critical above-the-fold styles */
-            body { margin: 0; font-family: Inter, system-ui, sans-serif; }
+            /* Critical above-the-fold styles for mobile performance */
+            * { box-sizing: border-box; }
+            html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+            body { 
+              margin: 0; 
+              padding: 0; 
+              font-family: 'JetBrains Mono', Inter, ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
+              line-height: 1.5;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+            }
             .min-h-screen { min-height: 100vh; }
             .flex { display: flex; }
             .flex-col { flex-direction: column; }
@@ -103,6 +122,16 @@ export default async function RootLayout({
             .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
             .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
             .z-50 { z-index: 50; }
+            
+            /* Mobile-specific optimizations */
+            @media (max-width: 768px) {
+              .text-3xl { font-size: 1.5rem; line-height: 2rem; }
+              .sm\\:text-4xl { font-size: 1.75rem; line-height: 2.25rem; }
+              .lg\\:text-5xl { font-size: 2rem; line-height: 2.5rem; }
+              .px-4 { padding-left: 1rem; padding-right: 1rem; }
+              .py-8 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+              .mb-6 { margin-bottom: 1rem; }
+            }
             
             /* Critical hero section styles */
             .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
