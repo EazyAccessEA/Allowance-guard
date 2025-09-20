@@ -59,7 +59,9 @@ const nextConfig = {
   
   // Performance optimizations
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-toast'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-toast', '@reown/appkit', 'wagmi'],
+    optimizeCss: true,
+    webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
   },
   
   // Image optimization

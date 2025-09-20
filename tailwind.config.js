@@ -6,6 +6,17 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  // Performance optimizations
+  corePlugins: {
+    // Disable unused features for smaller bundle
+    preflight: true,
+    container: false,
+    accessibility: true,
+  },
+  // Optimize for production
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       colors: {
