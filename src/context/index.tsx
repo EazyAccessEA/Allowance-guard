@@ -26,7 +26,7 @@ const initializeAppKit = () => {
         deferredAppKit = createAppKit({
           adapters: [wagmiAdapter],
           networks: [mainnet, arbitrum, base],
-          projectId,
+          projectId: projectId!,
           defaultNetwork: mainnet,
           enableAnalytics: false, // Disable analytics for TBT
           enableOnramp: false, // Disable onramp for TBT
@@ -48,7 +48,7 @@ const initializeAppKit = () => {
         deferredAppKit = createAppKit({
           adapters: [wagmiAdapter],
           networks: [mainnet, arbitrum, base],
-          projectId,
+          projectId: projectId!,
           defaultNetwork: mainnet,
           enableAnalytics: false,
           enableOnramp: false,
