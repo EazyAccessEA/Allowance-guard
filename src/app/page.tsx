@@ -132,6 +132,17 @@ export default function HomePage() {
         onWalletSelect={setSelectedWallet}
       />
 
+      {/* Trust Indicators */}
+      <Section className="py-8 bg-white">
+        <Container>
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-lg text-text-secondary font-medium">
+              No private keys required • Read-only access • 100% free
+            </p>
+          </div>
+        </Container>
+      </Section>
+
       {/* How It Works Section */}
       <Section className="py-16 sm:py-20 lg:py-24 bg-white">
         <Container>
