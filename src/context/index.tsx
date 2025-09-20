@@ -134,6 +134,8 @@ if (projectId) {
   if (typeof window !== 'undefined') {
     // Use requestIdleCallback to defer initialization when browser is idle
     const initAppKit = () => {
+      if (!projectId) return
+      
       createAppKit({
         adapters: [wagmiAdapter],
         projectId: projectId,
