@@ -17,13 +17,26 @@ export default function ConnectButton({
   className?: string
 }) {
   const { isConnected, address } = useAccount()
-  const { open } = useAppKit()
   const [isConnecting, setIsConnecting] = useState(false)
+  
+  // Safely get AppKit hook with error handling
+  let appKit = null
+  try {
+    appKit = useAppKit()
+  } catch (error) {
+    // AppKit not initialized yet, will show loading state
+    console.warn('AppKit not ready:', error)
+  }
 
   const handleConnect = async () => {
+    if (!appKit?.open) {
+      console.warn('AppKit not ready for connection')
+      return
+    }
+    
     try {
       setIsConnecting(true)
-      await open()
+      await appKit.open()
     } catch (error) {
       // Silently handle connection errors - they're often just user cancellation
       console.warn('Connection cancelled or failed:', error)
@@ -53,6 +66,20 @@ export default function ConnectButton({
           Change
         </Button>
       </div>
+    )
+  }
+
+  // Show loading state if AppKit isn't ready
+  if (!appKit) {
+    return (
+      <Button
+        variant={variant}
+        size={size}
+        disabled
+        className={className}
+      >
+        Loading...
+      </Button>
     )
   }
 
