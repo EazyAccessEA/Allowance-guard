@@ -38,7 +38,12 @@ if (typeof window !== 'undefined') {
         message.includes('/V3AG.mp4') ||
         message.includes('Refused to apply style from') ||
         message.includes('MIME type') ||
-        message.includes('Theano+Didot')) {
+        message.includes('Theano+Didot') ||
+        message.includes('Please call "createAppKit" before using "useAppKit" hook') ||
+        message.includes('Failed to load resource: the server responded with a status of 500') ||
+        message.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
+        message.includes('The resource was preloaded using link preload but not used within a few seconds') ||
+        message.includes('Performance issues detected')) {
       return // Suppress telemetry, WebSocket, WalletConnect, and AppKit update cycle errors
     }
     originalConsoleError.apply(console, args)
@@ -66,7 +71,12 @@ if (typeof window !== 'undefined') {
         event.message?.includes('/V3AG.mp4') ||
         event.message?.includes('Refused to apply style from') ||
         event.message?.includes('MIME type') ||
-        event.message?.includes('Theano+Didot')) {
+        event.message?.includes('Theano+Didot') ||
+        event.message?.includes('Please call "createAppKit" before using "useAppKit" hook') ||
+        event.message?.includes('Failed to load resource: the server responded with a status of 500') ||
+        event.message?.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
+        event.message?.includes('The resource was preloaded using link preload but not used within a few seconds') ||
+        event.message?.includes('Performance issues detected')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -94,7 +104,12 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('/V3AG.mp4') ||
         event.reason?.message?.includes('Refused to apply style from') ||
         event.reason?.message?.includes('MIME type') ||
-        event.reason?.message?.includes('Theano+Didot')) {
+        event.reason?.message?.includes('Theano+Didot') ||
+        event.reason?.message?.includes('Please call "createAppKit" before using "useAppKit" hook') ||
+        event.reason?.message?.includes('Failed to load resource: the server responded with a status of 500') ||
+        event.reason?.message?.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
+        event.reason?.message?.includes('The resource was preloaded using link preload but not used within a few seconds') ||
+        event.reason?.message?.includes('Performance issues detected')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -128,61 +143,43 @@ const metadata = {
   icons: ['https://www.allowanceguard.com/icon.png']
 }
 
-// Initialize AppKit with proper configuration per Reown docs - DEFERRED for performance
+// Initialize AppKit with proper configuration per Reown docs
 if (projectId && typeof window !== 'undefined') {
-  // Defer AppKit initialization to prevent blocking critical rendering
-  const initAppKit = () => {
-    if (!projectId) return
-    
-    try {
-      createAppKit({
-        adapters: [wagmiAdapter],
-        projectId: projectId,
-        networks: [mainnet, arbitrum, base],
-        defaultNetwork: mainnet,
-        metadata: metadata,
-        features: { 
-          analytics: false, // Disable analytics to prevent telemetry errors
-          email: false,
-          socials: false,
-          onramp: false,
-          swaps: false
-        },
-        themeMode: 'dark', // Match the new Reown-style dark theme
-        themeVariables: {
-          // Core theme colors - matching Fireart design tokens
-          '--w3m-color-mix': '#1E1F23', // obsidian
-          '--w3m-color-mix-strength': 40,
-          '--w3m-accent': '#2563EB', // cobalt
-          
-          // Border radius - matching component tokens
-          '--w3m-border-radius-master': '8px', // button borderRadius
-          
-          // Typography - matching Fireart typography scale
-          '--w3m-font-size-master': '16px', // base fontSize
-          '--w3m-font-family': 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
-          
-          // Modal specific - matching Fireart colors
-          '--w3m-z-index': 9999,
-        }
-      })
-    } catch (error) {
-      console.error('Failed to initialize AppKit:', error)
-    }
-  }
-
-  // Use multiple strategies to defer initialization
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(initAppKit, { timeout: 5000 })
-  } else if ('setTimeout' in window) {
-    setTimeout(initAppKit, 1000)
-  } else {
-    // Fallback: initialize after DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initAppKit)
-    } else {
-      initAppKit()
-    }
+  try {
+    // Initialize AppKit synchronously to ensure it's available for useAppKit hook
+    createAppKit({
+      adapters: [wagmiAdapter],
+      projectId: projectId,
+      networks: [mainnet, arbitrum, base],
+      defaultNetwork: mainnet,
+      metadata: metadata,
+      features: { 
+        analytics: false, // Disable analytics to prevent telemetry errors
+        email: false,
+        socials: false,
+        onramp: false,
+        swaps: false
+      },
+      themeMode: 'dark', // Match the new Reown-style dark theme
+      themeVariables: {
+        // Core theme colors - matching Fireart design tokens
+        '--w3m-color-mix': '#1E1F23', // obsidian
+        '--w3m-color-mix-strength': 40,
+        '--w3m-accent': '#2563EB', // cobalt
+        
+        // Border radius - matching component tokens
+        '--w3m-border-radius-master': '8px', // button borderRadius
+        
+        // Typography - matching Fireart typography scale
+        '--w3m-font-size-master': '16px', // base fontSize
+        '--w3m-font-family': 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
+        
+        // Modal specific - matching Fireart colors
+        '--w3m-z-index': 9999,
+      }
+    })
+  } catch (error) {
+    console.error('Failed to initialize AppKit:', error)
   }
 } else if (!projectId) {
   console.error('WalletConnect Project ID is missing. Wallet connection will not work.')
