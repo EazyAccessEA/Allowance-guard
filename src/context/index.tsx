@@ -29,7 +29,11 @@ if (typeof window !== 'undefined') {
         message.includes('cca-lite.coinbase.com/metrics') ||
         message.includes('w3m-router-container') ||
         message.includes('scheduled an update') ||
-        message.includes('change-in-update')) {
+        message.includes('change-in-update') ||
+        message.includes('net::ERR_ABORTED 401 (Unauthorized)') ||
+        message.includes('Rollbar: access token not found') ||
+        message.includes('POST https://api.rollbar.com/api/1/item/') ||
+        message.includes('403 (Forbidden)')) {
       return // Suppress telemetry, WebSocket, WalletConnect, and AppKit update cycle errors
     }
     originalConsoleError.apply(console, args)
@@ -48,7 +52,11 @@ if (typeof window !== 'undefined') {
         event.message?.includes('Connection request expired') ||
         (event.message?.includes('Origin') && event.message?.includes('not found on Allowlist')) ||
         event.message?.includes('update configuration on cloud.reown.com') ||
-        event.message?.includes('cca-lite.coinbase.com/metrics')) {
+        event.message?.includes('cca-lite.coinbase.com/metrics') ||
+        event.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') ||
+        event.message?.includes('Rollbar: access token not found') ||
+        event.message?.includes('POST https://api.rollbar.com/api/1/item/') ||
+        event.message?.includes('403 (Forbidden)')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -67,7 +75,11 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('Connection request expired') ||
         (event.reason?.message?.includes('Origin') && event.reason?.message?.includes('not found on Allowlist')) ||
         event.reason?.message?.includes('update configuration on cloud.reown.com') ||
-        event.reason?.message?.includes('cca-lite.coinbase.com/metrics')) {
+        event.reason?.message?.includes('cca-lite.coinbase.com/metrics') ||
+        event.reason?.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') ||
+        event.reason?.message?.includes('Rollbar: access token not found') ||
+        event.reason?.message?.includes('POST https://api.rollbar.com/api/1/item/') ||
+        event.reason?.message?.includes('403 (Forbidden)')) {
       event.preventDefault()
       event.stopPropagation()
       return false
