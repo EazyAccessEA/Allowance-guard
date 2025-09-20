@@ -110,51 +110,16 @@ export default function FeaturesPage() {
         </Container>
       </Section>
 
-      {/* Technical Specifications */}
-      <Section className="py-32 bg-gray-900 tech-data-bg relative">
-        {/* Technical Data Flow Background Elements */}
-        <div className="hex-pattern" />
-        <div className="data-flow-lines" />
-        <div className="data-points" />
-        <div className="tech-panel" />
-        
+      {/* Call to Action */}
+      <Section className="py-32">
         <Container>
-          <div className="max-w-4xl mx-auto relative z-10">
-            <div className="text-center mb-16 mobbin-fade-in">
-              <h2 className="mobbin-display-2 text-white leading-tight mb-8">
-                Built for security professionals
-              </h2>
-              <p className="mobbin-body-large text-gray-300 leading-relaxed">
-                Allowance Guard combines powerful security features with an intuitive interface. 
-                No complex setup, no hidden costs, no compromises on privacy.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Ready to Secure Your Wallet?</h2>
+            <p className="mobbin-body-large text-text-secondary leading-relaxed mb-12 mobbin-fade-in mobbin-stagger-1">
+              Start scanning your allowances and take control of your wallet&apos;s security today.
+            </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="text-center mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 bg-gray-800 border-gray-700">
-                <div className="p-6">
-                  <div className="mobbin-heading-2 text-white mb-2">3</div>
-                  <div className="mobbin-body text-gray-300">Supported Networks</div>
-                  <div className="mobbin-caption text-gray-400">Ethereum, Arbitrum, Base</div>
-                </div>
-              </div>
-              <div className="text-center mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 bg-gray-800 border-gray-700">
-                <div className="p-6">
-                  <div className="mobbin-heading-2 text-white mb-2">4</div>
-                  <div className="mobbin-body text-gray-300">Token Standards</div>
-                  <div className="mobbin-caption text-gray-400">ERC-20, ERC-721, ERC-1155, ERC-2612</div>
-                </div>
-              </div>
-              <div className="text-center mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3 bg-gray-800 border-gray-700">
-                <div className="p-6">
-                  <div className="mobbin-heading-2 text-white mb-2">100%</div>
-                  <div className="mobbin-body text-gray-300">Open Source</div>
-                  <div className="mobbin-caption text-gray-400">Auditable & Self-hostable</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mobbin-fade-in">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mobbin-fade-in mobbin-stagger-2">
               <Link 
                 href="/" 
                 className="inline-flex items-center justify-center rounded-lg px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-primary-700 text-white hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-700/30"
@@ -164,7 +129,7 @@ export default function FeaturesPage() {
               </Link>
               <Link 
                 href="/docs" 
-                className="inline-flex items-center justify-center rounded-lg px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-gray-800 text-white border border-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30"
+                className="inline-flex items-center justify-center rounded-lg px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-700/30"
               >
                 <Settings className="w-5 h-5 mr-2" />
                 View Documentation
