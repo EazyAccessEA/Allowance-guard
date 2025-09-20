@@ -25,7 +25,7 @@ export default function Hero({
   onWalletSelect 
 }: HeroProps) {
   return (
-    <Section className="relative py-12 sm:py-16 lg:py-24 overflow-hidden">
+    <Section className="relative py-12 sm:py-24 lg:py-32 overflow-hidden">
       {/* Video Background - Hidden on mobile for performance */}
       <div className="hidden md:block">
         <VideoBackground videoSrc="/V3AG.mp4" />
@@ -43,7 +43,7 @@ export default function Hero({
       />
       
       <Container className="relative text-left max-w-4xl z-10">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-4 md:mb-6 lg:mb-8 xl:mb-10 leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] flex flex-col justify-center">
             <MultiLineTypewriter
             messages={[
