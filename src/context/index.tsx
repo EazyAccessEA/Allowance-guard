@@ -28,12 +28,6 @@ const initializeAppKit = () => {
           networks: [mainnet, arbitrum, base],
           projectId: projectId!,
           defaultNetwork: mainnet,
-          enableAnalytics: false, // Disable analytics for TBT
-          enableOnramp: false, // Disable onramp for TBT
-          enableSwap: false, // Disable swap for TBT
-          enableEmail: false, // Disable email for TBT
-          enableSocials: false, // Disable socials for TBT
-          enableWalletFeatures: false, // Disable wallet features for TBT
         })
         isInitializing = false
       } catch (error) {
@@ -50,12 +44,6 @@ const initializeAppKit = () => {
           networks: [mainnet, arbitrum, base],
           projectId: projectId!,
           defaultNetwork: mainnet,
-          enableAnalytics: false,
-          enableOnramp: false,
-          enableSwap: false,
-          enableEmail: false,
-          enableSocials: false,
-          enableWalletFeatures: false,
         })
         isInitializing = false
       } catch (error) {
