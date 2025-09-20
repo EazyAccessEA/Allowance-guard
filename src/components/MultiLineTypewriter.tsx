@@ -60,8 +60,8 @@ export const MultiLineTypewriter = ({
     const effectiveTypingSpeed = isMobile ? mobileTypingSpeed : typingSpeed
     const effectiveDeletingSpeed = isMobile ? mobileDeletingSpeed : deletingSpeed
     const effectivePauseTime = isMobile ? mobilePauseTime : pauseTime
-    const targetFirstLine = words.slice(0, 3).join(' ')
-    const targetSecondLine = words.slice(3).join(' ')
+    const targetFirstLine = words.slice(0, 2).join(' ')
+    const targetSecondLine = words.slice(2).join(' ')
 
     if (isPaused) {
       scheduleUpdate(() => {
