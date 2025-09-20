@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { headers } from 'next/headers'
 import ContextProvider from '@/context'
+import { LighthouseInitializer } from '@/components/LighthouseInitializer'
 import RpcStatusBanner from '@/components/RpcStatusBanner'
 import HeaderWrapper from '@/components/HeaderWrapper'
 import Footer from '@/components/Footer'
@@ -78,10 +79,19 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://reown.com" />
         <link rel="dns-prefetch" href="https://wagmi.sh" />
         
-        {/* Preload critical resources for mobile performance */}
+        {/* PRPL Pattern: Push critical resources */}
         <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />
         <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
         <link rel="preload" href="/_next/static/chunks/webpack.js" as="script" />
+        
+        {/* Pre-cache critical routes */}
+        <link rel="prefetch" href="/features" />
+        <link rel="prefetch" href="/faq" />
+        <link rel="prefetch" href="/contact" />
+        
+        {/* Pre-cache critical components */}
+        <link rel="modulepreload" href="/_next/static/chunks/StatisticsSection.js" />
+        <link rel="modulepreload" href="/_next/static/chunks/AppArea.js" />
         
         {/* Critical mobile optimizations */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -201,6 +211,7 @@ export default async function RootLayout({
         <RpcStatusBanner />
         <RollbarProvider>
           <ContextProvider cookies={cookies}>
+            <LighthouseInitializer />
             <HeaderWrapper />
             <main id="main" className="flex-1">{children}</main>
             <Footer />

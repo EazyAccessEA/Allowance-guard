@@ -69,9 +69,14 @@ const nextConfig = {
             },
           },
         },
-        // Reduce main thread work
+        // Reduce main thread work (Lighthouse recommendation)
         usedExports: true,
         sideEffects: false,
+        // Advanced tree shaking
+        providedExports: true,
+        concatenateModules: true,
+        // Minimize bundle size
+        minimize: true,
       }
     }
     

@@ -7,10 +7,21 @@ import Section from '@/components/ui/Section'
 import { Button } from '@/components/ui/Button'
 import ConnectButton from '@/components/ConnectButton'
 import Hero from '@/components/Hero'
-import StatisticsSection from '@/components/StatisticsSection'
-import AppArea from '@/components/AppArea'
-import ActivityTimeline from '@/components/ActivityTimeline'
 import { LazySection } from '@/components/LazySection'
+import dynamic from 'next/dynamic'
+
+// Dynamic imports for code splitting (Lighthouse recommendation)
+const StatisticsSection = dynamic(() => import('@/components/StatisticsSection'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64 w-full" />
+})
+
+const AppArea = dynamic(() => import('@/components/AppArea'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />
+})
+
+const ActivityTimeline = dynamic(() => import('@/components/ActivityTimeline'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-48 w-full" />
+})
 
 export default function HomePage() {
   const { address: connectedAddress, isConnected } = useAccount()
