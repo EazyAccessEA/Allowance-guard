@@ -44,43 +44,29 @@ export default function Hero({
       
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-4 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
-          {/* Desktop: Animated typewriter */}
-          <div className="hidden md:block">
-            <MultiLineTypewriter
-              messages={[
-                "see every hidden connection clearly",
-                "instantly revoke any risky approval",
-                "find and cut off silent threats",
-                "control who has access to funds"
-              ]}
-              typingSpeed={110}
-              deletingSpeed={80}
-              pauseTime={2500}
-              onRender={(firstLine, secondLine) => (
-                <>
-                  <span className="block">
-                    <span className="text-text-primary">The power to </span>
-                    <span className="text-primary-700">{firstLine}</span>
-                  </span>
-                  <span className="block text-primary-700">
-                    {secondLine}
-                    <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-700 animate-pulse" />
-                  </span>
-                </>
-              )}
-            />
-          </div>
-          
-          {/* Mobile: Static text for zero TBT */}
-          <div className="md:hidden">
-            <span className="block">
-              <span className="text-text-primary">The power to </span>
-              <span className="text-primary-700">see every hidden</span>
-            </span>
-            <span className="block text-primary-700">
-              connection clearly
-            </span>
-          </div>
+          <MultiLineTypewriter
+            messages={[
+              "see every hidden connection clearly",
+              "instantly revoke any risky approval",
+              "find and cut off silent threats",
+              "control who has access to funds"
+            ]}
+            typingSpeed={110}
+            deletingSpeed={80}
+            pauseTime={2500}
+            onRender={(firstLine, secondLine) => (
+              <>
+                <span className="block">
+                  <span className="text-text-primary">The power to </span>
+                  <span className="text-primary-700">{firstLine}</span>
+                </span>
+                <span className="block text-primary-700">
+                  {secondLine}
+                  <span className="ml-0.5 inline-block h-6 w-0.5 bg-primary-700 animate-pulse" />
+                </span>
+              </>
+            )}
+          />
         </h1>
         <p className="mobbin-body-large text-text-secondary leading-relaxed mb-6 sm:mb-8 md:mb-10">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.

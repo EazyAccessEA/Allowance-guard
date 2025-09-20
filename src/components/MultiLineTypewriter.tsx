@@ -25,24 +25,29 @@ export const MultiLineTypewriter = ({
   const [currentLine, setCurrentLine] = useState(1)
 
   useEffect(() => {
-    let timer: NodeJS.Timeout
+    let timer: NodeJS.Timeout | null = null
     const currentMessage = messages[currentMessageIndex]
     const words = currentMessage.split(/\s+/)
     
     // TBT Optimization - Use requestIdleCallback for non-blocking execution
     const scheduleUpdate = (callback: () => void, delay: number) => {
       if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        requestIdleCallback(callback, { timeout: delay })
+        const id = requestIdleCallback(callback, { timeout: delay })
+        timer = { 
+          [Symbol.toPrimitive]: () => id,
+          valueOf: () => id,
+          toString: () => id.toString()
+        } as any
       } else {
-        setTimeout(callback, delay)
+        timer = setTimeout(callback, delay)
       }
     }
     
-    // Mobile performance optimization - reduce animation speed
+    // Mobile performance optimization - reduce animation speed for TBT
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-    const mobileTypingSpeed = typingSpeed * 2 // Even slower for TBT
-    const mobileDeletingSpeed = deletingSpeed * 2
-    const mobilePauseTime = pauseTime * 0.5
+    const mobileTypingSpeed = typingSpeed * 3 // Much slower for mobile TBT
+    const mobileDeletingSpeed = deletingSpeed * 3
+    const mobilePauseTime = pauseTime * 0.3
     
     const effectiveTypingSpeed = isMobile ? mobileTypingSpeed : typingSpeed
     const effectiveDeletingSpeed = isMobile ? mobileDeletingSpeed : deletingSpeed
@@ -89,7 +94,15 @@ export const MultiLineTypewriter = ({
       }
     }
 
-    return () => clearTimeout(timer)
+    return () => {
+      if (timer) {
+        if (typeof timer === 'number') {
+          clearTimeout(timer)
+        } else {
+          // For requestIdleCallback, we can't cancel it, but it's non-blocking anyway
+        }
+      }
+    }
   }, [currentMessageIndex, firstLine, secondLine, isDeleting, isPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
 
   return onRender(firstLine, secondLine)
