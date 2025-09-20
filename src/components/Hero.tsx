@@ -25,7 +25,7 @@ export default function Hero({
   onWalletSelect 
 }: HeroProps) {
   return (
-    <Section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
+    <Section className="relative py-20 sm:py-24 lg:py-32 overflow-hidden">
       {/* Video Background - Hidden on mobile for performance */}
       <div className="hidden md:block">
         <VideoBackground videoSrc="/V3AG.mp4" />
@@ -44,7 +44,7 @@ export default function Hero({
       
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-4 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
-          <div className="min-h-[3.5em] flex flex-col justify-center">
+          <div className="min-h-[4.5em] sm:min-h-[4em] md:min-h-[3.5em] flex flex-col justify-center">
             <MultiLineTypewriter
             messages={[
               "see every hidden connection clearly",
@@ -53,7 +53,7 @@ export default function Hero({
               "control who has access to funds"
             ]}
             typingSpeed={300}
-            deletingSpeed={100}
+            deletingSpeed={50}
             pauseTime={5000}
             onRender={(firstLine, secondLine) => (
               <>
@@ -70,7 +70,7 @@ export default function Hero({
             />
           </div>
         </h1>
-        <p className="mobbin-body-large text-text-secondary leading-relaxed mb-6 sm:mb-8 md:mb-10">
+        <p className="mobbin-body-large text-text-secondary leading-relaxed mb-8 sm:mb-10 md:mb-12">
           A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
         </p>
 
