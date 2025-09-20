@@ -23,7 +23,7 @@ export default function VideoBackground({
     }
   }, [hasError])
 
-  const handleError = (event: React.SyntheticEvent<HTMLVideoElement, Event>) => {
+  const handleError = () => {
     // Silently handle video loading errors to prevent console spam
     setHasError(true)
   }
