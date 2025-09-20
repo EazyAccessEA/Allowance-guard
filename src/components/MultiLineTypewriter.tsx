@@ -37,7 +37,7 @@ export const MultiLineTypewriter = ({
           [Symbol.toPrimitive]: () => id,
           valueOf: () => id,
           toString: () => id.toString()
-        } as any
+        } as NodeJS.Timeout
       } else {
         timer = setTimeout(callback, delay)
       }
