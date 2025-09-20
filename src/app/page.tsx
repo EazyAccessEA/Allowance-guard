@@ -165,16 +165,16 @@ export default function HomePage() {
                 Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control.
               </p>
             </div>
-
+            
             <div className="text-center">
               <div className="w-16 h-16 bg-semantic-info/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-semantic-info">2</span>
               </div>
               <h3 className="text-xl font-semibold text-text-primary mb-4">Analyze & Understand</h3>
               <p className="text-text-secondary leading-relaxed">
-                Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
-              </p>
-            </div>
+                  Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
+                </p>
+              </div>
 
             <div className="text-center">
               <div className="w-16 h-16 bg-semantic-success/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
@@ -290,8 +290,8 @@ export default function HomePage() {
                 />
               ) : (
                 <Button
-                  onClick={startScan}
-                  disabled={pending}
+                  onClick={startScan} 
+                  disabled={pending} 
                   loading={pending}
                   variant="primary"
                   size="lg"
@@ -352,7 +352,7 @@ export default function HomePage() {
                   {/* Ethereum */}
                   <div className="flex items-center">
                     <Image
-                      src="/ethereum-logo-landscape-black.svg"
+                      src="/ethereum-logo-landscape-purple.svg"
                       alt="Ethereum"
                       width={140}
                       height={35}
@@ -378,7 +378,7 @@ export default function HomePage() {
                       alt="Base"
                       width={80}
                       height={20}
-                      className="h-6 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                   
@@ -389,7 +389,7 @@ export default function HomePage() {
                       alt="Polygon"
                       width={120}
                       height={24}
-                      className="h-7 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                   
@@ -400,7 +400,7 @@ export default function HomePage() {
                       alt="Optimism"
                       width={120}
                       height={17}
-                      className="h-5 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                   
@@ -411,7 +411,7 @@ export default function HomePage() {
                       alt="Avalanche"
                       width={140}
                       height={25}
-                      className="h-7 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                 </div>
@@ -421,7 +421,7 @@ export default function HomePage() {
                   {/* Ethereum */}
                   <div className="flex items-center">
                     <Image
-                      src="/ethereum-logo-landscape-black.svg"
+                      src="/ethereum-logo-landscape-purple.svg"
                       alt="Ethereum"
                       width={140}
                       height={35}
@@ -447,7 +447,7 @@ export default function HomePage() {
                       alt="Base"
                       width={80}
                       height={20}
-                      className="h-6 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                   
@@ -458,7 +458,7 @@ export default function HomePage() {
                       alt="Polygon"
                       width={120}
                       height={24}
-                      className="h-7 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                   
@@ -469,7 +469,7 @@ export default function HomePage() {
                       alt="Optimism"
                       width={120}
                       height={17}
-                      className="h-5 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                   
@@ -480,7 +480,7 @@ export default function HomePage() {
                       alt="Avalanche"
                       width={140}
                       height={25}
-                      className="h-7 w-auto"
+                      className="h-8 w-auto"
                     />
                   </div>
                 </div>
@@ -492,7 +492,7 @@ export default function HomePage() {
               {/* Ethereum */}
               <div className="flex items-center">
                 <Image
-                  src="/ethereum-logo-landscape-black.svg"
+                  src="/ethereum-logo-landscape-purple.svg"
                   alt="Ethereum"
                   width={120}
                   height={30}
@@ -518,7 +518,7 @@ export default function HomePage() {
                   alt="Base"
                   width={70}
                   height={18}
-                  className="h-5 w-auto"
+                  className="h-7 w-auto"
                 />
               </div>
               
@@ -529,7 +529,7 @@ export default function HomePage() {
                   alt="Polygon"
                   width={100}
                   height={20}
-                  className="h-6 w-auto"
+                  className="h-7 w-auto"
                 />
               </div>
               
@@ -540,7 +540,7 @@ export default function HomePage() {
                   alt="Optimism"
                   width={100}
                   height={14}
-                  className="h-4 w-auto"
+                  className="h-7 w-auto"
                 />
               </div>
               
@@ -551,7 +551,7 @@ export default function HomePage() {
                   alt="Avalanche"
                   width={120}
                   height={22}
-                  className="h-6 w-auto"
+                  className="h-7 w-auto"
                 />
               </div>
             </div>
