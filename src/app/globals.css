@@ -4,7 +4,7 @@
 /* Critical CSS - Above the fold styles */
 @layer base {
   html {
-    font-family: Inter, system-ui, sans-serif;
+    font-family: 'JetBrains Mono', Inter, ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
   }
   
   body {
@@ -174,10 +174,10 @@ w3m-modal w3m-close-button:hover {
   
   /* Fireart Typography System */
   --font-satoshi: 'Satoshi', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-inter: 'JetBrains Mono', 'Inter', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
   --font-theano-didot: 'Inter', 'Times New Roman', serif;
-  --font-heading: 'Inter', 'Times New Roman', serif;
+  --font-heading: 'JetBrains Mono', 'Inter', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
   
   /* Fireart Spacing System (8px grid) */
   --space-xs: 0.25rem;    /* 4px */
