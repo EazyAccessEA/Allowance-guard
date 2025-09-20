@@ -6,9 +6,67 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createAppKit } from '@reown/appkit/react'
 import { mainnet, arbitrum, base } from '@reown/appkit/networks'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
-import React, { type ReactNode, useMemo, Component, ErrorInfo } from 'react'
+import React, { type ReactNode, useMemo, Component, ErrorInfo, useState, useEffect } from 'react'
 
 const queryClient = new QueryClient()
+
+// TBT Optimization: Defer AppKit initialization
+let deferredAppKit: any = null
+let isInitializing = false
+
+const initializeAppKit = () => {
+  if (deferredAppKit || isInitializing) return deferredAppKit
+  
+  isInitializing = true
+  
+  // Use requestIdleCallback for non-blocking initialization
+  if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+      try {
+        deferredAppKit = createAppKit({
+          adapters: [wagmiAdapter],
+          networks: [mainnet, arbitrum, base],
+          projectId,
+          defaultNetwork: mainnet,
+          enableAnalytics: false, // Disable analytics for TBT
+          enableOnramp: false, // Disable onramp for TBT
+          enableSwap: false, // Disable swap for TBT
+          enableEmail: false, // Disable email for TBT
+          enableSocials: false, // Disable socials for TBT
+          enableWalletFeatures: false, // Disable wallet features for TBT
+        })
+        isInitializing = false
+      } catch (error) {
+        console.warn('AppKit initialization failed:', error)
+        isInitializing = false
+      }
+    }, { timeout: 1000 })
+  } else {
+    // Fallback for browsers without requestIdleCallback
+    setTimeout(() => {
+      try {
+        deferredAppKit = createAppKit({
+          adapters: [wagmiAdapter],
+          networks: [mainnet, arbitrum, base],
+          projectId,
+          defaultNetwork: mainnet,
+          enableAnalytics: false,
+          enableOnramp: false,
+          enableSwap: false,
+          enableEmail: false,
+          enableSocials: false,
+          enableWalletFeatures: false,
+        })
+        isInitializing = false
+      } catch (error) {
+        console.warn('AppKit initialization failed:', error)
+        isInitializing = false
+      }
+    }, 100)
+  }
+  
+  return deferredAppKit
+}
 
 // Global error handler for wallet SDK telemetry errors
 if (typeof window !== 'undefined') {
@@ -254,8 +312,29 @@ class WalletErrorBoundary extends Component<
   }
 }
 
-// AppKit Provider Component - following official documentation pattern
+// AppKit Provider Component - TBT Optimized with deferred initialization
 function AppKitProvider({ children }: { children: ReactNode }) {
+  const [appKit, setAppKit] = useState<any>(null)
+  const [isReady, setIsReady] = useState(false)
+
+  useEffect(() => {
+    // Initialize AppKit on idle to avoid blocking main thread
+    const initAppKit = () => {
+      const kit = initializeAppKit()
+      if (kit) {
+        setAppKit(kit)
+        setIsReady(true)
+      } else {
+        // Retry if not ready
+        setTimeout(initAppKit, 100)
+      }
+    }
+
+    // Start initialization immediately but non-blocking
+    initAppKit()
+  }, [])
+
+  // Render children immediately, AppKit will be available when ready
   return <>{children}</>
 }
 

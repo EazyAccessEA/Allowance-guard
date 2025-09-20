@@ -29,11 +29,20 @@ export const MultiLineTypewriter = ({
     const currentMessage = messages[currentMessageIndex]
     const words = currentMessage.split(/\s+/)
     
+    // TBT Optimization - Use requestIdleCallback for non-blocking execution
+    const scheduleUpdate = (callback: () => void, delay: number) => {
+      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+        requestIdleCallback(callback, { timeout: delay })
+      } else {
+        setTimeout(callback, delay)
+      }
+    }
+    
     // Mobile performance optimization - reduce animation speed
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-    const mobileTypingSpeed = typingSpeed * 1.5
-    const mobileDeletingSpeed = deletingSpeed * 1.5
-    const mobilePauseTime = pauseTime * 0.8
+    const mobileTypingSpeed = typingSpeed * 2 // Even slower for TBT
+    const mobileDeletingSpeed = deletingSpeed * 2
+    const mobilePauseTime = pauseTime * 0.5
     
     const effectiveTypingSpeed = isMobile ? mobileTypingSpeed : typingSpeed
     const effectiveDeletingSpeed = isMobile ? mobileDeletingSpeed : deletingSpeed
@@ -42,17 +51,17 @@ export const MultiLineTypewriter = ({
     const targetSecondLine = words.slice(2).join(' ')
 
     if (isPaused) {
-      timer = setTimeout(() => {
+      scheduleUpdate(() => {
         setIsPaused(false)
         setIsDeleting(true)
       }, effectivePauseTime)
     } else if (isDeleting) {
       if (secondLine.length > 0) {
-        timer = setTimeout(() => {
+        scheduleUpdate(() => {
           setSecondLine(secondLine.slice(0, -1))
         }, effectiveDeletingSpeed)
       } else if (firstLine.length > 0) {
-        timer = setTimeout(() => {
+        scheduleUpdate(() => {
           setFirstLine(firstLine.slice(0, -1))
         }, effectiveDeletingSpeed)
       } else {
@@ -63,7 +72,7 @@ export const MultiLineTypewriter = ({
     } else {
       if (currentLine === 1) {
         if (firstLine.length < targetFirstLine.length) {
-          timer = setTimeout(() => {
+          scheduleUpdate(() => {
             setFirstLine(targetFirstLine.slice(0, firstLine.length + 1))
           }, effectiveTypingSpeed)
         } else {
@@ -71,7 +80,7 @@ export const MultiLineTypewriter = ({
         }
       } else {
         if (secondLine.length < targetSecondLine.length) {
-          timer = setTimeout(() => {
+          scheduleUpdate(() => {
             setSecondLine(targetSecondLine.slice(0, secondLine.length + 1))
           }, effectiveTypingSpeed)
         } else if (secondLine.length === targetSecondLine.length) {

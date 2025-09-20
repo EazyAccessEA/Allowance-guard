@@ -133,6 +133,29 @@ export default async function RootLayout({
               .mb-6 { margin-bottom: 1rem; }
             }
             
+            /* TBT Optimization - Prevent layout shifts */
+            .contain-layout { contain: layout style; }
+            .will-change-transform { will-change: transform; }
+            .transform-gpu { transform: translateZ(0); }
+            
+            /* Critical button styles to prevent layout shifts */
+            .btn-primary {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0.75rem 1.5rem;
+              font-size: 1rem;
+              font-weight: 600;
+              border-radius: 0.5rem;
+              background-color: #3B82F6;
+              color: white;
+              border: none;
+              cursor: pointer;
+              transition: background-color 0.2s;
+              min-height: 44px;
+              min-width: 120px;
+            }
+            
             /* Critical hero section styles */
             .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
             .sm\\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
