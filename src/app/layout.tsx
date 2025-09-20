@@ -75,6 +75,11 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://api.rollbar.com" />
         <link rel="dns-prefetch" href="https://www.allowanceguard.com" />
         
+        {/* Preload critical resources */}
+        <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        <link rel="preload" href="/_next/static/chunks/webpack.js" as="script" />
+        
         {/* Critical CSS inlining to reduce render blocking */}
         <style dangerouslySetInnerHTML={{
           __html: `
@@ -95,6 +100,26 @@ export default async function RootLayout({
             .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
             .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
             .z-50 { z-index: 50; }
+            
+            /* Critical hero section styles */
+            .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+            .sm\\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+            .lg\\:text-5xl { font-size: 3rem; line-height: 1; }
+            .font-bold { font-weight: 700; }
+            .text-text-primary { color: #0A0A0A; }
+            .leading-tight { line-height: 1.25; }
+            .mb-6 { margin-bottom: 1.5rem; }
+            
+            /* Critical button styles */
+            .bg-primary-700 { background-color: #008B7A; }
+            .text-white { color: white; }
+            .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+            .rounded-lg { border-radius: 0.5rem; }
+            .font-medium { font-weight: 500; }
+            .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; }
+            .duration-200 { transition-duration: 200ms; }
+            .hover\\:bg-primary-800:hover { background-color: #006B5C; }
           `
         }} />
       </head>
