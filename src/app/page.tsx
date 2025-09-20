@@ -1,6 +1,7 @@
 'use client'
 import { useAccount } from 'wagmi'
 import { useState } from 'react'
+import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { Button } from '@/components/ui/Button'
@@ -333,12 +334,55 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16">
+              {/* Ethereum - using text since no logo provided */}
               <span className="text-lg text-text-secondary font-medium">Ethereum</span>
+              
+              {/* Arbitrum - using text since no logo provided */}
               <span className="text-lg text-text-secondary font-medium">Arbitrum</span>
-              <span className="text-lg text-text-secondary font-medium">Base</span>
-              <span className="text-lg text-text-secondary font-medium">Polygon</span>
-              <span className="text-lg text-text-secondary font-medium">Optimism</span>
-              <span className="text-lg text-text-secondary font-medium">Avalanche</span>
+              
+              {/* Base */}
+              <div className="flex items-center">
+                <Image
+                  src="/Base_lockup_2color.svg"
+                  alt="Base"
+                  width={80}
+                  height={20}
+                  className="h-5 w-auto"
+                />
+              </div>
+              
+              {/* Polygon */}
+              <div className="flex items-center">
+                <Image
+                  src="/Polygon Primary Dark.svg"
+                  alt="Polygon"
+                  width={120}
+                  height={24}
+                  className="h-6 w-auto"
+                />
+              </div>
+              
+              {/* Optimism */}
+              <div className="flex items-center">
+                <Image
+                  src="/OPTIMISM-B.svg"
+                  alt="Optimism"
+                  width={120}
+                  height={17}
+                  className="h-4 w-auto"
+                />
+              </div>
+              
+              {/* Avalanche */}
+              <div className="flex items-center">
+                <Image
+                  src="/AvalancheLogo_Horizontal_4C_Primary.svg"
+                  alt="Avalanche"
+                  width={140}
+                  height={25}
+                  className="h-6 w-auto"
+                />
+              </div>
             </div>
           </div>
         </Container>
