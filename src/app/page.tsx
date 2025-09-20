@@ -10,6 +10,7 @@ import Hero from '@/components/Hero'
 import StatisticsSection from '@/components/StatisticsSection'
 import AppArea from '@/components/AppArea'
 import ActivityTimeline from '@/components/ActivityTimeline'
+import { LazySection } from '@/components/LazySection'
 
 export default function HomePage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -189,8 +190,10 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Statistics Section */}
-      <StatisticsSection />
+      {/* Statistics Section - Lazy Loaded */}
+      <LazySection>
+        <StatisticsSection />
+      </LazySection>
 
       {/* Features Section */}
       <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
@@ -310,7 +313,8 @@ export default function HomePage() {
 
       {/* App Area - Only show when connected */}
       {isConnected && (
-        <AppArea
+        <LazySection>
+          <AppArea
           isConnected={isConnected}
           selectedWallet={selectedWallet}
           setSelectedWallet={setSelectedWallet}
@@ -325,6 +329,7 @@ export default function HomePage() {
           canRevoke={true}
           loading={pending}
         />
+        </LazySection>
       )}
 
       {/* Activity Timeline - Only show when wallet is selected */}

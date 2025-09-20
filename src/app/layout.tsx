@@ -138,6 +138,24 @@ export default async function RootLayout({
             .will-change-transform { will-change: transform; }
             .transform-gpu { transform: translateZ(0); }
             
+            /* Critical performance optimizations */
+            .lazy-load { content-visibility: auto; contain-intrinsic-size: 0 500px; }
+            .optimize-rendering { will-change: auto; }
+            .reduce-paint { contain: paint; }
+            
+            /* Font display optimization */
+            @font-face {
+              font-family: 'JetBrains Mono';
+              font-display: swap;
+              src: url('/_next/static/media/jetbrains-mono-latin.woff2') format('woff2');
+            }
+            
+            @font-face {
+              font-family: 'Inter';
+              font-display: swap;
+              src: url('/_next/static/media/inter-latin.woff2') format('woff2');
+            }
+            
             /* Critical button styles to prevent layout shifts */
             .btn-primary {
               display: inline-flex;

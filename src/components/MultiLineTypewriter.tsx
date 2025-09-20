@@ -26,20 +26,27 @@ export const MultiLineTypewriter = ({
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null
+    let isActive = true
     const currentMessage = messages[currentMessageIndex]
     const words = currentMessage.split(/\s+/)
     
     // TBT Optimization - Use requestIdleCallback for non-blocking execution
     const scheduleUpdate = (callback: () => void, delay: number) => {
+      if (!isActive) return
+      
       if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        const id = requestIdleCallback(callback, { timeout: delay })
+        const id = requestIdleCallback(() => {
+          if (isActive) callback()
+        }, { timeout: delay })
         timer = { 
           [Symbol.toPrimitive]: () => id,
           valueOf: () => id,
           toString: () => id.toString()
         } as unknown as NodeJS.Timeout
       } else {
-        timer = setTimeout(callback, delay)
+        timer = setTimeout(() => {
+          if (isActive) callback()
+        }, delay)
       }
     }
     
@@ -95,6 +102,7 @@ export const MultiLineTypewriter = ({
     }
 
     return () => {
+      isActive = false
       if (timer) {
         if (typeof timer === 'number') {
           clearTimeout(timer)

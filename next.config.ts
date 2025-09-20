@@ -30,18 +30,29 @@ const nextConfig = {
         )
       }
       
-      // Optimize chunks
+      // Optimize chunks for TBT reduction
       config.optimization = {
         ...config.optimization,
         splitChunks: {
           chunks: 'all',
+          maxInitialRequests: 30,
+          maxAsyncRequests: 30,
           cacheGroups: {
+            // Separate vendor chunks for better caching
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: 'vendors',
               chunks: 'all',
               priority: 10,
             },
+            // Separate AppKit/Wagmi for deferred loading
+            wallet: {
+              test: /[\\/]node_modules[\\/](@reown|wagmi|@tanstack)[\\/]/,
+              name: 'wallet',
+              chunks: 'async',
+              priority: 15,
+            },
+            // Common chunks
             common: {
               name: 'common',
               minChunks: 2,
@@ -49,8 +60,18 @@ const nextConfig = {
               priority: 5,
               reuseExistingChunk: true,
             },
+            // UI components
+            ui: {
+              test: /[\\/]node_modules[\\/](@radix-ui|lucide-react)[\\/]/,
+              name: 'ui',
+              chunks: 'all',
+              priority: 8,
+            },
           },
         },
+        // Reduce main thread work
+        usedExports: true,
+        sideEffects: false,
       }
     }
     
@@ -65,6 +86,12 @@ const nextConfig = {
     optimizeCss: false, // Disabled due to build issues, but keep for future
     // Enable modern JavaScript for better performance
     esmExternals: true,
+    // Advanced performance features
+    webpackBuildWorker: true,
+    // Reduce bundle size
+    bundlePagesRouterDependencies: true,
+    // Optimize server components
+    serverComponentsExternalPackages: ['@reown/appkit', 'wagmi'],
   },
   
   // Server external packages (moved from experimental)
