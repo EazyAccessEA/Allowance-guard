@@ -132,6 +132,8 @@ const metadata = {
 if (projectId && typeof window !== 'undefined') {
   // Defer AppKit initialization to prevent blocking critical rendering
   const initAppKit = () => {
+    if (!projectId) return
+    
     try {
       createAppKit({
         adapters: [wagmiAdapter],
