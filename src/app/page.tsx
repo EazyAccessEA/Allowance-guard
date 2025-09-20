@@ -337,8 +337,16 @@ export default function HomePage() {
               {/* Ethereum - using text since no logo provided */}
               <span className="text-lg text-text-secondary font-medium">Ethereum</span>
               
-              {/* Arbitrum - using text since no logo provided */}
-              <span className="text-lg text-text-secondary font-medium">Arbitrum</span>
+              {/* Arbitrum */}
+              <div className="flex items-center">
+                <Image
+                  src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
+                  alt="Arbitrum"
+                  width={140}
+                  height={35}
+                  className="h-8 w-auto"
+                />
+              </div>
               
               {/* Base */}
               <div className="flex items-center">
