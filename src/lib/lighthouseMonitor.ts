@@ -99,7 +99,10 @@ export class LighthouseMonitor {
     // Track FID
     const fidObserver = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        this.metrics.fid = entry.processingStart - entry.startTime
+        const fidEntry = entry as PerformanceEntry & { processingStart?: number }
+        if (fidEntry.processingStart) {
+          this.metrics.fid = fidEntry.processingStart - entry.startTime
+        }
       }
     })
     fidObserver.observe({ entryTypes: ['first-input'] })
