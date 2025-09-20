@@ -370,8 +370,8 @@ export default function HomePage() {
                     <Image
                       src="/ethereum-logo-landscape-purple.svg"
                       alt="Ethereum"
-                      width={140}
-                      height={35}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -381,8 +381,8 @@ export default function HomePage() {
                     <Image
                       src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
                       alt="Arbitrum"
-                      width={140}
-                      height={35}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -392,8 +392,8 @@ export default function HomePage() {
                     <Image
                       src="/Base_lockup_2color.svg"
                       alt="Base"
-                      width={80}
-                      height={20}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -404,7 +404,7 @@ export default function HomePage() {
                       src="/Polygon Primary Dark.svg"
                       alt="Polygon"
                       width={120}
-                      height={24}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -415,7 +415,7 @@ export default function HomePage() {
                       src="/OPTIMISM-B.svg"
                       alt="Optimism"
                       width={120}
-                      height={17}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -425,8 +425,8 @@ export default function HomePage() {
                     <Image
                       src="/AvalancheLogo_Horizontal_4C_Primary.svg"
                       alt="Avalanche"
-                      width={140}
-                      height={25}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -439,8 +439,8 @@ export default function HomePage() {
                     <Image
                       src="/ethereum-logo-landscape-purple.svg"
                       alt="Ethereum"
-                      width={140}
-                      height={35}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -450,8 +450,8 @@ export default function HomePage() {
                     <Image
                       src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
                       alt="Arbitrum"
-                      width={140}
-                      height={35}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -461,8 +461,8 @@ export default function HomePage() {
                     <Image
                       src="/Base_lockup_2color.svg"
                       alt="Base"
-                      width={80}
-                      height={20}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -473,7 +473,7 @@ export default function HomePage() {
                       src="/Polygon Primary Dark.svg"
                       alt="Polygon"
                       width={120}
-                      height={24}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -484,7 +484,7 @@ export default function HomePage() {
                       src="/OPTIMISM-B.svg"
                       alt="Optimism"
                       width={120}
-                      height={17}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -494,8 +494,8 @@ export default function HomePage() {
                     <Image
                       src="/AvalancheLogo_Horizontal_4C_Primary.svg"
                       alt="Avalanche"
-                      width={140}
-                      height={25}
+                      width={120}
+                      height={32}
                       className="h-8 w-auto"
                     />
                   </div>
@@ -532,8 +532,8 @@ export default function HomePage() {
                 <Image
                   src="/Base_lockup_2color.svg"
                   alt="Base"
-                  width={70}
-                  height={18}
+                  width={100}
+                  height={28}
                   className="h-7 w-auto"
                 />
               </div>
@@ -544,7 +544,7 @@ export default function HomePage() {
                   src="/Polygon Primary Dark.svg"
                   alt="Polygon"
                   width={100}
-                  height={20}
+                  height={28}
                   className="h-7 w-auto"
                 />
               </div>
@@ -555,7 +555,7 @@ export default function HomePage() {
                   src="/OPTIMISM-B.svg"
                   alt="Optimism"
                   width={100}
-                  height={14}
+                  height={28}
                   className="h-7 w-auto"
                 />
               </div>
@@ -565,8 +565,8 @@ export default function HomePage() {
                 <Image
                   src="/AvalancheLogo_Horizontal_4C_Primary.svg"
                   alt="Avalanche"
-                  width={120}
-                  height={22}
+                  width={100}
+                  height={28}
                   className="h-7 w-auto"
                 />
               </div>
