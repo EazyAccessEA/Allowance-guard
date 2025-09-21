@@ -62,9 +62,9 @@ export default function Hero({
               "find and cut off silent threats",
               "control who has access to funds"
             ]}
-            typingSpeed={900}
-            deletingSpeed={100}
-            pauseTime={5000}
+            typingSpeed={100}
+            deletingSpeed={50}
+            pauseTime={4000}
             onRender={(firstLine, secondLine) => (
               <>
                 <span className="block">

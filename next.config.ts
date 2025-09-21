@@ -153,6 +153,16 @@ const nextConfig = {
             value: 'Accept-Encoding'
           }
         ]
+      },
+      // Fix CSS MIME type issues
+      {
+        source: '/next/static/css/(.*)',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/css'
+          }
+        ]
       }
     ]
   }
