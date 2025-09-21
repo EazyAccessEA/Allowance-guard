@@ -10,6 +10,12 @@ import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
 import PerformanceDashboard from '@/components/PerformanceDashboard'
 
+// Sophisticated Static Generation Strategy
+export const dynamic = 'force-static'
+export const revalidate = 3600 // 1 hour ISR
+export const fetchCache = 'force-cache'
+export const runtime = 'nodejs'
+
 const inter = Inter({ 
   subsets: ['latin'],
   display: 'swap',

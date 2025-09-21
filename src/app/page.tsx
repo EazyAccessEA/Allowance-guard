@@ -8,20 +8,150 @@ import { Button } from '@/components/ui/Button'
 import ConnectButton from '@/components/ConnectButton'
 import Hero from '@/components/Hero'
 import { LazySection } from '@/components/LazySection'
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 
-// Dynamic imports for code splitting (Lighthouse recommendation)
-const StatisticsSection = dynamic(() => import('@/components/StatisticsSection'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64 w-full" />
+// Note: Static generation exports moved to layout.tsx for client components
+
+// Enhanced Dynamic Imports with Error Boundaries
+const StatisticsSection = dynamicImport(() => import('@/components/StatisticsSection'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64 w-full" />,
+  ssr: false // Prevent SSR issues
 })
 
-const AppArea = dynamic(() => import('@/components/AppArea'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />
+const AppArea = dynamicImport(() => import('@/components/AppArea'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />,
+  ssr: false
 })
 
-const ActivityTimeline = dynamic(() => import('@/components/ActivityTimeline'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-48 w-full" />
+const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-48 w-full" />,
+  ssr: false
 })
+
+// Enhanced Error Boundary Component
+function ErrorFallback({ error, resetError }: { error: Error; resetError: () => void }) {
+  return (
+    <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="max-w-md mx-auto text-center p-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h2>
+        <p className="text-gray-600 mb-6">We&apos;re working to fix this issue. Please try again.</p>
+        <button
+          onClick={resetError}
+          className="bg-primary-700 text-white px-6 py-2 rounded-lg hover:bg-primary-800 transition-colors"
+        >
+          Try Again
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// Enhanced API Client with Retry Logic and Error Handling
+class APIClient {
+  private static async fetchWithRetry(
+    url: string, 
+    options: RequestInit = {}, 
+    maxRetries: number = 3
+  ): Promise<Response> {
+    let lastError: Error | null = null
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const response = await fetch(url, {
+          ...options,
+          headers: {
+            'Content-Type': 'application/json',
+            ...options.headers,
+          },
+        })
+        
+        if (response.ok) {
+          return response
+        }
+        
+        // Don't retry on client errors (4xx)
+        if (response.status >= 400 && response.status < 500) {
+          throw new Error(`Client error: ${response.status}`)
+        }
+        
+        throw new Error(`Server error: ${response.status}`)
+        
+      } catch (error) {
+        lastError = error as Error
+        
+        if (attempt === maxRetries) {
+          break
+        }
+        
+        // Exponential backoff
+        const delay = Math.pow(2, attempt) * 1000
+        await new Promise(resolve => setTimeout(resolve, delay))
+      }
+    }
+    
+    throw lastError || new Error('Request failed after retries')
+  }
+  
+  static async getAllowances(wallet: string, page: number = 1, pageSize: number = 25) {
+    if (typeof window === 'undefined') {
+      throw new Error('API calls only available on client side')
+    }
+    
+    const response = await this.fetchWithRetry(
+      `/api/allowances?wallet=${wallet}&page=${page}&pageSize=${pageSize}`
+    )
+    
+    return response.json()
+  }
+  
+  static async startScan(walletAddress: string, chains: string[] = ['eth', 'arb', 'base']) {
+    if (typeof window === 'undefined') {
+      throw new Error('API calls only available on client side')
+    }
+    
+    const response = await this.fetchWithRetry('/api/scan', {
+      method: 'POST',
+      body: JSON.stringify({ walletAddress, chains })
+    })
+    
+    return response.json()
+  }
+  
+  static async getJobStatus(jobId: number) {
+    if (typeof window === 'undefined') {
+      throw new Error('API calls only available on client side')
+    }
+    
+    const response = await this.fetchWithRetry(`/api/jobs/${jobId}`)
+    return response.json()
+  }
+  
+  static async refreshRisk(wallet: string) {
+    if (typeof window === 'undefined') {
+      throw new Error('API calls only available on client side')
+    }
+    
+    const response = await this.fetchWithRetry('/api/risk/refresh', {
+      method: 'POST',
+      body: JSON.stringify({ wallet })
+    })
+    
+    return response.json()
+  }
+  
+  static async enrichData(wallet: string) {
+    if (typeof window === 'undefined') {
+      throw new Error('API calls only available on client side')
+    }
+    
+    const response = await this.fetchWithRetry('/api/enrich', {
+      method: 'POST',
+      body: JSON.stringify({ wallet })
+    })
+    
+    return response.json()
+  }
+}
 
 export default function HomePage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -44,69 +174,108 @@ export default function HomePage() {
   const [pending, setPending] = useState(false)
   const [, setJobId] = useState<number | null>(null)
   const [message, setMessage] = useState('')
+  const [error, setError] = useState<Error | null>(null)
 
-  async function fetchAllowances(addr: string, p = page, ps = pageSize) {
-    const res = await fetch(`/api/allowances?wallet=${addr}&page=${p}&pageSize=${ps}`)
-    const json = await res.json()
-    setRows(json.allowances || [])
-    setTotal(json.total || 0)
+  // Enhanced error handling
+  const handleError = (error: Error, context: string) => {
+    console.error(`Error in ${context}:`, error)
+    setError(error)
+    setMessage(`Error: ${error.message}`)
   }
 
+  const resetError = () => {
+    setError(null)
+    setMessage('')
+  }
+
+  // Enhanced fetch allowances with error handling
+  async function fetchAllowances(addr: string, p = page, ps = pageSize) {
+    try {
+      const json = await APIClient.getAllowances(addr, p, ps)
+    setRows(json.allowances || [])
+    setTotal(json.total || 0)
+      setError(null)
+    } catch (err) {
+      handleError(err as Error, 'fetchAllowances')
+    }
+  }
+
+  // Enhanced scan function with comprehensive error handling
   async function startScan() {
     const target = selectedWallet || connectedAddress
     if (!target) {
       setMessage('Select or connect a wallet first')
       return
     }
+    
     if (pending) return // debounce protection
+    
     setPending(true)
     setMessage('Queuing…')
+    setError(null)
+    
     try {
-      const res = await fetch('/api/scan', { 
-        method:'POST', 
-        headers:{'content-type':'application/json'}, 
-        body: JSON.stringify({ walletAddress: target, chains: ['eth','arb','base'] }) 
-      })
-      const j = await res.json()
-      if (!res.ok) throw new Error(j.error || 'Failed to queue')
+      // Start scan
+      const scanResult = await APIClient.startScan(target, ['eth', 'arb', 'base'])
       
-      setJobId(j.jobId)
-      setMessage(`Scan queued (#${j.jobId})`)
+      if (!scanResult.jobId) {
+        throw new Error('Failed to get job ID from scan response')
+      }
+      
+      setJobId(scanResult.jobId)
+      setMessage(`Scan queued (#${scanResult.jobId})`)
       
       // Optional: immediately ping the processor in dev
       if (process.env.NODE_ENV !== 'production') {
-        fetch('/api/jobs/process', { method: 'POST' }).catch(()=>{})
+        fetch('/api/jobs/process', { method: 'POST' }).catch(() => {})
       }
       
-      // Poll job until done
-      for (let i = 0; i < 40; i++) {
+      // Enhanced polling with better error handling
+      let attempts = 0
+      const maxAttempts = 40
+      
+      while (attempts < maxAttempts) {
         await new Promise(r => setTimeout(r, 3000))
-        const s = await fetch(`/api/jobs/${j.jobId}`).then(r => r.json())
-        if (s.status === 'succeeded') { 
+        attempts++
+        
+        try {
+          const status = await APIClient.getJobStatus(scanResult.jobId)
+          
+          if (status.status === 'succeeded') {
           setMessage('Scan complete')
           break 
         }
-        if (s.status === 'failed') { 
-          setMessage(`Scan failed: ${s.error || ''}`)
-          break 
+          
+          if (status.status === 'failed') {
+            throw new Error(`Scan failed: ${status.error || 'Unknown error'}`)
+          }
+          
+          setMessage(`Scanning… (attempt ${status.attempts || attempts})`)
+          
+        } catch (pollError) {
+          console.error('Polling error:', pollError)
+          if (attempts >= maxAttempts) {
+            throw new Error('Scan timed out - please try again')
+          }
         }
-        setMessage(`Scanning… (attempt ${s.attempts})`)
       }
       
-      // Post-scan tasks
-      await fetch('/api/risk/refresh', { 
-        method:'POST', 
-        headers:{'content-type':'application/json'}, 
-        body: JSON.stringify({ wallet: target }) 
-      })
-      await fetch('/api/enrich', { 
-        method:'POST', 
-        headers:{'content-type':'application/json'}, 
-        body: JSON.stringify({ wallet: target }) 
-      })
+      // Post-scan tasks with error handling
+      try {
+        await Promise.allSettled([
+          APIClient.refreshRisk(target),
+          APIClient.enrichData(target)
+        ])
+        
       await fetchAllowances(target, 1, pageSize)
-    } catch (e: unknown) {
-      setMessage(e instanceof Error ? e.message : 'Scan failed to queue')
+        
+      } catch (postScanError) {
+        console.error('Post-scan tasks failed:', postScanError)
+        // Don't fail the entire scan for post-processing errors
+      }
+      
+    } catch (err) {
+      handleError(err as Error, 'startScan')
     } finally {
       setPending(false)
     }
@@ -131,6 +300,11 @@ export default function HomePage() {
     if (selectedWallet) {
       await fetchAllowances(selectedWallet, page, pageSize)
     }
+  }
+
+  // Enhanced error boundary
+  if (error) {
+    return <ErrorFallback error={error} resetError={resetError} />
   }
 
   return (
@@ -201,7 +375,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Statistics Section - Lazy Loaded */}
+      {/* Statistics Section - Lazy Loaded with Error Boundary */}
       <LazySection>
         <StatisticsSection />
       </LazySection>
