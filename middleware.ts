@@ -1,7 +1,14 @@
 // middleware.ts
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { randomUUID } from 'crypto'
+// Use Web Crypto API instead of Node.js crypto for Edge Runtime compatibility
+function generateUUID(): string {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0
+    const v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
 
 /** Your public origin (no trailing slash) */
 const ORIGIN = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') || 'http://localhost:3000'
@@ -137,7 +144,7 @@ function checkRateLimit(req: NextRequest, botInfo: ReturnType<typeof isBot>): Ne
         return createErrorResponse(
           'Rate limit exceeded', 
           429, 
-          req.headers.get('x-request-id') || randomUUID()
+          req.headers.get('x-request-id') || generateUUID()
         )
       }
       
@@ -199,7 +206,7 @@ function applyCORS(response: NextResponse, req: NextRequest, botInfo: ReturnType
     pre.headers.set('access-control-allow-headers', 'content-type, stripe-signature, x-cc-webhook-signature')
     pre.headers.set('access-control-allow-origin', isSame ? ORIGIN : 'null')
     pre.headers.set('vary', 'origin')
-    pre.headers.set('x-request-id', req.headers.get('x-request-id') || randomUUID())
+    pre.headers.set('x-request-id', req.headers.get('x-request-id') || generateUUID())
     return pre
   } else if (origin) {
     response.headers.set('access-control-allow-origin', isSame ? ORIGIN : 'null')
@@ -211,7 +218,7 @@ function applyCORS(response: NextResponse, req: NextRequest, botInfo: ReturnType
 
 /** Main Middleware Function with Comprehensive Error Handling */
 export async function middleware(req: NextRequest) {
-  const requestId = req.headers.get('x-request-id') || randomUUID()
+  const requestId = req.headers.get('x-request-id') || generateUUID()
   let botInfo: ReturnType<typeof isBot> = { isBot: false, category: 'unknown', priority: 'low' }
   
   try {

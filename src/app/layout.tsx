@@ -39,6 +39,11 @@ export const metadata: Metadata = {
   title: { default: 'Allowance Guard', template: '%s · Allowance Guard' },
   description: 'Open-source, free tool to view and revoke token approvals safely.',
   robots: { index: true, follow: true },
+  keywords: [
+    'DeFi', 'dapp', 'web3', 'blockchain', 'ethereum', 'token approvals', 
+    'wallet security', 'crypto security', 'allowance management', 'revoke tokens',
+    'Ethereum', 'Arbitrum', 'Base', 'Polygon', 'Optimism', 'Avalanche'
+  ],
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -94,6 +99,39 @@ export default async function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        
+        {/* DApp Identification Signals for Security Scanners */}
+        <meta name="application-name" content="Allowance Guard" />
+        <meta name="dapp" content="true" />
+        <meta name="web3" content="true" />
+        <meta name="defi" content="true" />
+        <meta name="blockchain" content="ethereum,arbitrum,base,polygon,optimism,avalanche" />
+        <meta name="wallet-connect" content="true" />
+        <meta name="token-approvals" content="true" />
+        <meta name="crypto-security" content="true" />
+        
+        {/* Structured Data for DApp Recognition */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Allowance Guard",
+            "description": "Open-source, free tool to view and revoke token approvals safely.",
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "keywords": "DeFi, dapp, web3, blockchain, ethereum, token approvals, wallet security, crypto security",
+            "url": process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+            "author": {
+              "@type": "Organization",
+              "name": "Allowance Guard Team"
+            }
+          })
+        }} />
         
         {/* Preload critical fonts - removed incorrect paths that cause 404s */}
         

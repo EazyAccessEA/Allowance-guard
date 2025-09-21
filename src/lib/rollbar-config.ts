@@ -37,8 +37,8 @@ export const rollbarServerConfig = {
   environment: process.env.NODE_ENV || 'development',
   captureUncaught: true,
   captureUnhandledRejections: true,
-  // Server-specific options
-  root: process.cwd(),
+  // Server-specific options - removed process.cwd() for Edge Runtime compatibility
+  root: '/',
   // Filter out development noise and missing tokens
   filter: {
     filter: () => {

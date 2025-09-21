@@ -103,16 +103,38 @@ This project implements wallet-focused security features:
 
 ## 📖 Documentation
 
+### For Users
 - [User Documentation](https://www.allowanceguard.com/docs)
 - [API Documentation](https://www.allowanceguard.com/docs/api)
 - [Integration Guide](https://www.allowanceguard.com/docs/integration)
-- [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing)
+
+### For Contributors
+- [Financial Support](https://www.allowanceguard.com/docs/contributing) - Support development with donations
+- [Technical Contributing Guide](CONTRIBUTING.md) - Complete guide for code contributors
+- [Developer Guide](docs/developer-guide.md) - Technical deep dive for developers
+- [Testing Policy](TESTING_POLICY.md) - Comprehensive testing standards
+- [Operations Monitoring](docs/ops-monitoring.md) - Production monitoring setup
+
+### Deployment & Setup
 - [Rollbar Error Monitoring Setup](ROLLBAR_SETUP.md)
 - [Vercel Deployment Guide](VERCEL_ROLLBAR_SETUP.md)
+- [Production Deployment Checklist](PRODUCTION_DEPLOYMENT_CHECKLIST.md)
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](https://www.allowanceguard.com/docs/contributing) for details.
+We welcome all types of contributions! Choose how you'd like to help:
+
+### 💰 Financial Support
+**[Support Development](https://www.allowanceguard.com/docs/contributing)** - Your donations directly fund:
+- Core development team compensation
+- Security audits and infrastructure costs  
+- Future feature development
+- Essential Web3 security infrastructure
+
+### 💻 Technical Contributions
+- **[Technical Contributing Guide](CONTRIBUTING.md)** - Complete guide for code contributors
+- **[Developer Guide](docs/developer-guide.md)** - Technical deep dive for developers
+- **[Testing Policy](TESTING_POLICY.md)** - Comprehensive testing standards
 
 ### Development Setup
 

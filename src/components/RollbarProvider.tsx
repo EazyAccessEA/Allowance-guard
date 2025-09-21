@@ -11,9 +11,8 @@ interface RollbarProviderProps {
 }
 
 export default function RollbarProvider({ children }: RollbarProviderProps) {
-  // Temporarily disable Rollbar to fix console errors
-  // TODO: Configure valid Rollbar access token
-  const isConfigured = false
+  // Check if Rollbar is properly configured
+  const isConfigured = !!process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN
 
   if (!isConfigured) {
     // Return children without Rollbar provider if not configured
