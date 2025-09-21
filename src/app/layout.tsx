@@ -65,7 +65,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const cookieStore = await cookies()
-  const cookieString = cookieStore.toString()
+  const cookieString = cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ')
 
   return (
     <html lang="en" data-scroll-behavior="smooth">
