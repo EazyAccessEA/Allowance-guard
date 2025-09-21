@@ -55,12 +55,6 @@ export default function VideoBackground({
       aria-label="Allowance Guard background animation"
     >
       <source src={videoSrc} type="video/mp4" />
-      <track
-        kind="captions"
-        srcLang="en"
-        label="English"
-        default
-      />
       Your browser does not support the video tag.
     </video>
   )

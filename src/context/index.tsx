@@ -89,7 +89,8 @@ if (typeof window !== 'undefined') {
         message.includes('Failed to load resource: the server responded with a status of 500') ||
         message.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
         message.includes('The resource was preloaded using link preload but not used within a few seconds') ||
-        message.includes('Performance issues detected')) {
+        message.includes('Performance issues detected') ||
+        message.includes('An empty string ("") was passed to the src attribute')) {
       return // Suppress telemetry, WebSocket, WalletConnect, and AppKit update cycle errors
     }
     originalConsoleError.apply(console, args)
@@ -122,7 +123,8 @@ if (typeof window !== 'undefined') {
         event.message?.includes('Failed to load resource: the server responded with a status of 500') ||
         event.message?.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
         event.message?.includes('The resource was preloaded using link preload but not used within a few seconds') ||
-        event.message?.includes('Performance issues detected')) {
+        event.message?.includes('Performance issues detected') ||
+        event.message?.includes('An empty string ("") was passed to the src attribute')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -155,7 +157,8 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('Failed to load resource: the server responded with a status of 500') ||
         event.reason?.message?.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
         event.reason?.message?.includes('The resource was preloaded using link preload but not used within a few seconds') ||
-        event.reason?.message?.includes('Performance issues detected')) {
+        event.reason?.message?.includes('Performance issues detected') ||
+        event.reason?.message?.includes('An empty string ("") was passed to the src attribute')) {
       event.preventDefault()
       event.stopPropagation()
       return false
