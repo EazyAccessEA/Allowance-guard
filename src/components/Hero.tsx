@@ -62,7 +62,7 @@ export default function Hero({
               "find and cut off silent threats",
               "control who has access to funds"
             ]}
-            typingSpeed={400}
+            typingSpeed={900}
             deletingSpeed={100}
             pauseTime={5000}
             onRender={(firstLine, secondLine) => (
@@ -116,7 +116,7 @@ export default function Hero({
           )}
         </div>
 
-        {/* Trust Indicators - Mobile Optimized */}
+        {/* Trust Indicators - Mobile Optimized }
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mobbin-body-small text-text-secondary">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-semantic-success-500 rounded-full flex-shrink-0" />
