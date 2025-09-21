@@ -169,12 +169,16 @@ export default function CookieBanner() {
 
                   <p className="mobbin-caption text-text-secondary text-center">
                     By continuing, you agree to our{' '}
-                    <a href="/cookies" className="text-primary-700 hover:text-primary-800 underline">
-                      Cookie Policy
-                    </a>{' '}
-                    and{' '}
+                    <a href="/terms" className="text-primary-700 hover:text-primary-800 underline">
+                      Terms of Use
+                    </a>
+                    ,{' '}
                     <a href="/privacy" className="text-primary-700 hover:text-primary-800 underline">
                       Privacy Policy
+                    </a>
+                    , and{' '}
+                    <a href="/cookies" className="text-primary-700 hover:text-primary-800 underline">
+                      Cookie Policy
                     </a>
                   </p>
                 </div>
@@ -197,6 +201,9 @@ export default function CookieBanner() {
                             <p className="mobbin-caption text-text-secondary">
                               Required for wallet connection and security features
                             </p>
+                            <p className="mobbin-caption text-text-secondary mt-1">
+                              <strong>Retention:</strong> Session-based (deleted when browser closes)
+                            </p>
                           </div>
                         </div>
                         <div className="px-3 py-1 bg-green-100 text-green-800 rounded-full mobbin-caption font-medium">
@@ -214,6 +221,9 @@ export default function CookieBanner() {
                             <h5 className="mobbin-body font-medium text-text-primary">Preference Cookies</h5>
                             <p className="mobbin-caption text-text-secondary">
                               Remember your UI settings and alert preferences
+                            </p>
+                            <p className="mobbin-caption text-text-secondary mt-1">
+                              <strong>Retention:</strong> Up to 1 year
                             </p>
                           </div>
                         </div>
@@ -241,6 +251,9 @@ export default function CookieBanner() {
                             <h5 className="mobbin-body font-medium text-text-primary">Analytics Cookies</h5>
                             <p className="mobbin-caption text-text-secondary">
                               Anonymous usage data to improve our service
+                            </p>
+                            <p className="mobbin-caption text-text-secondary mt-1">
+                              <strong>Retention:</strong> Up to 2 years
                             </p>
                           </div>
                         </div>
@@ -274,6 +287,51 @@ export default function CookieBanner() {
                     >
                       Back
                     </button>
+                  </div>
+
+                  {/* User Rights */}
+                  <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                    <h5 className="mobbin-body font-medium text-text-primary mb-2">Your Rights</h5>
+                    <ul className="space-y-1 mobbin-caption text-text-secondary">
+                      <li>• Accept or reject non-essential cookies</li>
+                      <li>• Delete existing cookies from your browser</li>
+                      <li>• Be informed about what cookies we use</li>
+                      <li>• Withdraw consent at any time</li>
+                      <li>• Request data deletion or portability</li>
+                    </ul>
+                  </div>
+
+                  {/* Policy Links */}
+                  <div className="pt-4 border-t border-border-primary">
+                    <p className="mobbin-caption text-text-secondary text-center mb-3">
+                      Learn more about our policies:
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-4">
+                      <a 
+                        href="/terms" 
+                        className="text-primary-700 hover:text-primary-800 underline mobbin-caption"
+                      >
+                        Terms of Use
+                      </a>
+                      <a 
+                        href="/privacy" 
+                        className="text-primary-700 hover:text-primary-800 underline mobbin-caption"
+                      >
+                        Privacy Policy
+                      </a>
+                      <a 
+                        href="/cookies" 
+                        className="text-primary-700 hover:text-primary-800 underline mobbin-caption"
+                      >
+                        Cookie Policy
+                      </a>
+                    </div>
+                    <p className="mobbin-caption text-text-secondary text-center mt-3">
+                      Questions? Contact us at{' '}
+                      <a href="mailto:legal.support@allowanceguard.com" className="text-primary-700 hover:text-primary-800 underline">
+                        legal.support@allowanceguard.com
+                      </a>
+                    </p>
                   </div>
                 </div>
               )}
