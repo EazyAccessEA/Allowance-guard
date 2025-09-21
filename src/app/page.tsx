@@ -179,8 +179,8 @@ export default function HomePage() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-semantic-info/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-semantic-info">2</span>
+              <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-primary-accent">2</span>
               </div>
               <h3 className="text-xl font-semibold text-text-primary mb-4">Analyze & Understand</h3>
               <p className="text-text-secondary leading-relaxed">
@@ -189,8 +189,8 @@ export default function HomePage() {
               </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-semantic-success/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-semantic-success">3</span>
+              <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-primary-accent">3</span>
               </div>
               <h3 className="text-xl font-semibold text-text-primary mb-4">Act & Secure</h3>
               <p className="text-text-secondary leading-relaxed">
@@ -325,7 +325,7 @@ export default function HomePage() {
       {/* App Area - Only show when connected */}
       {isConnected && (
         <LazySection>
-          <AppArea
+        <AppArea
           isConnected={isConnected}
           selectedWallet={selectedWallet}
           setSelectedWallet={setSelectedWallet}
