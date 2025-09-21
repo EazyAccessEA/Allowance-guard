@@ -210,11 +210,11 @@ export default function HomePage() {
       <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
+            <div className="mb-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
                 Built for Security & Clarity
               </h2>
-              <p className="text-xl text-text-secondary leading-relaxed">
+              <p className="text-xl text-text-secondary leading-relaxed text-justify">
                 Every feature is designed with one goal: keeping your assets secure.
               </p>
             </div>
@@ -223,14 +223,14 @@ export default function HomePage() {
               <div className="space-y-8">
                   <div>
                   <h3 className="text-xl font-semibold text-text-primary mb-3">Non-Custodial Security</h3>
-                  <p className="text-text-secondary leading-relaxed">
+                  <p className="text-text-secondary leading-relaxed text-justify">
                     Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet.
                   </p>
                 </div>
 
                   <div>
                   <h3 className="text-xl font-semibold text-text-primary mb-3">Clarity-First Dashboard</h3>
-                  <p className="text-text-secondary leading-relaxed">
+                  <p className="text-text-secondary leading-relaxed text-justify">
                     Designed to enterprise standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
                   </p>
                 </div>
@@ -239,14 +239,14 @@ export default function HomePage() {
               <div className="space-y-8">
                   <div>
                   <h3 className="text-xl font-semibold text-text-primary mb-3">Advanced Risk Intelligence</h3>
-                  <p className="text-text-secondary leading-relaxed">
+                  <p className="text-text-secondary leading-relaxed text-justify">
                       Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
                     </p>
                 </div>
 
                   <div>
                   <h3 className="text-xl font-semibold text-text-primary mb-3">Gas-Efficient Revocation</h3>
-                  <p className="text-text-secondary leading-relaxed">
+                  <p className="text-text-secondary leading-relaxed text-justify">
                       Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
                     </p>
                 </div>
@@ -259,11 +259,11 @@ export default function HomePage() {
       {/* Final CTA Section */}
       <Section className="py-16 sm:py-20 lg:py-24 bg-white">
         <Container>
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
               Ready to Secure Your Wallet?
             </h2>
-            <p className="text-xl text-text-secondary leading-relaxed mb-8">
+            <p className="text-xl text-text-secondary leading-relaxed mb-8 text-justify">
               Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
             </p>
             
@@ -326,8 +326,8 @@ export default function HomePage() {
 
       {/* Trust Section - Full Screen Width */}
       <div className="py-12 sm:py-16 bg-background-light">
-        <div className="w-full text-center mb-6">
-          <p className="text-base text-text-secondary font-medium">
+        <div className="w-full mb-6">
+          <p className="text-base text-text-secondary font-medium text-center">
             Trusted by security-conscious users across
           </p>
         </div>

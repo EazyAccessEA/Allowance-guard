@@ -15,7 +15,7 @@ export default function Section({
   size = 'default',
   background = 'default',
   fullWidth = false,
-  center = true
+  center = false
 }: SectionProps) {
   // Sketch-inspired responsive section spacing
   const sizeClasses = {

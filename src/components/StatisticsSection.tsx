@@ -55,15 +55,15 @@ export default function StatisticsSection() {
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header - Apple-style clarity */}
-        <div className="text-center mb-20">
+        {/* Section Header - Left-aligned for better readability */}
+        <div className="mb-20">
           <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
             Security Intelligence
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
             The Hidden Risk in Every Wallet
           </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-4xl leading-relaxed text-justify">
             Token approvals are the silent vulnerability that affects every DeFi user. 
             Understanding the scale helps you protect what matters most.
           </p>
@@ -124,13 +124,13 @@ export default function StatisticsSection() {
           </div>
         </div>
 
-        {/* Risk Types - Apple-style list with clear hierarchy */}
+        {/* Risk Types - Left-aligned for better readability */}
         <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-          <div className="text-center mb-12">
+          <div className="mb-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
               Common Approval Risks
             </h3>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+            <p className="text-gray-600 text-lg max-w-3xl text-justify">
               Understanding these risks helps you make informed decisions about your token approvals.
             </p>
           </div>
