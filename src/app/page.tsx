@@ -324,17 +324,16 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* Trust Section */}
-      <Section className="py-12 sm:py-16 bg-background-light">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-base text-text-secondary font-medium mb-6">
+      {/* Trust Section - Full Screen Width */}
+      <div className="py-12 sm:py-16 bg-background-light w-full">
+        <div className="w-full text-center">
+          <p className="text-base text-text-secondary font-medium mb-6 px-4">
               Trusted by security-conscious users across
             </p>
             
-            {/* Desktop: Scrolling animation */}
-            <div className="hidden md:block relative overflow-hidden h-12">
-              <div className="flex items-center gap-12 lg:gap-20 animate-scroll h-12">
+          {/* Full Screen Continuous Scrolling */}
+          <div className="w-full relative overflow-hidden h-12">
+            <div className="flex items-center gap-12 lg:gap-20 animate-scroll h-12 w-full">
                 {/* First set of logos */}
                 <div className="flex items-center gap-12 lg:gap-20 flex-shrink-0">
                   {/* Ethereum */}
@@ -475,77 +474,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Mobile: Static layout with horizontal scroll */}
-            <div className="md:hidden brand-logos-mobile px-4 h-10">
-              {/* Ethereum */}
-              <div className="flex items-center">
-                <Image
-                  src="/ethereum-logo-landscape-purple.svg"
-                  alt="Ethereum"
-                  width={120}
-                  height={28}
-                  className="h-7 w-auto"
-                />
-              </div>
-              
-              {/* Arbitrum */}
-              <div className="flex items-center">
-                <Image
-                  src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
-                  alt="Arbitrum"
-                  width={120}
-                  height={30}
-                  className="h-7 w-auto"
-                />
-              </div>
-              
-              {/* Base */}
-              <div className="flex items-center">
-                <Image
-                  src="/Base_lockup_2color.svg"
-                  alt="Base"
-                  width={100}
-                  height={28}
-                  className="h-7 w-auto"
-                />
-              </div>
-              
-              {/* Polygon */}
-              <div className="flex items-center">
-                <Image
-                  src="/Polygon Primary Dark.svg"
-                  alt="Polygon"
-                  width={100}
-                  height={28}
-                  className="h-7 w-auto"
-                />
-              </div>
-              
-              {/* Optimism */}
-              <div className="flex items-center">
-                <Image
-                  src="/OPTIMISM-B.svg"
-                  alt="Optimism"
-                  width={100}
-                  height={28}
-                  className="h-7 w-auto"
-                />
-              </div>
-              
-              {/* Avalanche */}
-              <div className="flex items-center">
-                <Image
-                  src="/AvalancheLogo_Horizontal_4C_Primary.svg"
-                  alt="Avalanche"
-                  width={100}
-                  height={28}
-                  className="h-7 w-auto"
-                />
-              </div>
-            </div>
           </div>
-        </Container>
-      </Section>
+        </div>
     </div>
   )
 }
