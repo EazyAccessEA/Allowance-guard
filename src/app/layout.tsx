@@ -82,10 +82,7 @@ export default async function RootLayout({
         {/* PRPL Pattern: Push critical resources */}
         <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />
         
-        {/* Pre-cache critical routes */}
-        <link rel="prefetch" href="/features" />
-        <link rel="prefetch" href="/faq" />
-        <link rel="prefetch" href="/contact" />
+        {/* Pre-cache critical routes - removed client-side pages that cause 500 errors */}
         
         {/* Critical mobile optimizations */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
