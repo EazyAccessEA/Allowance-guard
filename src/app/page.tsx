@@ -340,7 +340,7 @@ export default function HomePage() {
               {/* Ethereum */}
               <div className="flex items-center">
                 <Image
-                  src="/ethereum-logo-landscape-purple.svg"
+                  src="/ethereum-logo-landscape-purple.png"
                   alt="Ethereum"
                   width={140}
                   height={32}
@@ -409,7 +409,7 @@ export default function HomePage() {
               {/* Ethereum */}
               <div className="flex items-center">
                 <Image
-                  src="/ethereum-logo-landscape-purple.svg"
+                  src="/ethereum-logo-landscape-purple.png"
                   alt="Ethereum"
                   width={140}
                   height={32}
@@ -478,7 +478,7 @@ export default function HomePage() {
               {/* Ethereum */}
               <div className="flex items-center">
                 <Image
-                  src="/ethereum-logo-landscape-purple.svg"
+                  src="/ethereum-logo-landscape-purple.png"
                   alt="Ethereum"
                   width={140}
                   height={32}
