@@ -25,43 +25,21 @@ function StatCard({ title, value, description, trend, trendValue, icon }: StatCa
   }
 
   const getTrendIcon = () => {
-    switch (trend) {
-      case 'up':
-        return (
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l9.2-9.2M17 17V7H7" />
-          </svg>
-        )
-      case 'down':
-        return (
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 7l-9.2 9.2M7 7v10h10" />
-          </svg>
-        )
-      default:
-        return null
-    }
+    // Icons removed for cleaner design
+    return null
   }
 
   return (
     <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white border-0 shadow-sm">
       <CardContent className="p-8">
-        {/* Apple-style icon with better visual hierarchy */}
+        {/* Clean text-focused design without icons */}
         <div className="flex items-start justify-between mb-6">
-          <div className="flex items-start gap-4">
-            {icon && (
-              <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                {icon}
-              </div>
-            )}
-            <div className="flex-1">
-              <h3 className="text-sm font-medium text-gray-600 mb-2 tracking-wide uppercase">{title}</h3>
-              <div className="text-3xl font-bold text-gray-900 mb-2">{value}</div>
-            </div>
+          <div className="flex-1">
+            <h3 className="text-sm font-medium text-gray-600 mb-2 tracking-wide uppercase">{title}</h3>
+            <div className="text-3xl font-bold text-gray-900 mb-2">{value}</div>
           </div>
           {trend && trendValue && (
-            <div className={`flex items-center gap-1 text-sm font-semibold ${getTrendColor()}`}>
-              {getTrendIcon()}
+            <div className={`text-sm font-semibold ${getTrendColor()}`}>
               <span>{trendValue}</span>
             </div>
           )}
@@ -100,10 +78,7 @@ export default function StatisticsSection() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-1">$3.2B+ Lost in 2024</h3>
                 <p className="text-gray-600 text-lg">Lost to approval-based exploits across all DeFi protocols</p>
               </div>
-              <div className="flex items-center space-x-2 text-red-600">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l9.2-9.2M17 17V7H7" />
-                </svg>
+              <div className="text-red-600">
                 <span className="text-lg font-semibold">+47%</span>
               </div>
             </div>
@@ -119,10 +94,7 @@ export default function StatisticsSection() {
               <p className="text-gray-600 text-sm leading-relaxed">
                 Exploit token approvals as their primary attack vector
               </p>
-              <div className="flex items-center space-x-1 text-orange-600 mt-3">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17l9.2-9.2M17 17V7H7" />
-                </svg>
+              <div className="text-orange-600 mt-3">
                 <span className="text-sm font-medium">+12%</span>
               </div>
             </div>
@@ -145,10 +117,7 @@ export default function StatisticsSection() {
               <p className="text-gray-600 text-sm leading-relaxed">
                 Average time to complete a comprehensive security audit
               </p>
-              <div className="flex items-center space-x-1 text-green-600 mt-3">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 7l-9.2 9.2M7 7v10h10" />
-                </svg>
+              <div className="text-green-600 mt-3">
                 <span className="text-sm font-medium">-30%</span>
               </div>
             </div>
