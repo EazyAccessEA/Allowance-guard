@@ -15,6 +15,9 @@ let deferredAppKit: unknown = null
 let isInitializing = false
 
 const initializeAppKit = () => {
+  // Only initialize on client side
+  if (typeof window === 'undefined') return null
+  
   if (deferredAppKit || isInitializing) return deferredAppKit
   
   isInitializing = true
@@ -202,6 +205,7 @@ const metadata = {
 }
 
 // Initialize AppKit with proper configuration per Reown docs
+// Only initialize on client side to prevent SSR issues
 if (projectId && typeof window !== 'undefined') {
   try {
     // Initialize AppKit synchronously to ensure it's available for useAppKit hook
@@ -239,7 +243,7 @@ if (projectId && typeof window !== 'undefined') {
   } catch (error) {
     console.error('Failed to initialize AppKit:', error)
   }
-} else if (!projectId) {
+} else if (!projectId && typeof window !== 'undefined') {
   console.error('WalletConnect Project ID is missing. Wallet connection will not work.')
 }
 
@@ -318,6 +322,9 @@ function AppKitProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
+    // Only initialize on client side
+    if (typeof window === 'undefined') return
+
     // Initialize AppKit on idle to avoid blocking main thread
     const initAppKit = () => {
       const kit = initializeAppKit()
