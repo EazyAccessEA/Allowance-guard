@@ -31,24 +31,13 @@ export const MultiLineTypewriter = ({
     const currentMessage = messages[currentMessageIndex]
     const words = currentMessage.split(/\s+/)
     
-    // TBT Optimization - Use requestIdleCallback for non-blocking execution
+    // Use setTimeout for consistent timing
     const scheduleUpdate = (callback: () => void, delay: number) => {
       if (!isActive) return
       
-      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        const id = requestIdleCallback(() => {
-          if (isActive) callback()
-        }, { timeout: delay })
-        timer = { 
-          [Symbol.toPrimitive]: () => id,
-          valueOf: () => id,
-          toString: () => id.toString()
-        } as unknown as NodeJS.Timeout
-      } else {
-        timer = setTimeout(() => {
-          if (isActive) callback()
-        }, delay)
-      }
+      timer = setTimeout(() => {
+        if (isActive) callback()
+      }, delay)
     }
     
     // Mobile performance optimization - faster animation like Fireart
@@ -110,11 +99,7 @@ export const MultiLineTypewriter = ({
     return () => {
       isActive = false
       if (timer) {
-        if (typeof timer === 'number') {
-          clearTimeout(timer)
-        } else {
-          // For requestIdleCallback, we can't cancel it, but it's non-blocking anyway
-        }
+        clearTimeout(timer)
       }
     }
   }, [currentMessageIndex, firstLine, secondLine, isDeleting, isPaused, isDeletingPaused, currentLine, messages, typingSpeed, deletingSpeed, pauseTime])
