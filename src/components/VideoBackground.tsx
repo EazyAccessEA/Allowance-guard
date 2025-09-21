@@ -59,7 +59,6 @@ export default function VideoBackground({
         kind="captions"
         srcLang="en"
         label="English"
-        src=""
         default
       />
       Your browser does not support the video tag.
