@@ -156,6 +156,15 @@ const nextConfig = {
       },
       // Fix CSS MIME type issues
       {
+        source: '/_next/static/css/(.*)',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/css'
+          }
+        ]
+      },
+      {
         source: '/next/static/css/(.*)',
         headers: [
           {

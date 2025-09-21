@@ -81,17 +81,11 @@ export default async function RootLayout({
         
         {/* PRPL Pattern: Push critical resources */}
         <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />
-        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
-        <link rel="preload" href="/_next/static/chunks/webpack.js" as="script" />
         
         {/* Pre-cache critical routes */}
         <link rel="prefetch" href="/features" />
         <link rel="prefetch" href="/faq" />
         <link rel="prefetch" href="/contact" />
-        
-        {/* Pre-cache critical components */}
-        <link rel="modulepreload" href="/_next/static/chunks/StatisticsSection.js" />
-        <link rel="modulepreload" href="/_next/static/chunks/AppArea.js" />
         
         {/* Critical mobile optimizations */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -99,9 +93,7 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         
-        {/* Preload critical fonts */}
-        <link rel="preload" href="/_next/static/media/inter-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/_next/static/media/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        {/* Preload critical fonts - removed incorrect paths that cause 404s */}
         
         {/* Critical CSS inlining to reduce render blocking */}
         <style dangerouslySetInnerHTML={{
@@ -153,18 +145,7 @@ export default async function RootLayout({
             .optimize-rendering { will-change: auto; }
             .reduce-paint { contain: paint; }
             
-            /* Font display optimization */
-            @font-face {
-              font-family: 'JetBrains Mono';
-              font-display: swap;
-              src: url('/_next/static/media/jetbrains-mono-latin.woff2') format('woff2');
-            }
-            
-            @font-face {
-              font-family: 'Inter';
-              font-display: swap;
-              src: url('/_next/static/media/inter-latin.woff2') format('woff2');
-            }
+            /* Font display optimization - using Next.js font optimization */
             
             /* Critical button styles to prevent layout shifts */
             .btn-primary {
