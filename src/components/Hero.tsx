@@ -54,7 +54,7 @@ export default function Hero({
       
       <Container className="relative text-left max-w-4xl z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
-          <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] flex flex-col justify-center">
+          <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
             <MultiLineTypewriter
             messages={[
               "see every hidden connection clearly",
@@ -85,7 +85,7 @@ export default function Hero({
         </p>
 
         {/* CTA Section - Mobile Optimized */}
-        <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8 min-h-[120px] sm:min-h-[100px]">
           {!isConnected ? (
             <div className="flex flex-col gap-4">
               <ConnectButton 

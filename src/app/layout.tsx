@@ -80,7 +80,6 @@ export default async function RootLayout({
         <link rel="dns-prefetch" href="https://wagmi.sh" />
         
         {/* PRPL Pattern: Push critical resources */}
-        <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />
         
         {/* Pre-cache critical routes - removed client-side pages that cause 500 errors */}
         

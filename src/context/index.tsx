@@ -72,7 +72,8 @@ if (typeof window !== 'undefined') {
         message.includes('Connection request expired') ||
         message.includes('Origin') && message.includes('not found on Allowlist') ||
         message.includes('update configuration on cloud.reown.com') ||
-        message.includes('cca-lite.coinbase.com/metrics') ||
+               message.includes('cca-lite.coinbase.com/metrics') ||
+               message.includes('POST https://cca-lite.coinbase.com/metrics') ||
         message.includes('w3m-router-container') ||
         message.includes('scheduled an update') ||
         message.includes('change-in-update') ||
@@ -108,7 +109,8 @@ if (typeof window !== 'undefined') {
         event.message?.includes('Connection request expired') ||
         (event.message?.includes('Origin') && event.message?.includes('not found on Allowlist')) ||
         event.message?.includes('update configuration on cloud.reown.com') ||
-        event.message?.includes('cca-lite.coinbase.com/metrics') ||
+               event.message?.includes('cca-lite.coinbase.com/metrics') ||
+               event.message?.includes('POST https://cca-lite.coinbase.com/metrics') ||
         event.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') ||
         event.message?.includes('Rollbar: access token not found') ||
         event.message?.includes('POST https://api.rollbar.com/api/1/item/') ||
@@ -141,7 +143,8 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('Connection request expired') ||
         (event.reason?.message?.includes('Origin') && event.reason?.message?.includes('not found on Allowlist')) ||
         event.reason?.message?.includes('update configuration on cloud.reown.com') ||
-        event.reason?.message?.includes('cca-lite.coinbase.com/metrics') ||
+               event.reason?.message?.includes('cca-lite.coinbase.com/metrics') ||
+               event.reason?.message?.includes('POST https://cca-lite.coinbase.com/metrics') ||
         event.reason?.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') ||
         event.reason?.message?.includes('Rollbar: access token not found') ||
         event.reason?.message?.includes('POST https://api.rollbar.com/api/1/item/') ||
