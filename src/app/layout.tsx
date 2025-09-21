@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { headers } from 'next/headers'
+import { cookies } from 'next/headers'
 import ContextProvider from '@/context'
 import { LighthouseInitializer } from '@/components/LighthouseInitializer'
 import RpcStatusBanner from '@/components/RpcStatusBanner'
@@ -64,8 +64,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const headersList = await headers()
-  const cookies = headersList.get('cookie')
+  const cookieStore = await cookies()
+  const cookieString = cookieStore.toString()
 
   return (
     <html lang="en" data-scroll-behavior="smooth">
@@ -187,7 +187,7 @@ export default async function RootLayout({
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <RollbarProvider>
-          <ContextProvider cookies={cookies}>
+          <ContextProvider cookies={cookieString}>
             <LighthouseInitializer />
             <HeaderWrapper />
             <main id="main" className="flex-1">{children}</main>
