@@ -218,6 +218,42 @@ export default function FAQPage() {
                   </p>
                 </div>
               </div>
+
+              <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-4">
+                <div className="p-8">
+                  <h3 className="mobbin-heading-3 text-text-primary mb-6">Has Allowance Guard been audited?</h3>
+                  <p className="mobbin-body-large text-text-secondary leading-relaxed">
+                    Yes, Allowance Guard has undergone comprehensive security reviews and audits. We completed an initial security assessment in September 2024, covering all security-critical components including our risk engine, data handling, and smart contract interactions. We use only standard, well-audited ERC-20 and ERC-721 functions for revocation operations, which have been extensively tested by the broader Ethereum community. We are actively working toward SOC 2 Type II compliance and plan to conduct third-party security audits in Q1 2025. Our security posture includes regular dependency vulnerability scanning, automated security testing in our CI/CD pipeline, and comprehensive audit logging for all operations.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-5">
+                <div className="p-8">
+                  <h3 className="mobbin-heading-3 text-text-primary mb-6">How often is data updated?</h3>
+                  <p className="mobbin-body-large text-text-secondary leading-relaxed">
+                    Our data is updated in real-time from the blockchain. Allowance data is refreshed every time you scan your wallet, ensuring you always see the most current state of your token approvals. Our threat intelligence database is updated continuously throughout the day, incorporating new security research, community reports, and blockchain analysis. Risk scores are recalculated in real-time based on the latest threat intelligence. We maintain a 99.9% uptime target and use redundant infrastructure to ensure data freshness and availability. For optimal security, we recommend scanning your wallet regularly, especially after interacting with new DeFi protocols or when you notice unusual activity.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-6">
+                <div className="p-8">
+                  <h3 className="mobbin-heading-3 text-text-primary mb-6">What about false positives?</h3>
+                  <p className="mobbin-body-large text-text-secondary leading-relaxed">
+                    We acknowledge that false positives can occur in any security system. Our approach is to provide maximum transparency about why allowances are flagged, giving you the information needed to make informed decisions. Each flagged allowance includes detailed explanations of the specific risk factors detected, such as unlimited approvals, unverified contracts, or high-risk patterns. We continuously improve our algorithms based on user feedback and community reports. If you believe an allowance was incorrectly flagged, you can report it through our feedback system, and our team will review and refine our detection rules. Our goal is to minimize false positives while maintaining high detection rates for actual threats.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-7">
+                <div className="p-8">
+                  <h3 className="mobbin-heading-3 text-text-primary mb-6">What contracts are known malicious?</h3>
+                  <p className="mobbin-body-large text-text-secondary leading-relaxed">
+                    Our malicious contract database includes addresses identified through multiple sources: security researchers, blockchain analysis firms, community reports, and our own threat intelligence. We maintain a comprehensive blacklist of contracts involved in known exploits, phishing attacks, rug pulls, and other malicious activities. This database is continuously updated with new threats as they emerge. We also track contracts with suspicious patterns, such as those that have been involved in multiple security incidents or exhibit behavior consistent with malicious activity. However, we emphasize that our risk assessment is just one tool in your security toolkit - always conduct your own research and never rely solely on automated systems for security decisions.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </Container>
