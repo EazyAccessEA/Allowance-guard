@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 // Button component not used in this file anymore
 import { Badge } from '@/components/ui/Badge'
-import ConnectButton from '@/components/ConnectButton'
+import ClientConnectButton from '@/components/ClientConnectButton'
 import MobileNavigation from '@/components/MobileNavigation'
 
 interface HeaderProps {
@@ -101,7 +101,7 @@ export default function Header({ isConnected }: HeaderProps) {
                 Connected
               </Badge>
             ) : (
-              <ConnectButton variant="primary" className="mobbin-hover-lift" />
+              <ClientConnectButton variant="primary" className="mobbin-hover-lift" />
             )}
           </div>
 

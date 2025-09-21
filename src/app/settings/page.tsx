@@ -5,7 +5,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
-import ConnectButton from '@/components/ConnectButton'
+import ClientConnectButton from '@/components/ClientConnectButton'
 
 export default function SettingsPage() {
   const { address: connectedAddress, isConnected } = useAccount()
@@ -225,7 +225,7 @@ export default function SettingsPage() {
                   Your wallet connection is secure and only used to identify which settings apply to your addresses.
                 </p>
                 <div className="flex justify-center">
-                  <ConnectButton 
+                  <ClientConnectButton 
                     variant="primary"
                     className="px-8 py-3 text-base font-medium rounded-lg"
                   />

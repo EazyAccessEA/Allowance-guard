@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
-import ConnectButton from '@/components/ConnectButton'
+import ClientConnectButton from '@/components/ClientConnectButton'
 import { 
   X, 
   Menu, 
@@ -187,7 +187,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 {/* Connect Wallet - Prominent */}
                 <div className="mb-8 text-center">
                   <div onClick={() => setIsOpen(false)}>
-                    <ConnectButton 
+                    <ClientConnectButton 
                       variant={isConnected ? "secondary" : "primary"}
                       size="lg"
                       className="w-full text-xl py-6"

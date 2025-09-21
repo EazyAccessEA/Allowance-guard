@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import dynamic from 'next/dynamic'
-import ConnectButton from '@/components/ConnectButton'
+import ClientConnectButton from '@/components/ClientConnectButton'
 import TestConnect from '@/components/TestConnect'
 
 // Dynamic imports for non-critical components
@@ -88,7 +88,7 @@ export default function Hero({
         <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8 min-h-[120px] sm:min-h-[100px]">
           {!isConnected ? (
             <div className="flex flex-col gap-4">
-              <ConnectButton 
+              <ClientConnectButton 
                 variant="primary" 
                 size="lg"
                 className="w-full sm:w-auto"

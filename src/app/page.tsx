@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { Button } from '@/components/ui/Button'
-import ConnectButton from '@/components/ConnectButton'
+import ClientConnectButton from '@/components/ClientConnectButton'
 import Hero from '@/components/Hero'
 import { LazySection } from '@/components/LazySection'
 import dynamicImport from 'next/dynamic'
@@ -443,7 +443,7 @@ export default function HomePage() {
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {!isConnected ? (
-                <ConnectButton 
+                <ClientConnectButton 
                   variant="primary" 
                   size="lg"
                   className="w-full sm:w-auto"
