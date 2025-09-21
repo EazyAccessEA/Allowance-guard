@@ -74,6 +74,7 @@ if (typeof window !== 'undefined') {
         message.includes('update configuration on cloud.reown.com') ||
                message.includes('cca-lite.coinbase.com/metrics') ||
                message.includes('POST https://cca-lite.coinbase.com/metrics') ||
+               message.includes('net::ERR_ABORTED 401 (Unauthorized)') && message.includes('cca-lite.coinbase.com') ||
         message.includes('w3m-router-container') ||
         message.includes('scheduled an update') ||
         message.includes('change-in-update') ||
@@ -90,7 +91,9 @@ if (typeof window !== 'undefined') {
         message.includes('Failed to load resource: the server responded with a status of 500') ||
         message.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
         message.includes('The resource was preloaded using link preload but not used within a few seconds') ||
-        message.includes('Performance issues detected')) {
+               message.includes('Performance issues detected') ||
+               message.includes('VM3425:1') ||
+               message.includes('POST https://cca-lite.coinbase.com/metrics net::ERR_ABORTED 401')) {
       return // Suppress telemetry, WebSocket, WalletConnect, and AppKit update cycle errors
     }
     originalConsoleError.apply(console, args)
@@ -111,6 +114,7 @@ if (typeof window !== 'undefined') {
         event.message?.includes('update configuration on cloud.reown.com') ||
                event.message?.includes('cca-lite.coinbase.com/metrics') ||
                event.message?.includes('POST https://cca-lite.coinbase.com/metrics') ||
+               (event.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') && event.message?.includes('cca-lite.coinbase.com')) ||
         event.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') ||
         event.message?.includes('Rollbar: access token not found') ||
         event.message?.includes('POST https://api.rollbar.com/api/1/item/') ||
@@ -124,7 +128,9 @@ if (typeof window !== 'undefined') {
         event.message?.includes('Failed to load resource: the server responded with a status of 500') ||
         event.message?.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
         event.message?.includes('The resource was preloaded using link preload but not used within a few seconds') ||
-        event.message?.includes('Performance issues detected')) {
+               event.message?.includes('Performance issues detected') ||
+               event.message?.includes('VM3425:1') ||
+               event.message?.includes('POST https://cca-lite.coinbase.com/metrics net::ERR_ABORTED 401')) {
       event.preventDefault()
       event.stopPropagation()
       return false
@@ -145,6 +151,7 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('update configuration on cloud.reown.com') ||
                event.reason?.message?.includes('cca-lite.coinbase.com/metrics') ||
                event.reason?.message?.includes('POST https://cca-lite.coinbase.com/metrics') ||
+               (event.reason?.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') && event.reason?.message?.includes('cca-lite.coinbase.com')) ||
         event.reason?.message?.includes('net::ERR_ABORTED 401 (Unauthorized)') ||
         event.reason?.message?.includes('Rollbar: access token not found') ||
         event.reason?.message?.includes('POST https://api.rollbar.com/api/1/item/') ||
@@ -158,7 +165,9 @@ if (typeof window !== 'undefined') {
         event.reason?.message?.includes('Failed to load resource: the server responded with a status of 500') ||
         event.reason?.message?.includes('Error checking Cross-Origin-Opener-Policy: HTTP error! status: 500') ||
         event.reason?.message?.includes('The resource was preloaded using link preload but not used within a few seconds') ||
-        event.reason?.message?.includes('Performance issues detected')) {
+               event.reason?.message?.includes('Performance issues detected') ||
+               event.reason?.message?.includes('VM3425:1') ||
+               event.reason?.message?.includes('POST https://cca-lite.coinbase.com/metrics net::ERR_ABORTED 401')) {
       event.preventDefault()
       event.stopPropagation()
       return false
