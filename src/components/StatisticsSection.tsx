@@ -168,56 +168,35 @@ export default function StatisticsSection() {
           
           <div className="space-y-6">
             {/* High Risk */}
-            <div className="flex items-start space-x-4 p-6 bg-red-50 rounded-2xl border border-red-100">
-              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">Unlimited Approvals</h4>
-                <p className="text-gray-700 leading-relaxed mb-3">
-                  Approvals that allow unlimited token spending, creating maximum risk exposure. These should be avoided whenever possible.
-                </p>
-                <div className="inline-flex items-center px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
-                  High Risk
-                </div>
+            <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Unlimited Approvals</h4>
+              <p className="text-gray-700 leading-relaxed mb-3">
+                Approvals that allow unlimited token spending, creating maximum risk exposure. These should be avoided whenever possible.
+              </p>
+              <div className="inline-flex items-center px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
+                High Risk
               </div>
             </div>
 
             {/* Medium Risk */}
-            <div className="flex items-start space-x-4 p-6 bg-orange-50 rounded-2xl border border-orange-100">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">Abandoned Contracts</h4>
-                <p className="text-gray-700 leading-relaxed mb-3">
-                  Approvals to contracts that are no longer maintained or have been compromised. These pose ongoing security risks.
-                </p>
-                <div className="inline-flex items-center px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
-                  Medium Risk
-                </div>
+            <div className="p-6 bg-orange-50 rounded-2xl border border-orange-100">
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Abandoned Contracts</h4>
+              <p className="text-gray-700 leading-relaxed mb-3">
+                Approvals to contracts that are no longer maintained or have been compromised. These pose ongoing security risks.
+              </p>
+              <div className="inline-flex items-center px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
+                Medium Risk
               </div>
             </div>
 
             {/* Critical Risk */}
-            <div className="flex items-start space-x-4 p-6 bg-blue-50 rounded-2xl border border-blue-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold text-gray-900 mb-2">Malicious Contracts</h4>
-                <p className="text-gray-700 leading-relaxed mb-3">
-                  Known malicious or suspicious contracts that pose immediate security threats. These should be revoked immediately.
-                </p>
-                <div className="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                  Critical Risk
-                </div>
+            <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Malicious Contracts</h4>
+              <p className="text-gray-700 leading-relaxed mb-3">
+                Known malicious or suspicious contracts that pose immediate security threats. These should be revoked immediately.
+              </p>
+              <div className="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                Critical Risk
               </div>
             </div>
           </div>
