@@ -52,7 +52,10 @@ export const MultiLineTypewriter = ({
     const targetFirstLine = words.slice(0, 2).join(' ')
     const targetSecondLine = words.slice(2).join(' ')
 
-    if (isPaused) {
+    if (isDeletingPaused) {
+      // Do nothing during deletion pause - timer is already set
+      return
+    } else if (isPaused) {
       scheduleUpdate(() => {
         setIsPaused(false)
         setIsDeleting(true)
