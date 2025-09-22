@@ -46,7 +46,6 @@ export function AppKitProvider({ children }: PropsWithChildren) {
           `${appUrl}/android-chrome-512x512.png`
         ],
       },
-      networks,
       projectId: PROJECT_ID,
       features: { analytics: false },
       namespaces: {
