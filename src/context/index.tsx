@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createAppKit } from '@reown/appkit/react'
 import { mainnet, arbitrum, base } from '@reown/appkit/networks'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
-import React, { type ReactNode, useMemo, Component, ErrorInfo, useState, useEffect } from 'react'
+import React, { type ReactNode, useMemo, Component, ErrorInfo } from 'react'
 
 const queryClient = new QueryClient()
 
@@ -154,12 +154,25 @@ if (typeof window !== 'undefined') {
 // Only initialize on client side to prevent SSR issues
 if (projectId && typeof window !== 'undefined') {
   try {
+    console.log('Initializing AppKit with project ID:', projectId)
+    console.log('App URL:', process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com')
     // Initialize AppKit synchronously to ensure it's available for useAppKit hook
     createAppKit({
       adapters: [wagmiAdapter],
       projectId: projectId,
       networks: [mainnet, arbitrum, base],
       defaultNetwork: mainnet,
+      metadata: {
+        name: 'Allowance Guard',
+        description: 'Open-source, free tool to view and revoke token approvals safely',
+        url: process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com',
+        icons: [
+          `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/AG_Logo2.png`,
+          `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/AG_Logo_Grey.png`,
+          `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/android-chrome-192x192.png`,
+          `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/android-chrome-512x512.png`
+        ]
+      },
       features: { 
         analytics: false, // Disable analytics to prevent telemetry errors
         email: false,
@@ -185,11 +198,14 @@ if (projectId && typeof window !== 'undefined') {
         '--w3m-z-index': 9999,
       }
     })
+    console.log('AppKit initialized successfully')
   } catch (error) {
     console.error('Failed to initialize AppKit:', error)
   }
 } else if (!projectId && typeof window !== 'undefined') {
   console.error('WalletConnect Project ID is missing. Wallet connection will not work.')
+} else if (typeof window === 'undefined') {
+  console.log('AppKit initialization skipped on server side')
 }
 
 // Error Boundary for wallet-related errors
@@ -261,34 +277,7 @@ class WalletErrorBoundary extends Component<
   }
 }
 
-// AppKit Provider Component - TBT Optimized with deferred initialization
-function AppKitProvider({ children }: { children: ReactNode }) {
-  const [appKit, setAppKit] = useState<unknown>(null)
-  const [isReady, setIsReady] = useState(false)
-
-  useEffect(() => {
-    // Only initialize on client side
-    if (typeof window === 'undefined') return
-
-    // Initialize AppKit on idle to avoid blocking main thread
-    const initAppKit = () => {
-      const kit = initializeAppKit()
-      if (kit) {
-        setAppKit(kit)
-        setIsReady(true)
-      } else {
-        // Retry if not ready
-        setTimeout(initAppKit, 100)
-      }
-    }
-
-    // Start initialization immediately but non-blocking
-    initAppKit()
-  }, [])
-
-  // Render children immediately, AppKit will be available when ready
-  return <>{children}</>
-}
+// AppKit is now initialized synchronously above, no need for provider
 
 export default function ContextProvider({
   children,
@@ -306,9 +295,7 @@ export default function ContextProvider({
     <WalletErrorBoundary>
       <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
         <QueryClientProvider client={queryClient}>
-          <AppKitProvider>
-            {children}
-          </AppKitProvider>
+          {children}
         </QueryClientProvider>
       </WagmiProvider>
     </WalletErrorBoundary>

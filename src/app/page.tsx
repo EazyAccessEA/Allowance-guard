@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import Hero from '@/components/Hero'
 import { LazySection } from '@/components/LazySection'
-import WalletDebug from '@/components/WalletDebug'
 import dynamicImport from 'next/dynamic'
 
 // Note: Static generation exports moved to layout.tsx for client components
@@ -791,8 +790,6 @@ export default function HomePage() {
         </div>
       </div>
       
-      {/* Temporary debug component */}
-      <WalletDebug />
     </div>
   )
 }
