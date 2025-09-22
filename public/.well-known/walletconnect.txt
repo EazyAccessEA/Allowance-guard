@@ -1,0 +1,2 @@
+# This file will be populated with the verification code from Reown Cloud
+# After you get the code from Reown Cloud, replace this content with just the verification code
