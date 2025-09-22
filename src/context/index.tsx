@@ -180,6 +180,8 @@ if (projectId && typeof window !== 'undefined') {
         onramp: false,
         swaps: false
       },
+      enableNetworkSwitching: true,
+      enableAccountView: true,
       themeMode: 'dark', // Match the new Reown-style dark theme
       themeVariables: {
         // Core theme colors - matching Fireart design tokens
