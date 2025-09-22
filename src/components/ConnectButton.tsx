@@ -26,13 +26,10 @@ export default function ConnectButton({
   const handleConnect = async () => {
     try {
       setIsConnecting(true)
-      console.log('Opening wallet connection modal...')
       await open()
-      console.log('Wallet connection modal opened successfully')
     } catch (error) {
-      // Log connection errors for debugging
-      console.error('Connection failed:', error)
-      alert(`Connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      // Silently handle connection errors - they're often just user cancellation
+      console.warn('Connection cancelled or failed:', error)
     } finally {
       setIsConnecting(false)
     }

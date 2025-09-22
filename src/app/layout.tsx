@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { cookies } from 'next/headers'
 import ContextProvider from '@/context'
 import { LighthouseInitializer } from '@/components/LighthouseInitializer'
 import RpcStatusBanner from '@/components/RpcStatusBanner'
@@ -10,7 +9,7 @@ import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
 import PerformanceDashboard from '@/components/PerformanceDashboard'
 import CookieBanner from '@/components/CookieBanner'
-import { AppKit } from '../../appkit'
+import { AppKitProvider } from '../../appkit'
 
 // Sophisticated Static Generation Strategy
 export const dynamic = 'force-static'
@@ -75,13 +74,11 @@ export const metadata: Metadata = {
   }
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const cookieString = cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ')
 
   return (
     <html lang="en" data-scroll-behavior="smooth">
@@ -232,39 +229,31 @@ export default async function RootLayout({
           `
         }} />
       </head>
-      <body className={`${inter.className} ${jetbrainsMono.className} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <RollbarProvider>
-          <AppKit>
-            <ContextProvider cookies={cookieString}>
+          <AppKitProvider>
+            <ContextProvider>
               <LighthouseInitializer />
               <HeaderWrapper />
               <main id="main" className="flex-1">{children}</main>
               <Footer />
-              <PerformanceDashboard />
+              {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />}
               <CookieBanner />
             </ContextProvider>
-          </AppKit>
+          </AppKitProvider>
         </RollbarProvider>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Suppress Coinbase Commerce metrics errors
-              (function() {
-                const originalError = console.error;
-                console.error = function(...args) {
-                  if (args[0] && typeof args[0] === 'string' && 
-                      (args[0].includes('cca-lite.coinbase.com/metrics') || 
-                       args[0].includes('Failed to load resource: the server responded with a status of 401'))) {
-                    return; // Suppress Coinbase Commerce metrics errors
-                  }
-                  originalError.apply(console, args);
-                };
-              })();
-            `
-          }}
-        />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            :root { 
+              --font-mono: ${jetbrainsMono.style.fontFamily}; 
+            } 
+            code, pre, .font-mono { 
+              font-family: var(--font-mono); 
+            }
+          `
+        }} />
       </body>
     </html>
   )
