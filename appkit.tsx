@@ -52,4 +52,14 @@ export const config = createAppKit({
   }
 })
 
+// Export wagmiAdapter for use in context
+export { wagmiAdapter }
+
+// Create AppKitProvider component
+import { AppKitProvider as BaseAppKitProvider } from '@reown/appkit/react'
+
+export function AppKitProvider({ children }: { children: React.ReactNode }) {
+  return <BaseAppKitProvider>{children}</BaseAppKitProvider>
+}
+
 export default config
