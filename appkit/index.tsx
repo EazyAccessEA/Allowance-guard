@@ -47,15 +47,7 @@ export function AppKitProvider({ children }: PropsWithChildren) {
         ],
       },
       projectId: PROJECT_ID,
-      features: { analytics: false },
-      namespaces: {
-        eip155: {
-          defaultChain: 1,
-          chains: ['eip155:1','eip155:42161','eip155:8453'],
-          methods: ['eth_requestAccounts','eth_sendTransaction','personal_sign','eth_signTypedData'],
-          events: ['accountsChanged','chainChanged']
-        }
-      }
+      features: { analytics: false }
     });
 
     inited = true;
