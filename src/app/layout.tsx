@@ -10,6 +10,7 @@ import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
 import PerformanceDashboard from '@/components/PerformanceDashboard'
 import CookieBanner from '@/components/CookieBanner'
+import { AppKitProvider } from '@/appkit'
 
 // Sophisticated Static Generation Strategy
 export const dynamic = 'force-static'
@@ -235,14 +236,16 @@ export default async function RootLayout({
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <RollbarProvider>
-          <ContextProvider cookies={cookieString}>
-            <LighthouseInitializer />
-            <HeaderWrapper />
-            <main id="main" className="flex-1">{children}</main>
-            <Footer />
-            <PerformanceDashboard />
-            <CookieBanner />
-          </ContextProvider>
+          <AppKitProvider>
+            <ContextProvider cookies={cookieString}>
+              <LighthouseInitializer />
+              <HeaderWrapper />
+              <main id="main" className="flex-1">{children}</main>
+              <Footer />
+              <PerformanceDashboard />
+              <CookieBanner />
+            </ContextProvider>
+          </AppKitProvider>
         </RollbarProvider>
         <script
           dangerouslySetInnerHTML={{
