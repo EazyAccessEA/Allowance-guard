@@ -1,6 +1,6 @@
 'use client'
 
-import { wagmiAdapter } from '@/appkit'
+import { wagmiAdapter } from '../../appkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
 import React, { type ReactNode, useMemo } from 'react'

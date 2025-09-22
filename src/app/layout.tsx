@@ -10,7 +10,7 @@ import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
 import PerformanceDashboard from '@/components/PerformanceDashboard'
 import CookieBanner from '@/components/CookieBanner'
-import { AppKitProvider } from '@/appkit'
+import { AppKitProvider } from '../../appkit'
 
 // Sophisticated Static Generation Strategy
 export const dynamic = 'force-static'
