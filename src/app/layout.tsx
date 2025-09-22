@@ -9,7 +9,7 @@ import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
 import PerformanceDashboard from '@/components/PerformanceDashboard'
 import CookieBanner from '@/components/CookieBanner'
-import { AppKitProvider } from '../../appkit'
+import { AppKit } from '../../appkit'
 
 // Sophisticated Static Generation Strategy
 export const dynamic = 'force-static'
@@ -233,7 +233,7 @@ export default function RootLayout({
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <RollbarProvider>
-          <AppKitProvider>
+          <AppKit>
             <ContextProvider>
               <LighthouseInitializer />
               <HeaderWrapper />
@@ -242,7 +242,7 @@ export default function RootLayout({
               {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />}
               <CookieBanner />
             </ContextProvider>
-          </AppKitProvider>
+          </AppKit>
         </RollbarProvider>
         <style dangerouslySetInnerHTML={{
           __html: `
