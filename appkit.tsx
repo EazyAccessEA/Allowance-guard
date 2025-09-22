@@ -1,61 +1,51 @@
-import { createAppKit } from '@reown/appkit/react'
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { mainnet, arbitrum, base } from '@reown/appkit/networks'
-import { cookieStorage, createStorage } from '@wagmi/core'
+"use client";
 
-// Get projectId from https://cloud.reown.com
-export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!
+import { createAppKit } from "@reown/appkit/react";
+import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import { mainnet, arbitrum, base } from "@reown/appkit/networks";
+import { cookieStorage, createStorage } from "@wagmi/core";
+import React from "react";
 
-if (!projectId) throw new Error('Project ID is not defined')
+// 1. Get projectId at https://cloud.reown.com
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!;
 
+if (!projectId) throw new Error('Project ID is not defined');
+
+// 2. Create a metadata object
 const metadata = {
-  name: 'Allowance Guard',
-  description: 'Open-source, free tool to view and revoke token approvals safely',
-  url: process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com',
+  name: "Allowance Guard",
+  description: "Open-source, free tool to view and revoke token approvals safely",
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://www.allowanceguard.com", // origin must match your domain & subdomain
   icons: [
     `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/AG_Logo2.png`,
     `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/AG_Logo_Grey.png`,
     `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/android-chrome-192x192.png`,
     `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/android-chrome-512x512.png`
-  ]
-}
+  ],
+};
 
+// 3. Create the Wagmi Adapter
 const wagmiAdapter = new WagmiAdapter({
   storage: createStorage({ storage: cookieStorage }),
   ssr: true,
   projectId,
   networks: [mainnet, arbitrum, base]
-})
+});
 
-export const config = createAppKit({
+// 4. Create the AppKit instance
+createAppKit({
   adapters: [wagmiAdapter],
-  projectId,
+  metadata: metadata,
   networks: [mainnet, arbitrum, base],
-  defaultNetwork: mainnet,
-  metadata,
+  projectId,
   features: {
-    analytics: false,
-    email: false,
-    socials: false,
-    onramp: false,
-    swaps: false
+    analytics: false, // Optional - defaults to your Cloud configuration
   },
-  themeMode: 'dark',
-  themeVariables: {
-    '--w3m-color-mix': '#1E1F23',
-    '--w3m-color-mix-strength': 40,
-    '--w3m-accent': '#2563EB',
-    '--w3m-border-radius-master': '8px',
-    '--w3m-font-size-master': '16px',
-    '--w3m-font-family': 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
-    '--w3m-z-index': 9999,
-  }
-})
+});
 
 // Export wagmiAdapter for use in context
-export { wagmiAdapter }
+export { wagmiAdapter };
 
-// AppKit is already initialized above, no need for a separate provider
-// The AppKitProvider is automatically available after createAppKit is called
-
-export default config
+export function AppKit({ children }: { children: React.ReactNode }) {
+  return <>{children}</>; // AppKit is already initialized above
+}
