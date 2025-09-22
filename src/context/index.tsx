@@ -180,7 +180,7 @@ if (projectId && typeof window !== 'undefined') {
         onramp: false,
         swaps: false
       },
-      enableNetworkSwitching: true,
+      enableNetworkSwitch: true,
       enableAccountView: true,
       themeMode: 'dark', // Match the new Reown-style dark theme
       themeVariables: {
