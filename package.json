@@ -1,6 +1,6 @@
 {
   "name": "allowance-guard",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "description": "Secure token approval monitoring and management platform",
   "private": true,
   "author": "Allowance Guard Team",

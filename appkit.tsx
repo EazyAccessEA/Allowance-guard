@@ -44,6 +44,8 @@ createAppKit({
   },
 });
 
+export { wagmiAdapter };
+
 export function AppKit({ children }: { children: React.ReactNode }) {
   return <>{children}</>; // AppKit is already initialized above
 }
