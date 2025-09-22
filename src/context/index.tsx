@@ -10,54 +10,7 @@ import React, { type ReactNode, useMemo, Component, ErrorInfo, useState, useEffe
 
 const queryClient = new QueryClient()
 
-// TBT Optimization: Defer AppKit initialization
-let deferredAppKit: unknown = null
-let isInitializing = false
-
-const initializeAppKit = () => {
-  // Only initialize on client side
-  if (typeof window === 'undefined') return null
-  
-  if (deferredAppKit || isInitializing) return deferredAppKit
-  
-  isInitializing = true
-  
-  // Use requestIdleCallback for non-blocking initialization
-  if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-      try {
-        deferredAppKit = createAppKit({
-          adapters: [wagmiAdapter],
-          networks: [mainnet, arbitrum, base],
-          projectId: projectId!,
-          defaultNetwork: mainnet,
-        })
-        isInitializing = false
-      } catch (error) {
-        console.warn('AppKit initialization failed:', error)
-        isInitializing = false
-      }
-    }, { timeout: 1000 })
-  } else {
-    // Fallback for browsers without requestIdleCallback
-    setTimeout(() => {
-      try {
-        deferredAppKit = createAppKit({
-          adapters: [wagmiAdapter],
-          networks: [mainnet, arbitrum, base],
-          projectId: projectId!,
-          defaultNetwork: mainnet,
-        })
-        isInitializing = false
-      } catch (error) {
-        console.warn('AppKit initialization failed:', error)
-        isInitializing = false
-      }
-    }, 100)
-  }
-  
-  return deferredAppKit
-}
+// AppKit is now initialized synchronously above
 
 // Global error handler for wallet SDK telemetry errors
 if (typeof window !== 'undefined') {
@@ -197,13 +150,6 @@ if (typeof window !== 'undefined') {
 }
 
 // Create AppKit outside React components to avoid unwanted rerenders (following documentation)
-const metadata = {
-  name: 'Allowance Guard',
-  description: 'Allowance monitoring & revocation',
-  url: 'https://www.allowanceguard.com',
-  icons: ['https://www.allowanceguard.com/icon.png']
-}
-
 // Initialize AppKit with proper configuration per Reown docs
 // Only initialize on client side to prevent SSR issues
 if (projectId && typeof window !== 'undefined') {
@@ -214,7 +160,6 @@ if (projectId && typeof window !== 'undefined') {
       projectId: projectId,
       networks: [mainnet, arbitrum, base],
       defaultNetwork: mainnet,
-      metadata: metadata,
       features: { 
         analytics: false, // Disable analytics to prevent telemetry errors
         email: false,

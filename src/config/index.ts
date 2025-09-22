@@ -14,7 +14,16 @@ export const wagmiAdapter = new WagmiAdapter({
   storage: createStorage({ storage: cookieStorage }),
   ssr: true,
   projectId,
-  networks
+  networks,
+  metadata: {
+    name: 'Allowance Guard',
+    description: 'Open-source, free tool to view and revoke token approvals safely',
+    url: process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com',
+    icons: [
+      `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/android-chrome-192x192.png`,
+      `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/android-chrome-512x512.png`
+    ]
+  }
 })
 
 export const wagmiConfig = wagmiAdapter.wagmiConfig
