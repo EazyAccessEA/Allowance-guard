@@ -4,7 +4,6 @@ import { createAppKit } from "@reown/appkit/react";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
 import { mainnet, arbitrum, base } from "@reown/appkit/networks";
 import { cookieStorage, createStorage } from "@wagmi/core";
-import { useEffect, useRef } from "react";
 
 // 1. Get projectId at https://cloud.reown.com
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!;
@@ -15,7 +14,7 @@ if (!projectId) throw new Error('Project ID is not defined');
 const metadata = {
   name: "Allowance Guard",
   description: "Open-source, free tool to view and revoke token approvals safely",
-  url: "https://www.allowanceguard.com", // Fixed URL to match your domain
+  url: "https://www.allowanceguard.com", // origin must match your domain & subdomain
   icons: [
     "https://www.allowanceguard.com/AG_Logo2.png",
     "https://www.allowanceguard.com/AG_Logo_Grey.png",
@@ -32,31 +31,19 @@ const wagmiAdapter = new WagmiAdapter({
   networks: [mainnet, arbitrum, base]
 });
 
-// Global flag to ensure AppKit is only initialized once
-let appKitInitialized = false;
+// 4. Create the AppKit instance - OUTSIDE React component as per docs
+createAppKit({
+  adapters: [wagmiAdapter],
+  metadata: metadata,
+  networks: [mainnet, arbitrum, base],
+  projectId,
+  features: {
+    analytics: false, // Optional - defaults to your Cloud configuration
+  },
+});
 
 export { wagmiAdapter };
 
 export function AppKit({ children }: { children: React.ReactNode }) {
-  const initialized = useRef(false);
-
-  useEffect(() => {
-    if (initialized.current || appKitInitialized) return;
-
-    // 4. Create the AppKit instance
-    createAppKit({
-      adapters: [wagmiAdapter],
-      metadata: metadata,
-      networks: [mainnet, arbitrum, base],
-      projectId,
-      features: {
-        analytics: false, // Optional - defaults to your Cloud configuration
-      },
-    });
-
-    initialized.current = true;
-    appKitInitialized = true;
-  }, []);
-
-  return <>{children}</>;
+  return <>{children}</>; // AppKit is already initialized above
 }
