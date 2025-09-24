@@ -10,13 +10,13 @@ export function sanitizeHtml(html: string): string {
     // Remove dangerous attributes
     .replace(/\s*(on\w+|javascript:|data:|vbscript:)/gi, '')
     // Allow only safe tags
-    .replace(/<(?!\/?(?:p|br|strong|em|u|h[1-6]|ul|ol|li|a|blockquote|code|pre)\b)[^>]*>/gi, '')
+    .replace(/<(?!\/?(?:p|br|strong|em|u|h[1-6]|ul|ol|li|a|blockquote|code|pre|table|thead|tbody|tr|td|th)\b)[^>]*>/gi, '')
     // Clean up any remaining dangerous content
     .replace(/<[^>]*>/g, (match) => {
       // Only allow safe attributes
       const safeAttrs = match.match(/\s+(?:href|target|rel)=["'][^"']*["']/gi) || []
       const tagName = match.match(/<\/?(\w+)/)?.[1]
-      if (tagName && ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre'].includes(tagName)) {
+      if (tagName && ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre', 'table', 'thead', 'tbody', 'tr', 'td', 'th'].includes(tagName)) {
         return `<${tagName}${safeAttrs.join('')}>`
       }
       return ''
