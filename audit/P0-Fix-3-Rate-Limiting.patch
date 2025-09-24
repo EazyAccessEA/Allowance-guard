@@ -1,0 +1,139 @@
+# P0 Fix 3: Redis-based Rate Limiting
+
+## Issue
+In-memory rate limiting can be bypassed with multiple IP addresses, allowing API abuse.
+
+## Files Modified
+- `src/lib/rate-limit.ts`
+- `src/lib/redis.ts` (new)
+
+## Patch
+
+### 1. Redis-based rate limiting
+```typescript
+// src/lib/redis.ts
+import { Redis } from '@upstash/redis'
+
+const redis = new Redis({
+  url: process.env.REDIS_URL!,
+  token: process.env.REDIS_TOKEN!,
+})
+
+export { redis }
+```
+
+### 2. Enhanced rate limiting
+```typescript
+// src/lib/rate-limit.ts
+import { NextRequest, NextResponse } from 'next/server'
+import { redis } from './redis'
+
+interface RateLimitOptions {
+  windowMs: number
+  maxRequests: number
+  message?: string
+  keyGenerator?: (req: NextRequest) => string
+}
+
+export function rateLimit(options: RateLimitOptions) {
+  const { windowMs, maxRequests, message = 'Too many requests', keyGenerator } = options
+
+  return async (req: NextRequest) => {
+    const key = keyGenerator ? keyGenerator(req) : getDefaultKey(req)
+    const window = Math.floor(Date.now() / windowMs)
+    const redisKey = `rate_limit:${key}:${window}`
+
+    try {
+      const current = await redis.incr(redisKey)
+      
+      if (current === 1) {
+        await redis.expire(redisKey, Math.ceil(windowMs / 1000))
+      }
+
+      if (current > maxRequests) {
+        return NextResponse.json(
+          { error: message, retryAfter: windowMs / 1000 },
+          { 
+            status: 429,
+            headers: {
+              'Retry-After': Math.ceil(windowMs / 1000).toString(),
+              'X-RateLimit-Limit': maxRequests.toString(),
+              'X-RateLimit-Remaining': '0',
+              'X-RateLimit-Reset': ((window + 1) * windowMs / 1000).toString()
+            }
+          }
+        )
+      }
+
+      return NextResponse.next({
+        headers: {
+          'X-RateLimit-Limit': maxRequests.toString(),
+          'X-RateLimit-Remaining': Math.max(0, maxRequests - current).toString(),
+          'X-RateLimit-Reset': ((window + 1) * windowMs / 1000).toString()
+        }
+      })
+    } catch (error) {
+      console.error('Rate limiting error:', error)
+      return NextResponse.next()
+    }
+  }
+}
+
+function getDefaultKey(req: NextRequest): string {
+  const ip = req.headers.get('x-forwarded-for') || 
+             req.headers.get('x-real-ip') || 
+             'unknown'
+  return ip.split(',')[0].trim()
+}
+
+// Enhanced rate limiters
+export const apiRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  maxRequests: 100,
+  message: 'Too many API requests, please try again later'
+})
+
+export const scanRateLimit = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  maxRequests: 10,
+  message: 'Too many scan requests, please wait before scanning again',
+  keyGenerator: (req) => {
+    const ip = getDefaultKey(req)
+    const wallet = req.headers.get('x-wallet-address') || 'anonymous'
+    return `${ip}:${wallet}`
+  }
+})
+
+export const strictRateLimit = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  maxRequests: 5,
+  message: 'Rate limit exceeded, please slow down'
+})
+```
+
+### 3. Update API routes
+```typescript
+// src/app/api/scan/route.ts
+import { scanRateLimit } from '@/lib/rate-limit'
+
+export async function POST(req: Request) {
+  const rateLimitResponse = await scanRateLimit(req as NextRequest)
+  if (rateLimitResponse instanceof NextResponse) {
+    return rateLimitResponse
+  }
+  
+  // ... rest of implementation
+}
+```
+
+## Environment Variables
+```bash
+REDIS_URL=redis://default:password@host:port
+REDIS_TOKEN=your_redis_token
+```
+
+## Testing
+- Test rate limiting with multiple requests
+- Test rate limiting with different IPs
+- Test rate limiting with different wallets
+- Verify rate limit headers

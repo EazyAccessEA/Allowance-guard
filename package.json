@@ -35,7 +35,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "deploy:prod": "bash scripts/deploy-production.sh",
-    "analyze": "cross-env ANALYZE=true next build"
+    "analyze": "cross-env ANALYZE=true next build",
+    "networks:update": "node scripts/update-networks-changelog.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",

@@ -1,0 +1,63 @@
+# P0 Fix 1: XSS Vulnerability in Blog Content
+
+## Issue
+Blog content is rendered using `dangerouslySetInnerHTML` without sanitization, allowing potential XSS attacks.
+
+## Files Modified
+- `src/app/blog/[slug]/page.tsx`
+- `src/lib/sanitize.ts` (new)
+- `__tests__/security.test.ts` (new)
+
+## Patch
+
+### 1. Create sanitization utility
+```typescript
+// src/lib/sanitize.ts
+import DOMPurify from 'isomorphic-dompurify'
+
+export function sanitizeHtml(html: string): string {
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre'],
+    ALLOWED_ATTR: ['href', 'target', 'rel'],
+    ALLOW_DATA_ATTR: false
+  })
+}
+```
+
+### 2. Update blog rendering
+```typescript
+// src/app/blog/[slug]/page.tsx
+import { sanitizeHtml } from '@/lib/sanitize'
+
+// Replace line 1221:
+// dangerouslySetInnerHTML={{ __html: post.content }}
+
+// With:
+dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
+```
+
+### 3. Add security test
+```typescript
+// __tests__/security.test.ts
+import { sanitizeHtml } from '@/lib/sanitize'
+
+describe('XSS Protection', () => {
+  test('should sanitize script tags', () => {
+    const malicious = '<script>alert("xss")</script><p>Safe content</p>'
+    const sanitized = sanitizeHtml(malicious)
+    expect(sanitized).toBe('<p>Safe content</p>')
+    expect(sanitized).not.toContain('<script>')
+  })
+})
+```
+
+## Dependencies
+```bash
+npm install isomorphic-dompurify
+npm install --save-dev @types/dompurify
+```
+
+## Testing
+- Run security tests: `npm test __tests__/security.test.ts`
+- Verify blog content renders safely
+- Test with malicious HTML input

@@ -1,31 +1,29 @@
-// Rate limiting utility for API routes
+// Enhanced rate limiting utility with improved security
 import { NextRequest, NextResponse } from 'next/server'
 
 interface RateLimitOptions {
   windowMs: number // Time window in milliseconds
   maxRequests: number // Maximum requests per window
   message?: string
+  keyGenerator?: (req: NextRequest) => string
 }
 
-// In-memory store for rate limiting (in production, use Redis or similar)
-const requestCounts = new Map<string, { count: number; resetTime: number }>()
+// Enhanced in-memory store with better security
+const requestCounts = new Map<string, { count: number; resetTime: number; lastSeen: number }>()
 
 export function rateLimit(options: RateLimitOptions) {
-  const { windowMs, maxRequests, message = 'Too many requests' } = options
+  const { windowMs, maxRequests, message = 'Too many requests', keyGenerator } = options
 
   return (req: NextRequest) => {
-    const ip = (req as NextRequest & { ip?: string }).ip || req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+    const key = keyGenerator ? keyGenerator(req) : getDefaultKey(req)
     const now = Date.now()
 
-    // Clean up expired entries
-    for (const [key, value] of requestCounts.entries()) {
-      if (value.resetTime < now) {
-        requestCounts.delete(key)
-      }
-    }
+    // Clean up expired entries and suspicious patterns
+    cleanupExpiredEntries(now)
+    detectAndBlockSuspiciousActivity(now)
 
     // Get or create rate limit entry
-    const entry = requestCounts.get(ip) || { count: 0, resetTime: now + windowMs }
+    const entry = requestCounts.get(key) || { count: 0, resetTime: now + windowMs, lastSeen: now }
     
     // Reset if window has expired
     if (entry.resetTime < now) {
@@ -33,9 +31,12 @@ export function rateLimit(options: RateLimitOptions) {
       entry.resetTime = now + windowMs
     }
 
+    // Update last seen
+    entry.lastSeen = now
+
     // Increment count
     entry.count++
-    requestCounts.set(ip, entry)
+    requestCounts.set(key, entry)
 
     // Check if limit exceeded
     if (entry.count > maxRequests) {
@@ -46,7 +47,7 @@ export function rateLimit(options: RateLimitOptions) {
           headers: {
             'Retry-After': Math.ceil((entry.resetTime - now) / 1000).toString(),
             'X-RateLimit-Limit': maxRequests.toString(),
-            'X-RateLimit-Remaining': Math.max(0, maxRequests - entry.count).toString(),
+            'X-RateLimit-Remaining': '0',
             'X-RateLimit-Reset': Math.ceil(entry.resetTime / 1000).toString()
           }
         }
@@ -62,6 +63,35 @@ export function rateLimit(options: RateLimitOptions) {
       }
     })
   }
+}
+
+function cleanupExpiredEntries(now: number): void {
+  for (const [key, value] of requestCounts.entries()) {
+    if (value.resetTime < now) {
+      requestCounts.delete(key)
+    }
+  }
+}
+
+function detectAndBlockSuspiciousActivity(now: number): void {
+  // Detect rapid-fire requests from same IP (potential bot)
+  const suspiciousThreshold = 50 // requests in 1 minute
+  const timeWindow = 60 * 1000 // 1 minute
+  
+  for (const [key, value] of requestCounts.entries()) {
+    if (value.count > suspiciousThreshold && (now - value.lastSeen) < timeWindow) {
+      // Mark as suspicious and extend reset time
+      value.resetTime = now + (5 * 60 * 1000) // 5 minute penalty
+      requestCounts.set(key, value)
+    }
+  }
+}
+
+function getDefaultKey(req: NextRequest): string {
+  const ip = req.headers.get('x-forwarded-for') || 
+             req.headers.get('x-real-ip') || 
+             'unknown'
+  return ip.split(',')[0].trim()
 }
 
 // Predefined rate limiters for different use cases
@@ -80,7 +110,12 @@ export const authRateLimit = rateLimit({
 export const scanRateLimit = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   maxRequests: 10, // 10 scans per minute
-  message: 'Too many scan requests, please wait before scanning again'
+  message: 'Too many scan requests, please wait before scanning again',
+  keyGenerator: (req) => {
+    const ip = getDefaultKey(req)
+    const wallet = req.headers.get('x-wallet-address') || 'anonymous'
+    return `${ip}:${wallet}`
+  }
 })
 
 export const strictRateLimit = rateLimit({

@@ -9,6 +9,7 @@ import { H1 } from '@/components/ui/Heading'
 import { Badge } from '@/components/ui/Badge'
 import { Calendar, Clock, ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
+import { sanitizeHtml } from '@/lib/sanitize'
 
 // Blog posts data - in a real app, this would come from a CMS or database
 const blogPosts = [
@@ -1218,7 +1219,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Article content */}
             <article 
               className="prose prose-lg max-w-none mb-12"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             />
 
             {/* Call to action */}

@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
 import { apiLogger } from '@/lib/logger'
 import { sendThankYouEmail } from '@/lib/mailer'
-// import { WebhooksService } from 'commerce-node' // TODO: Fix webhook integration
+import { WebhooksService } from 'coinbase-commerce-node'
 
 export async function POST(req: Request) {
   try {
-    // const body = await req.text() // TODO: Use for webhook verification
+    const body = await req.text()
     const signature = req.headers.get('x-cc-webhook-signature')
     
     if (!signature) {
@@ -14,26 +14,12 @@ export async function POST(req: Request) {
     }
     
     // Verify webhook signature
-    // TODO: Fix webhook verification - temporarily disabled for deployment
-    // const webhooksService = new WebhooksService({ apiKey: process.env.COINBASE_COMMERCE_API_KEY! })
-    // const event = webhooksService.verifyEventBody(
-    //   body,
-    //   signature,
-    //   process.env.COINBASE_COMMERCE_WEBHOOK_SECRET!
-    // )
-    
-    // Mock event for now
-    const event = { 
-      type: 'charge:confirmed', 
-      data: { 
-        id: 'mock-charge-id',
-        pricing: { local: { amount: '25', currency: 'USD' } },
-        metadata: { 
-          donor_email: 'test@example.com',
-          donor_name: 'Test User'
-        } 
-      } 
-    }
+    const webhooksService = new WebhooksService()
+    const event = webhooksService.verifyEventBody(
+      body,
+      signature,
+      process.env.COINBASE_COMMERCE_WEBHOOK_SECRET!
+    )
     
     if (event.type === 'charge:confirmed') {
       const charge = event.data

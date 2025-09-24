@@ -1,0 +1,142 @@
+# P0 Fix 2: Comprehensive Input Validation
+
+## Issue
+Multiple API routes lack comprehensive input validation, allowing potential injection attacks.
+
+## Files Modified
+- `src/lib/validation.ts`
+- `src/middleware/validation.ts` (new)
+- All API route files
+
+## Patch
+
+### 1. Enhanced validation schemas
+```typescript
+// src/lib/validation.ts
+import { z } from 'zod'
+
+export const walletAddressSchema = z.string()
+  .regex(/^0x[a-fA-F0-9]{40}$/, 'Invalid wallet address format')
+  .transform(addr => addr.toLowerCase())
+
+export const chainIdSchema = z.number()
+  .int()
+  .positive()
+  .refine(id => [1, 42161, 8453].includes(id), 'Unsupported chain ID')
+
+export const paginationSchema = z.object({
+  page: z.number().int().min(1).max(1000).default(1),
+  pageSize: z.number().int().min(1).max(100).default(25)
+})
+
+export const scanRequestSchema = z.object({
+  walletAddress: walletAddressSchema,
+  chains: z.array(z.enum(['eth', 'arb', 'base'])).optional()
+})
+
+export const allowanceQuerySchema = z.object({
+  wallet: walletAddressSchema,
+  riskOnly: z.boolean().optional(),
+  ...paginationSchema.shape
+})
+```
+
+### 2. Validation middleware
+```typescript
+// src/middleware/validation.ts
+import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
+
+export function validateRequest<T>(schema: z.ZodSchema<T>) {
+  return async (request: NextRequest) => {
+    try {
+      const body = await request.json()
+      const validated = schema.parse(body)
+      return { success: true, data: validated }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return {
+          success: false,
+          error: 'Invalid request data',
+          details: error.issues
+        }
+      }
+      return {
+        success: false,
+        error: 'Request parsing failed'
+      }
+    }
+  }
+}
+
+export function validateQuery<T>(schema: z.ZodSchema<T>) {
+  return (request: NextRequest) => {
+    try {
+      const { searchParams } = new URL(request.url)
+      const params = Object.fromEntries(searchParams.entries())
+      const validated = schema.parse(params)
+      return { success: true, data: validated }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return {
+          success: false,
+          error: 'Invalid query parameters',
+          details: error.issues
+        }
+      }
+      return {
+        success: false,
+        error: 'Query parsing failed'
+      }
+    }
+  }
+}
+```
+
+### 3. Update API routes
+```typescript
+// src/app/api/scan/route.ts
+import { validateRequest } from '@/middleware/validation'
+import { scanRequestSchema } from '@/lib/validation'
+
+export async function POST(req: Request) {
+  const validation = await validateRequest(scanRequestSchema)(req as NextRequest)
+  
+  if (!validation.success) {
+    return NextResponse.json(
+      { error: validation.error, details: validation.details },
+      { status: 400 }
+    )
+  }
+  
+  const { walletAddress, chains } = validation.data
+  // ... rest of implementation
+}
+```
+
+### 4. Update allowances API
+```typescript
+// src/app/api/allowances/route.ts
+import { validateQuery } from '@/middleware/validation'
+import { allowanceQuerySchema } from '@/lib/validation'
+
+export async function GET(req: Request) {
+  const validation = validateQuery(allowanceQuerySchema)(req as NextRequest)
+  
+  if (!validation.success) {
+    return NextResponse.json(
+      { error: validation.error, details: validation.details },
+      { status: 400 }
+    )
+  }
+  
+  const { wallet, riskOnly, page, pageSize } = validation.data
+  // ... rest of implementation
+}
+```
+
+## Testing
+- Test with invalid wallet addresses
+- Test with invalid chain IDs
+- Test with malicious input
+- Verify proper error responses

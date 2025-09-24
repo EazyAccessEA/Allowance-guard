@@ -1,25 +1,30 @@
 // app/api/allowances/route.ts
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { pool } from '@/lib/db'
 import { withReq } from '@/lib/logger'
 import { cacheGet, cacheSet } from '@/lib/cache'
+import { validateQuery } from '@/middleware/validation'
+import { allowanceQuerySchema } from '@/lib/validation'
 
 export const runtime = 'nodejs'
 
 export async function GET(req: Request) {
   const L = withReq(req)
-  const { searchParams } = new URL(req.url)
-  const wallet = (searchParams.get('wallet') || '').toLowerCase()
-  const riskOnly = (searchParams.get('riskOnly') || 'false') === 'true'
-  const page = Math.max(1, Number(searchParams.get('page') || 1))
-  const pageSize = Math.min(100, Math.max(10, Number(searchParams.get('pageSize') || 25)))
+  
+  // Validate query parameters
+  const validation = validateQuery(allowanceQuerySchema)(req as NextRequest)
+  
+  if (!validation.success) {
+    L.warn('allowances.fetch.invalid_params', { errors: validation.details })
+    return NextResponse.json(
+      { error: validation.error, details: validation.details },
+      { status: 400 }
+    )
+  }
+  
+  const { wallet, riskOnly, page, pageSize } = validation.data
   
   L.info('allowances.fetch.start', { wallet, riskOnly, page, pageSize })
-  
-  if (!/^0x[a-f0-9]{40}$/.test(wallet)) {
-    L.warn('allowances.fetch.invalid_wallet', { wallet })
-    return NextResponse.json({ error: 'Invalid wallet' }, { status: 400 })
-  }
 
   // Check cache first
   const cacheKey = `allow:${wallet}:${riskOnly}:${page}:${pageSize}`

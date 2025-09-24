@@ -2,286 +2,403 @@
 
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
+import { H1, H2, H3 } from '@/components/ui/Heading'
+import { useState } from 'react'
+import { Copy, Check, Code, Package, Globe, Zap, Shield } from 'lucide-react'
+import AllowanceGuardWidget from '@/components/AllowanceGuardWidget'
 
 export default function IntegrationPage() {
+  const [copiedCode, setCopiedCode] = useState<string | null>(null)
+
+  const copyToClipboard = (code: string, id: string) => {
+    navigator.clipboard.writeText(code)
+    setCopiedCode(id)
+    setTimeout(() => setCopiedCode(null), 2000)
+  }
+
+  const CodeBlock = ({ code, language, id }: { code: string; language: string; id: string }) => (
+    <div className="relative">
+      <button
+        onClick={() => copyToClipboard(code, id)}
+        className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+      >
+        {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
+      </button>
+      <pre className="bg-gray-900 text-gray-100 p-6 rounded-lg overflow-x-auto text-sm">
+        <code className={`language-${language}`}>{code}</code>
+      </pre>
+    </div>
+  )
+
+  const reactWidgetCode = `import React from 'react'
+import AllowanceGuardWidget from 'allowance-guard-widget'
+
+function MyApp() {
+  return (
+    <div>
+      <h1>My DeFi App</h1>
+      
+      {/* Embed AllowanceGuard Widget */}
+      <AllowanceGuardWidget
+        walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+        chainId={1}
+        showRiskOnly={true}
+        maxItems={5}
+        theme="light"
+        onAllowanceClick={(allowance) => {
+          console.log('Allowance clicked:', allowance)
+        }}
+      />
+    </div>
+  )
+}
+
+export default MyApp`
+
+  const htmlWidgetCode = `<!DOCTYPE html>
+<html>
+<head>
+  <title>My DeFi App</title>
+  <script src="https://unpkg.com/allowance-guard-widget@latest/dist/widget.js"></script>
+</head>
+<body>
+  <h1>My DeFi App</h1>
+  
+  <!-- AllowanceGuard Widget -->
+  <div id="allowance-guard-widget"></div>
+  
+  <script>
+    // Initialize the widget
+    AllowanceGuardWidget.init({
+      container: '#allowance-guard-widget',
+      walletAddress: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
+      chainId: 1,
+      showRiskOnly: true,
+      maxItems: 5,
+      theme: 'light',
+      onAllowanceClick: (allowance) => {
+        console.log('Allowance clicked:', allowance)
+      }
+    })
+  </script>
+</body>
+</html>`
+
+  const reactHooksCode = `import React, { useState, useEffect } from 'react'
+import { useAllowances, useRiskAssessment, useNetworks } from 'allowance-guard-hooks'
+
+function MyWalletComponent({ walletAddress }) {
+  const { data: allowances, loading, error } = useAllowances({
+    walletAddress,
+    riskOnly: true,
+    pageSize: 10
+  })
+
+  const { data: networks } = useNetworks()
+
+  if (loading) return <div>Loading allowances...</div>
+  if (error) return <div>Error: {error}</div>
+
+  return (
+    <div>
+      <h2>Wallet Security Status</h2>
+      <p>Supported networks: {networks?.supported.length || 0}</p>
+      
+      <div className="allowances-list">
+        {allowances.map((allowance, index) => (
+          <div key={index} className="allowance-item">
+            <h3>{allowance.tokenName}</h3>
+            <p>Spender: {allowance.spenderName}</p>
+            <p>Risk Level: {allowance.riskLevel}</p>
+            <p>Amount: {allowance.allowanceFormatted}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default MyWalletComponent`
+
+  const nodeSDKCode = `const AllowanceGuardSDK = require('allowance-guard-sdk')
+
+// Initialize the SDK
+const sdk = new AllowanceGuardSDK({
+  apiKey: process.env.ALLOWANCE_GUARD_API_KEY, // Optional
+  timeout: 30000
+})
+
+async function checkWalletSecurity(walletAddress) {
+  try {
+    // Get allowances
+    const allowances = await sdk.getAllowances(walletAddress, {
+      riskOnly: true,
+      pageSize: 50
+    })
+
+    // Analyze risk
+    const criticalAllowances = allowances.data.filter(a => a.riskLevel >= 3)
+    
+    console.log(\`Found \${criticalAllowances.length} high-risk allowances\`)
+    
+    // Export report
+    const csvData = await sdk.exportAllowances(walletAddress, 'csv')
+    
+    return {
+      totalAllowances: allowances.data.length,
+      criticalAllowances: criticalAllowances.length,
+      csvData: csvData
+    }
+  } catch (error) {
+    console.error('Error checking wallet security:', error)
+    throw error
+  }
+}
+
+// Usage
+checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
+  .then(result => {
+    console.log('Security check completed:', result)
+  })
+  .catch(error => {
+    console.error('Security check failed:', error)
+  })`
 
   return (
     <div className="min-h-screen bg-white text-ink">
-      
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <VideoBackground videoSrc="/V3AG.mp4" />
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        
+        <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-blue-100" />
         <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Building a Safer Web3, Together</H1>
+          <H1 className="mb-6">Integration Guide</H1>
           <p className="text-lg text-stone leading-relaxed mb-8">
-            Extend the power of Allowance Guard to your users directly within your application. This guide details our public API and smart contract interfaces for scanning token allowances, retrieving risk data, and facilitating secure revocations. All tools are permissionless and free to use.
+            Integrate AllowanceGuard into your dApp, wallet, or service with our comprehensive toolkit. 
+            Choose from React hooks, embeddable widgets, or Node.js SDK.
           </p>
         </Container>
       </Section>
 
       <div className="border-t border-line" />
 
-      {/* Integration Architecture */}
-      <Section className="py-32">
+      {/* Integration Options */}
+      <Section className="py-16">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8">Integration Architecture</H2>
-            <p className="text-lg text-stone leading-relaxed mb-8">
-              There are two primary methods for integration: using our convenient API to quickly access processed data, or interacting directly with on-chain smart contracts for maximum decentralization. Most integrations will use a combination of both: the API for reading data and smart contracts for writing revocation transactions.
-            </p>
+          <div className="max-w-6xl mx-auto">
+            <H2 className="mb-12 text-center">Choose Your Integration Method</H2>
             
-            <h3 className="text-2xl font-semibold text-ink mb-6">Integration Flow</h3>
-            <p className="text-lg text-stone leading-relaxed mb-8">
-              The standard integration flow is: 1) Your UI prompts the user to check allowances. 2) Your backend calls our allowances API endpoint for the user&apos;s address. 3) Your frontend displays the returned list of allowances with their risk scores. 4) When a user chooses to revoke, your frontend calls the appropriate token contract&apos;s approve method via the user&apos;s wallet.
-            </p>
-          </div>
-        </Container>
-      </Section>
-
-      {/* API Reference */}
-      <Section className="py-32 bg-mist/30">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8">API Reference</H2>
-            <p className="text-lg text-stone leading-relaxed mb-8">
-              Our API provides read-only access to allowance and risk data. All endpoints are public and do not require an API key.
-            </p>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6">GET /api/allowances</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              Retrieves all token allowances for a given wallet address.
-            </p>
-            
-            <h4 className="text-xl font-semibold text-ink mb-4">Parameters</h4>
-            <div className="bg-white border border-line rounded-lg p-6 mb-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`wallet (string, required): The Ethereum address to fetch allowances for
-page (number, optional): Page number for pagination (default: 1)
-pageSize (number, optional): Number of results per page (default: 25, max: 100)
-riskOnly (boolean, optional): Filter to show only risky allowances (default: false)`}
-              </pre>
-            </div>
-
-            <h4 className="text-xl font-semibold text-ink mb-4">Response Object</h4>
-            <div className="bg-white border border-line rounded-lg p-6 mb-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`{
-  "allowances": [
-    {
-      "chain_id": 1,
-      "token_address": "0xa0b86a33e6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6",
-      "spender_address": "0xb1c97d44e7d7d7d7d7d7d7d7d7d7d7d7d7d7d7d7d",
-      "standard": "ERC20",
-      "allowance_type": "per-token",
-      "amount": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-      "is_unlimited": true,
-      "last_seen_block": "18500000",
-      "risk_score": 50,
-      "risk_flags": ["UNLIMITED"],
-      "token_name": "USD Coin",
-      "token_symbol": "USDC",
-      "token_decimals": 6,
-      "spender_label": "Uniswap V3 Router",
-      "spender_trust": "verified"
-    }
-  ],
-  "page": 1,
-  "pageSize": 25,
-  "total": 42
-}`}
-              </pre>
-            </div>
-
-            <h4 className="text-xl font-semibold text-ink mb-4">Example Request</h4>
-            <div className="bg-white border border-line rounded-lg p-6 mb-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`curl -X GET "https://www.allowanceguard.com/api/allowances?wallet=0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6&page=1&pageSize=25&riskOnly=true"`}
-              </pre>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Smart Contract Integration */}
-      <Section className="py-32">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8">Smart Contract Integration</H2>
-            <p className="text-lg text-stone leading-relaxed mb-8">
-              For revocation actions, you should interact directly with the token contracts themselves. This is a non-custodial and permissionless method that works with any ERC20, ERC721, or ERC1155 token.
-            </p>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6">ERC20 Token Revocation</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              For ERC20 tokens, call the approve function with amount 0 to revoke an allowance.
-            </p>
-            
-            <h4 className="text-xl font-semibold text-ink mb-4">ERC20 ABI</h4>
-            <div className="bg-white border border-line rounded-lg p-6 mb-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`[
-  {
-    "type": "function",
-    "name": "approve",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      { "name": "spender", "type": "address" },
-      { "name": "amount", "type": "uint256" }
-    ],
-    "outputs": [{ "type": "bool", "name": "" }]
-  }
-]`}
-              </pre>
-            </div>
-
-            <h4 className="text-xl font-semibold text-ink mb-4">Web3.js Example</h4>
-            <div className="bg-white border border-line rounded-lg p-6 mb-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`import { ethers } from 'ethers';
-
-async function revokeERC20Allowance(tokenAddress, spenderAddress, signer) {
-  const tokenContract = new ethers.Contract(tokenAddress, [
-    'function approve(address spender, uint256 amount) returns (bool)'
-  ], signer);
-  
-  const tx = await tokenContract.approve(spenderAddress, 0);
-  await tx.wait();
-  
-  console.log('Allowance revoked:', tx.hash);
-  return tx.hash;
-}
-
-// Usage
-const tokenAddress = '0xA0b86a33E6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6';
-const spenderAddress = '0xB1c97d44E7d7d7d7d7d7d7d7d7d7d7d7d7d7d7d7d';
-const txHash = await revokeERC20Allowance(tokenAddress, spenderAddress, signer);`}
-              </pre>
-            </div>
-
-            <h3 className="text-2xl font-semibold text-ink mb-6">ERC721/ERC1155 Revocation</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              For NFT collections, call setApprovalForAll with approved set to false.
-            </p>
-            
-            <h4 className="text-xl font-semibold text-ink mb-4">ERC721/ERC1155 ABI</h4>
-            <div className="bg-white border border-line rounded-lg p-6 mb-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`[
-  {
-    "type": "function",
-    "name": "setApprovalForAll",
-    "stateMutability": "nonpayable",
-    "inputs": [
-      { "name": "operator", "type": "address" },
-      { "name": "approved", "type": "bool" }
-    ],
-    "outputs": []
-  }
-]`}
-              </pre>
-            </div>
-
-            <h4 className="text-xl font-semibold text-ink mb-4">Web3.js Example</h4>
-            <div className="bg-white border border-line rounded-lg p-6 mb-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`async function revokeNFTApproval(collectionAddress, operatorAddress, signer) {
-  const nftContract = new ethers.Contract(collectionAddress, [
-    'function setApprovalForAll(address operator, bool approved)'
-  ], signer);
-  
-  const tx = await nftContract.setApprovalForAll(operatorAddress, false);
-  await tx.wait();
-  
-  console.log('NFT approval revoked:', tx.hash);
-  return tx.hash;
-}`}
-              </pre>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Risk Data Attribution */}
-      <Section className="py-32 bg-mist/30">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8">Understanding Risk Scores</H2>
-            <p className="text-lg text-stone leading-relaxed mb-8">
-              Our risk scoring system evaluates allowances based on multiple heuristics to identify potentially dangerous permissions.
-            </p>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6">Risk Flags</h3>
-            <div className="space-y-4">
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-ink mb-2">UNLIMITED (Score: +50)</h4>
-                <p className="text-stone">
-                  The allowance amount equals the maximum uint256 value, giving the spender unlimited access to the token. This is the highest risk as it allows complete drainage of the token balance.
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <div className="bg-white border border-line rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center mb-4">
+                  <Globe className="mr-3 text-blue-600" size={24} />
+                  <H3>Embeddable Widget</H3>
+                </div>
+                <p className="text-stone mb-4">
+                  Drop-in widget for any website. Works with React, Vue, Angular, or vanilla HTML.
                 </p>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Zero configuration</li>
+                  <li>• Customizable themes</li>
+                  <li>• Real-time updates</li>
+                  <li>• Mobile responsive</li>
+                </ul>
               </div>
-              
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-ink mb-2">STALE (Score: +10)</h4>
-                <p className="text-stone">
-                  The allowance was last seen more than 90 days ago (650,000 blocks on Ethereum, 900,000 blocks on Arbitrum/Base). Stale allowances may indicate forgotten permissions or abandoned integrations.
+
+              <div className="bg-white border border-line rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center mb-4">
+                  <Zap className="mr-3 text-yellow-600" size={24} />
+                  <H3>React Hooks</H3>
+                </div>
+                <p className="text-stone mb-4">
+                  Custom React hooks for seamless integration into React applications.
                 </p>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• TypeScript support</li>
+                  <li>• Automatic caching</li>
+                  <li>• Error handling</li>
+                  <li>• Real-time updates</li>
+                </ul>
               </div>
-            </div>
 
-            <h3 className="text-2xl font-semibold text-ink mb-6 mt-8">Risk Score Calculation</h3>
-            <div className="bg-white border border-line rounded-lg p-6">
-              <pre className="text-sm text-ink overflow-x-auto">
-{`Risk Score = 0
-if (is_unlimited) Risk Score += 50
-if (stale && amount > 0) Risk Score += 10
-
-Risk Level:
-- High: Score >= 50 (unlimited allowances)
-- Medium: Score >= 10 (stale allowances)
-- Low: Score < 10 (recent, limited allowances)`}
-              </pre>
+              <div className="bg-white border border-line rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-center mb-4">
+                  <Package className="mr-3 text-green-600" size={24} />
+                  <H3>Node.js SDK</H3>
+                </div>
+                <p className="text-stone mb-4">
+                  Full-featured SDK for backend services and server-side applications.
+                </p>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Complete API coverage</li>
+                  <li>• Built-in retry logic</li>
+                  <li>• Data export features</li>
+                  <li>• Batch operations</li>
+                </ul>
+              </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Supported Networks */}
-      <Section className="py-32">
+      {/* Live Widget Demo */}
+      <Section className="py-16 bg-mist/30">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8">Supported Networks</H2>
-            <p className="text-lg text-stone leading-relaxed mb-8">
-              Allowance Guard currently supports three major networks with comprehensive allowance scanning and risk assessment.
+            <H2 className="mb-8 text-center">Live Widget Demo</H2>
+            <p className="text-center text-stone mb-8">
+              See the AllowanceGuard widget in action with real data.
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-ink mb-2">Ethereum</h3>
-                <p className="text-stone text-sm mb-2">Chain ID: 1</p>
-                <p className="text-stone text-sm mb-2">Block Time: ~12 seconds</p>
-                <p className="text-stone text-sm">Stale Threshold: 650,000 blocks (~90 days)</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <H3 className="mb-4">All Allowances</H3>
+                <AllowanceGuardWidget
+                  walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+                  chainId={1}
+                  showRiskOnly={false}
+                  maxItems={5}
+                  theme="light"
+                  compact={false}
+                />
               </div>
               
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-ink mb-2">Arbitrum</h3>
-                <p className="text-stone text-sm mb-2">Chain ID: 42161</p>
-                <p className="text-stone text-sm mb-2">Block Time: ~0.25 seconds</p>
-                <p className="text-stone text-sm">Stale Threshold: 900,000 blocks (~90 days)</p>
+              <div>
+                <H3 className="mb-4">High Risk Only</H3>
+                <AllowanceGuardWidget
+                  walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+                  chainId={1}
+                  showRiskOnly={true}
+                  maxItems={5}
+                  theme="light"
+                  compact={true}
+                />
               </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Code Examples */}
+      <Section className="py-16">
+        <Container>
+          <div className="max-w-6xl mx-auto">
+            <H2 className="mb-12 text-center">Code Examples</H2>
+            
+            <div className="space-y-12">
               
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-ink mb-2">Base</h3>
-                <p className="text-stone text-sm mb-2">Chain ID: 8453</p>
-                <p className="text-stone text-sm mb-2">Block Time: ~2 seconds</p>
-                <p className="text-stone text-sm">Stale Threshold: 900,000 blocks (~90 days)</p>
+              {/* React Widget */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Globe className="mr-3 text-blue-600" size={24} />
+                  <H3>React Widget Integration</H3>
+                </div>
+                <p className="text-stone mb-6">
+                  Install the widget package and embed it in your React application.
+                </p>
+                <CodeBlock code={reactWidgetCode} language="jsx" id="react-widget" />
+              </div>
+
+              {/* HTML Widget */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Code className="mr-3 text-green-600" size={24} />
+                  <H3>HTML/JavaScript Integration</H3>
+                </div>
+                <p className="text-stone mb-6">
+                  Include the widget script and initialize it in any HTML page.
+                </p>
+                <CodeBlock code={htmlWidgetCode} language="html" id="html-widget" />
+              </div>
+
+              {/* React Hooks */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Zap className="mr-3 text-yellow-600" size={24} />
+                  <H3>React Hooks Integration</H3>
+                </div>
+                <p className="text-stone mb-6">
+                  Use our custom hooks for more control over data fetching and state management.
+                </p>
+                <CodeBlock code={reactHooksCode} language="jsx" id="react-hooks" />
+              </div>
+
+              {/* Node.js SDK */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Package className="mr-3 text-purple-600" size={24} />
+                  <H3>Node.js SDK Integration</H3>
+                </div>
+                <p className="text-stone mb-6">
+                  Use the SDK in your backend services for comprehensive wallet security analysis.
+                </p>
+                <CodeBlock code={nodeSDKCode} language="javascript" id="node-sdk" />
+              </div>
+
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Installation Instructions */}
+      <Section className="py-16 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <H2 className="mb-8 text-center">Installation & Setup</H2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <H3 className="mb-4">React Widget</H3>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">Installation:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">Import:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from 'allowance-guard-widget'</pre>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <H3 className="mb-4">React Hooks</H3>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">Installation:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-hooks</pre>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">Import:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">import { useAllowances } from 'allowance-guard-hooks'</pre>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <H3 className="mb-4">Node.js SDK</H3>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">Installation:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-sdk</pre>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">Import:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">const AllowanceGuardSDK = require('allowance-guard-sdk')</pre>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <H3 className="mb-4">HTML Widget</H3>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">CDN Script:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src="https://unpkg.com/allowance-guard-widget@latest/dist/widget.js"&gt;&lt;/script&gt;</pre>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-ink mb-2">Initialize:</p>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">AllowanceGuardWidget.init({...})</pre>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -289,96 +406,67 @@ Risk Level:
       </Section>
 
       {/* Best Practices */}
-      <Section className="py-32 bg-mist/30">
+      <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8">Implementation Best Practices</H2>
-            <p className="text-lg text-stone leading-relaxed mb-8">
-              Follow these guidelines to ensure a secure and user-friendly integration.
-            </p>
+            <H2 className="mb-8 text-center">Best Practices</H2>
             
-            <h3 className="text-2xl font-semibold text-ink mb-6">Attribution</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              Always clearly state that your integration is powered by Allowance Guard. Never imply that you are generating this data yourself without attribution. Include a link to www.allowanceguard.com in your UI.
-            </p>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6">Displaying Allowances</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              We recommend displaying allowances in a sortable table. Always show the token logo, name, spender name/address, amount, and the risk score prominently. Use color cautiously (e.g., red only for high-risk items). Group by risk level with unlimited allowances at the top.
-            </p>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6">Executing Revocations</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              Always clearly explain the transaction the user is about to sign. Show the estimated gas fee. Upon successful revocation, update the UI immediately to reflect the change (e.g., remove the item or show a success state). Consider implementing batch revocation for multiple allowances to save gas costs.
-            </p>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6">Error Handling</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              Implement proper error handling for API failures, network issues, and transaction failures. Provide clear error messages to users and fallback options when the API is unavailable.
-            </p>
-          </div>
-        </Container>
-      </Section>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <div className="flex items-center mb-4">
+                  <Shield className="mr-3 text-green-600" size={20} />
+                  <H3>Security</H3>
+                </div>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Always validate wallet addresses client-side</li>
+                  <li>• Use HTTPS for all API requests</li>
+                  <li>• Implement proper error handling</li>
+                  <li>• Don't expose API keys in client-side code</li>
+                </ul>
+              </div>
 
-      {/* Troubleshooting */}
-      <Section className="py-32">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8">Troubleshooting</H2>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6">Common Issues</h3>
-            
-            <div className="space-y-6">
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-ink mb-2">API returns no allowances for a new address</h4>
-                <p className="text-stone">
-                  The indexer may take a short time to sync new addresses. Please retry after a few minutes. For addresses with no transaction history, the API will return an empty result.
-                </p>
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <div className="flex items-center mb-4">
+                  <Zap className="mr-3 text-blue-600" size={20} />
+                  <H3>Performance</H3>
+                </div>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Use pagination for large datasets</li>
+                  <li>• Implement client-side caching</li>
+                  <li>• Debounce user input for search</li>
+                  <li>• Use appropriate page sizes</li>
+                </ul>
               </div>
-              
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-ink mb-2">Revocation transaction fails</h4>
-                <p className="text-stone">
-                  This is often due to insufficient gas. Prompt the user to try again with a higher gas limit. Some tokens may have additional restrictions or require specific approval patterns.
-                </p>
+
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <div className="flex items-center mb-4">
+                  <Globe className="mr-3 text-purple-600" size={20} />
+                  <H3>User Experience</H3>
+                </div>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Show loading states during API calls</li>
+                  <li>• Provide clear error messages</li>
+                  <li>• Use consistent theming</li>
+                  <li>• Make widgets mobile-responsive</li>
+                </ul>
               </div>
-              
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-ink mb-2">Spender name is unknown</h4>
-                <p className="text-stone">
-                  Our database relies on public labels and contract verification. You can fall back to displaying the contract address. Consider implementing your own labeling system for common protocols.
-                </p>
+
+              <div className="bg-white p-6 rounded-lg border border-line">
+                <div className="flex items-center mb-4">
+                  <Package className="mr-3 text-orange-600" size={20} />
+                  <H3>Integration</H3>
+                </div>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Test with multiple wallet addresses</li>
+                  <li>• Handle network switching gracefully</li>
+                  <li>• Implement proper TypeScript types</li>
+                  <li>• Follow semantic versioning</li>
+                </ul>
               </div>
-              
-              <div className="bg-white border border-line rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-ink mb-2">Risk scores seem incorrect</h4>
-                <p className="text-stone">
-                  Risk scores are calculated based on our heuristics. If you believe a score is incorrect, please report it to our support team with the specific allowance details.
-                </p>
-              </div>
-            </div>
-            
-            <h3 className="text-2xl font-semibold text-ink mb-6 mt-8">Getting Help</h3>
-            <p className="text-lg text-stone leading-relaxed mb-6">
-              For technical issues with integration, open an issue on our GitHub repository. For general questions, reach out to our team at support@allowanceguard.com. We typically respond within 24 hours.
-            </p>
-            
-            <div className="bg-white border border-line rounded-lg p-6">
-              <h4 className="text-lg font-semibold text-ink mb-2">Integration Support</h4>
-              <p className="text-stone mb-4">
-                We provide dedicated support for integration partners. Contact us at support@allowanceguard.com with &quot;Integration Support&quot; in the subject line for priority assistance.
-              </p>
-              <a 
-                href="mailto:support@allowanceguard.com?subject=Integration Support"
-                className="inline-flex items-center px-6 py-3 border border-cobalt text-cobalt rounded-lg font-medium hover:bg-cobalt hover:text-white transition-colors duration-200"
-              >
-                Contact Integration Support
-              </a>
             </div>
           </div>
         </Container>
       </Section>
-
     </div>
   )
 }

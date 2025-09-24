@@ -1,0 +1,125 @@
+{
+  "supported": [
+    {
+      "chainId": 1,
+      "name": "Ethereum",
+      "status": "live",
+      "since": "2024-11-01",
+      "description": "The original smart contract platform",
+      "features": [
+        "ERC-20",
+        "ERC-721",
+        "ERC-1155",
+        "Multi-sig",
+        "DeFi protocols"
+      ]
+    },
+    {
+      "chainId": 42161,
+      "name": "Arbitrum One",
+      "status": "live",
+      "since": "2024-12-10",
+      "description": "Ethereum Layer 2 scaling solution",
+      "features": [
+        "Low fees",
+        "Fast transactions",
+        "EVM compatible",
+        "DeFi ecosystem"
+      ]
+    },
+    {
+      "chainId": 8453,
+      "name": "Base",
+      "status": "live",
+      "since": "2025-01-05",
+      "description": "Coinbase's Layer 2 network",
+      "features": [
+        "Coinbase integration",
+        "Low fees",
+        "Developer friendly",
+        "Growing ecosystem"
+      ]
+    }
+  ],
+  "planned": [
+    {
+      "chainId": 10,
+      "name": "Optimism",
+      "targetMonth": "2025-10",
+      "description": "Optimistic rollup for Ethereum scaling",
+      "features": [
+        "OP Stack",
+        "Superchain",
+        "Low latency",
+        "Developer tools"
+      ]
+    },
+    {
+      "chainId": 137,
+      "name": "Polygon PoS",
+      "targetMonth": "2025-10",
+      "description": "Ethereum sidechain with proof-of-stake",
+      "features": [
+        "Matic token",
+        "High throughput",
+        "Low fees",
+        "Web3 ecosystem"
+      ]
+    },
+    {
+      "chainId": 43114,
+      "name": "Avalanche C-Chain",
+      "targetMonth": "2025-11",
+      "description": "High-performance smart contract platform",
+      "features": [
+        "Subnets",
+        "Fast finality",
+        "EVM compatible",
+        "DeFi protocols"
+      ]
+    },
+    {
+      "chainId": 56,
+      "name": "BNB Smart Chain",
+      "targetMonth": "2025-12",
+      "description": "Binance's smart contract blockchain",
+      "features": [
+        "BNB token",
+        "Low fees",
+        "High throughput",
+        "DeFi ecosystem"
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "date": "2025-01-05",
+      "added": [
+        8453
+      ],
+      "notes": "Initial Base support with full ERC-20/721 scanning capabilities",
+      "version": "1.14.0"
+    },
+    {
+      "date": "2024-12-10",
+      "added": [
+        42161
+      ],
+      "notes": "Arbitrum One integration with enhanced risk detection",
+      "version": "1.13.0"
+    },
+    {
+      "date": "2024-11-01",
+      "added": [
+        1
+      ],
+      "notes": "Launch with Ethereum mainnet support",
+      "version": "1.0.0"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-09-24",
+    "nextReview": "2025-10-23",
+    "version": "1.0.0"
+  }
+}

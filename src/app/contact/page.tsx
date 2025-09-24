@@ -176,12 +176,13 @@ export default function ContactPage() {
                   </div>
                   <div className="flex items-center mobbin-caption text-text-tertiary">
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    <span 
+                    <a 
+                      href="mailto:support@allowanceguard.com?subject=General Support Request"
                       className="cursor-pointer hover:text-primary-700 transition-colors duration-200" 
-                      onClick={() => window.location.href = 'mailto:support@allowanceguard.com?subject=General Support Request'}
                       title="Click to send email"
-                      dangerouslySetInnerHTML={{ __html: obfuscateEmail('support@allowanceguard.com') }}
-                    />
+                    >
+                      support@allowanceguard.com
+                    </a>
                   </div>
                 </div>
                 <a 
@@ -211,12 +212,13 @@ export default function ContactPage() {
                   </div>
                   <div className="flex items-center mobbin-caption text-text-tertiary">
                     <Lock className="w-4 h-4 mr-2" />
-                    <span 
+                    <a 
+                      href="mailto:security@allowanceguard.com?subject=Security Vulnerability Report"
                       className="cursor-pointer hover:text-semantic-error-500 transition-colors duration-200" 
-                      onClick={() => window.location.href = 'mailto:security@allowanceguard.com?subject=Security Vulnerability Report'}
                       title="Click to send email"
-                      dangerouslySetInnerHTML={{ __html: obfuscateEmail('security@allowanceguard.com') }}
-                    />
+                    >
+                      security@allowanceguard.com
+                    </a>
                   </div>
                 </div>
                 <div className="space-y-3">

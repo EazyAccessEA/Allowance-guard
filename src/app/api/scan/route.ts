@@ -6,6 +6,8 @@ import { withReq } from '@/lib/logger'
 import { enabledChainIds } from '@/lib/networks'
 import { scanRateLimit } from '@/lib/rate-limit'
 import { incrScan } from '@/lib/metrics'
+import { validateRequest } from '@/middleware/validation'
+import { scanRequestSchema } from '@/lib/validation'
 
 export const runtime = 'nodejs'
 
@@ -28,27 +30,31 @@ export async function POST(req: Request) {
   try {
     L.info('scan.queue.start', { path: '/api/scan' })
     
-    const json = await req.json().catch(() => ({}))
-    const parsed = Body.safeParse(json)
+    // Validate request with enhanced validation
+    const validation = await validateRequest(scanRequestSchema)(req as NextRequest)
     
-    if (!parsed.success) {
-      L.warn('Invalid scan request body', { errors: parsed.error.issues })
-      return NextResponse.json({ error: 'Invalid body' }, { status: 400 })
+    if (!validation.success) {
+      L.warn('Invalid scan request body', { errors: validation.details })
+      return NextResponse.json(
+        { error: validation.error, details: validation.details },
+        { status: 400 }
+      )
     }
     
-    const addr = parsed.data.walletAddress.toLowerCase()
-    const chains = parsed.data.chains?.length 
-      ? parsed.data.chains.map(c => MAP[c])
+    const { walletAddress, chains } = validation.data
+    const addr = walletAddress
+    const chainIds = chains?.length 
+      ? chains.map(c => MAP[c])
       : enabledChainIds()
     
     // Increment scan counter
     await incrScan()
     
-    L.info('Enqueueing wallet scan', { address: addr, chains })
+    L.info('Enqueueing wallet scan', { address: addr, chains: chainIds })
     
     let jobId: number
     try {
-      jobId = await enqueueScan(addr, chains)
+      jobId = await enqueueScan(addr, chainIds)
     } catch (e: unknown) {
       if (e instanceof Error && String(e.message || '').includes('uniq_jobs_active_wallet')) {
         L.info('scan.queue.duplicate', { wallet: addr })
