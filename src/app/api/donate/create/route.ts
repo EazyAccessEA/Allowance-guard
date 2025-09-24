@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid contribution data' }, { status: 400 })
     }
     
-    const { amount, email } = parsed.data
+    const { amount, email, name, message } = parsed.data
     
     // Initialize Coinbase Commerce client
     Client.init(process.env.COINBASE_COMMERCE_API_KEY!)

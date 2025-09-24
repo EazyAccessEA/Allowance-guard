@@ -184,7 +184,7 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <a 
-                  href={createObfuscatedMailtoLink('support@allowanceguard.com', 'General Support Request')}
+                  href="mailto:support@allowanceguard.com?subject=General Support Request"
                   className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
                 >
                   <Mail className="w-4 h-4 mr-2" />
@@ -221,7 +221,7 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-3">
                   <a 
-                    href={createObfuscatedMailtoLink('security@allowanceguard.com', 'Security Vulnerability Report')}
+                    href="mailto:security@allowanceguard.com?subject=Security Vulnerability Report"
                     className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-semantic-error-500 text-semantic-error-500 rounded-lg hover:bg-semantic-error-500 hover:text-white transition-colors duration-200"
                   >
                     <Shield className="w-4 h-4 mr-2" />

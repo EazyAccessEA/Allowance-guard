@@ -22,7 +22,7 @@ export async function GET(req: Request) {
     )
   }
   
-  const { wallet, riskOnly, page, pageSize } = validation.data
+  const { wallet, riskOnly, page, pageSize } = validation.data!
   
   L.info('allowances.fetch.start', { wallet, riskOnly, page, pageSize })
 

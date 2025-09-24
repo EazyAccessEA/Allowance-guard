@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       )
     }
     
-    const { walletAddress, chains } = validation.data
+    const { walletAddress, chains } = validation.data!
     const addr = walletAddress
     const chainIds = chains?.length 
       ? chains.map(c => MAP[c])
