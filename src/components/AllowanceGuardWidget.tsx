@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useAllowances, useRiskLevel, useAllowanceFormatter } from '@/hooks/useAllowanceGuard'
+import { useAllowances, useAllowanceFormatter } from '@/hooks/useAllowanceGuard'
 import { Shield, AlertTriangle, CheckCircle, ExternalLink, RefreshCw, Eye, EyeOff } from 'lucide-react'
 
 export interface AllowanceGuardWidgetProps {

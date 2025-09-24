@@ -143,7 +143,7 @@ export default function WidgetPage() {
                       {['light', 'dark', 'auto'].map((theme) => (
                         <button
                           key={theme}
-                          onClick={() => setSelectedTheme(theme as any)}
+                          onClick={() => setSelectedTheme(theme as 'light' | 'dark' | 'auto')}
                           className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                             selectedTheme === theme
                               ? 'bg-blue-500 text-white'

@@ -2,48 +2,6 @@
 
 import { Card, CardContent } from '@/components/ui/Card'
 
-interface StatCardProps {
-  title: string
-  value: string
-  description: string
-  trend?: 'up' | 'down' | 'neutral'
-  trendValue?: string
-}
-
-function StatCard({ title, value, description, trend, trendValue }: StatCardProps) {
-  const getTrendColor = () => {
-    switch (trend) {
-      case 'up':
-        return 'text-red-600' // Apple uses red for concerning trends
-      case 'down':
-        return 'text-green-600' // Apple uses green for positive trends
-      default:
-        return 'text-gray-500'
-    }
-  }
-
-
-  return (
-    <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white border-0 shadow-sm">
-      <CardContent className="p-8">
-        {/* Clean text-focused design without icons */}
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex-1">
-            <h3 className="mobbin-caption text-text-secondary mb-2 tracking-wide uppercase">{title}</h3>
-            <div className="text-3xl font-bold text-gray-900 mb-2">{value}</div>
-          </div>
-          {trend && trendValue && (
-            <div className={`text-sm font-semibold ${getTrendColor()}`}>
-              <span>{trendValue}</span>
-            </div>
-          )}
-        </div>
-        {/* Apple-style description with better readability */}
-        <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
-      </CardContent>
-    </Card>
-  )
-}
 
 export default function StatisticsSection() {
   return (

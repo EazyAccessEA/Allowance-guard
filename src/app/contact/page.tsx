@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1 } from '@/components/ui/Heading'
 import { 
   Search, 
   Mail, 
