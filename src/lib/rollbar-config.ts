@@ -8,16 +8,16 @@ export const rollbarClientConfig = {
   environment: process.env.NODE_ENV || 'development',
   captureUncaught: true,
   captureUnhandledRejections: true,
-  // Additional client-side options
+  // Additional client-side options - disabled to prevent infinite loops
   autoInstrument: {
-    network: true,
-    log: true,
-    dom: true,
-    navigation: true,
+    network: false,
+    log: false,
+    dom: false,
+    navigation: false,
   },
   // Filter out development noise and missing tokens
   filter: {
-    filter: () => {
+    filter: (payload: unknown) => {
       // Don't send errors if no access token is configured
       if (!process.env.NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN) {
         return false;
@@ -25,6 +25,24 @@ export const rollbarClientConfig = {
       // Don't send errors in development unless explicitly enabled
       if (process.env.NODE_ENV === 'development' && !process.env.ROLLBAR_DEBUG) {
         return false;
+      }
+      // Prevent Rollbar from capturing its own errors (infinite loop protection)
+      if (payload && typeof payload === 'object' && payload !== null) {
+        const payloadObj = payload as Record<string, unknown>;
+        if (payloadObj.body && typeof payloadObj.body === 'object' && payloadObj.body !== null) {
+          const body = payloadObj.body as Record<string, unknown>;
+          if (body.trace && typeof body.trace === 'object' && body.trace !== null) {
+            const trace = body.trace as Record<string, unknown>;
+            if (trace.frames && Array.isArray(trace.frames)) {
+              const frames = trace.frames as Array<Record<string, unknown>>;
+              for (const frame of frames) {
+                if (frame.filename && typeof frame.filename === 'string' && frame.filename.includes('rollbar')) {
+                  return false;
+                }
+              }
+            }
+          }
+        }
       }
       return true;
     }
@@ -41,7 +59,7 @@ export const rollbarServerConfig = {
   root: '/',
   // Filter out development noise and missing tokens
   filter: {
-    filter: () => {
+    filter: (payload: unknown) => {
       // Don't send errors if no access token is configured
       if (!process.env.ROLLBAR_ACCESS_TOKEN) {
         return false;
@@ -49,6 +67,24 @@ export const rollbarServerConfig = {
       // Don't send errors in development unless explicitly enabled
       if (process.env.NODE_ENV === 'development' && !process.env.ROLLBAR_DEBUG) {
         return false;
+      }
+      // Prevent Rollbar from capturing its own errors (infinite loop protection)
+      if (payload && typeof payload === 'object' && payload !== null) {
+        const payloadObj = payload as Record<string, unknown>;
+        if (payloadObj.body && typeof payloadObj.body === 'object' && payloadObj.body !== null) {
+          const body = payloadObj.body as Record<string, unknown>;
+          if (body.trace && typeof body.trace === 'object' && body.trace !== null) {
+            const trace = body.trace as Record<string, unknown>;
+            if (trace.frames && Array.isArray(trace.frames)) {
+              const frames = trace.frames as Array<Record<string, unknown>>;
+              for (const frame of frames) {
+                if (frame.filename && typeof frame.filename === 'string' && frame.filename.includes('rollbar')) {
+                  return false;
+                }
+              }
+            }
+          }
+        }
       }
       return true;
     }

@@ -18,9 +18,19 @@ interface FooterSectionProps {
 function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectionProps) {
   return (
     <div className="border-b border-border-default/30 md:border-b-0">
-      <button
+      <div
         onClick={onToggle}
-        className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none"
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        aria-controls={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
+        className="btn-transparent flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none cursor-pointer rounded-md"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onToggle()
+          }
+        }}
       >
         <h3 className="text-lg font-semibold text-text-primary flex items-center gap-2">
           {icon}
@@ -33,8 +43,11 @@ function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectio
             <ChevronDown className="w-5 h-5 text-text-secondary" />
           )}
         </div>
-      </button>
-      <div className={`md:block ${isOpen ? 'block' : 'hidden'} pb-4 md:pb-0`}>
+      </div>
+      <div 
+        id={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
+        className={`md:block ${isOpen ? 'block' : 'hidden'} pb-4 md:pb-0`}
+      >
         {children}
       </div>
     </div>
@@ -57,7 +70,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-background-light border-t border-border-default">
+    <footer className="bg-background-light border-t border-border-default backdrop-blur-sm">
       <Container className="py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
@@ -77,6 +90,11 @@ export default function Footer() {
               <li>
                 <Link href="/docs" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
                   Documentation
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                  Blog
                 </Link>
               </li>
               <li>

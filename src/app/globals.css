@@ -177,7 +177,7 @@ w3m-modal w3m-close-button:hover {
   --font-inter: 'JetBrains Mono', 'Inter', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
   --font-theano-didot: 'Inter', 'Times New Roman', serif;
-  --font-heading: 'JetBrains Mono', 'Inter', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
+  --font-heading: 'Satoshi', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
   /* Fireart Spacing System (8px grid) */
   --space-xs: 0.25rem;    /* 4px */
@@ -304,6 +304,26 @@ body {
   outline: var(--a11y-focus-ring) solid var(--ring);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* CSS Reset for Better Global Button Styling */
+button {
+  /* Remove default browser styling */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: none;
 }
 
 /* Ensure minimum touch target size */
@@ -1818,12 +1838,12 @@ appkit-button::part(button):focus {
 }
 
 /* Smooth Transitions for All Interactive Elements */
-button, input, select, textarea, a {
+input, select, textarea, a {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Focus States */
-button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+/* Focus States - Only for form elements, not buttons */
+input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
@@ -1833,6 +1853,61 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
+}
+
+/* Utility Classes for Button Styling */
+.btn-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: none;
+}
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-glass:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+
+.btn-transparent {
+  background: transparent;
+  border: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+.btn-transparent:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.btn-transparent:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* Apple-style Frosted Glass Effects */
@@ -3201,3 +3276,4 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
     animation: none;
   }
 }
+

@@ -35,7 +35,7 @@ function StatCard({ title, value, description, trend, trendValue, icon }: StatCa
         {/* Clean text-focused design without icons */}
         <div className="flex items-start justify-between mb-6">
           <div className="flex-1">
-            <h3 className="text-sm font-medium text-gray-600 mb-2 tracking-wide uppercase">{title}</h3>
+            <h3 className="mobbin-caption text-text-secondary mb-2 tracking-wide uppercase">{title}</h3>
             <div className="text-3xl font-bold text-gray-900 mb-2">{value}</div>
           </div>
           {trend && trendValue && (
@@ -75,7 +75,7 @@ export default function StatisticsSection() {
           <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-1">$3.2B+ Lost in 2024</h3>
+                <h3 className="mobbin-heading-2 text-text-primary mb-1">$3.2B+ Lost in 2024</h3>
                 <p className="text-gray-600 text-lg">Lost to approval-based exploits across all DeFi protocols</p>
               </div>
               <div className="text-red-600">
@@ -138,7 +138,7 @@ export default function StatisticsSection() {
           <div className="space-y-6">
             {/* High Risk */}
             <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Unlimited Approvals</h4>
+              <h4 className="mobbin-heading-3 text-text-primary mb-2">Unlimited Approvals</h4>
               <p className="text-gray-700 leading-relaxed mb-3">
                 Approvals that allow unlimited token spending, creating maximum risk exposure. These should be avoided whenever possible.
               </p>
@@ -149,7 +149,7 @@ export default function StatisticsSection() {
 
             {/* Medium Risk */}
             <div className="p-6 bg-orange-50 rounded-2xl border border-orange-100">
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Abandoned Contracts</h4>
+              <h4 className="mobbin-heading-3 text-text-primary mb-2">Abandoned Contracts</h4>
               <p className="text-gray-700 leading-relaxed mb-3">
                 Approvals to contracts that are no longer maintained or have been compromised. These pose ongoing security risks.
               </p>
@@ -160,7 +160,7 @@ export default function StatisticsSection() {
 
             {/* Critical Risk */}
             <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Malicious Contracts</h4>
+              <h4 className="mobbin-heading-3 text-text-primary mb-2">Malicious Contracts</h4>
               <p className="text-gray-700 leading-relaxed mb-3">
                 Known malicious or suspicious contracts that pose immediate security threats. These should be revoked immediately.
               </p>

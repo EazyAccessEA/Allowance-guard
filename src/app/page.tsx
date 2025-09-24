@@ -33,7 +33,7 @@ function ErrorFallback({ error, resetError }: { error: Error; resetError: () => 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="max-w-md mx-auto text-center p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h2>
+        <h2 className="mobbin-heading-2 text-text-primary mb-4">Something went wrong</h2>
         <p className="text-gray-600 mb-6">We&apos;re working to fix this issue. Please try again.</p>
         <button
           onClick={resetError}
@@ -346,7 +346,7 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-primary-accent">1</span>
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-4">Connect & Scan</h3>
+              <h3 className="mobbin-heading-3 text-text-primary mb-4">Connect & Scan</h3>
               <p className="text-text-secondary leading-relaxed">
                 Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control.
               </p>
@@ -356,7 +356,7 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-primary-accent">2</span>
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-4">Analyze & Understand</h3>
+              <h3 className="mobbin-heading-3 text-text-primary mb-4">Analyze & Understand</h3>
               <p className="text-text-secondary leading-relaxed">
                   Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
                 </p>
@@ -366,7 +366,7 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-primary-accent">3</span>
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-4">Act & Secure</h3>
+              <h3 className="mobbin-heading-3 text-text-primary mb-4">Act & Secure</h3>
               <p className="text-text-secondary leading-relaxed">
                 Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.
               </p>
@@ -396,14 +396,14 @@ export default function HomePage() {
             <div className="grid lg:grid-cols-2 gap-12">
               <div className="space-y-8">
                   <div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-3">Non-Custodial Security</h3>
+                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Non-Custodial Security</h3>
                   <p className="text-text-secondary leading-relaxed text-justify">
                     Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet.
                   </p>
                 </div>
 
                   <div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-3">Clarity-First Dashboard</h3>
+                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Clarity-First Dashboard</h3>
                   <p className="text-text-secondary leading-relaxed text-justify">
                     Designed to enterprise standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
                   </p>
@@ -412,14 +412,14 @@ export default function HomePage() {
 
               <div className="space-y-8">
                   <div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-3">Advanced Risk Intelligence</h3>
+                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Advanced Risk Intelligence</h3>
                   <p className="text-text-secondary leading-relaxed text-justify">
                       Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
                     </p>
                 </div>
 
                   <div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-3">Gas-Efficient Revocation</h3>
+                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Gas-Efficient Revocation</h3>
                   <p className="text-text-secondary leading-relaxed text-justify">
                       Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
                     </p>
