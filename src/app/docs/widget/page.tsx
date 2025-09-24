@@ -316,7 +316,7 @@ export default function WidgetPage() {
                   
                   <div>
                     <p className="text-sm font-medium text-gray-700 mb-2">3. Initialize the widget:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto">AllowanceGuardWidget.init({...})</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
                   </div>
                 </div>
               </div>

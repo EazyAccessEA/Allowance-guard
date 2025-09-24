@@ -396,7 +396,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   </div>
                   <div>
                     <p className="text-sm font-medium text-ink mb-2">Initialize:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">AllowanceGuardWidget.init({...})</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
                   </div>
                 </div>
               </div>
