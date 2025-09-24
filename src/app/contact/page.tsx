@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2 } from '@/components/ui/Heading'
+import { H1 } from '@/components/ui/Heading'
 import { 
   Search, 
   Mail, 
@@ -18,7 +18,6 @@ import {
   CheckCircle,
   HelpCircle
 } from 'lucide-react'
-import { obfuscateEmail, createObfuscatedMailtoLink } from '@/lib/email-obfuscation'
 import VideoBackground from '@/components/VideoBackground'
 
 const faqData = [

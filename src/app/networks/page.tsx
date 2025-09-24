@@ -9,17 +9,11 @@ import {
   Calendar, 
   ExternalLink, 
   Network,
-  Shield,
-  Zap,
-  Globe,
-  ArrowRight,
   Info
 } from 'lucide-react'
 import type { NetworksApiResponse, NetworkSummary, ChangelogEntry } from '@/lib/schemas/networks'
 
-interface NetworksPageProps {}
-
-export default function NetworksPage({}: NetworksPageProps) {
+export default function NetworksPage() {
   const [data, setData] = useState<NetworksApiResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)

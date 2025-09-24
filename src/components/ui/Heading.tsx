@@ -6,6 +6,10 @@ export function H2({ children, className='' }: { children: React.ReactNode; clas
   return <h2 className={`text-3xl sm:text-4xl font-medium tracking-[-0.01em] text-ink ${className}`}>{children}</h2>;
 }
 
+export function H3({ children, className='' }: { children: React.ReactNode; className?: string }) {
+  return <h3 className={`text-2xl sm:text-3xl font-medium tracking-[-0.01em] text-ink ${className}`}>{children}</h3>;
+}
+
 export function Eyebrow({ children, className='' }: { children: React.ReactNode; className?: string }) {
   return <p className={`uppercase tracking-[0.2em] text-xs text-stone ${className}`}>{children}</p>;
 }

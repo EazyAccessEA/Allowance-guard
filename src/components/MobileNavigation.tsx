@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
-import { Badge } from '@/components/ui/Badge'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import { 
   X, 
@@ -12,11 +11,7 @@ import {
   Shield, 
   Settings, 
   FileText, 
-  ChevronRight,
-  Home,
-  Star,
-  Heart,
-  Github
+  Home
 } from 'lucide-react'
 import Image from 'next/image'
 

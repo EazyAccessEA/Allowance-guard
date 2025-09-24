@@ -12,7 +12,7 @@ export interface AllowanceGuardWidgetProps {
   theme?: 'light' | 'dark' | 'auto'
   compact?: boolean
   showHeader?: boolean
-  onAllowanceClick?: (allowance: any) => void
+  onAllowanceClick?: (allowance: unknown) => void
   className?: string
 }
 
@@ -162,7 +162,12 @@ export default function AllowanceGuardWidget({
           ) : (
             <div className="space-y-3">
               {displayedAllowances.map((allowance, index) => {
-                const riskInfo = useRiskLevel(allowance.riskLevel)
+                // Get risk info without using hook inside callback
+                const riskInfo = allowance.riskLevel === 'high' 
+                  ? { color: 'text-red-600', bgColor: 'bg-red-50', label: 'High Risk' }
+                  : allowance.riskLevel === 'medium'
+                  ? { color: 'text-yellow-600', bgColor: 'bg-yellow-50', label: 'Medium Risk' }
+                  : { color: 'text-green-600', bgColor: 'bg-green-50', label: 'Low Risk' }
                 
                 return (
                   <div

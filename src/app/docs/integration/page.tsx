@@ -354,7 +354,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   </div>
                   <div>
                     <p className="text-sm font-medium text-ink mb-2">Import:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from 'allowance-guard-widget'</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
                   </div>
                 </div>
               </div>
@@ -368,7 +368,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   </div>
                   <div>
                     <p className="text-sm font-medium text-ink mb-2">Import:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">import { useAllowances } from 'allowance-guard-hooks'</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">import &#123; useAllowances &#125; from &apos;allowance-guard-hooks&apos;</pre>
                   </div>
                 </div>
               </div>
@@ -382,7 +382,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   </div>
                   <div>
                     <p className="text-sm font-medium text-ink mb-2">Import:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">const AllowanceGuardSDK = require('allowance-guard-sdk')</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">const AllowanceGuardSDK = require(&apos;allowance-guard-sdk&apos;)</pre>
                   </div>
                 </div>
               </div>
@@ -392,7 +392,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-ink mb-2">CDN Script:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src="https://unpkg.com/allowance-guard-widget@latest/dist/widget.js"&gt;&lt;/script&gt;</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-ink mb-2">Initialize:</p>
@@ -421,7 +421,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <li>• Always validate wallet addresses client-side</li>
                   <li>• Use HTTPS for all API requests</li>
                   <li>• Implement proper error handling</li>
-                  <li>• Don't expose API keys in client-side code</li>
+                  <li>• Don&apos;t expose API keys in client-side code</li>
                 </ul>
               </div>
 

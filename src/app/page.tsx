@@ -29,7 +29,7 @@ const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeli
 })
 
 // Enhanced Error Boundary Component
-function ErrorFallback({ error, resetError }: { error: Error; resetError: () => void }) {
+function ErrorFallback({ resetError }: { error: Error; resetError: () => void }) {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="max-w-md mx-auto text-center p-6">

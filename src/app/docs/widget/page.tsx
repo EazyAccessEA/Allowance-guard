@@ -4,7 +4,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2, H3 } from '@/components/ui/Heading'
 import { useState } from 'react'
-import { Copy, Check, Code, Download, Eye, Settings, Palette } from 'lucide-react'
+import { Copy, Check, Code, Download, Eye, Settings } from 'lucide-react'
 import AllowanceGuardWidget from '@/components/AllowanceGuardWidget'
 
 export default function WidgetPage() {
@@ -210,7 +210,7 @@ export default function WidgetPage() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm font-mono"
                     />
                     <p className="text-xs text-gray-500 mt-1">
-                      Demo wallet (Vitalik's address)
+                      Demo wallet (Vitalik&apos;s address)
                     </p>
                   </div>
                 </div>
@@ -286,7 +286,7 @@ export default function WidgetPage() {
                   
                   <div>
                     <p className="text-sm font-medium text-gray-700 mb-2">2. Import and use:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from 'allowance-guard-widget'</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
                   </div>
                   
                   <div>
@@ -306,12 +306,12 @@ export default function WidgetPage() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-gray-700 mb-2">1. Include the script:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src="https://unpkg.com/allowance-guard-widget@latest/dist/widget.js"&gt;&lt;/script&gt;</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
                   </div>
                   
                   <div>
                     <p className="text-sm font-medium text-gray-700 mb-2">2. Add container div:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;div id="allowance-guard-widget"&gt;&lt;/div&gt;</pre>
+                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;div id=&quot;allowance-guard-widget&quot;&gt;&lt;/div&gt;</pre>
                   </div>
                   
                   <div>
@@ -415,10 +415,10 @@ export default function WidgetPage() {
                       string
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      'light'
+                      &apos;light&apos;
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
-                      Widget theme: 'light', 'dark', or 'auto'
+                      Widget theme: &apos;light&apos;, &apos;dark&apos;, or &apos;auto&apos;
                     </td>
                   </tr>
                   <tr>

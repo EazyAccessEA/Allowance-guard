@@ -1,7 +1,7 @@
 'use client'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2 } from '@/components/ui/Heading'
+import { H1 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
 
 export default function FAQPage() {

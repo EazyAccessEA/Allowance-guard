@@ -1,7 +1,6 @@
 'use client'
 
 import { Card, CardContent } from '@/components/ui/Card'
-import { Badge } from '@/components/ui/Badge'
 
 interface StatCardProps {
   title: string
@@ -9,10 +8,9 @@ interface StatCardProps {
   description: string
   trend?: 'up' | 'down' | 'neutral'
   trendValue?: string
-  icon?: React.ReactNode
 }
 
-function StatCard({ title, value, description, trend, trendValue, icon }: StatCardProps) {
+function StatCard({ title, value, description, trend, trendValue }: StatCardProps) {
   const getTrendColor = () => {
     switch (trend) {
       case 'up':
@@ -24,10 +22,6 @@ function StatCard({ title, value, description, trend, trendValue, icon }: StatCa
     }
   }
 
-  const getTrendIcon = () => {
-    // Icons removed for cleaner design
-    return null
-  }
 
   return (
     <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white border-0 shadow-sm">

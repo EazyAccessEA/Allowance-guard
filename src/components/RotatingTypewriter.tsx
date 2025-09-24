@@ -33,7 +33,7 @@ export default function RotatingTypewriter({
       // Start with the first message to prevent layout shift
       setDisplayedText(messages[0])
     }
-  }, [isInitialized, messages.length])
+  }, [isInitialized, messages])
 
   useEffect(() => {
     if (!isInitialized || messages.length === 0) return

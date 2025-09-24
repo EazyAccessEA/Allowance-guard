@@ -324,7 +324,7 @@ export function useRiskLevel(riskLevel: number) {
  * Utility hook for formatting allowance amounts
  */
 export function useAllowanceFormatter() {
-  const formatAllowance = useCallback((allowance: string, decimals: number = 18) => {
+  const formatAllowance = useCallback((allowance: string) => {
     try {
       const num = parseFloat(allowance)
       if (isNaN(num)) return '0'
