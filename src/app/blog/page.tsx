@@ -61,6 +61,16 @@ const blogPosts = [
     featured: false
   },
   {
+    slug: 'red-team-yourself-simulating-an-attack-on-your-wallet',
+    title: 'Red Team Yourself: Simulating an Attack on Your Wallet',
+    subtitle: 'Your Personal Flight Simulator for Web3 Security',
+    excerpt: 'Commercial pilots spend hundreds of hours in flight simulators, practicing their response to engine failures. Why should we treat our digital wealth with any less seriousness? This guide walks you through how to safely red team your own wallet and habits.',
+    publishedAt: '2024-12-19',
+    readTime: '10 min read',
+    category: 'Security',
+    featured: false
+  },
+  {
     slug: 'programmable-safety-future-allowance-security',
     title: 'Programmable Safety: The Future of Allowance Security',
     subtitle: 'From Static Risk to Dynamic, Self-Managing Guardrails',
