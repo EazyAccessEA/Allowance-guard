@@ -7,7 +7,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { Badge } from '@/components/ui/Badge'
-import { Calendar, Clock, ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react'
+import { Calendar, Clock, ArrowLeft, ArrowRight } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 import { sanitizeHtml } from '@/lib/sanitize'
 
@@ -195,7 +195,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
-      <VideoBackground />
+      <VideoBackground videoSrc="/V3AG.mp4" />
       
       <Section className="py-16">
         <Container>
