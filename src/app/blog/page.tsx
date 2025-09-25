@@ -41,6 +41,16 @@ const blogPosts = [
     featured: false
   },
   {
+    slug: 'gas-fees-and-revocations-making-security-cost-effective',
+    title: 'Gas, Fees, and Revocations: Making Security Cost-Effective',
+    subtitle: 'Transforming Security from Expensive Chore to Low-Cost Habit',
+    excerpt: 'Security is like insurance. Everyone understands its importance, but paying the premium can feel like a burden. In Web3, the "premium" for securing your wallet is often paid in gas fees. But what if you could significantly lower that premium?',
+    publishedAt: '2024-12-19',
+    readTime: '8 min read',
+    category: 'Security',
+    featured: false
+  },
+  {
     slug: 'programmable-safety-future-allowance-security',
     title: 'Programmable Safety: The Future of Allowance Security',
     subtitle: 'From Static Risk to Dynamic, Self-Managing Guardrails',
