@@ -245,10 +245,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
               </div>
 
-              {/* Tags */}
-              {post.tags && (
+              {/* Tags - Optional */}
+              {(post as any).tags && (
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {post.tags.map((tag) => (
+                  {(post as any).tags.map((tag: string) => (
                     <Badge key={tag} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
