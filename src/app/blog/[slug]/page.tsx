@@ -11,8 +11,21 @@ import { Calendar, Clock, ArrowLeft, ArrowRight } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 import { sanitizeHtml } from '@/lib/sanitize'
 
+// Blog post interface
+interface BlogPost {
+  slug: string
+  title: string
+  subtitle: string
+  content: string
+  publishedAt: string
+  readTime: string
+  category: string
+  featured: boolean
+  tags?: string[]
+}
+
 // Blog posts data - in a real app, this would come from a CMS or database
-const blogPosts = [
+const blogPosts: BlogPost[] = [
   {
     slug: 'hardware-wallets-and-multisigs-elevating-your-security',
     title: 'Hardware Wallets and Multisigs: Elevating Your Security',
@@ -246,9 +259,9 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               {/* Tags - Optional */}
-              {(post as any).tags && (
+              {post.tags && (
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {(post as any).tags.map((tag: string) => (
+                  {post.tags.map((tag) => (
                     <Badge key={tag} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
