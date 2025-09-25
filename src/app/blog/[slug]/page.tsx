@@ -202,10 +202,19 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
-      <VideoBackground videoSrc="/V3AG.mp4" />
-      
-      <Section className="py-16">
-        <Container>
+      {/* Hero Section */}
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
+        <VideoBackground videoSrc="/V3AG.mp4" />
+        
+        {/* Gradient overlay */}
+        <div 
+          className="absolute inset-0 z-10"
+          style={{
+            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+          }}
+        />
+        
+        <Container className="relative z-10">
           <div className="max-w-4xl mx-auto">
             {/* Back to blog link */}
             <Link 
