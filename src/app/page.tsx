@@ -1,6 +1,6 @@
 'use client'
 import { useAccount } from 'wagmi'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
@@ -156,6 +156,7 @@ class APIClient {
 export default function HomePage() {
   const { address: connectedAddress, isConnected } = useAccount()
   const [selectedWallet, setSelectedWallet] = useState<string | null>(null)
+  const [isHydrated, setIsHydrated] = useState(false)
   const [rows, setRows] = useState<{
     chain_id: number
     token_address: string
@@ -175,6 +176,11 @@ export default function HomePage() {
   const [, setJobId] = useState<number | null>(null)
   const [message, setMessage] = useState('')
   const [error, setError] = useState<Error | null>(null)
+
+  // Handle hydration to prevent SSR/client mismatch
+  useEffect(() => {
+    setIsHydrated(true)
+  }, [])
 
   // Enhanced error handling
   const handleError = (error: Error, context: string) => {
@@ -468,8 +474,8 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* App Area - Only show when connected */}
-      {isConnected && (
+      {/* App Area - Only show when connected and hydrated */}
+      {isHydrated && isConnected && (
         <LazySection>
         <AppArea
           isConnected={isConnected}
@@ -489,8 +495,8 @@ export default function HomePage() {
         </LazySection>
       )}
 
-      {/* Activity Timeline - Only show when wallet is selected */}
-      {selectedWallet && (
+      {/* Activity Timeline - Only show when wallet is selected and hydrated */}
+      {isHydrated && selectedWallet && (
         <Section>
           <Container>
             <ActivityTimeline wallet={selectedWallet} />
