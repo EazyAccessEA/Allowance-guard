@@ -1218,7 +1218,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="max-w-4xl mx-auto">
             {/* Article content */}
             <article 
-              className="prose prose-lg max-w-none mb-12"
+              className="prose max-w-none mb-12"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
             />
 

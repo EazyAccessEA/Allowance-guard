@@ -3284,6 +3284,9 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   line-height: 1.7 !important;
   max-width: none !important;
   font-size: 1rem !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 .prose h1,
@@ -3321,6 +3324,9 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   font-size: 1.125rem !important;
   line-height: 1.7 !important;
   margin-bottom: 1.5rem !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 .prose ul,
@@ -3333,6 +3339,9 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
 
 .prose li {
   margin-bottom: 0.5rem !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
 }
 
 .prose strong {
