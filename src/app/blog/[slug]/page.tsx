@@ -9,7 +9,6 @@ import { H1 } from '@/components/ui/Heading'
 import { Badge } from '@/components/ui/Badge'
 import { Calendar, Clock, ArrowLeft, ArrowRight } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
-import { sanitizeHtml } from '@/lib/sanitize'
 
 // Blog post interface
 interface BlogPost {
@@ -276,7 +275,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Article content */}
             <article 
               className="prose max-w-none mb-12"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
+              dangerouslySetInnerHTML={{ __html: post.content }}
             />
 
             {/* Call to action */}
