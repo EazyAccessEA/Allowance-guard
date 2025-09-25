@@ -224,12 +224,6 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 <div className="flex-1" />
               </div>
 
-              {/* Simple Footer */}
-              <div className="p-8 border-t border-gray-200 text-center">
-                <p className="mobbin-body-small text-gray-500">
-                  © 2024 Allowance Guard
-                </p>
-              </div>
             </div>
           </div>
         </div>
