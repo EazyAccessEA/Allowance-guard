@@ -51,6 +51,16 @@ const blogPosts = [
     featured: false
   },
   {
+    slug: 'understanding-layer-2-networks-how-they-work',
+    title: 'Understanding Layer 2 Networks: How They Work',
+    subtitle: 'A Deeper Dive into the Technology Behind Scalable Ethereum',
+    excerpt: 'To understand Layer 2 solutions, we first need to understand the fundamental challenge they are designed to solve: the Blockchain Trilemma. Layer 2 networks are the key to unlocking Ethereum\'s scalability.',
+    publishedAt: '2024-12-19',
+    readTime: '12 min read',
+    category: 'Education',
+    featured: false
+  },
+  {
     slug: 'programmable-safety-future-allowance-security',
     title: 'Programmable Safety: The Future of Allowance Security',
     subtitle: 'From Static Risk to Dynamic, Self-Managing Guardrails',
