@@ -18,7 +18,7 @@ const blogPosts = [
     title: 'Hardware Wallets and Multisigs: Elevating Your Security',
     subtitle: 'From Digital Convenience to Physical Security',
     content: `
-      <p>In our ongoing discussion of Web3 security, we have focused on managing the permissions you grant to smart contracts. This is like curating the list of people allowed to enter a bank. It is a critical, essential practice. But what about the master key to the vault itself?</p>
+      <p>In our ongoing discussion of Web3 security, we have focused on managing the complete permissions you grant to smart contract systems. This is like curating the list of people allowed to enter a bank. It is a critical, essential practice. But what about the master key to the vault itself?</p>
 
       <p>That master key is your private key. The security of every asset you own rests on its secrecy. Most users keep this key in a "hot wallet"—a browser extension or mobile app. This is like leaving the vault key on the bank teller&apos;s desk: convenient, but constantly exposed to the risks of the outside world.</p>
 
