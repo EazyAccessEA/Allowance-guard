@@ -2,6 +2,7 @@
 import { useAccount } from 'wagmi'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { Button } from '@/components/ui/Button'
@@ -1222,10 +1223,10 @@ export default function HomePage() {
               <div>
                 <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
                 <ul className="space-y-3">
-                  <li><a href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-                  <li><a href="/docs" className="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
-                  <li><a href="/features" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
-                  <li><a href="/settings" className="text-gray-300 hover:text-white transition-colors">Settings</a></li>
+                  <li><Link href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link></li>
+                  <li><Link href="/docs" className="text-gray-300 hover:text-white transition-colors">Documentation</Link></li>
+                  <li><Link href="/features" className="text-gray-300 hover:text-white transition-colors">Features</Link></li>
+                  <li><Link href="/settings" className="text-gray-300 hover:text-white transition-colors">Settings</Link></li>
                 </ul>
               </div>
 
