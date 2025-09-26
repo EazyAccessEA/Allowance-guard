@@ -911,7 +911,7 @@ export default function HomePage() {
                 alt="Ethereum"
                 width={140}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto brightness-0 invert"
               />
             </div>
             
@@ -922,7 +922,7 @@ export default function HomePage() {
                 alt="Arbitrum"
                 width={120}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto brightness-0 invert"
               />
             </div>
             
@@ -933,7 +933,7 @@ export default function HomePage() {
                 alt="Base"
                 width={120}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto brightness-0 invert"
               />
             </div>
             
@@ -944,7 +944,7 @@ export default function HomePage() {
                 alt="Polygon"
                 width={120}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto brightness-0 invert"
               />
             </div>
             
@@ -955,7 +955,7 @@ export default function HomePage() {
                 alt="Optimism"
                 width={120}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto brightness-0 invert"
               />
             </div>
             
@@ -966,7 +966,7 @@ export default function HomePage() {
                 alt="Avalanche"
                 width={120}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto brightness-0 invert"
               />
             </div>
           </div>
@@ -984,7 +984,7 @@ export default function HomePage() {
                   alt="Ethereum"
                   width={140}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -995,7 +995,7 @@ export default function HomePage() {
                   alt="Arbitrum"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1006,7 +1006,7 @@ export default function HomePage() {
                   alt="Base"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1017,7 +1017,7 @@ export default function HomePage() {
                   alt="Polygon"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1028,7 +1028,7 @@ export default function HomePage() {
                   alt="Optimism"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1039,7 +1039,7 @@ export default function HomePage() {
                   alt="Avalanche"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
             </div>
@@ -1053,7 +1053,7 @@ export default function HomePage() {
                   alt="Ethereum"
                   width={140}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1064,7 +1064,7 @@ export default function HomePage() {
                   alt="Arbitrum"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1075,7 +1075,7 @@ export default function HomePage() {
                   alt="Base"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1086,7 +1086,7 @@ export default function HomePage() {
                   alt="Polygon"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1097,7 +1097,7 @@ export default function HomePage() {
                   alt="Optimism"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1108,7 +1108,7 @@ export default function HomePage() {
                   alt="Avalanche"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
             </div>
@@ -1122,7 +1122,7 @@ export default function HomePage() {
                   alt="Ethereum"
                   width={140}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1133,7 +1133,7 @@ export default function HomePage() {
                   alt="Arbitrum"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1144,7 +1144,7 @@ export default function HomePage() {
                   alt="Base"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1155,7 +1155,7 @@ export default function HomePage() {
                   alt="Polygon"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1166,7 +1166,7 @@ export default function HomePage() {
                   alt="Optimism"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
               
@@ -1177,7 +1177,7 @@ export default function HomePage() {
                   alt="Avalanche"
                   width={120}
                   height={32}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto brightness-0 invert"
                 />
               </div>
             </div>
