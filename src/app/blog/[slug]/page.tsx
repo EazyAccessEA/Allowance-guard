@@ -844,7 +844,7 @@ const blogPosts: BlogPost[] = [
         <li><strong>Demonstrate with Clean Wallets:</strong> When creating tutorials or screenshots, use a fresh, empty wallet. Fund it with a tiny amount of ETH for gas from a privacy-preserving service if needed.</li>
         <li><strong>Blur Everything:</strong> Before posting any screenshot, meticulously blur or black out any potentially identifying information: ENS names, full wallet addresses, balances, and specific transaction hashes. The lesson is in the process (how to revoke), not in your personal holdings.</li>
       </ul>
-
+      
       <h3>Principle 2: Report Responsibly, Not Recklessly</h3>
 
       <p>When you discover a potential threat, your first instinct may be to sound the alarm publicly. This can sometimes cause more harm than good, creating panic or tipping off an attacker before a project can implement a fix. Follow the professional standard of responsible disclosure.</p>
@@ -1096,7 +1096,7 @@ const blogPosts: BlogPost[] = [
       <h3>1. Segmentation: Your Operating Environment</h3>
       
       <p>As we discussed in our article on hardware wallets, not all on-chain activity carries the same risk. By segmenting your funds and activities into different wallets, you contain the potential damage from any single point of failure.</p>
-
+      
       <table>
         <thead>
           <tr>
@@ -1123,11 +1123,11 @@ const blogPosts: BlogPost[] = [
           </tr>
         </tbody>
       </table>
-      
+
       <h3>2. Inspection: Your Audit Cadence</h3>
       
       <p>The core of your routine is a scheduled review of your wallet&apos;s active permissions and overall security posture. The key is to make this a recurring event in your calendar, not something you rely on memory to perform.</p>
-
+      
       <table>
         <thead>
           <tr>
@@ -1169,7 +1169,7 @@ const blogPosts: BlogPost[] = [
         <li><strong>Install a Browser Security Extension:</strong> A reputable extension like <a href="https://www.walletguard.app/" target="_blank" rel="noopener noreferrer">Wallet Guard</a> or the one from Revoke.cash can simulate transactions before you sign them and block known phishing sites, acting as a critical first line of defense.</li>
         <li><strong>Use Batch Revocation:</strong> As we covered in our article on gas fees, manually revoking dozens of allowances is time-consuming and expensive. Batching tools turn this into a single, efficient, and cost-effective transaction.</li>
       </ul>
-
+      
       <h3>4. Documentation: Your Command Center</h3>
       
       <p>A complex security setup is useless if you can&apos;t remember how it works in a moment of stress. Create a simple, private "Security Operating Manual." This document should be stored securely—never in plain text on a cloud drive, but rather in an encrypted file or a secure notes feature within a trusted password manager.</p>
@@ -1240,7 +1240,7 @@ const blogPosts: BlogPost[] = [
         <li><strong>Contract Changes:</strong> Dapps are not static. Developers upgrade contracts or migrate to new proxy addresses. Your permanent approval for an old, perhaps now unmaintained, contract remains active, becoming a piece of forgotten technical debt that exposes you to risk.</li>
         <li><strong>The Burden of Manual Revocation:</strong> The only way to close this security hole is to manually revoke the allowance, which costs a gas fee. This requires users to be constantly vigilant, use third-party tools to track their approvals, and spend money to clean them up. In reality, most users never do.</li>
       </ul>
-
+      
       <p>This static, permanent model is fundamentally misaligned with the principles of robust security. It demands perfect, perpetual vigilance from the user, when it should be the system itself that provides inherent safety.</p>
 
       <h2>What "Programmable Safety" Really Means</h2>
@@ -1287,7 +1287,7 @@ const blogPosts: BlogPost[] = [
           </tr>
         </tbody>
       </table>
-
+      
       <p>By embedding these characteristics into the allowance process, we shift the responsibility for security from the user&apos;s memory to the system&apos;s logic. An approval is no longer a permanent liability but a temporary, purpose-driven permission that cleans itself up.</p>
 
       <h2>An Open Safety Layer for Everyone</h2>
@@ -1303,7 +1303,7 @@ const blogPosts: BlogPost[] = [
         <li><strong>Dapp-Level Automation:</strong> Developers can embed safety features directly into their applications. A DeFi protocol could automatically revoke a user&apos;s approval after a loan is repaid or a trade is completed, eliminating the need for manual cleanup.</li>
         <li><strong>Shared Intelligence:</strong> An open standard allows for the creation of decentralized risk oracles—shared, on-chain databases that track malicious contracts and addresses. When one user flags a bad actor, the entire network benefits from that knowledge.</li>
       </ul>
-
+      
       <p>This approach mirrors how the web itself became safer. We didn&apos;t rely on one company to secure the internet. Instead, we developed open standards like HTTPS and OAuth that provided a common framework for secure communication and authentication. An open safety layer for Web3 allowances is the next logical step in that evolution.</p>
 
       <h3>Privacy and Transparency by Design</h3>
@@ -1372,6 +1372,166 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '9 min read',
     category: 'Innovation',
+    featured: false
+  },
+  {
+    slug: 'how-to-self-audit-your-wallet',
+    title: 'How to Self-Audit Your Wallet',
+    subtitle: 'Take Control of Your Own Security',
+    content: `
+      <p>In traditional finance, you might check your bank statement to make sure the bank hasn&apos;t made a mistake. In Web3, you audit your wallet to make sure <em>you</em> haven&apos;t made a mistake that will drain your account six months from now.</p>
+
+      <p>This is the glorious and terrifying reality of self-custody. It makes you the sole master of your assets, but it also makes you the Chief Security Officer, the Head of Compliance, and the person who gets to file the incident report.</p>
+
+      <p>The good news is that this job is far less intimidating than it sounds. A periodic wallet audit is a simple, methodical process. It is less about being a technical genius and more about being a diligent housekeeper. With the right approach, you can turn a task that feels like a chore into a routine that provides effortless confidence.</p>
+
+      <p>This guide will provide a clear, five-step process for auditing your wallet. Think of it not as a test, but as a tune-up—a way to find and fix the small issues before they become large problems.</p>
+
+      <h2>The Invisible Contracts You&apos;ve Already Signed</h2>
+      
+      <p>Every time you interact with a decentralized application—staking a token, listing an NFT, providing liquidity—you leave a digital footprint. The most common of these is the <strong>token approval</strong>. It&apos;s a digital permission slip you sign, giving a smart contract permission to move a certain number of your tokens on your behalf.</p>
+
+      <p>For convenience, most applications ask for an <strong>unlimited approval</strong>. You grant it once and the permission lasts forever.</p>
+
+      <p>This is wonderfully efficient. It is also wonderfully dangerous.</p>
+
+      <p>These approvals accumulate silently in the background of your wallet. You gave one to that yield farm in 2023. Another to that NFT marketplace you tried once. A third to that protocol whose name you can&apos;t quite remember. Each one is a dormant key to your funds, held by a piece of code you haven&apos;t thought about in months. An attacker doesn&apos;t need to break into your house if you&apos;ve already given them a key. A wallet audit is simply the process of finding and reclaiming those forgotten keys.</p>
+
+      <h2>The Five-Step Audit: From Chaos to Control</h2>
+      
+      <p>A proper audit is not a frantic scramble; it is a calm, structured review. Follow these five steps to take control of your wallet&apos;s security posture.</p>
+
+      <h3>Step 1: The Roll Call (Map Your Wallets)</h3>
+      
+      <p>You cannot secure what you do not acknowledge. Before you dive into approvals, take a moment to map out your operational landscape. Most seasoned users operate with a few distinct wallets, each with a specific job.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Wallet Persona</th>
+            <th>Purpose & Typical Risk Profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>The Vault</strong></td>
+            <td>Long-term holdings, high-value assets. Secured by a hardware wallet. Approvals are exceedingly rare.</td>
+          </tr>
+          <tr>
+            <td><strong>The Workshop</strong></td>
+            <td>Your daily driver for reputable DeFi protocols. A browser wallet like MetaMask or Rabby. This is where most of your approvals will live.</td>
+          </tr>
+          <tr>
+            <td><strong>The Playground</strong></td>
+            <td>A "burner" wallet for minting NFTs, trying new unaudited dapps, and general degeneracy. Assumed to be high-risk at all times.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>This simple map tells you where to focus your attention. The Playground needs constant cleaning, while the Vault should, ideally, have nothing to clean at all.</p>
+
+      <h3>Step 2: The Multi-Chain Expedition (Leave No Stone Unturned)</h3>
+      
+      <p>Attackers are equal-opportunity employers; they are just as happy to find a vulnerability on a Layer 2 network as they are on Ethereum Mainnet. In fact, they prefer it, because they know users often forget to check their permissions on sidechains and testnets.</p>
+
+      <p>Your audit must be comprehensive. Use an allowance tool to check every chain you have ever interacted with. A great utility for this is <a href="https://chainlist.org/" target="_blank" rel="noopener noreferrer">Chainlist</a>, which helps you easily add and switch between dozens of EVM-compatible networks in your wallet. Your checklist should include:</p>
+
+      <ul>
+        <li>Ethereum Mainnet</li>
+        <li>Layer 2s (Arbitrum, Optimism, Base, etc.)</li>
+        <li>Sidechains (Polygon, Avalanche, etc.)</li>
+        <li>Any other chain where you might have signed a transaction.</li>
+      </ul>
+
+      <h3>Step 3: The Triage (Scoring Your Risks)</h3>
+      
+      <p>Not all approvals are created equal. Once you have a list of active permissions from a tool like AllowanceGuard or <a href="https://revoke.cash/" target="_blank" rel="noopener noreferrer">Revoke.cash</a>, your next job is to triage them. This isn&apos;t about making a binary "keep" or "revoke" decision. It&apos;s about understanding the specific risk of each permission.</p>
+
+      <p>Use this simple scorecard:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Risk Factor</th>
+            <th>High Risk (Revoke Immediately)</th>
+            <th>Medium Risk (Consider Reducing)</th>
+            <th>Low Risk (Likely Fine)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Approval Amount</strong></td>
+            <td><strong>Unlimited.</strong> A blank cheque you wrote to a smart contract.</td>
+            <td>A large, fixed amount that is more than you currently need.</td>
+            <td>A small, specific amount for a single past transaction.</td>
+          </tr>
+          <tr>
+            <td><strong>Contract Age</strong></td>
+            <td>Deployed recently; new and unaudited.</td>
+            <td>Established, but has a history of minor issues.</td>
+            <td>Years old and battle-tested with billions in value secured.</td>
+          </tr>
+          <tr>
+            <td><strong>Usage Frequency</strong></td>
+            <td>Dormant. You haven&apos;t used the dapp in over 90 days.</td>
+            <td>You use it occasionally, perhaps once a month.</td>
+            <td>You use it actively and daily.</td>
+          </tr>
+          <tr>
+            <td><strong>Protocol Audits</strong></td>
+            <td>No public audits, or audits from unknown firms.</td>
+            <td>Audited once by a reputable firm.</td>
+            <td>Multiple, recent audits from top-tier firms. Check <a href="https://defillama.com/audits" target="_blank" rel="noopener noreferrer">DeFiLlama&apos;s Audit Dashboard</a> for records.</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>This triage process helps you prioritize. The unlimited approval for a dormant, unaudited contract is a five-alarm fire. The limited approval for Uniswap is probably fine.</p>
+
+      <h3>Step 4: The Cleanup (Revoke with Confidence)</h3>
+      
+      <p>Now for the satisfying part: reclaiming your keys.</p>
+
+      <ul>
+        <li><strong>Revoke:</strong> This resets the approval to zero. It is the most secure action for any permission you no longer need.</li>
+        <li><strong>Reduce:</strong> Some tools allow you to lower an unlimited approval to a smaller, fixed amount. This can be a good middle ground for dapps you use regularly.</li>
+      </ul>
+
+      <p>When cleaning up, remember two things. First, <strong>batch your revocations.</strong> Using a tool that can bundle dozens of revocations into a single transaction saves a remarkable amount of time and gas fees. Second, always verify you are interacting with the correct tool by using a trusted bookmark. The only thing worse than a risky approval is getting phished while trying to revoke it.</p>
+
+      <h3>Step 5: The Captain&apos;s Log (Archive Your Work)</h3>
+      
+      <p>This final step may seem superfluous, but it separates the amateur from the professional. Take a screenshot or export a CSV of your allowances both before and after your audit.</p>
+
+      <p>This simple record gives you a benchmark for your next audit and serves as a clear, historical log of your diligence. Your future self will thank you.</p>
+
+      <h2>Beyond the Audit: A Note on Good Housekeeping</h2>
+      
+      <p>A quarterly audit is designed to clean up the mess. But better daily habits can prevent the mess from accumulating in the first place.</p>
+
+      <ul>
+        <li><strong>The Bookmark Rule:</strong> Never, ever find a dapp via Google search or a link in a social media bio. Phishing clones are rampant. Find the official link once, bookmark it, and only use that bookmark.</li>
+        <li><strong>The "Specific Amount" Habit:</strong> When your wallet asks for an approval, don&apos;t just click "Max." Most wallets have an option to set a specific spending cap. Take the extra three seconds to approve only the amount you need for that transaction.</li>
+        <li><strong>Read the Label:</strong> Before you click "Confirm," read what your wallet is telling you. Are you signing an <code>approve</code> transaction, or a <code>transfer</code>? Are you interacting with the contract you think you are? That final confirmation screen is your last line of defence. Use it.</li>
+      </ul>
+
+      <h3>Practical Next Steps</h3>
+      
+      <p>Theory is useful. Action is essential. Here is your plan for the next 30 minutes.</p>
+
+      <ol>
+        <li><strong>Choose Your Tool:</strong> Open a trusted allowance manager like AllowanceGuard.</li>
+        <li><strong>Run a Multi-Chain Scan:</strong> Connect your "Workshop" wallet and scan for approvals across all relevant networks.</li>
+        <li><strong>Perform a Triage:</strong> Identify the top three riskiest approvals based on the scorecard above (look for "Unlimited" and "Dormant").</li>
+        <li><strong>Execute the Cleanup:</strong> Use the batch revoke function to eliminate them in one efficient transaction.</li>
+        <li><strong>Schedule the Next One:</strong> Open your calendar right now and create a recurring 30-minute event three months from today. Title it "Wallet Security Audit."</li>
+      </ol>
+      
+      <p>A regular audit might be the most profitable half-hour you spend in your financial life. It doesn&apos;t generate yield, but it masterfully prevents its total loss.</p>
+    `,
+    publishedAt: '2024-12-19',
+    readTime: '8 min read',
+    category: 'Security',
     featured: false
   }
 ]
