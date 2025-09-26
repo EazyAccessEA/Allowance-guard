@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
@@ -28,7 +29,8 @@ const blogPosts = [
     publishedAt: '2024-12-19',
     readTime: '10 min read',
     category: 'Security',
-    featured: false
+    featured: false,
+    image: '/u3182613983_High-detail_3D_render_of_an_open_semi-transparent_50162c0f-297f-4156-aa76-5016cafeb9c5_2.png'
   },
   {
     slug: 'building-your-personal-web3-security-routine',
@@ -266,6 +268,18 @@ export default function BlogPage() {
                 return (
                   <article key={post.slug} className="group">
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
+                      {/* Add image if it exists */}
+                      {(post as any).image && (
+                        <div className="relative h-48 overflow-hidden">
+                          <Image
+                            src={(post as any).image}
+                            alt={post.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      )}
+                      
                       <div className="p-6 h-full flex flex-col">
                         <div className="flex items-center gap-2 mb-4">
                           <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r`}>
