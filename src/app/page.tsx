@@ -653,7 +653,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <blockquote className="text-text-secondary leading-relaxed">
-                  "I was shocked to find 15 unlimited approvals I had forgotten about. AllowanceGuard helped me clean up my wallet and sleep better at night. The risk assessment is incredibly detailed."
+                  &quot;I was shocked to find 15 unlimited approvals I had forgotten about. AllowanceGuard helped me clean up my wallet and sleep better at night. The risk assessment is incredibly detailed.&quot;
                 </blockquote>
               </div>
 
@@ -670,7 +670,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <blockquote className="text-text-secondary leading-relaxed">
-                  "As someone who interacts with dozens of dApps, I need to stay on top of my approvals. AllowanceGuard makes it simple and fast. The batch revocation feature saved me hours."
+                  &quot;As someone who interacts with dozens of dApps, I need to stay on top of my approvals. AllowanceGuard makes it simple and fast. The batch revocation feature saved me hours.&quot;
                 </blockquote>
               </div>
 
@@ -687,7 +687,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <blockquote className="text-text-secondary leading-relaxed">
-                  "The transparency of open-source code gives me confidence. I can see exactly what AllowanceGuard is doing with my data. No hidden fees, no data collection - just pure security."
+                  &quot;The transparency of open-source code gives me confidence. I can see exactly what AllowanceGuard is doing with my data. No hidden fees, no data collection - just pure security.&quot;
                 </blockquote>
               </div>
 
@@ -704,7 +704,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <blockquote className="text-text-secondary leading-relaxed">
-                  "Multi-chain support is crucial for my work. Being able to check allowances across Ethereum, Arbitrum, and Base in one interface is a game-changer. The API integration is seamless."
+                  &quot;Multi-chain support is crucial for my work. Being able to check allowances across Ethereum, Arbitrum, and Base in one interface is a game-changer. The API integration is seamless.&quot;
                 </blockquote>
               </div>
 
@@ -721,7 +721,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <blockquote className="text-text-secondary leading-relaxed">
-                  "The real-time monitoring alerts saved me from a potential exploit. I got notified about a suspicious contract before I could interact with it. This tool is essential for any serious investor."
+                  &quot;The real-time monitoring alerts saved me from a potential exploit. I got notified about a suspicious contract before I could interact with it. This tool is essential for any serious investor.&quot;
                 </blockquote>
               </div>
 
@@ -738,7 +738,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <blockquote className="text-text-secondary leading-relaxed">
-                  "I recommend AllowanceGuard to all my students. The educational content and clear explanations help them understand Web3 security. It&apos;s not just a tool, it&apos;s a learning platform."
+                  &quot;I recommend AllowanceGuard to all my students. The educational content and clear explanations help them understand Web3 security. It&apos;s not just a tool, it&apos;s a learning platform.&quot;
                 </blockquote>
               </div>
             </div>
