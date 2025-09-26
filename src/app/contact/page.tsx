@@ -100,7 +100,7 @@ export default function ContactPage() {
       <div className="border-t border-border-primary" />
 
       {/* Section 1: Quick Help Search */}
-      <Section className="py-32">
+      <Section className="py-32 bg-gray-50">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Quick Help Search</h2>
@@ -272,7 +272,7 @@ export default function ContactPage() {
       </Section>
 
       {/* Section 3: Community & Async Support - Mobbin Layout */}
-      <Section className="py-32">
+      <Section className="py-32 bg-gray-50">
         <Container className="max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
@@ -295,7 +295,7 @@ export default function ContactPage() {
                   Get real-time help from our community and developers. It&apos;s the best place for quick questions and discussions.
                 </p>
                 <a 
-                  href="https://discord.gg/allowanceguard"
+                  href="https://discord.gg/DsJ4Pa94"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
@@ -320,7 +320,7 @@ export default function ContactPage() {
                   Follow us for the latest announcements, updates, and security tips.
                 </p>
                 <a 
-                  href="https://x.com/AllowanceGuard"
+                  href="https://x.com/allowanceguard"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
@@ -328,7 +328,7 @@ export default function ContactPage() {
                   <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
-                  Follow @AllowanceGuard
+                  Follow @allowanceguard
                   <ExternalLink className="w-4 h-4 ml-2" />
                 </a>
               </div>
