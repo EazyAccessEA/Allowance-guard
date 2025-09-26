@@ -182,6 +182,11 @@ export default function HomePage() {
     setIsHydrated(true)
   }, [])
 
+  // Debug logging
+  useEffect(() => {
+    console.log('HomePage state:', { isHydrated, isConnected, selectedWallet, connectedAddress })
+  }, [isHydrated, isConnected, selectedWallet, connectedAddress])
+
   // Enhanced error handling
   const handleError = (error: Error, context: string) => {
     console.error(`Error in ${context}:`, error)
@@ -474,7 +479,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* App Area - Only show when connected, hydrated, and wallet is selected */}
+      {/* App Area - Only show when connected, hydrated, and wallet is explicitly selected */}
       {isHydrated && isConnected && selectedWallet && (
         <LazySection>
         <AppArea
