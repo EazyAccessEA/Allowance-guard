@@ -2,12 +2,72 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import { Badge } from '@/components/ui/Badge'
 import DonationButton from '@/components/DonationButton'
-import { Heart, Shield, Code, Users, FileText, Settings, BookOpen, Github, MessageCircle, Mail } from 'lucide-react'
+import { Heart, Shield, Code, Users, BookOpen, Github, MessageCircle, Mail, ChevronDown, ChevronUp } from 'lucide-react'
+
+interface FooterSectionProps {
+  title: string
+  children: React.ReactNode
+  isOpen: boolean
+  onToggle: () => void
+  icon?: React.ReactNode
+}
+
+function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectionProps) {
+  return (
+    <div className="border-b border-gray-800 md:border-b-0">
+      <div
+        onClick={onToggle}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        aria-controls={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
+        className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none cursor-pointer rounded-md hover:bg-gray-800/50 transition-colors duration-200"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onToggle()
+          }
+        }}
+      >
+        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+          {icon}
+          {title}
+        </h3>
+        <div className="md:hidden">
+          {isOpen ? (
+            <ChevronUp className="w-5 h-5 text-gray-400" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-gray-400" />
+          )}
+        </div>
+      </div>
+      <div 
+        id={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
+        className={`md:block ${isOpen ? 'block' : 'hidden'} pb-4 md:pb-0`}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
 
 export default function Footer() {
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    quickLinks: false,
+    community: false,
+  })
+
+  const toggleSection = (section: string) => {
+    setOpenSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }))
+  }
+
   return (
     <footer className="bg-gray-900 text-white">
       <Container className="py-16 sm:py-20 lg:py-24">
@@ -47,6 +107,7 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 hover:bg-primary-accent rounded-lg flex items-center justify-center transition-all duration-200 group"
+                aria-label="GitHub"
               >
                 <Github className="w-5 h-5 text-gray-400 group-hover:text-white" />
               </a>
@@ -55,6 +116,7 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 hover:bg-primary-accent rounded-lg flex items-center justify-center transition-all duration-200 group"
+                aria-label="Discord"
               >
                 <MessageCircle className="w-5 h-5 text-gray-400 group-hover:text-white" />
               </a>
@@ -63,6 +125,7 @@ export default function Footer() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 hover:bg-primary-accent rounded-lg flex items-center justify-center transition-all duration-200 group"
+                aria-label="Twitter"
               >
                 <svg className="w-5 h-5 text-gray-400 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -71,13 +134,14 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-primary-accent" />
-              Quick Links
-            </h4>
-            <ul className="space-y-4">
+          {/* Quick Links - Collapsible on Mobile */}
+          <FooterSection
+            title="Quick Links"
+            icon={<BookOpen className="w-5 h-5 text-primary-accent" />}
+            isOpen={openSections.quickLinks}
+            onToggle={() => toggleSection('quickLinks')}
+          >
+            <ul className="space-y-4 mt-6 md:mt-6">
               <li>
                 <Link href="/blog" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
                   Blog
@@ -99,15 +163,16 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </FooterSection>
 
-          {/* Community & Support */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-              <Users className="w-5 h-5 text-primary-accent" />
-              Community
-            </h4>
-            <ul className="space-y-4">
+          {/* Community & Support - Collapsible on Mobile */}
+          <FooterSection
+            title="Community"
+            icon={<Users className="w-5 h-5 text-primary-accent" />}
+            isOpen={openSections.community}
+            onToggle={() => toggleSection('community')}
+          >
+            <ul className="space-y-4 mt-6 md:mt-6">
               <li>
                 <a 
                   href="https://github.com/EazyAccessEA/Allowance-guard" 
@@ -148,7 +213,7 @@ export default function Footer() {
             <div className="mt-6">
               <DonationButton />
             </div>
-          </div>
+          </FooterSection>
         </div>
 
         {/* Bottom section */}
