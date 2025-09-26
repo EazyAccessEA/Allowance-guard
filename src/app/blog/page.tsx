@@ -112,7 +112,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '6 min read',
     category: 'Security',
-    featured: false
+    featured: false,
+    image: '/How to self audit.png'
   },
   {
     slug: 'what-are-token-allowances',
