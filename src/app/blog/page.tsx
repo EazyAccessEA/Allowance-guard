@@ -151,70 +151,30 @@ export default function BlogPage() {
   const regularPosts = blogPosts.filter(post => !post.featured)
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Image, Overlay, and Title */}
-      <Section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        {/* Background Image/Video */}
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
         
-        {/* Overlay on top of image */}
+        {/* Gradient overlay */}
         <div 
           className="absolute inset-0 z-10"
           style={{
-            background: 'linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)'
+            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
         
-        {/* Blog Title above both image and overlay */}
-        <Container className="relative z-20">
-          <div className="max-w-6xl mx-auto text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full text-sm font-medium mb-8">
-              <BookOpen className="w-4 h-4" />
-              Latest Web3 Security Insights
-            </div>
-            
-            {/* Main Title - Above everything */}
-            <h1 className="text-7xl md:text-9xl font-bold mb-8">
-              <span className="bg-gradient-to-r from-white via-primary-100 to-blue-100 bg-clip-text text-transparent drop-shadow-2xl">
-                Blog
-              </span>
-            </h1>
-            
-            {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-gray-100 leading-relaxed mb-16 max-w-4xl mx-auto drop-shadow-lg">
+        <Container className="relative z-10">
+          <div className="max-w-4xl">
+            <H1 className="mb-6">Blog</H1>
+            <p className="text-xl text-text-secondary leading-relaxed mb-8">
               Insights, guides, and updates on Web3 security, token allowances, and DeFi best practices.
             </p>
-            
-            {/* Stats Cards with glassmorphism */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-center hover:bg-white/15 transition-all duration-300">
-                <div className="w-16 h-16 bg-primary-500/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Shield className="w-8 h-8 text-primary-200" />
-                </div>
-                <div className="text-4xl font-bold text-white mb-3">12+</div>
-                <div className="text-sm text-gray-200 font-medium">Security Articles</div>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-center hover:bg-white/15 transition-all duration-300">
-                <div className="w-16 h-16 bg-blue-500/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <BookOpen className="w-8 h-8 text-blue-200" />
-                </div>
-                <div className="text-4xl font-bold text-white mb-3">8+</div>
-                <div className="text-sm text-gray-200 font-medium">Educational Guides</div>
-              </div>
-              
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-center hover:bg-white/15 transition-all duration-300">
-                <div className="w-16 h-16 bg-green-500/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Lightbulb className="w-8 h-8 text-green-200" />
-                </div>
-                <div className="text-4xl font-bold text-white mb-3">5+</div>
-                <div className="text-sm text-gray-200 font-medium">Innovation Posts</div>
-              </div>
-            </div>
           </div>
         </Container>
       </Section>
+
+      <div className="border-t border-border-primary" />
 
       {/* Featured Post Section */}
       {featuredPost && (
