@@ -491,14 +491,14 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Final CTA Section */}
-      <Section className="py-16 sm:py-20 lg:py-24 bg-white">
+      {/* Final CTA Section - Dark Background */}
+      <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
               Ready to Secure Your Wallet?
             </h2>
-            <p className="text-xl text-text-secondary leading-relaxed mb-8 text-justify">
+            <p className="text-xl text-gray-300 leading-relaxed mb-8">
               Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
             </p>
             
@@ -521,7 +521,7 @@ export default function HomePage() {
                   {pending ? 'Scanning...' : 'Scan Your Wallet'}
                 </Button>
               )}
-              <p className="text-sm text-text-tertiary">
+              <p className="text-sm text-gray-400">
                 No sign-up required. No email. Just connect and scan.
               </p>
             </div>
@@ -892,10 +892,10 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* Trust Section - Full Screen Width */}
-      <div className="py-12 sm:py-16 bg-background-light">
+      {/* Trust Section - Full Screen Width - Dark Background */}
+      <div className="py-12 sm:py-16 bg-gray-900">
         <div className="w-full mb-6">
-          <p className="text-base text-text-secondary font-medium text-center">
+          <p className="text-base text-gray-300 font-medium text-center">
               Trusted by security-conscious users across
             </p>
         </div>
@@ -1183,6 +1183,78 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* Dark Footer Section */}
+      <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
+        <Container>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+              {/* Company Info */}
+              <div className="lg:col-span-2">
+                <div className="flex items-center gap-3 mb-6">
+                  <Image
+                    src="/AG_Logo2.png"
+                    alt="Allowance Guard Logo"
+                    width={40}
+                    height={40}
+                    className="rounded-lg"
+                  />
+                  <div>
+                    <h3 className="text-xl font-bold text-white">Allowance Guard</h3>
+                    <p className="text-gray-400 text-sm">Secure Token Approvals</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
+                  The most comprehensive token allowance security platform for Web3. 
+                  Protect your digital assets with enterprise-grade security.
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-8 bg-primary-accent/10 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <span className="text-gray-300 text-sm">Open Source & Free Forever</span>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                <ul className="space-y-3">
+                  <li><a href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</a></li>
+                  <li><a href="/docs" className="text-gray-300 hover:text-white transition-colors">Documentation</a></li>
+                  <li><a href="/features" className="text-gray-300 hover:text-white transition-colors">Features</a></li>
+                  <li><a href="/settings" className="text-gray-300 hover:text-white transition-colors">Settings</a></li>
+                </ul>
+              </div>
+
+              {/* Security */}
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-4">Security</h4>
+                <ul className="space-y-3">
+                  <li><span className="text-gray-300">No Private Keys</span></li>
+                  <li><span className="text-gray-300">Read-Only Access</span></li>
+                  <li><span className="text-gray-300">Open Source</span></li>
+                  <li><span className="text-gray-300">Community Audited</span></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom Bar */}
+            <div className="mt-12 pt-8 border-t border-gray-800">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p className="text-gray-400 text-sm">
+                  © 2024 Allowance Guard. All rights reserved.
+                </p>
+                <div className="flex items-center gap-6">
+                  <span className="text-gray-400 text-sm">Built with ❤️ for Web3 security</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
       
     </div>
   )
