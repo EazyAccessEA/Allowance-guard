@@ -122,7 +122,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-18',
     readTime: '8 min read',
     category: 'Security',
-    featured: false
+    featured: false,
+    image: '/What are token allowances.png'
   },
   {
     slug: 'from-dapp-user-to-security-advocate-building-community-trust',
