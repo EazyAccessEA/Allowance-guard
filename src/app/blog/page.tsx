@@ -150,54 +150,98 @@ export default function BlogPage() {
   const regularPosts = blogPosts.filter(post => !post.featured)
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section with Image, Overlay, and Title */}
+      <Section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image/Video */}
         <VideoBackground videoSrc="/V3AG.mp4" />
         
-        {/* Gradient overlay */}
+        {/* Overlay on top of image */}
         <div 
           className="absolute inset-0 z-10"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+            background: 'linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%)'
           }}
         />
         
-        <Container className="relative z-10">
-          <div className="max-w-4xl">
-            <H1 className="mb-6">Blog</H1>
-            <p className="text-xl text-text-secondary leading-relaxed mb-8">
+        {/* Blog Title above both image and overlay */}
+        <Container className="relative z-20">
+          <div className="max-w-6xl mx-auto text-center">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full text-sm font-medium mb-8">
+              <BookOpen className="w-4 h-4" />
+              Latest Web3 Security Insights
+            </div>
+            
+            {/* Main Title - Above everything */}
+            <h1 className="text-7xl md:text-9xl font-bold mb-8">
+              <span className="bg-gradient-to-r from-white via-primary-100 to-blue-100 bg-clip-text text-transparent drop-shadow-2xl">
+                Blog
+              </span>
+            </h1>
+            
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-gray-100 leading-relaxed mb-16 max-w-4xl mx-auto drop-shadow-lg">
               Insights, guides, and updates on Web3 security, token allowances, and DeFi best practices.
             </p>
+            
+            {/* Stats Cards with glassmorphism */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-center hover:bg-white/15 transition-all duration-300">
+                <div className="w-16 h-16 bg-primary-500/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Shield className="w-8 h-8 text-primary-200" />
+                </div>
+                <div className="text-4xl font-bold text-white mb-3">12+</div>
+                <div className="text-sm text-gray-200 font-medium">Security Articles</div>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-center hover:bg-white/15 transition-all duration-300">
+                <div className="w-16 h-16 bg-blue-500/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <BookOpen className="w-8 h-8 text-blue-200" />
+                </div>
+                <div className="text-4xl font-bold text-white mb-3">8+</div>
+                <div className="text-sm text-gray-200 font-medium">Educational Guides</div>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 text-center hover:bg-white/15 transition-all duration-300">
+                <div className="w-16 h-16 bg-green-500/30 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Lightbulb className="w-8 h-8 text-green-200" />
+                </div>
+                <div className="text-4xl font-bold text-white mb-3">5+</div>
+                <div className="text-sm text-gray-200 font-medium">Innovation Posts</div>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
-
       {/* Featured Post Section */}
       {featuredPost && (
-        <Section className="py-16 bg-gradient-to-r from-primary-50 via-white to-blue-50">
+        <Section className="py-24 bg-white">
           <Container>
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Article</h2>
-                <p className="text-lg text-gray-600">Our most important insights and guides</p>
+              <div className="text-center mb-16">
+                <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                  <Shield className="w-4 h-4" />
+                  Featured Article
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Most Important Insights</h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto">Essential guides and deep-dives into Web3 security</p>
               </div>
               
               <article className="group">
-                <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="p-8 md:p-12">
-                    <div className="flex items-center gap-3 mb-6">
-                      <Badge variant="default" className="text-sm bg-primary-100 text-primary-700 border-primary-200">
+                <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl border border-gray-100 overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2">
+                  <div className="p-10 md:p-16">
+                    <div className="flex items-center gap-4 mb-8">
+                      <Badge variant="default" className="text-sm bg-primary-100 text-primary-700 border-primary-200 px-4 py-2">
                         {featuredPost.category}
                       </Badge>
-                      <Badge variant="secondary" className="text-sm bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-700 border-orange-200">
+                      <Badge variant="secondary" className="text-sm bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-700 border-orange-200 px-4 py-2">
                         ⭐ Featured
                       </Badge>
                     </div>
                     
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">
+                    <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 group-hover:text-primary-600 transition-colors duration-300 leading-tight">
                       <Link 
                         href={`/blog/${featuredPost.slug}`}
                         className="hover:text-primary-accent transition-colors duration-200"
@@ -206,36 +250,36 @@ export default function BlogPage() {
                       </Link>
                     </h2>
                     
-                    <p className="text-xl text-gray-600 mb-6 font-medium">
+                    <p className="text-2xl text-gray-600 mb-8 font-medium leading-relaxed">
                       {featuredPost.subtitle}
                     </p>
                     
-                    <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                    <p className="text-xl text-gray-700 mb-12 leading-relaxed max-w-4xl">
                       {featuredPost.excerpt}
                     </p>
                     
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-6 text-sm text-gray-500">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { 
+                      <div className="flex items-center gap-8 text-sm text-gray-500">
+                        <div className="flex items-center gap-3">
+                          <Calendar className="w-5 h-5" />
+                          <span className="text-lg">{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { 
                             year: 'numeric', 
                             month: 'long', 
                             day: 'numeric' 
                           })}</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4" />
-                          <span>{featuredPost.readTime}</span>
+                        <div className="flex items-center gap-3">
+                          <Clock className="w-5 h-5" />
+                          <span className="text-lg">{featuredPost.readTime}</span>
                         </div>
                       </div>
                       
                       <Link 
                         href={`/blog/${featuredPost.slug}`}
-                        className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                        className="inline-flex items-center gap-3 bg-primary-600 text-white px-8 py-4 rounded-2xl font-semibold hover:bg-primary-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg"
                       >
                         Read Article
-                        <ArrowRight className="w-4 h-4" />
+                        <ArrowRight className="w-5 h-5" />
                       </Link>
                     </div>
                   </div>
