@@ -5,7 +5,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { Badge } from '@/components/ui/Badge'
-import { Calendar, Clock, ArrowRight } from 'lucide-react'
+import { Calendar, Clock, ArrowRight, TrendingUp, BookOpen, Shield, Lightbulb, Users, Zap } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 
 // Blog posts data - in a real app, this would come from a CMS or database
@@ -122,158 +122,280 @@ const blogPosts = [
   }
 ]
 
+// Category configuration with icons and colors
+const categoryConfig = {
+  Security: { icon: Shield, color: 'bg-red-50 text-red-700 border-red-200', gradient: 'from-red-50 to-red-100' },
+  Education: { icon: BookOpen, color: 'bg-blue-50 text-blue-700 border-blue-200', gradient: 'from-blue-50 to-blue-100' },
+  Innovation: { icon: Lightbulb, color: 'bg-yellow-50 text-yellow-700 border-yellow-200', gradient: 'from-yellow-50 to-yellow-100' },
+  Community: { icon: Users, color: 'bg-green-50 text-green-700 border-green-200', gradient: 'from-green-50 to-green-100' },
+}
+
 export default function BlogPage() {
+  const featuredPost = blogPosts.find(post => post.featured)
+  const regularPosts = blogPosts.filter(post => !post.featured)
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Hero Section with Enhanced Design */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
         
-        {/* Gradient overlay */}
+        {/* Enhanced gradient overlay */}
         <div 
           className="absolute inset-0 z-10"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,250,0.9) 50%, rgba(255,255,255,0.95) 100%)'
           }}
         />
         
         <Container className="relative z-10">
-          <div className="max-w-4xl">
-            <H1 className="mb-6">Blog</H1>
-            <p className="text-xl text-text-secondary leading-relaxed mb-8">
-              Insights, guides, and updates on Web3 security, token allowances, and DeFi best practices.
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <TrendingUp className="w-4 h-4" />
+              Latest Web3 Security Insights
+            </div>
+            
+            <H1 className="mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-primary-600 bg-clip-text text-transparent">
+              Blog
+            </H1>
+            
+            <p className="text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto">
+              Insights, guides, and updates on Web3 security, token allowances, and DeFi best practices. 
+              Stay ahead of the curve with expert analysis and actionable security strategies.
             </p>
+
+            {/* Stats Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-primary-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">12+</div>
+                    <div className="text-sm text-gray-600">Security Articles</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <BookOpen className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">8+</div>
+                    <div className="text-sm text-gray-600">Educational Guides</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-gray-900">5+</div>
+                    <div className="text-sm text-gray-600">Innovation Posts</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
-
-      <Section className="py-16 bg-gray-50">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-
-            {/* Featured Post */}
-            {blogPosts.filter(post => post.featured).map((post) => (
-              <article key={post.slug} className="mb-12">
-                <div className="bg-white rounded-2xl border border-border-default overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
-                  <div className="p-8">
-                      <div className="flex items-center gap-2 mb-4">
-                        <Badge variant="default" className="text-sm">
-                          {post.category}
-                        </Badge>
-                        <Badge variant="secondary" className="text-sm">
-                          Featured
-                        </Badge>
-                      </div>
+      {/* Featured Post Section */}
+      {featuredPost && (
+        <Section className="py-16 bg-gradient-to-r from-primary-50 via-white to-blue-50">
+          <Container>
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Article</h2>
+                <p className="text-lg text-gray-600">Our most important insights and guides</p>
+              </div>
+              
+              <article className="group">
+                <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                  <div className="p-8 md:p-12">
+                    <div className="flex items-center gap-3 mb-6">
+                      <Badge variant="default" className="text-sm bg-primary-100 text-primary-700 border-primary-200">
+                        {featuredPost.category}
+                      </Badge>
+                      <Badge variant="secondary" className="text-sm bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-700 border-orange-200">
+                        ⭐ Featured
+                      </Badge>
+                    </div>
                     
-                    <h2 className="text-3xl font-bold text-text-primary mb-3">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 group-hover:text-primary-600 transition-colors duration-300">
                       <Link 
-                        href={`/blog/${post.slug}`}
+                        href={`/blog/${featuredPost.slug}`}
                         className="hover:text-primary-accent transition-colors duration-200"
                       >
-                        {post.title}
+                        {featuredPost.title}
                       </Link>
                     </h2>
                     
-                    <p className="text-lg text-text-secondary mb-4 font-medium">
-                      {post.subtitle}
+                    <p className="text-xl text-gray-600 mb-6 font-medium">
+                      {featuredPost.subtitle}
                     </p>
                     
-                    <p className="text-text-secondary mb-6 leading-relaxed">
-                      {post.excerpt}
+                    <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                      {featuredPost.excerpt}
                     </p>
                     
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4 text-sm text-text-tertiary">
-                        <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-6 text-sm text-gray-500">
+                        <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" />
-                          <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { 
+                          <span>{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { 
                             year: 'numeric', 
                             month: 'long', 
                             day: 'numeric' 
                           })}</span>
                         </div>
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-2">
                           <Clock className="w-4 h-4" />
-                          <span>{post.readTime}</span>
+                          <span>{featuredPost.readTime}</span>
                         </div>
                       </div>
                       
                       <Link 
-                        href={`/blog/${post.slug}`}
-                        className="inline-flex items-center gap-2 text-primary-accent hover:text-primary-accent/80 font-medium transition-colors duration-200"
+                        href={`/blog/${featuredPost.slug}`}
+                        className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                       >
-                        Read more
+                        Read Article
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>
                   </div>
                 </div>
               </article>
-            ))}
+            </div>
+          </Container>
+        </Section>
+      )}
 
-            {/* Regular Posts */}
-            <div className="space-y-8 bg-white rounded-2xl p-8 shadow-sm">
-              {blogPosts.filter(post => !post.featured).map((post, index) => (
-                <article key={post.slug} className={`border-b border-border-default pb-8 last:border-b-0 rounded-lg p-6 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} shadow-sm`}>
-                  <div className="flex items-start gap-6">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Badge variant="default" className="text-sm">
-                          {post.category}
-                        </Badge>
-                      </div>
-                      
-                      <h3 className="text-2xl font-bold text-text-primary mb-2">
-                        <Link 
-                          href={`/blog/${post.slug}`}
-                          className="hover:text-primary-accent transition-colors duration-200"
-                        >
-                          {post.title}
-                        </Link>
-                      </h3>
-                      
-                      <p className="text-text-secondary mb-4 leading-relaxed">
-                        {post.excerpt}
-                      </p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 text-sm text-text-tertiary">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { 
-                              year: 'numeric', 
-                              month: 'long', 
-                              day: 'numeric' 
-                            })}</span>
+      {/* All Posts Section */}
+      <Section className="py-16 bg-white">
+        <Container>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">All Articles</h2>
+              <p className="text-lg text-gray-600">Explore our complete library of Web3 security content</p>
+            </div>
+
+            {/* Category Filter */}
+            <div className="flex flex-wrap gap-3 justify-center mb-12">
+              {Object.entries(categoryConfig).map(([category, config]) => {
+                const Icon = config.icon
+                const count = blogPosts.filter(post => post.category === category).length
+                return (
+                  <button
+                    key={category}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-200 hover:shadow-md ${config.color}`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {category} ({count})
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Posts Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {regularPosts.map((post, index) => {
+                const categoryInfo = categoryConfig[post.category as keyof typeof categoryConfig]
+                const Icon = categoryInfo?.icon || BookOpen
+                
+                return (
+                  <article key={post.slug} className="group">
+                    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
+                      <div className="p-6 h-full flex flex-col">
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r`}>
+                            <Icon className="w-4 h-4 text-gray-700" />
                           </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            <span>{post.readTime}</span>
-                          </div>
+                          <Badge variant="default" className={`text-xs ${categoryInfo?.color}`}>
+                            {post.category}
+                          </Badge>
                         </div>
                         
-                        <Link 
-                          href={`/blog/${post.slug}`}
-                          className="inline-flex items-center gap-2 text-primary-accent hover:text-primary-accent/80 font-medium transition-colors duration-200"
-                        >
-                          Read more
-                          <ArrowRight className="w-4 h-4" />
-                        </Link>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+                          <Link 
+                            href={`/blog/${post.slug}`}
+                            className="hover:text-primary-accent transition-colors duration-200"
+                          >
+                            {post.title}
+                          </Link>
+                        </h3>
+                        
+                        <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3 flex-grow">
+                          {post.excerpt}
+                        </p>
+                        
+                        <div className="flex items-center justify-between mt-auto">
+                          <div className="flex items-center gap-4 text-xs text-gray-500">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric' 
+                              })}</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              <span>{post.readTime}</span>
+                            </div>
+                          </div>
+                          
+                          <Link 
+                            href={`/blog/${post.slug}`}
+                            className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors duration-200"
+                          >
+                            Read
+                            <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                )
+              })}
             </div>
 
             {/* Empty state for when there are no posts */}
             {blogPosts.length === 0 && (
               <div className="text-center py-16">
-                <p className="text-text-secondary text-lg">No blog posts yet. Check back soon!</p>
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="w-8 h-8 text-gray-400" />
+                </div>
+                <p className="text-gray-600 text-lg">No blog posts yet. Check back soon!</p>
               </div>
             )}
+          </div>
+        </Container>
+      </Section>
+
+      {/* Newsletter CTA Section */}
+      <Section className="py-16 bg-gradient-to-r from-primary-600 to-blue-600">
+        <Container>
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Stay Updated</h2>
+            <p className="text-xl text-primary-100 mb-8">
+              Get the latest Web3 security insights delivered to your inbox
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-3 rounded-xl border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white/50 focus:outline-none"
+              />
+              <button className="bg-white text-primary-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors duration-200">
+                Subscribe
+              </button>
+            </div>
           </div>
         </Container>
       </Section>
