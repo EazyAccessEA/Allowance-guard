@@ -1185,45 +1185,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Dark Footer Section */}
-      <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
-        <Container>
-          <div className="max-w-2xl mx-auto text-center">
-            <div>
-              {/* Company Info */}
-              <div>
-                <div className="flex items-center justify-center gap-3 mb-6">
-                  <Image
-                    src="/AG_Logo2.png"
-                    alt="Allowance Guard Logo"
-                    width={40}
-                    height={40}
-                    className="rounded-lg"
-                  />
-                  <div>
-                    <h3 className="text-xl font-bold text-white">Allowance Guard</h3>
-                    <p className="text-gray-400 text-sm">Secure Token Approvals</p>
-                  </div>
-                </div>
-                <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
-                  The most comprehensive token allowance security platform for Web3. 
-                  Protect your digital assets with enterprise-grade security.
-                </p>
-                <div className="flex items-center justify-center gap-4">
-                  <div className="w-8 h-8 bg-primary-accent/10 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-300 text-sm">Open Source & Free Forever</span>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </Container>
-      </Section>
       
     </div>
   )

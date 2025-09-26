@@ -1,127 +1,121 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import { Badge } from '@/components/ui/Badge'
 import DonationButton from '@/components/DonationButton'
-import { ChevronDown, ChevronUp, Heart, Shield, Code, Users } from 'lucide-react'
-
-interface FooterSectionProps {
-  title: string
-  children: React.ReactNode
-  isOpen: boolean
-  onToggle: () => void
-  icon?: React.ReactNode
-}
-
-function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectionProps) {
-  return (
-    <div className="border-b border-border-default/30 md:border-b-0">
-      <div
-        onClick={onToggle}
-        role="button"
-        tabIndex={0}
-        aria-expanded={isOpen}
-        aria-controls={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
-        className="btn-transparent flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none cursor-pointer rounded-md"
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            onToggle()
-          }
-        }}
-      >
-        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-          {icon}
-          {title}
-        </h3>
-        <div className="md:hidden">
-          {isOpen ? (
-            <ChevronUp className="w-5 h-5 text-gray-400" />
-          ) : (
-            <ChevronDown className="w-5 h-5 text-gray-400" />
-          )}
-        </div>
-      </div>
-      <div 
-        id={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
-        className={`md:block ${isOpen ? 'block' : 'hidden'} pb-4 md:pb-0`}
-      >
-        {children}
-      </div>
-    </div>
-  )
-}
+import { Heart, Shield, Code, Users, FileText, Settings, BookOpen, Github, MessageCircle, Mail } from 'lucide-react'
 
 export default function Footer() {
-  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    product: false,
-    support: false,
-    company: false,
-  })
-
-  const toggleSection = (section: string) => {
-    setOpenSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }))
-  }
-
   return (
-    <footer className="bg-gray-900 text-white border-t border-gray-800 backdrop-blur-sm">
-      <Container className="py-16">
+    <footer className="bg-gray-900 text-white">
+      <Container className="py-16 sm:py-20 lg:py-24">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-          {/* Product & Resources */}
-          <FooterSection
-            title="Product"
-            icon={<Shield className="w-5 h-5 text-primary-accent" />}
-            isOpen={openSections.product}
-            onToggle={() => toggleSection('product')}
-          >
-            <ul className="space-y-3 mt-6 md:mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          
+          {/* Company Info */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+              <Image
+                src="/AG_Logo2.png"
+                alt="Allowance Guard Logo"
+                width={40}
+                height={40}
+                className="rounded-lg"
+              />
+              <div>
+                <h3 className="text-xl font-bold text-white">Allowance Guard</h3>
+                <p className="text-gray-400 text-sm">Secure Token Approvals</p>
+              </div>
+            </div>
+            <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
+              The most comprehensive token allowance security platform for Web3. 
+              Protect your digital assets with enterprise-grade security.
+            </p>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-8 h-8 bg-primary-accent/10 rounded-full flex items-center justify-center">
+                <Shield className="w-4 h-4 text-primary-accent" />
+              </div>
+              <span className="text-gray-300 text-sm">Open Source & Free Forever</span>
+            </div>
+            
+            {/* Social Links */}
+            <div className="flex items-center gap-4">
+              <a 
+                href="https://github.com/EazyAccessEA/Allowance-guard" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 hover:bg-primary-accent rounded-lg flex items-center justify-center transition-all duration-200 group"
+              >
+                <Github className="w-5 h-5 text-gray-400 group-hover:text-white" />
+              </a>
+              <a 
+                href="https://discord.gg/DsJ4Pa94" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 hover:bg-primary-accent rounded-lg flex items-center justify-center transition-all duration-200 group"
+              >
+                <MessageCircle className="w-5 h-5 text-gray-400 group-hover:text-white" />
+              </a>
+              <a 
+                href="https://twitter.com/allowanceguard" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 hover:bg-primary-accent rounded-lg flex items-center justify-center transition-all duration-200 group"
+              >
+                <svg className="w-5 h-5 text-gray-400 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-primary-accent" />
+              Quick Links
+            </h4>
+            <ul className="space-y-4">
               <li>
-                <Link href="/features" className="text-gray-300 hover:text-white transition-colors duration-150">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link href="/docs" className="text-gray-300 hover:text-white transition-colors duration-150">
-                  Documentation
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors duration-150">
+                <Link href="/blog" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/security" className="text-gray-300 hover:text-white transition-colors duration-150">
-                  Security
+                <Link href="/docs" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
+                  Documentation
+                </Link>
+              </li>
+              <li>
+                <Link href="/features" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
+                  Features
+                </Link>
+              </li>
+              <li>
+                <Link href="/settings" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
+                  Settings
                 </Link>
               </li>
             </ul>
-          </FooterSection>
+          </div>
 
           {/* Community & Support */}
-          <FooterSection
-            title="Community"
-            icon={<Users className="w-5 h-5 text-primary-accent" />}
-            isOpen={openSections.support}
-            onToggle={() => toggleSection('support')}
-          >
-            <ul className="space-y-3 mt-6 md:mt-6">
+          <div>
+            <h4 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+              <Users className="w-5 h-5 text-primary-accent" />
+              Community
+            </h4>
+            <ul className="space-y-4">
               <li>
                 <a 
                   href="https://github.com/EazyAccessEA/Allowance-guard" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-white transition-colors duration-150 flex items-center gap-2"
+                  className="text-gray-300 hover:text-primary-accent transition-colors duration-200 flex items-center gap-2"
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
+                  <Github className="w-4 h-4" />
                   GitHub
                 </a>
               </li>
@@ -130,74 +124,40 @@ export default function Footer() {
                   href="https://discord.gg/DsJ4Pa94" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-white transition-colors duration-150 flex items-center gap-2"
+                  className="text-gray-300 hover:text-primary-accent transition-colors duration-200 flex items-center gap-2"
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                  </svg>
+                  <MessageCircle className="w-4 h-4" />
                   Discord
                 </a>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white transition-colors duration-150">
+                <Link href="/contact" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
                   Contact Us
                 </Link>
               </li>
+              <li>
+                <Link href="/docs/contributing" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 flex items-center gap-2">
+                  <Code className="w-4 h-4" />
+                  Contributing
+                </Link>
+              </li>
             </ul>
+            
+            {/* Donation Button */}
             <div className="mt-6">
               <DonationButton />
             </div>
-          </FooterSection>
-
-          {/* Legal */}
-          <FooterSection
-            title="Legal"
-            icon={<Shield className="w-5 h-5 text-primary-accent" />}
-            isOpen={openSections.company}
-            onToggle={() => toggleSection('company')}
-          >
-            <ul className="space-y-3 mt-6 md:mt-6">
-              <li>
-                <Link href="/privacy" className="text-gray-300 hover:text-white transition-colors duration-150">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="text-gray-300 hover:text-white transition-colors duration-150">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/cookies" className="text-gray-300 hover:text-white transition-colors duration-150">
-                  Cookie Policy
-                </Link>
-              </li>
-            </ul>
-            <div className="mt-8">
-              <div className="flex space-x-4">
-                <a 
-                  href="https://twitter.com/allowanceguard" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors duration-150"
-                >
-                  <span className="sr-only">Twitter</span>
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </FooterSection>
+          </div>
         </div>
 
         {/* Bottom section */}
-        <div className="mt-16 pt-8 border-t border-border-default">
+        <div className="mt-16 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-3">
                 <Badge variant="secondary" className="flex items-center gap-1">
-                  <Heart className="w-3 h-3 text-semantic-danger" />
+                  <Heart className="w-3 h-3 text-red-500" />
                   Open Source
                 </Badge>
                 <Badge variant="success" className="flex items-center gap-1">
