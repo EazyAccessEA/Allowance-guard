@@ -1035,7 +1035,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
       <div className="border-t border-border-primary" />
 
-      <Section className="py-16">
+      {/* Article Content with Alternating Backgrounds */}
+      <Section className="py-16 bg-gray-50">
         <Container>
           <div className="max-w-4xl mx-auto">
             {/* Article content */}
@@ -1045,7 +1046,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             />
 
             {/* Call to action */}
-            <div className="bg-primary-50 border border-primary-200 rounded-2xl p-8 mb-12">
+            <div className="bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-200 rounded-2xl p-8 mb-12 shadow-sm">
               <h3 className="text-2xl font-bold text-text-primary mb-4">
                 Ready to Secure Your Token Allowances?
               </h3>
@@ -1055,7 +1056,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
                   href="/"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-primary-accent text-white font-semibold rounded-lg hover:bg-primary-accent/90 transition-colors duration-200"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-primary-accent text-white font-semibold rounded-lg hover:bg-primary-accent/90 transition-colors duration-200 shadow-md hover:shadow-lg"
                 >
                   Get Started Free
                 </Link>
@@ -1069,7 +1070,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             {/* Navigation */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 pt-8 border-t border-border-primary">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 pt-8 border-t border-border-primary bg-white rounded-lg p-6 shadow-sm">
               {prevPost ? (
                 <Link 
                   href={`/blog/${prevPost.slug}`}

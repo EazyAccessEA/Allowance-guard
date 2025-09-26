@@ -149,7 +149,7 @@ export default function BlogPage() {
 
       <div className="border-t border-border-primary" />
 
-      <Section className="py-16">
+      <Section className="py-16 bg-gray-50">
         <Container>
           <div className="max-w-4xl mx-auto">
 
@@ -214,9 +214,9 @@ export default function BlogPage() {
             ))}
 
             {/* Regular Posts */}
-            <div className="space-y-8">
-              {blogPosts.filter(post => !post.featured).map((post) => (
-                <article key={post.slug} className="border-b border-border-default pb-8 last:border-b-0">
+            <div className="space-y-8 bg-white rounded-2xl p-8 shadow-sm">
+              {blogPosts.filter(post => !post.featured).map((post, index) => (
+                <article key={post.slug} className={`border-b border-border-default pb-8 last:border-b-0 rounded-lg p-6 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} shadow-sm`}>
                   <div className="flex items-start gap-6">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-3">
