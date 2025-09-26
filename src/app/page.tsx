@@ -1242,17 +1242,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Bottom Bar */}
-            <div className="mt-12 pt-8 border-t border-gray-800">
-              <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <p className="text-gray-400 text-sm">
-                  © 2024 Allowance Guard. All rights reserved.
-                </p>
-                <div className="flex items-center gap-6">
-                  <span className="text-gray-400 text-sm">Built with ❤️ for Web3 security</span>
-                </div>
-              </div>
-            </div>
           </div>
         </Container>
       </Section>
