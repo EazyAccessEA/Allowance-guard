@@ -11,7 +11,8 @@ import {
   Shield, 
   Settings, 
   FileText, 
-  Home
+  Home,
+  BookOpen
 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -85,6 +86,13 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
       badge: null
     },
     {
+      href: '/blog',
+      label: 'Blog',
+      icon: <BookOpen className="w-5 h-5" />,
+      description: 'Security insights and guides',
+      badge: null
+    },
+    {
       href: '/docs',
       label: 'Documentation',
       icon: <FileText className="w-5 h-5" />,
@@ -92,17 +100,17 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
       badge: null
     },
     {
-      href: '/settings',
-      label: 'Settings',
-      icon: <Settings className="w-5 h-5" />,
-      description: 'Configure your preferences',
-      badge: null
-    },
-    {
       href: '/features',
       label: 'Features',
       icon: <Shield className="w-5 h-5" />,
       description: 'Explore our security features',
+      badge: null
+    },
+    {
+      href: '/settings',
+      label: 'Settings',
+      icon: <Settings className="w-5 h-5" />,
+      description: 'Configure your preferences',
       badge: null
     }
   ]

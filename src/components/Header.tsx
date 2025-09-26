@@ -83,14 +83,17 @@ export default function Header({ isConnected }: HeaderProps) {
 
           {/* Desktop Navigation - Mobbin Spacing */}
           <nav className="hidden lg:flex items-center gap-2 xl:gap-3 flex-1 justify-center max-w-lg">
+            <NavLink href="/blog" current={pathname?.startsWith('/blog') ?? false}>
+              Blog
+            </NavLink>
             <NavLink href="/docs" current={pathname?.startsWith('/docs') ?? false}>
               Documentation
             </NavLink>
-            <NavLink href="/settings" current={pathname === '/settings'}>
-              Settings
-            </NavLink>
             <NavLink href="/features" current={pathname === '/features'}>
               Features
+            </NavLink>
+            <NavLink href="/settings" current={pathname === '/settings'}>
+              Settings
             </NavLink>
           </nav>
 
