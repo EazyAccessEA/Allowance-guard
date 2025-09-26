@@ -32,15 +32,15 @@ function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectio
           }
         }}
       >
-        <h3 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
           {icon}
           {title}
         </h3>
         <div className="md:hidden">
           {isOpen ? (
-            <ChevronUp className="w-5 h-5 text-text-secondary" />
+            <ChevronUp className="w-5 h-5 text-gray-400" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-text-secondary" />
+            <ChevronDown className="w-5 h-5 text-gray-400" />
           )}
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-background-light border-t border-border-default backdrop-blur-sm">
+    <footer className="bg-gray-900 text-white border-t border-gray-800 backdrop-blur-sm">
       <Container className="py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
@@ -83,27 +83,27 @@ export default function Footer() {
           >
             <ul className="space-y-3 mt-6 md:mt-6">
               <li>
-                <Link href="/features" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/features" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/docs" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Documentation
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/security" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/security" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Security
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/faq" className="text-gray-300 hover:text-white transition-colors duration-150">
                   FAQ
                 </Link>
               </li>
@@ -136,23 +136,23 @@ export default function Footer() {
                   href="https://github.com/EazyAccessEA/Allowance-guard/issues" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-text-secondary hover:text-text-primary transition-colors duration-150"
+                  className="text-gray-300 hover:text-white transition-colors duration-150"
                 >
                   Report Issues
                 </a>
               </li>
               <li>
-                <Link href="/docs/api" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/docs/api" className="text-gray-300 hover:text-white transition-colors duration-150">
                   API Reference
                 </Link>
               </li>
               <li>
-                <Link href="/docs/integration" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/docs/integration" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Integration Guide
                 </Link>
               </li>
               <li>
-                <Link href="/docs/contributing" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/docs/contributing" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Contributing Guide
                 </Link>
               </li>
@@ -168,7 +168,7 @@ export default function Footer() {
           >
             <ul className="space-y-3 mt-6 md:mt-6">
               <li>
-                <Link href="/contact" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/contact" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Contact Us
                 </Link>
               </li>
@@ -200,17 +200,17 @@ export default function Footer() {
           >
             <ul className="space-y-3 mt-6 md:mt-6">
               <li>
-                <Link href="/privacy" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/privacy" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/terms" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="text-text-secondary hover:text-text-primary transition-colors duration-150">
+                <Link href="/cookies" className="text-gray-300 hover:text-white transition-colors duration-150">
                   Cookie Policy
                 </Link>
               </li>
@@ -258,7 +258,7 @@ export default function Footer() {
                   Free Forever
                 </Badge>
               </div>
-              <p className="text-text-secondary text-sm max-w-2xl">
+              <p className="text-gray-300 text-sm max-w-2xl">
                 Open-source and free to use. Maintained by a small independent team and funded by{' '}
                 <Link className="text-primary-accent hover:text-primary-accent/80 transition-colors duration-150" href="/docs/contributing">
                   donations and grants
@@ -267,7 +267,7 @@ export default function Footer() {
               </p>
             </div>
             
-            <div className="flex items-center gap-4 text-sm text-text-secondary">
+            <div className="flex items-center gap-4 text-sm text-gray-400">
               <span>© 2024 Allowance Guard</span>
               <span>•</span>
               <span>Built with ❤️ for Web3 security</span>
