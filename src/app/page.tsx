@@ -538,7 +538,7 @@ export default function HomePage() {
                 Why Allowance Guard?
               </h2>
               <p className="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto">
-                We've built the most comprehensive token allowance security platform for Web3, 
+                We&apos;ve built the most comprehensive token allowance security platform for Web3, 
                 designed to protect your digital assets with enterprise-grade security.
               </p>
             </div>
@@ -605,7 +605,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-text-primary mb-4">24/7 Monitoring</h3>
                 <p className="text-text-secondary leading-relaxed">
                   Continuous threat detection and real-time alerts. 
-                  Stay protected even when you're not actively using the platform.
+                  Stay protected even when you&apos;re not actively using the platform.
                 </p>
               </div>
 
