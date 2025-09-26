@@ -474,8 +474,8 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* App Area - Only show when connected and hydrated */}
-      {isHydrated && isConnected && (
+      {/* App Area - Only show when connected, hydrated, and wallet is selected */}
+      {isHydrated && isConnected && selectedWallet && (
         <LazySection>
         <AppArea
           isConnected={isConnected}
