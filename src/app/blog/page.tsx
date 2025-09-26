@@ -109,6 +109,16 @@ const blogPosts = [
     readTime: '8 min read',
     category: 'Security',
     featured: false
+  },
+  {
+    slug: 'from-dapp-user-to-security-advocate-building-community-trust',
+    title: 'From Dapp User to Security Advocate: Building Community Trust',
+    subtitle: 'How to Become a Force Multiplier for Web3 Security',
+    excerpt: 'Web3 is a frontier town rapidly growing into a global city. For too long, we have treated security as a purely personal problem. But to build a truly resilient and trustworthy ecosystem, we must take the next step: becoming security advocates who strengthen the entire network.',
+    publishedAt: '2024-12-19',
+    readTime: '12 min read',
+    category: 'Community',
+    featured: false
   }
 ]
 
