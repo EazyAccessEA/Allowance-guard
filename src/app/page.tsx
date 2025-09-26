@@ -182,10 +182,6 @@ export default function HomePage() {
     setIsHydrated(true)
   }, [])
 
-  // Debug logging
-  useEffect(() => {
-    console.log('HomePage state:', { isHydrated, isConnected, selectedWallet, connectedAddress })
-  }, [isHydrated, isConnected, selectedWallet, connectedAddress])
 
   // Enhanced error handling
   const handleError = (error: Error, context: string) => {
