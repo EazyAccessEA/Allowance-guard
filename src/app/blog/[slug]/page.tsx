@@ -166,184 +166,6 @@ const blogContent = {
 // Combine content chunks
 const fullContent = Object.values(blogContent).join('\n')
 
-// Smart Contract Risk content broken into chunks
-const smartContractRiskContent = `
-  <p>Managing your token allowances is like diligently locking the doors and windows of your home. It&apos;s a fundamental, non-negotiable step in securing your assets. But what if the building itself has a cracked foundation? What if the landlord can enter and change the locks at any time, without warning?</p>
-
-  <p>This is the reality of smart contract risk. While allowances control who can access your tokens, the underlying smart contracts define what can be done with them. These contracts are not static blocks of code; they are often living, upgradeable, and deeply interconnected programs. A bug, a malicious upgrade, or a vulnerability in a connected protocol can create a security failure that no amount of allowance management can prevent on its own.</p>
-
-  <p>To truly secure your on-chain presence, you must look beyond allowances and develop a deeper understanding of the contracts you interact with. This guide will teach you how to assess contract-level risk, identify hidden dangers like proxies and composability, and build a more resilient security strategy.</p>
-
-  <h2>The Living Code You Place Your Trust In</h2>
-  
-  <p>When you use a decentralized application (dapp), you are not just interacting with a website. You are sending your assets to be managed by one or more smart contracts. These autonomous programs are responsible for everything:</p>
-
-  <ul>
-    <li><strong>Custody:</strong> They hold your tokens in liquidity pools, staking vaults, or lending protocols.</li>
-    <li><strong>Execution:</strong> They contain the logic that executes your swaps, calculates your yield, or issues your loans.</li>
-    <li><strong>Interaction:</strong> They can call other smart contracts across the ecosystem to perform complex, multi-step operations.</li>
-  </ul>
-
-  <p>Your trust is not in the dapp&apos;s brand or its user interface; it is a direct trust in the integrity of its underlying code. If that code is flawed or can be changed maliciously, your assets are at risk, regardless of how carefully you manage your approvals.</p>
-
-  <h2>The Double-Edged Sword of Upgradeable Contracts</h2>
-  
-  <p>In the early days of Ethereum, most smart contracts were immutable—once deployed, their code could never be changed. This created a rigid but predictable security environment. Today, most major protocols use upgradeable contracts to allow for bug fixes and new features without requiring a massive, disruptive user migration.</p>
-
-  <p>This is typically achieved using a proxy pattern. Imagine your home address is permanent (the proxy contract), but an architect can swap out the entire internal layout and structure overnight (the implementation contract).</p>
-
-  <p>While convenient for developers, this introduces a significant new risk vector for users. A contract you reviewed and trusted today could be replaced by a completely different, potentially malicious, version tomorrow. Your existing token approval would still be valid for the same proxy address, but it would now point to dangerous new logic.</p>
-
-  <p>Here are common proxy patterns you will encounter:</p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Proxy Pattern</th>
-        <th>How It Works</th>
-        <th>The Primary Risk for Users</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Transparent Proxy</strong></td>
-        <td>The proxy contract holds the assets and user state, but forwards all logic-related calls to a separate implementation contract.</td>
-        <td>The protocol&apos;s administrators can unilaterally change the implementation contract, altering the core logic that governs your funds.</td>
-      </tr>
-      <tr>
-        <td><strong>Beacon Proxy</strong></td>
-        <td>Multiple proxy contracts point to a single "beacon" contract, which in turn points to the implementation logic.</td>
-        <td>A single upgrade to the beacon can change the rules for every user of every proxy simultaneously, creating a systemic risk.</td>
-      </tr>
-      <tr>
-        <td><strong>Diamond (EIP-2535)</strong></td>
-        <td>A single proxy contract routes calls to many smaller, modular logic contracts called "facets."</td>
-        <td>While highly flexible, this pattern significantly increases the contract&apos;s complexity and attack surface, making a full security audit more difficult.</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <p>An upgradeable contract is not inherently bad, but it requires a higher degree of trust in the team that controls the upgrade keys.</p>
-
-  <h2>Hidden Dangers: Composability and Chained Risk</h2>
-  
-  <p>DeFi is often described as "money Legos" because of composability—the ability for protocols to seamlessly plug into and build upon one another. A yield aggregator can deposit funds into a lending protocol, which might use a decentralized exchange for liquidations.</p>
-
-  <p>This powerful feature also creates chained risk. Your risk exposure is not limited to the protocol you interact with directly; it is the sum of the risks of every protocol in the chain.</p>
-
-  <p>Consider this common scenario:</p>
-
-  <p><strong>You → Yield Aggregator (Protocol A) → Lending Protocol (Protocol B) → Oracle (Protocol C)</strong></p>
-
-  <p>Even if Protocol A is perfectly audited and secure, you are still exposed to risks from B and C:</p>
-
-  <ul>
-    <li><strong>Counterparty Risk:</strong> A bug or exploit in the lending protocol (B) could lead to a loss of the aggregator&apos;s (A) funds—which includes your deposit.</li>
-    <li><strong>Dependency Risk:</strong> If the lending protocol (B) relies on a price oracle (C) that gets manipulated, it could trigger improper liquidations, causing losses that flow back up the chain to you.</li>
-    <li><strong>Bridge Risk:</strong> If a protocol uses wrapped assets from a cross-chain bridge, a hack of that bridge can make the wrapped tokens worthless, impacting the protocol and its users.</li>
-  </ul>
-
-  <p>When you deposit into a composable protocol, you are implicitly trusting its entire stack of dependencies.</p>
-
-  <h2>A Practical Toolkit for Risk Assessment</h2>
-  
-  <p>You do not need to be a Solidity developer to perform a basic risk assessment of a smart contract. Using free, public tools, you can gather enough information to make a more informed decision.</p>
-
-  <h3>1. Check for Reputable Audits</h3>
-  
-  <p>Audits are a crucial signal, but not all are created equal.</p>
-
-  <ul>
-    <li>Look for multiple audits from well-known security firms (e.g., Trail of Bits, OpenZeppelin, ConsenSys Diligence, Certik). A single audit, especially from an unknown firm, is a weak signal.</li>
-    <li>Read the audit summary. Pay attention to any high-severity findings that were not resolved by the development team.</li>
-  </ul>
-
-  <h3>2. Verify Open-Source Code</h3>
-  
-  <p>Trustworthy projects publish their source code for public review.</p>
-
-  <p>On a block explorer like Etherscan, navigate to the contract&apos;s address and click the "Contract" tab. Look for a green checkmark indicating that the source code is verified and matches the deployed bytecode. If the code is not verified, it is a significant red flag.</p>
-
-  <h3>3. Identify Upgradeability and Admin Keys</h3>
-  
-  <p>This is perhaps the most important check you can perform.</p>
-
-  <ul>
-    <li><strong>Is it a proxy?</strong> On the "Contract" tab in Etherscan, look for buttons labeled "Read as Proxy" or "Write as Proxy." If you see them, the contract is upgradeable. Click through to find the address of the current implementation contract.</li>
-    <li><strong>Who holds the keys?</strong> Investigate the admin address that has the power to upgrade the contract. Is it a single person&apos;s wallet (an EOA, or Externally Owned Account)? This is extremely high-risk. A better setup is a multi-signature wallet controlled by several parties. The best-case scenario is a timelock, where all upgrades are subject to a mandatory public delay, giving users time to review changes and withdraw funds if necessary.</li>
-  </ul>
-
-  <h2>Building Your Own Risk Scorecard</h2>
-  
-  <p>You can track these factors in a simple spreadsheet to compare protocols and manage your exposure.</p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Factor</th>
-        <th>Low Risk</th>
-        <th>Medium Risk</th>
-        <th>High Risk</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Upgradeability</strong></td>
-        <td>Immutable (Not a proxy)</td>
-        <td>Upgradeable via a DAO with a timelock</td>
-        <td>Upgradeable by a single wallet or small multi-sig with no delay</td>
-      </tr>
-      <tr>
-        <td><strong>Audit Coverage</strong></td>
-        <td>Multiple audits from top-tier firms</td>
-        <td>One reputable audit, or audits from newer firms</td>
-        <td>No public audits, or unresolved critical findings</td>
-      </tr>
-      <tr>
-        <td><strong>Source Code</strong></td>
-        <td>Verified, open-source, and well-documented</td>
-        <td>Verified but complex and poorly documented</td>
-        <td>Unverified ("black box")</td>
-      </tr>
-      <tr>
-        <td><strong>Admin Control</strong></td>
-        <td>Fully decentralized (no admin keys) or a large, diverse DAO</td>
-        <td>Controlled by a multi-sig of 3-7 known parties</td>
-        <td>Controlled by a single anonymous EOA</td>
-      </tr>
-      <tr>
-        <td><strong>Contract Age</strong></td>
-        <td>>1 year, battle-tested through high-volume usage</td>
-        <td>3-12 months old, gaining traction</td>
-        <td><3 months old, unaudited, or recently launched</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h2>Layering Your Defenses</h2>
-  
-  <p>Understanding smart contract risk does not replace the need for diligent allowance management—it enhances it. These two practices form a powerful, layered security strategy.</p>
-
-  <ul>
-    <li><strong>Allowance management</strong> is your first line of defense, controlling access at your wallet&apos;s edge.</li>
-    <li><strong>Contract risk assessment</strong> is your second line of defense, helping you decide which protocols are trustworthy enough to interact with in the first place.</li>
-  </ul>
-
-  <p>When you combine these, your security posture becomes proactive. If you see a governance proposal to remove a timelock or a suspicious upgrade to a contract you use, you can immediately use a tool like <a href="/" className="text-primary-accent hover:text-primary-accent/80 underline">AllowanceGuard</a> to revoke your approval before any potential damage is done.</p>
-
-  <h2>Practical Next Steps</h2>
-  
-  <p>Knowledge is most powerful when put into practice. Take these steps this week to begin assessing risk beyond allowances.</p>
-
-  <ol>
-    <li><strong>Pick One Dapp You Use Daily:</strong> Go to its contract address on a block explorer. Use the guide above to determine if it is an upgradeable proxy.</li>
-    <li><strong>Identify the Admin:</strong> Find out who controls the upgrade keys. Is it a single address or a multi-sig with a timelock?</li>
-    <li><strong>Check Its Audit History:</strong> Look for the project&apos;s security audits. Have they been audited by reputable firms?</li>
-    <li><strong>Make an Informed Decision:</strong> Based on your findings, decide if your current level of exposure to this protocol aligns with your risk tolerance. Adjust your position or revoke allowances if you are uncomfortable.</li>
-  </ol>
-
-  <p>By expanding your focus from just allowances to the full architecture of a smart contract, you move from being a passive user to an informed and empowered participant in the decentralized ecosystem.</p>
-`
 
 // Blog posts data - in a real app, this would come from a CMS or database
 const blogPosts: BlogPost[] = [
@@ -361,7 +183,183 @@ const blogPosts: BlogPost[] = [
     slug: 'understanding-smart-contract-risk-beyond-allowances',
     title: 'Understanding Smart Contract Risk Beyond Allowances',
     subtitle: 'The Hidden Dangers in the Code You Trust',
-    content: smartContractRiskContent,
+    content: `
+      <p>Managing your token allowances is like diligently locking the doors and windows of your home. It&apos;s a fundamental, non-negotiable step in securing your assets. But what if the building itself has a cracked foundation? What if the landlord can enter and change the locks at any time, without warning?</p>
+
+      <p>This is the reality of smart contract risk. While allowances control who can access your tokens, the underlying smart contracts define what can be done with them. These contracts are not static blocks of code; they are often living, upgradeable, and deeply interconnected programs. A bug, a malicious upgrade, or a vulnerability in a connected protocol can create a security failure that no amount of allowance management can prevent on its own.</p>
+
+      <p>To truly secure your on-chain presence, you must look beyond allowances and develop a deeper understanding of the contracts you interact with. This guide will teach you how to assess contract-level risk, identify hidden dangers like proxies and composability, and build a more resilient security strategy.</p>
+
+      <h2>The Living Code You Place Your Trust In</h2>
+      
+      <p>When you use a decentralized application (dapp), you are not just interacting with a website. You are sending your assets to be managed by one or more smart contracts. These autonomous programs are responsible for everything:</p>
+
+      <ul>
+        <li><strong>Custody:</strong> They hold your tokens in liquidity pools, staking vaults, or lending protocols.</li>
+        <li><strong>Execution:</strong> They contain the logic that executes your swaps, calculates your yield, or issues your loans.</li>
+        <li><strong>Interaction:</strong> They can call other smart contracts across the ecosystem to perform complex, multi-step operations.</li>
+      </ul>
+
+      <p>Your trust is not in the dapp&apos;s brand or its user interface; it is a direct trust in the integrity of its underlying code. If that code is flawed or can be changed maliciously, your assets are at risk, regardless of how carefully you manage your approvals.</p>
+
+      <h2>The Double-Edged Sword of Upgradeable Contracts</h2>
+      
+      <p>In the early days of Ethereum, most smart contracts were immutable—once deployed, their code could never be changed. This created a rigid but predictable security environment. Today, most major protocols use upgradeable contracts to allow for bug fixes and new features without requiring a massive, disruptive user migration.</p>
+
+      <p>This is typically achieved using a proxy pattern. Imagine your home address is permanent (the proxy contract), but an architect can swap out the entire internal layout and structure overnight (the implementation contract).</p>
+
+      <p>While convenient for developers, this introduces a significant new risk vector for users. A contract you reviewed and trusted today could be replaced by a completely different, potentially malicious, version tomorrow. Your existing token approval would still be valid for the same proxy address, but it would now point to dangerous new logic.</p>
+
+      <p>Here are common proxy patterns you will encounter:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Proxy Pattern</th>
+            <th>How It Works</th>
+            <th>The Primary Risk for Users</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Transparent Proxy</strong></td>
+            <td>The proxy contract holds the assets and user state, but forwards all logic-related calls to a separate implementation contract.</td>
+            <td>The protocol&apos;s administrators can unilaterally change the implementation contract, altering the core logic that governs your funds.</td>
+          </tr>
+          <tr>
+            <td><strong>Beacon Proxy</strong></td>
+            <td>Multiple proxy contracts point to a single "beacon" contract, which in turn points to the implementation logic.</td>
+            <td>A single upgrade to the beacon can change the rules for every user of every proxy simultaneously, creating a systemic risk.</td>
+          </tr>
+          <tr>
+            <td><strong>Diamond (EIP-2535)</strong></td>
+            <td>A single proxy contract routes calls to many smaller, modular logic contracts called "facets."</td>
+            <td>While highly flexible, this pattern significantly increases the contract&apos;s complexity and attack surface, making a full security audit more difficult.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>An upgradeable contract is not inherently bad, but it requires a higher degree of trust in the team that controls the upgrade keys.</p>
+
+      <h2>Hidden Dangers: Composability and Chained Risk</h2>
+      
+      <p>DeFi is often described as "money Legos" because of composability—the ability for protocols to seamlessly plug into and build upon one another. A yield aggregator can deposit funds into a lending protocol, which might use a decentralized exchange for liquidations.</p>
+
+      <p>This powerful feature also creates chained risk. Your risk exposure is not limited to the protocol you interact with directly; it is the sum of the risks of every protocol in the chain.</p>
+
+      <p>Consider this common scenario:</p>
+
+      <p><strong>You → Yield Aggregator (Protocol A) → Lending Protocol (Protocol B) → Oracle (Protocol C)</strong></p>
+
+      <p>Even if Protocol A is perfectly audited and secure, you are still exposed to risks from B and C:</p>
+
+      <ul>
+        <li><strong>Counterparty Risk:</strong> A bug or exploit in the lending protocol (B) could lead to a loss of the aggregator&apos;s (A) funds—which includes your deposit.</li>
+        <li><strong>Dependency Risk:</strong> If the lending protocol (B) relies on a price oracle (C) that gets manipulated, it could trigger improper liquidations, causing losses that flow back up the chain to you.</li>
+        <li><strong>Bridge Risk:</strong> If a protocol uses wrapped assets from a cross-chain bridge, a hack of that bridge can make the wrapped tokens worthless, impacting the protocol and its users.</li>
+      </ul>
+
+      <p>When you deposit into a composable protocol, you are implicitly trusting its entire stack of dependencies.</p>
+
+      <h2>A Practical Toolkit for Risk Assessment</h2>
+      
+      <p>You do not need to be a Solidity developer to perform a basic risk assessment of a smart contract. Using free, public tools, you can gather enough information to make a more informed decision.</p>
+
+      <h3>1. Check for Reputable Audits</h3>
+      
+      <p>Audits are a crucial signal, but not all are created equal.</p>
+
+      <ul>
+        <li>Look for multiple audits from well-known security firms (e.g., Trail of Bits, OpenZeppelin, ConsenSys Diligence, Certik). A single audit, especially from an unknown firm, is a weak signal.</li>
+        <li>Read the audit summary. Pay attention to any high-severity findings that were not resolved by the development team.</li>
+      </ul>
+
+      <h3>2. Verify Open-Source Code</h3>
+      
+      <p>Trustworthy projects publish their source code for public review.</p>
+
+      <p>On a block explorer like Etherscan, navigate to the contract&apos;s address and click the "Contract" tab. Look for a green checkmark indicating that the source code is verified and matches the deployed bytecode. If the code is not verified, it is a significant red flag.</p>
+
+      <h3>3. Identify Upgradeability and Admin Keys</h3>
+      
+      <p>This is perhaps the most important check you can perform.</p>
+
+      <ul>
+        <li><strong>Is it a proxy?</strong> On the "Contract" tab in Etherscan, look for buttons labeled "Read as Proxy" or "Write as Proxy." If you see them, the contract is upgradeable. Click through to find the address of the current implementation contract.</li>
+        <li><strong>Who holds the keys?</strong> Investigate the admin address that has the power to upgrade the contract. Is it a single person&apos;s wallet (an EOA, or Externally Owned Account)? This is extremely high-risk. A better setup is a multi-signature wallet controlled by several parties. The best-case scenario is a timelock, where all upgrades are subject to a mandatory public delay, giving users time to review changes and withdraw funds if necessary.</li>
+      </ul>
+
+      <h2>Building Your Own Risk Scorecard</h2>
+      
+      <p>You can track these factors in a simple spreadsheet to compare protocols and manage your exposure.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Low Risk</th>
+            <th>Medium Risk</th>
+            <th>High Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Upgradeability</strong></td>
+            <td>Immutable (Not a proxy)</td>
+            <td>Upgradeable via a DAO with a timelock</td>
+            <td>Upgradeable by a single wallet or small multi-sig with no delay</td>
+          </tr>
+          <tr>
+            <td><strong>Audit Coverage</strong></td>
+            <td>Multiple audits from top-tier firms</td>
+            <td>One reputable audit, or audits from newer firms</td>
+            <td>No public audits, or unresolved critical findings</td>
+          </tr>
+          <tr>
+            <td><strong>Source Code</strong></td>
+            <td>Verified, open-source, and well-documented</td>
+            <td>Verified but complex and poorly documented</td>
+            <td>Unverified ("black box")</td>
+          </tr>
+          <tr>
+            <td><strong>Admin Control</strong></td>
+            <td>Fully decentralized (no admin keys) or a large, diverse DAO</td>
+            <td>Controlled by a multi-sig of 3-7 known parties</td>
+            <td>Controlled by a single anonymous EOA</td>
+          </tr>
+          <tr>
+            <td><strong>Contract Age</strong></td>
+            <td>>1 year, battle-tested through high-volume usage</td>
+            <td>3-12 months old, gaining traction</td>
+            <td><3 months old, unaudited, or recently launched</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Layering Your Defenses</h2>
+      
+      <p>Understanding smart contract risk does not replace the need for diligent allowance management—it enhances it. These two practices form a powerful, layered security strategy.</p>
+
+      <ul>
+        <li><strong>Allowance management</strong> is your first line of defense, controlling access at your wallet&apos;s edge.</li>
+        <li><strong>Contract risk assessment</strong> is your second line of defense, helping you decide which protocols are trustworthy enough to interact with in the first place.</li>
+      </ul>
+
+      <p>When you combine these, your security posture becomes proactive. If you see a governance proposal to remove a timelock or a suspicious upgrade to a contract you use, you can immediately use a tool like <a href="/" className="text-primary-accent hover:text-primary-accent/80 underline">AllowanceGuard</a> to revoke your approval before any potential damage is done.</p>
+
+      <h2>Practical Next Steps</h2>
+      
+      <p>Knowledge is most powerful when put into practice. Take these steps this week to begin assessing risk beyond allowances.</p>
+
+      <ol>
+        <li><strong>Pick One Dapp You Use Daily:</strong> Go to its contract address on a block explorer. Use the guide above to determine if it is an upgradeable proxy.</li>
+        <li><strong>Identify the Admin:</strong> Find out who controls the upgrade keys. Is it a single address or a multi-sig with a timelock?</li>
+        <li><strong>Check Its Audit History:</strong> Look for the project&apos;s security audits. Have they been audited by reputable firms?</li>
+        <li><strong>Make an Informed Decision:</strong> Based on your findings, decide if your current level of exposure to this protocol aligns with your risk tolerance. Adjust your position or revoke allowances if you are uncomfortable.</li>
+      </ol>
+
+      <p>By expanding your focus from just allowances to the full architecture of a smart contract, you move from being a passive user to an informed and empowered participant in the decentralized ecosystem.</p>
+    `,
     publishedAt: '2024-12-19',
     readTime: '10 min read',
     category: 'Security',
