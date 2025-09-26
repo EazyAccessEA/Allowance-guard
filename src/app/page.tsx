@@ -1188,11 +1188,11 @@ export default function HomePage() {
       {/* Dark Footer Section */}
       <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
         <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          <div className="max-w-2xl mx-auto text-center">
+            <div>
               {/* Company Info */}
-              <div className="lg:col-span-2">
-                <div className="flex items-center gap-3 mb-6">
+              <div>
+                <div className="flex items-center justify-center gap-3 mb-6">
                   <Image
                     src="/AG_Logo2.png"
                     alt="Allowance Guard Logo"
@@ -1209,7 +1209,7 @@ export default function HomePage() {
                   The most comprehensive token allowance security platform for Web3. 
                   Protect your digital assets with enterprise-grade security.
                 </p>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center gap-4">
                   <div className="w-8 h-8 bg-primary-accent/10 rounded-full flex items-center justify-center">
                     <svg className="w-4 h-4 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -1219,27 +1219,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Quick Links */}
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
-                <ul className="space-y-3">
-                  <li><Link href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link></li>
-                  <li><Link href="/docs" className="text-gray-300 hover:text-white transition-colors">Documentation</Link></li>
-                  <li><Link href="/features" className="text-gray-300 hover:text-white transition-colors">Features</Link></li>
-                  <li><Link href="/settings" className="text-gray-300 hover:text-white transition-colors">Settings</Link></li>
-                </ul>
-              </div>
-
-              {/* Security */}
-              <div>
-                <h4 className="text-lg font-semibold text-white mb-4">Security</h4>
-                <ul className="space-y-3">
-                  <li><span className="text-gray-300">No Private Keys</span></li>
-                  <li><span className="text-gray-300">Read-Only Access</span></li>
-                  <li><span className="text-gray-300">Open Source</span></li>
-                  <li><span className="text-gray-300">Community Audited</span></li>
-                </ul>
-              </div>
             </div>
 
           </div>
