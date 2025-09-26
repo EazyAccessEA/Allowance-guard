@@ -6,11 +6,23 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { Badge } from '@/components/ui/Badge'
-import { Calendar, Clock, ArrowRight, TrendingUp, BookOpen, Shield, Lightbulb, Users, Zap } from 'lucide-react'
+import { Calendar, Clock, ArrowRight, BookOpen, Shield, Lightbulb, Users } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 
 // Blog posts data - in a real app, this would come from a CMS or database
-const blogPosts = [
+interface BlogPost {
+  slug: string
+  title: string
+  subtitle: string
+  excerpt: string
+  publishedAt: string
+  readTime: string
+  category: string
+  featured: boolean
+  image?: string
+}
+
+const blogPosts: BlogPost[] = [
   {
     slug: 'hardware-wallets-and-multisigs-elevating-your-security',
     title: 'Hardware Wallets and Multisigs: Elevating Your Security',
@@ -261,7 +273,7 @@ export default function BlogPage() {
 
             {/* Posts Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regularPosts.map((post, index) => {
+              {regularPosts.map((post) => {
                 const categoryInfo = categoryConfig[post.category as keyof typeof categoryConfig]
                 const Icon = categoryInfo?.icon || BookOpen
                 
@@ -269,10 +281,10 @@ export default function BlogPage() {
                   <article key={post.slug} className="group">
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
                       {/* Add image if it exists */}
-                      {(post as any).image && (
+                      {post.image && (
                         <div className="relative h-48 overflow-hidden">
                           <Image
-                            src={(post as any).image}
+                            src={post.image}
                             alt={post.title}
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-300"
