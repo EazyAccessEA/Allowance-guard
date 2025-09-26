@@ -12,6 +12,9 @@ export const runtime = 'nodejs'
 export async function GET() {
   const out: { ok: boolean; checks: Record<string, string | Record<string, string>> } = { ok: true, checks: {} }
 
+  // Basic app health
+  out.checks.app = 'ok'
+
   // DB check
   try { 
     await pool.query('SELECT 1')
@@ -32,14 +35,15 @@ export async function GET() {
 
   // RPC check (Ethereum mainnet as sentinel)
   try {
+    const rpcUrl = process.env.ETHEREUM_RPC_URL || 'https://eth.llamarpc.com'
     const client = createPublicClient({
       chain: mainnet,
-      transport: http(process.env.ETHEREUM_RPC_URL || 'https://eth.llamarpc.com')
+      transport: http(rpcUrl)
     })
     const n = await getBlockNumber(client)
     out.checks.rpc = `ok:${n}`
   } catch (e: unknown) { 
-    out.ok = false
+    // Don't fail the entire health check for RPC issues
     out.checks.rpc = e instanceof Error ? e.message : 'Unknown error'
   }
 
@@ -50,7 +54,7 @@ export async function GET() {
       const bn = await getBlockNumber(clientFor(id))
       chainChecks[id] = `ok:${bn}`
     } catch (e: unknown) {
-      out.ok = false
+      // Don't fail the entire health check for individual chain issues
       chainChecks[id] = `fail:${e instanceof Error ? e.message?.slice(0,120) : 'Unknown error'}`
     }
   }
