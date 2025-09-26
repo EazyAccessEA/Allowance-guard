@@ -135,76 +135,30 @@ export default function BlogPage() {
   const regularPosts = blogPosts.filter(post => !post.featured)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      {/* Hero Section with Enhanced Design */}
+    <div className="min-h-screen">
+      {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
         
-        {/* Enhanced gradient overlay */}
+        {/* Gradient overlay */}
         <div 
           className="absolute inset-0 z-10"
           style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,250,0.9) 50%, rgba(255,255,255,0.95) 100%)'
+            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
         
         <Container className="relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <TrendingUp className="w-4 h-4" />
-              Latest Web3 Security Insights
-            </div>
-            
-            <H1 className="mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-primary-600 bg-clip-text text-transparent">
-              Blog
-            </H1>
-            
-            <p className="text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto">
-              Insights, guides, and updates on Web3 security, token allowances, and DeFi best practices. 
-              Stay ahead of the curve with expert analysis and actionable security strategies.
+          <div className="max-w-4xl">
+            <H1 className="mb-6">Blog</H1>
+            <p className="text-xl text-text-secondary leading-relaxed mb-8">
+              Insights, guides, and updates on Web3 security, token allowances, and DeFi best practices.
             </p>
-
-            {/* Stats Section */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-primary-600" />
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900">12+</div>
-                    <div className="text-sm text-gray-600">Security Articles</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <BookOpen className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900">8+</div>
-                    <div className="text-sm text-gray-600">Educational Guides</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50 shadow-sm">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-green-600" />
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-gray-900">5+</div>
-                    <div className="text-sm text-gray-600">Innovation Posts</div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </Container>
       </Section>
+
+      <div className="border-t border-border-primary" />
 
       {/* Featured Post Section */}
       {featuredPost && (
@@ -378,27 +332,6 @@ export default function BlogPage() {
         </Container>
       </Section>
 
-      {/* Newsletter CTA Section */}
-      <Section className="py-16 bg-gradient-to-r from-primary-600 to-blue-600">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Stay Updated</h2>
-            <p className="text-xl text-primary-100 mb-8">
-              Get the latest Web3 security insights delivered to your inbox
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-xl border-0 text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white/50 focus:outline-none"
-              />
-              <button className="bg-white text-primary-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors duration-200">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </Container>
-      </Section>
     </div>
   )
 }
