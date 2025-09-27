@@ -52,7 +52,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '8 min read',
     category: 'Security',
-    featured: false
+    featured: false,
+    image: '/Building Your Personal Web3 Security Routine.png'
   },
   {
     slug: 'gas-fees-and-revocations-making-security-cost-effective',
