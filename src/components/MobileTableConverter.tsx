@@ -27,7 +27,7 @@ export default function MobileTableConverter() {
         mobileCardsContainer.style.display = 'none';
         
         // Create a card for each data row
-        dataRows.forEach((row, rowIndex) => {
+        dataRows.forEach((row) => {
           const cells = Array.from(row.querySelectorAll('td, th'));
           
           if (cells.length === 0) return;
