@@ -200,6 +200,19 @@ export default function BlogPage() {
               
               <article className="group">
                 <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl sm:rounded-3xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 sm:hover:-translate-y-2">
+                  {/* Add featured post image if it exists */}
+                  {featuredPost.image && (
+                    <div className="relative h-64 sm:h-80 overflow-hidden">
+                      <Image
+                        src={featuredPost.image}
+                        alt={featuredPost.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    </div>
+                  )}
                   <div className="p-6 sm:p-8 md:p-12 lg:p-16">
                     <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
                       <Badge variant="default" className="text-xs sm:text-sm bg-primary-100 text-primary-700 border-primary-200 px-3 py-1.5 sm:px-4 sm:py-2">
