@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 // Button component not used in this file
 import { Badge } from '@/components/ui/Badge'
 import AuditDashboard from '@/components/AuditDashboard'
-import PerformanceDashboard from '@/components/PerformanceDashboard'
+// import PerformanceDashboard from '@/components/PerformanceDashboard' // Removed
 import { 
   Shield, 
   BarChart3, 
@@ -267,8 +267,7 @@ export default function AdminDashboard() {
         </Container>
       </Section>
 
-      {/* Performance Dashboard Widget */}
-      <PerformanceDashboard />
+      {/* Performance Dashboard Widget - Removed */}
     </div>
   )
 }
