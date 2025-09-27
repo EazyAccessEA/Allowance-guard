@@ -3360,6 +3360,9 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   border-collapse: collapse !important;
   margin: 2rem 0 !important;
   font-size: 1rem !important;
+  overflow-x: auto !important;
+  display: block !important;
+  white-space: nowrap !important;
 }
 
 .prose th,
@@ -3368,12 +3371,55 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   padding: 0.75rem 1rem !important;
   text-align: left !important;
   color: #1E293B !important;
+  min-width: 120px !important;
+  white-space: normal !important;
 }
 
 .prose th {
   background-color: #F8FAFC !important;
   font-weight: 600 !important;
   color: #0F172A !important;
+}
+
+/* Mobile table improvements */
+@media (max-width: 768px) {
+  .prose table {
+    font-size: 0.875rem !important;
+    margin: 1.5rem 0 !important;
+    display: table !important;
+    width: max-content !important;
+    min-width: 100% !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .prose th,
+  .prose td {
+    padding: 0.5rem 0.75rem !important;
+    min-width: 100px !important;
+  }
+  
+  .prose th {
+    background-color: #F8FAFC !important;
+    font-weight: 600 !important;
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 10 !important;
+  }
+  
+  .prose td:first-child {
+    background-color: #F8FAFC !important;
+    font-weight: 600 !important;
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 5 !important;
+  }
+  
+  /* Table wrapper for horizontal scroll */
+  .prose {
+    overflow-x: auto !important;
+  }
 }
 
 .prose tbody tr:nth-child(even) {
