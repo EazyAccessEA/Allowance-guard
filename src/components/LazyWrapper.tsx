@@ -43,8 +43,9 @@ export function withLazyLoading<T extends object>(
 }
 
 // Lazy load components that are not critical for initial render
-export const LazyBlogSection = lazy(() => import('@/components/BlogSection'))
-export const LazyTestimonials = lazy(() => import('@/components/Testimonials'))
+// Note: Add actual component imports when components exist
+// export const LazyBlogSection = lazy(() => import('@/components/BlogSection'))
+// export const LazyTestimonials = lazy(() => import('@/components/Testimonials'))
 export const LazyFooter = lazy(() => import('@/components/Footer'))
 export const LazyPerformanceDashboard = lazy(() => import('@/components/PerformanceDashboard'))
 
