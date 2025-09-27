@@ -307,10 +307,10 @@ export default function BlogPage() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                           <div className="absolute bottom-0 left-0 right-0 p-6">
                             <div className="flex items-center gap-2 mb-3">
-                              <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r`}>
-                                <Icon className="w-3 h-3 text-white" />
+                              <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-lg`}>
+                                <Icon className="w-3 h-3 text-white drop-shadow-lg" />
                               </div>
-                              <Badge variant="default" className={`text-xs ${categoryInfo?.color} bg-white/20 backdrop-blur-sm border-white/30 text-white`}>
+                              <Badge variant="default" className={`text-xs ${categoryInfo?.color} bg-white/20 backdrop-blur-sm border-white/30 text-white shadow-lg`}>
                                 {post.category}
                               </Badge>
                             </div>
@@ -357,15 +357,15 @@ export default function BlogPage() {
                         <div className="flex items-center justify-between mt-auto">
                             <div className="flex items-center gap-4 text-xs text-gray-500">
                             <div className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3 text-gray-500" />
-                              <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { 
+                              <Calendar className="w-4 h-4 text-gray-600" />
+                              <span className="text-gray-600">{new Date(post.publishedAt).toLocaleDateString('en-US', { 
                                 month: 'short', 
                                 day: 'numeric' 
                               })}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Clock className="w-3 h-3 text-gray-500" />
-                              <span>{post.readTime}</span>
+                              <Clock className="w-4 h-4 text-gray-600" />
+                              <span className="text-gray-600">{post.readTime}</span>
                             </div>
                           </div>
                           
@@ -374,7 +374,7 @@ export default function BlogPage() {
                             className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors duration-200"
                           >
                             Read
-                            <ArrowRight className="w-3 h-3 text-primary-600" />
+                            <ArrowRight className="w-4 h-4 text-primary-600" />
                           </Link>
                         </div>
                       </div>
