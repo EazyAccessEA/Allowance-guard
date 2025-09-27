@@ -97,7 +97,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '9 min read',
     category: 'Innovation',
-    featured: false
+    featured: false,
+    image: '/Programmable Safety.png'
   },
   {
     slug: 'staying-safe-with-defi-dapps',
