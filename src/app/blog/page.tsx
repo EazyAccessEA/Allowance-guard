@@ -6,7 +6,6 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import { Badge } from '@/components/ui/Badge'
-import { Calendar, Clock, ArrowRight, BookOpen, Shield, Lightbulb, Users } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 
 // Blog posts data - in a real app, this would come from a CMS or database
@@ -146,12 +145,12 @@ const blogPosts: BlogPost[] = [
   }
 ]
 
-// Category configuration with icons and colors
+// Category configuration with colors
 const categoryConfig = {
-  Security: { icon: Shield, color: 'bg-red-50 text-red-700 border-red-200', gradient: 'from-red-50 to-red-100' },
-  Education: { icon: BookOpen, color: 'bg-blue-50 text-blue-700 border-blue-200', gradient: 'from-blue-50 to-blue-100' },
-  Innovation: { icon: Lightbulb, color: 'bg-yellow-50 text-yellow-700 border-yellow-200', gradient: 'from-yellow-50 to-yellow-100' },
-  Community: { icon: Users, color: 'bg-green-50 text-green-700 border-green-200', gradient: 'from-green-50 to-green-100' },
+  Security: { color: 'bg-red-50 text-red-700 border-red-200', gradient: 'from-red-50 to-red-100' },
+  Education: { color: 'bg-blue-50 text-blue-700 border-blue-200', gradient: 'from-blue-50 to-blue-100' },
+  Innovation: { color: 'bg-yellow-50 text-yellow-700 border-yellow-200', gradient: 'from-yellow-50 to-yellow-100' },
+  Community: { color: 'bg-green-50 text-green-700 border-green-200', gradient: 'from-green-50 to-green-100' },
 }
 
 export default function BlogPage() {
@@ -244,7 +243,6 @@ export default function BlogPage() {
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 text-sm text-white/70">
                         <div className="flex items-center gap-2 sm:gap-3">
-                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-white/80" />
                           <span className="text-sm sm:text-base md:text-lg text-white/80">{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { 
                             year: 'numeric', 
                             month: 'long', 
@@ -252,7 +250,6 @@ export default function BlogPage() {
                           })}</span>
                         </div>
                         <div className="flex items-center gap-2 sm:gap-3">
-                          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white/80" />
                           <span className="text-sm sm:text-base md:text-lg text-white/80">{featuredPost.readTime}</span>
                         </div>
                       </div>
@@ -262,7 +259,6 @@ export default function BlogPage() {
                         className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-sm text-white border border-white/30 px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 text-base sm:text-lg w-full sm:w-auto"
                       >
                         Read Article
-                        <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                       </Link>
                     </div>
                   </div>
@@ -286,14 +282,12 @@ export default function BlogPage() {
             {/* Category Filter */}
             <div className="flex flex-wrap gap-3 justify-center mb-12">
               {Object.entries(categoryConfig).map(([category, config]) => {
-                const Icon = config.icon
                 const count = blogPosts.filter(post => post.category === category).length
                 return (
                   <button
                     key={category}
                     className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-200 hover:shadow-md ${config.color}`}
                   >
-                    <Icon className="w-4 h-4" />
                     {category} ({count})
                   </button>
                 )
@@ -304,7 +298,6 @@ export default function BlogPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {regularPosts.map((post) => {
                 const categoryInfo = categoryConfig[post.category as keyof typeof categoryConfig]
-                const Icon = categoryInfo?.icon || BookOpen
                 
                 return (
                   <article key={post.slug} className="group">
@@ -324,9 +317,6 @@ export default function BlogPage() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                           <div className="absolute bottom-0 left-0 right-0 p-6">
                             <div className="flex items-center gap-2 mb-3">
-                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-lg`}>
-                                <Icon className="w-4 h-4 text-white drop-shadow-lg" />
-                              </div>
                               <Badge variant="default" className={`text-xs bg-black/60 backdrop-blur-sm border-black/40 text-white shadow-lg font-medium`}>
                                 {post.category}
                               </Badge>
@@ -348,9 +338,6 @@ export default function BlogPage() {
                         {!post.image && (
                           <>
                             <div className="flex items-center gap-2 mb-4">
-                              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-sm`}>
-                                <Icon className="w-5 h-5 text-white drop-shadow-sm" />
-                              </div>
                               <Badge variant="default" className={`text-xs ${categoryInfo?.color}`}>
                                 {post.category}
                               </Badge>
@@ -374,14 +361,12 @@ export default function BlogPage() {
                         <div className="flex items-center justify-between mt-auto">
                             <div className="flex items-center gap-4 text-xs text-gray-500">
                             <div className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4 text-gray-600" />
                               <span className="text-gray-600">{new Date(post.publishedAt).toLocaleDateString('en-US', { 
                                 month: 'short', 
                                 day: 'numeric' 
                               })}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Clock className="w-4 h-4 text-gray-600" />
                               <span className="text-gray-600">{post.readTime}</span>
                             </div>
                           </div>
@@ -391,7 +376,6 @@ export default function BlogPage() {
                             className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors duration-200"
                           >
                             Read
-                            <ArrowRight className="w-4 h-4 text-primary-600" />
                           </Link>
                         </div>
                       </div>
