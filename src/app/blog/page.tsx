@@ -199,66 +199,67 @@ export default function BlogPage() {
               </div>
               
               <article className="group">
-                <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl sm:rounded-3xl border border-gray-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 sm:hover:-translate-y-2">
-                  {/* Add featured post image if it exists */}
+                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 sm:hover:-translate-y-2">
+                  {/* Background Image */}
                   {featuredPost.image && (
-                    <div className="relative h-64 sm:h-80 overflow-hidden">
+                    <div className="absolute inset-0">
                       <Image
                         src={featuredPost.image}
                         alt={featuredPost.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                     </div>
                   )}
-                  <div className="p-6 sm:p-8 md:p-12 lg:p-16">
+                  
+                  {/* Glassmorphism Overlay */}
+                  <div className="relative z-10 bg-white/10 backdrop-blur-md border border-white/20">
+                    <div className="p-6 sm:p-8 md:p-12 lg:p-16">
                     <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-                      <Badge variant="default" className="text-xs sm:text-sm bg-primary-100 text-primary-700 border-primary-200 px-3 py-1.5 sm:px-4 sm:py-2">
+                      <Badge variant="default" className="text-xs sm:text-sm bg-white/20 text-white border-white/30 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-sm">
                         {featuredPost.category}
                       </Badge>
-                      <Badge variant="secondary" className="text-xs sm:text-sm bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-700 border-orange-200 px-3 py-1.5 sm:px-4 sm:py-2">
+                      <Badge variant="secondary" className="text-xs sm:text-sm bg-yellow-400/20 text-yellow-100 border-yellow-300/30 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-sm">
                         ⭐ Featured
                       </Badge>
                     </div>
                     
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 group-hover:text-primary-600 transition-colors duration-300 leading-tight">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 group-hover:text-primary-200 transition-colors duration-300 leading-tight drop-shadow-lg">
                       <Link 
                         href={`/blog/${featuredPost.slug}`}
-                        className="hover:text-primary-accent transition-colors duration-200"
+                        className="hover:text-primary-200 transition-colors duration-200"
                       >
                         {featuredPost.title}
                       </Link>
                     </h2>
                     
-                    <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 sm:mb-8 font-medium leading-relaxed">
+                    <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8 font-medium leading-relaxed drop-shadow-md">
                       {featuredPost.subtitle}
                     </p>
                     
-                    <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-8 sm:mb-10 md:mb-12 leading-relaxed max-w-4xl">
+                    <p className="text-base sm:text-lg md:text-xl text-white/80 mb-8 sm:mb-10 md:mb-12 leading-relaxed max-w-4xl drop-shadow-sm">
                       {featuredPost.excerpt}
                     </p>
                     
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 text-sm text-gray-500">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 text-sm text-white/70">
                         <div className="flex items-center gap-2 sm:gap-3">
-                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
-                          <span className="text-sm sm:text-base md:text-lg">{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { 
+                          <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-white/80" />
+                          <span className="text-sm sm:text-base md:text-lg text-white/80">{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { 
                             year: 'numeric', 
                             month: 'long', 
                             day: 'numeric' 
                           })}</span>
                         </div>
                         <div className="flex items-center gap-2 sm:gap-3">
-                          <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
-                          <span className="text-sm sm:text-base md:text-lg">{featuredPost.readTime}</span>
+                          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white/80" />
+                          <span className="text-sm sm:text-base md:text-lg text-white/80">{featuredPost.readTime}</span>
                         </div>
                       </div>
                       
                       <Link 
                         href={`/blog/${featuredPost.slug}`}
-                        className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-primary-600 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 text-base sm:text-lg w-full sm:w-auto"
+                        className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-sm text-white border border-white/30 px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 text-base sm:text-lg w-full sm:w-auto"
                       >
                         Read Article
                         <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
