@@ -23,6 +23,13 @@ export default function VideoBackground({
   const [isInView, setIsInView] = useState(!lazy) // If not lazy, always in view
   const [shouldLoad, setShouldLoad] = useState(!lazy || priority)
 
+  // Mobile detection for battery/data optimization
+  const isMobile = useCallback(() => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    )
+  }, [])
+
   // Intersection Observer for lazy loading
   useEffect(() => {
     if (!lazy || shouldLoad) return
@@ -116,13 +123,6 @@ export default function VideoBackground({
 
     return () => observer.disconnect()
   }, [lazy, isLoaded])
-
-  // Mobile detection for battery/data optimization
-  const isMobile = useCallback(() => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    )
-  }, [])
 
   // Cleanup on unmount
   useEffect(() => {
