@@ -190,7 +190,6 @@ export default function BlogPage() {
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12 sm:mb-16">
                 <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4 sm:mb-6">
-                  <Shield className="w-4 h-4" />
                   Featured Article
                 </div>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">Our Most Important Insights</h2>
@@ -389,7 +388,6 @@ export default function BlogPage() {
             {blogPosts.length === 0 && (
               <div className="text-center py-16">
                 <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BookOpen className="w-8 h-8 text-gray-400" />
                 </div>
                 <p className="text-gray-600 text-lg">No blog posts yet. Check back soon!</p>
               </div>
