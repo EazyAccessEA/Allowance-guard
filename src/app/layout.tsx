@@ -10,7 +10,7 @@ import RollbarProvider from '@/components/RollbarProvider'
 import PerformanceDashboard from '@/components/PerformanceDashboard'
 import CookieBanner from '@/components/CookieBanner'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
-import PerformanceMonitor from '@/components/PerformanceMonitor'
+// import PerformanceMonitor from '@/components/PerformanceMonitor' // Disabled due to missing API endpoint
 import { AppKit } from '../../appkit'
 
 // Sophisticated Static Generation Strategy
@@ -256,7 +256,7 @@ export default function RootLayout({
               {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />}
               <CookieBanner />
               <ServiceWorkerRegistration />
-              <PerformanceMonitor />
+              {/* <PerformanceMonitor /> - Disabled due to missing API endpoint */}
             </ContextProvider>
           </AppKit>
         </RollbarProvider>
