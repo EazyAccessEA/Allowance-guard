@@ -47,7 +47,7 @@ export function withLazyLoading<T extends object>(
 // export const LazyBlogSection = lazy(() => import('@/components/BlogSection'))
 // export const LazyTestimonials = lazy(() => import('@/components/Testimonials'))
 export const LazyFooter = lazy(() => import('@/components/Footer'))
-export const LazyPerformanceDashboard = lazy(() => import('@/components/PerformanceDashboard'))
+// export const LazyPerformanceDashboard = lazy(() => import('@/components/PerformanceDashboard')) // Removed
 
 // Intersection observer hook for lazy loading
 export function useIntersectionObserver(
