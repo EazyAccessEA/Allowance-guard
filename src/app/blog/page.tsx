@@ -84,7 +84,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '10 min read',
     category: 'Security',
-    featured: false
+    featured: false,
+    image: '/Red_Team.png'
   },
   {
     slug: 'programmable-safety-future-allowance-security',
