@@ -19,9 +19,7 @@ const DefaultFallback = () => (
 // Lazy wrapper with intersection observer
 export default function LazyWrapper({ 
   children, 
-  fallback = <DefaultFallback />,
-  threshold = 0.1,
-  rootMargin = '50px'
+  fallback = <DefaultFallback />
 }: LazyWrapperProps) {
   return (
     <Suspense fallback={fallback}>

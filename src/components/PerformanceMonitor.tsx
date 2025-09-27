@@ -31,7 +31,7 @@ export default function PerformanceMonitor({
     if (typeof window === 'undefined') return
 
     // Report Web Vitals to analytics
-    const reportWebVitals = (metric: any) => {
+    const reportWebVitals = (metric: { name: string; value: number; delta: number; id: string }) => {
       const { name, value, delta, id } = metric
       
       // Update local state
@@ -151,7 +151,7 @@ export default function PerformanceMonitor({
 
     try {
       observer.observe({ entryTypes: ['longtask'] })
-    } catch (error) {
+    } catch (_error) {
       // Long task API not supported in all browsers
       console.log('Long task API not supported')
     }

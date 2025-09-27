@@ -103,9 +103,7 @@ export default function RootLayout({
         <link rel="preload" href="/AG_Logo2.png" as="image" />
         <link rel="preload" href="/AllowanceGuard_BG.png" as="image" />
         
-        {/* Preload critical fonts */}
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" />
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" />
+        {/* Fonts are handled by Next.js font optimization */}
         
         {/* Pre-cache critical routes */}
         <link rel="prefetch" href="/blog" />
