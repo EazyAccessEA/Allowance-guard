@@ -21,7 +21,7 @@ export function useScrollPrediction(options: ScrollPredictionOptions = {}) {
   const [sectionsToPreload, setSectionsToPreload] = useState<string[]>([])
 
   const lastScrollY = useRef(0)
-  const scrollTimeout = useRef<NodeJS.Timeout>()
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null)
 
   // Track scroll behavior
   const handleScroll = useCallback(() => {
