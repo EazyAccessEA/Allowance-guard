@@ -31,7 +31,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '12 min read',
     category: 'Security',
-    featured: true
+    featured: true,
+    image: '/Hardware Wallets and Multisigs.png'
   },
   {
     slug: 'understanding-smart-contract-risk-beyond-allowances',
