@@ -25,7 +25,7 @@ export default function PredictiveSection({
   const sectionRef = useRef<HTMLElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isPreloading, setIsPreloading] = useState(false)
-  const { shouldPreloadSection, scrollDirection, scrollVelocity } = useScrollPrediction()
+  const { shouldPreloadSection } = useScrollPrediction()
 
   // Check if section should be preloaded
   useEffect(() => {

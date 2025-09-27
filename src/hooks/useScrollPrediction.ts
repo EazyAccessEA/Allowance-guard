@@ -54,7 +54,6 @@ export function useScrollPrediction(options: ScrollPredictionOptions = {}) {
   // Predict which sections to preload
   const predictSections = useCallback(() => {
     const sections = document.querySelectorAll('[data-section-id]')
-    const currentScrollY = window.scrollY
     const viewportHeight = window.innerHeight
     const sectionsToLoad: string[] = []
 
@@ -63,7 +62,6 @@ export function useScrollPrediction(options: ScrollPredictionOptions = {}) {
       if (!sectionId) return
 
       const rect = section.getBoundingClientRect()
-      const distance = Math.abs(rect.top - viewportHeight / 2)
       
       // Predict based on scroll direction and velocity
       let shouldPreload = false
@@ -109,7 +107,7 @@ export function useScrollPrediction(options: ScrollPredictionOptions = {}) {
 
     const checkBattery = async () => {
       try {
-        // @ts-ignore - Battery API is experimental
+        // @ts-expect-error - Battery API is experimental
         const battery = await navigator.getBattery?.()
         if (battery && battery.level < 0.2) {
           console.log('Low battery detected, reducing preloading')
