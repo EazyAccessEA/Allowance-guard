@@ -353,14 +353,14 @@ export default function BlogPage() {
                         <div className="flex items-center justify-between mt-auto">
                             <div className="flex items-center gap-4 text-xs text-gray-500">
                             <div className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3" />
+                              <Calendar className="w-3 h-3 text-gray-500" />
                               <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { 
                                 month: 'short', 
                                 day: 'numeric' 
                               })}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
+                              <Clock className="w-3 h-3 text-gray-500" />
                               <span>{post.readTime}</span>
                             </div>
                           </div>
@@ -370,7 +370,7 @@ export default function BlogPage() {
                             className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors duration-200"
                           >
                             Read
-                            <ArrowRight className="w-3 h-3" />
+                            <ArrowRight className="w-3 h-3 text-primary-600" />
                           </Link>
                         </div>
                       </div>
