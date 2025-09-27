@@ -504,6 +504,20 @@ const blogPosts: BlogPost[] = [
         <li><strong>Plan a Batch Cleanup:</strong> Make a list of all your low-risk, "nice-to-have" revocations. Plan to use a batch revocation tool during the next network-wide quiet period to clean them all up in one go.</li>
       </ol>
 
+      <div style="margin: 2rem 0; text-align: center;">
+        <video 
+          controls 
+          style="max-width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+          poster="/gas_fees_poster.jpg"
+        >
+          <source src="/gas_fees.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748B; font-style: italic;">
+          Watch: Gas fee optimization strategies in action
+        </p>
+      </div>
+
       <p>By being intentional and strategic, you can achieve a state of high security at a low cost. The peace of mind that comes from a clean, well-managed wallet is worth every cent.</p>
     `,
     publishedAt: '2024-12-19',
