@@ -63,7 +63,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '8 min read',
     category: 'Security',
-    featured: false
+    featured: false,
+    image: '/Gas.png'
   },
   {
     slug: 'understanding-layer-2-networks-how-they-work',
