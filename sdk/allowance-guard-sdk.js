@@ -9,6 +9,7 @@
  * @license GPL-3.0
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const axios = require('axios')
 
 class AllowanceGuardSDK {

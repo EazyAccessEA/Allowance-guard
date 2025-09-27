@@ -5,6 +5,7 @@
  * for fetching token allowances and assessing risks.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const AllowanceGuardSDK = require('../allowance-guard-sdk')
 
 async function basicUsageExample() {

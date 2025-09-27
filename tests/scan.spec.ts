@@ -9,7 +9,7 @@ test.beforeAll(async ({ request, baseURL }) => {
     if (!res.ok()) {
       console.log('Database seeding failed, skipping database-dependent tests')
     }
-  } catch (error) {
+  } catch (_error) {
     console.log('Database not available, skipping database-dependent tests')
   }
 })
@@ -33,7 +33,7 @@ test('scan flow shows seeded approvals', async ({ page }) => {
     // processor route may be cron—force it once in test:
     try {
       await page.request.post('/api/jobs/process')
-    } catch (error) {
+    } catch (_error) {
       console.log('Job processing failed, continuing with test')
     }
 

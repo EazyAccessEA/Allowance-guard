@@ -196,7 +196,7 @@ function applySecurityHeaders(response: NextResponse, botInfo: ReturnType<typeof
 }
 
 /** Enhanced CORS with Bot Awareness */
-function applyCORS(response: NextResponse, req: NextRequest, botInfo: ReturnType<typeof isBot>): NextResponse {
+function applyCORS(response: NextResponse, req: NextRequest, _botInfo: ReturnType<typeof isBot>): NextResponse {
   const origin = req.headers.get('origin') || ''
   const isSame = origin === ORIGIN
   

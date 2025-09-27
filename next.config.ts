@@ -16,11 +16,12 @@ const nextConfig = {
   webpack: (config: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
     
-    // Performance optimizations
-    if (config.mode === 'production') {
-      // Enable bundle analyzer if ANALYZE=true
-      if (process.env.ANALYZE === 'true') {
-        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+      // Performance optimizations
+      if (config.mode === 'production') {
+        // Enable bundle analyzer if ANALYZE=true
+        if (process.env.ANALYZE === 'true') {
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
         config.plugins.push(
           new BundleAnalyzerPlugin({
             analyzerMode: 'static',

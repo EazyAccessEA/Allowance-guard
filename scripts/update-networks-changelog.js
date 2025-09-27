@@ -11,7 +11,9 @@
  * Usage: node scripts/update-networks-changelog.js
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path');
 
 const DATA_FILE = path.join(__dirname, '..', 'data', 'networks.json');

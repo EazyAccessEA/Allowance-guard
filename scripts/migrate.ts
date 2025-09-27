@@ -18,7 +18,7 @@ function loadEnvFile() {
         }
       }
     }
-  } catch (error) {
+  } catch (_error) {
     console.log('No .env.local file found, using system environment variables')
   }
 }

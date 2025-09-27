@@ -5,8 +5,11 @@
  * including wallet scanning, data export, and batch operations.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const AllowanceGuardSDK = require('../allowance-guard-sdk')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path')
 
 async function advancedUsageExample() {
