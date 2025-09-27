@@ -9,6 +9,8 @@ import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
 import PerformanceDashboard from '@/components/PerformanceDashboard'
 import CookieBanner from '@/components/CookieBanner'
+import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
+import PerformanceMonitor from '@/components/PerformanceMonitor'
 import { AppKit } from '../../appkit'
 
 // Sophisticated Static Generation Strategy
@@ -93,8 +95,22 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://wagmi.sh" />
         
         {/* PRPL Pattern: Push critical resources */}
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        <link rel="preload" href="/_next/static/css/app/page.css" as="style" />
+        <link rel="preload" href="/_next/static/css/app/globals.css" as="style" />
         
-        {/* Pre-cache critical routes - removed client-side pages that cause 500 errors */}
+        {/* Preload critical images */}
+        <link rel="preload" href="/AG_Logo2.png" as="image" />
+        <link rel="preload" href="/AllowanceGuard_BG.png" as="image" />
+        
+        {/* Preload critical fonts */}
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" />
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" as="style" />
+        
+        {/* Pre-cache critical routes */}
+        <link rel="prefetch" href="/blog" />
+        <link rel="prefetch" href="/docs" />
+        <link rel="prefetch" href="/features" />
         
         {/* Critical mobile optimizations */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -241,6 +257,8 @@ export default function RootLayout({
               <Footer />
               {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />}
               <CookieBanner />
+              <ServiceWorkerRegistration />
+              <PerformanceMonitor />
             </ContextProvider>
           </AppKit>
         </RollbarProvider>
