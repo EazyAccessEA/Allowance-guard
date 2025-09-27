@@ -211,13 +211,13 @@ export default function BlogPage() {
                   )}
                   
                   {/* Glassmorphism Overlay */}
-                  <div className="relative z-10 bg-white/10 backdrop-blur-md border border-white/20">
+                  <div className="relative z-10 bg-black/40 backdrop-blur-md border border-white/20">
                     <div className="p-6 sm:p-8 md:p-12 lg:p-16">
                     <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-                      <Badge variant="default" className="text-xs sm:text-sm bg-white/20 text-white border-white/30 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-sm">
+                      <Badge variant="default" className="text-xs sm:text-sm bg-black/60 text-white border-black/40 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-sm">
                         {featuredPost.category}
                       </Badge>
-                      <Badge variant="secondary" className="text-xs sm:text-sm bg-yellow-400/20 text-yellow-100 border-yellow-300/30 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-sm">
+                      <Badge variant="secondary" className="text-xs sm:text-sm bg-yellow-500/80 text-yellow-100 border-yellow-400/50 px-3 py-1.5 sm:px-4 sm:py-2 backdrop-blur-sm">
                         ⭐ Featured
                       </Badge>
                     </div>
@@ -255,7 +255,7 @@ export default function BlogPage() {
                       
                       <Link 
                         href={`/blog/${featuredPost.slug}`}
-                        className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/20 backdrop-blur-sm text-white border border-white/30 px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 text-base sm:text-lg w-full sm:w-auto"
+                        className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-black/60 backdrop-blur-sm text-white border border-black/40 px-6 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl font-semibold hover:bg-black/70 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 sm:hover:-translate-y-1 text-base sm:text-lg w-full sm:w-auto"
                       >
                         Read Article
                       </Link>
