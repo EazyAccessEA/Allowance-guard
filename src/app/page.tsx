@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import Hero from '@/components/Hero'
 import { LazySection } from '@/components/LazySection'
+import CascadingScrollAnimation, { StaggeredAnimation, FadeInScale } from '@/components/CascadingScrollAnimation'
 import dynamicImport from 'next/dynamic'
 
 // Note: Static generation exports moved to layout.tsx for client components
@@ -326,19 +327,23 @@ export default function HomePage() {
       />
 
       {/* Statistics Section - Inspired by DNA Payments */}
-      <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-text-primary mb-4">
-                Trusted by Security-Conscious Users
-              </h2>
-              <p className="text-xl text-text-secondary">
-                Protecting digital assets across the Web3 ecosystem
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+      <CascadingScrollAnimation direction="up" distance={60} delay={200}>
+        <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light">
+          <Container>
+            <div className="max-w-6xl mx-auto">
+              <FadeInScale delay={100}>
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-text-primary mb-4">
+                    Trusted by Security-Conscious Users
+                  </h2>
+                  <p className="text-xl text-text-secondary">
+                    Protecting digital assets across the Web3 ecosystem
+                  </p>
+                </div>
+              </FadeInScale>
+              
+              <StaggeredAnimation direction="up" distance={40} stagger={150}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
               <div className="text-center">
                 <div className="text-4xl sm:text-5xl font-bold text-primary-accent mb-2">
                   50,000+
@@ -374,10 +379,12 @@ export default function HomePage() {
                   Real-time threat detection and alerts
                 </div>
               </div>
+                </div>
+              </StaggeredAnimation>
             </div>
-          </div>
-        </Container>
-      </Section>
+          </Container>
+        </Section>
+      </CascadingScrollAnimation>
 
       {/* Trust Indicators */}
       <Section className="py-8 bg-white">
@@ -391,18 +398,22 @@ export default function HomePage() {
       </Section>
 
       {/* How It Works Section */}
-      <Section className="py-16 sm:py-20 lg:py-24 bg-white">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
-              How Allowance Guard Works
-            </h2>
-            <p className="text-xl text-text-secondary leading-relaxed">
-              Three simple steps to secure your wallet and protect your assets.
-            </p>
-          </div>
+      <CascadingScrollAnimation direction="up" distance={80} delay={400}>
+        <Section className="py-16 sm:py-20 lg:py-24 bg-white">
+          <Container>
+            <FadeInScale delay={200}>
+              <div className="max-w-4xl mx-auto text-center mb-16">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+                  How Allowance Guard Works
+                </h2>
+                <p className="text-xl text-text-secondary leading-relaxed">
+                  Three simple steps to secure your wallet and protect your assets.
+                </p>
+              </div>
+            </FadeInScale>
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+            <StaggeredAnimation direction="up" distance={60} stagger={200}>
+              <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <span className="text-2xl font-bold text-primary-accent">1</span>
@@ -432,9 +443,11 @@ export default function HomePage() {
                 Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.
               </p>
             </div>
-          </div>
-        </Container>
-      </Section>
+              </div>
+            </StaggeredAnimation>
+          </Container>
+        </Section>
+      </CascadingScrollAnimation>
 
       {/* Statistics Section - Lazy Loaded with Error Boundary */}
       <LazySection>
@@ -442,19 +455,23 @@ export default function HomePage() {
       </LazySection>
 
       {/* Features Section */}
-      <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
-                Built for Security & Clarity
-              </h2>
-              <p className="text-xl text-text-secondary leading-relaxed text-justify">
-                Every feature is designed with one goal: keeping your assets secure.
-              </p>
-            </div>
-            
-            <div className="grid lg:grid-cols-2 gap-12">
+      <CascadingScrollAnimation direction="up" distance={70} delay={600}>
+        <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
+          <Container>
+            <div className="max-w-4xl mx-auto">
+              <FadeInScale delay={300}>
+                <div className="mb-16">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+                    Built for Security & Clarity
+                  </h2>
+                  <p className="text-xl text-text-secondary leading-relaxed text-justify">
+                    Every feature is designed with one goal: keeping your assets secure.
+                  </p>
+                </div>
+              </FadeInScale>
+              
+              <StaggeredAnimation direction="up" distance={50} stagger={250}>
+                <div className="grid lg:grid-cols-2 gap-12">
               <div className="space-y-8">
                   <div>
                   <h3 className="mobbin-heading-3 text-text-primary mb-3">Non-Custodial Security</h3>
@@ -481,28 +498,32 @@ export default function HomePage() {
 
                   <div>
                   <h3 className="mobbin-heading-3 text-text-primary mb-3">Gas-Efficient Revocation</h3>
-                  <p className="text-text-secondary leading-relaxed text-justify">
+                    <p className="text-text-secondary leading-relaxed text-justify">
                       Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
                     </p>
                 </div>
               </div>
+                </div>
+              </StaggeredAnimation>
             </div>
-          </div>
-        </Container>
-      </Section>
+          </Container>
+        </Section>
+      </CascadingScrollAnimation>
 
       {/* Final CTA Section - Dark Background */}
-      <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-              Ready to Secure Your Wallet?
-            </h2>
-            <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <CascadingScrollAnimation direction="up" distance={80} delay={800}>
+        <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
+          <Container>
+            <FadeInScale delay={400}>
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
+                  Ready to Secure Your Wallet?
+                </h2>
+                <p className="text-xl text-gray-300 leading-relaxed mb-8">
+                  Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               {!isConnected ? (
                 <ClientConnectButton 
                   variant="primary" 
@@ -524,15 +545,18 @@ export default function HomePage() {
               <p className="text-sm text-gray-400">
                 No sign-up required. No email. Just connect and scan.
               </p>
-            </div>
-          </div>
-        </Container>
-      </Section>
+                </div>
+              </div>
+            </FadeInScale>
+          </Container>
+        </Section>
+      </CascadingScrollAnimation>
 
 
       {/* Testimonials Section - Inspired by DNA Payments */}
-      <Section className="py-16 sm:py-20 lg:py-24 bg-white">
-        <Container>
+      <CascadingScrollAnimation direction="up" distance={60} delay={1000}>
+        <Section className="py-16 sm:py-20 lg:py-24 bg-white">
+          <Container>
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
@@ -648,7 +672,8 @@ export default function HomePage() {
             </div>
           </div>
         </Container>
-      </Section>
+        </Section>
+      </CascadingScrollAnimation>
 
       {/* Trust Indicators & Security Badges - Inspired by DNA Payments */}
       <Section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-primary-50 to-background-light">

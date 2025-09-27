@@ -1,2 +1,7 @@
+packages:
+  - '.'
+  - 'extension'
+  - 'sdk'
+
 onlyBuiltDependencies:
   - '@sentry/cli'
