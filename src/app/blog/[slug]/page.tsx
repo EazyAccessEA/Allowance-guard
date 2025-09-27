@@ -9,6 +9,7 @@ import { H1 } from '@/components/ui/Heading'
 import { Badge } from '@/components/ui/Badge'
 import { Calendar, Clock, ArrowLeft, ArrowRight } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
+import MobileTableConverter from '@/components/MobileTableConverter'
 
 // Blog post interface
 interface BlogPost {
@@ -1643,6 +1644,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               className="prose max-w-none mb-12"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
+            <MobileTableConverter />
 
             {/* Call to action */}
             <div className="bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-200 rounded-2xl p-8 mb-12 shadow-sm">

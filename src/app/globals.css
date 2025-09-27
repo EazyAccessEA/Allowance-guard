@@ -3381,44 +3381,71 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   color: #0F172A !important;
 }
 
-/* Mobile table improvements */
+/* Mobile table improvements - Card-based layout */
+.mobile-table-cards {
+  display: none;
+}
+
+.mobile-card {
+  background: white !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 0.75rem !important;
+  padding: 1rem !important;
+  margin-bottom: 1rem !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mobile-card-header {
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  color: #0F172A !important;
+  margin-bottom: 0.75rem !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.mobile-card-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  padding: 0.5rem 0 !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+}
+
+.mobile-card-row:last-child {
+  border-bottom: none !important;
+}
+
+.mobile-card-label {
+  font-weight: 500 !important;
+  color: #64748B !important;
+  font-size: 0.875rem !important;
+  flex: 1 !important;
+  margin-right: 1rem !important;
+}
+
+.mobile-card-value {
+  color: #1E293B !important;
+  font-size: 0.875rem !important;
+  text-align: right !important;
+  flex: 1 !important;
+  line-height: 1.4 !important;
+}
+
 @media (max-width: 768px) {
   .prose table {
-    font-size: 0.875rem !important;
+    display: none !important;
+  }
+  
+  .mobile-table-cards {
+    display: block !important;
     margin: 1.5rem 0 !important;
-    display: table !important;
-    width: max-content !important;
-    min-width: 100% !important;
-    border: 1px solid #E2E8F0 !important;
-    border-radius: 0.5rem !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
   }
-  
-  .prose th,
-  .prose td {
-    padding: 0.5rem 0.75rem !important;
-    min-width: 100px !important;
-  }
-  
-  .prose th {
-    background-color: #F8FAFC !important;
-    font-weight: 600 !important;
-    position: sticky !important;
-    left: 0 !important;
-    z-index: 10 !important;
-  }
-  
-  .prose td:first-child {
-    background-color: #F8FAFC !important;
-    font-weight: 600 !important;
-    position: sticky !important;
-    left: 0 !important;
-    z-index: 5 !important;
-  }
-  
-  /* Table wrapper for horizontal scroll */
-  .prose {
-    overflow-x: auto !important;
+}
+
+@media (min-width: 769px) {
+  .mobile-table-cards {
+    display: none !important;
   }
 }
 
