@@ -618,17 +618,6 @@ const blogPosts: BlogPost[] = [
         <li><strong>L2s are Separate Networks:</strong> Your funds on Arbitrum are separate from your funds on Optimism. You need to use a bridge to move assets between them or back to L1. It is critical to ensure you are connected to the correct network in your wallet when interacting with a dapp.</li>
       </ol>
 
-      <div style="margin: 2rem 0; text-align: center;">
-        <img 
-          src="/Layer2.png" 
-          alt="Layer 2 Networks - Complex digital interface showing blockchain technology and data processing"
-          style="max-width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
-        />
-        <p style="margin-top: 0.5rem; font-size: 0.875rem; color: #64748B; font-style: italic;">
-          Layer 2 Networks: The complex infrastructure powering scalable blockchain solutions
-        </p>
-      </div>
-
       <p>In summary, Layer 2 networks are the key to unlocking Ethereum&apos;s scalability. By taking the heavy computational work off-chain and using L1 for security and data availability, they allow the ecosystem to grow to millions of users without sacrificing the core principles of decentralization and security that make it so valuable.</p>
     `,
     publishedAt: '2024-12-19',

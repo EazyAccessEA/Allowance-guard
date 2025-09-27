@@ -73,7 +73,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '12 min read',
     category: 'Education',
-    featured: false
+    featured: false,
+    image: '/Layer2.png'
   },
   {
     slug: 'red-team-yourself-simulating-an-attack-on-your-wallet',
