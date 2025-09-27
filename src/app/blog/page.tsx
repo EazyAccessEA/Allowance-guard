@@ -309,8 +309,8 @@ export default function BlogPage() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                           <div className="absolute bottom-0 left-0 right-0 p-6">
                             <div className="flex items-center gap-2 mb-3">
-                              <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-lg`}>
-                                <Icon className="w-3 h-3 text-white drop-shadow-lg" />
+                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-lg`}>
+                                <Icon className="w-4 h-4 text-white drop-shadow-lg" />
                               </div>
                               <Badge variant="default" className={`text-xs bg-black/60 backdrop-blur-sm border-black/40 text-white shadow-lg font-medium`}>
                                 {post.category}
@@ -333,8 +333,8 @@ export default function BlogPage() {
                         {!post.image && (
                           <>
                             <div className="flex items-center gap-2 mb-4">
-                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-sm`}>
-                                <Icon className="w-4 h-4 text-white drop-shadow-sm" />
+                              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-sm`}>
+                                <Icon className="w-5 h-5 text-white drop-shadow-sm" />
                               </div>
                               <Badge variant="default" className={`text-xs ${categoryInfo?.color}`}>
                                 {post.category}
