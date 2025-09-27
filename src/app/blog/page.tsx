@@ -350,7 +350,7 @@ export default function BlogPage() {
                         </p>
                         
                         <div className="flex items-center justify-between mt-auto">
-                          <div className="flex items-center gap-4 text-xs text-gray-500">
+                            <div className="flex items-center gap-4 text-xs text-gray-500">
                             <div className="flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
                               <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { 
