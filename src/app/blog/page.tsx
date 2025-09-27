@@ -286,7 +286,7 @@ export default function BlogPage() {
                 return (
                   <article key={post.slug} className="group">
                     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
-                      {/* Add image if it exists */}
+                      {/* Add image if it exists with glassmorphism overlay */}
                       {post.image && (
                         <div className="relative h-48 overflow-hidden">
                           <Image
@@ -295,27 +295,52 @@ export default function BlogPage() {
                             fill
                             className="object-cover group-hover:scale-105 transition-transform duration-300"
                           />
+                          {/* Glassmorphism overlay with title */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                          <div className="absolute bottom-0 left-0 right-0 p-6">
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r`}>
+                                <Icon className="w-3 h-3 text-white" />
+                              </div>
+                              <Badge variant="default" className={`text-xs ${categoryInfo?.color} bg-white/20 backdrop-blur-sm border-white/30 text-white`}>
+                                {post.category}
+                              </Badge>
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary-200 transition-colors duration-300 line-clamp-2 drop-shadow-lg">
+                              <Link 
+                                href={`/blog/${post.slug}`}
+                                className="hover:text-primary-200 transition-colors duration-200"
+                              >
+                                {post.title}
+                              </Link>
+                            </h3>
+                          </div>
                         </div>
                       )}
                       
                       <div className="p-6 h-full flex flex-col">
-                        <div className="flex items-center gap-2 mb-4">
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r`}>
-                            <Icon className="w-4 h-4 text-gray-700" />
-                          </div>
-                          <Badge variant="default" className={`text-xs ${categoryInfo?.color}`}>
-                            {post.category}
-                          </Badge>
-                        </div>
-                        
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
-                          <Link 
-                            href={`/blog/${post.slug}`}
-                            className="hover:text-primary-accent transition-colors duration-200"
-                          >
-                            {post.title}
-                          </Link>
-                        </h3>
+                        {/* Show category and title only if no image */}
+                        {!post.image && (
+                          <>
+                            <div className="flex items-center gap-2 mb-4">
+                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r`}>
+                                <Icon className="w-4 h-4 text-gray-700" />
+                              </div>
+                              <Badge variant="default" className={`text-xs ${categoryInfo?.color}`}>
+                                {post.category}
+                              </Badge>
+                            </div>
+                            
+                            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+                              <Link 
+                                href={`/blog/${post.slug}`}
+                                className="hover:text-primary-accent transition-colors duration-200"
+                              >
+                                {post.title}
+                              </Link>
+                            </h3>
+                          </>
+                        )}
                         
                         <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3 flex-grow">
                           {post.excerpt}
