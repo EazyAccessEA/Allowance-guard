@@ -136,7 +136,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '12 min read',
     category: 'Community',
-    featured: false
+    featured: false,
+    image: '/From Dapp User.png'
   }
 ]
 
