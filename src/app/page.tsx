@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import Hero from '@/components/Hero'
 import { LazySection } from '@/components/LazySection'
-import CascadingScrollAnimation, { StaggeredAnimation, FadeInScale } from '@/components/CascadingScrollAnimation'
+import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScrollAnimation'
 import dynamicImport from 'next/dynamic'
 
 // Note: Static generation exports moved to layout.tsx for client components
@@ -342,8 +342,7 @@ export default function HomePage() {
                 </div>
               </FadeInScale>
               
-              <StaggeredAnimation direction="up" distance={40} stagger={150}>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
               <div className="text-center">
                 <div className="text-4xl sm:text-5xl font-bold text-primary-accent mb-2">
                   50,000+
@@ -380,7 +379,6 @@ export default function HomePage() {
                 </div>
               </div>
                 </div>
-              </StaggeredAnimation>
             </div>
           </Container>
         </Section>
@@ -399,54 +397,52 @@ export default function HomePage() {
 
       {/* How It Works Section */}
       <CascadingScrollAnimation direction="up" distance={80} delay={400}>
-        <Section className="py-16 sm:py-20 lg:py-24 bg-white">
-          <Container>
+      <Section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <Container>
             <FadeInScale delay={200}>
-              <div className="max-w-4xl mx-auto text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
-                  How Allowance Guard Works
-                </h2>
-                <p className="text-xl text-text-secondary leading-relaxed">
-                  Three simple steps to secure your wallet and protect your assets.
-                </p>
-              </div>
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+              How Allowance Guard Works
+            </h2>
+            <p className="text-xl text-text-secondary leading-relaxed">
+              Three simple steps to secure your wallet and protect your assets.
+            </p>
+          </div>
             </FadeInScale>
 
-            <StaggeredAnimation direction="up" distance={60} stagger={200}>
-              <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-primary-accent">1</span>
+            <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
+            <div className="text-center px-6 py-8">
+              <div className="w-20 h-20 bg-primary-accent/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+                <span className="text-3xl font-bold text-primary-accent">1</span>
               </div>
-              <h3 className="mobbin-heading-3 text-text-primary mb-4">Connect & Scan</h3>
-              <p className="text-text-secondary leading-relaxed">
+              <h3 className="text-2xl font-bold text-text-primary mb-6">Connect & Scan</h3>
+              <p className="text-lg text-text-secondary leading-relaxed">
                 Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control.
               </p>
             </div>
             
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-primary-accent">2</span>
+            <div className="text-center px-6 py-8">
+              <div className="w-20 h-20 bg-primary-accent/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+                <span className="text-3xl font-bold text-primary-accent">2</span>
               </div>
-              <h3 className="mobbin-heading-3 text-text-primary mb-4">Analyze & Understand</h3>
-              <p className="text-text-secondary leading-relaxed">
+              <h3 className="text-2xl font-bold text-text-primary mb-6">Analyze & Understand</h3>
+              <p className="text-lg text-text-secondary leading-relaxed">
                   Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
                 </p>
               </div>
 
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-bold text-primary-accent">3</span>
+            <div className="text-center px-6 py-8">
+              <div className="w-20 h-20 bg-primary-accent/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+                <span className="text-3xl font-bold text-primary-accent">3</span>
               </div>
-              <h3 className="mobbin-heading-3 text-text-primary mb-4">Act & Secure</h3>
-              <p className="text-text-secondary leading-relaxed">
+              <h3 className="text-2xl font-bold text-text-primary mb-6">Act & Secure</h3>
+              <p className="text-lg text-text-secondary leading-relaxed">
                 Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.
               </p>
             </div>
-              </div>
-            </StaggeredAnimation>
-          </Container>
-        </Section>
+          </div>
+        </Container>
+      </Section>
       </CascadingScrollAnimation>
 
       {/* Statistics Section - Lazy Loaded with Error Boundary */}
@@ -456,79 +452,77 @@ export default function HomePage() {
 
       {/* Features Section */}
       <CascadingScrollAnimation direction="up" distance={70} delay={600}>
-        <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
-          <Container>
-            <div className="max-w-4xl mx-auto">
+      <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
+        <Container>
+          <div className="max-w-4xl mx-auto">
               <FadeInScale delay={300}>
-                <div className="mb-16">
-                  <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
-                    Built for Security & Clarity
-                  </h2>
-                  <p className="text-xl text-text-secondary leading-relaxed text-justify">
-                    Every feature is designed with one goal: keeping your assets secure.
-                  </p>
-                </div>
+            <div className="mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+                Built for Security & Clarity
+              </h2>
+              <p className="text-xl text-text-secondary leading-relaxed text-justify">
+                Every feature is designed with one goal: keeping your assets secure.
+              </p>
+            </div>
               </FadeInScale>
-              
-              <StaggeredAnimation direction="up" distance={50} stagger={250}>
-                <div className="grid lg:grid-cols-2 gap-12">
-              <div className="space-y-8">
-                  <div>
-                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Non-Custodial Security</h3>
-                  <p className="text-text-secondary leading-relaxed text-justify">
+            
+              <div className="grid lg:grid-cols-2 gap-16">
+              <div className="space-y-12">
+                  <div className="px-6 py-8">
+                  <h3 className="text-2xl font-bold text-text-primary mb-6">Non-Custodial Security</h3>
+                  <p className="text-lg text-text-secondary leading-relaxed">
                     Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet.
                   </p>
                 </div>
 
-                  <div>
-                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Clarity-First Dashboard</h3>
-                  <p className="text-text-secondary leading-relaxed text-justify">
+                  <div className="px-6 py-8">
+                  <h3 className="text-2xl font-bold text-text-primary mb-6">Clarity-First Dashboard</h3>
+                  <p className="text-lg text-text-secondary leading-relaxed">
                     Designed to enterprise standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
                   </p>
                 </div>
               </div>
 
-              <div className="space-y-8">
-                  <div>
-                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Advanced Risk Intelligence</h3>
-                  <p className="text-text-secondary leading-relaxed text-justify">
+              <div className="space-y-12">
+                  <div className="px-6 py-8">
+                  <h3 className="text-2xl font-bold text-text-primary mb-6">Advanced Risk Intelligence</h3>
+                  <p className="text-lg text-text-secondary leading-relaxed">
                       Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
                     </p>
                 </div>
 
-                  <div>
-                  <h3 className="mobbin-heading-3 text-text-primary mb-3">Gas-Efficient Revocation</h3>
-                    <p className="text-text-secondary leading-relaxed text-justify">
+                  <div className="px-6 py-8">
+                  <h3 className="text-2xl font-bold text-text-primary mb-6">Gas-Efficient Revocation</h3>
+                  <p className="text-lg text-text-secondary leading-relaxed">
                       Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
                     </p>
                 </div>
               </div>
-                </div>
-              </StaggeredAnimation>
             </div>
-          </Container>
-        </Section>
+          </div>
+        </Container>
+      </Section>
       </CascadingScrollAnimation>
 
       {/* Final CTA Section - Dark Background */}
       <CascadingScrollAnimation direction="up" distance={80} delay={800}>
         <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
-          <Container>
+        <Container>
             <FadeInScale delay={400}>
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-                  Ready to Secure Your Wallet?
-                </h2>
+              Ready to Secure Your Wallet?
+            </h2>
                 <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                  Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               {!isConnected ? (
                 <ClientConnectButton 
                   variant="primary" 
                   size="lg"
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto min-h-[44px] px-8 py-4 text-lg font-semibold"
                 />
               ) : (
                 <Button
@@ -537,19 +531,19 @@ export default function HomePage() {
                   loading={pending}
                   variant="primary"
                   size="lg"
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto min-h-[44px] px-8 py-4 text-lg font-semibold"
                 >
                   {pending ? 'Scanning...' : 'Scan Your Wallet'}
                 </Button>
               )}
-              <p className="text-sm text-gray-400">
+              <p className="text-base text-gray-300 leading-relaxed max-w-md text-center">
                 No sign-up required. No email. Just connect and scan.
               </p>
-                </div>
-              </div>
+            </div>
+          </div>
             </FadeInScale>
-          </Container>
-        </Section>
+        </Container>
+      </Section>
       </CascadingScrollAnimation>
 
 

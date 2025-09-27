@@ -10,7 +10,6 @@ interface CascadingScrollAnimationProps {
   distance?: number
   duration?: number
   threshold?: number
-  stagger?: number
 }
 
 export default function CascadingScrollAnimation({
@@ -20,8 +19,7 @@ export default function CascadingScrollAnimation({
   direction = 'up',
   distance = 50,
   duration = 600,
-  threshold = 0.1,
-  stagger = 100
+  threshold = 0.1
 }: CascadingScrollAnimationProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -180,7 +178,7 @@ export function ParallaxScroll({
   useEffect(() => {
     const handleScroll = () => {
       if (ref.current) {
-        const rect = ref.current.getBoundingClientRect()
+        const _rect = ref.current.getBoundingClientRect()
         const scrolled = window.pageYOffset
         const rate = scrolled * speed
         setOffset(rate)

@@ -67,15 +67,14 @@ export default function PerformanceMonitor({
     }
 
     // Import and use web-vitals library
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB, getINP }) => {
-      getCLS(reportWebVitals)
-      getFID(reportWebVitals)
-      getFCP(reportWebVitals)
-      getLCP(reportWebVitals)
-      getTTFB(reportWebVitals)
-      getINP(reportWebVitals)
-    }).catch(error => {
-      console.warn('Failed to load web-vitals:', error)
+    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
+      onCLS(reportWebVitals)
+      onFCP(reportWebVitals)
+      onLCP(reportWebVitals)
+      onTTFB(reportWebVitals)
+      onINP(reportWebVitals)
+    }).catch(_error => {
+      console.warn('Failed to load web-vitals')
     })
 
     // Monitor Core Web Vitals thresholds
