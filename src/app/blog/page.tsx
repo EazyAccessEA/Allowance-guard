@@ -312,7 +312,7 @@ export default function BlogPage() {
                               <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-lg`}>
                                 <Icon className="w-3 h-3 text-white drop-shadow-lg" />
                               </div>
-                              <Badge variant="default" className={`text-xs ${categoryInfo?.color} bg-white/20 backdrop-blur-sm border-white/30 text-white shadow-lg`}>
+                              <Badge variant="default" className={`text-xs bg-black/60 backdrop-blur-sm border-black/40 text-white shadow-lg font-medium`}>
                                 {post.category}
                               </Badge>
                             </div>
@@ -333,8 +333,8 @@ export default function BlogPage() {
                         {!post.image && (
                           <>
                             <div className="flex items-center gap-2 mb-4">
-                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r`}>
-                                <Icon className="w-4 h-4 text-gray-700" />
+                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${categoryInfo?.gradient} bg-gradient-to-r shadow-sm`}>
+                                <Icon className="w-4 h-4 text-white drop-shadow-sm" />
                               </div>
                               <Badge variant="default" className={`text-xs ${categoryInfo?.color}`}>
                                 {post.category}
