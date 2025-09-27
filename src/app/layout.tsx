@@ -7,7 +7,7 @@ import RpcStatusBanner from '@/components/RpcStatusBanner'
 import HeaderWrapper from '@/components/HeaderWrapper'
 import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
-import PerformanceDashboard from '@/components/PerformanceDashboard'
+// import PerformanceDashboard from '@/components/PerformanceDashboard' // Removed
 import CookieBanner from '@/components/CookieBanner'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 // import PerformanceMonitor from '@/components/PerformanceMonitor' // Disabled due to missing API endpoint
@@ -253,7 +253,7 @@ export default function RootLayout({
               <HeaderWrapper />
               <main id="main" className="flex-1">{children}</main>
               <Footer />
-              {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />}
+              {/* {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />} - Removed */}
               <CookieBanner />
               <ServiceWorkerRegistration />
               {/* <PerformanceMonitor /> - Disabled due to missing API endpoint */}
