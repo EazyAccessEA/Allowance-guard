@@ -107,7 +107,8 @@ const blogPosts: BlogPost[] = [
     publishedAt: '2024-12-19',
     readTime: '7 min read',
     category: 'Security',
-    featured: false
+    featured: false,
+    image: '/Staying Safe With DeFi Dapps.png'
   },
   {
     slug: 'how-to-self-audit-your-wallet',
