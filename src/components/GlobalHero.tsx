@@ -29,11 +29,12 @@ export default function GlobalHero() {
         />
       </div>
 
-      {/* 2) Glass Apple-white overlay: right 100% → left 25% */}
+      {/* 2) Glass Apple-white overlay: left 100% → right 25% */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-l from-white/100 to-white/25 dark:from-white/40 dark:to-white/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/100 to-white/25 dark:from-white/40 dark:to-white/10" />
         <div className="absolute inset-0 backdrop-blur-sm md:backdrop-blur-md" />
-        <div className="absolute inset-y-0 right-0 w-px bg-white/60" />
+        {/* crisp glass edge on the far left */}
+        <div className="absolute inset-y-0 left-0 w-px bg-white/60" />
       </div>
 
       {/* 3) Content */}
