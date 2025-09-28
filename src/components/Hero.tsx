@@ -9,6 +9,10 @@ import ClientConnectButton from '@/components/ClientConnectButton'
 import TestConnect from '@/components/TestConnect'
 
 // Dynamic imports
+const VideoBackground = dynamic(() => import('@/components/VideoBackground'), {
+  ssr: false,
+  loading: () => null
+})
 const MultiLineTypewriter = dynamic(
   () => import('@/components/MultiLineTypewriter').then(m => ({ default: m.MultiLineTypewriter })),
   { ssr: false, loading: () => <span className="text-primary-700">see every hidden connection clearly</span> }
@@ -30,9 +34,29 @@ export default function Hero({
   onWalletSelect
 }: HeroProps) {
   return (
-    <Section className="relative py-12 sm:py-24 lg:py-32">
-      {/* Content - Video and overlay are now global */}
-      <Container className="relative max-w-4xl">
+    <Section className="relative py-12 sm:py-24 lg:py-32 min-h-[70svh]">
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <VideoBackground
+          videoSrc="/V3AG.mp4"
+          containerClassName="absolute inset-0"
+          videoClassName="absolute inset-0 w-full h-full object-cover object-center"
+          priority
+          lazy={false}
+          posterSrc="/AllowanceGuard_BG.png"
+          decorative
+        />
+      </div>
+
+      {/* Glass overlay */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-r from-white/100 to-white/25 dark:from-white/40 dark:to-white/10" />
+        <div className="absolute inset-0 backdrop-blur-sm md:backdrop-blur-md" />
+        <div className="absolute inset-y-0 left-0 w-px bg-white/60" />
+      </div>
+
+      {/* Content */}
+      <Container className="relative max-w-4xl z-20">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
             <MultiLineTypewriter

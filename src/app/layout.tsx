@@ -6,7 +6,6 @@ import { LighthouseInitializer } from '@/components/LighthouseInitializer'
 import RpcStatusBanner from '@/components/RpcStatusBanner'
 import HeaderWrapper from '@/components/HeaderWrapper'
 import Footer from '@/components/Footer'
-import GlobalHero from '@/components/GlobalHero'
 import RollbarProvider from '@/components/RollbarProvider'
 // import PerformanceDashboard from '@/components/PerformanceDashboard' // Removed
 import CookieBanner from '@/components/CookieBanner'
@@ -251,7 +250,6 @@ export default function RootLayout({
             <ContextProvider>
               <LighthouseInitializer />
               <HeaderWrapper />
-              <GlobalHero />
               <main id="main" className="flex-1">{children}</main>
               <Footer />
               {/* {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />} - Removed */}
