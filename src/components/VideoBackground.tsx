@@ -11,10 +11,10 @@ interface VideoBackgroundProps {
 
 export default function VideoBackground({ 
   videoSrc, 
-  className = "absolute inset-0 w-full h-full object-cover",
-  lazy = true,
+  className = "absolute inset-0 w-full h-full object-cover object-center",
+  lazy = false,
   fallbackGradient = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  priority = false
+  priority = true
 }: VideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -175,15 +175,15 @@ export default function VideoBackground({
   }
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className={`responsive-video ${hasError ? 'video-error' : ''} ${!isLoaded ? 'video-loading' : ''}`}>
       <video
         ref={videoRef}
-        className={className}
+        className="video-optimized"
         autoPlay={isInView && !isMobile()}
         loop
         muted
         playsInline
-        preload={priority ? "metadata" : "none"} // Only preload metadata for priority videos
+        preload={priority ? "auto" : "metadata"}
         onError={() => setHasError(true)}
         aria-label="Allowance Guard background animation"
         style={{
