@@ -35,27 +35,29 @@ export default function Hero({
   onWalletSelect 
 }: HeroProps) {
   return (
-    <Section className="relative py-12 sm:py-24 lg:py-32 overflow-hidden">
-      {/* Video Background - Responsive with CSS */}
-      <div className="relative w-full h-full">
+    <Section className="relative min-h-[70svh] py-12 sm:py-24 lg:py-32 overflow-hidden">
+      {/* Video Background - Behind everything but above page background */}
+      <div className="absolute inset-0 z-0">
         <VideoBackground 
           videoSrc="/V4AG_1.mp4" 
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          containerClassName="absolute inset-0 w-full h-full"
+          videoClassName="w-full h-full object-cover object-center"
         />
       </div>
       
-      {/* Mobile gradient background for performance */}
-      <div className="md:hidden absolute inset-0 bg-gradient-to-br from-primary-50 to-secondary-100" />
+      {/* Mobile gradient background for performance - Above video */}
+      <div className="md:hidden absolute inset-0 z-10 bg-gradient-to-br from-primary-50 to-secondary-100" />
       
-      {/* Gradient overlay for better text readability */}
+      {/* Semi-transparent overlay for text readability - Above video, below content */}
       <div 
-        className="absolute inset-0"
+        className="absolute inset-0 z-20"
         style={{
-          background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+          background: 'linear-gradient(to right, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 100%)'
         }}
       />
       
-      <Container className="relative text-left max-w-4xl z-10">
+      {/* Content - Above everything */}
+      <Container className="relative text-left max-w-4xl z-30">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
             <MultiLineTypewriter
