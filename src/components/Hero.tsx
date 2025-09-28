@@ -35,30 +35,23 @@ export default function Hero({
 }: HeroProps) {
   return (
     <Section className="relative overflow-hidden min-h-[70svh]">
-      {/* VIDEO LAYER (behind everything, but above page bg) */}
-      <div 
-        className="absolute inset-0 -z-10"
-        style={{
-          backgroundImage: 'url(/AllowanceGuard_BG.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      />
-
-      {/* GRADIENT GLASS OVERLAY (left 100% → right 25%) */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.25) 100%)',
-          backdropFilter: 'blur(8px)'
-        }}
-        aria-hidden
-      />
+      {/* VIDEO LAYER - No overlays, just the video */}
+      <div className="absolute inset-0 -z-10">
+        <VideoBackground
+          videoSrc="/V4AG_1.mp4"
+          containerClassName="absolute inset-0"
+          videoClassName="absolute inset-0 w-full h-full object-cover object-center"
+          posterSrc="/AllowanceGuard_BG.png"
+          priority
+          lazy={false}
+          decorative
+        />
+      </div>
 
       {/* CONTENT */}
       <Container className="relative z-10 max-w-4xl">
+        {/* Simple text background for readability */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 mb-6">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
             <MultiLineTypewriter
@@ -149,6 +142,7 @@ export default function Hero({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
+        </div>
         </div>
       </Container>
     </Section>
