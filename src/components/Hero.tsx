@@ -38,7 +38,7 @@ export default function Hero({
     <Section className="relative py-12 sm:py-24 lg:py-32 overflow-hidden">
       {/* Video Background - Hidden on mobile for performance */}
       <div className="hidden md:block">
-        <VideoBackground videoSrc="/V3AG.mp4" />
+        <VideoBackground videoSrc="/AG_Logo_Header.mov" />
       </div>
       
       {/* Mobile gradient background for performance */}
