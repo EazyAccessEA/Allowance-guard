@@ -35,16 +35,16 @@ export default function Hero({
 }: HeroProps) {
   return (
     <Section className="relative overflow-hidden min-h-[70svh]">
-      {/* VIDEO LAYER */}
-      <div className="absolute inset-0 z-0">
-        <VideoBackground
-          videoSrc="/V3AG.mp4"
-          containerClassName="absolute inset-0"
-          videoClassName="absolute inset-0 w-full h-full object-cover object-center"
-          priority
-          lazy={false}
-          posterSrc="/AllowanceGuard_BG.png"
-          decorative
+      {/* VIDEO LAYER - Test with simple HTML5 video */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/V3AG.mp4"
         />
       </div>
 
