@@ -35,17 +35,23 @@ export default function Hero({
 }: HeroProps) {
   return (
     <Section className="relative overflow-hidden min-h-[70svh]">
-      {/* VIDEO LAYER - Clean video background */}
+      {/* VIDEO LAYER - Simple HTML5 video */}
       <div className="absolute inset-0 -z-10">
-        <VideoBackground
-          videoSrc="/V4AG_1.mp4"
-          containerClassName="absolute inset-0"
-          videoClassName="absolute inset-0 w-full h-full object-cover object-center"
-          posterSrc="/AllowanceGuard_BG.png"
-          priority
-          lazy={false}
-          decorative
-        />
+        <video
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/AllowanceGuard_BG.png"
+          onError={(e) => console.error('Video error:', e)}
+          onLoadStart={() => console.log('Video loading started')}
+          onCanPlay={() => console.log('Video can play')}
+        >
+          <source src="/V3AG.mp4" type="video/mp4" />
+          <source src="/V4AG_1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
 
       {/* CONTENT */}
