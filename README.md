@@ -1,6 +1,6 @@
 # Allowance Guard
 
-**Version 1.9.0** - Open Source Token Approval Security Platform
+**Version 1.14.0** - Open Source Token Approval Security Platform
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)
@@ -20,6 +20,8 @@ Allowance Guard is an open source security platform for monitoring and managing 
 - **📊 Analytics**: Comprehensive reporting and risk scoring
 - **🔍 Error Monitoring**: Real-time error tracking with Rollbar
 - **🛡️ Wallet Security**: Comprehensive security dashboard for connected wallets
+- **🎨 PuredgeOS Design**: Modern, minimalist design system with Mobbin-style animations
+- **📱 Mobile-First**: Responsive design optimized for all devices
 - **🔓 Open Source**: Full source code available
 
 ## 🚀 Quick Start
@@ -41,16 +43,16 @@ git clone https://github.com/EazyAccessEA/Allowance-guard.git
 cd Allowance-guard
 
 # Install dependencies
-npm install
+pnpm install
 
 # Set up environment variables
 cp production.env.example .env.local
 
 # Run database migrations
-npm run migrate
+pnpm run migrate
 
 # Start development server
-npm run dev
+pnpm run dev
 ```
 
 ### Environment Variables

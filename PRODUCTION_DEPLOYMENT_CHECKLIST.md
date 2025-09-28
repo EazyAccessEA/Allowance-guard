@@ -1,10 +1,10 @@
-# Production Deployment Checklist - v1.9.0 Wallet-First Security
+# Production Deployment Checklist - v1.14.0 Wallet-First Security
 
 ## 🚀 Launch Readiness & Production Deploy
 
-This checklist ensures all systems are ready for production deployment of Allowance Guard v1.9.0 with simplified wallet-first authentication.
+This checklist ensures all systems are ready for production deployment of Allowance Guard v1.14.0 with simplified wallet-first authentication.
 
-### 🎯 New Features in v1.9.0
+### 🎯 New Features in v1.14.0
 - **Wallet-Only Authentication**: Connect wallet → Immediate access to everything
 - **Wallet Security Dashboard**: Real-time risk assessment and security monitoring
 - **Simplified User Flow**: No more confusing magic link authentication
@@ -379,5 +379,5 @@ Once all items are checked, Allowance Guard is ready for production use.
 
 **Deployment Date**: _______________
 **Deployed By**: _______________
-**Version**: 1.0.0
+**Version**: 1.14.0
 **Next Review**: _______________
