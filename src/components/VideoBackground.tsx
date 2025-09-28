@@ -55,17 +55,16 @@ export default function VideoBackground({
     const video = videoRef.current
     if (!video) return
 
-    const handleCanPlay = () => {
+    const handleLoadedData = () => {
       setIsLoaded(true)
-      // Always attempt autoplay; muted + playsInline satisfies most policies
-      video.play().catch(() => {/* ignore */})
+      video.play().catch(() => {/* ignore autoplay failures since muted+inline is set */})
     }
     const handleError = () => setHasError(true)
 
-    video.addEventListener('canplay', handleCanPlay)
+    video.addEventListener('loadeddata', handleLoadedData)
     video.addEventListener('error', handleError)
     return () => {
-      video.removeEventListener('canplay', handleCanPlay)
+      video.removeEventListener('loadeddata', handleLoadedData)
       video.removeEventListener('error', handleError)
     }
   }, [shouldLoad, hasError])
@@ -114,56 +113,50 @@ export default function VideoBackground({
     )
   }
 
-  // Loading fallback
-  if (!shouldLoad || !isLoaded) {
-    return (
+  return (
+    <div
+      ref={containerRef}
+      className={containerClassName || className || 'absolute inset-0'}
+      style={{ position: 'absolute', inset: 0 }}
+    >
+      {/* Poster as CSS bg while the <video> is decoding (nice visual continuity) */}
       <div
-        ref={containerRef}
-        className={containerClassName || className}
+        className="absolute inset-0"
         style={{
           backgroundImage: posterSrc ? `url(${posterSrc})` : 'url(/AllowanceGuard_BG.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          position: 'absolute',
-          inset: 0
+          opacity: isLoaded ? 0 : 1,
+          transition: 'opacity 300ms ease-in-out'
         }}
-        role="presentation"
-        aria-hidden="true"
-      >
-        {shouldLoad && !isLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-          </div>
-        )}
-      </div>
-    )
-  }
+        aria-hidden
+      />
 
-  return (
-    <div
-      ref={containerRef}
-      className={containerClassName || className}
-      style={{ pointerEvents: 'none' }} // let the hero UI be fully clickable
-    >
       <video
         ref={videoRef}
-        className={videoClassName}
+        className={videoClassName || "absolute inset-0 w-full h-full object-cover"}
         autoPlay
         loop
         muted
         playsInline
-        preload={priority ? 'auto' : 'metadata'}
+        preload={priority ? "auto" : "metadata"}
         poster={posterSrc}
         onError={() => setHasError(true)}
-        aria-label={decorative ? undefined : 'Allowance Guard background animation'}
+        aria-label={decorative ? undefined : "Allowance Guard background animation"}
         aria-hidden={decorative}
-        role={decorative ? 'presentation' : undefined}
+        role={decorative ? "presentation" : undefined}
         style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 300ms ease-in-out' }}
       >
         <source src={videoSrc} type="video/mp4" />
-        Your browser does not support the video tag.
       </video>
+
+      {/* Optional spinner while decoding */}
+      {!isLoaded && shouldLoad && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        </div>
+      )}
     </div>
   )
 }
