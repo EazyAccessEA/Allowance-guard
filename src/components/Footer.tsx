@@ -74,9 +74,9 @@ export default function Footer() {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           
-          {/* Company Info */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
+          {/* Company Info - Centered on mobile */}
+          <div className="lg:col-span-2 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
               <Image
                 src="/AG_Logo2.png"
                 alt="Allowance Guard Logo"
@@ -89,19 +89,19 @@ export default function Footer() {
                 <p className="text-gray-400 text-sm">Secure Token Approvals</p>
               </div>
             </div>
-            <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
+            <p className="text-gray-300 leading-relaxed mb-6 max-w-md mx-auto md:mx-0">
               The most comprehensive token allowance security platform for Web3. 
               Protect your digital assets with enterprise-grade security.
             </p>
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
               <div className="w-8 h-8 bg-primary-accent/10 rounded-full flex items-center justify-center">
                 <Shield className="w-4 h-4 text-primary-accent" />
               </div>
               <span className="text-gray-300 text-sm">Open Source & Free Forever</span>
             </div>
             
-            {/* Social Links */}
-            <div className="flex items-center gap-4">
+            {/* Social Links - Centered on mobile */}
+            <div className="flex items-center justify-center md:justify-start gap-4">
               <a 
                 href="https://github.com/EazyAccessEA/Allowance-guard" 
                 target="_blank" 
@@ -216,11 +216,11 @@ export default function Footer() {
           </FooterSection>
         </div>
 
-        {/* Bottom section */}
+        {/* Bottom section - Mobile centered */}
         <div className="mt-16 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-3">
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+            <div className="flex-1 text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
                 <Badge variant="secondary" className="flex items-center gap-1">
                   <Heart className="w-3 h-3 text-red-500" />
                   Open Source
@@ -230,7 +230,7 @@ export default function Footer() {
                   Free Forever
                 </Badge>
               </div>
-              <p className="text-gray-300 text-sm max-w-2xl">
+              <p className="text-gray-300 text-sm max-w-2xl mx-auto md:mx-0">
                 Open-source and free to use. Maintained by a small independent team and funded by{' '}
                 <Link className="text-primary-accent hover:text-primary-accent/80 transition-colors duration-150" href="/docs/contributing">
                   donations and grants
@@ -239,7 +239,7 @@ export default function Footer() {
               </p>
             </div>
             
-            <div className="flex items-center gap-4 text-sm text-gray-400">
+            <div className="flex items-center justify-center md:justify-end gap-4 text-sm text-gray-400">
               <span>© 2025 Allowance Guard</span>
             </div>
           </div>
