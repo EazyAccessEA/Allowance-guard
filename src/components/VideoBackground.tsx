@@ -4,17 +4,25 @@ import { useRef, useEffect, useState, useCallback } from 'react'
 interface VideoBackgroundProps {
   videoSrc: string
   className?: string
+  containerClassName?: string
+  videoClassName?: string
+  posterSrc?: string
   lazy?: boolean // Enable lazy loading
   fallbackGradient?: string // Custom fallback gradient
   priority?: boolean // High priority loading
+  decorative?: boolean // For decorative videos
 }
 
 export default function VideoBackground({ 
   videoSrc, 
   className = "absolute inset-0 w-full h-full object-cover object-center",
+  containerClassName,
+  videoClassName,
+  posterSrc,
   lazy = false,
   fallbackGradient = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-  priority = true
+  priority = true,
+  decorative = false
 }: VideoBackgroundProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -136,9 +144,9 @@ export default function VideoBackground({
     return (
       <div 
         ref={containerRef}
-        className={className}
+        className={containerClassName || className}
         style={{
-          backgroundImage: 'url(/AllowanceGuard_BG.png)',
+          backgroundImage: posterSrc ? `url(${posterSrc})` : 'url(/AllowanceGuard_BG.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -154,9 +162,9 @@ export default function VideoBackground({
     return (
       <div 
         ref={containerRef}
-        className={className}
+        className={containerClassName || className}
         style={{
-          backgroundImage: 'url(/AllowanceGuard_BG.png)',
+          backgroundImage: posterSrc ? `url(${posterSrc})` : 'url(/AllowanceGuard_BG.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -176,17 +184,23 @@ export default function VideoBackground({
   }
 
   return (
-    <div ref={containerRef} className={`responsive-video ${hasError ? 'video-error' : ''} ${!isLoaded ? 'video-loading' : ''}`}>
+    <div 
+      ref={containerRef} 
+      className={containerClassName || className || `responsive-video ${hasError ? 'video-error' : ''} ${!isLoaded ? 'video-loading' : ''}`}
+    >
       <video
         ref={videoRef}
-        className="video-optimized"
+        className={videoClassName || "video-optimized"}
         autoPlay={isInView && !isMobile()}
         loop
         muted
         playsInline
         preload={priority ? "auto" : "metadata"}
+        poster={posterSrc}
         onError={() => setHasError(true)}
-        aria-label="Allowance Guard background animation"
+        aria-label={decorative ? undefined : "Allowance Guard background animation"}
+        aria-hidden={decorative}
+        role={decorative ? "presentation" : undefined}
         style={{
           opacity: isLoaded ? 1 : 0,
           transition: 'opacity 0.3s ease-in-out'

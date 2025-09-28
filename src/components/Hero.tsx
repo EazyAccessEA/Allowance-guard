@@ -1,23 +1,22 @@
 'use client'
 
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import dynamic from 'next/dynamic'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import TestConnect from '@/components/TestConnect'
 
-// Dynamic imports for non-critical components
+// Dynamic imports
 const VideoBackground = dynamic(() => import('@/components/VideoBackground'), {
   ssr: false,
   loading: () => null
 })
-
-const MultiLineTypewriter = dynamic(() => import('@/components/MultiLineTypewriter').then(mod => ({ default: mod.MultiLineTypewriter })), {
-  ssr: false,
-  loading: () => <span className="text-primary-700">see every hidden connection clearly</span>
-})
+const MultiLineTypewriter = dynamic(
+  () => import('@/components/MultiLineTypewriter').then(m => ({ default: m.MultiLineTypewriter })),
+  { ssr: false, loading: () => <span className="text-primary-700">see every hidden connection clearly</span> }
+)
 
 interface HeroProps {
   isConnected: boolean
@@ -27,38 +26,41 @@ interface HeroProps {
   onWalletSelect: (address: string) => void
 }
 
-export default function Hero({ 
-  isConnected, 
-  onScan, 
-  isScanning, 
-  scanMessage, 
-  onWalletSelect 
+export default function Hero({
+  isConnected,
+  onScan,
+  isScanning,
+  scanMessage,
+  onWalletSelect
 }: HeroProps) {
   return (
-    <Section className="relative min-h-[70svh] py-12 sm:py-24 lg:py-32 overflow-hidden">
-      {/* Video Background - Behind everything but above page background */}
-      <div className="absolute inset-0 z-0">
-        <VideoBackground 
-          videoSrc="/V3AG.mp4" 
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          priority={true}
+    <Section className="relative overflow-hidden min-h-[70svh]">
+      {/* VIDEO LAYER (behind everything, but above page bg) */}
+      <div className="absolute inset-0 -z-10">
+        <VideoBackground
+          videoSrc="/V4AG_1.mp4"
+          containerClassName="absolute inset-0"
+          videoClassName="absolute inset-0 w-full h-full object-cover object-center"
+          posterSrc="/AllowanceGuard_BG.png"
+          priority
           lazy={false}
+          decorative
         />
       </div>
-      
-      {/* Mobile gradient background for performance - Above video */}
-      <div className="md:hidden absolute inset-0 z-10 bg-gradient-to-br from-primary-50 to-secondary-100" />
-      
-      {/* Semi-transparent overlay for text readability - Above video, below content */}
-      <div 
-        className="absolute inset-0 z-20"
+
+      {/* GRADIENT GLASS OVERLAY (left 100% → right 25%) */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.25) 100%)'
+          background:
+            'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.25) 100%)',
+          backdropFilter: 'blur(8px)'
         }}
+        aria-hidden
       />
-      
-      {/* Content - Above everything */}
-      <Container className="relative text-left max-w-4xl z-30">
+
+      {/* CONTENT */}
+      <Container className="relative z-10 max-w-4xl">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
             <MultiLineTypewriter
