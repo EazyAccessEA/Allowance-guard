@@ -33,10 +33,6 @@ CREATE TABLE IF NOT EXISTS token_metadata (
   CONSTRAINT chk_token_metadata_addr_lower CHECK (token_address ~ '^0x[0-9a-f]{40}$')
 );
 
-CREATE INDEX IF NOT EXISTS idx_token_metadata_name    ON token_metadata (name);
-CREATE INDEX IF NOT EXISTS idx_token_metadata_symbol  ON token_metadata (symbol);
-CREATE INDEX IF NOT EXISTS idx_token_metadata_verified ON token_metadata (verified);
-
 -- Submissions
 CREATE TABLE IF NOT EXISTS token_submissions (
   id            BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -158,3 +154,8 @@ COMMENT ON COLUMN token_submissions.token_address IS 'Lowercased, checksummed Et
 COMMENT ON COLUMN token_category_mappings.token_address IS 'Lowercased, checksummed Ethereum address (0x...)';
 COMMENT ON COLUMN token_submissions.submitted_by IS 'Email address or wallet address of submitter';
 COMMENT ON COLUMN token_submissions.admin_notes IS 'Internal notes for curation decisions';
+
+-- Create indexes after all tables are created
+CREATE INDEX IF NOT EXISTS idx_token_metadata_name    ON token_metadata (name);
+CREATE INDEX IF NOT EXISTS idx_token_metadata_symbol  ON token_metadata (symbol);
+CREATE INDEX IF NOT EXISTS idx_token_metadata_verified ON token_metadata (verified);
