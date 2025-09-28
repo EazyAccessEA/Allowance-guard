@@ -73,12 +73,13 @@ export default function VideoBackground({
       }
     }
 
-    const handleError = () => {
+    const handleError = (event: Event) => {
+      console.error('Video loading error:', event)
       setHasError(true)
     }
 
     const handleLoadStart = () => {
-      // Set loading state
+      console.log('Video loading started:', videoSrc)
       setIsLoaded(false)
     }
 
@@ -181,7 +182,7 @@ export default function VideoBackground({
         loop
         muted
         playsInline
-        preload={priority ? "metadata" : "none"} // Only preload metadata for priority videos
+        preload={priority ? "auto" : "metadata"} // Preload full video for priority, metadata for others
         onError={() => setHasError(true)}
         aria-label="Allowance Guard background animation"
         style={{
