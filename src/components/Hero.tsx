@@ -39,8 +39,10 @@ export default function Hero({
       {/* Video Background - Behind everything but above page background */}
       <div className="absolute inset-0 z-0">
         <VideoBackground 
-          videoSrc="/V4AG_1.mp4" 
+          videoSrc="/V3AG.mp4" 
           className="absolute inset-0 w-full h-full object-cover object-center"
+          priority={true}
+          lazy={false}
         />
       </div>
       
@@ -51,7 +53,7 @@ export default function Hero({
       <div 
         className="absolute inset-0 z-20"
         style={{
-          background: 'linear-gradient(to right, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 100%)'
+          background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.25) 100%)'
         }}
       />
       

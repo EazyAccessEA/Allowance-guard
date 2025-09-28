@@ -64,12 +64,13 @@ export default function VideoBackground({
     if (!video) return
 
     const handleCanPlay = () => {
+      console.log('Video can play, attempting autoplay...')
       setIsLoaded(true)
-      // Only autoplay if in viewport and not on mobile (battery/data saving)
-      if (isInView && !isMobile()) {
-        video.play().catch(() => {
-          // Silently handle autoplay failures
-          setHasError(true)
+      // Try to autoplay regardless of mobile detection for hero videos
+      if (isInView) {
+        video.play().catch((error) => {
+          console.log('Autoplay failed, but video is loaded:', error)
+          // Don't set error for autoplay failures, just log them
         })
       }
     }
