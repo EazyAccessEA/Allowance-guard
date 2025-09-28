@@ -178,7 +178,7 @@ export function ParallaxScroll({
   useEffect(() => {
     const handleScroll = () => {
       if (ref.current) {
-        const _rect = ref.current.getBoundingClientRect()
+        // const _rect = ref.current.getBoundingClientRect() // Unused variable removed
         const scrolled = window.pageYOffset
         const rate = scrolled * speed
         setOffset(rate)

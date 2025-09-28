@@ -12,7 +12,7 @@ function AppleParallaxImage({ src, alt, children, className = '' }: {
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLDivElement>(null)
-  const [scrollY, setScrollY] = useState(0)
+  const [_scrollY, setScrollY] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {

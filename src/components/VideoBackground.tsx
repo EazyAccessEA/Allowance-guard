@@ -100,7 +100,7 @@ export default function VideoBackground({
       video.removeEventListener('error', handleError)
       video.removeEventListener('loadstart', handleLoadStart)
     }
-  }, [shouldLoad, hasError, isInView])
+  }, [shouldLoad, hasError, isInView, isMobile, videoSrc])
 
   // Pause video when out of viewport (battery saving)
   useEffect(() => {
@@ -135,10 +135,11 @@ export default function VideoBackground({
 
   // Cleanup on unmount
   useEffect(() => {
+    const video = videoRef.current
     return () => {
-      if (videoRef.current) {
-        videoRef.current.pause()
-        videoRef.current.src = ''
+      if (video) {
+        video.pause()
+        video.src = ''
       }
     }
   }, [])
