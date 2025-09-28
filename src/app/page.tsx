@@ -6,7 +6,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
-import Hero from '@/components/Hero'
+// import Hero from '@/components/Hero' // Removed - now using GlobalHero in layout
 import { LazySection } from '@/components/LazySection'
 import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScrollAnimation'
 import dynamicImport from 'next/dynamic'
@@ -317,14 +317,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <Hero
-        isConnected={isConnected}
-        onScan={startScan}
-        isScanning={pending}
-        scanMessage={message}
-        onWalletSelect={setSelectedWallet}
-      />
+      {/* Hero Section - Now handled by GlobalHero in layout */}
 
       {/* Statistics Section - Inspired by DNA Payments */}
       <CascadingScrollAnimation direction="up" distance={60} delay={200}>
