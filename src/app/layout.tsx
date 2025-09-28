@@ -95,9 +95,8 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://wagmi.sh" />
         
         {/* PRPL Pattern: Push critical resources */}
-        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
-        <link rel="preload" href="/_next/static/css/app/page.css" as="style" />
-        <link rel="preload" href="/_next/static/css/app/globals.css" as="style" />
+        {/* CSS files are handled by Next.js automatically */}
+        {/* Critical CSS preloading - Next.js handles this automatically */}
         
         {/* Preload critical images */}
         <link rel="preload" href="/AG_Logo2.png" as="image" />
