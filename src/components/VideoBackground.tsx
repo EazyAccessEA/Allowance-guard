@@ -76,31 +76,15 @@ export default function VideoBackground({
 
     const handleError = (event: Event) => {
       console.error('Video loading error:', event)
-      console.error('Video src:', videoSrc)
-      console.error('Video element:', video)
       setHasError(true)
     }
 
-    const handleLoadStart = () => {
-      console.log('Video loading started:', videoSrc)
-      setIsLoaded(false)
-    }
-
-    const handleCanPlayThrough = () => {
-      console.log('Video can play through:', videoSrc)
-      setIsLoaded(true)
-    }
-
     video.addEventListener('canplay', handleCanPlay)
-    video.addEventListener('canplaythrough', handleCanPlayThrough)
     video.addEventListener('error', handleError)
-    video.addEventListener('loadstart', handleLoadStart)
 
     return () => {
       video.removeEventListener('canplay', handleCanPlay)
-      video.removeEventListener('canplaythrough', handleCanPlayThrough)
       video.removeEventListener('error', handleError)
-      video.removeEventListener('loadstart', handleLoadStart)
     }
   }, [shouldLoad, hasError, isInView, isMobile, videoSrc])
 
@@ -199,7 +183,7 @@ export default function VideoBackground({
         loop
         muted
         playsInline
-        preload={priority ? "auto" : "metadata"} // Preload full video for priority, metadata for others
+        preload={priority ? "metadata" : "none"} // Only preload metadata for priority videos
         onError={() => setHasError(true)}
         aria-label="Allowance Guard background animation"
         style={{
