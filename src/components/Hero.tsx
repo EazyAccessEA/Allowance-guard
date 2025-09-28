@@ -35,7 +35,7 @@ export default function Hero({
 }: HeroProps) {
   return (
     <Section className="relative overflow-hidden min-h-[70svh]">
-      {/* VIDEO LAYER - No overlays, just the video */}
+      {/* VIDEO LAYER - Clean video background */}
       <div className="absolute inset-0 -z-10">
         <VideoBackground
           videoSrc="/V4AG_1.mp4"
