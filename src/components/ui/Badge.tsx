@@ -13,7 +13,7 @@ const badgeVariants = cva(
       variant: {
         default: 'border-border-default bg-background-light text-text-primary',
         primary: 'border-primary/20 bg-primary/10 text-primary',
-        success: 'border-semantic-success/20 bg-semanticBg-success text-semantic-success',
+        success: 'border-green-200 bg-green-50 text-green-800',
         danger: 'border-semantic-danger/20 bg-semanticBg-danger text-semantic-danger',
         warning: 'border-semantic-warning/20 bg-semanticBg-warning text-semantic-warning',
         info: 'border-semantic-info/20 bg-semanticBg-info text-semantic-info',
