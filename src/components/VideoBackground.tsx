@@ -25,6 +25,7 @@ export default function VideoBackground({
 
   // Mobile detection for battery/data optimization
   const isMobile = useCallback(() => {
+    if (typeof window === 'undefined') return false
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       navigator.userAgent
     )
@@ -83,12 +84,19 @@ export default function VideoBackground({
       setIsLoaded(false)
     }
 
+    const handleCanPlayThrough = () => {
+      console.log('Video can play through:', videoSrc)
+      setIsLoaded(true)
+    }
+
     video.addEventListener('canplay', handleCanPlay)
+    video.addEventListener('canplaythrough', handleCanPlayThrough)
     video.addEventListener('error', handleError)
     video.addEventListener('loadstart', handleLoadStart)
 
     return () => {
       video.removeEventListener('canplay', handleCanPlay)
+      video.removeEventListener('canplaythrough', handleCanPlayThrough)
       video.removeEventListener('error', handleError)
       video.removeEventListener('loadstart', handleLoadStart)
     }
