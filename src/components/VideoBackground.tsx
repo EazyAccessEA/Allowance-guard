@@ -76,6 +76,8 @@ export default function VideoBackground({
 
     const handleError = (event: Event) => {
       console.error('Video loading error:', event)
+      console.error('Video src:', videoSrc)
+      console.error('Video element:', video)
       setHasError(true)
     }
 
@@ -151,7 +153,10 @@ export default function VideoBackground({
         ref={containerRef}
         className={className}
         style={{
-          background: fallbackGradient
+          backgroundImage: 'url(/AllowanceGuard_BG.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
         }}
         role="presentation"
         aria-hidden="true"
@@ -159,14 +164,17 @@ export default function VideoBackground({
     )
   }
 
-  // Loading state with gradient fallback
+  // Loading state with background image fallback
   if (!shouldLoad || !isLoaded) {
     return (
       <div 
         ref={containerRef}
         className={className}
         style={{
-          background: fallbackGradient,
+          backgroundImage: 'url(/AllowanceGuard_BG.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
           position: 'relative'
         }}
         role="presentation"
