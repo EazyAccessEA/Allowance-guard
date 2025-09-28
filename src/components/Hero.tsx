@@ -50,8 +50,6 @@ export default function Hero({
 
       {/* CONTENT */}
       <Container className="relative z-10 max-w-4xl">
-        {/* Simple text background for readability */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 mb-6">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
             <MultiLineTypewriter
@@ -142,7 +140,6 @@ export default function Hero({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
-        </div>
         </div>
       </Container>
     </Section>
