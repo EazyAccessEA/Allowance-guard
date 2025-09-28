@@ -3,24 +3,24 @@ import { useRef, useEffect, useState, useCallback } from 'react'
 
 interface VideoBackgroundProps {
   videoSrc: string
-  className?: string
-  containerClassName?: string
-  videoClassName?: string
+  className?: string               // (legacy) container class — prefer containerClassName
+  containerClassName?: string      // container class
+  videoClassName?: string          // actual <video> class
   posterSrc?: string
-  lazy?: boolean // Enable lazy loading
-  fallbackGradient?: string // Custom fallback gradient
-  priority?: boolean // High priority loading
-  decorative?: boolean // For decorative videos
+  lazy?: boolean
+  fallbackGradient?: string
+  priority?: boolean
+  decorative?: boolean
 }
 
-export default function VideoBackground({ 
-  videoSrc, 
-  className = "absolute inset-0 w-full h-full object-cover object-center",
-  containerClassName,
-  videoClassName,
+export default function VideoBackground({
+  videoSrc,
+  className, // kept for backward compat, but prefer containerClassName
+  containerClassName = 'absolute inset-0',
+  videoClassName = 'absolute inset-0 w-full h-full object-cover object-center',
   posterSrc,
   lazy = false,
-  fallbackGradient = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+  fallbackGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
   priority = true,
   decorative = false
 }: VideoBackgroundProps) {
@@ -28,118 +28,70 @@ export default function VideoBackground({
   const containerRef = useRef<HTMLDivElement>(null)
   const [hasError, setHasError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isInView, setIsInView] = useState(!lazy) // If not lazy, always in view
+  const [isInView, setIsInView] = useState(!lazy)
   const [shouldLoad, setShouldLoad] = useState(!lazy || priority)
 
-  // Mobile detection for battery/data optimization
   const isMobile = useCallback(() => {
     if (typeof window === 'undefined') return false
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    )
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   }, [])
 
-  // Intersection Observer for lazy loading
   useEffect(() => {
     if (!lazy || shouldLoad) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true)
-          setShouldLoad(true)
-          observer.disconnect()
-        }
-      },
-      {
-        rootMargin: '50px', // Start loading 50px before entering viewport
-        threshold: 0.1
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true)
+        setShouldLoad(true)
+        obs.disconnect()
       }
-    )
+    }, { rootMargin: '50px', threshold: 0.1 })
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current)
-    }
-
-    return () => observer.disconnect()
+    if (containerRef.current) obs.observe(containerRef.current)
+    return () => obs.disconnect()
   }, [lazy, shouldLoad])
 
-  // Video loading and playback logic
   useEffect(() => {
     if (!shouldLoad || hasError) return
-
     const video = videoRef.current
     if (!video) return
 
-    console.log('Loading video:', videoSrc)
-    console.log('Video element:', video)
-
     const handleCanPlay = () => {
-      console.log('Video can play, attempting autoplay...')
       setIsLoaded(true)
-      // Try to autoplay regardless of mobile detection for hero videos
-      if (isInView) {
-        video.play().catch((error) => {
-          console.log('Autoplay failed, but video is loaded:', error)
-          // Don't set error for autoplay failures, just log them
-        })
-      }
+      // Always attempt autoplay; muted + playsInline satisfies most policies
+      video.play().catch(() => {/* ignore */})
     }
-
-    const handleError = (event: Event) => {
-      console.error('Video loading error:', event)
-      console.error('Video src:', videoSrc)
-      console.error('Video element:', videoRef.current)
-      setHasError(true)
-    }
+    const handleError = () => setHasError(true)
 
     video.addEventListener('canplay', handleCanPlay)
     video.addEventListener('error', handleError)
-
     return () => {
       video.removeEventListener('canplay', handleCanPlay)
       video.removeEventListener('error', handleError)
     }
-  }, [shouldLoad, hasError, isInView, isMobile, videoSrc])
+  }, [shouldLoad, hasError])
 
-  // Pause video when out of viewport (battery saving)
   useEffect(() => {
     if (!lazy || !videoRef.current) return
+    const obs = new IntersectionObserver(([entry]) => {
+      const video = videoRef.current
+      if (!video) return
+      if (entry.isIntersecting) {
+        if (video.paused && isLoaded) video.play().catch(() => {})
+      } else {
+        if (!video.paused) video.pause()
+      }
+    }, { threshold: 0.1 })
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const video = videoRef.current
-        if (!video) return
-
-        if (entry.isIntersecting) {
-          if (video.paused && isLoaded) {
-            video.play().catch(() => {
-              // Silently handle play failures
-            })
-          }
-        } else {
-          if (!video.paused) {
-            video.pause()
-          }
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current)
-    }
-
-    return () => observer.disconnect()
+    if (containerRef.current) obs.observe(containerRef.current)
+    return () => obs.disconnect()
   }, [lazy, isLoaded])
 
-  // Cleanup on unmount
   useEffect(() => {
-    const video = videoRef.current
+    const v = videoRef.current
     return () => {
-      if (video) {
-        video.pause()
-        video.src = ''
+      if (v) {
+        v.pause()
+        v.src = ''
       }
     }
   }, [])
@@ -147,7 +99,7 @@ export default function VideoBackground({
   // Error fallback
   if (hasError) {
     return (
-      <div 
+      <div
         ref={containerRef}
         className={containerClassName || className}
         style={{
@@ -162,10 +114,10 @@ export default function VideoBackground({
     )
   }
 
-  // Loading state with background image fallback
+  // Loading fallback
   if (!shouldLoad || !isLoaded) {
     return (
-      <div 
+      <div
         ref={containerRef}
         className={containerClassName || className}
         style={{
@@ -173,15 +125,15 @@ export default function VideoBackground({
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          position: 'relative'
+          position: 'absolute',
+          inset: 0
         }}
         role="presentation"
         aria-hidden="true"
       >
-        {/* Loading indicator */}
         {shouldLoad && !isLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           </div>
         )}
       </div>
@@ -189,27 +141,25 @@ export default function VideoBackground({
   }
 
   return (
-    <div 
-      ref={containerRef} 
-      className={containerClassName || className || `responsive-video ${hasError ? 'video-error' : ''} ${!isLoaded ? 'video-loading' : ''}`}
+    <div
+      ref={containerRef}
+      className={containerClassName || className}
+      style={{ pointerEvents: 'none' }} // let the hero UI be fully clickable
     >
       <video
         ref={videoRef}
-        className={videoClassName || "video-optimized"}
-        autoPlay={isInView && !isMobile()}
+        className={videoClassName}
+        autoPlay
         loop
         muted
         playsInline
-        preload={priority ? "auto" : "metadata"}
+        preload={priority ? 'auto' : 'metadata'}
         poster={posterSrc}
         onError={() => setHasError(true)}
-        aria-label={decorative ? undefined : "Allowance Guard background animation"}
+        aria-label={decorative ? undefined : 'Allowance Guard background animation'}
         aria-hidden={decorative}
-        role={decorative ? "presentation" : undefined}
-        style={{
-          opacity: isLoaded ? 1 : 0,
-          transition: 'opacity 0.3s ease-in-out'
-        }}
+        role={decorative ? 'presentation' : undefined}
+        style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 300ms ease-in-out' }}
       >
         <source src={videoSrc} type="video/mp4" />
         Your browser does not support the video tag.
@@ -218,23 +168,10 @@ export default function VideoBackground({
   )
 }
 
-// Specialized components for different use cases
 export function HeroVideo(props: VideoBackgroundProps) {
-  return (
-    <VideoBackground
-      {...props}
-      priority={true}
-      lazy={false}
-    />
-  )
+  return <VideoBackground {...props} priority lazy={false} />
 }
 
 export function LazyVideo(props: VideoBackgroundProps) {
-  return (
-    <VideoBackground
-      {...props}
-      lazy={true}
-      priority={false}
-    />
-  )
+  return <VideoBackground {...props} lazy priority={false} />
 }

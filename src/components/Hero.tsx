@@ -35,13 +35,16 @@ export default function Hero({
 }: HeroProps) {
   return (
     <Section className="relative overflow-hidden min-h-[70svh]">
-      {/* VIDEO LAYER - Back to VideoBackground with simple props */}
+      {/* VIDEO LAYER */}
       <div className="absolute inset-0 z-0">
         <VideoBackground
           videoSrc="/V3AG.mp4"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          priority={true}
+          containerClassName="absolute inset-0"
+          videoClassName="absolute inset-0 w-full h-full object-cover object-center"
+          priority
           lazy={false}
+          posterSrc="/AllowanceGuard_BG.png"
+          decorative
         />
       </div>
 
