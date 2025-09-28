@@ -36,17 +36,15 @@ export default function Hero({
   return (
     <Section className="relative overflow-hidden min-h-[70svh]">
       {/* VIDEO LAYER (behind everything, but above page bg) */}
-      <div className="absolute inset-0 -z-10">
-        <VideoBackground
-          videoSrc="/V4AG_1.mp4"
-          containerClassName="absolute inset-0"
-          videoClassName="absolute inset-0 w-full h-full object-cover object-center"
-          posterSrc="/AllowanceGuard_BG.png"
-          priority
-          lazy={false}
-          decorative
-        />
-      </div>
+      <div 
+        className="absolute inset-0 -z-10"
+        style={{
+          backgroundImage: 'url(/AllowanceGuard_BG.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
 
       {/* GRADIENT GLASS OVERLAY (left 100% → right 25%) */}
       <div

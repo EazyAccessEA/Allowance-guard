@@ -71,6 +71,9 @@ export default function VideoBackground({
     const video = videoRef.current
     if (!video) return
 
+    console.log('Loading video:', videoSrc)
+    console.log('Video element:', video)
+
     const handleCanPlay = () => {
       console.log('Video can play, attempting autoplay...')
       setIsLoaded(true)
@@ -85,6 +88,8 @@ export default function VideoBackground({
 
     const handleError = (event: Event) => {
       console.error('Video loading error:', event)
+      console.error('Video src:', videoSrc)
+      console.error('Video element:', videoRef.current)
       setHasError(true)
     }
 
