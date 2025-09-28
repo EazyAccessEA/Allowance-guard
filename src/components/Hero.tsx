@@ -9,6 +9,10 @@ import ClientConnectButton from '@/components/ClientConnectButton'
 import TestConnect from '@/components/TestConnect'
 
 // Dynamic imports
+const VideoBackground = dynamic(() => import('@/components/VideoBackground'), {
+  ssr: false,
+  loading: () => null
+})
 const MultiLineTypewriter = dynamic(
   () => import('@/components/MultiLineTypewriter').then(m => ({ default: m.MultiLineTypewriter })),
   { ssr: false, loading: () => <span className="text-primary-700">see every hidden connection clearly</span> }
@@ -30,8 +34,31 @@ export default function Hero({
   onWalletSelect
 }: HeroProps) {
   return (
-    <Section className="relative py-12 sm:py-24 lg:py-32">
-      <Container className="relative max-w-4xl">
+    <Section className="relative py-12 sm:py-24 lg:py-32 min-h-[70svh]">
+      {/* Video Background - Desktop only */}
+      <div className="hidden md:block absolute inset-0 z-0">
+        <VideoBackground
+          videoSrc="/V3AG.mp4"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          priority
+          lazy={false}
+         /* posterSrc="/AllowanceGuard_BG.png"*/
+          decorative
+        />
+      </div>
+
+      {/* Mobile gradient background */}
+      <div className="md:hidden absolute inset-0 z-10 bg-gradient-to-br from-primary-50 to-primary-100" />
+
+      {/* Semi-transparent overlay */}
+      <div
+        className="absolute inset-0 z-20"
+        style={{
+          background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+        }}
+      />
+      {/* Content */}
+      <Container className="relative max-w-4xl z-30">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:mobbin-display-1 text-text-primary mb-2 sm:mb-6 md:mb-8 lg:mb-10 xl:mb-12 leading-tight">
           <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
             <MultiLineTypewriter
@@ -43,7 +70,7 @@ export default function Hero({
             ]}
             typingSpeed={100}
             deletingSpeed={50}
-            pauseTime={3000}
+            pauseTime={4000}
             onRender={(firstLine, secondLine) => (
               <>
                 <span className="block">

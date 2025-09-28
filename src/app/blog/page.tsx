@@ -60,7 +60,7 @@ const blogPosts: BlogPost[] = [
     title: 'Gas, Fees, and Revocations: Making Security Cost-Effective',
     subtitle: 'Transforming Security from Expensive Chore to Low-Cost Habit',
     excerpt: 'Security is like insurance—everyone understands its importance, but paying the premium can feel like a burden. In Web3, the "premium" is often paid in gas fees. But what if you could lower that cost?',
-    publishedAt: '2024-12-19',
+    publishedAt: '2025-08-19',
     readTime: '8 min read',
     category: 'Security',
     featured: false,
@@ -71,7 +71,7 @@ const blogPosts: BlogPost[] = [
     title: 'Understanding Layer 2 Networks: How They Work',
     subtitle: 'A Deeper Dive into the Technology Behind Scalable Ethereum',
     excerpt: 'To understand Layer 2 solutions, we first need to understand the fundamental challenge they solve: the Blockchain Trilemma. Layer 2 networks are the key to unlocking Ethereum\'s scalability.',
-    publishedAt: '2024-12-19',
+    publishedAt: '2025-06-19',
     readTime: '12 min read',
     category: 'Education',
     featured: false,
@@ -167,7 +167,7 @@ export default function BlogPage() {
         <div 
           className="absolute inset-0 z-10"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.80) 100%)'
           }}
         />
         

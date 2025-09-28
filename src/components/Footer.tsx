@@ -93,12 +93,6 @@ export default function Footer() {
               The most comprehensive token allowance security platform for Web3. 
               Protect your digital assets with enterprise-grade security.
             </p>
-            <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
-              <div className="w-8 h-8 bg-primary-accent/10 rounded-full flex items-center justify-center">
-                <Shield className="w-4 h-4 text-primary-accent" />
-              </div>
-              <span className="text-gray-300 text-sm">Open Source & Free Forever</span>
-            </div>
             
             {/* Social Links - Centered on mobile */}
             <div className="flex items-center justify-center md:justify-start gap-4">
@@ -231,7 +225,7 @@ export default function Footer() {
                 </Badge>
               </div>
               <p className="text-gray-300 text-sm max-w-2xl mx-auto md:mx-0">
-                Open-source and free to use. Maintained by a small independent team and funded by{' '}
+                Maintained by a small independent team and funded by{' '}
                 <Link className="text-primary-accent hover:text-primary-accent/80 transition-colors duration-150" href="/docs/contributing">
                   donations and grants
                 </Link>
