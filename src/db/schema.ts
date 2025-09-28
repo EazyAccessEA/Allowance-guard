@@ -1,5 +1,8 @@
 import { pgTable, text, timestamp, integer, jsonb, uuid, bigserial, index, uniqueIndex } from 'drizzle-orm/pg-core'
 
+// Export token curation schema
+export * from './schema/tokens'
+
 export const donations = pgTable('donations', {
   id: uuid('id').defaultRandom().primaryKey(),
   stripeSessionId: text('stripe_session_id').notNull().unique(),
