@@ -183,6 +183,20 @@ export default function HomePage() {
     setIsHydrated(true)
   }, [])
 
+  // Auto-select connected wallet when user connects
+  useEffect(() => {
+    if (isConnected && connectedAddress && !selectedWallet) {
+      setSelectedWallet(connectedAddress)
+    }
+  }, [isConnected, connectedAddress, selectedWallet])
+
+  // Auto-fetch allowances when wallet is selected
+  useEffect(() => {
+    if (selectedWallet && isHydrated) {
+      fetchAllowances(selectedWallet)
+    }
+  }, [selectedWallet, isHydrated, fetchAllowances])
+
 
   // Enhanced error handling
   const handleError = (error: Error, context: string) => {
