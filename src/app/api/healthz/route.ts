@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
 import { cacheHealthCheck } from '@/lib/cache'
 import { getBlockNumber } from 'viem/actions'
-import { createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
 import { clientFor } from '@/lib/chains'
 import { enabledChainIds } from '@/lib/networks'
 
@@ -35,11 +33,7 @@ export async function GET() {
 
   // RPC check (Ethereum mainnet as sentinel)
   try {
-    const rpcUrl = process.env.ETHEREUM_RPC_URL || 'https://eth.llamarpc.com'
-    const client = createPublicClient({
-      chain: mainnet,
-      transport: http(rpcUrl)
-    })
+    const client = clientFor(1) // Use the new CHAINS configuration
     const n = await getBlockNumber(client)
     out.checks.rpc = `ok:${n}`
   } catch (e: unknown) { 

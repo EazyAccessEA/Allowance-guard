@@ -18,7 +18,7 @@ async function handle(job: JobRow) {
   
   // Process chains sequentially (safe for RPC rate limits)
   for (const chainId of chains) {
-    await withTimeout(scanWalletOnChain(wallet, chainId as 1|42161|8453), 60_000)
+    await withTimeout(scanWalletOnChain(wallet, chainId as 1|42161|8453|10|137|43114|56), 60_000)
   }
   
   // Post-scan: risk, enrich, drift

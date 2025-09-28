@@ -1,14 +1,20 @@
 import { z } from 'zod'
+import { getSupportedChainIds } from './networks'
 
 // Enhanced validation schemas
 export const walletAddressSchema = z.string()
   .regex(/^0x[a-fA-F0-9]{40}$/, 'Invalid wallet address format')
   .transform(addr => addr.toLowerCase())
 
-export const chainIdSchema = z.number()
+export const chainIdSchema = z
+  .number()
   .int()
   .positive()
-  .refine(id => [1, 42161, 8453].includes(id), 'Unsupported chain ID')
+  .refine(id => getSupportedChainIds(true).includes(id), 'Unsupported chain ID')
+
+export const addressSchema = z
+  .string()
+  .regex(/^0x[a-fA-F0-9]{40}$/, 'Invalid address')
 
 export const paginationSchema = z.object({
   page: z.number().int().min(1).max(1000).default(1),

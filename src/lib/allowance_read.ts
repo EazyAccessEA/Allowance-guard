@@ -9,7 +9,7 @@ export async function readCurrentAllowance(params: {
   token: `0x${string}`
   spender: `0x${string}`
 }): Promise<{ amount: bigint, isUnlimited: boolean }> {
-  const client = clientFor(params.chainId as 1|42161|8453)
+  const client = clientFor(params.chainId as 1|42161|8453|10|137|43114|56)
   if (params.standard === 'ERC20') {
     const amt = await readContract(client, {
       address: params.token, abi: ERC20_READ_ABI,

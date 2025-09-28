@@ -10,7 +10,15 @@ import { scanRequestSchema } from '@/lib/validation'
 
 export const runtime = 'nodejs'
 
-const MAP: Record<string, 1|42161|8453> = { eth: 1, arb: 42161, base: 8453 }
+const MAP: Record<string, 1|42161|8453|10|137|43114|56> = { 
+  eth: 1, 
+  arb: 42161, 
+  base: 8453,
+  op: 10,
+  polygon: 137,
+  avalanche: 43114,
+  bsc: 56
+}
 
 export async function POST(req: Request) {
   const L = withReq(req)

@@ -17,7 +17,7 @@ export async function refreshRiskForWallet(wallet: string) {
   )
 
   // group by chain to fetch tips once
-  const chains = [...new Set(rows.map(r => Number(r.chain_id)))] as (1|42161|8453)[]
+  const chains = [...new Set(rows.map(r => Number(r.chain_id)))] as (1|42161|8453|10|137|43114|56)[]
   const tips: Record<number, bigint> = {}
   for (const id of chains) tips[id] = await clientFor(id).getBlockNumber()
 
