@@ -40,8 +40,7 @@ export default function Hero({
       <div className="absolute inset-0 z-0">
         <VideoBackground 
           videoSrc="/V4AG_1.mp4" 
-          containerClassName="absolute inset-0 w-full h-full"
-          videoClassName="w-full h-full object-cover object-center"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
       </div>
       
