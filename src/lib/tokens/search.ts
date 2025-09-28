@@ -8,6 +8,8 @@ export type TokenSearchFilters = {
   limit?: number
   offset?: number
   sort?: 'relevance' | 'verified' | 'name' | 'symbol' | 'recent'
+  fuzzy?: boolean               // NEW: default true when q present and length >= 3
+  minScore?: number             // NEW: optional score floor (0..~3)
 }
 
 export type TokenSearchResult = {
@@ -19,6 +21,7 @@ export type TokenSearchResult = {
   standard: 'ERC20' | 'ERC721' | 'ERC1155'
   verified: boolean
   categories: string[]
+  score?: number                // NEW: only in fuzzy mode
 }
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n))
@@ -31,74 +34,67 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
     verified,
     limit = 20,
     offset = 0,
-    sort = 'verified'
+    sort,                 // if q present and sort not provided -> default 'relevance'
+    fuzzy,
+    minScore
   } = filters
+
+  const qNorm = (query ?? '').trim().toLowerCase()
+  const useFuzzy = !!qNorm && (fuzzy ?? (qNorm.length >= 3))
+  const safeLimit = clamp(limit, 1, 100)
+  const safeOffset = Math.max(0, offset)
 
   const params: (string | number | boolean)[] = []
   let p = 1
 
-  // WHERE conditions
   const where: string[] = []
+  const needsCategory = typeof category === 'string' && category.trim().length > 0
 
-  if (query && query.trim()) {
-    // Use ILIKE for case-insensitive match on name/symbol/address
-    where.push(`(
-      tm.name ILIKE $${p} OR
-      tm.symbol ILIKE $${p} OR
-      tm.token_address ILIKE $${p}
-    )`)
-    params.push(`%${query.trim()}%`)
-    p++
-  }
-
+  // Common filters
   if (typeof chainId === 'number' && Number.isFinite(chainId)) {
     where.push(`tm.chain_id = $${p}`)
     params.push(chainId)
     p++
   }
-
   if (typeof verified === 'boolean') {
     where.push(`tm.verified = $${p}`)
     params.push(verified)
     p++
   }
-
-  // Category filtering (optional)
-  // If a category is provided, we switch LEFT JOIN -> INNER JOIN on the mapping+category
-  const needsCategory = typeof category === 'string' && category.trim().length > 0
   if (needsCategory) {
     where.push(`tc.name = $${p}`)
-    params.push(category.trim())
+    params.push(category!.trim())
     p++
+  }
+
+  // Text filter (fuzzy vs classic)
+  if (qNorm) {
+    if (useFuzzy) {
+      // Recall-oriented filter: either LIKE match or trigram similarity over small floor
+      where.push(`(
+        lower(tm.name)   ILIKE $${p} OR
+        lower(tm.symbol) ILIKE $${p + 1} OR
+        tm.token_address ILIKE $${p + 2} OR
+        similarity(lower(tm.name),   $${p + 3}) > 0.1 OR
+        similarity(lower(tm.symbol), $${p + 3}) > 0.1
+      )`)
+      params.push(`%${qNorm}%`, `%${qNorm}%`, `${qNorm}%`, qNorm)
+      p += 4
+    } else {
+      // Classic ILIKE
+      where.push(`(
+        lower(tm.name)   ILIKE $${p} OR
+        lower(tm.symbol) ILIKE $${p + 1} OR
+        tm.token_address ILIKE $${p + 2}
+      )`)
+      params.push(`%${qNorm}%`, `%${qNorm}%`, `${qNorm}%`)
+      p += 3
+    }
   }
 
   const whereClause = where.length ? `WHERE ${where.join(' AND ')}` : ''
 
-  // Sorting
-  let orderBy = `tm.verified DESC, tm.name ASC`
-  switch (sort) {
-    case 'name':
-      orderBy = `tm.name ASC, tm.symbol ASC`
-      break
-    case 'symbol':
-      orderBy = `tm.symbol ASC, tm.name ASC`
-      break
-    case 'recent':
-      orderBy = `tm.created_at DESC NULLS LAST, tm.name ASC`
-      break
-    case 'relevance':
-      // crude relevance: verified first, then name match closeness via name length (as proxy)
-      // you can enhance in Phase 4 with pg_trgm similarity
-      orderBy = `tm.verified DESC, length(tm.name) ASC, tm.name ASC`
-      break
-    default:
-      orderBy = `tm.verified DESC, tm.name ASC`
-  }
-
-  const safeLimit = clamp(limit, 1, 100)
-  const safeOffset = Math.max(0, offset)
-
-  // COUNT total (distinct pair)
+  // COUNT total distinct tokens
   const countSql = `
     SELECT COUNT(*) AS total
     FROM (
@@ -117,7 +113,64 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
       GROUP BY tm.chain_id, tm.token_address
     ) sub
   `
+  const countRes = await pool.query<{ total: string }>(countSql, params)
+  const total = Number(countRes.rows[0]?.total ?? 0)
 
+  // ORDER & SCORE
+  let orderBy = `tm.verified DESC, tm.name ASC`
+  let selectScore = `NULL::float AS "score"`
+
+  if (useFuzzy) {
+    // Weighted score:
+    //  - symbol similarity (x1.5)
+    //  - name similarity (x1.0)
+    //  - exact/prefix bonuses for symbol/name/address
+    //  - verified boost (+0.5)
+    // Result is ~[0..3]; tune weights as you like.
+    selectScore = `
+      (
+        -- similarity components
+        1.5 * similarity(lower(tm.symbol), $${p}) +
+        1.0 * similarity(lower(tm.name),   $${p}) +
+        -- exact/prefix bonuses
+        CASE WHEN lower(tm.symbol) = $${p} THEN 0.9
+             WHEN lower(tm.symbol) LIKE $${p + 1} THEN 0.6 ELSE 0 END +
+        CASE WHEN lower(tm.name)   = $${p} THEN 0.4
+             WHEN lower(tm.name)   LIKE $${p + 1} THEN 0.3 ELSE 0 END +
+        CASE WHEN tm.token_address = $${p} THEN 0.8
+             WHEN tm.token_address LIKE $${p + 1} THEN 0.2 ELSE 0 END +
+        -- verified boost
+        CASE WHEN tm.verified THEN 0.5 ELSE 0 END
+      ) AS "score"
+    `
+    params.push(qNorm, `${qNorm}%`)
+    p += 2
+
+    orderBy = `"score" DESC, tm.verified DESC, tm.name ASC`
+  } else {
+    // Classic sorting
+    switch (sort) {
+      case 'name':
+        orderBy = `tm.name ASC, tm.symbol ASC`; break
+      case 'symbol':
+        orderBy = `tm.symbol ASC, tm.name ASC`; break
+      case 'recent':
+        orderBy = `tm.created_at DESC NULLS LAST, tm.name ASC`; break
+      case 'relevance':
+      case 'verified':
+      default:
+        orderBy = `tm.verified DESC, tm.name ASC`
+    }
+  }
+
+  // Optional minScore floor (fuzzy only)
+  let havingClause = ''
+  if (useFuzzy && typeof minScore === 'number') {
+    havingClause = `HAVING (${selectScore.replace(/ AS "score"$/,'')}) >= ${Math.max(0, minScore)}`
+    // Note: this inlines expression; safe since we don't inject untrusted strings (minScore is numeric).
+  }
+
+  // DATA query
   const dataSql = `
     SELECT
       tm.chain_id              AS "chainId",
@@ -127,7 +180,8 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
       tm.decimals              AS "decimals",
       tm.standard              AS "standard",
       tm.verified              AS "verified",
-      COALESCE(ARRAY_AGG(DISTINCT tc.name) FILTER (WHERE tc.name IS NOT NULL), '{}') AS "categories"
+      COALESCE(ARRAY_AGG(DISTINCT tc.name) FILTER (WHERE tc.name IS NOT NULL), '{}') AS "categories",
+      ${selectScore}
     FROM token_metadata tm
     ${needsCategory ? `
       INNER JOIN token_category_mappings tcm
@@ -140,13 +194,10 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
     `}
     ${whereClause}
     GROUP BY tm.chain_id, tm.token_address, tm.name, tm.symbol, tm.decimals, tm.standard, tm.verified
+    ${havingClause}
     ORDER BY ${orderBy}
     LIMIT $${p} OFFSET $${p + 1}
   `
-
-  const countRes = await pool.query<{ total: string }>(countSql, params)
-  const total = Number(countRes.rows[0]?.total ?? 0)
-
   const dataRes = await pool.query<TokenSearchResult>(dataSql, [...params, safeLimit, safeOffset])
   return { tokens: dataRes.rows, total }
 }
