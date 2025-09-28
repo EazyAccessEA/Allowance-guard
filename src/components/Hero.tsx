@@ -9,10 +9,6 @@ import ClientConnectButton from '@/components/ClientConnectButton'
 import TestConnect from '@/components/TestConnect'
 
 // Dynamic imports
-const VideoBackground = dynamic(() => import('@/components/VideoBackground'), {
-  ssr: false,
-  loading: () => null
-})
 const MultiLineTypewriter = dynamic(
   () => import('@/components/MultiLineTypewriter').then(m => ({ default: m.MultiLineTypewriter })),
   { ssr: false, loading: () => <span className="text-primary-700">see every hidden connection clearly</span> }
@@ -46,9 +42,9 @@ export default function Hero({
               "find and cut off silent threats",
               "control who has access to funds"
             ]}
-            typingSpeed={200}
+            typingSpeed={100}
             deletingSpeed={50}
-            pauseTime={4000}
+            pauseTime={3000}
             onRender={(firstLine, secondLine) => (
               <>
                 <span className="block">
