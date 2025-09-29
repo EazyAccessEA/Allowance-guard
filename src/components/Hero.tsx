@@ -132,6 +132,11 @@ export default function Hero({
                   {scanMessage}
                 </p>
               )}
+              <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-sm text-green-700 font-medium">
+                  🎉 Wallet Connected! Taking you to your Security Dashboard...
+                </p>
+              </div>
             </div>
           )}
         </div>

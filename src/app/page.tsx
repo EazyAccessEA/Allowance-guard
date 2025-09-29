@@ -210,6 +210,33 @@ export default function HomePage() {
     }
   }, [selectedWallet, isHydrated, fetchAllowances])
 
+  // Auto-scroll to Security Dashboard when wallet connects and is selected
+  useEffect(() => {
+    if (isConnected && selectedWallet && isHydrated) {
+      // Small delay to ensure DOM is ready and smooth transition
+      const timer = setTimeout(() => {
+        const dashboardElement = document.getElementById('security-dashboard')
+        if (dashboardElement) {
+          // Add a subtle highlight effect before scrolling
+          dashboardElement.classList.add('animate-pulse')
+          
+          dashboardElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start',
+            inline: 'nearest'
+          })
+          
+          // Remove highlight after scroll completes
+          setTimeout(() => {
+            dashboardElement.classList.remove('animate-pulse')
+          }, 1000)
+        }
+      }, 300) // 300ms delay for smooth transition
+      
+      return () => clearTimeout(timer)
+    }
+  }, [isConnected, selectedWallet, isHydrated])
+
 
   // Enhanced error handling
   const handleError = (error: Error, context: string) => {
@@ -702,6 +729,10 @@ export default function HomePage() {
       {/* App Area - Only show when connected, hydrated, and wallet is explicitly selected */}
       {isHydrated && isConnected && selectedWallet && (
         <LazySection>
+        <div 
+          id="security-dashboard"
+          className="scroll-mt-20" // Add scroll margin for better positioning
+        >
         <AppArea
           isConnected={isConnected}
           selectedWallet={selectedWallet}
@@ -717,6 +748,7 @@ export default function HomePage() {
           canRevoke={true}
           loading={pending}
         />
+        </div>
         </LazySection>
       )}
 
