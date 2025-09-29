@@ -1,6 +1,6 @@
 'use client'
 import { useAccount } from 'wagmi'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
@@ -191,6 +191,18 @@ export default function HomePage() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState<Error | null>(null)
 
+  // Enhanced fetch allowances with error handling
+  const fetchAllowances = useCallback(async (addr: string, p = page, ps = pageSize) => {
+    try {
+      const json = await APIClient.getAllowances(addr, p, ps)
+    setRows(json.allowances || [])
+    setTotal(json.total || 0)
+      setError(null)
+    } catch (err) {
+      handleError(err as Error, 'fetchAllowances')
+    }
+  }, [page, pageSize])
+
   // Handle hydration to prevent SSR/client mismatch
   useEffect(() => {
     setIsHydrated(true)
@@ -274,18 +286,6 @@ export default function HomePage() {
   const resetError = () => {
     setError(null)
     setMessage('')
-  }
-
-  // Enhanced fetch allowances with error handling
-  async function fetchAllowances(addr: string, p = page, ps = pageSize) {
-    try {
-      const json = await APIClient.getAllowances(addr, p, ps)
-    setRows(json.allowances || [])
-    setTotal(json.total || 0)
-      setError(null)
-    } catch (err) {
-      handleError(err as Error, 'fetchAllowances')
-    }
   }
 
   // Enhanced scan function with comprehensive error handling

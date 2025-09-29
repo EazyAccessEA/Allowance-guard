@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useEffect, useState, useCallback } from 'react'
+import { useRef, useEffect, useState } from 'react'
 
 interface VideoBackgroundProps {
   videoSrc: string
@@ -8,7 +8,6 @@ interface VideoBackgroundProps {
   videoClassName?: string          // actual <video> class
   posterSrc?: string
   lazy?: boolean
-  fallbackGradient?: string
   priority?: boolean
   decorative?: boolean
 }
@@ -20,7 +19,6 @@ export default function VideoBackground({
   videoClassName = 'absolute inset-0 w-full h-full object-cover object-center',
   posterSrc,
   lazy = false,
-  fallbackGradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
   priority = true,
   decorative = false
 }: VideoBackgroundProps) {
@@ -28,13 +26,14 @@ export default function VideoBackground({
   const containerRef = useRef<HTMLDivElement>(null)
   const [hasError, setHasError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isInView, setIsInView] = useState(!lazy)
+  const [, setIsInView] = useState(!lazy)
   const [shouldLoad, setShouldLoad] = useState(!lazy || priority)
 
-  const isMobile = useCallback(() => {
-    if (typeof window === 'undefined') return false
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-  }, [])
+  // Mobile detection (currently unused but kept for future use)
+  // const isMobile = useCallback(() => {
+  //   if (typeof window === 'undefined') return false
+  //   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  // }, [])
 
   useEffect(() => {
     if (!lazy || shouldLoad) return

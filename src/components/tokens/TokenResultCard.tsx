@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 
 type Props = {
   name: string
@@ -20,9 +21,11 @@ export default function TokenResultCard(p: Props) {
         {/* Token Logo/Icon */}
         <div className="flex-shrink-0">
           {p.logoUrl ? (
-            <img 
+            <Image 
               src={p.logoUrl} 
               alt={`${p.name} logo`}
+              width={48}
+              height={48}
               className="w-12 h-12 rounded-lg object-cover"
               onError={(e) => {
                 e.currentTarget.style.display = 'none'

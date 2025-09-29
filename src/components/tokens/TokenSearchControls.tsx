@@ -168,7 +168,7 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
             </label>
             <select
               value={sort}
-              onChange={e => setSort(e.target.value as any)}
+              onChange={e => setSort(e.target.value as 'relevance' | 'name' | 'symbol' | 'recent')}
               className="px-3 py-1.5 rounded border border-border-default bg-background-light text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-accent/20"
             >
               <option value="relevance">Relevance</option>
