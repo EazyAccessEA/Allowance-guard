@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import ContextProvider from '@/context'
 import { LighthouseInitializer } from '@/components/LighthouseInitializer'
@@ -38,9 +39,9 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
-  title: { default: 'Allowance Guard', template: '%s · Allowance Guard' },
-  description: 'Open-source, free tool to view and revoke token approvals safely.',
+  metadataBase: new URL("https://allowanceguard.com"),
+  title: "Allowance Guard — Review & Revoke Wallet Permissions",
+  description: "Free, open-source dashboard to review, revoke, and monitor wallet approvals across chains.",
   robots: { index: true, follow: true },
   keywords: [
     'DeFi', 'dapp', 'web3', 'blockchain', 'ethereum', 'token approvals', 
@@ -61,18 +62,23 @@ export const metadata: Metadata = {
     shortcut: '/favicon.ico'
   },
   manifest: '/site.webmanifest',
+  themeColor: '#ffffff',
   openGraph: {
-    title: 'Allowance Guard',
-    description: 'Open-source, free tool to view and revoke token approvals safely.',
-    url: '/',
-    siteName: 'Allowance Guard',
     type: 'website',
+    url: 'https://allowanceguard.com',
+    siteName: 'Allowance Guard',
+    title: 'Allowance Guard — Review & Revoke Wallet Permissions',
+    description: 'Free, open-source dashboard to review, revoke, and monitor wallet approvals across chains.',
+    images: ['/og-card.png']
   },
   alternates: { canonical: '/' },
   twitter: {
     card: 'summary_large_image',
-    title: 'Allowance Guard',
-    description: 'Open-source, free tool to view and revoke token approvals safely.'
+    site: '@AllowanceGuard',
+    creator: '@AllowanceGuard',
+    title: 'Allowance Guard — Review & Revoke Wallet Permissions',
+    description: 'Free, open-source dashboard to review, revoke, and monitor wallet approvals across chains.',
+    images: ['/og-card.png']
   }
 }
 
@@ -269,6 +275,48 @@ export default function RootLayout({
             }
           `
         }} />
+        
+        {/* JSON-LD Structured Data */}
+        <Script
+          id="organization-jsonld"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Allowance Guard",
+              "url": "https://allowanceguard.com",
+              "logo": "https://allowanceguard.com/logo.png",
+              "sameAs": [
+                "https://github.com/EazyAccessEA/Allowance-guard",
+                "https://x.com/AllowanceGuard"
+              ]
+            })
+          }}
+        />
+        
+        <Script
+          id="software-application-jsonld"
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Allowance Guard",
+              "applicationCategory": "FinanceApplication",
+              "operatingSystem": "Web",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "description": "Open-source dashboard to inspect and revoke approvals",
+              "url": "https://allowanceguard.com"
+            })
+          }}
+        />
       </body>
     </html>
   )

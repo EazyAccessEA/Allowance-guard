@@ -1,2 +1,16 @@
-# Replace this entire content with the verification code from Reown Cloud
-# The verification code should be just the code itself, no extra text
+# WalletConnect Verification
+# 
+# To verify this domain with WalletConnect Cloud:
+# 1. Go to https://cloud.walletconnect.com/
+# 2. Navigate to your project settings
+# 3. Copy the verification token provided
+# 4. Replace the placeholder below with your actual token
+# 5. Save this file
+#
+# Format: walletconnect-verification=<YOUR_VERIFICATION_TOKEN>
+#
+# Example:
+# walletconnect-verification=abc123def456ghi789jkl012mno345pqr678stu901vwx234yz
+#
+# Note: Do not commit actual verification tokens to version control
+# This file serves as a placeholder for the verification process
