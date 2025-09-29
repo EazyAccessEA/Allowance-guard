@@ -24,7 +24,7 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
   const [chainId, setChainId] = useState<number|undefined>(initial.chainId)
   const [category, setCategory] = useState<string|undefined>(initial.category)
   const [verified, setVerified] = useState<boolean>(!!initial.verified)
-  const [fuzzy, setFuzzy] = useState<boolean>(initial.fuzzy ?? true)
+  const [fuzzy, setFuzzy] = useState<boolean>(true) // Always enabled for better UX
   const [minScore, setMinScore] = useState<number>(initial.minScore ?? 0)
   const [sort, setSort] = useState<Props['initial']['sort']>(initial.sort ?? (q ? 'relevance' : 'recent'))
 
@@ -51,8 +51,8 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
     onChange({ q: dq || undefined, chainId, category, verified, fuzzy, minScore, sort })
   }, [dq, chainId, category, verified, fuzzy, minScore, sort, onChange])
 
-  // Disable minScore when fuzzy is off
-  const canScore = useMemo(() => fuzzy && (dq?.length ?? 0) >= 3, [fuzzy, dq])
+  // Show score slider when there's a search query
+  const canScore = useMemo(() => (dq?.length ?? 0) >= 3, [dq])
 
   return (
     <div className="bg-background-light rounded-2xl border border-border-default p-6 mb-8">
@@ -131,23 +131,11 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
             </label>
           </div>
 
-          <div className="flex items-center gap-3">
-            <input
-              type="checkbox"
-              id="fuzzy"
-              checked={fuzzy}
-              onChange={e => setFuzzy(e.target.checked)}
-              className="w-4 h-4 text-primary-accent bg-background-light border-border-default rounded focus:ring-primary-accent/20"
-            />
-            <label htmlFor="fuzzy" className="text-sm font-medium text-text-primary">
-              Fuzzy search
-            </label>
-          </div>
 
           {canScore && (
             <div className="flex items-center gap-3">
               <label className="text-sm font-medium text-text-primary">
-                Min Score:
+                Match Quality:
               </label>
               <input
                 type="range"
@@ -158,7 +146,9 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
                 onChange={e => setMinScore(Number(e.target.value))}
                 className="w-24"
               />
-              <span className="text-sm text-text-secondary">{minScore.toFixed(1)}</span>
+              <span className="text-sm text-text-secondary">
+                {minScore === 0 ? 'All matches' : `${minScore.toFixed(1)}+`}
+              </span>
             </div>
           )}
 

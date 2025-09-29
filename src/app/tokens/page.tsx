@@ -69,11 +69,11 @@ export default function TokensPage() {
           <div className="flex items-center gap-4 text-sm text-stone">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary-accent" />
-              <span>Advanced fuzzy search</span>
+              <span>Smart search</span>
             </div>
             <div className="flex items-center gap-2">
               <Filter className="w-4 h-4 text-primary-accent" />
-              <span>Smart filtering</span>
+              <span>Advanced filtering</span>
             </div>
           </div>
         </Container>

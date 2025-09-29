@@ -22,6 +22,7 @@ export default function SearchGuidance() {
                 <li>• <strong>Symbols:</strong> &ldquo;USDC&rdquo;, &ldquo;USDT&rdquo;, &ldquo;UNI&rdquo;, &ldquo;WETH&rdquo;</li>
                 <li>• <strong>Contract addresses:</strong> &ldquo;0xa0b86a33e6c3c5c5c5c5c5c5c5c5c5c5c5c5c5c5&rdquo;</li>
                 <li>• <strong>Partial matches:</strong> &ldquo;stable&rdquo; (finds stablecoins)</li>
+                <li>• <strong>Smart search:</strong> Works even with typos or partial names</li>
               </ul>
             </div>
             
@@ -32,7 +33,7 @@ export default function SearchGuidance() {
               </h4>
               <ul className="text-sm text-text-secondary space-y-1">
                 <li>• <strong>Verified only:</strong> Show only verified, legitimate tokens</li>
-                <li>• <strong>Fuzzy search:</strong> Find tokens even with typos</li>
+                <li>• <strong>Smart matching:</strong> Find tokens even with typos</li>
                 <li>• <strong>Categories:</strong> Filter by DeFi, stablecoins, NFTs, etc.</li>
                 <li>• <strong>Blockchain:</strong> Search specific networks</li>
               </ul>
@@ -45,7 +46,7 @@ export default function SearchGuidance() {
               <div>
                 <h4 className="font-medium text-amber-800 mb-1">Pro Tip</h4>
                 <p className="text-sm text-amber-700">
-                  Start with verified tokens only for safety. Use fuzzy search to find tokens even if you&apos;re not sure of the exact spelling. 
+                  Start with verified tokens only for safety. Our smart search works even if you&apos;re not sure of the exact spelling. 
                   Always check the verification status and official website before granting approvals.
                 </p>
               </div>

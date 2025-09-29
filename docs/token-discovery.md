@@ -7,7 +7,7 @@ The Token Discovery feature allows users to search and verify tokens before gran
 ## Features
 
 ### 🔍 Comprehensive Search
-- **Fuzzy Search**: Find tokens even with typos or partial matches
+- **Smart Search**: Find tokens even with typos or partial matches
 - **Multi-chain Support**: Search across Ethereum, Arbitrum, and Base
 - **Advanced Filtering**: Filter by category, verification status, and blockchain
 - **Smart Sorting**: Sort by relevance, name, symbol, or recency
@@ -80,8 +80,8 @@ GET /api/tokens/search?q={query}&chainId={id}&category={name}&verified={bool}&fu
 - `chainId`: Filter by blockchain (1, 42161, 8453)
 - `category`: Filter by category name
 - `verified`: Show only verified tokens
-- `fuzzy`: Enable fuzzy search
-- `minScore`: Minimum similarity score (0-3)
+- `fuzzy`: Enable smart search (always enabled)
+- `minScore`: Minimum match quality (0-3)
 - `sort`: Sort by relevance, name, symbol, or recent
 - `limit`: Results per page (1-100)
 - `offset`: Pagination offset
@@ -224,7 +224,7 @@ const data = await response.json();
 
 ### Find Tokens by Name
 ```javascript
-const response = await fetch('/api/tokens/search?q=Uniswap&fuzzy=true');
+const response = await fetch('/api/tokens/search?q=Uniswap');
 const data = await response.json();
 ```
 
