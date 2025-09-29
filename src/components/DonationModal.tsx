@@ -1,289 +1,185 @@
 'use client'
 
-import { useState } from 'react'
-import { X, Heart, DollarSign, CreditCard, Coins } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { X, Heart, ExternalLink, Copy, Check } from 'lucide-react'
+import { useAccount } from 'wagmi'
 
 interface DonationModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
-const PRESET_AMOUNTS = [5, 10, 25, 50, 100]
-
-type PaymentMethod = 'stripe' | 'coinbase'
-
 export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
-  const [amount, setAmount] = useState<number>(25)
-  const [customAmount, setCustomAmount] = useState('')
-  const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [message, setMessage] = useState('')
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('stripe')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [amount, setAmount] = useState('5')
+  const [ethAmount, setEthAmount] = useState('0.001')
+  const [copied, setCopied] = useState(false)
+  const { address, isConnected } = useAccount()
 
-  if (!isOpen) return null
+  // Allowance Guard donation address
+  const donationAddress = '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'
 
-  const handleContribute = async () => {
-    setIsLoading(true)
-    setError('')
+  // Calculate ETH amount based on USD input (simplified - you'd want real price feed)
+  useEffect(() => {
+    const usdAmount = parseFloat(amount) || 0
+    const ethEquivalent = (usdAmount / 3000).toFixed(6) // Rough ETH price
+    setEthAmount(ethEquivalent)
+  }, [amount])
 
+  const handleCopyAddress = async () => {
     try {
-      const contributionAmount = customAmount ? parseFloat(customAmount) : amount
-      
-      if (contributionAmount < 1 || contributionAmount > 10000) {
-        setError('Please enter an amount between $1 and $10,000')
-        return
-      }
-
-      if (paymentMethod === 'stripe') {
-        // Stripe payment flow
-        const amountInCents = Math.round(contributionAmount * 100)
-
-        const response = await fetch('/api/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            amount: amountInCents
-          })
-        })
-
-        const data = await response.json()
-
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to create checkout session')
-        }
-
-        // Redirect to Stripe Checkout
-        const stripe = await import('@stripe/stripe-js')
-        const { loadStripe } = stripe
-        const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-        
-        const stripeInstance = await stripePromise
-        if (stripeInstance) {
-          const { error } = await stripeInstance.redirectToCheckout({
-            sessionId: data.id
-          })
-          
-          if (error) {
-            throw new Error(error.message)
-          }
-        }
-      } else {
-        // Coinbase Commerce payment flow
-        const amountInCents = Math.round(contributionAmount * 100)
-        
-        const response = await fetch('/api/coinbase/create-charge', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            amount: amountInCents,
-            currency: 'USD',
-            email: email || undefined
-          })
-        })
-
-        const data = await response.json()
-
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to create crypto charge')
-        }
-
-        // Redirect to Coinbase Commerce checkout
-        window.location.href = data.hosted_url
-      }
-
+      await navigator.clipboard.writeText(donationAddress)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-    } finally {
-      setIsLoading(false)
+      console.error('Failed to copy address:', err)
     }
   }
 
+  const handleSendDonation = async () => {
+    if (!isConnected) {
+      alert('Please connect your wallet first')
+      return
+    }
+    
+    // Redirect to your existing crypto donation flow
+    try {
+      const response = await fetch('/api/coinbase/create-charge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          amount: Math.round(parseFloat(amount) * 100), // Convert to cents
+          currency: 'USD',
+          email: '' // Optional email
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create crypto charge')
+      }
+
+      const { hosted_url } = await response.json()
+      if (hosted_url) {
+        window.location.href = hosted_url
+      }
+    } catch (error) {
+      console.error('Donation error:', error)
+      alert('Failed to process donation. Please try again.')
+    }
+  }
+
+  if (!isOpen) return null
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white border border-line rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-large">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      
+      {/* Modal */}
+      <div className="relative bg-slate-900 rounded-2xl p-6 mx-4 max-w-md w-full border border-slate-700 shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <Heart className="w-8 h-8 text-crimson fill-current" />
-            <h2 className="text-2xl font-semibold text-ink">Support Allowance Guard</h2>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary-600/10 rounded-xl flex items-center justify-center">
+              <Heart className="w-5 h-5 text-primary-400" />
+            </div>
+            <h2 className="text-xl font-bold text-white">
+              Donate to Allowance Guard
+            </h2>
           </div>
           <button
             onClick={onClose}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-stone hover:text-ink hover:bg-mist transition-colors duration-200"
+            className="text-slate-300 hover:text-white transition-colors focus:ring-2 focus:ring-primary-500 focus:outline-none rounded p-1"
           >
-            <X className="w-5 h-5" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="space-y-6">
-          <p className="text-base text-stone leading-relaxed">
-            Allowance Guard is <strong>100% free and open source</strong>. Your contributions help us:
-          </p>
-          
-          <ul className="text-base text-stone space-y-3 leading-relaxed">
-            <li>• Keep the service completely free for everyone</li>
-            <li>• Add support for more blockchain networks</li>
-            <li>• Improve security features and monitoring</li>
-            <li>• Maintain servers and infrastructure</li>
-            <li>• Support the open source community</li>
-          </ul>
-          
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-sm text-blue-800">
-              <strong>Open Source:</strong> All code is available on GitHub. No premium features, no paywalls, no subscriptions.
-            </p>
-          </div>
-
-          {/* Amount Selection */}
-          <div>
-            <label className="block text-base font-medium text-ink mb-4">
-              Select Amount
-            </label>
-            <div className="grid grid-cols-3 gap-3 mb-4">
-              {PRESET_AMOUNTS.map((preset) => (
-                <button
-                  key={preset}
-                  onClick={() => {
-                    setAmount(preset)
-                    setCustomAmount('')
-                  }}
-                  className={`p-3 text-base font-medium rounded-lg border transition-colors ${
-                    amount === preset && !customAmount
-                      ? 'border-crimson bg-red-50 text-crimson'
-                      : 'border-line hover:border-cobalt text-stone hover:text-ink'
-                  }`}
-                >
-                  ${preset}
-                </button>
-              ))}
-            </div>
-            
-            <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stone" />
+        {/* Donation Input */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-slate-300 mb-3">
+            Donation Amount
+          </label>
+          <div className="flex items-center gap-3">
+            <div className="flex-1">
               <input
                 type="number"
-                placeholder="Custom amount"
-                value={customAmount}
-                onChange={(e) => {
-                  setCustomAmount(e.target.value)
-                  if (e.target.value) setAmount(0)
-                }}
-                className="w-full px-3 py-3 pl-10 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
-                min="1"
-                max="10000"
-                step="0.01"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="5"
+                className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               />
             </div>
+            <span className="text-slate-400 font-medium">USD</span>
           </div>
-
-          {/* Payment Method Selection */}
-          <div>
-            <label className="block text-base font-medium text-ink mb-4">
-              Payment Method
-            </label>
-            <div className="grid grid-cols-2 gap-3">
+          
+          {/* ETH Equivalent */}
+          <div className="mt-3 flex items-center justify-between">
+            <span className="text-sm text-slate-400">
+              ≈ {ethAmount} ETH
+            </span>
+            {isConnected && (
               <button
-                onClick={() => setPaymentMethod('stripe')}
-                className={`p-4 text-base font-medium rounded-lg border transition-colors ${
-                  paymentMethod === 'stripe'
-                    ? 'border-cobalt bg-cobalt/10 text-cobalt'
-                    : 'border-line hover:border-cobalt text-stone hover:text-ink'
-                }`}
+                onClick={handleSendDonation}
+                className="px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors focus:ring-4 focus:ring-primary-600/20"
               >
-                <div className="flex items-center justify-center gap-2">
-                  <CreditCard className="w-4 h-4" />
-                  <span>Credit/Debit Card</span>
-                </div>
-                <p className="text-xs text-stone mt-1">Via Stripe</p>
+                Send
               </button>
-              
+            )}
+          </div>
+        </div>
+
+        {/* Alternative Donation Method */}
+        <div className="border-t border-slate-700 pt-6">
+          <p className="text-sm text-slate-400 mb-4">
+            Or send any token to our donations address:
+          </p>
+          
+          <div className="bg-slate-800 rounded-xl p-4 mb-4">
+            <div className="flex items-center justify-between">
+              <code className="text-xs text-slate-300 font-mono break-all">
+                {donationAddress}
+              </code>
               <button
-                onClick={() => setPaymentMethod('coinbase')}
-                className={`p-4 text-base font-medium rounded-lg border transition-colors ${
-                  paymentMethod === 'coinbase'
-                    ? 'border-cobalt bg-cobalt/10 text-cobalt'
-                    : 'border-line hover:border-cobalt text-stone hover:text-ink'
-                }`}
+                onClick={handleCopyAddress}
+                className="ml-3 p-2 text-slate-300 hover:text-white transition-colors focus:ring-2 focus:ring-primary-500 focus:outline-none rounded"
               >
-                <div className="flex items-center justify-center gap-2">
-                  <Coins className="w-4 h-4" />
-                  <span>Cryptocurrency</span>
-                </div>
-                <p className="text-xs text-stone mt-1">Via Coinbase</p>
+                {copied ? (
+                  <Check className="w-4 h-4 text-green-400" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
               </button>
             </div>
           </div>
 
-          {/* Optional Information */}
-          <div className="space-y-4">
-            <div>
-              <label className="block text-base font-medium text-ink mb-2">
-                Name (Optional)
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your name"
-                className="w-full px-3 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
-              />
-            </div>
-
-            <div>
-              <label className="block text-base font-medium text-ink mb-2">
-                Email (Optional)
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="w-full px-3 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
-              />
-              <p className="text-sm text-stone mt-2">
-                We&apos;ll send you a thank you email and receipt
-              </p>
-            </div>
-
-            <div>
-              <label className="block text-base font-medium text-ink mb-2">
-                Message (Optional)
-              </label>
-              <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Leave us a message..."
-                rows={3}
-                maxLength={500}
-                className="w-full px-3 py-3 text-base border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200 resize-none"
-              />
-            </div>
+          <div className="flex items-center gap-2 text-xs text-slate-500">
+            <ExternalLink className="w-3 h-3" />
+            <a 
+              href={`https://etherscan.io/address/${donationAddress}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-slate-300 transition-colors"
+            >
+              View on Etherscan
+            </a>
           </div>
+        </div>
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <p className="text-base text-crimson">{error}</p>
-            </div>
-          )}
-
-          {/* Actions */}
-          <div className="flex gap-4">
-            <button
-              onClick={onClose}
-              className="flex-1 px-4 py-3 text-base font-medium text-ink border border-line rounded-lg hover:bg-mist transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+        {/* Footer */}
+        <div className="mt-6 pt-4 border-t border-slate-700">
+          <p className="text-xs text-slate-500 text-center mb-3">
+            Your support helps us maintain and improve Allowance Guard
+          </p>
+          <div className="text-center">
+            <a 
+              href="/contribute"
+              className="text-xs text-primary-accent hover:text-primary-accent/80 transition-colors"
             >
-              Cancel
-            </button>
-            <button
-              onClick={handleContribute}
-              disabled={isLoading}
-              className="flex-1 px-4 py-3 text-base font-medium text-white bg-cobalt hover:bg-cobalt/90 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50"
-            >
-                    {isLoading ? 'Processing...' : `Contribute $${customAmount || amount}`}
-            </button>
+              More donation options →
+            </a>
           </div>
         </div>
       </div>

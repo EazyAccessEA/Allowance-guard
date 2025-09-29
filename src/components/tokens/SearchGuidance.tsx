@@ -4,58 +4,58 @@ import Link from 'next/link'
 
 export default function SearchGuidance() {
   return (
-    <div className="space-y-8 mb-8">
+    <div className="space-y-6 sm:space-y-8 mb-6 sm:mb-8">
       {/* Security Checklist Section */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-8 border border-amber-200">
-        <div className="flex items-start gap-4 mb-6">
-          <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
-            <Shield className="w-6 h-6 text-amber-600" />
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 sm:p-6 md:p-8 border border-amber-200">
+        <div className="flex flex-col sm:flex-row items-start gap-4 mb-4 sm:mb-6">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />
           </div>
-          <div>
-            <h2 className="text-2xl font-bold text-amber-800 mb-3">Your Proactive Security Checklist: Essential Habits for Safe Token Management</h2>
-            <p className="text-amber-700 mb-6">
+          <div className="flex-1 min-w-0">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-amber-800 mb-2 sm:mb-3">Your Proactive Security Checklist: Essential Habits for Safe Token Management</h2>
+            <p className="text-sm sm:text-base text-amber-700 mb-4 sm:mb-6">
               True crypto security isn&apos;t about a single action; it&apos;s about building smart, consistent habits. By integrating these best practices into your routine, you can significantly reduce your risk exposure and protect your digital assets from emerging threats.
             </p>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg p-6 border border-amber-200">
-            <div className="flex items-center gap-3 mb-4">
-              <Shield className="w-6 h-6 text-amber-600" />
-              <h3 className="text-lg font-semibold text-amber-800">1. The &apos;Trust but Verify&apos; Mantra: Always Vet Contracts First</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="bg-white rounded-lg p-4 sm:p-6 border border-amber-200">
+            <div className="flex items-start gap-3 mb-3 sm:mb-4">
+              <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+              <h3 className="text-base sm:text-lg font-semibold text-amber-800">1. The &apos;Trust but Verify&apos; Mantra: Always Vet Contracts First</h3>
             </div>
-            <p className="text-sm text-amber-700">
+            <p className="text-xs sm:text-sm text-amber-700">
               Before you even consider granting an approval, your first step should be to investigate the token contract itself. Think of it as checking the foundation of a house before you buy it. Use our tool to look up the contract address and ensure it aligns with the official project information.
             </p>
           </div>
 
-          <div className="bg-white rounded-lg p-6 border border-amber-200">
-            <div className="flex items-center gap-3 mb-4">
-              <CheckCircle className="w-6 h-6 text-amber-600" />
-              <h3 className="text-lg font-semibold text-amber-800">2. Look for the Green Flags: Prioritize Verified Tokens</h3>
+          <div className="bg-white rounded-lg p-4 sm:p-6 border border-amber-200">
+            <div className="flex items-start gap-3 mb-3 sm:mb-4">
+              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+              <h3 className="text-base sm:text-lg font-semibold text-amber-800">2. Look for the Green Flags: Prioritize Verified Tokens</h3>
             </div>
-            <p className="text-sm text-amber-700">
+            <p className="text-xs sm:text-sm text-amber-700">
               A verified token contract, which has its source code publicly available on a block explorer, is a critical sign of transparency. Furthermore, always cross-reference with the project&apos;s official website and active social media channels (like Twitter and Discord).
             </p>
           </div>
 
-          <div className="bg-white rounded-lg p-6 border border-amber-200">
-            <div className="flex items-center gap-3 mb-4">
-              <DollarSign className="w-6 h-6 text-amber-600" />
-              <h3 className="text-lg font-semibold text-amber-800">3. Limit Your Exposure: Avoid Unlimited Approvals</h3>
+          <div className="bg-white rounded-lg p-4 sm:p-6 border border-amber-200">
+            <div className="flex items-start gap-3 mb-3 sm:mb-4">
+              <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+              <h3 className="text-base sm:text-lg font-semibold text-amber-800">3. Limit Your Exposure: Avoid Unlimited Approvals</h3>
             </div>
-            <p className="text-sm text-amber-700">
+            <p className="text-xs sm:text-sm text-amber-700">
               When a dApp allows it, always choose to set a specific spending limit rather than granting an unlimited approval. This is the difference between giving a friend £20 for lunch versus giving them your entire bank card and PIN.
             </p>
           </div>
 
-          <div className="bg-white rounded-lg p-6 border border-amber-200">
-            <div className="flex items-center gap-3 mb-4">
-              <Trash2 className="w-6 h-6 text-amber-600" />
-              <h3 className="text-lg font-semibold text-amber-800">4. Practice Good Digital Hygiene: Regular Reviews</h3>
+          <div className="bg-white rounded-lg p-4 sm:p-6 border border-amber-200">
+            <div className="flex items-start gap-3 mb-3 sm:mb-4">
+              <Trash2 className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+              <h3 className="text-base sm:text-lg font-semibold text-amber-800">4. Practice Good Digital Hygiene: Regular Reviews</h3>
             </div>
-            <p className="text-sm text-amber-700">
+            <p className="text-xs sm:text-sm text-amber-700">
               Don&apos;t let old, unused approvals linger. Every active approval represents a potential entry point for an exploit. Make it a monthly habit to visit your Allowance Guard dashboard and revoke any that you no longer need.
             </p>
           </div>

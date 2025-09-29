@@ -43,8 +43,8 @@ export default function TokensPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - Using Universal Header */}
-      <Section className="relative py-12 sm:py-24 lg:py-32 min-h-[70svh]">
+      {/* Hero Section - Mobile Responsive */}
+      <Section className="relative py-8 sm:py-12 md:py-24 lg:py-32 min-h-[60svh] sm:min-h-[70svh]">
         {/* Video Background - Desktop only */}
         <div className="hidden md:block absolute inset-0 z-0">
           <VideoBackground
@@ -68,19 +68,19 @@ export default function TokensPage() {
         />
         
         <Container className="relative max-w-4xl z-30">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 bg-primary-accent/10 rounded-xl flex items-center justify-center">
-              <Search className="w-6 h-6 text-primary-accent" />
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Search className="w-5 h-5 sm:w-6 sm:h-6 text-primary-accent" />
             </div>
-            <div>
-              <H1 className="mb-2">Token Discovery</H1>
-              <p className="text-stone text-lg">
+            <div className="flex-1 min-w-0">
+              <H1 className="mb-2 text-2xl sm:text-3xl lg:text-4xl">Token Discovery</H1>
+              <p className="text-stone text-base sm:text-lg">
                 Explore and discover tokens across multiple blockchains
               </p>
             </div>
           </div>
           
-          <div className="flex items-center gap-4 text-sm text-stone">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-sm text-stone">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary-accent" />
               <span>Smart search</span>
@@ -94,20 +94,20 @@ export default function TokensPage() {
       </Section>
 
       {/* Educational Section */}
-      <Section className="py-24 bg-white/50 backdrop-blur-sm">
+      <Section className="py-12 sm:py-16 md:py-24 bg-white/50 backdrop-blur-sm">
         <Container>
           <TokenDiscoveryEducation />
         </Container>
       </Section>
 
       {/* Search Section */}
-      <Section className="py-24">
+      <Section className="py-12 sm:py-16 md:py-24">
         <Container>
           <div className="max-w-7xl mx-auto">
             <SearchGuidance />
             
             {/* Search Interface */}
-            <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl shadow-xl shadow-slate-900/5 p-8 mb-12">
+            <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl shadow-xl shadow-slate-900/5 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12">
               <TokenSearchControls initial={state} onChange={onChange} />
             </div>
             

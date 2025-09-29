@@ -55,36 +55,36 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
   const canScore = useMemo(() => (dq?.length ?? 0) >= 3, [dq])
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-slate-900 mb-3">Advanced Token Discovery</h2>
-        <p className="text-slate-600 max-w-2xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">Advanced Token Discovery</h2>
+        <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
           Search and analyze tokens with enterprise-grade precision. Filter by verification status, 
           category, and blockchain to find exactly what you need.
         </p>
       </div>
 
       {/* Main Search Interface */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-900/5 p-8">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-900/5 p-4 sm:p-6 md:p-8">
         {/* Search Input - Prominent */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <label className="block text-sm font-semibold text-slate-700 mb-3">
             Search Query
           </label>
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+            <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
             <input
               value={q}
               onChange={e => setQ(e.target.value)}
               placeholder="Search by name, symbol, or contract address..."
-              className="w-full pl-12 pr-4 py-4 text-lg rounded-xl border-2 border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+              className="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 text-base sm:text-lg rounded-xl border-2 border-slate-200 bg-slate-50/50 text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
             />
           </div>
         </div>
 
         {/* Filters Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
           {/* Chain Filter */}
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-3">
@@ -93,7 +93,7 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
             <select
               value={chainId ?? ''}
               onChange={e => setChainId(e.target.value ? Number(e.target.value) : undefined)}
-              className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-sm sm:text-base"
             >
               <option value="">All Networks</option>
               {chains.map(c => (
@@ -110,7 +110,7 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
             <select
               value={category ?? ''}
               onChange={e => setCategory(e.target.value || undefined)}
-              className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-sm sm:text-base"
             >
               <option value="">All Categories</option>
               {cats.map(c => (
@@ -120,14 +120,14 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
           </div>
 
           {/* Sort Filter */}
-          <div>
+          <div className="sm:col-span-2 lg:col-span-1">
             <label className="block text-sm font-semibold text-slate-700 mb-3">
               Sort Results
             </label>
             <select
               value={sort}
               onChange={e => setSort(e.target.value as 'relevance' | 'name' | 'symbol' | 'recent')}
-              className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-sm sm:text-base"
             >
               <option value="relevance">Relevance</option>
               <option value="name">Name (A-Z)</option>
@@ -138,8 +138,8 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
         </div>
 
         {/* Advanced Options */}
-        <div className="border-t border-slate-200 pt-6">
-          <div className="flex flex-wrap items-center gap-8">
+        <div className="border-t border-slate-200 pt-4 sm:pt-6">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-4 sm:gap-6 lg:gap-8">
             {/* Verified Toggle */}
             <div className="flex items-center gap-3">
               <input
@@ -147,7 +147,7 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
                 id="verified"
                 checked={verified}
                 onChange={e => setVerified(e.target.checked)}
-                className="w-5 h-5 text-blue-600 bg-slate-100 border-2 border-slate-300 rounded focus:ring-4 focus:ring-blue-500/20 focus:ring-offset-0"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 bg-slate-100 border-2 border-slate-300 rounded focus:ring-4 focus:ring-blue-500/20 focus:ring-offset-0"
               />
               <label htmlFor="verified" className="text-sm font-semibold text-slate-700">
                 Verified tokens only
@@ -156,11 +156,11 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
 
             {/* Match Quality Slider */}
             {canScore && (
-              <div className="flex items-center gap-4">
-                <label className="text-sm font-semibold text-slate-700">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
+                <label className="text-sm font-semibold text-slate-700 whitespace-nowrap">
                   Match Quality:
                 </label>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
                   <input
                     type="range"
                     min="0"
@@ -168,9 +168,9 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
                     step="0.1"
                     value={minScore}
                     onChange={e => setMinScore(Number(e.target.value))}
-                    className="w-32 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider"
+                    className="flex-1 sm:w-32 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider"
                   />
-                  <span className="text-sm font-medium text-slate-600 min-w-[60px]">
+                  <span className="text-sm font-medium text-slate-600 min-w-[60px] text-right sm:text-left">
                     {minScore === 0 ? 'All matches' : `${minScore.toFixed(1)}+`}
                   </span>
                 </div>

@@ -145,20 +145,21 @@ const nextConfig = {
             key: 'Cross-Origin-Resource-Policy',
             value: 'same-site'
           },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https: https://api.web3modal.org",
-              "font-src 'self' data:",
-              "connect-src 'self' https://rpc.* https://*.infura.io https://*.alchemy.com https://cloud.walletconnect.com https://*.walletconnect.com https://*.blastapi.io https://api.web3modal.org",
-              "frame-ancestors 'none'",
-              "base-uri 'self'",
-              "form-action 'self'"
-            ].join('; ')
-          },
+                  {
+                    key: 'Content-Security-Policy',
+                    value: [
+                      "default-src 'self'",
+                      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+                      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+                      "img-src 'self' data: https: blob: https://api.web3modal.org",
+                      "font-src 'self' data: https://fonts.gstatic.com",
+                      "connect-src 'self' https://*.infura.io https://*.alchemy.com https://cloud.walletconnect.com https://*.walletconnect.com https://*.walletconnect.org https://*.reown.com https://*.blastapi.io https://api.web3modal.org https://eth.llamarpc.com https://polygon-rpc.com https://arb1.arbitrum.io https://mainnet.optimism.io https://mainnet.base.org https://cca-lite.coinbase.com https://*.rpc.com",
+                      "frame-src 'self' https://*.walletconnect.org https://*.walletconnect.com https://secure.walletconnect.org",
+                      "frame-ancestors 'none'",
+                      "base-uri 'self'",
+                      "form-action 'self'"
+                    ].join('; ')
+                  },
           // Performance headers
           {
             key: 'Cache-Control',

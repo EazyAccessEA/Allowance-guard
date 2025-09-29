@@ -28,10 +28,31 @@ export default function ConnectButton({
   const handleConnect = async () => {
     try {
       setIsConnecting(true)
+      console.log('Attempting to open wallet connection...')
+      console.log('AppKit open function available:', typeof open)
+      console.log('User agent:', navigator.userAgent)
+      console.log('Network status:', navigator.onLine)
+      
       await open()
+      console.log('Wallet connection opened successfully')
     } catch (error) {
-      // Silently handle connection errors - they're often just user cancellation
-      console.warn('Connection cancelled or failed:', error)
+      console.error('Wallet connection failed:', error)
+      console.error('Error details:', {
+        name: error instanceof Error ? error.name : 'Unknown',
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+        cause: error instanceof Error ? (error as Error & { cause?: unknown }).cause : undefined
+      })
+      
+      // More specific error messages
+      const errorMessage = error instanceof Error ? error.message : String(error)
+      if (errorMessage.includes('User rejected')) {
+        alert('Connection cancelled by user.')
+      } else if (errorMessage.includes('network')) {
+        alert('Network error. Please check your internet connection and try again.')
+      } else {
+        alert(`Wallet connection failed: ${errorMessage || 'Unknown error'}. Please try again.`)
+      }
     } finally {
       setIsConnecting(false)
     }

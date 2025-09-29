@@ -86,7 +86,7 @@ const CSP = [
   "img-src 'self' data: blob: https:",
   "style-src 'self' 'unsafe-inline'", // Next injects inline styles
   "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live", // Allow Next.js and Vercel
-  `connect-src 'self' ${new URL(ORIGIN).origin} https://eth.llamarpc.com https://polygon-rpc.com https://arb1.arbitrum.io https://mainnet.optimism.io https://mainnet.base.org https: wss:`,
+  `connect-src 'self' ${new URL(ORIGIN).origin} https://eth.llamarpc.com https://polygon-rpc.com https://arb1.arbitrum.io https://mainnet.optimism.io https://mainnet.base.org https://rpc.ankr.com https://cloud.walletconnect.com https://*.walletconnect.com https://*.walletconnect.org https://*.reown.com https: wss:`,
   "font-src 'self' data: https://fonts.gstatic.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",

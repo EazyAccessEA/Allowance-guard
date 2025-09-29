@@ -4,70 +4,70 @@ import Link from 'next/link'
 
 export default function TokenDiscoveryEducation() {
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 mb-8">
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 sm:p-6 md:p-8 mb-6 sm:mb-8">
       <div className="max-w-6xl mx-auto">
         {/* Main Header */}
-        <div className="text-center mb-12">
-          <div className="w-16 h-16 bg-primary-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Shield className="w-8 h-8 text-primary-accent" />
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-primary-accent" />
           </div>
-          <h1 className="text-3xl font-bold text-text-primary mb-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-text-primary mb-3 sm:mb-4">
             Before You Click &apos;Approve&apos;: Why Token Discovery is Non-Negotiable for Your Crypto Security
           </h1>
-          <p className="text-lg text-text-secondary max-w-4xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-text-secondary max-w-4xl mx-auto">
             In the fast-paced world of DeFi, Web3 gaming, and NFTs, clicking &quot;approve&quot; on a token interaction can feel like a routine step. But behind that simple click lies a critical security decision—one that could grant a smart contract unlimited, permanent access to your crypto assets. Malicious actors thrive on this complacency. This is where proactive token discovery isn&apos;t just a helpful feature—it&apos;s your first and most crucial line of defense.
           </p>
         </div>
 
         {/* Hidden Dangers Section */}
-        <div className="bg-white rounded-xl p-8 border border-red-100 mb-8">
-          <div className="flex items-start gap-4 mb-6">
-            <AlertTriangle className="w-8 h-8 text-red-500 flex-shrink-0" />
-            <div>
-              <h2 className="text-2xl font-bold text-red-800 mb-4">The Hidden Dangers: Understanding Token Approval Risks</h2>
-              <p className="text-red-700 mb-6">
+        <div className="bg-white rounded-xl p-4 sm:p-6 md:p-8 border border-red-100 mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-start gap-4 mb-4 sm:mb-6">
+            <AlertTriangle className="w-6 h-6 sm:w-8 sm:h-8 text-red-500 flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-red-800 mb-3 sm:mb-4">The Hidden Dangers: Understanding Token Approval Risks</h2>
+              <p className="text-sm sm:text-base text-red-700 mb-4 sm:mb-6">
                 Granting a token approval is like giving a valet the keys to your car. But what if the valet is a thief? Approving a malicious contract can lead to a total loss of funds. Here are the primary threats you face:
               </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-red-50 rounded-lg p-6 border border-red-200">
-              <div className="flex items-center gap-3 mb-3">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
-                <h3 className="text-lg font-semibold text-red-800">The Phantom Menace: Wallet-Draining Scam Tokens</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="bg-red-50 rounded-lg p-4 sm:p-6 border border-red-200">
+              <div className="flex items-start gap-3 mb-3">
+                <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                <h3 className="text-base sm:text-lg font-semibold text-red-800">The Phantom Menace: Wallet-Draining Scam Tokens</h3>
               </div>
-              <p className="text-sm text-red-700">
+              <p className="text-xs sm:text-sm text-red-700">
                 These are contracts engineered with one purpose: to steal your funds. Once you grant approval, they can execute a function to transfer your tokens—like USDC, WETH, or your favorite altcoins—directly out of your wallet without any further action from you.
               </p>
             </div>
 
-            <div className="bg-red-50 rounded-lg p-6 border border-red-200">
-              <div className="flex items-center gap-3 mb-3">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
-                <h3 className="text-lg font-semibold text-red-800">The Unseen Vulnerability: Unverified Contracts</h3>
+            <div className="bg-red-50 rounded-lg p-4 sm:p-6 border border-red-200">
+              <div className="flex items-start gap-3 mb-3">
+                <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                <h3 className="text-base sm:text-lg font-semibold text-red-800">The Unseen Vulnerability: Unverified Contracts</h3>
               </div>
-              <p className="text-sm text-red-700">
+              <p className="text-xs sm:text-sm text-red-700">
                 An unverified contract on a block explorer means its source code is hidden. You have no way of knowing what hidden functions exist. Approving these is a leap of faith into the dark, exposing you to potential backdoors and hidden exploits.
               </p>
             </div>
 
-            <div className="bg-red-50 rounded-lg p-6 border border-red-200">
-              <div className="flex items-center gap-3 mb-3">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
-                <h3 className="text-lg font-semibold text-red-800">The Deceptive Twin: Sophisticated Fake Tokens</h3>
+            <div className="bg-red-50 rounded-lg p-4 sm:p-6 border border-red-200">
+              <div className="flex items-start gap-3 mb-3">
+                <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                <h3 className="text-base sm:text-lg font-semibold text-red-800">The Deceptive Twin: Sophisticated Fake Tokens</h3>
               </div>
-              <p className="text-sm text-red-700">
+              <p className="text-xs sm:text-sm text-red-700">
                 Scammers create tokens that perfectly mimic the name, symbol, and logo of legitimate, popular projects. You might think you&apos;re interacting with a trusted DeFi protocol, but you&apos;re actually approving a counterfeit designed to compromise your security.
               </p>
             </div>
 
-            <div className="bg-red-50 rounded-lg p-6 border border-red-200">
-              <div className="flex items-center gap-3 mb-3">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
-                <h3 className="text-lg font-semibold text-red-800">The Open Vault: Unlimited, Non-Expiring Approvals</h3>
+            <div className="bg-red-50 rounded-lg p-4 sm:p-6 border border-red-200">
+              <div className="flex items-start gap-3 mb-3">
+                <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                <h3 className="text-base sm:text-lg font-semibold text-red-800">The Open Vault: Unlimited, Non-Expiring Approvals</h3>
               </div>
-              <p className="text-sm text-red-700">
+              <p className="text-xs sm:text-sm text-red-700">
                 Many dApps request unlimited (max_uint256) approvals for convenience. While often safe with reputable protocols, this permission never expires. If that protocol is ever exploited—even years later—your approved funds are at immediate risk. It&apos;s like leaving a signed, blank check on the table forever.
               </p>
             </div>
