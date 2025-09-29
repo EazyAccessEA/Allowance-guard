@@ -6,6 +6,9 @@ import { H1 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
 import TokenSearchControls from '@/components/tokens/TokenSearchControls'
 import TokenResults from '@/components/tokens/TokenResults'
+import TokenDiscoveryEducation from '@/components/tokens/TokenDiscoveryEducation'
+import SearchGuidance from '@/components/tokens/SearchGuidance'
+import TokenDiscoveryCTA from '@/components/tokens/TokenDiscoveryCTA'
 import { Search, Filter, Sparkles } from 'lucide-react'
 
 type SearchState = {
@@ -78,11 +81,22 @@ export default function TokensPage() {
 
       <div className="border-t border-line" />
 
+      {/* Educational Section */}
+      <Section className="py-16">
+        <Container>
+          <TokenDiscoveryEducation />
+        </Container>
+      </Section>
+
+      <div className="border-t border-line" />
+
       {/* Search Section */}
       <Section className="py-16">
         <Container>
+          <SearchGuidance />
           <TokenSearchControls initial={state} onChange={onChange} />
           <TokenResults state={apiState} />
+          <TokenDiscoveryCTA />
         </Container>
       </Section>
     </div>

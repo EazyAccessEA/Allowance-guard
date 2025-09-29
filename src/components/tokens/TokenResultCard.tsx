@@ -53,11 +53,36 @@ export default function TokenResultCard(p: Props) {
               </p>
             </div>
             
-            {/* Action Button */}
-            <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-4 py-2 bg-primary-accent text-white rounded-lg text-sm font-medium hover:bg-primary-accent/90">
-              View Details
-            </button>
+            {/* Action Buttons */}
+            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <button className="px-3 py-1.5 bg-primary-accent text-white rounded-lg text-xs font-medium hover:bg-primary-accent/90">
+                Check Approvals
+              </button>
+              {p.website && (
+                <a 
+                  href={p.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 bg-blue-500 text-white rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors"
+                >
+                  Official Site
+                </a>
+              )}
+            </div>
           </div>
+
+          {/* Security Warning for Unverified Tokens */}
+          {!p.verified && (
+            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="flex items-start gap-2">
+                <span className="text-amber-600 text-sm">⚠️</span>
+                <div>
+                  <p className="text-sm font-medium text-amber-800">Unverified Token</p>
+                  <p className="text-xs text-amber-700">This token has not been verified. Exercise caution before granting approvals.</p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Description */}
           {p.description && (
