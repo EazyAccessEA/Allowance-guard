@@ -1,6 +1,6 @@
 'use client'
 
-import { useAccount } from 'wagmi'
+import { useAccount, useDisconnect } from 'wagmi'
 import { useState } from 'react'
 import { useAppKit } from '@reown/appkit/react'
 import { Button } from '@/components/ui/Button'
@@ -18,7 +18,9 @@ export default function ConnectButton({
   className?: string
 }) {
   const { isConnected, address } = useAccount()
+  const { disconnect } = useDisconnect()
   const [isConnecting, setIsConnecting] = useState(false)
+  const [isDisconnecting, setIsDisconnecting] = useState(false)
   
   // Use AppKit hook per Reown documentation
   const { open } = useAppKit()
@@ -35,7 +37,18 @@ export default function ConnectButton({
     }
   }
 
-  // If already connected, show wallet info
+  const handleDisconnect = async () => {
+    try {
+      setIsDisconnecting(true)
+      await disconnect()
+    } catch (error) {
+      console.warn('Disconnect failed:', error)
+    } finally {
+      setIsDisconnecting(false)
+    }
+  }
+
+  // If already connected, show wallet info with disconnect option
   if (isConnected && address) {
     const truncatedAddress = `${address.slice(0, 6)}...${address.slice(-4)}`
     
@@ -47,14 +60,25 @@ export default function ConnectButton({
             {truncatedAddress}
           </span>
         </div>
-        <Button
-          variant="ghost"
-          size={size}
-          onClick={handleConnect}
-          className="text-xs"
-        >
-          Change
-        </Button>
+        <div className="flex gap-1">
+          <Button
+            variant="ghost"
+            size={size}
+            onClick={handleConnect}
+            className="text-xs"
+          >
+            Change
+          </Button>
+          <Button
+            variant="ghost"
+            size={size}
+            onClick={handleDisconnect}
+            loading={isDisconnecting}
+            className="text-xs text-red-600 hover:text-red-700 hover:bg-red-50"
+          >
+            {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
+          </Button>
+        </div>
       </div>
     )
   }

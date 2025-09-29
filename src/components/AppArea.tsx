@@ -40,8 +40,10 @@ import {
   Settings, 
   AlertTriangle,
   CheckCircle,
-  RefreshCw
+  RefreshCw,
+  LogOut
 } from 'lucide-react'
+import { useDisconnect } from 'wagmi'
 
 interface AppAreaProps {
   isConnected: boolean
@@ -73,10 +75,12 @@ interface AppAreaProps {
 export default function AppArea({
   isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress, canRevoke = true, loading = false
 }: AppAreaProps) {
+  const { disconnect } = useDisconnect()
   const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
   const [monitorFreq, setMonitorFreq] = useState(720)
   const [activeTab, setActiveTab] = useState<'allowances' | 'security' | 'analytics'>('allowances')
   const [selectedRows, setSelectedRows] = useState<typeof rows>([])
+  const [isDisconnecting, setIsDisconnecting] = useState(false)
 
   const loadMonitor = useCallback(async () => {
     const target = selectedWallet || connectedAddress
@@ -87,6 +91,18 @@ export default function AppArea({
   }, [selectedWallet, connectedAddress])
   
   useEffect(() => { loadMonitor() }, [loadMonitor])
+
+  const handleDisconnect = async () => {
+    try {
+      setIsDisconnecting(true)
+      await disconnect()
+      setSelectedWallet(null) // Clear selected wallet
+    } catch (error) {
+      console.warn('Disconnect failed:', error)
+    } finally {
+      setIsDisconnecting(false)
+    }
+  }
 
   async function saveMonitor() {
     const target = selectedWallet || connectedAddress
@@ -124,15 +140,27 @@ export default function AppArea({
               <h2 className="mobbin-heading-1 text-text-primary mb-2">Security Dashboard</h2>
               <p className="mobbin-body text-text-secondary">Monitor and manage your wallet&apos;s token approvals</p>
             </div>
-            <Button
-              onClick={onRefresh}
-              variant="secondary"
-              size="sm"
-              className="flex items-center gap-2 w-full sm:w-auto"
-            >
-              <RefreshCw className="w-4 h-4" />
-              Refresh
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={onRefresh}
+                variant="secondary"
+                size="sm"
+                className="flex items-center gap-2 w-full sm:w-auto"
+              >
+                <RefreshCw className="w-4 h-4" />
+                Refresh
+              </Button>
+              <Button
+                onClick={handleDisconnect}
+                variant="ghost"
+                size="sm"
+                loading={isDisconnecting}
+                className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 w-full sm:w-auto"
+              >
+                <LogOut className="w-4 h-4" />
+                {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
+              </Button>
+            </div>
           </div>
 
           {/* Quick Stats - Mobile Optimized */}
