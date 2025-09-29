@@ -118,7 +118,7 @@ export default function DocsPage() {
               <div className="space-y-2 text-base text-stone mb-8">
                 <p><strong>Getting Started:</strong> What Are Token Allowances? • What This Tool Does (And Does Not Do) • Connecting Your Wallet: A Step-by-Step Guide</p>
                 <p><strong>Core Concepts:</strong> How We Calculate Risk Scores • The Revocation Process Explained • Data Privacy and Security</p>
-                <p><strong>Usage Guides:</strong> How to Interpret Your Allowance Dashboard • How to Revoke a Single Allowance • How to Batch Revoke Allowances</p>
+                <p><strong>Usage Guides:</strong> How to Interpret Your Allowance Dashboard • How to Revoke a Single Allowance • How to Batch Revoke Allowances • Token Discovery & Search</p>
                 <p><strong>Advanced Topics:</strong> Allowance Guard&apos;s Architecture • Smart Contract Integration • API Reference (Public)</p>
                 <p><strong>Support & Troubleshooting:</strong> Common Issues and Solutions • Glossary of Terms • Getting Help</p>
               </div>
@@ -137,6 +137,10 @@ export default function DocsPage() {
                 <div>
                   <h4 className="font-medium text-ink mb-2">Advanced Risk Intelligence</h4>
                   <p className="text-base text-stone">Real-time threat intelligence powered by rule-based algorithms that identify unlimited approvals, malicious contracts, anomalous patterns, and high-risk spender addresses.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Token Discovery & Curation</h4>
+                  <p className="text-base text-stone">Comprehensive token database with fuzzy search, categorization, and community-driven curation. Discover tokens across multiple chains with advanced filtering and relevance scoring.</p>
                 </div>
                 <div>
                   <h4 className="font-medium text-ink mb-2">Non-Custodial Security</h4>
@@ -393,6 +397,26 @@ export default function DocsPage() {
                   <p className="text-base text-stone">Batch operations can reduce gas costs by up to 70% compared to individual revocations, as you only pay the base transaction fee once instead of multiple times. This makes it cost-effective to clean up many allowances simultaneously.</p>
                 </div>
               </div>
+              
+              <h3 id="token-discovery-search" className="text-xl font-semibold text-ink mb-3">Token Discovery & Search</h3>
+              <div className="space-y-4 mb-6">
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Accessing Token Discovery</h4>
+                  <p className="text-base text-stone">Navigate to the &quot;Discover Tokens&quot; page to explore our comprehensive token database. This feature allows you to search and discover tokens across multiple blockchain networks with advanced filtering and categorization.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Advanced Search Features</h4>
+                  <p className="text-base text-stone">Use fuzzy search to find tokens by name, symbol, or contract address. Filter by blockchain network, token category (DeFi, NFT, Stablecoins, etc.), and verification status. The search uses PostgreSQL trigram indexing for fast, relevant results.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Token Categories</h4>
+                  <p className="text-base text-stone">Browse tokens by category including Stablecoins, DeFi protocols, NFT collections, Governance tokens, and more. Each category is curated by the community and verified by our team to ensure accuracy and relevance.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Community Curation</h4>
+                  <p className="text-base text-stone">Submit new tokens for inclusion in our database through the token submission system. All submissions are validated on-chain and reviewed by our curation team before being added to the public database.</p>
+                </div>
+              </div>
             </div>
           </div>
         )
@@ -452,6 +476,22 @@ export default function DocsPage() {
                 <div>
                   <h4 className="font-medium text-ink mb-2">Job Status Endpoint</h4>
                   <p className="text-base text-stone">GET /api/jobs/[id] - Check the status of a scan job. Returns current progress, completion status, and any error messages. Essential for implementing proper loading states and error handling in client applications.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Token Search Endpoint</h4>
+                  <p className="text-base text-stone">GET /api/tokens/search - Search and discover tokens across multiple blockchains. Supports fuzzy search, category filtering, and relevance scoring. Returns paginated results with token metadata, categories, and verification status.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Token Categories Endpoint</h4>
+                  <p className="text-base text-stone">GET /api/tokens/categories - Retrieve all available token categories with usage counts. Useful for building category filters and understanding the token taxonomy.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Token Submission Endpoint</h4>
+                  <p className="text-base text-stone">POST /api/tokens/submit - Submit new tokens for community curation. Validates tokens on-chain and queues them for review. Requires email contact and token metadata including name, symbol, and standard.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-ink mb-2">Chains Endpoint</h4>
+                  <p className="text-base text-stone">GET /api/chains - Retrieve supported blockchain networks with their configuration. Returns chain IDs, names, symbols, and RPC endpoints for integration with wallet providers.</p>
                 </div>
               </div>
             </div>
