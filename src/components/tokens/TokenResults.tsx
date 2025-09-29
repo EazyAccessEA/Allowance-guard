@@ -149,7 +149,7 @@ export default function TokenResults({ state }: { state: SearchState }) {
         </div>
         <h3 className="text-2xl font-bold text-slate-900 mb-3">No tokens found</h3>
         <p className="text-slate-600 mb-8 max-w-md mx-auto">
-          Try adjusting your search criteria or filters to find what you're looking for.
+          Try adjusting your search criteria or filters to find what you&apos;re looking for.
         </p>
         <button 
           onClick={() => window.location.reload()} 

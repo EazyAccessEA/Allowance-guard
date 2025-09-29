@@ -24,7 +24,7 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
   const [chainId, setChainId] = useState<number|undefined>(initial.chainId)
   const [category, setCategory] = useState<string|undefined>(initial.category)
   const [verified, setVerified] = useState<boolean>(!!initial.verified)
-  const [fuzzy, setFuzzy] = useState<boolean>(true) // Always enabled for better UX
+  const [fuzzy] = useState<boolean>(true) // Always enabled for better UX
   const [minScore, setMinScore] = useState<number>(initial.minScore ?? 0)
   const [sort, setSort] = useState<Props['initial']['sort']>(initial.sort ?? (q ? 'relevance' : 'recent'))
 
