@@ -152,7 +152,7 @@ export default function SearchGuidance() {
             <Lightbulb className="w-6 h-6 text-green-600" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-green-800 mb-4">🌟 Pro-Tip for Maximum Security</h2>
+            <h2 className="text-2xl font-bold text-green-800 mb-4">Pro-Tip for Maximum Security</h2>
             <p className="text-green-700 mb-4">
               Always start your search with the &apos;Verified Only&apos; filter enabled. This is the single most effective step you can take to reduce your initial risk. While our smart search is excellent for discovery, your final decision to grant an approval should always be based on confirming the token&apos;s verification status and cross-referencing its official website and community channels.
             </p>

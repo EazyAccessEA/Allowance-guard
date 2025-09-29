@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useMemo } from 'react'
+import { Search, AlertTriangle } from 'lucide-react'
 import qs from 'qs'
 import TokenResultCard from './TokenResultCard'
 
@@ -88,40 +89,51 @@ export default function TokenResults({ state }: { state: SearchState }) {
 
   if (loading && !data) {
     return (
-      <div className="space-y-4">
-        {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="bg-background-light rounded-xl border border-border-default p-6 animate-pulse">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-text-secondary/20 rounded-lg"></div>
-              <div className="flex-1 space-y-2">
-                <div className="h-5 bg-text-secondary/20 rounded w-1/3"></div>
-                <div className="h-4 bg-text-secondary/10 rounded w-1/4"></div>
-                <div className="h-3 bg-text-secondary/10 rounded w-full"></div>
-                <div className="flex gap-2 mt-3">
-                  <div className="h-5 bg-text-secondary/10 rounded w-16"></div>
-                  <div className="h-5 bg-text-secondary/10 rounded w-20"></div>
+      <div className="space-y-6">
+        <div className="text-center">
+          <div className="inline-flex items-center gap-3 px-6 py-3 bg-blue-50 border border-blue-200 rounded-full text-blue-700 font-medium">
+            <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <span>Searching tokens...</span>
+          </div>
+        </div>
+        <div className="grid gap-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl border border-slate-200 p-8 animate-pulse">
+              <div className="flex items-start gap-6">
+                <div className="w-16 h-16 bg-slate-200 rounded-2xl"></div>
+                <div className="flex-1 space-y-3">
+                  <div className="h-6 bg-slate-200 rounded w-1/3"></div>
+                  <div className="h-5 bg-slate-100 rounded w-1/4"></div>
+                  <div className="h-4 bg-slate-100 rounded w-full"></div>
+                  <div className="flex gap-3 mt-4">
+                    <div className="h-6 bg-slate-100 rounded-full w-20"></div>
+                    <div className="h-6 bg-slate-100 rounded-full w-24"></div>
+                    <div className="h-6 bg-slate-100 rounded-full w-16"></div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="bg-semantic-danger/5 border border-semantic-danger/20 rounded-xl p-6">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-8 h-8 bg-semantic-danger/10 rounded-lg flex items-center justify-center">
-            <span className="text-semantic-danger">⚠️</span>
+      <div className="bg-red-50 border border-red-200 rounded-2xl p-8">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center">
+            <AlertTriangle className="w-6 h-6 text-red-600" />
           </div>
-          <h3 className="text-lg font-semibold text-semantic-danger">Search Failed</h3>
+          <div>
+            <h3 className="text-xl font-bold text-red-800">Search Failed</h3>
+            <p className="text-red-600">{error}</p>
+          </div>
         </div>
-        <p className="text-text-secondary">{error}</p>
         <button 
           onClick={() => window.location.reload()} 
-          className="mt-4 px-4 py-2 bg-semantic-danger text-white rounded-lg text-sm font-medium hover:bg-semantic-danger/90"
+          className="px-6 py-3 bg-red-600 text-white rounded-xl font-semibold hover:bg-red-700 transition-colors shadow-lg shadow-red-600/25"
         >
           Try Again
         </button>
@@ -131,15 +143,17 @@ export default function TokenResults({ state }: { state: SearchState }) {
 
   if (!data?.data?.length) {
     return (
-      <div className="text-center py-16">
-        <div className="w-16 h-16 bg-text-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">🔍</span>
+      <div className="text-center py-20">
+        <div className="w-20 h-20 bg-slate-100 rounded-3xl flex items-center justify-center mx-auto mb-6">
+          <Search className="w-8 h-8 text-slate-400" />
         </div>
-        <h3 className="text-xl font-semibold text-text-primary mb-2">No tokens found</h3>
-        <p className="text-text-secondary mb-6">Try adjusting your search criteria or filters</p>
+        <h3 className="text-2xl font-bold text-slate-900 mb-3">No tokens found</h3>
+        <p className="text-slate-600 mb-8 max-w-md mx-auto">
+          Try adjusting your search criteria or filters to find what you're looking for.
+        </p>
         <button 
           onClick={() => window.location.reload()} 
-          className="px-6 py-3 bg-primary-accent text-white rounded-lg font-medium hover:bg-primary-accent/90"
+          className="px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/25"
         >
           Clear Filters
         </button>
@@ -156,21 +170,29 @@ export default function TokenResults({ state }: { state: SearchState }) {
   const setOffset = (n: number) => state.setOffset?.(n)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Results Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-text-primary">
-            Search Results
-          </h3>
-          <p className="text-sm text-text-secondary">
-            {total} token{total !== 1 ? 's' : ''} found
-          </p>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-900/5 p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-2xl font-bold text-slate-900 mb-2">
+              Search Results
+            </h3>
+            <p className="text-slate-600">
+              {total} token{total !== 1 ? 's' : ''} found
+            </p>
+          </div>
+          <div className="text-right">
+            <div className="text-sm text-slate-500 mb-1">Showing</div>
+            <div className="text-lg font-semibold text-slate-700">
+              {Math.min(total, offset + 1)}–{Math.min(total, offset + limit)} of {total}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Token Cards */}
-      <div className="grid gap-4">
+      <div className="grid gap-6">
         {data.data.map(t => (
           <TokenResultCard
             key={`${t.chainId}:${t.tokenAddress}`}
@@ -190,28 +212,27 @@ export default function TokenResults({ state }: { state: SearchState }) {
 
       {/* Pagination */}
       {pages > 1 && (
-        <div className="flex items-center justify-between pt-6 border-t border-border-default">
-          <div className="text-sm text-text-secondary">
-            Showing {Math.min(total, offset + 1)}–{Math.min(total, offset + limit)} of {total} results
-          </div>
-          <div className="flex items-center gap-2">
-            <button 
-              disabled={page <= 1}
-              onClick={() => setOffset((page - 2) * limit)}
-              className="px-4 py-2 rounded-lg border border-border-default bg-background-light text-text-primary hover:bg-text-secondary/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              Previous
-            </button>
-            <span className="px-4 py-2 text-sm text-text-secondary">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-900/5 p-6">
+          <div className="flex items-center justify-between">
+            <div className="text-slate-600">
               Page {page} of {pages}
-            </span>
-            <button 
-              disabled={page >= pages}
-              onClick={() => setOffset(page * limit)}
-              className="px-4 py-2 rounded-lg border border-border-default bg-background-light text-text-primary hover:bg-text-secondary/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              Next
-            </button>
+            </div>
+            <div className="flex items-center gap-3">
+              <button 
+                disabled={page <= 1}
+                onClick={() => setOffset((page - 2) * limit)}
+                className="px-6 py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 font-semibold"
+              >
+                Previous
+              </button>
+              <button 
+                disabled={page >= pages}
+                onClick={() => setOffset(page * limit)}
+                className="px-6 py-3 rounded-xl border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 font-semibold"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       )}

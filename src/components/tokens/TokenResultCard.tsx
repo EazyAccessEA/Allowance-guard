@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import { AlertTriangle } from 'lucide-react'
 
 type Props = {
   name: string
@@ -16,25 +17,25 @@ type Props = {
 
 export default function TokenResultCard(p: Props) {
   return (
-    <div className="bg-background-light rounded-xl border border-border-default p-6 hover:border-primary-accent/30 hover:shadow-lg transition-all duration-200 group">
-      <div className="flex items-start gap-4">
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-900/5 p-8 hover:shadow-xl hover:shadow-slate-900/10 hover:border-slate-300 transition-all duration-300 group">
+      <div className="flex items-start gap-6">
         {/* Token Logo/Icon */}
         <div className="flex-shrink-0">
           {p.logoUrl ? (
             <Image 
               src={p.logoUrl} 
               alt={`${p.name} logo`}
-              width={48}
-              height={48}
-              className="w-12 h-12 rounded-lg object-cover"
+              width={64}
+              height={64}
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-slate-100"
               onError={(e) => {
                 e.currentTarget.style.display = 'none'
                 e.currentTarget.nextElementSibling?.classList.remove('hidden')
               }}
             />
           ) : null}
-          <div className={`w-12 h-12 bg-primary-accent/10 rounded-lg flex items-center justify-center ${p.logoUrl ? 'hidden' : ''}`}>
-            <span className="text-xl font-bold text-primary-accent">
+          <div className={`w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center border-2 border-slate-100 ${p.logoUrl ? 'hidden' : ''}`}>
+            <span className="text-2xl font-bold text-white">
               {p.symbol.charAt(0)}
             </span>
           </div>
@@ -43,19 +44,30 @@ export default function TokenResultCard(p: Props) {
         {/* Token Info */}
         <div className="flex-1 min-w-0">
           {/* Header */}
-          <div className="flex items-start justify-between gap-4 mb-3">
+          <div className="flex items-start justify-between gap-6 mb-6">
             <div className="min-w-0 flex-1">
-              <h3 className="text-lg font-semibold text-text-primary truncate">
-                {p.name}
-              </h3>
-              <p className="text-sm text-text-secondary">
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-2xl font-bold text-slate-900 truncate">
+                  {p.name}
+                </h3>
+                {p.verified && (
+                  <div className="flex items-center gap-1 px-3 py-1 bg-green-100 border border-green-200 rounded-full">
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
+                    <span className="text-xs font-semibold text-green-700">Verified</span>
+                  </div>
+                )}
+              </div>
+              <p className="text-lg font-medium text-slate-600 mb-1">
                 {p.symbol}
               </p>
+              <p className="text-sm text-slate-500 font-mono">
+                {p.tokenAddress}
+              </p>
             </div>
-            
+
             {/* Action Buttons */}
-            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              <button className="px-3 py-1.5 bg-primary-accent text-white rounded-lg text-xs font-medium hover:bg-primary-accent/90">
+            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button className="px-6 py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/25">
                 Check Approvals
               </button>
               {p.website && (
@@ -63,7 +75,7 @@ export default function TokenResultCard(p: Props) {
                   href={p.website} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 bg-blue-500 text-white rounded-lg text-xs font-medium hover:bg-blue-600 transition-colors"
+                  className="px-6 py-3 bg-slate-100 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-200 transition-colors border border-slate-200"
                 >
                   Official Site
                 </a>
@@ -73,12 +85,14 @@ export default function TokenResultCard(p: Props) {
 
           {/* Security Warning for Unverified Tokens */}
           {!p.verified && (
-            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-              <div className="flex items-start gap-2">
-                <span className="text-amber-600 text-sm">⚠️</span>
+            <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                </div>
                 <div>
-                  <p className="text-sm font-medium text-amber-800">Unverified Token</p>
-                  <p className="text-xs text-amber-700">This token has not been verified. Exercise caution before granting approvals.</p>
+                  <p className="text-sm font-semibold text-amber-800 mb-1">Unverified Token</p>
+                  <p className="text-sm text-amber-700">This token has not been verified. Exercise caution before granting approvals.</p>
                 </div>
               </div>
             </div>
@@ -86,61 +100,56 @@ export default function TokenResultCard(p: Props) {
 
           {/* Description */}
           {p.description && (
-            <p className="text-sm text-text-secondary mb-4 line-clamp-2">
+            <p className="text-slate-600 mb-6 line-clamp-2 leading-relaxed">
               {p.description}
             </p>
           )}
 
-          {/* Token Address */}
-          <div className="mb-4">
-            <p className="text-xs text-text-secondary font-mono break-all">
-              {p.tokenAddress}
-            </p>
-          </div>
+          {/* Badges and Metadata */}
+          <div className="space-y-4">
+            {/* Chain and Categories */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-sm font-semibold border border-slate-200">
+                {p.chainName}
+              </span>
 
-          {/* Badges and Links */}
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-neutral-bg text-neutral-text border border-neutral-borders">
-              {p.chainName}
-            </span>
-            
-            {p.verified && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-semantic-success/10 text-semantic-success border border-semantic-success/20">
-                ✓ Verified
-              </span>
-            )}
-            
-            {p.categories?.slice(0, 2).map(c => (
-              <span 
-                key={c} 
-                className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-accent/10 text-primary-accent border border-primary-accent/20"
-              >
-                {c}
-              </span>
-            ))}
-            
-            {p.categories && p.categories.length > 2 && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-text-secondary/10 text-text-secondary border border-text-secondary/20">
-                +{p.categories.length - 2} more
-              </span>
-            )}
-            
-            {typeof p.score === 'number' && (
-              <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-600 border border-indigo-500/20">
-                Score: {p.score.toFixed(2)}
-              </span>
-            )}
+              {p.categories?.slice(0, 3).map(c => (
+                <span 
+                  key={c} 
+                  className="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-xl text-sm font-semibold border border-blue-200"
+                >
+                  {c}
+                </span>
+              ))}
+
+              {p.categories && p.categories.length > 3 && (
+                <span className="inline-flex items-center px-4 py-2 bg-slate-50 text-slate-600 rounded-xl text-sm font-semibold border border-slate-200">
+                  +{p.categories.length - 3} more
+                </span>
+              )}
+
+              {typeof p.score === 'number' && (
+                <span className="inline-flex items-center px-4 py-2 bg-indigo-50 text-indigo-700 rounded-xl text-sm font-semibold border border-indigo-200">
+                  Score: {p.score.toFixed(2)}
+                </span>
+              )}
+            </div>
 
             {/* Website Link */}
             {p.website && (
-              <a 
-                href={p.website} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
-              >
-                🌐 Website
-              </a>
+              <div className="pt-2">
+                <a 
+                  href={p.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  <span>Visit Official Website</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
             )}
           </div>
         </div>

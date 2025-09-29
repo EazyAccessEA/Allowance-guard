@@ -34,7 +34,7 @@ export default function TokenDiscoveryEducation() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-red-50 rounded-lg p-6 border border-red-200">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">🚨</span>
+                <AlertTriangle className="w-6 h-6 text-red-600" />
                 <h3 className="text-lg font-semibold text-red-800">The Phantom Menace: Wallet-Draining Scam Tokens</h3>
               </div>
               <p className="text-sm text-red-700">
@@ -44,7 +44,7 @@ export default function TokenDiscoveryEducation() {
 
             <div className="bg-red-50 rounded-lg p-6 border border-red-200">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">❓</span>
+                <AlertTriangle className="w-6 h-6 text-red-600" />
                 <h3 className="text-lg font-semibold text-red-800">The Unseen Vulnerability: Unverified Contracts</h3>
               </div>
               <p className="text-sm text-red-700">
@@ -54,7 +54,7 @@ export default function TokenDiscoveryEducation() {
 
             <div className="bg-red-50 rounded-lg p-6 border border-red-200">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">🎭</span>
+                <AlertTriangle className="w-6 h-6 text-red-600" />
                 <h3 className="text-lg font-semibold text-red-800">The Deceptive Twin: Sophisticated Fake Tokens</h3>
               </div>
               <p className="text-sm text-red-700">
@@ -64,7 +64,7 @@ export default function TokenDiscoveryEducation() {
 
             <div className="bg-red-50 rounded-lg p-6 border border-red-200">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">⛓️</span>
+                <AlertTriangle className="w-6 h-6 text-red-600" />
                 <h3 className="text-lg font-semibold text-red-800">The Open Vault: Unlimited, Non-Expiring Approvals</h3>
               </div>
               <p className="text-sm text-red-700">
