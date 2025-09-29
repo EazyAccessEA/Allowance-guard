@@ -3,15 +3,6 @@ const nextConfig = {
   // Generate source maps for production debugging
   productionBrowserSourceMaps: true,
   
-  // Configure Turbopack (updated syntax)
-  turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
-    },
-  },
   // Keep webpack config for production builds
   webpack: (config: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
@@ -160,9 +151,9 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: https:",
+              "img-src 'self' data: https: https://api.web3modal.org",
               "font-src 'self' data:",
-              "connect-src 'self' https://rpc.* https://*.infura.io https://*.alchemy.com https://cloud.walletconnect.com https://*.walletconnect.com https://*.blastapi.io",
+              "connect-src 'self' https://rpc.* https://*.infura.io https://*.alchemy.com https://cloud.walletconnect.com https://*.walletconnect.com https://*.blastapi.io https://api.web3modal.org",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'"
