@@ -19,6 +19,9 @@ export type TokenSearchResult = {
   symbol: string
   decimals: number | null
   standard: 'ERC20' | 'ERC721' | 'ERC1155'
+  description: string | null
+  website: string | null
+  logoUrl: string | null
   verified: boolean
   categories: string[]
   score?: number                // NEW: only in fuzzy mode
@@ -179,6 +182,9 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
       tm.symbol                AS "symbol",
       tm.decimals              AS "decimals",
       tm.standard              AS "standard",
+      tm.description           AS "description",
+      tm.website               AS "website",
+      tm.logo_url              AS "logoUrl",
       tm.verified              AS "verified",
       COALESCE(ARRAY_AGG(DISTINCT tc.name) FILTER (WHERE tc.name IS NOT NULL), '{}') AS "categories",
       ${selectScore}
@@ -193,7 +199,7 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
       LEFT JOIN token_categories tc ON tc.id = tcm.category_id
     `}
     ${whereClause}
-    GROUP BY tm.chain_id, tm.token_address, tm.name, tm.symbol, tm.decimals, tm.standard, tm.verified
+    GROUP BY tm.chain_id, tm.token_address, tm.name, tm.symbol, tm.decimals, tm.standard, tm.description, tm.website, tm.logo_url, tm.verified
     ${havingClause}
     ORDER BY ${orderBy}
     LIMIT $${p} OFFSET $${p + 1}

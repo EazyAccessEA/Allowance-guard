@@ -89,9 +89,6 @@ export default function Header({ isConnected }: HeaderProps) {
             <NavLink href="/docs" current={pathname?.startsWith('/docs') ?? false}>
               Documentation
             </NavLink>
-            <NavLink href="/tokens" current={pathname === '/tokens'}>
-              Discover Tokens
-            </NavLink>
             <NavLink href="/features" current={pathname === '/features'}>
               Features
             </NavLink>
