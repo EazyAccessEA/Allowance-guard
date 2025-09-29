@@ -213,27 +213,53 @@ export default function HomePage() {
   // Auto-scroll to Security Dashboard when wallet connects and is selected
   useEffect(() => {
     if (isConnected && selectedWallet && isHydrated) {
-      // Small delay to ensure DOM is ready and smooth transition
-      const timer = setTimeout(() => {
+      console.log('🔄 Wallet connected, preparing to scroll to dashboard...')
+      
+      // Simple and reliable approach
+      const scrollToDashboard = () => {
         const dashboardElement = document.getElementById('security-dashboard')
         if (dashboardElement) {
+          console.log('🎯 Scrolling to Security Dashboard...')
+          
           // Add a subtle highlight effect before scrolling
           dashboardElement.classList.add('animate-pulse')
           
-          dashboardElement.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start',
-            inline: 'nearest'
+          // Use a more reliable scroll approach
+          const elementRect = dashboardElement.getBoundingClientRect()
+          const absoluteElementTop = elementRect.top + window.pageYOffset
+          const offset = 80 // Account for header
+          
+          window.scrollTo({
+            top: absoluteElementTop - offset,
+            behavior: 'smooth'
           })
           
           // Remove highlight after scroll completes
           setTimeout(() => {
             dashboardElement.classList.remove('animate-pulse')
           }, 1000)
+          
+          return true // Success
         }
-      }, 300) // 300ms delay for smooth transition
+        return false // Not found
+      }
       
-      return () => clearTimeout(timer)
+      // Try multiple times with different delays
+      const tryScroll = (attempt = 1) => {
+        console.log(`🔄 Attempt ${attempt} to find dashboard...`)
+        
+        if (scrollToDashboard()) {
+          console.log('✅ Successfully scrolled to dashboard!')
+        } else if (attempt < 5) {
+          // Retry with increasing delay
+          setTimeout(() => tryScroll(attempt + 1), attempt * 500)
+        } else {
+          console.log('⚠️ Could not find dashboard after 5 attempts')
+        }
+      }
+      
+      // Start trying after a short delay
+      setTimeout(() => tryScroll(), 100)
     }
   }, [isConnected, selectedWallet, isHydrated])
 
@@ -732,6 +758,7 @@ export default function HomePage() {
         <div 
           id="security-dashboard"
           className="scroll-mt-20" // Add scroll margin for better positioning
+          data-testid="security-dashboard" // Add test ID for easier debugging
         >
         <AppArea
           isConnected={isConnected}
