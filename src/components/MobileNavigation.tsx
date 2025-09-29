@@ -12,7 +12,8 @@ import {
   Settings, 
   FileText, 
   Home,
-  BookOpen
+  BookOpen,
+  Search
 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -97,6 +98,13 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
       label: 'Documentation',
       icon: <FileText className="w-5 h-5" />,
       description: 'Learn how to use Allowance Guard',
+      badge: null
+    },
+    {
+      href: '/tokens',
+      label: 'Discover Tokens',
+      icon: <Search className="w-5 h-5" />,
+      description: 'Search and discover tokens across blockchains',
       badge: null
     },
     {

@@ -11,6 +11,7 @@ export async function GET() {
     { url: '/docs/api', priority: '0.8', changefreq: 'weekly' },
     { url: '/docs/integration', priority: '0.8', changefreq: 'monthly' },
     { url: '/docs/contributing', priority: '0.7', changefreq: 'monthly' },
+    { url: '/tokens', priority: '0.8', changefreq: 'weekly' },
     { url: '/blog', priority: '0.8', changefreq: 'weekly' },
     { url: '/blog/hardware-wallets-and-multisigs-elevating-your-security', priority: '0.7', changefreq: 'monthly' },
     { url: '/blog/understanding-smart-contract-risk-beyond-allowances', priority: '0.7', changefreq: 'monthly' },
