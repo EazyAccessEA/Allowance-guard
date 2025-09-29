@@ -20,6 +20,8 @@ Allowance Guard is an open source security platform for monitoring and managing 
 - **📊 Analytics**: Comprehensive reporting and risk scoring
 - **🔍 Error Monitoring**: Real-time error tracking with Rollbar
 - **🛡️ Wallet Security**: Comprehensive security dashboard for connected wallets
+- **🔍 Token Discovery**: Search and verify tokens before granting approvals
+- **📚 Educational Content**: Learn about token security and best practices
 - **🎨 PuredgeOS Design**: Modern, minimalist design system with Mobbin-style animations
 - **📱 Mobile-First**: Responsive design optimized for all devices
 - **🔓 Open Source**: Full source code available
@@ -83,6 +85,14 @@ This project implements wallet-focused security features:
 - **⚠️ High-Risk Detection**: Identify and flag dangerous token approvals
 - **🔍 Security Monitoring**: Continuous monitoring of wallet security status
 - **📈 Security Analytics**: Detailed security metrics and trends
+
+### Token Discovery & Security
+- **🔍 Token Search**: Comprehensive database of verified tokens across multiple chains
+- **📚 Educational Content**: Learn about token security before granting approvals
+- **⚠️ Security Warnings**: Clear indicators for unverified or risky tokens
+- **🔗 Category Filtering**: Organize tokens by DeFi, stablecoins, gaming, infrastructure, etc.
+- **✅ Verification Status**: Check if tokens are verified and legitimate
+- **🌐 Official Links**: Direct links to token websites and documentation
 
 ### Technical Security
 - Input validation and sanitization

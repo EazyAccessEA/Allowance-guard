@@ -37,7 +37,10 @@
     "test:e2e:ui": "playwright test --ui",
     "deploy:prod": "bash scripts/deploy-production.sh",
     "analyze": "cross-env ANALYZE=true next build",
-    "networks:update": "node scripts/update-networks-changelog.js"
+    "networks:update": "node scripts/update-networks-changelog.js",
+    "tokens:add": "node scripts/add-comprehensive-tokens.js",
+    "tokens:test": "node scripts/test-token-search.js",
+    "tokens:add-popular": "node scripts/add-popular-tokens.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",
