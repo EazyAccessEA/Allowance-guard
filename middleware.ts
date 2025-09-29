@@ -171,6 +171,8 @@ function applySecurityHeaders(response: NextResponse, botInfo: ReturnType<typeof
   response.headers.set('x-frame-options', 'DENY')
   response.headers.set('permissions-policy', 'camera=(), microphone=(), geolocation=()')
   response.headers.set('strict-transport-security', 'max-age=31536000; includeSubDomains; preload')
+  // Fix Cross-Origin-Opener-Policy for wallet connections
+  response.headers.set('cross-origin-opener-policy', 'same-origin-allow-popups')
   
   // Bot-specific optimizations
   if (botInfo.isBot) {
@@ -222,6 +224,13 @@ export async function middleware(req: NextRequest) {
   let botInfo: ReturnType<typeof isBot> = { isBot: false, category: 'unknown', priority: 'low' }
   
   try {
+    // 0. Skip middleware for health checks to prevent 403 errors
+    if (req.nextUrl.pathname === '/api/healthz') {
+      const response = NextResponse.next()
+      response.headers.set('x-request-id', requestId)
+      return response
+    }
+    
     // 1. Intelligent Bot Detection
     const userAgent = req.headers.get('user-agent') || ''
     botInfo = isBot(userAgent)

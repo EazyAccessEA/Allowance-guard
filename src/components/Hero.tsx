@@ -8,14 +8,28 @@ import Section from '@/components/ui/Section'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import TestConnect from '@/components/TestConnect'
 
-// Dynamic imports
+// Dynamic imports with priority loading
 const VideoBackground = dynamic(() => import('@/components/VideoBackground'), {
   ssr: false,
-  loading: () => null
+  loading: () => (
+    <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-primary-100">
+      <div className="absolute inset-0 bg-[url('/AllowanceGuard_BG.png')] bg-cover bg-center bg-no-repeat" />
+    </div>
+  )
 })
 const MultiLineTypewriter = dynamic(
   () => import('@/components/MultiLineTypewriter').then(m => ({ default: m.MultiLineTypewriter })),
-  { ssr: false, loading: () => <span className="text-primary-700">see every hidden connection clearly</span> }
+  { 
+    ssr: false, 
+    loading: () => (
+      <div className="min-h-[5.5em] sm:min-h-[5em] md:min-h-[3.5em] max-h-[6em] sm:max-h-[5.5em] md:max-h-[4em] flex flex-col justify-center">
+        <span className="block">
+          <span className="text-text-primary">The power to </span>
+          <span className="text-primary-700">see every hidden connection clearly</span>
+        </span>
+      </div>
+    )
+  }
 )
 
 interface HeroProps {

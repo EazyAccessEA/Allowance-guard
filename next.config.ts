@@ -94,6 +94,8 @@ const nextConfig = {
     esmExternals: true,
     // Advanced performance features
     webpackBuildWorker: true,
+    // Fix preload warnings
+    optimizeServerReact: true,
   },
   
   // Server external packages (moved from experimental)

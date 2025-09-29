@@ -72,7 +72,13 @@ class APIClient {
         
         // Don't retry on client errors (4xx)
         if (response.status >= 400 && response.status < 500) {
-          throw new Error(`Client error: ${response.status}`)
+          try {
+            const errorData = await response.json()
+            console.error('API Error Details:', errorData)
+            throw new Error(`Client error: ${response.status} - ${errorData.error || 'Unknown error'}`)
+          } catch {
+            throw new Error(`Client error: ${response.status}`)
+          }
         }
         
         throw new Error(`Server error: ${response.status}`)
@@ -98,8 +104,15 @@ class APIClient {
       throw new Error('API calls only available on client side')
     }
     
+    // Create URLSearchParams to ensure proper encoding
+    const params = new URLSearchParams({
+      wallet,
+      page: page.toString(),
+      pageSize: pageSize.toString()
+    })
+    
     const response = await this.fetchWithRetry(
-      `/api/allowances?wallet=${wallet}&page=${page}&pageSize=${pageSize}`
+      `/api/allowances?${params.toString()}`
     )
     
     return response.json()

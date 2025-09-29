@@ -38,7 +38,7 @@ createAppKit({
   networks: [mainnet, arbitrum, base],
   projectId,
   features: {
-    analytics: false, // Optional - defaults to your Cloud configuration
+    analytics: false, // Disable analytics to prevent Coinbase API calls
   },
 });
 

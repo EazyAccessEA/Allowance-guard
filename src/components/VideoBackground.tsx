@@ -55,6 +55,14 @@ export default function VideoBackground({
     const video = videoRef.current
     if (!video) return
 
+    // Clear any existing source to prevent cache issues
+    video.src = ''
+    video.load()
+
+    // Add cache-busting parameter to ensure fresh video load
+    const videoSrcWithCache = `${videoSrc}?v=${Date.now()}`
+    video.src = videoSrcWithCache
+
     const handleLoadedData = () => {
       setIsLoaded(true)
       video.play().catch(() => {/* ignore autoplay failures since muted+inline is set */})
@@ -67,7 +75,7 @@ export default function VideoBackground({
       video.removeEventListener('loadeddata', handleLoadedData)
       video.removeEventListener('error', handleError)
     }
-  }, [shouldLoad, hasError])
+  }, [shouldLoad, hasError, videoSrc])
 
   useEffect(() => {
     if (!lazy || !videoRef.current) return

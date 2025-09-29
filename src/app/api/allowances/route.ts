@@ -15,9 +15,16 @@ export async function GET(req: Request) {
   const validation = validateQuery(allowanceQuerySchema)(req as NextRequest)
   
   if (!validation.success) {
-    L.warn('allowances.fetch.invalid_params', { errors: validation.details })
+    L.warn('allowances.fetch.invalid_params', { 
+      errors: validation.details,
+      query: Object.fromEntries(new URL(req.url).searchParams.entries())
+    })
     return NextResponse.json(
-      { error: validation.error, details: validation.details },
+      { 
+        error: validation.error, 
+        details: validation.details,
+        query: Object.fromEntries(new URL(req.url).searchParams.entries())
+      },
       { status: 400 }
     )
   }
