@@ -58,8 +58,13 @@ export default function LegacyTokensPage() {
     const optimizedParams = convertLegacyParams(legacyParams)
     const newURL = generateOptimizedURL(optimizedParams, URL_MAPPING)
     
-    // Redirect to the new URL structure
-    router.replace(newURL)
+    // If no parameters, redirect to the main token discovery page
+    if (newURL === '/tokens') {
+      router.replace('/tokens/search')
+    } else {
+      // Redirect to the new URL structure
+      router.replace(newURL)
+    }
   }, [searchParams, router])
 
   // Show loading state while redirecting
