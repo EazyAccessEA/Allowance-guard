@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import { Badge } from '@/components/ui/Badge'
 import DonationButton from '@/components/DonationButton'
-import { Heart, Shield, Code, Users, BookOpen, Github, MessageCircle, Mail, ChevronDown, ChevronUp } from 'lucide-react'
+import { Heart, Shield, Code, Users, BookOpen, Github, MessageCircle, Mail, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react'
 
 interface FooterSectionProps {
   title: string
@@ -161,6 +161,11 @@ export default function Footer() {
                   Settings
                 </Link>
               </li>
+              <li>
+                <Link href="/donate" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
+                  Donate
+                </Link>
+              </li>
             </ul>
           </FooterSection>
 
@@ -211,6 +216,19 @@ export default function Footer() {
             {/* Donation Button */}
             <div className="mt-6">
               <DonationButton />
+            </div>
+            
+            {/* ENS Link */}
+            <div className="mt-4">
+              <a 
+                href="https://app.ens.domains/name/allowanceguard.eth"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-primary-accent transition-colors duration-200 flex items-center gap-2 text-sm"
+              >
+                <ExternalLink className="w-3 h-3" />
+                ENS: allowanceguard.eth
+              </a>
             </div>
           </FooterSection>
         </div>

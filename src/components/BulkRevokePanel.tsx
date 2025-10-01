@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Alert } from '@/components/ui/Alert'
+import DonateTipStep from '@/components/donate/DonateTipStep'
+import { useDonateNative } from '@/lib/web3/donate'
 import { 
   AlertTriangle, 
   Clock, 
@@ -52,6 +54,7 @@ export default function BulkRevokePanel({
 }: BulkRevokePanelProps) {
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [showResults, setShowResults] = useState(false)
+  const [tipAmount, setTipAmount] = useState<string | null>(null)
   
   const {
     revokeMany,
@@ -60,6 +63,8 @@ export default function BulkRevokePanel({
     progress,
     result
   } = useBulkRevokeEnhanced(selectedWallet)
+  
+  const { donateNative } = useDonateNative()
 
   const revokeAllowed = 
     !!selectedWallet &&
@@ -122,6 +127,21 @@ export default function BulkRevokePanel({
     if (!selectedRows.length) return
 
     try {
+      // Send donation first if tip is enabled
+      if (tipAmount && parseFloat(tipAmount) > 0) {
+        try {
+          const donationResult = await donateNative(tipAmount)
+          if (!donationResult.success) {
+            console.warn('Donation failed, continuing with revokes:', donationResult.error)
+            // Continue with revokes even if donation fails
+          }
+        } catch (error) {
+          console.warn('Donation error, continuing with revokes:', error)
+          // Continue with revokes even if donation fails
+        }
+      }
+
+      // Proceed with revokes
       await revokeMany(selectedRows, () => {
         // Progress is handled by the hook
       })
@@ -220,6 +240,13 @@ export default function BulkRevokePanel({
             Revoke Selected
           </Button>
         </div>
+
+        {/* Donation Tip Step */}
+        <DonateTipStep 
+          onTipAdded={setTipAmount}
+          onTipRemoved={() => setTipAmount(null)}
+          className="mb-4"
+        />
 
         {/* Advanced Options */}
         {showAdvanced && (
