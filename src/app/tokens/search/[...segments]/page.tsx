@@ -78,7 +78,7 @@ export default function EnhancedTokensPage({
   useEffect(() => {
     const initializeFromURL = async () => {
       const resolvedParams = await params
-      const segments = resolvedParams.segments || []
+      const _segments = resolvedParams.segments || []
       
       // Parse the optimized URL structure
       const optimizedParams = parseOptimizedURL(pathname, searchParams, URL_MAPPING)

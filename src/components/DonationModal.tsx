@@ -13,7 +13,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const [amount, setAmount] = useState('5')
   const [ethAmount, setEthAmount] = useState('0.001')
   const [copied, setCopied] = useState(false)
-  const { address, isConnected } = useAccount()
+  const { isConnected } = useAccount()
 
   // Allowance Guard donation address
   const donationAddress = '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'

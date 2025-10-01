@@ -2,7 +2,7 @@
 // Checks if build has changed and needs cache invalidation
 
 import { NextRequest, NextResponse } from 'next/server'
-import { checkBuildChange, getCurrentBuild } from '@/lib/build-cache'
+import { checkBuildChange } from '@/lib/build-cache'
 
 export async function GET(req: NextRequest) {
   try {

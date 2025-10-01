@@ -12,7 +12,6 @@ export default function DonatePage() {
   const { isConnected } = useAccount()
   const [amount, setAmount] = useState('0.001')
   const [copied, setCopied] = useState(false)
-  const [qrCode, setQrCode] = useState<string>('')
   const { donateNative, isPending } = useDonateNative()
   const { trackEvent } = useDonationAnalytics()
   
@@ -24,7 +23,8 @@ export default function DonatePage() {
     if (donationAddress) {
       // Simple QR code generation (you might want to use a proper QR library)
       const qrData = `ethereum:${donationAddress}?value=${parseFloat(amount) * 1e18}`
-      setQrCode(qrData)
+      // QR code data generated but not used in current implementation
+      console.log('QR Code data:', qrData)
     }
   }, [donationAddress, amount])
 
@@ -144,7 +144,7 @@ export default function DonatePage() {
               
               {/* Preset Buttons */}
               <div className="mt-3 flex flex-wrap gap-2">
-                {Object.entries(DONATION_PRESETS).map(([key, value]) => (
+                {Object.entries(DONATION_PRESETS).map(([key]) => (
                   <button
                     key={key}
                     onClick={() => handlePresetClick(key as keyof typeof DONATION_PRESETS)}

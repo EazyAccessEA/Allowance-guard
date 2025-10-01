@@ -28,7 +28,7 @@ export default function BuildDetectionProvider() {
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
       // Add global functions for debugging
-      (window as any).buildInfo = {
+      (window as Window & { buildInfo?: any }).buildInfo = {
         currentBuildId: buildDetection.currentBuildId,
         isChecking: buildDetection.isChecking,
         lastCheck: buildDetection.lastCheck
