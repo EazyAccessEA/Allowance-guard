@@ -12,7 +12,8 @@ export default function ServiceWorkerRegistration() {
       const registerSW = async () => {
         try {
           const registration = await navigator.serviceWorker.register('/sw.js', {
-            scope: '/'
+            scope: '/',
+            updateViaCache: 'none' // Always check for updates
           })
 
           console.log('🔧 Service Worker registered:', registration.scope)
@@ -40,6 +41,16 @@ export default function ServiceWorkerRegistration() {
             if (event.data && event.data.type === 'CACHE_UPDATED') {
               console.log('📦 Cache updated:', event.data.cacheName)
             }
+            if (event.data && event.data.type === 'BUILD_CHANGED') {
+              console.log('🔨 Build changed, reloading...')
+              window.location.reload()
+            }
+          })
+
+          // Handle controller changes
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            console.log('🔄 Service Worker controller changed')
+            window.location.reload()
           })
 
         } catch (error) {

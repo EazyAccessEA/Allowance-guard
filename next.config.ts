@@ -87,6 +87,13 @@ const nextConfig = {
     webpackBuildWorker: true,
     // Fix preload warnings
     optimizeServerReact: true,
+    // Enhanced caching for better build consistency
+    staleTimes: {
+      dynamic: 30,
+      static: 180,
+    },
+    // Enable modern bundling
+    bundlePagesRouterDependencies: true,
   },
   
   // Server external packages (moved from experimental)
@@ -107,7 +114,20 @@ const nextConfig = {
   
   // Output file tracing for better performance
   outputFileTracingRoot: process.cwd(),
-  // Security headers
+  
+  // Build optimization for consistent loading
+  generateBuildId: async () => {
+    // Generate consistent build ID based on timestamp
+    return `build-${Date.now()}`
+  },
+  
+  // Enhanced static generation
+  trailingSlash: false,
+  
+  // Optimize for production builds
+  swcMinify: true,
+  
+  // Enhanced caching and security headers
   async headers() {
     return [
       {
@@ -189,6 +209,34 @@ const nextConfig = {
             value: 'text/css'
           }
         ]
+      },
+      // Enhanced caching headers for build optimization
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/api/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=60, s-maxage=300',
+          },
+        ],
+      },
+      {
+        source: '/sw.js',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
       }
     ]
   }

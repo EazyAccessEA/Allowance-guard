@@ -7,9 +7,12 @@
  * - Offline fallbacks for critical pages
  */
 
-const CACHE_NAME = 'allowance-guard-v1.14.9'
-const STATIC_CACHE = 'static-v1.14.9'
-const API_CACHE = 'api-v1.14.9'
+// Dynamic versioning based on build timestamp
+const BUILD_VERSION = 'v1.14.9-' + Date.now()
+const CACHE_NAME = 'allowance-guard-' + BUILD_VERSION
+const STATIC_CACHE = 'static-' + BUILD_VERSION
+const API_CACHE = 'api-' + BUILD_VERSION
+const RUNTIME_CACHE = 'runtime-' + BUILD_VERSION
 
 // Critical resources to cache immediately
 const CRITICAL_RESOURCES = [
@@ -24,6 +27,14 @@ const CRITICAL_RESOURCES = [
   '/favicon.ico',
   '/android-chrome-192x192.png',
   '/android-chrome-512x512.png'
+]
+
+// Build-specific resources that must be fresh
+const BUILD_SPECIFIC_RESOURCES = [
+  '/_next/static/chunks/',
+  '/_next/static/css/',
+  '/_next/static/js/',
+  '/_next/static/media/'
 ]
 
 // Static assets to cache aggressively
@@ -46,14 +57,22 @@ const CACHEABLE_APIS = [
 
 // Install event - cache critical resources
 self.addEventListener('install', (event) => {
-  console.log('🔧 Service Worker installing...')
+  console.log('🔧 Service Worker installing with version:', BUILD_VERSION)
   
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => {
-      console.log('📦 Caching critical resources...')
-      return cache.addAll(CRITICAL_RESOURCES)
-    }).then(() => {
-      console.log('✅ Critical resources cached')
+    Promise.all([
+      // Cache critical resources
+      caches.open(STATIC_CACHE).then((cache) => {
+        console.log('📦 Caching critical resources...')
+        return cache.addAll(CRITICAL_RESOURCES)
+      }),
+      // Cache build-specific resources
+      caches.open(RUNTIME_CACHE).then((cache) => {
+        console.log('🔨 Caching build-specific resources...')
+        return cache.addAll(BUILD_SPECIFIC_RESOURCES)
+      })
+    ]).then(() => {
+      console.log('✅ All resources cached')
       return self.skipWaiting()
     })
   )
@@ -67,7 +86,8 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== STATIC_CACHE && cacheName !== API_CACHE) {
+          // Keep only current version caches
+          if (!cacheName.includes(BUILD_VERSION)) {
             console.log('🗑️ Deleting old cache:', cacheName)
             return caches.delete(cacheName)
           }
@@ -98,6 +118,12 @@ self.addEventListener('fetch', (event) => {
   // API requests - Network first with cache fallback
   if (url.pathname.startsWith('/api/')) {
     event.respondWith(handleApiRequest(request))
+    return
+  }
+  
+  // Build-specific resources - Network first (always fresh)
+  if (isBuildSpecificResource(url.pathname)) {
+    event.respondWith(handleBuildSpecificRequest(request))
     return
   }
   
@@ -270,6 +296,39 @@ self.addEventListener('push', (event) => {
     )
   }
 })
+
+// Helper function to check if resource is build-specific
+function isBuildSpecificResource(pathname) {
+  return BUILD_SPECIFIC_RESOURCES.some(pattern => pathname.startsWith(pattern))
+}
+
+// Handle build-specific resources (always fresh)
+async function handleBuildSpecificRequest(request) {
+  const url = new URL(request.url)
+  
+  try {
+    // Always try network first for build-specific resources
+    const response = await fetch(request)
+    
+    if (response.ok) {
+      // Cache the fresh response
+      const cache = await caches.open(RUNTIME_CACHE)
+      cache.put(request, response.clone())
+    }
+    
+    return response
+  } catch (error) {
+    console.log('🌐 Network failed for build resource, trying cache:', url.pathname)
+    
+    // Fallback to cache
+    const cachedResponse = await caches.match(request)
+    if (cachedResponse) {
+      return cachedResponse
+    }
+    
+    throw error
+  }
+}
 
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {

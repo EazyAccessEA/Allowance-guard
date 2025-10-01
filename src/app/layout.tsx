@@ -12,6 +12,7 @@ import RollbarProvider from '@/components/RollbarProvider'
 import CookieBanner from '@/components/CookieBanner'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import PredictivePerformanceProvider from '@/components/PredictivePerformanceProvider'
+import BuildDetectionProvider from '@/components/BuildDetectionProvider'
 // import PerformanceMonitor from '@/components/PerformanceMonitor' // Disabled due to missing API endpoint
 import { AppKit } from '../../appkit'
 
@@ -264,6 +265,7 @@ export default function RootLayout({
               <CookieBanner />
               <ServiceWorkerRegistration />
               <PredictivePerformanceProvider />
+              <BuildDetectionProvider />
               {/* <PerformanceMonitor /> - Disabled due to missing API endpoint */}
             </ContextProvider>
           </AppKit>
