@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { trackUserBehavior, getSmartPreloadResources, getAdaptiveLoadingStrategy } from '@/lib/predictive-performance'
 
 interface PerformanceVitals {
   lcp?: number
@@ -23,6 +24,9 @@ interface PerformanceMetrics {
   userAgent?: string
   pageUrl?: string
   timestamp?: string
+  userId?: string
+  sessionDuration?: number
+  connectionSpeed?: string
 }
 
 export async function POST(req: NextRequest) {
@@ -48,6 +52,19 @@ export async function POST(req: NextRequest) {
     
     // Log performance issues
     logPerformanceIssues(metrics)
+    
+    // Track user behavior for predictive optimization
+    if (metrics.userId && metrics.pageUrl && metrics.sessionDuration) {
+      await trackUserBehavior(
+        metrics.userId,
+        metrics.pageUrl,
+        metrics.sessionDuration,
+        {
+          userAgent: metrics.userAgent || '',
+          connectionSpeed: metrics.connectionSpeed
+        }
+      )
+    }
     
     return NextResponse.json({ success: true })
     
@@ -95,10 +112,30 @@ function logPerformanceIssues(metrics: PerformanceMetrics) {
   }
 }
 
-// GET endpoint to retrieve performance metrics (for admin dashboard)
-export async function GET() {
+// GET endpoint to retrieve performance metrics and predictive recommendations
+export async function GET(req: NextRequest) {
   try {
-    // Return mock data for now since we're not storing in database yet
+    const { searchParams } = new URL(req.url)
+    const userId = searchParams.get('userId')
+    const currentPage = searchParams.get('currentPage')
+    
+    // If userId and currentPage provided, return predictive recommendations
+    if (userId && currentPage) {
+      const [preloadResources, loadingStrategy] = await Promise.all([
+        getSmartPreloadResources(userId, currentPage),
+        getAdaptiveLoadingStrategy(userId)
+      ])
+      
+      return NextResponse.json({
+        predictive: {
+          preloadResources,
+          loadingStrategy,
+          timestamp: new Date().toISOString()
+        }
+      })
+    }
+    
+    // Return mock data for admin dashboard
     return NextResponse.json({ 
       metrics: [],
       message: 'Performance metrics collection is active but not yet stored in database'

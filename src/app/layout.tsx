@@ -11,6 +11,7 @@ import RollbarProvider from '@/components/RollbarProvider'
 // import PerformanceDashboard from '@/components/PerformanceDashboard' // Removed
 import CookieBanner from '@/components/CookieBanner'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
+import PredictivePerformanceProvider from '@/components/PredictivePerformanceProvider'
 // import PerformanceMonitor from '@/components/PerformanceMonitor' // Disabled due to missing API endpoint
 import { AppKit } from '../../appkit'
 
@@ -262,6 +263,7 @@ export default function RootLayout({
               {/* {process.env.NODE_ENV !== 'production' && <PerformanceDashboard />} - Removed */}
               <CookieBanner />
               <ServiceWorkerRegistration />
+              <PredictivePerformanceProvider />
               {/* <PerformanceMonitor /> - Disabled due to missing API endpoint */}
             </ContextProvider>
           </AppKit>
