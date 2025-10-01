@@ -161,11 +161,6 @@ export default function Footer() {
                   Settings
                 </Link>
               </li>
-              <li>
-                <Link href="/donate" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
-                  Donate
-                </Link>
-              </li>
             </ul>
           </FooterSection>
 
