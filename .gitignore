@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+!.env.template
+production.env.example
 
 # vercel
 .vercel
@@ -39,3 +42,86 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Security - Sensitive files that should never be public
+# Environment and configuration files
+.env*
+production.env.example
+*.env.production
+*.env.local
+*.env.development
+
+# Secrets and keys
+*.key
+*.pem
+*.p12
+*.pfx
+*.secret
+.secrets/
+config/secrets/
+*.private
+
+# Deployment files with sensitive info
+scripts/deploy-*.sh
+deployment/
+deploy/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+
+# Logs
+*.log
+logs/
+log/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Backup files
+*.backup
+*.bak
+.backup/
+backup/
+
+# Documentation with sensitive info (add specific files as needed)
+# PRODUCTION_DEPLOYMENT_CHECKLIST.md
+# VERCEL_DEPLOYMENT.md
+# WEBHOOK_SETUP_GUIDE.md
