@@ -7,6 +7,16 @@ const nextConfig = {
   webpack: (config: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
     
+    // Fix Node.js modules for client-side builds
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      dns: false,
+      'pg-native': false,
+    }
+    
       // Performance optimizations
       if (config.mode === 'production') {
         // Enable bundle analyzer if ANALYZE=true
@@ -79,8 +89,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-toast', '@reown/appkit', 'wagmi', 'react', 'react-dom'],
     webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
-    // Optimize CSS loading
-    optimizeCss: false, // Disabled due to build issues, but keep for future
     // Enable modern JavaScript for better performance
     esmExternals: true,
     // Advanced performance features
@@ -92,8 +100,6 @@ const nextConfig = {
       dynamic: 30,
       static: 180,
     },
-    // Enable modern bundling
-    bundlePagesRouterDependencies: true,
   },
   
   // Server external packages (moved from experimental)
@@ -124,8 +130,7 @@ const nextConfig = {
   // Enhanced static generation
   trailingSlash: false,
   
-  // Optimize for production builds
-  swcMinify: true,
+  // Optimize for production builds (removed deprecated swcMinify)
   
   // Enhanced caching and security headers
   async headers() {
