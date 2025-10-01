@@ -17,6 +17,7 @@ const CRITICAL_RESOURCES = [
   '/blog',
   '/docs',
   '/features',
+  '/donate',
   '/settings',
   '/contact',
   '/manifest.json',
@@ -39,7 +40,8 @@ const STATIC_ASSETS = [
 const CACHEABLE_APIS = [
   '/api/healthz',
   '/api/chains',
-  '/api/networks/roadmap'
+  '/api/networks/roadmap',
+  '/api/analytics/performance'
 ]
 
 // Install event - cache critical resources

@@ -13,6 +13,7 @@ export async function GET() {
     { url: '/docs/contributing', priority: '0.7', changefreq: 'monthly' },
     { url: '/tokens', priority: '0.8', changefreq: 'weekly' },
     { url: '/blog', priority: '0.8', changefreq: 'weekly' },
+    { url: '/donate', priority: '0.7', changefreq: 'monthly' },
     { url: '/blog/hardware-wallets-and-multisigs-elevating-your-security', priority: '0.7', changefreq: 'monthly' },
     { url: '/blog/understanding-smart-contract-risk-beyond-allowances', priority: '0.7', changefreq: 'monthly' },
     { url: '/blog/building-your-personal-web3-security-routine', priority: '0.7', changefreq: 'monthly' },

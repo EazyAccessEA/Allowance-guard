@@ -46,7 +46,8 @@ export const metadata: Metadata = {
   keywords: [
     'DeFi', 'dapp', 'web3', 'blockchain', 'ethereum', 'token approvals', 
     'wallet security', 'crypto security', 'allowance management', 'revoke tokens',
-    'Ethereum', 'Arbitrum', 'Base', 'Polygon', 'Optimism', 'Avalanche'
+    'Ethereum', 'Arbitrum', 'Base', 'Polygon', 'Optimism', 'Avalanche',
+    'donate', 'donation', 'support', 'open source', 'ENS', 'allowanceguard.eth'
   ],
   icons: {
     icon: [

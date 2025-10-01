@@ -41,7 +41,9 @@ export async function POST(req: NextRequest) {
       navigation: metrics.navigation,
       resources: metrics.resources,
       userAgent: metrics.userAgent,
-      pageUrl: metrics.pageUrl
+      pageUrl: metrics.pageUrl,
+      // Track donation page performance specifically
+      isDonationPage: metrics.pageUrl?.includes('/donate')
     })
     
     // Log performance issues
