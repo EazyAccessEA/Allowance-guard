@@ -1,121 +1,74 @@
-'use client'
-import { useCallback, useMemo, useState } from 'react'
-import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
-import { H1 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
-import TokenSearchControls from '@/components/tokens/TokenSearchControls'
-import TokenResults from '@/components/tokens/TokenResults'
-import TokenDiscoveryEducation from '@/components/tokens/TokenDiscoveryEducation'
-import SearchGuidance from '@/components/tokens/SearchGuidance'
-import TokenDiscoveryCTA from '@/components/tokens/TokenDiscoveryCTA'
-import { Search, Filter, Sparkles } from 'lucide-react'
+// Legacy Token Discovery Page - Redirects to Enhanced Version
+// Handles old URL structure and redirects to SEO-optimized URLs
 
-type SearchState = {
-  q?: string
-  chainId?: number
-  category?: string
-  verified?: boolean
-  fuzzy?: boolean
-  minScore?: number
-  sort?: 'relevance' | 'name' | 'symbol' | 'recent'
-  offset?: number
+'use client'
+
+import { useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
+import { convertLegacyParams, generateOptimizedURL } from '@/lib/url-optimization'
+
+// URL mapping for SEO-friendly slugs
+const URL_MAPPING = {
+  chains: {
+    1: 'ethereum',
+    137: 'polygon', 
+    42161: 'arbitrum',
+    10: 'optimism',
+    8453: 'base',
+    56: 'bsc',
+    43114: 'avalanche'
+  },
+  categories: {
+    1: 'defi',
+    2: 'stablecoins', 
+    3: 'gaming',
+    4: 'nft',
+    5: 'governance',
+    6: 'infrastructure',
+    7: 'meme',
+    8: 'layer2',
+    9: 'privacy'
+  },
+  sorts: {
+    relevance: 'relevance',
+    name: 'name',
+    symbol: 'symbol', 
+    recent: 'recent'
+  }
 }
 
-export default function TokensPage() {
-  const [state, setState] = useState<SearchState>({ 
-    q: '', 
-    verified: true, 
-    fuzzy: true, 
-    minScore: 0, 
-    sort: 'relevance', 
-    offset: 0 
-  })
-  
-  const onChange = useCallback((s: Partial<SearchState>) => 
-    setState((prev: SearchState) => ({ ...prev, ...s, offset: 0 })), 
-  [])
-  
-  const apiState = useMemo(() => ({ 
-    ...state, 
-    setOffset: (n: number) => setState((p: SearchState) => ({ ...p, offset: n })) 
-  }), [state])
+export default function LegacyTokensPage() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
+  useEffect(() => {
+    // Convert legacy parameters to optimized format
+    const legacyParams = {
+      q: searchParams.get('q'),
+      chainId: searchParams.get('chainId') ? parseInt(searchParams.get('chainId')!) : undefined,
+      category: searchParams.get('category'),
+      verified: searchParams.get('verified') === 'true',
+      sort: searchParams.get('sort') || 'relevance',
+      offset: searchParams.get('offset') ? parseInt(searchParams.get('offset')!) : 0,
+      fuzzy: searchParams.get('fuzzy') !== 'false',
+      minScore: searchParams.get('minScore') ? parseInt(searchParams.get('minScore')!) : 0,
+      limit: searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 20
+    }
+
+    const optimizedParams = convertLegacyParams(legacyParams)
+    const newURL = generateOptimizedURL(optimizedParams, URL_MAPPING)
+    
+    // Redirect to the new URL structure
+    router.replace(newURL)
+  }, [searchParams, router])
+
+  // Show loading state while redirecting
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section - Mobile Responsive */}
-      <Section className="relative py-8 sm:py-12 md:py-24 lg:py-32 min-h-[60svh] sm:min-h-[70svh]">
-        {/* Video Background - Desktop only */}
-        <div className="hidden md:block absolute inset-0 z-0">
-          <VideoBackground
-            videoSrc="/V3AG.mp4"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            priority
-            lazy={false}
-            decorative
-          />
-        </div>
-
-        {/* Mobile gradient background */}
-        <div className="md:hidden absolute inset-0 z-10 bg-gradient-to-br from-primary-50 to-primary-100" />
-
-        {/* Semi-transparent overlay */}
-        <div
-          className="absolute inset-0 z-20"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        
-        <Container className="relative max-w-4xl z-30">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-6">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Search className="w-5 h-5 sm:w-6 sm:h-6 text-primary-accent" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <H1 className="mb-2 text-2xl sm:text-3xl lg:text-4xl">Token Discovery</H1>
-              <p className="text-stone text-base sm:text-lg">
-                Explore and discover tokens across multiple blockchains
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-sm text-stone">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-primary-accent" />
-              <span>Smart search</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-primary-accent" />
-              <span>Advanced filtering</span>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Educational Section */}
-      <Section className="py-12 sm:py-16 md:py-24 bg-white/50 backdrop-blur-sm">
-        <Container>
-          <TokenDiscoveryEducation />
-        </Container>
-      </Section>
-
-      {/* Search Section */}
-      <Section className="py-12 sm:py-16 md:py-24">
-        <Container>
-          <div className="max-w-7xl mx-auto">
-            <SearchGuidance />
-            
-            {/* Search Interface */}
-            <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl shadow-xl shadow-slate-900/5 p-4 sm:p-6 md:p-8 mb-8 sm:mb-12">
-              <TokenSearchControls initial={state} onChange={onChange} />
-            </div>
-            
-            <TokenResults state={apiState} />
-            <TokenDiscoveryCTA />
-          </div>
-        </Container>
-      </Section>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-slate-600">Redirecting to enhanced token discovery...</p>
+      </div>
     </div>
   )
 }

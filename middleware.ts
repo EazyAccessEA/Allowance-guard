@@ -248,6 +248,15 @@ export async function middleware(req: NextRequest) {
       return rateLimitResponse
     }
     
+    // 4. URL Optimization for Token Discovery
+    const { pathname, searchParams } = req.nextUrl
+    if (pathname.startsWith('/tokens') && searchParams.toString()) {
+      const optimizedURL = optimizeTokenDiscoveryURL(pathname, searchParams)
+      if (optimizedURL !== pathname + '?' + searchParams.toString()) {
+        return NextResponse.redirect(new URL(optimizedURL, req.url))
+      }
+    }
+    
     // 4. Create base response
     let response = NextResponse.next()
     response.headers.set('x-request-id', requestId)
@@ -279,6 +288,99 @@ export async function middleware(req: NextRequest) {
       requestId
     )
   }
+}
+
+// URL optimization for token discovery
+function optimizeTokenDiscoveryURL(pathname: string, searchParams: URLSearchParams): string {
+  // Skip optimization for API routes
+  if (pathname.startsWith('/api/')) {
+    return pathname + '?' + searchParams.toString()
+  }
+  
+  // Handle legacy token discovery URLs
+  if (pathname === '/tokens') {
+    const params = {
+      q: searchParams.get('q'),
+      chainId: searchParams.get('chainId'),
+      category: searchParams.get('category'),
+      verified: searchParams.get('verified'),
+      sort: searchParams.get('sort'),
+      offset: searchParams.get('offset'),
+      fuzzy: searchParams.get('fuzzy'),
+      minScore: searchParams.get('minScore'),
+      limit: searchParams.get('limit')
+    }
+    
+    // Convert to optimized URL structure
+    const segments: string[] = ['/tokens']
+    
+    if (params.q) {
+      const encodedQuery = encodeURIComponent(params.q.toLowerCase().replace(/\s+/g, '-'))
+      segments.push('search', encodedQuery)
+    }
+    
+    if (params.chainId) {
+      const chainMapping: Record<string, string> = {
+        '1': 'ethereum',
+        '137': 'polygon',
+        '42161': 'arbitrum',
+        '10': 'optimism',
+        '8453': 'base',
+        '56': 'bsc',
+        '43114': 'avalanche'
+      }
+      const chainSlug = chainMapping[params.chainId]
+      if (chainSlug) {
+        segments.push('on', chainSlug)
+      }
+    }
+    
+    if (params.category) {
+      const categoryMapping: Record<string, string> = {
+        '1': 'defi',
+        '2': 'stablecoins',
+        '3': 'gaming',
+        '4': 'nft',
+        '5': 'governance',
+        '6': 'infrastructure',
+        '7': 'meme',
+        '8': 'layer2',
+        '9': 'privacy'
+      }
+      const categorySlug = categoryMapping[params.category]
+      if (categorySlug) {
+        segments.push('in', categorySlug)
+      }
+    }
+    
+    // Build query parameters for non-default values
+    const queryParams: string[] = []
+    
+    if (params.verified === 'true') {
+      queryParams.push('verified=true')
+    }
+    
+    if (params.sort && params.sort !== 'relevance') {
+      queryParams.push(`sort=${params.sort}`)
+    }
+    
+    if (params.offset && parseInt(params.offset) > 0) {
+      const page = Math.floor(parseInt(params.offset) / 20) + 1
+      if (page > 1) {
+        queryParams.push(`page=${page}`)
+      }
+    }
+    
+    // Build final URL
+    let url = segments.join('/')
+    if (queryParams.length > 0) {
+      url += '?' + queryParams.join('&')
+    }
+    
+    return url
+  }
+  
+  return pathname + '?' + searchParams.toString()
 }
 
 export const config = {
