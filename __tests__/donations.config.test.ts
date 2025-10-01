@@ -83,7 +83,7 @@ describe('Donation Configuration Logic', () => {
     it('should handle configured environment variables', () => {
       // Mock environment variables
       const originalEnv = process.env
-      process.env.NEXT_PUBLIC_DONATION_ADDRESS = '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'
+      process.env.NEXT_PUBLIC_DONATION_ADDRESS = '0xD434Bfa9cbD22281709d58872dAeb0Badcf17614'
       process.env.NEXT_PUBLIC_DONATION_ENS = 'custom.eth'
       process.env.NEXT_PUBLIC_ENABLE_TIP_FLOW = 'true'
 
@@ -91,7 +91,7 @@ describe('Donation Configuration Logic', () => {
       const donationEns = process.env.NEXT_PUBLIC_DONATION_ENS || 'allowanceguard.eth'
       const enableTipFlow = process.env.NEXT_PUBLIC_ENABLE_TIP_FLOW === 'true'
 
-      expect(donationAddress).toBe('0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6')
+      expect(donationAddress).toBe('0xD434Bfa9cbD22281709d58872dAeb0Badcf17614')
       expect(donationEns).toBe('custom.eth')
       expect(enableTipFlow).toBe(true)
 
