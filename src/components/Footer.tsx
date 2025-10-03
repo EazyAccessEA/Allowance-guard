@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import { Badge } from '@/components/ui/Badge'
 import DonationButton from '@/components/DonationButton'
-import { Heart, Shield, Code, Users, BookOpen, Github, MessageCircle, Mail, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react'
+import { Heart, Shield, Code, Users, BookOpen, Github, Mail, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react'
 
 interface FooterSectionProps {
   title: string
@@ -106,15 +106,6 @@ export default function Footer() {
                 <Github className="w-5 h-5 text-gray-400 group-hover:text-white" />
               </a>
               <a 
-                href="https://discord.gg/DsJ4Pa94" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 hover:bg-primary-accent rounded-lg flex items-center justify-center transition-all duration-200 group"
-                aria-label="Discord"
-              >
-                <MessageCircle className="w-5 h-5 text-gray-400 group-hover:text-white" />
-              </a>
-              <a 
                 href="https://twitter.com/allowanceguard" 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -181,17 +172,6 @@ export default function Footer() {
                 >
                   <Github className="w-4 h-4" />
                   GitHub
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://discord.gg/DsJ4Pa94" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-primary-accent transition-colors duration-200 flex items-center gap-2"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Discord
                 </a>
               </li>
               <li>

@@ -594,7 +594,6 @@ vercel logs [deployment-url]
 
 ### Community
 - [GitHub Discussions](https://github.com/EazyAccessEA/Allowance-guard/discussions)
-- [Discord Community](https://discord.gg/allowance-guard)
 - [Twitter](https://twitter.com/allowanceguard)
 
 ---

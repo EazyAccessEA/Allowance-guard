@@ -8,7 +8,6 @@ import {
   Mail, 
   Shield, 
   Users, 
-  MessageCircle, 
   Github, 
   Clock, 
   Lock,
@@ -283,29 +282,7 @@ export default function ContactPage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Discord */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MessageCircle className="w-8 h-8 text-primary-700" />
-                </div>
-                <h3 className="mobbin-heading-4 text-text-primary mb-4">Discord</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
-                  Get real-time help from our community and developers. It&apos;s the best place for quick questions and discussions.
-                </p>
-                <a 
-                  href="https://discord.gg/DsJ4Pa94"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Join our Discord Server
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </a>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {/* X (formerly Twitter) */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 text-center">

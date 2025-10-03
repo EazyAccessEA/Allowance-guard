@@ -230,7 +230,7 @@ pnpm exec playwright show-report
 
 ### Getting Help
 - GitHub Issues for bug reports
-- Discord community for discussions
+- GitHub discussions for community support
 - Email: legal.support@allowanceguard.com for urgent issues
 
 ## Policy Updates

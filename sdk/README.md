@@ -333,7 +333,6 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 
 - **Documentation**: [AllowanceGuard Docs](https://www.allowanceguard.com/docs)
 - **Issues**: [GitHub Issues](https://github.com/EazyAccessEA/Allowance-guard/issues)
-- **Discord**: [AllowanceGuard Community](https://discord.gg/allowanceguard)
 
 ## Changelog
 

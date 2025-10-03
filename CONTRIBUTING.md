@@ -418,7 +418,7 @@ Brief description of changes.
 - **Community advocacy** - Share your positive experiences on social media
 - **Feedback and testing** - Participate in beta testing and provide detailed feedback
 - **Issue triage** - Help identify and categorize issues
-- **User support** - Help other users in Discord and GitHub discussions
+- **User support** - Help other users in GitHub discussions
 
 #### Financial Contributions
 - **One-time donations** via [Stripe or Coinbase Commerce](https://www.allowanceguard.com/docs/contributing)

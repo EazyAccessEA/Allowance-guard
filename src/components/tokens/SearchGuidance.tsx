@@ -36,7 +36,7 @@ export default function SearchGuidance() {
               <h3 className="text-base sm:text-lg font-semibold text-amber-800">2. Look for the Green Flags: Prioritize Verified Tokens</h3>
             </div>
             <p className="text-xs sm:text-sm text-amber-700">
-              A verified token contract, which has its source code publicly available on a block explorer, is a critical sign of transparency. Furthermore, always cross-reference with the project&apos;s official website and active social media channels (like Twitter and Discord).
+              A verified token contract, which has its source code publicly available on a block explorer, is a critical sign of transparency. Furthermore, always cross-reference with the project&apos;s official website and active social media channels (like Twitter).
             </p>
           </div>
 

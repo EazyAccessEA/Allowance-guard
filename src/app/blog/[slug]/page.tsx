@@ -668,7 +668,7 @@ const blogPosts: BlogPost[] = [
       <p><strong>Objective:</strong> To test your real-world reflexes against a convincing phishing attempt.</p>
 
       <ol>
-        <li><strong>Setup:</strong> Enlist one trusted, tech-savvy friend. Explain the drill and establish your safe word. Ask them to craft a realistic phishing attempt targeted at you. This could be a direct message on Discord or Telegram, or an email. The message should use urgency or promise of reward, such as:
+        <li><strong>Setup:</strong> Enlist one trusted, tech-savvy friend. Explain the drill and establish your safe word. Ask them to craft a realistic phishing attempt targeted at you. This could be a direct message on Telegram, or an email. The message should use urgency or promise of reward, such as:
           <ul>
             <li>"Security Alert: A suspicious transaction was detected from your wallet. Click here to revoke permissions now."</li>
             <li>"Congratulations! You are eligible for the exclusive airdrop from [New Hot Project]. Connect your wallet to claim before it&apos;s too late."</li>
@@ -841,7 +841,7 @@ const blogPosts: BlogPost[] = [
       <p>Sharing knowledge should never mean sharing your personal information. Your wallet address, balances, and transaction history are private. To learn the fundamentals of digital privacy beyond Web3, the Electronic Frontier Foundation&apos;s Surveillance Self-Defense guide is an excellent starting point.</p>
 
       <ul>
-        <li><strong>Use a Dedicated Persona:</strong> Consider using a pseudonymous account (on X, Discord, etc.) specifically for sharing security content. This separates your public advocacy from your private on-chain activity.</li>
+        <li><strong>Use a Dedicated Persona:</strong> Consider using a pseudonymous account (on X, etc.) specifically for sharing security content. This separates your public advocacy from your private on-chain activity.</li>
         <li><strong>Demonstrate with Clean Wallets:</strong> When creating tutorials or screenshots, use a fresh, empty wallet. Fund it with a tiny amount of ETH for gas from a privacy-preserving service if needed.</li>
         <li><strong>Blur Everything:</strong> Before posting any screenshot, meticulously blur or black out any potentially identifying information: ENS names, full wallet addresses, balances, and specific transaction hashes. The lesson is in the process (how to revoke), not in your personal holdings.</li>
       </ul>
@@ -861,7 +861,7 @@ const blogPosts: BlogPost[] = [
       <p>The best way to raise the security bar of your community is to make it a shared, accessible activity rather than a solitary, intimidating chore.</p>
 
       <ul>
-        <li><strong>Host a "Revocation Party":</strong> In your DAO or favorite Discord, schedule a recurring monthly event. A trusted member can share their screen (using a clean wallet) and walk everyone through the process of checking their allowances on a tool like AllowanceGuard, Revoke.cash, or the native Etherscan Token Approval Checker. It turns a boring task into a social get-together and ensures everyone&apos;s security hygiene stays high.</li>
+        <li><strong>Host a "Revocation Party":</strong> In your DAO or favorite community, schedule a recurring monthly event. A trusted member can share their screen (using a clean wallet) and walk everyone through the process of checking their allowances on a tool like AllowanceGuard, Revoke.cash, or the native Etherscan Token Approval Checker. It turns a boring task into a social get-together and ensures everyone&apos;s security hygiene stays high.</li>
         <li><strong>Create a Pinned "Safety Message":</strong> Work with the admins of your group to create a comprehensive, pinned message in the main channel. It should include:
           <ul>
             <li>Links to official project websites, Twitter accounts, and contracts.</li>
@@ -924,7 +924,7 @@ const blogPosts: BlogPost[] = [
 
       <ol>
         <li><strong>Start in Your Own Circle:</strong> The next time a friend asks about a new project, don&apos;t just talk about the potential gains. Spend 30 seconds showing them how to check its contract on Etherscan.</li>
-        <li><strong>Create One Piece of Content:</strong> Write a short, simple guide on the single security habit that has helped you the most. It could be about wallet segmentation, using a hardware wallet, or your process for evaluating new contracts. Share it in your favorite Discord.</li>
+        <li><strong>Create One Piece of Content:</strong> Write a short, simple guide on the single security habit that has helped you the most. It could be about wallet segmentation, using a hardware wallet, or your process for evaluating new contracts. Share it in your favorite community.</li>
         <li><strong>Propose a "Revocation Party":</strong> Reach out to a moderator in a DAO or community you&apos;re a part of and suggest organizing a group allowance-checking session.</li>
         <li><strong>Curate a Resource List:</strong> Compile a simple list of your top 5 trusted security resources (tools, researchers to follow, educational sites) and share it.</li>
       </ol>

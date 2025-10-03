@@ -1,6 +1,6 @@
 'use client'
 
-import { BookOpen, Rocket, Zap, Wrench, Shield, HelpCircle, MessageCircle } from 'lucide-react'
+import { BookOpen, Rocket, Zap, Wrench, Shield, HelpCircle } from 'lucide-react'
 
 interface NavigationProps {
   activeSection: string
@@ -52,15 +52,6 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
           >
             <span className="mr-2">📦</span>
             GitHub Repository
-          </a>
-          <a 
-            href="https://discord.gg/allowanceguard" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="block px-3 py-2 text-sm text-ag-muted hover:text-ag-text hover:bg-ag-panel-hover transition-colors"
-          >
-            <MessageCircle className="inline w-4 h-4 mr-2" />
-            Discord Community
           </a>
           <a 
             href="https://x.com/allowanceguard" 
