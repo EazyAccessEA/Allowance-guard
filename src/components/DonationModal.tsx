@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect, useMemo, useCallback } from 'react'
-import { X, Heart, ExternalLink, Copy, Check } from 'lucide-react'
+import { X, Heart, ExternalLink, Copy, Check, Wallet, AlertCircle } from 'lucide-react'
 import { useAccount } from 'wagmi'
+import ClientConnectButton from '@/components/ClientConnectButton'
 
 interface DonationModalProps {
   isOpen: boolean
@@ -100,6 +101,42 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           </button>
         </div>
 
+        {/* Wallet Connection Status */}
+        {!isConnected ? (
+          <div className="mb-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-xl">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <h3 className="text-sm font-medium text-yellow-200 mb-2">
+                  Wallet Required
+                </h3>
+                <p className="text-xs text-yellow-300/80 mb-3">
+                  You need to connect your wallet to send crypto donations directly.
+                </p>
+                <ClientConnectButton 
+                  variant="primary" 
+                  size="sm"
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="mb-6 p-4 bg-green-900/20 border border-green-500/30 rounded-xl">
+            <div className="flex items-center gap-3">
+              <Wallet className="w-5 h-5 text-green-400" />
+              <div>
+                <h3 className="text-sm font-medium text-green-200">
+                  Wallet Connected
+                </h3>
+                <p className="text-xs text-green-300/80">
+                  You can now send crypto donations directly from your wallet.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Donation Input */}
         <div className="mb-6">
           <label className="block text-sm font-medium text-slate-300 mb-3">
@@ -123,13 +160,18 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
             <span className="text-sm text-slate-400">
               ≈ {ethAmount} ETH
             </span>
-            {isConnected && (
+            {isConnected ? (
               <button
                 onClick={handleSendDonation}
                 className="px-4 py-2 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors focus:ring-4 focus:ring-primary-600/20"
               >
                 Send
               </button>
+            ) : (
+              <div className="flex items-center gap-2 text-xs text-slate-500">
+                <Wallet className="w-4 h-4" />
+                <span>Connect wallet to send</span>
+              </div>
             )}
           </div>
         </div>
