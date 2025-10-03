@@ -1,5 +1,5 @@
 // Donation analytics events
-import { auditUserAction } from '@/lib/audit-enhanced'
+// Note: auditUserAction is server-side only, so we'll handle analytics differently for client components
 
 export interface DonationAnalyticsEvent {
   event: string
@@ -36,16 +36,8 @@ export async function trackDonationEvent(
       timestamp: new Date().toISOString()
     }
 
-    // Use existing audit system
-    await auditUserAction(
-      auditAction,
-      event.walletAddress || null,
-      'donation',
-      auditMeta,
-      request as any, // Type assertion for NextRequest compatibility
-      'low',
-      'data_access'
-    )
+    // For now, just log the event - server-side tracking will be handled in API routes
+    console.log('Donation Analytics Event:', auditAction, auditMeta)
 
     // Also log to console for development
     if (process.env.NODE_ENV === 'development') {
