@@ -134,6 +134,9 @@ export default function RootLayout({
         <meta name="token-approvals" content="true" />
         <meta name="crypto-security" content="true" />
         
+        {/* Google Site Verification */}
+        <meta name="google-site-verification" content="p5fb1uXV2sHQmWPgJRCfiI5QjM0LNOsbjymQG-5YiBE" />
+        
         {/* Structured Data for DApp Recognition */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: JSON.stringify({
