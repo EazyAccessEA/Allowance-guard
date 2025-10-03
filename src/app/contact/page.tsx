@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
+import { H1 } from '@/components/ui/Heading'
 import { 
   Search, 
   Mail, 
@@ -89,10 +90,12 @@ export default function ContactPage() {
         />
         
         <Container className="relative text-left max-w-4xl z-10">
-          <h1 className="mobbin-display-1 text-text-primary mb-6 mobbin-fade-in">How Can We Help?</h1>
-          <p className="mobbin-body-large text-text-secondary leading-relaxed mb-8 mobbin-fade-in mobbin-stagger-1">
-            Find the fastest path to a solution below.
-          </p>
+          <div>
+            <H1 className="mb-6">How Can We Help?</H1>
+            <p className="text-base text-stone max-w-reading mb-8">
+              Find the fastest path to a solution below.
+            </p>
+          </div>
         </Container>
       </Section>
 
