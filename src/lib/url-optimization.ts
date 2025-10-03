@@ -39,6 +39,9 @@ export function generateOptimizedURL(params: OptimizedSearchParams, mapping: URL
     // URL-encode the query and add as path segment
     const encodedQuery = encodeURIComponent(params.query.toLowerCase().replace(/\s+/g, '-'))
     segments.push('search', encodedQuery)
+  } else {
+    // If no query, always go to search page
+    segments.push('search')
   }
   
   if (params.chain && mapping.chains[parseInt(params.chain)]) {

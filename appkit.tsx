@@ -51,8 +51,7 @@ try {
       email: false, // Disable email login
       socials: [], // Disable all social logins to prevent CSP issues
     },
-    enableNetworkSwitching: false, // Disable network switching to prevent errors
-    enableAccountView: false, // Disable account view to prevent errors
+    enableNetworkSwitch: false, // Disable network switching to prevent errors
   });
   console.log('AppKit initialized successfully with full config');
 } catch (error) {

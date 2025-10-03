@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { X, Heart, ExternalLink, Copy, Check } from 'lucide-react'
 import { useAccount } from 'wagmi'
 
@@ -15,8 +15,11 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   const [copied, setCopied] = useState(false)
   const { isConnected } = useAccount()
 
-  // Allowance Guard donation address
-  const donationAddress = '0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6'
+  // Allowance Guard donation address - use config (memoized to prevent re-renders)
+  const donationAddress = useMemo(() => 
+    process.env.NEXT_PUBLIC_DONATION_ADDRESS || '0xD434Bfa9cbD22281709d58872dAeb0Badcf17614',
+    []
+  )
 
   // Calculate ETH amount based on USD input (simplified - you'd want real price feed)
   useEffect(() => {
@@ -25,7 +28,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     setEthAmount(ethEquivalent)
   }, [amount])
 
-  const handleCopyAddress = async () => {
+  const handleCopyAddress = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(donationAddress)
       setCopied(true)
@@ -33,7 +36,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     } catch (err) {
       console.error('Failed to copy address:', err)
     }
-  }
+  }, [donationAddress])
 
   const handleSendDonation = async () => {
     if (!isConnected) {
@@ -73,12 +76,12 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-200"
         onClick={onClose}
       />
       
       {/* Modal */}
-      <div className="relative bg-slate-900 rounded-2xl p-6 mx-4 max-w-md w-full border border-slate-700 shadow-2xl">
+      <div className="relative bg-slate-900 rounded-2xl p-6 mx-4 max-w-md w-full border border-slate-700 shadow-2xl transform transition-all duration-200 ease-out">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
