@@ -42,14 +42,15 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://allowanceguard.com"),
-  title: "Allowance Guard — Review & Revoke Wallet Permissions",
-  description: "Free, open-source dashboard to review, revoke, and monitor wallet approvals across chains.",
+  title: "Allowance Guard — Secure Your Wallet Permissions",
+  description: "Free, open-source dashboard to review, revoke, and monitor token approvals across all major blockchains. Protect your crypto assets today.",
   robots: { index: true, follow: true },
   keywords: [
-    'DeFi', 'dapp', 'web3', 'blockchain', 'ethereum', 'token approvals', 
-    'wallet security', 'crypto security', 'allowance management', 'revoke tokens',
+    'DeFi security', 'wallet protection', 'token approvals', 'crypto security', 
+    'blockchain security', 'ethereum security', 'wallet permissions', 'revoke tokens',
     'Ethereum', 'Arbitrum', 'Base', 'Polygon', 'Optimism', 'Avalanche',
-    'donate', 'donation', 'support', 'open source', 'ENS', 'allowanceguard.eth'
+    'free crypto tools', 'open source security', 'web3 security', 'dapp security',
+    'allowance management', 'token revoke', 'wallet monitoring', 'crypto safety'
   ],
   icons: {
     icon: [
@@ -70,18 +71,31 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://allowanceguard.com',
     siteName: 'Allowance Guard',
-    title: 'Allowance Guard — Review & Revoke Wallet Permissions',
-    description: 'Free, open-source dashboard to review, revoke, and monitor wallet approvals across chains.',
-    images: ['/og-card.png']
+    title: 'Allowance Guard — Secure Your Wallet Permissions',
+    description: 'Free, open-source dashboard to review, revoke, and monitor token approvals across all major blockchains. Protect your crypto assets today.',
+    images: [
+      {
+        url: '/og-card.png',
+        width: 1200,
+        height: 630,
+        alt: 'Allowance Guard - Secure Your Wallet Permissions'
+      }
+    ],
+    locale: 'en_US'
   },
   alternates: { canonical: '/' },
   twitter: {
     card: 'summary_large_image',
     site: '@AllowanceGuard',
     creator: '@AllowanceGuard',
-    title: 'Allowance Guard — Review & Revoke Wallet Permissions',
-    description: 'Free, open-source dashboard to review, revoke, and monitor wallet approvals across chains.',
-    images: ['/og-card.png']
+    title: 'Allowance Guard — Secure Your Wallet Permissions',
+    description: 'Free, open-source dashboard to review, revoke, and monitor token approvals across all major blockchains. Protect your crypto assets today.',
+    images: [
+      {
+        url: '/og-card.png',
+        alt: 'Allowance Guard - Secure Your Wallet Permissions'
+      }
+    ]
   }
 }
 
