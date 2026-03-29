@@ -1,39 +1,72 @@
 # Allowance Guard
 
-**Version 1.14.0** - Open Source Token Approval Security Platform
+**Web3 Wallet Security Platform** — Monitor, assess, and revoke token approvals across multiple blockchain networks.
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Next.js](https://img.shields.io/badge/Next.js-15.5.2-black)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 
-## 🛡️ Overview
+**Website**: [allowanceguard.com](https://www.allowanceguard.com) | **Docs**: [allowanceguard.com/docs](https://www.allowanceguard.com/docs) | **API**: [allowanceguard.com/docs/api-reference](https://www.allowanceguard.com/docs/api-reference)
 
-Allowance Guard is an open source security platform for monitoring and managing token approvals across multiple blockchain networks. Built for the DeFi community with a focus on security and transparency.
+---
 
-### Key Features
+## What is Allowance Guard?
 
-- **🔍 Real-time Monitoring**: Track token approvals across multiple chains
-- **⚠️ Risk Assessment**: Identify unlimited and stale approvals
-- **📧 Email Alerts**: Get notified about risky approvals
-- **🔗 Wallet Management**: Save and monitor multiple wallet addresses
-- **⚡ One-Click Revoke**: Instantly revoke risky approvals
-- **📊 Analytics**: Comprehensive reporting and risk scoring
-- **🔍 Error Monitoring**: Real-time error tracking with Rollbar
-- **🛡️ Wallet Security**: Comprehensive security dashboard for connected wallets
-- **🎨 PuredgeOS Design**: Modern, minimalist design system with Mobbin-style animations
-- **📱 Mobile-First**: Responsive design optimized for all devices
-- **🔓 Open Source**: Full source code available
+Every time you interact with a DeFi protocol, you grant it permission to move your tokens. These **token approvals** persist indefinitely — even after you stop using the protocol. If that contract is compromised, your tokens are at risk.
 
-## 🚀 Quick Start
+Allowance Guard scans your wallet, scores the risk of every active approval, and lets you revoke dangerous ones — individually or in batch.
+
+### Core Features
+
+- **Multi-Chain Scanning** — Ethereum, Arbitrum, Base, Polygon, Optimism, Avalanche
+- **Intelligent Risk Assessment** — Risk scoring across 2M+ analysed allowances
+- **Batch Revocation** — Revoke multiple approvals in one transaction with gas savings
+- **Time Machine Simulation** — Preview the impact of revoking approvals before committing on-chain
+- **Continuous Monitoring** — Email and Slack alerts when new risky approvals appear
+- **Team Dashboards** — Multi-wallet monitoring for DAOs and treasury managers
+- **Compliance Audit Logs** — Timestamped, exportable records for institutional users
+- **Non-Custodial** — Read-only access. You sign every transaction. No private keys stored.
+
+## Plans
+
+| Feature | Free | Pro | Sentinel |
+|---------|------|-----|----------|
+| Wallets | 3 | Unlimited | 50 monitored |
+| Chains | All 6 | All 6 | All 6 |
+| Risk scanning | Basic | Full | Full + automated rules |
+| Batch revoke | - | Included | Included |
+| Monitoring alerts | - | Email + Slack | Email + Slack + Webhooks |
+| Historical timeline | - | Included | Included |
+| Export (CSV/PDF) | - | Included | Compliance-grade |
+| Team dashboard | - | - | Included |
+| Automated revocation rules | - | - | Included |
+| Priority support | - | - | Included |
+| **Price** | **Free** | **$9.99/mo** | **$49.99/mo** |
+
+The core scanner is **free and open source**. Always.
+
+### API Access
+
+Build wallet security into your product with the AllowanceGuard API.
+
+| Tier | Calls/day | Price |
+|------|-----------|-------|
+| Free | 100 | $0 |
+| Developer | 10,000 | $39/mo |
+| Growth | 100,000 | $149/mo |
+| Enterprise | Custom | Contact us |
+
+See [API Documentation](https://www.allowanceguard.com/docs/api-reference) for endpoints, authentication, and code examples.
+
+## Quick Start
 
 ### Prerequisites
 
 - Node.js 18+
-- Database (PostgreSQL recommended)
-- SMTP service for email notifications
-- RPC endpoints for blockchain access
-- WalletConnect project
-- Rollbar account (free) for error monitoring
+- PostgreSQL (Neon recommended for serverless)
+- Redis (Upstash recommended)
+- Stripe account (for billing)
+- WalletConnect project ID
 
 ### Installation
 
@@ -45,145 +78,186 @@ cd Allowance-guard
 # Install dependencies
 pnpm install
 
-# Set up environment variables
+# Configure environment
 cp production.env.example .env.local
+# Edit .env.local with your credentials
 
 # Run database migrations
 pnpm run migrate
 
 # Start development server
-pnpm run dev
+pnpm dev
 ```
 
 ### Environment Variables
 
 Copy `production.env.example` to `.env.local` and configure:
 
-- Database connection string
-- SMTP credentials for email notifications
-- RPC endpoints for blockchain access
-- WalletConnect project ID
-- Other service credentials
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DATABASE_URL` | Yes | Neon PostgreSQL connection string |
+| `REDIS_URL` | Yes | Redis connection (Upstash recommended) |
+| `STRIPE_SECRET_KEY` | Yes | Stripe API key |
+| `STRIPE_WEBHOOK_SECRET` | Yes | Stripe webhook signing secret |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | Yes | WalletConnect project ID |
+| `NEXT_PUBLIC_APP_URL` | Yes | Your app URL |
+| `POSTMARK_SERVER_TOKEN` | No | Email delivery (or use SMTP_* vars) |
+| `COINBASE_COMMERCE_API_KEY` | No | Coinbase Commerce payments |
+| `SLACK_WEBHOOK_URL` | No | Slack notifications |
+| `ROLLBAR_ACCESS_TOKEN` | No | Error monitoring |
 
-## 🏗️ Architecture
+## Architecture
 
-- **Frontend**: Next.js 15 with TypeScript
-- **Database**: PostgreSQL with connection pooling
-- **Authentication**: WalletConnect integration
-- **Email**: SMTP service integration
-- **Deployment**: Vercel-ready configuration
+```
+Next.js 15 (App Router)
+├── React 19 + TypeScript
+├── Tailwind CSS (Serum Teal design system)
+├── Drizzle ORM → Neon PostgreSQL
+├── Redis (Upstash) — caching & rate limiting
+├── Stripe — subscriptions & billing
+├── Wagmi + Viem — blockchain interaction
+├── Reown AppKit — wallet connection
+└── Vercel — deployment
+```
 
-## 🔒 Security
+### Key Directories
 
-This project implements wallet-focused security features:
+```
+src/
+├── app/api/          # API routes (35+ endpoints)
+│   ├── v1/           # Public B2B API
+│   ├── billing/      # Subscription management
+│   ├── scan/         # Wallet scanning
+│   └── ...
+├── components/       # React components (50+)
+│   ├── ui/           # Design system primitives
+│   └── ...
+├── db/schema/        # Database table definitions
+├── lib/              # Shared utilities
+│   ├── plans.ts      # Plan definitions & limits
+│   ├── feature-gate.ts # Tier-based access control
+│   ├── billing.ts    # Stripe billing helpers
+│   └── api-keys.ts   # API key management
+└── design/           # Design tokens & documentation
+```
 
-### Wallet Security Features
-- **🛡️ Wallet Security Dashboard**: Comprehensive security overview for connected wallets
-- **📊 Risk Assessment**: Real-time risk scoring based on token allowances
-- **⚠️ High-Risk Detection**: Identify and flag dangerous token approvals
-- **🔍 Security Monitoring**: Continuous monitoring of wallet security status
-- **📈 Security Analytics**: Detailed security metrics and trends
+## Supported Networks
+
+| Chain | Status |
+|-------|--------|
+| Ethereum | Live |
+| Arbitrum | Live |
+| Base | Live |
+| Polygon | Live |
+| Optimism | Live |
+| Avalanche | Live |
+
+## Security
+
+Allowance Guard is **non-custodial by design**:
+
+- **No private keys** — We never ask for or store private keys
+- **Read-only scanning** — Wallet scans use public blockchain data
+- **User-signed transactions** — Every revocation requires your explicit signature
+- **Open source** — Full source code available for audit
 
 ### Technical Security
-- Input validation and sanitization
-- Rate limiting on API endpoints
-- CSRF protection
-- Security headers
-- Environment variable protection
+- Input validation with Zod schemas on all API endpoints
+- Rate limiting (IP-based + per-user/API-key)
+- CSRF protection and security headers (CSP, HSTS, X-Frame-Options)
+- Webhook idempotency guards (Stripe + Coinbase)
+- API keys stored as hashes (prefix-only identification)
 - No sensitive data in source code
-- Wallet-only authentication (no email/password required)
 
-**⚠️ CRITICAL SECURITY NOTICE**: 
-- This is open source software provided for educational purposes
-- **DO NOT use in production without comprehensive security audit**
-- Users are responsible for their own security assessments
-- The authors assume no liability for security breaches or fund loss
-- Always use testnet environments for development and testing
-- Keep all secrets and private keys secure and never commit them to version control
+**Security issues**: Contact security@allowanceguard.com
 
-**For security issues**: Contact legal.support@allowanceguard.com
+## Development
 
-## 📖 Documentation
+### Commands
 
-### For Users
-- [User Documentation](https://www.allowanceguard.com/docs)
-- [API Documentation](https://www.allowanceguard.com/docs/api)
-- [Integration Guide](https://www.allowanceguard.com/docs/integration)
-
-### For Contributors
-- [Financial Support](https://www.allowanceguard.com/docs/contributing) - Support development with donations
-- [Technical Contributing Guide](CONTRIBUTING.md) - Complete guide for code contributors
-- [Developer Guide](docs/developer-guide.md) - Technical deep dive for developers
-- [Testing Policy](TESTING_POLICY.md) - Comprehensive testing standards
-- [Operations Monitoring](docs/ops-monitoring.md) - Production monitoring setup
-
-### Deployment & Setup
-- [Rollbar Error Monitoring Setup](ROLLBAR_SETUP.md)
-- [Vercel Deployment Guide](VERCEL_ROLLBAR_SETUP.md)
-- [Production Deployment Checklist](PRODUCTION_DEPLOYMENT_CHECKLIST.md)
-
-## 🤝 Contributing
-
-We welcome all types of contributions! Choose how you'd like to help:
-
-### 💰 Financial Support
-**[Support Development](https://www.allowanceguard.com/docs/contributing)** - Your donations directly fund:
-- Core development team compensation
-- Security audits and infrastructure costs  
-- Future feature development
-- Essential Web3 security infrastructure
-
-### 💻 Technical Contributions
-- **[Technical Contributing Guide](CONTRIBUTING.md)** - Complete guide for code contributors
-- **[Developer Guide](docs/developer-guide.md)** - Technical deep dive for developers
-- **[Testing Policy](TESTING_POLICY.md)** - Comprehensive testing standards
-
-### Development Setup
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+```bash
+pnpm dev              # Dev server with Turbopack
+pnpm build            # Production build
+pnpm start            # Production server
+pnpm test:e2e         # Playwright E2E tests
+pnpm test:e2e:ui      # Tests with Playwright UI
+pnpm run migrate      # Database migrations
+```
 
 ### Testing
 
-Allowance Guard includes a comprehensive testing framework for developers:
-
 ```bash
-# Run E2E tests
+# Run full E2E suite
 pnpm test:e2e
 
-# Run E2E tests with UI
-pnpm test:e2e:ui
-
-# Run specific test file
+# Run specific test
 pnpm playwright test tests/scan.spec.ts
+
+# Test with mock payments
+E2E_FAKE_PAYMENTS=true pnpm test:e2e
 ```
 
-**Test Coverage:**
-- ✅ End-to-End testing with Playwright
-- ✅ Accessibility testing (WCAG 2.0 AA)
-- ✅ API endpoint testing
-- ✅ Payment flow testing
-- ✅ User workflow testing
+**Test coverage**: E2E workflows, accessibility (WCAG AA), API endpoints, payment flows.
 
-See `TESTING_POLICY.md` in the repository for detailed testing documentation.
+See [TESTING_POLICY.md](TESTING_POLICY.md) for full testing documentation.
 
-## 📄 License
+## Contributing
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE) file for details.
+We welcome contributions to the open-source core.
 
-## ⚠️ Disclaimer
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Make your changes
+4. Run tests (`pnpm test:e2e`)
+5. Submit a pull request
 
-This software is provided "as is" without warranty. Use at your own risk. The authors are not responsible for any loss of funds or security breaches.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines and [docs/developer-guide.md](docs/developer-guide.md) for the technical deep dive.
 
-## 🆘 Support
+### Financial Support
 
-- **Issues**: [GitHub Issues](https://github.com/EazyAccessEA/Allowance-guard/issues)
-- **Email**: legal.support@allowanceguard.com
-- **Documentation**: [Project Docs](https://www.allowanceguard.com/docs)
+Allowance Guard is built by a small independent team. If you find the tool valuable, consider [supporting development](https://www.allowanceguard.com/contribute) with a contribution. Funds go directly to development, security audits, and infrastructure.
+
+## Documentation
+
+| Resource | Description |
+|----------|-------------|
+| [User Docs](https://www.allowanceguard.com/docs) | How to use Allowance Guard |
+| [API Reference](https://www.allowanceguard.com/docs/api-reference) | B2B API documentation |
+| [Integration Guide](https://www.allowanceguard.com/docs/integration) | Embed AG in your product |
+| [Widget Docs](https://www.allowanceguard.com/docs/widget) | Embeddable widget |
+| [Developer Guide](docs/developer-guide.md) | Technical deep dive |
+| [Ops Monitoring](docs/ops-monitoring.md) | Production monitoring |
+| [Rollbar Setup](ROLLBAR_SETUP.md) | Error monitoring config |
+
+## Roadmap
+
+### Now
+- Subscription billing (Stripe) with Pro and Sentinel tiers
+- Public REST API v1 with API key authentication
+- Pricing page and account management dashboard
+
+### Next
+- Continuous monitoring service with real-time alerts
+- Historical approval timeline
+- Automated revocation rules engine
+- Browser extension (Chrome)
+
+### Later
+- Institutional compliance suite
+- White-label widget for wallet providers
+- Additional chain support
+- Mobile app
+
+## License
+
+This project is licensed under the [GNU General Public License v3.0](LICENSE).
+
+The open-source core is free to use, modify, and distribute. Premium features and managed services are available through [allowanceguard.com](https://www.allowanceguard.com/pricing).
+
+## Disclaimer
+
+This software is provided "as is" without warranty. Users are responsible for their own security assessments. The authors are not liable for any loss of funds. Always verify approvals independently before revoking.
 
 ---
 
-**Built with ❤️ for the DeFi community**
+**Built for the DeFi community by [EazyAccess](https://github.com/EazyAccessEA)**
