@@ -1,7 +1,7 @@
 # AllowanceGuard Revenue Engine — Implementation Plan
 
-> **Status**: In Progress — Phase 5 next
-> **Branch**: `claude/explore-allowance-guard-MaFYK`
+> **Status**: Phases 1–5 Complete — Phase 6 next
+> **Branch**: `claude/complete-phase-5-FdxN1`
 > **Started**: 2026-03-30
 
 ---
@@ -223,24 +223,53 @@
 
 ---
 
-## Phase 5: Institutional & Compliance
+## Phase 5: Institutional & Compliance  ✅ COMPLETE (2026-03-30)
+
+> **Commit**: Phase 5 — 16 new files, 2 modified files
+>
+> **Files created**:
+> - `migrations/022_phase5_institutional.sql` — All Phase 5 database tables (webhooks, webhook_deliveries, team_activity, compliance_exports + team enhancements)
+> - `src/db/schema/webhooks.ts` — Drizzle schemas: webhooks, webhookDeliveries, teamActivity, complianceExports
+> - `src/lib/webhook-dispatcher.ts` — HMAC-signed webhook delivery with retries, logging, auto-disable
+> - `src/lib/compliance-export.ts` — Audit log, risk summary, allowance snapshot, team report exports (JSON/CSV)
+> - `src/app/api/webhooks/route.ts` — GET (list) + POST (create) webhooks (Sentinel-gated)
+> - `src/app/api/webhooks/[id]/route.ts` — GET (details+deliveries) + PUT (update) + DELETE (revoke)
+> - `src/app/api/compliance/export/route.ts` — POST (generate) + GET (history) compliance exports (Pro+)
+> - `src/app/api/teams/details/route.ts` — GET team details with summary stats
+> - `src/app/api/teams/members/route.ts` — GET team members with role info
+> - `src/app/api/teams/portfolio/route.ts` — GET multi-wallet portfolio overview
+> - `src/app/api/teams/portfolio/allowances/route.ts` — GET allowances for team wallet
+> - `src/app/api/teams/activity/route.ts` — GET/POST team activity log
+> - `src/app/team/[id]/page.tsx` — Team dashboard with portfolio, activity, members tabs
+> - `src/components/team/TeamPortfolioView.tsx` — Multi-wallet portfolio view with expandable details
+> - `src/components/team/TeamActivityLog.tsx` — Per-member activity timeline with export
+> - `src/components/compliance/AuditReport.tsx` — Report generator UI with type/format/date selection
+>
+> **Files modified**:
+> - `src/app/api/teams/route.ts` — Expanded with PUT (update), richer GET (stats), Sentinel-gated POST, activity logging
+> - `src/db/schema.ts` — Added Phase 5 schema exports
 
 ### 5.1 Team Dashboard Enhancement
-- [ ] Expand `src/app/api/teams/route.ts` — Multi-wallet portfolio, role-based views
-- [ ] `src/app/team/[id]/page.tsx` — Team dashboard page
-- [ ] `src/components/team/TeamPortfolioView.tsx` — All team wallets, all chains
-- [ ] `src/components/team/TeamActivityLog.tsx` — Per-member activity log
+- [x] Expand `src/app/api/teams/route.ts` — Multi-wallet portfolio, role-based views, team update
+- [x] `src/app/api/teams/details/route.ts` — Team details with member/wallet counts
+- [x] `src/app/api/teams/members/route.ts` — Team members with roles
+- [x] `src/app/api/teams/portfolio/route.ts` — Aggregated wallet stats across all chains
+- [x] `src/app/api/teams/portfolio/allowances/route.ts` — Per-wallet allowance detail
+- [x] `src/app/api/teams/activity/route.ts` — Team activity log with pagination
+- [x] `src/app/team/[id]/page.tsx` — Team dashboard page with tabs (portfolio/activity/members)
+- [x] `src/components/team/TeamPortfolioView.tsx` — All team wallets, all chains, expandable details
+- [x] `src/components/team/TeamActivityLog.tsx` — Per-member activity log with CSV export
 
 ### 5.2 Compliance Audit Export
-- [ ] `src/app/api/compliance/export/route.ts` — Timestamped audit log export
-- [ ] `src/components/compliance/AuditReport.tsx` — Branded PDF report UI
-- [ ] `src/lib/compliance-export.ts` — PDF generation with audit data
+- [x] `src/app/api/compliance/export/route.ts` — Timestamped audit log export (JSON/CSV)
+- [x] `src/components/compliance/AuditReport.tsx` — Report generator UI with type/format/date filtering
+- [x] `src/lib/compliance-export.ts` — Export generation (full_audit, risk_summary, allowance_snapshot, team_report)
 
 ### 5.3 Webhook System
-- [ ] `src/db/schema/webhooks.ts` — webhooks table
-- [ ] `src/app/api/webhooks/route.ts` — Register + list webhooks
-- [ ] `src/app/api/webhooks/[id]/route.ts` — Delete webhook
-- [ ] `src/lib/webhook-dispatcher.ts` — Dispatch payloads on events
+- [x] `src/db/schema/webhooks.ts` — webhooks, webhook_deliveries, team_activity, compliance_exports tables
+- [x] `src/app/api/webhooks/route.ts` — Register + list webhooks (Sentinel-gated)
+- [x] `src/app/api/webhooks/[id]/route.ts` — GET details + PUT update + DELETE webhook
+- [x] `src/lib/webhook-dispatcher.ts` — HMAC-signed dispatch with retries, delivery logging, auto-disable
 
 ---
 
@@ -277,11 +306,13 @@
 
 | Category | New Files | Modified Files |
 |----------|-----------|----------------|
-| Database schemas | 6 | 1 |
+| Database schemas | 7 | 2 |
 | API routes (billing) | 4 | 0 |
 | API routes (v1 public) | 8 | 0 |
 | API routes (features) | 8 | 2 |
-| Middleware/lib | 10 | 3 |
-| Pages | 6 | 4 |
-| Components | 18 | 8 |
-| **Total** | **~60 new** | **~18 modified** |
+| API routes (teams/compliance/webhooks) | 8 | 1 |
+| Middleware/lib | 12 | 3 |
+| Pages | 7 | 4 |
+| Components | 21 | 8 |
+| Migrations | 1 | 0 |
+| **Total** | **~76 new** | **~20 modified** |
