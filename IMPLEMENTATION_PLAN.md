@@ -1,8 +1,12 @@
 # AllowanceGuard Revenue Engine — Implementation Plan
 
-> **Status**: Phases 1–6 Complete
+> **Status**: Phases 1–6 Complete · Post-launch hardening in progress
 > **Branch**: `claude/complete-phase-6-UaT1Z`
 > **Started**: 2026-03-30
+
+### Post-Completion Fixes
+- [x] **CVE-2025-66478**: Updated Next.js 15.5.2 → 15.5.14 (security patch)
+- [x] **Local Fonts**: Switched `next/font/google` → `next/font/local` using self-hosted Inter & JetBrains Mono `.ttf` files in `public/fonts/`, removing Google Fonts build dependency
 
 ---
 
