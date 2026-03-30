@@ -1,7 +1,7 @@
 # AllowanceGuard Revenue Engine — Implementation Plan
 
-> **Status**: Phases 1–5 Complete — Phase 6 next
-> **Branch**: `claude/complete-phase-5-FdxN1`
+> **Status**: Phases 1–6 Complete
+> **Branch**: `claude/complete-phase-6-UaT1Z`
 > **Started**: 2026-03-30
 
 ---
@@ -273,32 +273,53 @@
 
 ---
 
-## Phase 6: Design Upgrade (Parallel Track)
+## Phase 6: Design Upgrade (Parallel Track)  ✅ COMPLETE (2026-03-30)
+
+> **Commit**: Phase 6 — 1 new file, 12 modified files
+>
+> **Files created**:
+> - `src/components/ThemeProvider.tsx` — Theme switching (dark/light/system) with ThemeToggle button
+>
+> **Files modified**:
+> - `src/design/tokens.ts` — Dark mode surface system (bg, text, border, glass tokens)
+> - `tailwind.config.js` — Glass shadows, glow effects, backdrop blur, mesh/scroll/glow animations
+> - `src/app/globals.css` — Dark mode CSS variables, dark body gradient, glass morphism tokens
+> - `src/app/layout.tsx` — ThemeProvider integration, suppressHydrationWarning
+> - `src/components/ui/Card.tsx` — Glass variants (glass, glass-accent), dark mode for all variants
+> - `src/components/ui/Button.tsx` — Glow effects (dark:hover:shadow-glow-primary), dark mode for all variants
+> - `src/components/ui/Badge.tsx` — Dot indicators on StatusBadge/RiskBadge, dark mode for all variants
+> - `src/components/Header.tsx` — Floating pill nav, backdrop-blur-glass, ThemeToggle, dark mode
+> - `src/components/Footer.tsx` — Dark mode compatible with secondary-* palette
+> - `src/components/AnimatedBackground.tsx` — CSS mesh gradient (layered radial gradients, replaces image rotation)
+> - `src/components/Hero.tsx` — AnimatedBackground integration, removed video dependency, dark mode
+> - `src/app/page.tsx` — Dark mode across all sections (stats, how-it-works, features, CTA, testimonials)
+> - `src/components/AllowanceTable.tsx` — Modern data grid (rounded-xl, uppercase headers, row highlight on selection, dark mode)
+> - `src/components/WalletSecurity.tsx` — SVG radial gauge for risk score, dark mode throughout
 
 ### 6.1 Dark Mode System
-- [ ] `src/components/ThemeProvider.tsx` — Theme switching (dark/light/system)
-- [ ] Update `src/design/tokens.ts` — Dark mode tokens, surface colors
-- [ ] Update `tailwind.config.js` — Dark mode config
-- [ ] Update `src/app/globals.css` — Dark mode CSS variables
-- [ ] Update `src/app/layout.tsx` — Theme provider integration
+- [x] `src/components/ThemeProvider.tsx` — Theme switching (dark/light/system)
+- [x] Update `src/design/tokens.ts` — Dark mode tokens, surface colors
+- [x] Update `tailwind.config.js` — Dark mode config
+- [x] Update `src/app/globals.css` — Dark mode CSS variables
+- [x] Update `src/app/layout.tsx` — Theme provider integration
 
 ### 6.2 Glassmorphism Card System
-- [ ] Update `src/components/ui/Card.tsx` — Glass variants with backdrop-filter
-- [ ] Update `src/components/ui/Button.tsx` — Glow effects, dark mode
-- [ ] Update `src/components/ui/Badge.tsx` — Dot indicators, dark mode
+- [x] Update `src/components/ui/Card.tsx` — Glass variants with backdrop-filter
+- [x] Update `src/components/ui/Button.tsx` — Glow effects, dark mode
+- [x] Update `src/components/ui/Badge.tsx` — Dot indicators, dark mode
 
 ### 6.3 Navigation Redesign
-- [ ] Redesign `src/components/Header.tsx` — Floating pill nav, backdrop blur
-- [ ] Redesign `src/components/Footer.tsx` — Dark mode compatible
+- [x] Redesign `src/components/Header.tsx` — Floating pill nav, backdrop blur
+- [x] Redesign `src/components/Footer.tsx` — Dark mode compatible
 
 ### 6.4 Hero & Homepage
-- [ ] `src/components/AnimatedBackground.tsx` — CSS mesh gradient (replace video)
-- [ ] Redesign `src/components/Hero.tsx` — New animated hero
-- [ ] Restructure `src/app/page.tsx` — Visual "acts" with scroll reveals
+- [x] `src/components/AnimatedBackground.tsx` — CSS mesh gradient (replace video)
+- [x] Redesign `src/components/Hero.tsx` — New animated hero
+- [x] Restructure `src/app/page.tsx` — Visual "acts" with scroll reveals
 
 ### 6.5 Dashboard & Data
-- [ ] Redesign `src/components/AllowanceTable.tsx` — Modern data grid
-- [ ] Redesign `src/components/WalletSecurity.tsx` — Radial gauge
+- [x] Redesign `src/components/AllowanceTable.tsx` — Modern data grid
+- [x] Redesign `src/components/WalletSecurity.tsx` — Radial gauge
 
 ---
 

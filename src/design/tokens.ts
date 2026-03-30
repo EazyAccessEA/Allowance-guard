@@ -159,12 +159,40 @@ export const designTokens = {
       success: '#F0FDF4',
       info: '#F0F9FF',
       warning: '#FFFBEB',
-      
+
       // Enhanced variants for better contrast
       dangerSubtle: '#FEF7F7',
       successSubtle: '#F7FEF7',
       infoSubtle: '#F7FBFF',
       warningSubtle: '#FFFDF7',
+    },
+
+    // Dark Mode Surface System
+    dark: {
+      bg: {
+        primary: '#0A0E1A',       // Deepest background
+        secondary: '#111827',     // Card/section background
+        tertiary: '#1E293B',      // Elevated surfaces
+        elevated: '#263244',      // Popovers, dropdowns
+        overlay: 'rgba(0, 0, 0, 0.6)', // Modal backdrop
+      },
+      text: {
+        primary: '#F1F5F9',       // High-emphasis text
+        secondary: '#94A3B8',     // Medium-emphasis text
+        tertiary: '#64748B',      // Low-emphasis text
+        inverse: '#0F172A',       // Text on light backgrounds
+      },
+      border: {
+        primary: '#1E293B',       // Subtle borders
+        secondary: '#334155',     // Visible borders
+        tertiary: '#475569',      // High-contrast borders
+        focus: '#00C2B3',         // Focus ring (same as light)
+      },
+      surface: {
+        glass: 'rgba(17, 24, 39, 0.7)',       // Glass effect base
+        glassHover: 'rgba(30, 41, 59, 0.8)',   // Glass hover
+        glassBorder: 'rgba(71, 85, 105, 0.4)', // Glass border
+      },
     },
   },
   
