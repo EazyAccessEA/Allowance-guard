@@ -8,7 +8,7 @@ import type { ConsumerPlan } from '@/lib/plans'
 // ---------------------------------------------------------------------------
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
-  apiVersion: '2025-03-31.basil',
+  apiVersion: '2025-08-27.basil',
 })
 
 export { stripe }
@@ -145,8 +145,8 @@ export async function syncSubscription(sub: Stripe.Subscription): Promise<void> 
       sub.id,
       plan,
       sub.status,
-      sub.current_period_start,
-      sub.current_period_end,
+      sub.items.data[0]?.current_period_start ?? 0,
+      sub.items.data[0]?.current_period_end ?? 0,
       sub.cancel_at_period_end,
       JSON.stringify(sub.metadata ?? {}),
     ],
