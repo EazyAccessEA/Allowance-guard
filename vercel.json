@@ -1,5 +1,11 @@
 {
   "regions": ["lhr1"],
+  "crons": [
+    {
+      "path": "/api/monitor/cron",
+      "schedule": "*/15 * * * *"
+    }
+  ],
   "functions": {
     "app/**/route.ts": { "maxDuration": 60 }
   },

@@ -1,6 +1,6 @@
 # AllowanceGuard Revenue Engine — Implementation Plan
 
-> **Status**: In Progress — Phase 4 next
+> **Status**: In Progress — Phase 5 next
 > **Branch**: `claude/explore-allowance-guard-MaFYK`
 > **Started**: 2026-03-30
 
@@ -169,28 +169,57 @@
 
 ---
 
-## Phase 4: Pro Features Build
+## Phase 4: Pro Features Build  ✅ COMPLETE (2026-03-30)
+
+> **Commit**: Phase 4 — 16 new files, 4 modified files
+>
+> **Files created**:
+> - `src/db/schema/monitoring.ts` — monitored_wallets + monitoring_events tables
+> - `src/db/schema/history.ts` — wallet_events + risk_snapshots tables
+> - `src/db/schema/policies.ts` — revocation_rules + rule_executions tables
+> - `src/lib/monitoring.ts` — Monitoring logic, change detection, alert dispatch (email/Slack)
+> - `src/lib/rule-engine.ts` — Rule condition evaluator, rule execution engine, CRUD helpers
+> - `src/app/api/monitor/cron/route.ts` — Vercel Cron handler (every 15 min)
+> - `src/app/api/monitor/events/route.ts` — GET/POST monitoring events
+> - `src/app/api/history/route.ts` — Historical wallet events query
+> - `src/app/api/history/risk/route.ts` — Risk snapshots over time
+> - `src/app/api/history/risk-snapshots.ts` — Shared risk snapshot query handler
+> - `src/app/api/gas-estimate/route.ts` — Live gas price + ETH price (CoinGecko + RPC)
+> - `src/app/api/rules/route.ts` — CRUD for automated revocation rules (Sentinel-gated)
+> - `src/components/MonitoringDashboard.tsx` — Monitoring status + events timeline UI
+> - `src/components/HistoricalTimeline.tsx` — Time Machine: risk charts + event timeline
+> - `src/components/RuleBuilder.tsx` — Visual rule builder with condition editor
+> - `migrations/021_phase4_pro_features.sql` — All Phase 4 database tables
+>
+> **Files modified**:
+> - `src/db/schema.ts` — Added Phase 4 schema exports
+> - `src/components/BulkRevokePanel.tsx` — Full gas savings calculator with live pricing
+> - `src/app/api/bulk-revoke/route.ts` — Per-standard gas estimates + batch savings
+> - `vercel.json` — Added cron schedule for monitoring
 
 ### 4.1 Continuous Monitoring
-- [ ] `src/db/schema/monitoring.ts` — monitored_wallets + monitoring_events tables
-- [ ] `src/app/api/monitor/cron/route.ts` — Cron job: re-scan monitored wallets every 15 min
-- [ ] `src/lib/monitoring.ts` — Monitoring logic + alert dispatch (email/Slack/Telegram)
-- [ ] `src/components/MonitoringDashboard.tsx` — Monitoring status UI
+- [x] `src/db/schema/monitoring.ts` — monitored_wallets + monitoring_events tables
+- [x] `src/app/api/monitor/cron/route.ts` — Cron job: re-scan monitored wallets every 15 min
+- [x] `src/app/api/monitor/events/route.ts` — GET/POST monitoring events
+- [x] `src/lib/monitoring.ts` — Monitoring logic + alert dispatch (email/Slack/Telegram)
+- [x] `src/components/MonitoringDashboard.tsx` — Monitoring status UI
 
 ### 4.2 Historical Timeline
-- [ ] `src/db/schema/history.ts` — wallet_events table for historical snapshots
-- [ ] `src/app/api/history/route.ts` — History query endpoint
-- [ ] `src/components/HistoricalTimeline.tsx` — Visual timeline UI
+- [x] `src/db/schema/history.ts` — wallet_events + risk_snapshots tables
+- [x] `src/app/api/history/route.ts` — History query endpoint (with filtering/pagination)
+- [x] `src/app/api/history/risk/route.ts` — Risk snapshots over time
+- [x] `src/components/HistoricalTimeline.tsx` — Visual timeline UI with risk chart
 
 ### 4.3 Gas Savings Calculator
-- [ ] Modify `src/components/BulkRevokePanel.tsx` — Display gas savings (individual vs batch)
-- [ ] Modify `src/app/api/bulk-revoke/route.ts` — Return savings estimate in response
+- [x] Modify `src/components/BulkRevokePanel.tsx` — Full gas calculator: per-standard estimates, batch vs individual comparison, live gas/ETH prices, per-chain breakdown, USD cost display
+- [x] `src/app/api/gas-estimate/route.ts` — Live gas price (RPC) + ETH price (CoinGecko) with 60s cache
+- [x] Modify `src/app/api/bulk-revoke/route.ts` — Per-standard gas estimates + batch savings in response
 
 ### 4.4 Automated Revocation Rules (Sentinel)
-- [ ] `src/db/schema/policies.ts` — revocation_rules table
-- [ ] `src/app/api/rules/route.ts` — CRUD for rules
-- [ ] `src/lib/rule-engine.ts` — Rule evaluation logic
-- [ ] `src/components/RuleBuilder.tsx` — Rule creation UI
+- [x] `src/db/schema/policies.ts` — revocation_rules + rule_executions tables
+- [x] `src/app/api/rules/route.ts` — CRUD for rules (Sentinel-gated)
+- [x] `src/lib/rule-engine.ts` — Rule condition evaluation + execution engine
+- [x] `src/components/RuleBuilder.tsx` — Visual rule creation UI with condition editor
 
 ---
 
