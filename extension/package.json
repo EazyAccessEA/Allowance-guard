@@ -1,0 +1,33 @@
+{
+  "name": "allowance-guard-extension",
+  "version": "1.0.0",
+  "description": "AllowanceGuard Browser Extension - Protect your wallet from risky token approvals",
+  "private": true,
+  "scripts": {
+    "build": "npm run copy-files && npm run copy-icons",
+    "copy-files": "cp src/*.js dist/ && cp popup.html dist/ && cp manifest.json dist/",
+    "copy-icons": "cp -r icons dist/",
+    "dev": "npm run build && npm run watch",
+    "watch": "nodemon --watch src --ext js,html,json --exec 'npm run build'",
+    "package": "npm run build && cd dist && zip -r ../allowance-guard-extension.zip .",
+    "test": "echo 'Extension tests would go here'",
+    "lint": "echo 'Extension linting would go here'"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "keywords": [
+    "browser-extension",
+    "wallet-security",
+    "token-approvals",
+    "defi",
+    "ethereum",
+    "blockchain"
+  ],
+  "author": "Allowance Guard Team",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EazyAccessEA/Allowance-guard"
+  }
+}

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Wallet - AllowanceGuard Extension Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      color: #008B7A;
+      margin-bottom: 8px;
+    }
+    
+    .header p {
+      color: #666;
+    }
+    
+    .demo-section {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .demo-section h2 {
+      color: #333;
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+    
+    .wallet-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .info-card {
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid #008B7A;
+    }
+    
+    .info-card h3 {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .info-card p {
+      font-size: 16px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    .transaction-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .btn {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    
+    .btn-safe {
+      background: #4caf50;
+      color: white;
+    }
+    
+    .btn-safe:hover {
+      background: #45a049;
+    }
+    
+    .btn-risky {
+      background: #f44336;
+      color: white;
+    }
+    
+    .btn-risky:hover {
+      background: #da190b;
+    }
+    
+    .btn-critical {
+      background: #d32f2f;
+      color: white;
+      animation: pulse 2s infinite;
+    }
+    
+    .btn-critical:hover {
+      background: #b71c1c;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .instructions {
+      background: #e3f2fd;
+      border: 1px solid #2196f3;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .instructions h3 {
+      color: #1976d2;
+      margin-bottom: 8px;
+    }
+    
+    .instructions ol {
+      margin-left: 20px;
+    }
+    
+    .instructions li {
+      margin: 4px 0;
+      color: #1976d2;
+    }
+    
+    .log {
+      background: #f5f5f5;
+      border-radius: 8px;
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+    
+    .log-entry {
+      margin: 4px 0;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    
+    .log-entry.info {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+    
+    .log-entry.warning {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+    
+    .log-entry.error {
+      background: #ffebee;
+      color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🛡️ AllowanceGuard Extension Demo</h1>
+      <p>Test wallet simulation for extension functionality</p>
+    </div>
+    
+    <div class="instructions">
+      <h3>📋 How to Test the Extension:</h3>
+      <ol>
+        <li>Install the AllowanceGuard extension in your browser</li>
+        <li>Click "Connect Test Wallet" below</li>
+        <li>Try the different transaction buttons to see risk warnings</li>
+        <li>Check the extension popup for statistics</li>
+      </ol>
+    </div>
+    
+    <div class="demo-section">
+      <h2>🔗 Test Wallet</h2>
+      <div class="wallet-info">
+        <div class="info-card">
+          <h3>Wallet Address</h3>
+          <p id="walletAddress">Not Connected</p>
+        </div>
+        <div class="info-card">
+          <h3>Network</h3>
+          <p id="network">Ethereum Mainnet</p>
+        </div>
+      </div>
+      
+      <button class="btn btn-safe" id="connectBtn" onclick="connectWallet()">
+        Connect Test Wallet
+      </button>
+    </div>
+    
+    <div class="demo-section">
+      <h2>💸 Test Transactions</h2>
+      <p style="margin-bottom: 16px; color: #666;">
+        Click these buttons to simulate different types of token approvals:
+      </p>
+      
+      <div class="transaction-buttons">
+        <button class="btn btn-safe" onclick="simulateTransaction('safe')">
+          ✅ Safe Approval
+          <br><small>Low risk token</small>
+        </button>
+        
+        <button class="btn btn-risky" onclick="simulateTransaction('risky')">
+          ⚠️ Risky Approval
+          <br><small>Unknown contract</small>
+        </button>
+        
+        <button class="btn btn-critical" onclick="simulateTransaction('critical')">
+          🚨 Critical Risk
+          <br><small>Unlimited approval</small>
+        </button>
+        
+        <button class="btn btn-risky" onclick="simulateTransaction('nft')">
+          🖼️ NFT Approval
+          <br><small>setApprovalForAll</small>
+        </button>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>📊 Activity Log</h2>
+      <div class="log" id="activityLog">
+        <div class="log-entry info">Demo wallet ready. Connect to start testing.</div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let isConnected = false;
+    const testWalletAddress = '0x1234567890123456789012345678901234567890';
+    
+    function log(message, type = 'info') {
+      const log = document.getElementById('activityLog');
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      log.appendChild(entry);
+      log.scrollTop = log.scrollHeight;
+    }
+    
+    function connectWallet() {
+      if (!isConnected) {
+        document.getElementById('walletAddress').textContent = testWalletAddress;
+        document.getElementById('connectBtn').textContent = 'Disconnect Wallet';
+        document.getElementById('connectBtn').classList.remove('btn-safe');
+        document.getElementById('connectBtn').classList.add('btn-risky');
+        isConnected = true;
+        
+        log('Test wallet connected: ' + testWalletAddress, 'info');
+        
+        // Simulate wallet connection event
+        window.postMessage({
+          type: 'WALLET_CONNECTED',
+          data: { address: testWalletAddress }
+        }, '*');
+      } else {
+        document.getElementById('walletAddress').textContent = 'Not Connected';
+        document.getElementById('connectBtn').textContent = 'Connect Test Wallet';
+        document.getElementById('connectBtn').classList.remove('btn-risky');
+        document.getElementById('connectBtn').classList.add('btn-safe');
+        isConnected = false;
+        
+        log('Test wallet disconnected', 'info');
+        
+        // Simulate wallet disconnection event
+        window.postMessage({
+          type: 'WALLET_DISCONNECTED',
+          data: {}
+        }, '*');
+      }
+    }
+    
+    function simulateTransaction(type) {
+      if (!isConnected) {
+        log('Please connect wallet first', 'warning');
+        return;
+      }
+      
+      const transactions = {
+        safe: {
+          to: '0xA0b86a33E6441b8c4C8C0C8C0C8C0C8C0C8C0C8C',
+          data: '0x095ea7b3000000000000000000000000' + '1234567890123456789012345678901234567890'.slice(2) + '0000000000000000000000000000000000000000000000000000000000000001',
+          description: 'Safe USDC approval (1 token)'
+        },
+        risky: {
+          to: '0xB1c97a44F7551b9d5D5D1D5D1D5D1D5D1D5D1D5D1D',
+          data: '0x095ea7b3000000000000000000000000' + '9876543210987654321098765432109876543210'.slice(2) + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+          description: 'Risky token approval (unlimited)'
+        },
+        critical: {
+          to: '0xC2d88b55G8662c0e6E6E2E6E2E6E2E6E2E6E2E6E2E',
+          data: '0x095ea7b3000000000000000000000000' + '5555555555555555555555555555555555555555'.slice(2) + 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+          description: 'Critical risk: Unknown contract, unlimited approval'
+        },
+        nft: {
+          to: '0xD3e99c66H9773d1f7F7F3F7F3F7F3F7F3F7F3F7F3F',
+          data: '0xa22cb465000000000000000000000000' + '7777777777777777777777777777777777777777'.slice(2) + '0000000000000000000000000000000000000000000000000000000000000001',
+          description: 'NFT collection approval (setApprovalForAll)'
+        }
+      };
+      
+      const tx = transactions[type];
+      if (!tx) return;
+      
+      log(`Simulating ${tx.description}`, 'info');
+      
+      // Simulate transaction request
+      setTimeout(() => {
+        const mockTransaction = {
+          to: tx.to,
+          data: tx.data,
+          from: testWalletAddress,
+          value: '0x0'
+        };
+        
+        // Trigger the extension's transaction analysis
+        window.postMessage({
+          type: 'TRANSACTION_REQUEST',
+          data: mockTransaction
+        }, '*');
+        
+        log(`Transaction sent: ${tx.description}`, 'warning');
+      }, 500);
+    }
+    
+    // Initialize
+    log('AllowanceGuard Extension Demo loaded', 'info');
+    log('Make sure the extension is installed and enabled', 'info');
+  </script>
+</body>
+</html>

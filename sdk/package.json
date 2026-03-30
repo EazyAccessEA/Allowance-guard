@@ -1,0 +1,53 @@
+{
+  "name": "allowance-guard-sdk",
+  "version": "1.0.0",
+  "description": "Official AllowanceGuard SDK for Node.js - Protect your users from risky token approvals",
+  "main": "allowance-guard-sdk.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node examples/test.js",
+    "example": "node examples/basic-usage.js",
+    "lint": "eslint allowance-guard-sdk.js examples/*.js",
+    "docs": "jsdoc allowance-guard-sdk.js -d docs"
+  },
+  "keywords": [
+    "allowance-guard",
+    "defi",
+    "token-approvals",
+    "wallet-security",
+    "ethereum",
+    "blockchain",
+    "sdk",
+    "api"
+  ],
+  "author": "AllowanceGuard Team",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EazyAccessEA/Allowance-guard.git",
+    "directory": "sdk"
+  },
+  "homepage": "https://www.allowanceguard.com",
+  "bugs": {
+    "url": "https://github.com/EazyAccessEA/Allowance-guard/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "jsdoc": "^4.0.0"
+  },
+  "files": [
+    "allowance-guard-sdk.js",
+    "examples/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

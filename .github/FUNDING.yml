@@ -1,0 +1,77 @@
+# GitHub Sponsors Configuration for Allowance Guard
+
+# These funding links will appear on your GitHub profile and repository
+# Users can click the "Sponsor" button to see these options
+
+# Primary funding platform (GitHub Sponsors)
+github: [EazyAccessEA]
+
+# Alternative funding platforms
+patreon: allowance-guard
+open_collective: allowance-guard
+ko_fi: allowanceguard
+tidelift: platform
+community_bridge: allowance-guard
+liberapay: allowanceguard
+issuehunt: allowance-guard
+otechie: allowance-guard
+custom: ['https://www.allowanceguard.com/docs/contributing']
+
+# Cryptocurrency addresses for direct donations
+crypto:
+  - address: 0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6
+    symbol: ETH
+    name: Ethereum
+  - address: 0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6
+    symbol: USDC
+    name: USD Coin
+  - address: 0x742d35Cc6634C0532925a3b8D4C9db96C4b4d8b6
+    symbol: USDT
+    name: Tether USD
+
+# Additional funding information
+preferred_funding_platforms:
+  - github
+  - custom
+  - crypto
+
+# Funding tiers (for GitHub Sponsors)
+tiers:
+  - amount: 5
+    title: "Coffee Supporter"
+    description: "Buy the team a coffee and help keep the servers running"
+  - amount: 25
+    title: "Security Advocate"
+    description: "Support DeFi security research and development"
+  - amount: 100
+    title: "Protocol Partner"
+    description: "Help fund security audits and infrastructure improvements"
+  - amount: 500
+    title: "Ecosystem Guardian"
+    description: "Major supporter of DeFi security infrastructure"
+
+# Funding goals and transparency
+funding_goals:
+  - "Monthly server and infrastructure costs: $500"
+  - "Security audit budget: $5,000"
+  - "Developer compensation: $3,000/month"
+  - "Emergency security response fund: $10,000"
+
+# How funds are used
+fund_usage:
+  - "Infrastructure and hosting costs"
+  - "Security audits and bug bounty programs"
+  - "Core development team compensation"
+  - "Emergency security response"
+  - "Community events and education"
+  - "Legal and compliance costs"
+
+# Transparency commitment
+transparency:
+  - "Quarterly financial reports published on GitHub"
+  - "All major expenses documented and justified"
+  - "Community input on funding priorities"
+  - "Open source accounting practices"
+
+# Contact for funding questions
+contact: legal.support@allowanceguard.com

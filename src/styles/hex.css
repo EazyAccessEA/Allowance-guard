@@ -1,0 +1,171 @@
+/* AG Hex System - Hexagonal Primitives */
+/* No gradients, no blur effects - solids only */
+
+:root {
+  /* Design tokens as CSS variables */
+  --bg: #0B0C0E;
+  --panel: #111317;
+  --line: #1B1E24;
+  --text: #E7E9ED;
+  --muted: #A7AEBB;
+  --brand: #27E3A1;
+  --danger: #FF4D4F;
+  --warn: #FFC53D;
+  --info: #3DA9FF;
+  
+  /* Hover states */
+  --bg-hover: #0F1012;
+  --panel-hover: #15171B;
+  --line-hover: #202329;
+  --text-hover: #F0F2F5;
+  --muted-hover: #B8BFC9;
+  --brand-hover: #1FCB8A;
+  --brand-active: #17A673;
+  --danger-hover: #FF3333;
+  --danger-active: #E63939;
+  --warn-hover: #FFB800;
+  --warn-active: #E6A600;
+  --info-hover: #1A8CE6;
+  --info-active: #0D73CC;
+}
+
+/* Hexagonal clip-path utility */
+.hex-clip {
+  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+}
+
+/* Hexagonal stroke utility */
+.hex-stroke {
+  position: relative;
+}
+
+.hex-stroke::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid var(--line);
+  clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+  pointer-events: none;
+}
+
+/* Focus ring utilities - solid dual ring */
+.hex-focus {
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--brand);
+}
+
+.hex-focus:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--brand);
+}
+
+.hex-focus-danger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--danger);
+}
+
+.hex-focus-warn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--warn);
+}
+
+.hex-focus-info:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--info);
+}
+
+/* Risk level utilities */
+.risk-low {
+  background-color: var(--info);
+  color: var(--bg);
+}
+
+.risk-medium {
+  background-color: var(--warn);
+  color: var(--bg);
+}
+
+.risk-high {
+  background-color: var(--danger);
+  color: var(--bg);
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove all default rounded corners */
+* {
+  border-radius: 0 !important;
+}
+
+/* Hex background pattern */
+.hex-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.hex-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231B1E24' fill-opacity='0.1'%3E%3Cpath d='M30 5l25 15v20L30 55 5 40V20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Utility classes */
+.text-brand { color: var(--brand); }
+.text-danger { color: var(--danger); }
+.text-warn { color: var(--warn); }
+.text-info { color: var(--info); }
+.text-muted { color: var(--muted); }
+
+.bg-brand { background-color: var(--brand); }
+.bg-danger { background-color: var(--danger); }
+.bg-warn { background-color: var(--warn); }
+.bg-info { background-color: var(--info); }
+.bg-panel { background-color: var(--panel); }
+
+.border-line { border-color: var(--line); }
+.border-brand { border-color: var(--brand); }
+.border-danger { border-color: var(--danger); }
+.border-warn { border-color: var(--warn); }
+.border-info { border-color: var(--info); }
+
+/* Transitions */
+.transition-fast { transition: all 150ms ease-out; }
+.transition-normal { transition: all 200ms ease-out; }
+.transition-slow { transition: all 300ms ease-out; }
+
+/* Hover states */
+.hover\:bg-panel-hover:hover { background-color: var(--panel-hover); }
+.hover\:bg-brand-hover:hover { background-color: var(--brand-hover); }
+.hover\:bg-danger-hover:hover { background-color: var(--danger-hover); }
+.hover\:bg-warn-hover:hover { background-color: var(--warn-hover); }
+.hover\:bg-info-hover:hover { background-color: var(--info-hover); }
+
+.hover\:text-text-hover:hover { color: var(--text-hover); }
+.hover\:text-brand-hover:hover { color: var(--brand-hover); }
+
+.hover\:border-line-hover:hover { border-color: var(--line-hover); }
+.hover\:border-brand-hover:hover { border-color: var(--brand-hover); }

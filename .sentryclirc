@@ -1,0 +1,7 @@
+[defaults]
+url=https://sentry.io/
+org=your-org
+project=allowance-guard
+
+[auth]
+token=your-auth-token

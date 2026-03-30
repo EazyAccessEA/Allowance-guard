@@ -1,0 +1,32 @@
+'use client'
+import { useRevoke } from './useRevoke'
+
+type AllowanceRow = {
+  chain_id: number
+  token_address: string
+  spender_address: string
+  standard: string
+  allowance_type: string
+  amount: string
+  is_unlimited: boolean
+  last_seen_block: string
+  risk_score: number
+  risk_flags: string[]
+}
+
+export function useBulkRevoke(selectedWallet?: string | null) {
+  const { revoke } = useRevoke(selectedWallet)
+
+  async function revokeMany(rows: AllowanceRow[], onProgress?: (i:number, total:number)=>void) {
+    for (let i = 0; i < rows.length; i++) {
+      onProgress?.(i+1, rows.length)
+      try { 
+        await revoke(rows[i]) 
+      } catch (e) { 
+        console.warn(`Failed to revoke row ${i}:`, e)
+        // continue to next 
+      }
+    }
+  }
+  return { revokeMany }
+}
