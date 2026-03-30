@@ -1,42 +1,65 @@
 # AllowanceGuard Revenue Engine — Implementation Plan
 
-> **Status**: In Progress
+> **Status**: In Progress — Phase 2 next
 > **Branch**: `claude/explore-allowance-guard-MaFYK`
 > **Started**: 2026-03-30
 
 ---
 
-## Phase 1: Foundation — Subscription Infrastructure
+## Phase 1: Foundation — Subscription Infrastructure  ✅ COMPLETE (2026-03-30)
+
+> **Commit**: `6a57c7f` — 17 files, 1,557 lines added
+>
+> **Files created**:
+> - `src/lib/plans.ts` — Plan definitions, pricing, feature flags, helpers
+> - `src/lib/billing.ts` — Stripe customer/checkout/portal/sync
+> - `src/lib/feature-gate.ts` — Feature gating (wallet quota, API quota, chain access, boolean features)
+> - `src/lib/api-keys.ts` — Key generation (ag_live_ prefix), SHA-256 hashing, validation, rate limiting
+> - `src/db/schema/subscriptions.ts` — subscriptions table
+> - `src/db/schema/api-keys.ts` — api_keys table
+> - `src/db/schema/usage.ts` — usage_records table
+> - `src/db/schema/plan-limits.ts` — plan_limits config table
+> - `src/middleware/plan-guard.ts` — requireFeature() and requireWalletQuota() route guards
+> - `src/middleware/api-auth.ts` — API key auth middleware for v1 endpoints
+> - `src/app/api/billing/create-customer/route.ts`
+> - `src/app/api/billing/create-subscription/route.ts`
+> - `src/app/api/billing/manage/route.ts`
+> - `src/app/api/billing/webhook/route.ts`
+> - `src/app/api/keys/route.ts` — GET (list) + POST (create)
+> - `src/app/api/keys/[id]/route.ts` — DELETE (revoke)
+>
+> **Files modified**:
+> - `src/db/schema.ts` — Re-exports new schemas
 
 ### 1.1 Plan Definitions (`src/lib/plans.ts`)
-- [ ] Define consumer plans: Free, Pro ($9.99/mo | $79/yr), Sentinel ($49.99/mo | $499/yr)
-- [ ] Define API plans: Free (100/day), Developer ($39/mo, 10k/day), Growth ($149/mo, 100k/day), Enterprise (custom)
-- [ ] Define feature flags per plan (max_wallets, batch_revoke, export, alerts, teams, monitoring, time_machine)
-- [ ] Export helper functions: `getPlanLimits()`, `isPaidPlan()`, `getPlanPrice()`
+- [x] Define consumer plans: Free, Pro ($9.99/mo | $79/yr), Sentinel ($49.99/mo | $499/yr)
+- [x] Define API plans: Free (100/day), Developer ($39/mo, 10k/day), Growth ($149/mo, 100k/day), Enterprise (custom)
+- [x] Define feature flags per plan (max_wallets, batch_revoke, export, alerts, teams, monitoring, time_machine)
+- [x] Export helper functions: `getPlanLimits()`, `isPaidPlan()`, `getPlanPrice()`
 
 ### 1.2 Database Schemas
-- [ ] `src/db/schema/subscriptions.ts` — subscriptions table (user_id, stripe_customer_id, stripe_subscription_id, plan, status, period dates, cancel_at_period_end, metadata)
-- [ ] `src/db/schema/api-keys.ts` — api_keys table (user_id, key_hash, prefix, name, plan, rate_limit, last_used_at, expires_at, revoked_at)
-- [ ] `src/db/schema/usage.ts` — usage_records table (user_id, api_key_id, endpoint, timestamp, response_status, metadata)
-- [ ] `src/db/schema/plan-limits.ts` — plan_limits config table (plan, max_wallets, max_chains, feature booleans)
-- [ ] Register new schemas in `src/db/index.ts`
+- [x] `src/db/schema/subscriptions.ts` — subscriptions table
+- [x] `src/db/schema/api-keys.ts` — api_keys table
+- [x] `src/db/schema/usage.ts` — usage_records table
+- [x] `src/db/schema/plan-limits.ts` — plan_limits config table
+- [x] Register new schemas in `src/db/schema.ts`
 
 ### 1.3 Stripe Billing Integration
-- [ ] `src/lib/billing.ts` — Stripe billing helpers (createCustomer, createSubscription, cancelSubscription, getSubscription, syncSubscriptionStatus)
-- [ ] `POST /api/billing/create-customer/route.ts` — Create Stripe customer on signup
-- [ ] `POST /api/billing/create-subscription/route.ts` — Subscribe to Pro/Sentinel
-- [ ] `POST /api/billing/manage/route.ts` — Redirect to Stripe Customer Portal
-- [ ] `POST /api/billing/webhook/route.ts` — Handle subscription lifecycle events (created, updated, deleted, invoice.paid, invoice.failed)
+- [x] `src/lib/billing.ts` — Stripe billing helpers
+- [x] `POST /api/billing/create-customer/route.ts`
+- [x] `POST /api/billing/create-subscription/route.ts`
+- [x] `POST /api/billing/manage/route.ts`
+- [x] `POST /api/billing/webhook/route.ts`
 
 ### 1.4 Feature Gating
-- [ ] `src/lib/feature-gate.ts` — `checkFeature(userId, feature)` returns `{ allowed, limit, used }`
-- [ ] `src/middleware/plan-guard.ts` — Middleware wrapper for gated API routes
+- [x] `src/lib/feature-gate.ts` — `checkFeature(userId, feature)` returns `{ allowed, limit, used }`
+- [x] `src/middleware/plan-guard.ts` — Middleware wrapper for gated API routes
 
 ### 1.5 API Key System
-- [ ] `src/lib/api-keys.ts` — Key generation (ag_live_xxx prefix), hashing, validation
-- [ ] `src/middleware/api-auth.ts` — API key auth middleware (Authorization: Bearer)
-- [ ] `POST /api/keys/route.ts` — Generate & list API keys
-- [ ] `DELETE /api/keys/[id]/route.ts` — Revoke a key
+- [x] `src/lib/api-keys.ts` — Key generation (ag_live_xxx prefix), hashing, validation
+- [x] `src/middleware/api-auth.ts` — API key auth middleware (Authorization: Bearer)
+- [x] `POST /api/keys/route.ts` — Generate & list API keys
+- [x] `DELETE /api/keys/[id]/route.ts` — Revoke a key
 
 ---
 
