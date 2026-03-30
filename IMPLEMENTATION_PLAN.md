@@ -1,6 +1,6 @@
 # AllowanceGuard Revenue Engine — Implementation Plan
 
-> **Status**: In Progress — Phase 2 next
+> **Status**: In Progress — Phase 3 next
 > **Branch**: `claude/explore-allowance-guard-MaFYK`
 > **Started**: 2026-03-30
 
@@ -63,41 +63,69 @@
 
 ---
 
-## Phase 2: Messaging & UI Overhaul
+## Phase 2: Messaging & UI Overhaul  ✅ COMPLETE (2026-03-30)
+
+> **Commit**: Phase 2 — 13 new files, 7 modified files
+>
+> **Files created**:
+> - `src/app/pricing/page.tsx` — Three-tier pricing page with monthly/yearly toggle
+> - `src/components/PricingCard.tsx` — Individual plan card with feature list and CTA
+> - `src/components/PricingTable.tsx` — Feature comparison matrix
+> - `src/components/UpgradePrompt.tsx` — Post-scan gate (wallet limit reached)
+> - `src/components/ProNudge.tsx` — Value demonstration nudge after risk results
+> - `src/components/FeatureLock.tsx` — Blurred preview with "Unlock with Pro" overlay
+> - `src/components/PlanBadge.tsx` — Current plan badge for header/dashboard
+> - `src/app/account/page.tsx` — Account overview (plan, usage, billing)
+> - `src/app/account/billing/page.tsx` — Billing history, upgrade/downgrade
+> - `src/app/account/keys/page.tsx` — API key management
+> - `src/components/account/PlanCard.tsx` — Current plan display
+> - `src/components/account/UsageChart.tsx` — Usage statistics
+> - `src/components/account/ApiKeyManager.tsx` — Key CRUD UI
+>
+> **Files modified**:
+> - `src/components/Footer.tsx` — "Free Forever" → "Free Core", updated messaging and nav links
+> - `src/components/DonationModal.tsx` — Removed "100% free" / "No premium features" messaging
+> - `src/app/page.tsx` — Updated trust indicators
+> - `src/components/Hero.tsx` — Updated trust line
+> - `src/app/contribute/page.tsx` — Updated "free forever" to "core scanner is free forever"
+> - `src/app/faq/page.tsx` — Updated pricing FAQ with tier information
+> - `src/components/Header.tsx` — Added Pricing nav, plan badge, Account link, Upgrade button
+> - `src/components/AppArea.tsx` — Added plan context, feature locks on exports, ProNudge
+> - `src/components/BulkRevokePanel.tsx` — Added gas savings estimate display
 
 ### 2.1 Remove "Free Forever" Messaging
-- [ ] `src/components/Footer.tsx` — Badge: "Free Forever" → "Open Source • Free Core"; update donation text
-- [ ] `src/components/DonationModal.tsx` — Remove "100% free" / "No premium features" lines
-- [ ] `src/app/page.tsx` — Update trust indicators ("100% free" → "Free core • No private keys • Read-only")
-- [ ] `src/components/Hero.tsx` — Update trust line
-- [ ] `src/app/contribute/page.tsx` — "the app is free forever" → "The core scanner is free forever"
-- [ ] `src/app/faq/page.tsx` — Update FAQ answer about pricing
+- [x] `src/components/Footer.tsx` — Badge: "Free Forever" → "Open Source • Free Core"; update donation text
+- [x] `src/components/DonationModal.tsx` — Remove "100% free" / "No premium features" lines
+- [x] `src/app/page.tsx` — Update trust indicators ("100% free" → "Free core • No private keys • Read-only")
+- [x] `src/components/Hero.tsx` — Update trust line
+- [x] `src/app/contribute/page.tsx` — "the app is free forever" → "The core scanner is free forever"
+- [x] `src/app/faq/page.tsx` — Update FAQ answer about pricing
 
 ### 2.2 Pricing Page
-- [ ] `src/app/pricing/page.tsx` — Three-tier card layout (Free / Pro / Sentinel)
-- [ ] `src/components/PricingCard.tsx` — Individual plan card with feature list and CTA
-- [ ] `src/components/PricingTable.tsx` — Feature comparison matrix
+- [x] `src/app/pricing/page.tsx` — Three-tier card layout (Free / Pro / Sentinel)
+- [x] `src/components/PricingCard.tsx` — Individual plan card with feature list and CTA
+- [x] `src/components/PricingTable.tsx` — Feature comparison matrix
 
 ### 2.3 Conversion Funnel UI
-- [ ] `src/components/UpgradePrompt.tsx` — Post-scan gate (wallet limit reached)
-- [ ] `src/components/ProNudge.tsx` — Value demonstration after risk results
-- [ ] `src/components/FeatureLock.tsx` — Blurred preview with "Unlock with Pro" overlay
-- [ ] `src/components/PlanBadge.tsx` — Current plan badge for header/dashboard
-- [ ] Modify `src/components/AppArea.tsx` — Add plan context, gate tabs
-- [ ] Modify `src/components/BulkRevokePanel.tsx` — Gas savings display
-- [ ] Modify `src/components/Header.tsx` — Add plan badge + "Upgrade" link
+- [x] `src/components/UpgradePrompt.tsx` — Post-scan gate (wallet limit reached)
+- [x] `src/components/ProNudge.tsx` — Value demonstration after risk results
+- [x] `src/components/FeatureLock.tsx` — Blurred preview with "Unlock with Pro" overlay
+- [x] `src/components/PlanBadge.tsx` — Current plan badge for header/dashboard
+- [x] Modify `src/components/AppArea.tsx` — Add plan context, gate tabs
+- [x] Modify `src/components/BulkRevokePanel.tsx` — Gas savings display
+- [x] Modify `src/components/Header.tsx` — Add plan badge + "Upgrade" link
 
 ### 2.4 Account & Billing Dashboard
-- [ ] `src/app/account/page.tsx` — Account overview (plan, usage, billing)
-- [ ] `src/app/account/billing/page.tsx` — Billing history, upgrade/downgrade
-- [ ] `src/app/account/keys/page.tsx` — API key management
-- [ ] `src/components/account/PlanCard.tsx` — Current plan display
-- [ ] `src/components/account/UsageChart.tsx` — Usage statistics
-- [ ] `src/components/account/ApiKeyManager.tsx` — Key CRUD UI
+- [x] `src/app/account/page.tsx` — Account overview (plan, usage, billing)
+- [x] `src/app/account/billing/page.tsx` — Billing history, upgrade/downgrade
+- [x] `src/app/account/keys/page.tsx` — API key management
+- [x] `src/components/account/PlanCard.tsx` — Current plan display
+- [x] `src/components/account/UsageChart.tsx` — Usage statistics
+- [x] `src/components/account/ApiKeyManager.tsx` — Key CRUD UI
 
 ### 2.5 Navigation Updates
-- [ ] Header: Add "Pricing" nav link, "Account" when logged in, plan badge, "Upgrade" button for free users
-- [ ] Footer: Replace "Support Us" with "Pricing" link, deprioritize donation, update messaging
+- [x] Header: Add "Pricing" nav link, "Account" when logged in, plan badge, "Upgrade" button for free users
+- [x] Footer: Replace "Support Us" with "Pricing" link, deprioritize donation, update messaging
 
 ---
 

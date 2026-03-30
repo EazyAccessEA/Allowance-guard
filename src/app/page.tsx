@@ -471,7 +471,7 @@ export default function HomePage() {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-lg text-text-secondary font-medium">
-              No private keys required • Read-only access • 100% free
+              No private keys required • Read-only access • Free core • Open source
             </p>
           </div>
         </Container>

@@ -153,7 +153,7 @@ export default function Hero({
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-semantic-success-500 rounded-full flex-shrink-0" />
-            <span>100% free</span>
+            <span>Free core • Open source</span>
           </div>
         </div>
 

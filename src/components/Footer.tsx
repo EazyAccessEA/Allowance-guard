@@ -137,6 +137,11 @@ export default function Footer() {
           >
             <ul className="space-y-4 mt-6 md:mt-6">
               <li>
+                <Link href="/pricing" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
+                  Pricing
+                </Link>
+              </li>
+              <li>
                 <Link href="/blog" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
                   Blog
                 </Link>
@@ -147,18 +152,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/tokens" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
-                  Discover Tokens
-                </Link>
-              </li>
-              <li>
                 <Link href="/features" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="/settings" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
-                  Settings
+                <Link href="/account" className="text-gray-300 hover:text-primary-accent transition-colors duration-200 block">
+                  Account
                 </Link>
               </li>
             </ul>
@@ -226,15 +226,12 @@ export default function Footer() {
                 </Badge>
                 <Badge variant="success" className="flex items-center gap-1">
                   <Shield className="w-3 h-3" />
-                  Free Forever
+                  Free Core
                 </Badge>
               </div>
               <p className="text-gray-300 text-sm max-w-2xl mx-auto md:mx-0">
-                Maintained by a small independent team and funded by{' '}
-                <Link className="text-primary-accent hover:text-primary-accent/80 transition-colors duration-150" href="/docs/contributing">
-                  donations and grants
-                </Link>
-                . No VC, no token.
+                Open-source core, always free. Premium monitoring and API access for power users and teams.
+                No VC, no token.
               </p>
             </div>
             
