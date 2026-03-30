@@ -241,24 +241,59 @@ w3m-modal w3m-close-button:hover {
 }
 
 .dark {
-  /* Dark mode support (optional) - same as light mode for consistency */
-  --background: #1a1d29;
-  --foreground: #f8fafc;
-  --muted: #94a3b8;
-  --muted-foreground: #64748b;
-  --border: #334155;
-  --input: #2d3142;
-  --primary: #8b5cf6;
-  --primary-foreground: #ffffff;
-  --secondary: #10b981;
-  --secondary-foreground: #ffffff;
-  --accent: #06b6d4;
-  --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --ring: #8b5cf6;
+  /* Dark Mode — Phase 6 Design Upgrade */
+  --obsidian: #F1F5F9;
+  --platinum: #0A0E1A;
+  --charcoal: #94A3B8;
+  --sandstone: #1E293B;
+  --warm-gray: #1E293B;
+  --navy: #0A0E1A;
+
+  --background: #0A0E1A;
+  --foreground: #F1F5F9;
+  --muted: #94A3B8;
+  --muted-foreground: #64748B;
+  --border: #1E293B;
+  --input: #1E293B;
+  --primary: #00C2B3;
+  --primary-foreground: #0A0E1A;
+  --secondary: #00C2B3;
+  --secondary-foreground: #0A0E1A;
+  --accent: #2DD4BF;
+  --accent-foreground: #0A0E1A;
+  --destructive: #F87171;
+  --destructive-foreground: #0A0E1A;
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --ring: #00C2B3;
+
+  /* Dark surfaces */
+  --surface-primary: #0A0E1A;
+  --surface-secondary: #111827;
+  --surface-tertiary: #1E293B;
+  --surface-elevated: #263244;
+
+  /* Dark shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-focus: 0 0 0 3px rgba(0, 194, 179, 0.25);
+
+  /* Glass morphism in dark mode */
+  --glass-bg: rgba(17, 24, 39, 0.7);
+  --glass-border: rgba(71, 85, 105, 0.4);
+  --glass-hover: rgba(30, 41, 59, 0.8);
+}
+
+/* Dark mode body background */
+.dark body {
+  background: linear-gradient(135deg,
+    #0A0E1A 0%,
+    #111827 25%,
+    #0F172A 50%,
+    #0A1628 75%,
+    #0A0E1A 100%
+  );
 }
 
 * {

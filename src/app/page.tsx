@@ -32,10 +32,10 @@ const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeli
 // Enhanced Error Boundary Component
 function ErrorFallback({ resetError }: { error: Error; resetError: () => void }) {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
+    <div className="min-h-screen bg-white dark:bg-[#0A0E1A] flex items-center justify-center">
       <div className="max-w-md mx-auto text-center p-6">
-        <h2 className="mobbin-heading-2 text-text-primary mb-4">Something went wrong</h2>
-        <p className="text-gray-600 mb-6">We&apos;re working to fix this issue. Please try again.</p>
+        <h2 className="mobbin-heading-2 text-text-primary dark:text-secondary-100 mb-4">Something went wrong</h2>
+        <p className="text-gray-600 dark:text-secondary-400 mb-6">We&apos;re working to fix this issue. Please try again.</p>
         <button
           onClick={resetError}
           className="bg-primary-700 text-white px-6 py-2 rounded-lg hover:bg-primary-800 transition-colors"
@@ -396,7 +396,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-[#0A0E1A]">
       {/* Hero Section - Content on top of global video/overlay */}
       <div className="relative z-20">
         <Hero
@@ -410,15 +410,15 @@ export default function HomePage() {
 
       {/* Statistics Section - Inspired by DNA Payments */}
       <CascadingScrollAnimation direction="up" distance={60} delay={200}>
-        <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light">
+        <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light dark:from-secondary-900 dark:to-[#0A0E1A]">
           <Container>
             <div className="max-w-6xl mx-auto">
               <FadeInScale delay={100}>
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-text-primary mb-4">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-text-primary dark:text-secondary-100 mb-4">
                     Trusted by Security-Conscious Users
                   </h2>
-                  <p className="text-xl text-text-secondary">
+                  <p className="text-xl text-text-secondary dark:text-secondary-400">
                     Protecting digital assets across the Web3 ecosystem
                   </p>
                 </div>
@@ -426,7 +426,7 @@ export default function HomePage() {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
               <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
                   50,000+
                 </div>
                 <div className="text-lg font-semibold text-text-primary mb-1">
@@ -438,7 +438,7 @@ export default function HomePage() {
               </div>
               
               <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
                   2M+
                 </div>
                 <div className="text-lg font-semibold text-text-primary mb-1">
@@ -450,7 +450,7 @@ export default function HomePage() {
               </div>
               
               <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
                   24/7
                 </div>
                 <div className="text-lg font-semibold text-text-primary mb-1">
@@ -467,10 +467,10 @@ export default function HomePage() {
       </CascadingScrollAnimation>
 
       {/* Trust Indicators */}
-      <Section className="py-8 bg-white">
+      <Section className="py-8 bg-white dark:bg-[#0A0E1A]">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-text-secondary font-medium">
+            <p className="text-lg text-text-secondary dark:text-secondary-400 font-medium">
               No private keys required • Read-only access • Free core • Open source
             </p>
           </div>
@@ -479,14 +479,14 @@ export default function HomePage() {
 
       {/* How It Works Section */}
       <CascadingScrollAnimation direction="up" distance={80} delay={400}>
-      <Section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <Section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0A0E1A]">
         <Container>
             <FadeInScale delay={200}>
           <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
               How Allowance Guard Works
             </h2>
-            <p className="text-xl text-text-secondary leading-relaxed">
+            <p className="text-xl text-text-secondary dark:text-secondary-400 leading-relaxed">
               Three simple steps to secure your wallet and protect your assets.
             </p>
           </div>
@@ -494,7 +494,7 @@ export default function HomePage() {
 
             <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
             <div className="text-center px-6 py-8">
-              <div className="w-20 h-20 bg-primary-accent/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+              <div className="w-20 h-20 bg-primary-accent/10 dark:bg-primary-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
                 <span className="text-3xl font-bold text-primary-accent">1</span>
               </div>
               <h3 className="text-2xl font-bold text-text-primary mb-6">Connect & Scan</h3>
@@ -504,7 +504,7 @@ export default function HomePage() {
             </div>
             
             <div className="text-center px-6 py-8">
-              <div className="w-20 h-20 bg-primary-accent/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+              <div className="w-20 h-20 bg-primary-accent/10 dark:bg-primary-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
                 <span className="text-3xl font-bold text-primary-accent">2</span>
               </div>
               <h3 className="text-2xl font-bold text-text-primary mb-6">Analyze & Understand</h3>
@@ -514,7 +514,7 @@ export default function HomePage() {
               </div>
 
             <div className="text-center px-6 py-8">
-              <div className="w-20 h-20 bg-primary-accent/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+              <div className="w-20 h-20 bg-primary-accent/10 dark:bg-primary-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
                 <span className="text-3xl font-bold text-primary-accent">3</span>
               </div>
               <h3 className="text-2xl font-bold text-text-primary mb-6">Act & Secure</h3>
@@ -534,15 +534,15 @@ export default function HomePage() {
 
       {/* Features Section */}
       <CascadingScrollAnimation direction="up" distance={70} delay={600}>
-      <Section className="py-16 sm:py-20 lg:py-24 bg-background-light">
+      <Section className="py-16 sm:py-20 lg:py-24 bg-background-light dark:bg-secondary-900/50">
         <Container>
           <div className="max-w-4xl mx-auto">
               <FadeInScale delay={300}>
             <div className="mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
                 Built for Security & Clarity
               </h2>
-              <p className="text-xl text-text-secondary leading-relaxed text-justify">
+              <p className="text-xl text-text-secondary dark:text-secondary-400 leading-relaxed text-justify">
                 Every feature is designed with one goal: keeping your assets secure.
               </p>
             </div>
@@ -588,7 +588,7 @@ export default function HomePage() {
 
       {/* Final CTA Section - Dark Background */}
       <CascadingScrollAnimation direction="up" distance={80} delay={800}>
-        <Section className="py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
+        <Section className="py-16 sm:py-20 lg:py-24 bg-secondary-900 dark:bg-[#060A14] text-white">
         <Container>
             <FadeInScale delay={400}>
               <div className="max-w-4xl mx-auto text-center">
@@ -631,11 +631,11 @@ export default function HomePage() {
 
       {/* Testimonials Section - Inspired by DNA Payments */}
       <CascadingScrollAnimation direction="up" distance={60} delay={1000}>
-        <Section className="py-16 sm:py-20 lg:py-24 bg-white">
+        <Section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0A0E1A]">
           <Container>
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary leading-tight mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
                 Hear Why Our Users Choose Allowance Guard
               </h2>
               <p className="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto">
@@ -644,9 +644,9 @@ export default function HomePage() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-              <div className="bg-background-light rounded-2xl p-8 border border-border-primary">
+              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
                     <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
@@ -661,9 +661,9 @@ export default function HomePage() {
                 </blockquote>
               </div>
 
-              <div className="bg-background-light rounded-2xl p-8 border border-border-primary">
+              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
                     <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
@@ -678,9 +678,9 @@ export default function HomePage() {
                 </blockquote>
               </div>
 
-              <div className="bg-background-light rounded-2xl p-8 border border-border-primary">
+              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
                     <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
@@ -695,9 +695,9 @@ export default function HomePage() {
                 </blockquote>
               </div>
 
-              <div className="bg-background-light rounded-2xl p-8 border border-border-primary">
+              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
                     <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                     </svg>
@@ -712,9 +712,9 @@ export default function HomePage() {
                 </blockquote>
               </div>
 
-              <div className="bg-background-light rounded-2xl p-8 border border-border-primary">
+              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
                     <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -729,9 +729,9 @@ export default function HomePage() {
                 </blockquote>
               </div>
 
-              <div className="bg-background-light rounded-2xl p-8 border border-border-primary">
+              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
                 <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
                     <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
                     </svg>
@@ -789,7 +789,7 @@ export default function HomePage() {
       )}
 
       {/* Trust Section - Full Screen Width - Dark Background */}
-      <div className="py-12 sm:py-16 bg-gray-900">
+      <div className="py-12 sm:py-16 bg-secondary-900 dark:bg-[#060A14]">
         <div className="w-full mb-6">
           <p className="text-base text-gray-300 font-medium text-center">
               Trusted by security-conscious users across

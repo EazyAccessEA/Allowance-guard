@@ -7,6 +7,7 @@ import RpcStatusBanner from '@/components/RpcStatusBanner'
 import HeaderWrapper from '@/components/HeaderWrapper'
 import Footer from '@/components/Footer'
 import RollbarProvider from '@/components/RollbarProvider'
+import { ThemeProvider } from '@/components/ThemeProvider'
 // import PerformanceDashboard from '@/components/PerformanceDashboard' // Removed
 import CookieBanner from '@/components/CookieBanner'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
@@ -83,7 +84,7 @@ export default function RootLayout({
 }) {
 
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Resource hints for better performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -245,6 +246,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
+        <ThemeProvider>
         <RollbarProvider>
           <AppKit>
             <ContextProvider>
@@ -259,6 +261,7 @@ export default function RootLayout({
             </ContextProvider>
           </AppKit>
         </RollbarProvider>
+        </ThemeProvider>
         <style dangerouslySetInnerHTML={{
           __html: `
             :root { 
