@@ -3,6 +3,12 @@ import { pgTable, text, timestamp, integer, jsonb, uuid, bigserial, index, uniqu
 // Export token curation schema
 export * from './schema/tokens'
 
+// Export subscription & billing schemas
+export * from './schema/subscriptions'
+export * from './schema/api-keys'
+export * from './schema/usage'
+export * from './schema/plan-limits'
+
 export const donations = pgTable('donations', {
   id: uuid('id').defaultRandom().primaryKey(),
   stripeSessionId: text('stripe_session_id').notNull().unique(),
