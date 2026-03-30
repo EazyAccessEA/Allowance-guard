@@ -1,6 +1,6 @@
 # AllowanceGuard Revenue Engine — Implementation Plan
 
-> **Status**: In Progress — Phase 3 next
+> **Status**: In Progress — Phase 4 next
 > **Branch**: `claude/explore-allowance-guard-MaFYK`
 > **Started**: 2026-03-30
 
@@ -129,25 +129,43 @@
 
 ---
 
-## Phase 3: B2B API Product
+## Phase 3: B2B API Product  ✅ COMPLETE (2026-03-30)
+
+> **Commit**: Phase 3 — 14 new files
+>
+> **Files created**:
+> - `src/lib/api-response.ts` — Standardized API response envelope `{ data, error, meta }`
+> - `src/middleware/api-rate-limit.ts` — Per-key burst rate limiting (sliding window)
+> - `src/app/api/v1/health/route.ts` — Health check (public, no auth)
+> - `src/app/api/v1/chains/route.ts` — List supported chains
+> - `src/app/api/v1/scan/route.ts` — Trigger wallet scan
+> - `src/app/api/v1/scan/[id]/route.ts` — Check scan status
+> - `src/app/api/v1/allowances/route.ts` — Get allowances with filtering/pagination
+> - `src/app/api/v1/risk-score/route.ts` — Aggregated risk score (0-100) with breakdown
+> - `src/app/api/v1/risk-check/route.ts` — Pre-signing approval risk assessment
+> - `src/app/api/v1/simulate/route.ts` — Time Machine revocation simulation
+> - `src/app/docs/api-reference/page.tsx` — Interactive API reference documentation
+> - `src/components/docs/ApiEndpoint.tsx` — Expandable endpoint documentation block
+> - `src/components/docs/CodeExample.tsx` — Multi-language code tabs (JS/Python/cURL)
+> - `src/components/docs/ApiPlayground.tsx` — Interactive try-it sandbox
 
 ### 3.1 Public API v1 Endpoints
-- [ ] `src/lib/api-response.ts` — Standardized response helpers `{ data, error, meta: { requestId, rateLimit } }`
-- [ ] `src/middleware/api-rate-limit.ts` — Per-key rate limiting
-- [ ] `GET /api/v1/health/route.ts` — Health check
-- [ ] `GET /api/v1/chains/route.ts` — Supported chains
-- [ ] `POST /api/v1/scan/route.ts` — Trigger wallet scan
-- [ ] `GET /api/v1/scan/[id]/route.ts` — Check scan status
-- [ ] `GET /api/v1/allowances/route.ts` — Get allowances for wallet
-- [ ] `GET /api/v1/risk-score/route.ts` — Get risk score for wallet
-- [ ] `POST /api/v1/risk-check/route.ts` — Pre-signing approval risk check
-- [ ] `POST /api/v1/simulate/route.ts` — Time Machine simulation
+- [x] `src/lib/api-response.ts` — Standardized response helpers `{ data, error, meta: { requestId, rateLimit } }`
+- [x] `src/middleware/api-rate-limit.ts` — Per-key rate limiting
+- [x] `GET /api/v1/health/route.ts` — Health check
+- [x] `GET /api/v1/chains/route.ts` — Supported chains
+- [x] `POST /api/v1/scan/route.ts` — Trigger wallet scan
+- [x] `GET /api/v1/scan/[id]/route.ts` — Check scan status
+- [x] `GET /api/v1/allowances/route.ts` — Get allowances for wallet
+- [x] `GET /api/v1/risk-score/route.ts` — Get risk score for wallet
+- [x] `POST /api/v1/risk-check/route.ts` — Pre-signing approval risk check
+- [x] `POST /api/v1/simulate/route.ts` — Time Machine simulation
 
 ### 3.2 API Documentation
-- [ ] `src/app/docs/api-reference/page.tsx` — Interactive API docs
-- [ ] `src/components/docs/ApiEndpoint.tsx` — Endpoint documentation block
-- [ ] `src/components/docs/CodeExample.tsx` — Multi-language code tabs
-- [ ] `src/components/docs/ApiPlayground.tsx` — Interactive try-it sandbox
+- [x] `src/app/docs/api-reference/page.tsx` — Interactive API docs
+- [x] `src/components/docs/ApiEndpoint.tsx` — Endpoint documentation block
+- [x] `src/components/docs/CodeExample.tsx` — Multi-language code tabs
+- [x] `src/components/docs/ApiPlayground.tsx` — Interactive try-it sandbox
 
 ---
 
