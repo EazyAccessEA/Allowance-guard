@@ -14,6 +14,9 @@ export * from './schema/monitoring'
 export * from './schema/history'
 export * from './schema/policies'
 
+// Export Phase 5 schemas
+export * from './schema/webhooks'
+
 export const donations = pgTable('donations', {
   id: uuid('id').defaultRandom().primaryKey(),
   stripeSessionId: text('stripe_session_id').notNull().unique(),

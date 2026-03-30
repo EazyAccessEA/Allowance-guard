@@ -1,0 +1,300 @@
+'use client'
+
+import { useState, useEffect, useCallback, use } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
+import { Badge } from '@/components/ui/Badge'
+import { Alert } from '@/components/ui/Alert'
+import TeamPortfolioView from '@/components/team/TeamPortfolioView'
+import TeamActivityLog from '@/components/team/TeamActivityLog'
+import {
+  Users,
+  Wallet,
+  Shield,
+  Activity,
+  Settings,
+  UserPlus,
+  Download,
+  RefreshCw,
+} from 'lucide-react'
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+interface TeamInfo {
+  id: number
+  name: string
+  description: string | null
+  role: string
+  member_count: number
+  wallet_count: number
+  created_at: string
+}
+
+interface TeamMember {
+  user_id: number
+  email: string
+  name: string | null
+  role: string
+  created_at: string
+}
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
+export default function TeamDashboardPage({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id: teamId } = use(params)
+
+  const [team, setTeam] = useState<TeamInfo | null>(null)
+  const [members, setMembers] = useState<TeamMember[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<'portfolio' | 'activity' | 'members'>('portfolio')
+
+  const loadTeam = useCallback(async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const [teamRes, membersRes] = await Promise.all([
+        fetch(`/api/teams/details?teamId=${teamId}`),
+        fetch(`/api/teams/members?teamId=${teamId}`),
+      ])
+
+      if (!teamRes.ok) {
+        const data = await teamRes.json()
+        setError(data.error ?? 'Failed to load team')
+        return
+      }
+
+      const teamData = await teamRes.json()
+      const membersData = await membersRes.json()
+
+      setTeam(teamData.team)
+      setMembers(membersData.members ?? [])
+    } catch {
+      setError('Failed to load team data')
+    } finally {
+      setLoading(false)
+    }
+  }, [teamId])
+
+  useEffect(() => { loadTeam() }, [loadTeam])
+
+  const canManage = team?.role === 'owner' || team?.role === 'admin'
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="animate-pulse space-y-6">
+          <div className="h-8 bg-background-secondary rounded w-48" />
+          <div className="h-32 bg-background-secondary rounded" />
+          <div className="h-64 bg-background-secondary rounded" />
+        </div>
+      </div>
+    )
+  }
+
+  if (error || !team) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <Alert variant="danger">
+          {error ?? 'Team not found'}
+        </Alert>
+      </div>
+    )
+  }
+
+  const roleColor = (role: string) => {
+    switch (role) {
+      case 'owner': return 'danger' as const
+      case 'admin': return 'warning' as const
+      case 'editor': return 'info' as const
+      default: return 'secondary' as const
+    }
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+      {/* Team Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-bold text-text-primary">{team.name}</h1>
+            <Badge variant={roleColor(team.role)}>
+              {team.role.charAt(0).toUpperCase() + team.role.slice(1)}
+            </Badge>
+          </div>
+          {team.description && (
+            <p className="text-sm text-text-secondary mt-1">{team.description}</p>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <Button onClick={loadTeam} variant="ghost" size="sm">
+            <RefreshCw className="w-4 h-4 mr-1" />
+            Refresh
+          </Button>
+          {canManage && (
+            <Button
+              onClick={() => window.location.href = `/api/compliance/export?teamId=${teamId}`}
+              variant="secondary"
+              size="sm"
+            >
+              <Download className="w-4 h-4 mr-1" />
+              Export Report
+            </Button>
+          )}
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center gap-2">
+              <Users className="w-5 h-5 text-primary-accent" />
+              <div>
+                <div className="text-2xl font-bold">{team.member_count}</div>
+                <div className="text-xs text-text-secondary">Members</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center gap-2">
+              <Wallet className="w-5 h-5 text-primary-accent" />
+              <div>
+                <div className="text-2xl font-bold">{team.wallet_count}</div>
+                <div className="text-xs text-text-secondary">Wallets</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-green-500" />
+              <div>
+                <div className="text-2xl font-bold">Sentinel</div>
+                <div className="text-xs text-text-secondary">Plan</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-4">
+            <div className="flex items-center gap-2">
+              <Activity className="w-5 h-5 text-amber-500" />
+              <div>
+                <div className="text-2xl font-bold">Active</div>
+                <div className="text-xs text-text-secondary">Status</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Tab Navigation */}
+      <div className="flex gap-1 border-b border-border-primary">
+        <button
+          onClick={() => setActiveTab('portfolio')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'portfolio'
+              ? 'border-primary-accent text-primary-accent'
+              : 'border-transparent text-text-secondary hover:text-text-primary'
+          }`}
+        >
+          <Wallet className="w-4 h-4 inline mr-1.5" />
+          Portfolio
+        </button>
+        <button
+          onClick={() => setActiveTab('activity')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'activity'
+              ? 'border-primary-accent text-primary-accent'
+              : 'border-transparent text-text-secondary hover:text-text-primary'
+          }`}
+        >
+          <Activity className="w-4 h-4 inline mr-1.5" />
+          Activity Log
+        </button>
+        <button
+          onClick={() => setActiveTab('members')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'members'
+              ? 'border-primary-accent text-primary-accent'
+              : 'border-transparent text-text-secondary hover:text-text-primary'
+          }`}
+        >
+          <Users className="w-4 h-4 inline mr-1.5" />
+          Members
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === 'portfolio' && (
+        <TeamPortfolioView teamId={Number(teamId)} />
+      )}
+
+      {activeTab === 'activity' && (
+        <TeamActivityLog teamId={Number(teamId)} />
+      )}
+
+      {activeTab === 'members' && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                Team Members
+              </CardTitle>
+              {canManage && (
+                <Button variant="primary" size="sm">
+                  <UserPlus className="w-4 h-4 mr-1" />
+                  Invite
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          <CardContent>
+            {members.length === 0 ? (
+              <p className="text-sm text-text-secondary">No members found</p>
+            ) : (
+              <div className="space-y-3">
+                {members.map((m) => (
+                  <div
+                    key={m.user_id}
+                    className="flex items-center justify-between p-3 rounded-lg border border-border-primary"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
+                        <span className="text-sm font-medium text-primary-accent">
+                          {(m.name ?? m.email)?.[0]?.toUpperCase() ?? '?'}
+                        </span>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-text-primary">
+                          {m.name ?? m.email}
+                        </div>
+                        <div className="text-xs text-text-tertiary">{m.email}</div>
+                      </div>
+                    </div>
+                    <Badge variant={roleColor(m.role)}>
+                      {m.role.charAt(0).toUpperCase() + m.role.slice(1)}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  )
+}
