@@ -32,18 +32,21 @@ const DataVisualizationDashboard = dynamic(() => import('@/components/DataVisual
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />
 })
 import { useState, useEffect, useCallback } from 'react'
-import { 
-  Shield, 
-  Eye, 
-  Download, 
-  FileText, 
-  Settings, 
+import {
+  Shield,
+  Eye,
+  Download,
+  FileText,
+  Settings,
   AlertTriangle,
   CheckCircle,
   RefreshCw,
   LogOut
 } from 'lucide-react'
 import { useDisconnect } from 'wagmi'
+import PlanBadge from '@/components/PlanBadge'
+import ProNudge from '@/components/ProNudge'
+import FeatureLock from '@/components/FeatureLock'
 
 interface AppAreaProps {
   isConnected: boolean
@@ -81,6 +84,8 @@ export default function AppArea({
   const [activeTab, setActiveTab] = useState<'allowances' | 'security' | 'analytics'>('allowances')
   const [selectedRows, setSelectedRows] = useState<typeof rows>([])
   const [isDisconnecting, setIsDisconnecting] = useState(false)
+  // TODO: Replace with actual user plan from session/API
+  const userPlan: 'free' | 'pro' | 'sentinel' = 'free'
 
   const loadMonitor = useCallback(async () => {
     const target = selectedWallet || connectedAddress
@@ -137,7 +142,10 @@ export default function AppArea({
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
             <div>
-              <h2 className="mobbin-heading-1 text-text-primary mb-2">Security Dashboard</h2>
+              <div className="flex items-center gap-3">
+                <h2 className="mobbin-heading-1 text-text-primary mb-2">Security Dashboard</h2>
+                <PlanBadge plan={userPlan} size="sm" />
+              </div>
               <p className="mobbin-body text-text-secondary">Monitor and manage your wallet&apos;s token approvals</p>
             </div>
             <div className="flex gap-2">
@@ -259,6 +267,11 @@ export default function AppArea({
               </CardContent>
             </Card>
 
+            {/* Pro Nudge for free users */}
+            {userPlan === 'free' && (
+              <ProNudge variant="monitoring" />
+            )}
+
             {/* Security Tips */}
             <Card>
               <CardHeader>
@@ -354,35 +367,50 @@ export default function AppArea({
                         </p>
                       </div>
                       {currentWallet && (
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="flex items-center gap-2"
-                            onClick={() => window.open(`/api/export/csv?wallet=${currentWallet}&riskOnly=true`, '_blank')}
-                          >
-                            <Download className="w-4 h-4" />
-                            CSV
-                          </Button>
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="flex items-center gap-2"
-                            onClick={() => window.open(`/api/export/pdf?wallet=${currentWallet}&riskOnly=true`, '_blank')}
-                          >
-                            <FileText className="w-4 h-4" />
-                            PDF
-                          </Button>
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="flex items-center gap-2"
-                            onClick={() => window.open(`/report/${currentWallet}`, '_blank')}
-                          >
-                            <Eye className="w-4 h-4" />
-                            Report
-                          </Button>
-                        </div>
+                        userPlan === 'free' ? (
+                          <FeatureLock feature="Export reports" requiredPlan="pro">
+                            <div className="flex items-center gap-2">
+                              <Button variant="secondary" size="sm" className="flex items-center gap-2" disabled>
+                                <Download className="w-4 h-4" />
+                                CSV
+                              </Button>
+                              <Button variant="secondary" size="sm" className="flex items-center gap-2" disabled>
+                                <FileText className="w-4 h-4" />
+                                PDF
+                              </Button>
+                            </div>
+                          </FeatureLock>
+                        ) : (
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="flex items-center gap-2"
+                              onClick={() => window.open(`/api/export/csv?wallet=${currentWallet}&riskOnly=true`, '_blank')}
+                            >
+                              <Download className="w-4 h-4" />
+                              CSV
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="flex items-center gap-2"
+                              onClick={() => window.open(`/api/export/pdf?wallet=${currentWallet}&riskOnly=true`, '_blank')}
+                            >
+                              <FileText className="w-4 h-4" />
+                              PDF
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="flex items-center gap-2"
+                              onClick={() => window.open(`/report/${currentWallet}`, '_blank')}
+                            >
+                              <Eye className="w-4 h-4" />
+                              Report
+                            </Button>
+                          </div>
+                        )
                       )}
                     </div>
                   </CardHeader>

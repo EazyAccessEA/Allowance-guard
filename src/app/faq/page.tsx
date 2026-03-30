@@ -119,7 +119,7 @@ export default function FAQPage() {
                 <div className="p-8">
                   <h3 className="mobbin-heading-3 text-text-primary mb-6">How much does it cost?</h3>
                   <p className="mobbin-body-large text-text-secondary leading-relaxed">
-                    The core functionality of Allowance Guard is completely free to use. We believe basic Web3 security should be accessible to everyone. Our project is sustained through voluntary contributions from our community to fund development and infrastructure costs. We do not charge subscription fees, premium tiers, or hidden costs. The only costs you may encounter are the standard gas fees required for blockchain transactions when revoking allowances, which are paid directly to the network validators, not to us.
+                    The core scanner is free and open source — always. We believe basic Web3 security should be accessible to everyone. For power users and teams, we offer Pro and Sentinel plans with advanced features like continuous monitoring, batch revocation, multi-chain portfolio views, and team dashboards. We also offer a B2B API for developers. The only additional costs for free-tier users are the standard gas fees required for blockchain transactions when revoking allowances, which are paid directly to the network validators, not to us.
                   </p>
                 </div>
               </div>

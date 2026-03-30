@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/Badge'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import MobileNavigation from '@/components/MobileNavigation'
+import PlanBadge from '@/components/PlanBadge'
 
 interface HeaderProps {
   isConnected: boolean
@@ -82,7 +83,7 @@ export default function Header({ isConnected }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation - Mobbin Spacing */}
-          <nav className="hidden lg:flex items-center gap-2 xl:gap-3 flex-1 justify-center max-w-lg">
+          <nav className="hidden lg:flex items-center gap-2 xl:gap-3 flex-1 justify-center max-w-xl">
             <NavLink href="/blog" current={pathname?.startsWith('/blog') ?? false}>
               Blog
             </NavLink>
@@ -92,6 +93,9 @@ export default function Header({ isConnected }: HeaderProps) {
             <NavLink href="/features" current={pathname === '/features'}>
               Features
             </NavLink>
+            <NavLink href="/pricing" current={pathname === '/pricing'}>
+              Pricing
+            </NavLink>
             <NavLink href="/settings" current={pathname === '/settings'}>
               Settings
             </NavLink>
@@ -100,11 +104,28 @@ export default function Header({ isConnected }: HeaderProps) {
           {/* Desktop Actions - Mobbin Touch Targets */}
           <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             {isConnected ? (
-              <Badge variant="success" size="sm" className="mobbin-hover-lift">
-                Connected
-              </Badge>
+              <>
+                <PlanBadge plan="free" size="sm" />
+                <Link
+                  href="/account"
+                  className="px-3 py-1.5 mobbin-body-small font-medium text-text-secondary hover:text-text-primary transition-colors duration-150"
+                >
+                  Account
+                </Link>
+                <Badge variant="success" size="sm" className="mobbin-hover-lift">
+                  Connected
+                </Badge>
+              </>
             ) : (
-              <ClientConnectButton variant="primary" className="mobbin-hover-lift" />
+              <>
+                <Link
+                  href="/pricing"
+                  className="px-4 py-2 mobbin-body-small font-medium text-primary-700 hover:text-primary-800 bg-primary-50 hover:bg-primary-100 rounded-lg transition-colors duration-150 mobbin-hover-lift"
+                >
+                  Upgrade
+                </Link>
+                <ClientConnectButton variant="primary" className="mobbin-hover-lift" />
+              </>
             )}
           </div>
 

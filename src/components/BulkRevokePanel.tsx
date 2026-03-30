@@ -6,13 +6,14 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Alert } from '@/components/ui/Alert'
-import { 
-  AlertTriangle, 
-  Clock, 
+import {
+  AlertTriangle,
+  Clock,
   Zap,
   ChevronDown,
   ChevronUp,
-  X
+  X,
+  TrendingDown
 } from 'lucide-react'
 
 type AllowanceRow = {
@@ -340,6 +341,23 @@ export default function BulkRevokePanel({
                 </div>
               </Alert>
             )}
+          </div>
+        )}
+
+        {/* Gas Savings Estimate */}
+        {selectedRows.length > 1 && (
+          <div className="border-t border-neutral-borders pt-4 mb-4">
+            <div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <TrendingDown className="w-5 h-5 text-green-600 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-green-800">
+                  Batch revoke saves gas
+                </p>
+                <p className="text-xs text-green-600">
+                  Revoking {selectedRows.length} approvals in batch can save up to ~{Math.round(selectedRows.length * 0.15 * 100)}% on total gas fees compared to individual transactions.
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
