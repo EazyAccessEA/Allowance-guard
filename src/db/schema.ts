@@ -9,6 +9,11 @@ export * from './schema/api-keys'
 export * from './schema/usage'
 export * from './schema/plan-limits'
 
+// Export Phase 4 schemas
+export * from './schema/monitoring'
+export * from './schema/history'
+export * from './schema/policies'
+
 export const donations = pgTable('donations', {
   id: uuid('id').defaultRandom().primaryKey(),
   stripeSessionId: text('stripe_session_id').notNull().unique(),
