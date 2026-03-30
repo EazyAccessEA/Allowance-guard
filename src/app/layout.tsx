@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import ContextProvider from '@/context'
 import { LighthouseInitializer } from '@/components/LighthouseInitializer'
@@ -20,16 +20,28 @@ export const revalidate = 3600 // 1 hour ISR
 export const fetchCache = 'force-cache'
 export const runtime = 'nodejs'
 
-const inter = Inter({ 
-  subsets: ['latin'],
+const inter = localFont({
+  src: [
+    { path: '../../public/fonts/Inter_18pt-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/Inter_18pt-Italic.ttf', weight: '400', style: 'italic' },
+    { path: '../../public/fonts/Inter_18pt-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/Inter_18pt-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/Inter_18pt-Bold.ttf', weight: '700', style: 'normal' },
+    { path: '../../public/fonts/Inter_18pt-ExtraBold.ttf', weight: '800', style: 'normal' },
+  ],
   display: 'swap',
-  preload: true
+  preload: true,
 })
 
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ['latin'],
+const jetbrainsMono = localFont({
+  src: [
+    { path: '../../public/fonts/JetBrainsMono-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-Italic.ttf', weight: '400', style: 'italic' },
+    { path: '../../public/fonts/JetBrainsMono-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/JetBrainsMono-Bold.ttf', weight: '700', style: 'normal' },
+  ],
   display: 'swap',
-  preload: true
+  preload: true,
 })
 
 export const viewport: Viewport = {
@@ -87,8 +99,6 @@ export default function RootLayout({
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Resource hints for better performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://api.rollbar.com" />
         <link rel="dns-prefetch" href="https://www.allowanceguard.com" />
         <link rel="dns-prefetch" href="https://vercel.com" />
