@@ -90,7 +90,7 @@ export async function POST(req: Request) {
           customerId: invoice.customer,
         })
 
-        await auditWebhook('stripe', 'invoice.payment_succeeded', invoice.id, {
+        await auditWebhook('stripe', 'invoice.payment_succeeded', invoice.id ?? null, {
           amount: invoice.amount_paid,
           currency: invoice.currency,
         })
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
           customerId: invoice.customer,
         })
 
-        await auditWebhook('stripe', 'invoice.payment_failed', invoice.id, {
+        await auditWebhook('stripe', 'invoice.payment_failed', invoice.id ?? null, {
           amount: invoice.amount_due,
           currency: invoice.currency,
           attemptCount: invoice.attempt_count,
