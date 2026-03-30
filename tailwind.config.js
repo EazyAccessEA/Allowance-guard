@@ -279,6 +279,21 @@ module.exports = {
         'focus-danger': '0 0 0 3px rgba(239, 68, 68, 0.1)',
         'focus-success': '0 0 0 3px rgba(34, 197, 94, 0.1)',
         'focus-info': '0 0 0 3px rgba(14, 165, 233, 0.1)',
+        // Glass morphism shadows
+        'glass': '0 8px 32px rgba(0, 0, 0, 0.08)',
+        'glass-lg': '0 16px 48px rgba(0, 0, 0, 0.12)',
+        // Dark mode shadows
+        'dark-subtle': '0 1px 3px rgba(0, 0, 0, 0.3)',
+        'dark-medium': '0 4px 6px rgba(0, 0, 0, 0.3)',
+        'dark-large': '0 10px 15px rgba(0, 0, 0, 0.4)',
+        // Glow effects
+        'glow-primary': '0 0 20px rgba(0, 194, 179, 0.3)',
+        'glow-primary-lg': '0 0 40px rgba(0, 194, 179, 0.2)',
+      },
+      backdropBlur: {
+        'xs': '2px',
+        'glass': '12px',
+        'glass-lg': '20px',
       },
       animation: {
         // Enhanced Motion System - Sketch-Inspired
@@ -289,13 +304,20 @@ module.exports = {
         'button-press': 'buttonPress 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         'modal-in': 'modalIn 250ms cubic-bezier(0.4, 0, 0.2, 1)',
         'tab-switch': 'tabSwitch 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-        
+
         // Sketch-inspired additional animations
         'sketch-fade-in': 'fadeIn 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         'sketch-slide-up': 'slideUp 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         'sketch-scale-in': 'scaleIn 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         'sketch-bounce': 'bounce 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55)',
         'sketch-pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+
+        // Mesh gradient animation
+        'mesh-shift': 'meshShift 15s ease infinite',
+        // Scroll reveal
+        'scroll-reveal': 'scrollReveal 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        // Glow pulse
+        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -337,6 +359,18 @@ module.exports = {
         pulse: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.5' },
+        },
+        meshShift: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+        scrollReveal: {
+          '0%': { opacity: '0', transform: 'translateY(30px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        glowPulse: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(0, 194, 179, 0.15)' },
+          '50%': { boxShadow: '0 0 40px rgba(0, 194, 179, 0.3)' },
         },
       },
       // Professional Component Styles
