@@ -13,7 +13,7 @@ AllowanceGuard is a **Web3 wallet security platform** that helps users monitor, 
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | Next.js 15 (App Router, Turbopack) |
+| Framework | Next.js 15.5 (App Router, Turbopack) |
 | Language | TypeScript 5.0, React 19 |
 | Styling | Tailwind CSS 3.4 + CSS custom properties |
 | Database | PostgreSQL (Neon serverless) via Drizzle ORM |
@@ -197,8 +197,8 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 
 ### Typography
 - **Headings**: Satoshi (bold, tight letter-spacing)
-- **Body**: Inter (regular)
-- **Mono**: JetBrains Mono (code, wallet addresses, token amounts)
+- **Body**: Inter (regular) — self-hosted via `next/font/local` from `public/fonts/`
+- **Mono**: JetBrains Mono (code, wallet addresses, token amounts) — self-hosted via `next/font/local` from `public/fonts/`
 
 ### Motion
 - Fast: 150ms (button interactions)
@@ -265,36 +265,45 @@ pnpm run migrate      # Run database migrations
 | Unique | Time Machine, Batch Revoke, Gas Savings | Browser Extension, 100 chains | Real-time tx simulation |
 | Revenue | Subscriptions + API + Enterprise | Unsolved | B2B contracts |
 
-## Implementation Priority
+## Implementation Status
 
-### Phase 1 — Subscription Infrastructure (NOW)
+> All 6 phases are **complete**. See `IMPLEMENTATION_PLAN.md` for full details.
+
+### Phase 1 — Subscription Infrastructure ✅
 - Database schemas (subscriptions, api_keys, usage, plan_limits)
 - Plan definitions and feature gating
 - Stripe billing integration
 - API key system
 
-### Phase 2 — Messaging & UI
-- Remove "Free Forever" messaging
+### Phase 2 — Messaging & UI ✅
+- Removed "Free Forever" messaging
 - Pricing page
 - Upgrade prompts and feature locks
 - Account/billing dashboard
 
-### Phase 3 — B2B API
+### Phase 3 — B2B API ✅
 - Public REST API v1 endpoints
 - API key authentication
 - Per-key rate limiting
 - API documentation
 
-### Phase 4 — Pro Features
+### Phase 4 — Pro Features ✅
 - Continuous monitoring service
 - Historical timeline
 - Gas savings calculator
 - Automated revocation rules
 
-### Phase 5 — Institutional
+### Phase 5 — Institutional ✅
 - Team dashboard expansion
 - Compliance audit export
 - Webhook system for integrations
+
+### Phase 6 — Design Upgrade ✅
+- Dark mode system with theme provider
+- Glassmorphism card system
+- Navigation redesign (floating pill nav)
+- Animated hero background
+- Radial gauge for wallet security score
 
 ## Do Not
 
