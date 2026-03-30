@@ -4,39 +4,40 @@ import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-// Mobbin-Inspired Card Variants
+// Mobbin-Inspired Card Variants with Glassmorphism
 const cardVariants = cva(
-  // Base styles - Mobbin-inspired interactions and states
-  'rounded-base border bg-background-primary text-text-primary shadow-sm transition-all duration-150 hover:transition-all hover:duration-150',
+  // Base styles with dark mode support
+  'rounded-base border bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100 shadow-sm dark:shadow-dark-subtle transition-all duration-150',
   {
     variants: {
       variant: {
-        // Default: Mobbin-inspired clean card
-        default: 'border-border-primary hover:border-border-secondary',
-        elevated: 'shadow-md hover:shadow-lg active:shadow-md',
-        outlined: 'border-2 border-border-primary shadow-none hover:border-border-secondary',
-        ghost: 'border-none shadow-none bg-transparent hover:bg-background-secondary',
-        // Mobbin-inspired semantic variants
-        success: 'border-semantic-success-200 bg-semantic-success-50 hover:border-semantic-success-300 hover:bg-semantic-success-100',
-        warning: 'border-semantic-warning-200 bg-semantic-warning-50 hover:border-semantic-warning-300 hover:bg-semantic-warning-100',
-        danger: 'border-semantic-error-200 bg-semantic-error-50 hover:border-semantic-error-300 hover:bg-semantic-error-100',
-        info: 'border-semantic-info-200 bg-semantic-info-50 hover:border-semantic-info-300 hover:bg-semantic-info-100',
-        // Mobbin-inspired additional variants
-        subtle: 'border-neutral-200 bg-neutral-50 hover:border-neutral-300 hover:bg-neutral-100',
-        accent: 'border-primary-200 bg-primary-50 hover:border-primary-300 hover:bg-primary-100',
+        // Default: Clean card with dark mode
+        default: 'border-border-primary dark:border-secondary-700 hover:border-border-secondary dark:hover:border-secondary-600',
+        elevated: 'shadow-md dark:shadow-dark-medium hover:shadow-lg dark:hover:shadow-dark-large active:shadow-md',
+        outlined: 'border-2 border-border-primary dark:border-secondary-600 shadow-none hover:border-border-secondary dark:hover:border-secondary-500',
+        ghost: 'border-none shadow-none bg-transparent hover:bg-background-secondary dark:hover:bg-secondary-800',
+        // Semantic variants with dark mode
+        success: 'border-semantic-success-200 dark:border-semantic-success-800 bg-semantic-success-50 dark:bg-semantic-success-900/30 hover:border-semantic-success-300 dark:hover:border-semantic-success-700',
+        warning: 'border-semantic-warning-200 dark:border-semantic-warning-800 bg-semantic-warning-50 dark:bg-semantic-warning-900/30 hover:border-semantic-warning-300 dark:hover:border-semantic-warning-700',
+        danger: 'border-semantic-error-200 dark:border-semantic-error-800 bg-semantic-error-50 dark:bg-semantic-error-900/30 hover:border-semantic-error-300 dark:hover:border-semantic-error-700',
+        info: 'border-semantic-info-200 dark:border-semantic-info-800 bg-semantic-info-50 dark:bg-semantic-info-900/30 hover:border-semantic-info-300 dark:hover:border-semantic-info-700',
+        subtle: 'border-neutral-200 dark:border-secondary-700 bg-neutral-50 dark:bg-secondary-800/50 hover:border-neutral-300 dark:hover:border-secondary-600',
+        accent: 'border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-primary-900/20 hover:border-primary-300 dark:hover:border-primary-700',
+        // Glassmorphism variants
+        glass: 'bg-white/60 dark:bg-secondary-900/60 backdrop-blur-glass border-white/30 dark:border-secondary-600/30 shadow-glass dark:shadow-dark-medium hover:bg-white/70 dark:hover:bg-secondary-800/70',
+        'glass-accent': 'bg-primary-50/50 dark:bg-primary-900/20 backdrop-blur-glass border-primary-200/40 dark:border-primary-700/30 shadow-glass hover:bg-primary-50/70 dark:hover:bg-primary-900/30',
       },
       size: {
-        // Mobbin-inspired size variants with systematic spacing
-        xs: 'p-3',           // 12px - Extra small for compact layouts
-        sm: 'p-4',           // 16px - Small for secondary content
-        default: 'p-6',      // 24px - Default size
-        lg: 'p-8',           // 32px - Large for primary content
-        xl: 'p-10',          // 40px - Extra large for hero content
-        '2xl': 'p-12',       // 48px - 2XL for display content
-        '3xl': 'p-16',       // 64px - 3XL for massive content
+        xs: 'p-3',
+        sm: 'p-4',
+        default: 'p-6',
+        lg: 'p-8',
+        xl: 'p-10',
+        '2xl': 'p-12',
+        '3xl': 'p-16',
       },
       interactive: {
-        true: 'cursor-pointer hover:shadow-md hover:border-primary-300 active:shadow-sm active:scale-98 transition-all duration-150',
+        true: 'cursor-pointer hover:shadow-md dark:hover:shadow-dark-medium hover:border-primary-300 dark:hover:border-primary-600 active:shadow-sm active:scale-98 transition-all duration-150',
         false: '',
       },
     },
@@ -81,12 +82,12 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           <div className="mb-4 last:mb-0">
             {header}
             {title && (
-              <h3 className="mobbin-heading-4 text-text-primary">
+              <h3 className="mobbin-heading-4 text-text-primary dark:text-secondary-100">
                 {title}
               </h3>
             )}
             {description && (
-              <p className="mt-1 mobbin-body-small text-text-secondary">
+              <p className="mt-1 mobbin-body-small text-text-secondary dark:text-secondary-400">
                 {description}
               </p>
             )}
@@ -98,7 +99,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         
         {/* Footer Section */}
         {footer && (
-          <div className="mt-4 pt-4 border-t border-border-default">
+          <div className="mt-4 pt-4 border-t border-border-default dark:border-secondary-700">
             {footer}
           </div>
         )}
@@ -128,7 +129,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("mobbin-heading-4 text-text-primary", className)}
+    className={cn("mobbin-heading-4 text-text-primary dark:text-secondary-100", className)}
     {...props}
   />
 ))
@@ -140,7 +141,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mobbin-body-small text-text-secondary", className)}
+    className={cn("mobbin-body-small text-text-secondary dark:text-secondary-400", className)}
     {...props}
   />
 ))
@@ -160,7 +161,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center pt-4 mt-4 border-t border-border-default", className)}
+    className={cn("flex items-center pt-4 mt-4 border-t border-border-default dark:border-secondary-700", className)}
     {...props}
   />
 ))

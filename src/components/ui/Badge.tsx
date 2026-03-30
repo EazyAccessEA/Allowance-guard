@@ -4,21 +4,21 @@ import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-// Professional badge variants following design system
+// Badge variants with dark mode and dot indicators
 const badgeVariants = cva(
-  // Base styles - clean, minimal, status indicators
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  // Base styles with dark mode
+  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 dark:focus:ring-offset-secondary-900',
   {
     variants: {
       variant: {
-        default: 'border-border-default bg-background-light text-text-primary',
-        primary: 'border-primary/20 bg-primary/10 text-primary',
-        success: 'border-green-200 bg-green-50 text-green-800',
-        danger: 'border-semantic-danger/20 bg-semanticBg-danger text-semantic-danger',
-        warning: 'border-semantic-warning/20 bg-semanticBg-warning text-semantic-warning',
-        info: 'border-semantic-info/20 bg-semanticBg-info text-semantic-info',
-        outline: 'border-border-default text-text-primary bg-transparent',
-        secondary: 'border-slate-200 bg-slate-100 text-slate-700',
+        default: 'border-border-default dark:border-secondary-600 bg-background-light dark:bg-secondary-800 text-text-primary dark:text-secondary-200',
+        primary: 'border-primary/20 dark:border-primary-700 bg-primary/10 dark:bg-primary-900/30 text-primary dark:text-primary-300',
+        success: 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-300',
+        danger: 'border-semantic-danger/20 dark:border-red-800 bg-semanticBg-danger dark:bg-red-900/30 text-semantic-danger dark:text-red-300',
+        warning: 'border-semantic-warning/20 dark:border-amber-800 bg-semanticBg-warning dark:bg-amber-900/30 text-semantic-warning dark:text-amber-300',
+        info: 'border-semantic-info/20 dark:border-sky-800 bg-semanticBg-info dark:bg-sky-900/30 text-semantic-info dark:text-sky-300',
+        outline: 'border-border-default dark:border-secondary-600 text-text-primary dark:text-secondary-200 bg-transparent',
+        secondary: 'border-slate-200 dark:border-secondary-600 bg-slate-100 dark:bg-secondary-800 text-slate-700 dark:text-secondary-300',
       },
       size: {
         sm: 'px-2 py-0.5 text-xs',
@@ -100,16 +100,17 @@ export const StatusBadge: React.FC<{
   className?: string
 }> = ({ status, className }) => {
   const variants = {
-    safe: { variant: 'success' as const, text: 'Safe' },
-    risky: { variant: 'danger' as const, text: 'Risky' },
-    unknown: { variant: 'warning' as const, text: 'Unknown' },
-    revoked: { variant: 'secondary' as const, text: 'Revoked' },
+    safe: { variant: 'success' as const, text: 'Safe', dot: 'bg-green-500' },
+    risky: { variant: 'danger' as const, text: 'Risky', dot: 'bg-red-500' },
+    unknown: { variant: 'warning' as const, text: 'Unknown', dot: 'bg-amber-500' },
+    revoked: { variant: 'secondary' as const, text: 'Revoked', dot: 'bg-slate-400' },
   }
 
   const config = variants[status]
 
   return (
     <Badge variant={config.variant} className={className}>
+      <span className={`w-1.5 h-1.5 rounded-full ${config.dot} mr-1.5`} aria-hidden="true" />
       {config.text}
     </Badge>
   )
@@ -120,16 +121,17 @@ export const RiskBadge: React.FC<{
   className?: string
 }> = ({ risk, className }) => {
   const variants = {
-    low: { variant: 'success' as const, text: 'Low Risk' },
-    medium: { variant: 'warning' as const, text: 'Medium Risk' },
-    high: { variant: 'danger' as const, text: 'High Risk' },
-    critical: { variant: 'danger' as const, text: 'Critical Risk' },
+    low: { variant: 'success' as const, text: 'Low Risk', dot: 'bg-green-500' },
+    medium: { variant: 'warning' as const, text: 'Medium Risk', dot: 'bg-amber-500' },
+    high: { variant: 'danger' as const, text: 'High Risk', dot: 'bg-red-500' },
+    critical: { variant: 'danger' as const, text: 'Critical Risk', dot: 'bg-red-600 animate-pulse' },
   }
 
   const config = variants[risk]
 
   return (
     <Badge variant={config.variant} className={className}>
+      <span className={`w-1.5 h-1.5 rounded-full ${config.dot} mr-1.5`} aria-hidden="true" />
       {config.text}
     </Badge>
   )
