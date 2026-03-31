@@ -12,7 +12,11 @@ let ready = false
 client.connect().then(()=>{ ready = true }).catch(()=>{})
 
 export async function limitHit(key: string, windowSec: number, max: number) {
-  if (!ready) return { allowed: true, remaining: max, ttl: windowSec } // fallback if Redis not ready
+  if (!ready) {
+    // Fail CLOSED: deny requests when rate limiter is unavailable
+    console.warn('[ratelimit] Redis unavailable — failing closed')
+    return { allowed: false, remaining: 0, ttl: windowSec }
+  }
   const now = Math.floor(Date.now()/1000)
   const bucket = `rl:${key}:${Math.floor(now / windowSec)}`
   const count = await client.incr(bucket)
@@ -22,17 +26,25 @@ export async function limitHit(key: string, windowSec: number, max: number) {
   return { allowed, remaining: Math.max(0, max - count), ttl }
 }
 
+/** Centralized rate limits for all public endpoints */
+const RATE_LIMITS: Record<string, { windowSec: number; max: number }> = {
+  'coinbase-charge': { windowSec: 60, max: 10 },
+  'stripe-checkout': { windowSec: 60, max: 10 },
+  'scan':            { windowSec: 60, max: 12 },
+  'share-create':    { windowSec: 60, max: 20 },
+  'bulk-revoke':     { windowSec: 60, max: 5 },
+  'preferences':     { windowSec: 60, max: 20 },
+  'monitor':         { windowSec: 60, max: 20 },
+  'audit-logs':      { windowSec: 60, max: 30 },
+}
+
 export async function limitOrThrow(ip: string, endpoint: string) {
-  const limits: Record<string, { windowSec: number; max: number }> = {
-    'coinbase-charge': { windowSec: 60, max: 10 },
-    'stripe-checkout': { windowSec: 60, max: 10 },
-  }
-  
-  const config = limits[endpoint]
+  const config = RATE_LIMITS[endpoint]
   if (!config) return // no limit configured
-  
+
   const result = await limitHit(`${endpoint}:${ip}`, config.windowSec, config.max)
   if (!result.allowed) {
     throw new Error('Rate limit exceeded')
   }
+  return result
 }

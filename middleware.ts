@@ -80,87 +80,43 @@ function createErrorResponse(message: string, status: number = 500, requestId: s
   return errorResponse
 }
 
-/** Very tight CSP. Extend connect-src for your RPCs/analytics if needed. */
+/** Strict CSP — no unsafe-eval, connect-src restricted to known domains */
 const CSP = [
   "default-src 'self'",
   "img-src 'self' data: blob: https:",
-  "style-src 'self' 'unsafe-inline'", // Next injects inline styles
-  "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live", // Allow Next.js and Vercel
-  `connect-src 'self' ${new URL(ORIGIN).origin} https://eth.llamarpc.com https://polygon-rpc.com https://arb1.arbitrum.io https://mainnet.optimism.io https://mainnet.base.org https: wss:`,
+  "style-src 'self' 'unsafe-inline'", // Next.js injects inline styles
+  "script-src 'self' 'unsafe-inline' https://vercel.live https://js.stripe.com",
+  [
+    "connect-src 'self'",
+    new URL(ORIGIN).origin,
+    // RPC endpoints
+    'https://eth.llamarpc.com',
+    'https://polygon-rpc.com',
+    'https://arb1.arbitrum.io',
+    'https://mainnet.optimism.io',
+    'https://mainnet.base.org',
+    'https://api.avax.network',
+    // Services
+    'https://api.stripe.com',
+    'https://*.upstash.io',
+    'https://*.neon.tech',
+    'https://api.coingecko.com',
+    // WalletConnect / Reown
+    'https://*.walletconnect.com',
+    'wss://*.walletconnect.com',
+    'https://*.reown.com',
+    'wss://*.reown.com',
+  ].join(' '),
   "font-src 'self' data: https://fonts.gstatic.com",
   "frame-ancestors 'none'",
+  "frame-src 'self' https://js.stripe.com https://hooks.stripe.com",
   "base-uri 'self'",
   "form-action 'self'",
 ].join('; ')
 
-const RATE_LIMIT_PATHS = new Map<string, { windowSec: number; max: number }>([
-  ['/api/scan', { windowSec: 60, max: 12 }],
-  ['/api/coinbase/create-charge', { windowSec: 60, max: 10 }],
-  ['/api/create-checkout-session', { windowSec: 60, max: 10 }],
-  ['/api/share/create', { windowSec: 60, max: 20 }],
-])
-
-// Enhanced in-memory rate limiting with bot-aware logic
-const memoryBucket = new Map<string, { reset: number; count: number; lastSeen: number }>()
-
-/** Sophisticated Rate Limiting with Bot Awareness */
-function checkRateLimit(req: NextRequest, botInfo: ReturnType<typeof isBot>): NextResponse | null {
-  // Skip rate limiting for high-priority bots
-  if (botInfo.priority === 'high') {
-    return null
-  }
-  
-  // Apply relaxed rate limiting for medium-priority bots
-  const rateLimitMultiplier = botInfo.priority === 'medium' ? 3 : 1
-  
-  for (const [prefix, cfg] of RATE_LIMIT_PATHS) {
-    if (req.nextUrl.pathname.startsWith(prefix)) {
-      const ip = req.headers.get('x-forwarded-for') || 
-                 req.headers.get('x-real-ip') || 
-                 req.headers.get('cf-connecting-ip') || // Cloudflare
-                 'unknown'
-      
-      const key = `${prefix}:${ip}:${botInfo.category}`
-      const now = Date.now()
-      const rec = memoryBucket.get(key) || { 
-        reset: now + cfg.windowSec * 1000, 
-        count: 0, 
-        lastSeen: now 
-      }
-      
-      // Reset if window expired
-      if (now > rec.reset) { 
-        rec.count = 0
-        rec.reset = now + cfg.windowSec * 1000
-      }
-      
-      rec.count++
-      rec.lastSeen = now
-      memoryBucket.set(key, rec)
-      
-      const effectiveLimit = cfg.max * rateLimitMultiplier
-      
-      if (rec.count > effectiveLimit) {
-        return createErrorResponse(
-          'Rate limit exceeded', 
-          429, 
-          req.headers.get('x-request-id') || generateUUID()
-        )
-      }
-      
-      // Create response with rate limit headers
-      const response = NextResponse.next()
-      response.headers.set('x-ratelimit-limit', String(effectiveLimit))
-      response.headers.set('x-ratelimit-remaining', String(Math.max(0, effectiveLimit - rec.count)))
-      response.headers.set('x-ratelimit-reset', String(Math.ceil(rec.reset / 1000)))
-      response.headers.set('x-bot-category', botInfo.category)
-      
-      return response
-    }
-  }
-  
-  return null
-}
+// Rate limiting is handled by Redis-based src/lib/ratelimit.ts at the route level.
+// In-memory rate limiting was removed — it resets on every serverless cold start
+// and is unreliable on Vercel's edge/serverless architecture.
 
 /** Enhanced Security Headers with Bot-Specific Optimizations */
 function applySecurityHeaders(response: NextResponse, botInfo: ReturnType<typeof isBot>): NextResponse {
@@ -205,7 +161,7 @@ function applyCORS(response: NextResponse, req: NextRequest, _botInfo: ReturnTyp
   if (req.method === 'OPTIONS') {
     const pre = NextResponse.json({}, { status: 204 })
     pre.headers.set('access-control-allow-methods', 'GET,POST,DELETE,PUT,OPTIONS')
-    pre.headers.set('access-control-allow-headers', 'content-type, stripe-signature, x-cc-webhook-signature')
+    pre.headers.set('access-control-allow-headers', 'content-type, stripe-signature, x-cc-webhook-signature, x-csrf-token')
     pre.headers.set('access-control-allow-origin', isSame ? ORIGIN : 'null')
     pre.headers.set('vary', 'origin')
     pre.headers.set('x-request-id', req.headers.get('x-request-id') || generateUUID())
@@ -242,20 +198,14 @@ export async function middleware(req: NextRequest) {
       return applySecurityHeaders(applyCORS(response, req, botInfo), botInfo)
     }
     
-    // 3. Sophisticated Rate Limiting (skips high-priority bots)
-    const rateLimitResponse = checkRateLimit(req, botInfo)
-    if (rateLimitResponse) {
-      return rateLimitResponse
-    }
-    
-    // 4. Create base response
+    // 3. Create base response (rate limiting handled at route level via Redis)
     let response = NextResponse.next()
     response.headers.set('x-request-id', requestId)
     
-    // 5. Apply security headers with bot optimizations
+    // 4. Apply security headers with bot optimizations
     response = applySecurityHeaders(response, botInfo)
-    
-    // 6. Apply CORS with bot awareness
+
+    // 5. Apply CORS with bot awareness
     response = applyCORS(response, req, botInfo)
     
     return response

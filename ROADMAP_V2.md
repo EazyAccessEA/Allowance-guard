@@ -61,10 +61,11 @@ This plan addresses every finding across all 12 evaluators. Each phase has concr
 
 ---
 
-## Phase 0 — Security Critical (Week 1)
+## Phase 0 — Security Critical (Week 1) ✅ COMPLETED
 
 **Council members addressed**: Security Auditor (D+), DevOps Engineer (C-)
 **Goal**: Close all exploitable vulnerabilities before any other work.
+**Status**: All 8 tasks completed. Implemented 2026-03-31.
 
 ### 0.1 — Authenticate All Unprotected API Endpoints
 
@@ -109,9 +110,9 @@ if (authHeader !== `Bearer ${cronSecret}`) {
 ```
 
 **Acceptance criteria**:
-- [ ] Every endpoint in the table returns 401 without a valid session (or CRON_SECRET for cron routes)
-- [ ] CRON routes reject when `CRON_SECRET` is not set (fail-closed)
-- [ ] All queries are scoped to the authenticated user (no cross-user data access)
+- [x] Every endpoint in the table returns 401 without a valid session (or CRON_SECRET for cron routes)
+- [x] CRON routes reject when `CRON_SECRET` is not set (fail-closed)
+- [x] All queries are scoped to the authenticated user (no cross-user data access)
 - [ ] Integration tests verify auth enforcement for each endpoint
 
 ### 0.2 — Fix Rate Limiting Fail-Open
@@ -135,8 +136,8 @@ export async function limitHit(key: string, windowSec: number, max: number) {
 **Also fix**: In-memory rate limits in `middleware.ts` reset on every serverless cold start. Replace with a note that Redis-based limiting is the primary control, and in-memory serves only as a secondary burst limiter.
 
 **Acceptance criteria**:
-- [ ] `limitHit()` returns `{ allowed: false }` when Redis is unavailable
-- [ ] Application logs a warning when falling back to fail-closed mode
+- [x] `limitHit()` returns `{ allowed: false }` when Redis is unavailable
+- [x] Application logs a warning when falling back to fail-closed mode
 - [ ] Load test: verify rate limiting works during Redis disconnection
 
 ### 0.3 — Tighten CSP Headers
@@ -157,9 +158,9 @@ Current CSP allows `'unsafe-eval'` and `'unsafe-inline'` — these defeat the pu
 - Add `form-action 'self'`
 
 **Acceptance criteria**:
-- [ ] CSP header present on all responses
-- [ ] No `unsafe-eval` in production CSP
-- [ ] `connect-src` lists only known domains (no wildcards except necessary subdomains)
+- [x] CSP header present on all responses
+- [x] No `unsafe-eval` in production CSP
+- [x] `connect-src` lists only known domains (no wildcards except necessary subdomains)
 - [ ] Application functions correctly with tightened CSP (wallet connect, Stripe checkout, RPC calls all work)
 
 ### 0.4 — Fix Wildcard CORS in vercel.json
@@ -171,9 +172,9 @@ The `/api/alerts/daily` endpoint has `Access-Control-Allow-Origin: *` which bypa
 **Fix**: Remove the CORS override from `vercel.json`. Let `middleware.ts` handle CORS consistently for all routes.
 
 **Acceptance criteria**:
-- [ ] No `Access-Control-Allow-Origin: *` in `vercel.json`
-- [ ] All CORS handling goes through `middleware.ts`
-- [ ] `/api/alerts/daily` respects origin allowlist
+- [x] No `Access-Control-Allow-Origin: *` in `vercel.json`
+- [x] All CORS handling goes through `middleware.ts`
+- [x] `/api/alerts/daily` respects origin allowlist
 
 ### 0.5 — Disable Production Source Maps
 
@@ -186,8 +187,8 @@ productionBrowserSourceMaps: false,
 ```
 
 **Acceptance criteria**:
-- [ ] Production build does not include `.map` files in client bundles
-- [ ] Dev mode still has source maps
+- [x] Production build does not include `.map` files in client bundles
+- [x] Dev mode still has source maps
 
 ### 0.6 — Add CSRF Protection
 
@@ -200,10 +201,10 @@ No state-changing endpoint has CSRF protection. For cookie-based session auth, t
 4. Exempt: API key-authenticated routes (B2B API), webhook receivers (Stripe, Coinbase), CRON routes
 
 **Acceptance criteria**:
-- [ ] All browser-initiated state-changing requests include CSRF token
-- [ ] Missing/invalid CSRF token returns 403
-- [ ] API key routes and webhooks are exempt
-- [ ] CSRF token is included in the page layout via a meta tag or cookie
+- [x] All browser-initiated state-changing requests include CSRF token
+- [x] Missing/invalid CSRF token returns 403
+- [x] API key routes and webhooks are exempt
+- [x] CSRF token is included in the page layout via a meta tag or cookie
 
 ### 0.7 — Consolidate Rate Limiting
 
@@ -219,10 +220,10 @@ Three separate rate-limiting systems exist:
 - Document the rate-limiting architecture in a code comment
 
 **Acceptance criteria**:
-- [ ] Single rate-limiting system (Redis-based) for all endpoints
-- [ ] In-memory rate limiter removed from middleware
-- [ ] All public endpoints have rate limiting applied
-- [ ] Rate limit headers returned in responses (`X-RateLimit-Remaining`, `X-RateLimit-Reset`)
+- [x] Single rate-limiting system (Redis-based) for all endpoints
+- [x] In-memory rate limiter removed from middleware
+- [x] All public endpoints have rate limiting applied
+- [x] Rate limit headers returned in responses (`X-RateLimit-Remaining`, `X-RateLimit-Reset`)
 
 ### 0.8 — Remove Unused crypto-js Dependency
 
@@ -235,10 +236,10 @@ pnpm remove crypto-js @types/crypto-js
 ```
 
 **Acceptance criteria**:
-- [ ] `crypto-js` removed from `package.json`
-- [ ] `@types/crypto-js` removed from `package.json`
-- [ ] No import of `crypto-js` in any source file
-- [ ] Build succeeds
+- [x] `crypto-js` removed from `package.json`
+- [x] `@types/crypto-js` removed from `package.json`
+- [x] No import of `crypto-js` in any source file
+- [x] Build succeeds
 
 ---
 
