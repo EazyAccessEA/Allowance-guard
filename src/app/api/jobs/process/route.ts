@@ -11,7 +11,8 @@ import { cacheDel } from '@/lib/cache'
 import { reportError } from '@/lib/rollbar'
 
 function verifyCronSecret(req: NextRequest): NextResponse | null {
-  const cronSecret = process.env.CRON_SECRET
+  // Supports both CRON_SECRET and CRON_JOBS_API_KEY for backwards compatibility
+  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
   if (!cronSecret) {
     return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
   }

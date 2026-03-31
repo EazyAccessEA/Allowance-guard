@@ -5,7 +5,7 @@
  * Picks wallets due for re-scan, enqueues scan jobs, then runs change detection
  * and dispatches alerts for any completed scans.
  *
- * Security: protected by CRON_SECRET header.
+ * Security: protected by CRON_SECRET or CRON_JOBS_API_KEY header.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { getDueMonitors, enqueueMonitorScans, detectChanges, dispatchAlerts } from '@/lib/monitoring'
@@ -24,7 +24,8 @@ export async function POST(req: NextRequest) {
 
 async function handleCron(req: NextRequest) {
   // Verify cron secret — fail CLOSED if not configured
-  const cronSecret = process.env.CRON_SECRET
+  // Supports both CRON_SECRET and CRON_JOBS_API_KEY for backwards compatibility
+  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
   if (!cronSecret) {
     return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
   }
