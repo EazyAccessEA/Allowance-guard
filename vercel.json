@@ -8,16 +8,5 @@
   ],
   "functions": {
     "app/**/route.ts": { "maxDuration": 60 }
-  },
-  "headers": [
-    {
-      "source": "/api/alerts/daily",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        }
-      ]
-    }
-  ]
+  }
 }

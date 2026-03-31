@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server'
 import { createOrRotateShare } from '@/lib/share'
+import { getSession } from '@/lib/auth'
 
 export async function POST(req: Request) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const { wallet, censor_addresses = true, censor_amounts = false, risk_only = true, expires_in_days = null } =
     await req.json().catch(() => ({}))
 
