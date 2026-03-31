@@ -46,13 +46,17 @@ export async function POST(req: Request) {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.allowanceguard.com'
 
+    // Pro tier gets a 7-day free trial
+    const trialDays = plan === 'pro' ? 7 : undefined
+
     const checkoutUrl = await createCheckoutSession({
       userId: session.user_id as number,
       email: session.email as string,
       priceId,
       plan,
-      successUrl: `${appUrl}/account?session_id={CHECKOUT_SESSION_ID}`,
+      successUrl: `${appUrl}/account/success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${appUrl}/pricing`,
+      trialDays,
     })
 
     L.info('billing.subscribe.checkout_created', {

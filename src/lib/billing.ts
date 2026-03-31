@@ -53,6 +53,7 @@ export interface CreateSubscriptionOptions {
   plan: ConsumerPlan | string
   successUrl: string
   cancelUrl: string
+  trialDays?: number
 }
 
 /**
@@ -62,7 +63,7 @@ export interface CreateSubscriptionOptions {
 export async function createCheckoutSession(opts: CreateSubscriptionOptions): Promise<string> {
   const customerId = await getOrCreateCustomer(opts.userId, opts.email)
 
-  const session = await stripe.checkout.sessions.create({
+  const sessionParams: Stripe.Checkout.SessionCreateParams = {
     customer: customerId,
     mode: 'subscription',
     line_items: [{ price: opts.priceId, quantity: 1 }],
@@ -78,7 +79,13 @@ export async function createCheckoutSession(opts: CreateSubscriptionOptions): Pr
       ag_user_id: String(opts.userId),
       ag_plan: opts.plan,
     },
-  })
+  }
+
+  if (opts.trialDays && opts.trialDays > 0) {
+    sessionParams.subscription_data!.trial_period_days = opts.trialDays
+  }
+
+  const session = await stripe.checkout.sessions.create(sessionParams)
 
   apiLogger.info('stripe.checkout.created', {
     userId: opts.userId,
