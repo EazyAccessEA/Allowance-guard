@@ -97,6 +97,26 @@ export async function POST(req: Request) {
         break
       }
 
+      // ----- Trial ending soon -----
+      case 'customer.subscription.trial_will_end': {
+        const subscription = event.data.object as Stripe.Subscription
+
+        L.info('billing.webhook.trial_ending', {
+          subscriptionId: subscription.id,
+          trialEnd: subscription.trial_end,
+          userId: subscription.metadata?.ag_user_id,
+        })
+
+        await auditWebhook('stripe', 'trial_will_end', subscription.id, {
+          trialEnd: subscription.trial_end,
+          userId: subscription.metadata?.ag_user_id,
+          plan: subscription.metadata?.ag_plan,
+        })
+
+        // TODO: Send trial-ending email notification to user
+        break
+      }
+
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice
 

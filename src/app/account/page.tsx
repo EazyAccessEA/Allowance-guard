@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import Section from '@/components/ui/Section'
 import Container from '@/components/ui/Container'
-import { Button } from '@/components/ui/Button'
 import PlanCard from '@/components/account/PlanCard'
 import UsageChart from '@/components/account/UsageChart'
 import { cn } from '@/lib/utils'
 import {
   CreditCard,
   Key,
+  BarChart3,
   ArrowRight,
   User,
 } from 'lucide-react'
@@ -47,7 +47,7 @@ export default function AccountPage() {
 
     async function fetchAccount() {
       try {
-        const res = await fetch('/api/billing/manage')
+        const res = await fetch('/api/billing/manage', { credentials: 'include' })
         if (res.ok) {
           const json = await res.json()
           if (!cancelled) setData(json)
@@ -77,6 +77,12 @@ export default function AccountPage() {
       icon: Key,
       label: 'API Keys',
       description: 'Create and manage API keys',
+    },
+    {
+      href: '/account/usage',
+      icon: BarChart3,
+      label: 'Usage',
+      description: 'View your API calls, wallets, and resource usage',
     },
   ]
 
