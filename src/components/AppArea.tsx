@@ -47,6 +47,7 @@ import { useDisconnect } from 'wagmi'
 import PlanBadge from '@/components/PlanBadge'
 import ProNudge from '@/components/ProNudge'
 import FeatureLock from '@/components/FeatureLock'
+import { useUserPlan } from '@/hooks/useUserPlan'
 
 interface AppAreaProps {
   isConnected: boolean
@@ -84,8 +85,7 @@ export default function AppArea({
   const [activeTab, setActiveTab] = useState<'allowances' | 'security' | 'analytics'>('allowances')
   const [selectedRows, setSelectedRows] = useState<typeof rows>([])
   const [isDisconnecting, setIsDisconnecting] = useState(false)
-  // TODO: Replace with actual user plan from session/API
-  const userPlan: 'free' | 'pro' | 'sentinel' = 'free'
+  const { plan: userPlan } = useUserPlan()
 
   const loadMonitor = useCallback(async () => {
     const target = selectedWallet || connectedAddress

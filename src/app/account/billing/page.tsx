@@ -13,17 +13,15 @@ import {
   getPlanDisplayName,
   formatPrice,
   CONSUMER_PRICES,
-  CONSUMER_PLAN_LIMITS,
   isPaidPlan,
-  isUnlimited,
 } from '@/lib/plans'
 import {
   ArrowLeft,
   ExternalLink,
   Check,
   Clock,
-  CreditCard,
 } from 'lucide-react'
+import { useUserPlan } from '@/hooks/useUserPlan'
 
 const PLANS: { key: ConsumerPlan; features: string[] }[] = [
   {
@@ -60,16 +58,18 @@ const PLANS: { key: ConsumerPlan; features: string[] }[] = [
 ]
 
 export default function BillingPage() {
-  const [currentPlan] = useState<ConsumerPlan>('free')
+  const { plan: currentPlan, status: planStatus, currentPeriodEnd } = useUserPlan()
   const [portalLoading, setPortalLoading] = useState(false)
 
   async function openBillingPortal() {
     setPortalLoading(true)
     try {
-      const res = await fetch('/api/billing/manage', { method: 'POST' })
+      const res = await fetch('/api/billing/portal', { method: 'POST' })
       if (res.ok) {
         const { url } = await res.json()
         if (url) window.location.href = url
+      } else if (res.status === 404) {
+        window.location.href = '/pricing'
       }
     } finally {
       setPortalLoading(false)
@@ -112,7 +112,23 @@ export default function BillingPage() {
                   {getPlanDisplayName(currentPlan)}
                 </span>{' '}
                 plan.
+                {planStatus === 'trialing' && (
+                  <span className="ml-1 text-primary-600 font-medium">(Trial)</span>
+                )}
+                {planStatus === 'past_due' && (
+                  <span className="ml-1 text-semantic-warning-600 font-medium">(Payment past due)</span>
+                )}
               </p>
+              {currentPeriodEnd && isPaidPlan(currentPlan) && (
+                <p className="text-xs text-text-secondary mt-1">
+                  {planStatus === 'trialing' ? 'Trial ends' : 'Renews'}{' '}
+                  {new Date(currentPeriodEnd).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </p>
+              )}
               {isPaidPlan(currentPlan) && (
                 <Button
                   variant="secondary"

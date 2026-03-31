@@ -1,0 +1,97 @@
+'use client'
+
+import React, { useEffect, useState } from 'react'
+import Section from '@/components/ui/Section'
+import Container from '@/components/ui/Container'
+import { Card, CardContent } from '@/components/ui/Card'
+import { Button } from '@/components/ui/Button'
+import PlanBadge from '@/components/PlanBadge'
+import { useUserPlan } from '@/hooks/useUserPlan'
+import { useQueryClient } from '@tanstack/react-query'
+import { CheckCircle, Loader2 } from 'lucide-react'
+import type { ConsumerPlan } from '@/lib/plans'
+
+export default function CheckoutSuccessPage() {
+  const queryClient = useQueryClient()
+  const { plan } = useUserPlan()
+  const [pollCount, setPollCount] = useState(0)
+  const [ready, setReady] = useState(false)
+
+  // Poll for subscription update (webhooks can be delayed)
+  useEffect(() => {
+    if (plan !== 'free') {
+      setReady(true)
+      return
+    }
+
+    if (pollCount >= 15) {
+      // Stop polling after ~30 seconds, show anyway
+      setReady(true)
+      return
+    }
+
+    const timer = setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey: ['user-plan'] })
+      setPollCount((c) => c + 1)
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [plan, pollCount, queryClient])
+
+  // Auto-redirect to dashboard after showing success
+  useEffect(() => {
+    if (!ready) return
+    const timer = setTimeout(() => {
+      window.location.href = '/account'
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [ready])
+
+  return (
+    <Section size="sm" background="muted">
+      <Container size="sm">
+        <Card className="text-center">
+          <CardContent className="py-12 space-y-6">
+            {!ready ? (
+              <>
+                <Loader2 className="h-12 w-12 text-primary-500 animate-spin mx-auto" />
+                <h1 className="text-2xl font-bold text-text-primary">
+                  Setting up your subscription...
+                </h1>
+                <p className="text-sm text-text-secondary">
+                  This usually takes just a moment. Please don&apos;t close this page.
+                </p>
+              </>
+            ) : (
+              <>
+                <CheckCircle className="h-16 w-16 text-semantic-success-500 mx-auto" />
+                <div className="space-y-2">
+                  <h1 className="text-2xl font-bold text-text-primary">
+                    Welcome to AllowanceGuard{' '}
+                    {plan !== 'free' && <PlanBadge plan={plan as ConsumerPlan} />}
+                  </h1>
+                  <p className="text-sm text-text-secondary">
+                    {plan !== 'free'
+                      ? 'Your subscription is active. All premium features are now unlocked.'
+                      : 'Your payment is being processed. Features will unlock shortly.'}
+                  </p>
+                </div>
+                <div className="pt-4">
+                  <Button
+                    variant="primary"
+                    onClick={() => (window.location.href = '/account')}
+                  >
+                    Go to Dashboard
+                  </Button>
+                </div>
+                <p className="text-xs text-text-secondary">
+                  Redirecting in 5 seconds...
+                </p>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </Container>
+    </Section>
+  )
+}
