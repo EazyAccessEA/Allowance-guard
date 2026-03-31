@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { claimPending, finishJob, JobRow } from '@/lib/jobs'
 import { scanWalletOnChain } from '@/lib/scanner'
 import { apiLogger } from '@/lib/logger'
@@ -9,6 +9,18 @@ import { pool } from '@/lib/db'
 import { withTimeout } from '@/lib/retry'
 import { cacheDel } from '@/lib/cache'
 import { reportError } from '@/lib/rollbar'
+
+function verifyCronSecret(req: NextRequest): NextResponse | null {
+  const cronSecret = process.env.CRON_SECRET
+  if (!cronSecret) {
+    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
+  }
+  const authHeader = req.headers.get('authorization')
+  if (authHeader !== `Bearer ${cronSecret}`) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  return null
+}
 
 async function handle(job: JobRow) {
   if (job.type !== 'scan_wallet') throw new Error(`Unknown job type: ${job.type}`)
@@ -39,7 +51,10 @@ async function handle(job: JobRow) {
   apiLogger.info('Scan job completed', { jobId: job.id, wallet })
 }
 
-export async function POST() {
+export async function POST(req: NextRequest) {
+  const authError = verifyCronSecret(req)
+  if (authError) return authError
+
   try {
     const jobs = await claimPending(2) // small batch
     let done = 0
@@ -66,6 +81,6 @@ export async function POST() {
   }
 }
 
-export async function GET() { 
-  return POST() 
+export async function GET(req: NextRequest) {
+  return POST(req)
 }

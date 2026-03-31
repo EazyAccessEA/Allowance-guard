@@ -1,26 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { getSession } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url)
-    const email = searchParams.get('email')
-    
-    if (!email) {
-      return NextResponse.json(
-        { error: 'Email parameter is required' },
-        { status: 400 }
-      )
-    }
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email format' },
-        { status: 400 }
-      )
-    }
+  try {
+    // Use session email instead of query parameter to prevent cross-user access
+    const email = session.email
 
     // Get subscription preferences
     const client = await db.connect()
@@ -67,36 +57,28 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const body = await request.json()
-    const { email, daily_digest, risk_alerts, is_active } = body
+    const { daily_digest, risk_alerts, is_active } = body
 
-    if (!email) {
-      return NextResponse.json(
-        { error: 'Email is required' },
-        { status: 400 }
-      )
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email format' },
-        { status: 400 }
-      )
-    }
+    // Use session email — prevents users from modifying other users' preferences
+    const email = session.email
 
     // Update subscription preferences
     const client = await db.connect()
     try {
       const result = await client.query(
-        `UPDATE alert_subscriptions 
+        `UPDATE alert_subscriptions
          SET is_active = COALESCE($2, is_active),
              daily_digest = COALESCE($3, daily_digest),
              risk_alerts = COALESCE($4, risk_alerts),
              updated_at = NOW()
-         WHERE email = $1 
+         WHERE email = $1
          RETURNING id, email, is_active, daily_digest, risk_alerts, updated_at`,
         [email, is_active, daily_digest, risk_alerts]
       )

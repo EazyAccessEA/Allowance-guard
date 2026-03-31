@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auditUserAction } from '@/lib/audit-enhanced'
 import { secureLogger } from '@/lib/secure-logger'
+import { getSession } from '@/lib/auth'
 
 export async function POST(req: NextRequest) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const body = await req.json()
     const { 
@@ -168,6 +174,11 @@ export async function POST(req: NextRequest) {
 
 // GET endpoint to retrieve bulk revoke statistics
 export async function GET(req: NextRequest) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const { searchParams } = new URL(req.url)
     const walletAddress = searchParams.get('walletAddress')

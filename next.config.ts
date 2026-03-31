@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Generate source maps for production debugging
-  productionBrowserSourceMaps: true,
+  // Source maps disabled in production to prevent code exposure
+  productionBrowserSourceMaps: false,
   
   // Configure Turbopack (updated syntax)
   turbopack: {
