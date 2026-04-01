@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     const endDate = searchParams.get('endDate') ? new Date(searchParams.get('endDate')!) : undefined
 
     // Non-admin users can only see their own logs
-    const actorId = isAdmin(session.user_id) ? (searchParams.get('actorId') || undefined) : String(session.user_id)
+    const actorId = isAdmin(session.user_id as number) ? (searchParams.get('actorId') || undefined) : String(session.user_id)
 
     // Validate parameters
     if (limit > 1000) {
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  if (!isAdmin(session.user_id)) {
+  if (!isAdmin(session.user_id as number)) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 

@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  if (!ADMIN_USER_IDS.includes(session.user_id)) {
+  if (!ADMIN_USER_IDS.includes(session.user_id as number)) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
