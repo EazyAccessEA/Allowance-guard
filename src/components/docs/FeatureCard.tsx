@@ -9,10 +9,10 @@ interface FeatureCardProps {
 
 export function FeatureCard({ icon, title, description, className }: FeatureCardProps) {
   return (
-    <div className={`bg-ag-panel border-2 border-ag-line p-6 hover:border-ag-line-hover transition-colors ${className}`}>
+    <div className={`bg-background-secondary dark:bg-secondary-800 border-2 border-border-primary dark:border-secondary-700 p-6 hover:border-border-primary/70 dark:hover:border-secondary-600 transition-colors ${className}`}>
       <div className="text-3xl mb-3">{icon}</div>
-      <h3 className="text-lg font-semibold text-ag-text mb-2">{title}</h3>
-      <p className="text-ag-muted text-sm leading-relaxed">{description}</p>
+      <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">{title}</h3>
+      <p className="text-text-secondary dark:text-secondary-400 text-sm leading-relaxed">{description}</p>
     </div>
   )
 }

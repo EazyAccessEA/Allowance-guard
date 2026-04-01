@@ -72,7 +72,7 @@ export default function FAQPage() {
       </Section>
 
       {/* Security & Privacy */}
-      <Section className="py-32 bg-background-secondary">
+      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-12 mobbin-fade-in">Our Security Model and Your Privacy</h2>
@@ -148,7 +148,7 @@ export default function FAQPage() {
       </Section>
 
       {/* Technical & Support */}
-      <Section className="py-32 bg-background-secondary">
+      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-12 mobbin-fade-in">Technical Details and Troubleshooting</h2>
@@ -260,7 +260,7 @@ export default function FAQPage() {
       </Section>
 
       {/* Support Section */}
-      <Section className="py-32 bg-background-secondary">
+      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">

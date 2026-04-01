@@ -24,23 +24,23 @@ export function CodeBlock({ children, language = 'javascript', filename }: CodeB
 
   return (
     <div className="relative">
-      <div className="flex items-center justify-between bg-ag-panel border-2 border-ag-line px-4 py-2">
+      <div className="flex items-center justify-between bg-background-secondary dark:bg-secondary-800 border-2 border-border-primary dark:border-secondary-700 px-4 py-2">
         <div className="flex items-center gap-3">
           {filename && (
-            <span className="text-sm font-mono text-ag-text">{filename}</span>
+            <span className="text-sm font-mono text-text-primary dark:text-secondary-100">{filename}</span>
           )}
-          <span className="text-xs text-ag-muted uppercase tracking-wide">{language}</span>
+          <span className="text-xs text-text-secondary dark:text-secondary-400 uppercase tracking-wide">{language}</span>
         </div>
-        <HexButton 
-          size="sm" 
+        <HexButton
+          size="sm"
           variant="ghost"
           onClick={copyToClipboard}
         >
           {copied ? '✓ Copied' : 'Copy'}
         </HexButton>
       </div>
-      <pre className="bg-ag-bg border-2 border-ag-line border-t-0 p-4 overflow-x-auto">
-        <code className={`text-sm font-mono text-ag-text language-${language}`}>
+      <pre className="bg-background-primary dark:bg-secondary-900 border-2 border-border-primary dark:border-secondary-700 border-t-0 p-4 overflow-x-auto">
+        <code className={`text-sm font-mono text-text-primary dark:text-secondary-100 language-${language}`}>
           {children}
         </code>
       </pre>

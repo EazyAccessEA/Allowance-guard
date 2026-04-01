@@ -16,18 +16,18 @@ export default function ApiReferencePage() {
           {/* Header */}
           <div className="mb-12">
             <H1>API Reference</H1>
-            <p className="text-ag-muted mt-4 text-lg">
+            <p className="text-text-secondary dark:text-secondary-400 mt-4 text-lg">
               AllowanceGuard REST API v1 — Monitor, assess, and manage token approvals
               programmatically across multiple chains.
             </p>
             <div className="flex flex-wrap gap-3 mt-6">
-              <span className="px-3 py-1 bg-[#00C2B3]/10 text-[#00C2B3] text-sm rounded-full border border-[#00C2B3]/20">
+              <span className="px-3 py-1 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 text-sm rounded-full border border-primary-600/20 dark:border-primary-400/20">
                 Base URL: /api/v1
               </span>
-              <span className="px-3 py-1 bg-ag-panel text-ag-muted text-sm rounded-full border border-ag-line">
+              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-border-primary dark:border-secondary-700">
                 JSON responses
               </span>
-              <span className="px-3 py-1 bg-ag-panel text-ag-muted text-sm rounded-full border border-ag-line">
+              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-border-primary dark:border-secondary-700">
                 Bearer token auth
               </span>
             </div>
@@ -35,13 +35,13 @@ export default function ApiReferencePage() {
 
           {/* Authentication */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ag-text mb-4 flex items-center gap-2">
-              <Key className="w-6 h-6 text-[#00C2B3]" />
+            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
+              <Key className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Authentication
             </h2>
-            <p className="text-ag-muted mb-4">
-              All API endpoints (except <code className="text-sm bg-ag-panel px-1 rounded">/health</code>)
-              require an API key sent via the <code className="text-sm bg-ag-panel px-1 rounded">Authorization</code> header.
+            <p className="text-text-secondary dark:text-secondary-400 mb-4">
+              All API endpoints (except <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">/health</code>)
+              require an API key sent via the <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">Authorization</code> header.
             </p>
             <CodeExample
               tabs={[
@@ -75,7 +75,7 @@ data = res.json()['data']`,
               ]}
             />
             <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-              <p className="text-sm text-amber-300">
+              <p className="text-sm text-amber-600 dark:text-amber-300">
                 <strong>Keep your API key secret.</strong> Do not expose it in client-side
                 code. All calls should be made from your server.
               </p>
@@ -84,69 +84,69 @@ data = res.json()['data']`,
 
           {/* Rate Limits */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ag-text mb-4 flex items-center gap-2">
-              <Zap className="w-6 h-6 text-[#00C2B3]" />
+            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
+              <Zap className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Rate Limits
             </h2>
-            <p className="text-ag-muted mb-4">
+            <p className="text-text-secondary dark:text-secondary-400 mb-4">
               Rate limits are applied per API key based on your plan. Every response includes
               rate limit headers.
             </p>
-            <div className="border border-ag-line rounded-lg overflow-hidden">
+            <div className="border border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-ag-panel text-left">
-                    <th className="px-4 py-3 font-medium text-ag-muted">Plan</th>
-                    <th className="px-4 py-3 font-medium text-ag-muted">Daily Limit</th>
-                    <th className="px-4 py-3 font-medium text-ag-muted">Burst (per min)</th>
-                    <th className="px-4 py-3 font-medium text-ag-muted">Price</th>
+                  <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
+                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Plan</th>
+                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Daily Limit</th>
+                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Burst (per min)</th>
+                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Price</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-t border-ag-line">
-                    <td className="px-4 py-3 text-ag-text font-medium">Free</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">100</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">10</td>
-                    <td className="px-4 py-3 text-ag-muted">$0</td>
+                  <tr className="border-t border-border-primary dark:border-secondary-700">
+                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Free</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">100</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">10</td>
+                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$0</td>
                   </tr>
-                  <tr className="border-t border-ag-line">
-                    <td className="px-4 py-3 text-ag-text font-medium">Developer</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">10,000</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">60</td>
-                    <td className="px-4 py-3 text-ag-muted">$39/mo</td>
+                  <tr className="border-t border-border-primary dark:border-secondary-700">
+                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Developer</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">10,000</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">60</td>
+                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$39/mo</td>
                   </tr>
-                  <tr className="border-t border-ag-line">
-                    <td className="px-4 py-3 text-ag-text font-medium">Growth</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">100,000</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">300</td>
-                    <td className="px-4 py-3 text-ag-muted">$149/mo</td>
+                  <tr className="border-t border-border-primary dark:border-secondary-700">
+                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Growth</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">100,000</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">300</td>
+                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$149/mo</td>
                   </tr>
-                  <tr className="border-t border-ag-line">
-                    <td className="px-4 py-3 text-ag-text font-medium">Enterprise</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">Unlimited</td>
-                    <td className="px-4 py-3 font-mono text-ag-muted">Unlimited</td>
-                    <td className="px-4 py-3 text-ag-muted">Custom</td>
+                  <tr className="border-t border-border-primary dark:border-secondary-700">
+                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Enterprise</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">Unlimited</td>
+                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">Unlimited</td>
+                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">Custom</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-ag-muted mt-3">
-              Headers: <code className="bg-ag-panel px-1 rounded">X-RateLimit-Limit</code>,{' '}
-              <code className="bg-ag-panel px-1 rounded">X-RateLimit-Remaining</code>
+            <p className="text-xs text-text-secondary dark:text-secondary-400 mt-3">
+              Headers: <code className="bg-background-secondary dark:bg-secondary-800 px-1 rounded">X-RateLimit-Limit</code>,{' '}
+              <code className="bg-background-secondary dark:bg-secondary-800 px-1 rounded">X-RateLimit-Remaining</code>
             </p>
           </div>
 
           {/* Response Format */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ag-text mb-4 flex items-center gap-2">
-              <Activity className="w-6 h-6 text-[#00C2B3]" />
+            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
+              <Activity className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Response Format
             </h2>
-            <p className="text-ag-muted mb-4">
+            <p className="text-text-secondary dark:text-secondary-400 mb-4">
               All endpoints return a consistent JSON envelope with{' '}
-              <code className="text-sm bg-ag-panel px-1 rounded">data</code>,{' '}
-              <code className="text-sm bg-ag-panel px-1 rounded">error</code>, and{' '}
-              <code className="text-sm bg-ag-panel px-1 rounded">meta</code> fields.
+              <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">data</code>,{' '}
+              <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">error</code>, and{' '}
+              <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">meta</code> fields.
             </p>
             <CodeExample
               tabs={[
@@ -191,12 +191,12 @@ data = res.json()['data']`,
 
           {/* Health */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ag-text mb-6 flex items-center gap-2">
-              <Globe className="w-6 h-6 text-[#00C2B3]" />
+            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-6 flex items-center gap-2">
+              <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Endpoints
             </h2>
 
-            <h3 className="text-lg font-bold text-ag-text mb-3">Health & Info</h3>
+            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3">Health & Info</h3>
 
             <ApiEndpoint
               method="GET"
@@ -232,8 +232,8 @@ data = res.json()['data']`,
 
           {/* Scanning */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-ag-text mb-3 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-[#00C2B3]" />
+            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3 flex items-center gap-2">
+              <Shield className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               Wallet Scanning
             </h3>
 
@@ -285,7 +285,7 @@ data = res.json()['data']`,
 
           {/* Allowances */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-ag-text mb-3">Allowances</h3>
+            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3">Allowances</h3>
 
             <ApiEndpoint
               method="GET"
@@ -328,8 +328,8 @@ data = res.json()['data']`,
 
           {/* Risk */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-ag-text mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-[#00C2B3]" />
+            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               Risk Assessment
             </h3>
 
@@ -410,7 +410,7 @@ data = res.json()['data']`,
 
           {/* Simulation */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-ag-text mb-3">Simulation</h3>
+            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3">Simulation</h3>
 
             <ApiEndpoint
               method="POST"
@@ -452,8 +452,8 @@ data = res.json()['data']`,
 
           {/* Quick Start */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ag-text mb-4">Quick Start</h2>
-            <p className="text-ag-muted mb-4">
+            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4">Quick Start</h2>
+            <p className="text-text-secondary dark:text-secondary-400 mb-4">
               Scan a wallet and retrieve its risk profile in three API calls:
             </p>
             <CodeExample
@@ -546,14 +546,14 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
 
           {/* Error Codes */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ag-text mb-4">Error Codes</h2>
-            <div className="border border-ag-line rounded-lg overflow-hidden">
+            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4">Error Codes</h2>
+            <div className="border border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-ag-panel text-left">
-                    <th className="px-4 py-3 font-medium text-ag-muted">HTTP</th>
-                    <th className="px-4 py-3 font-medium text-ag-muted">Code</th>
-                    <th className="px-4 py-3 font-medium text-ag-muted">Description</th>
+                  <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
+                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">HTTP</th>
+                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Code</th>
+                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -567,10 +567,10 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
                     ['429', 'BURST_RATE_LIMIT_EXCEEDED', 'Per-minute burst limit exceeded'],
                     ['500', 'INTERNAL_ERROR', 'Unexpected server error'],
                   ].map(([http, code, desc]) => (
-                    <tr key={code} className="border-t border-ag-line">
-                      <td className="px-4 py-2 font-mono text-xs text-ag-muted">{http}</td>
-                      <td className="px-4 py-2 font-mono text-xs text-ag-text">{code}</td>
-                      <td className="px-4 py-2 text-xs text-ag-muted">{desc}</td>
+                    <tr key={code} className="border-t border-border-primary dark:border-secondary-700">
+                      <td className="px-4 py-2 font-mono text-xs text-text-secondary dark:text-secondary-400">{http}</td>
+                      <td className="px-4 py-2 font-mono text-xs text-text-primary dark:text-secondary-100">{code}</td>
+                      <td className="px-4 py-2 text-xs text-text-secondary dark:text-secondary-400">{desc}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -579,21 +579,21 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
           </div>
 
           {/* CTA */}
-          <div className="text-center p-8 bg-ag-panel border-2 border-ag-line rounded-lg">
-            <h3 className="text-xl font-bold text-ag-text mb-2">Ready to integrate?</h3>
-            <p className="text-ag-muted mb-4">
+          <div className="text-center p-8 bg-background-secondary dark:bg-secondary-800 border-2 border-border-primary dark:border-secondary-700 rounded-lg">
+            <h3 className="text-xl font-bold text-text-primary dark:text-secondary-100 mb-2">Ready to integrate?</h3>
+            <p className="text-text-secondary dark:text-secondary-400 mb-4">
               Get your API key from the Account dashboard and start building.
             </p>
             <div className="flex justify-center gap-4">
               <a
                 href="/account/keys"
-                className="px-6 py-2 bg-[#00C2B3] text-white rounded font-medium hover:bg-[#00C2B3]/80 transition-colors"
+                className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded font-medium transition-colors"
               >
                 Get API Key
               </a>
               <a
                 href="/pricing"
-                className="px-6 py-2 bg-ag-bg border border-ag-line text-ag-text rounded font-medium hover:bg-ag-panel transition-colors"
+                className="px-6 py-2 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 text-text-primary dark:text-secondary-100 rounded font-medium hover:bg-background-secondary dark:hover:bg-secondary-800 transition-colors"
               >
                 View Plans
               </a>

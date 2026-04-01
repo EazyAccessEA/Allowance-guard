@@ -49,7 +49,7 @@ export default function TermsPage() {
               {/* Service Description */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">What Allowance Guard Does</H2>
-                <div className="bg-ag-panel p-6 rounded-lg mb-6">
+                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg mb-6">
                   <p className="text-stone">
                     Allowance Guard is a free, open-source tool that helps you:
                   </p>
@@ -96,7 +96,7 @@ export default function TermsPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">Your Responsibilities</H2>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Wallet Security</h3>
                     <p className="text-stone text-sm">
                       You are responsible for keeping your wallet secure. Never share your private keys 
@@ -104,7 +104,7 @@ export default function TermsPage() {
                     </p>
                   </div>
                   
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Transaction Verification</h3>
                     <p className="text-stone text-sm">
                       Always review transaction details before confirming. Verify token addresses, 
@@ -112,7 +112,7 @@ export default function TermsPage() {
                     </p>
                   </div>
                   
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Compliance</h3>
                     <p className="text-stone text-sm">
                       Ensure your use of Allowance Guard complies with applicable laws and regulations 
@@ -120,7 +120,7 @@ export default function TermsPage() {
                     </p>
                   </div>
                   
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Accurate Information</h3>
                     <p className="text-stone text-sm">
                       Provide accurate information when subscribing to alerts or making donations. 
@@ -147,7 +147,7 @@ export default function TermsPage() {
               {/* Donations */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">Donations</H2>
-                <div className="bg-ag-panel p-6 rounded-lg">
+                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                   <p className="text-stone mb-4">
                     Donations are voluntary and help support development. Important notes:
                   </p>
@@ -187,7 +187,7 @@ export default function TermsPage() {
               {/* Contact */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">Questions About These Terms?</H2>
-                <div className="bg-ag-panel p-6 rounded-lg">
+                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                   <p className="text-stone mb-4">
                     If you have questions about these terms or need clarification, contact us:
                   </p>
