@@ -134,13 +134,13 @@ export default function ContributePage() {
         
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Support Allowance Guard</H1>
-          <p className="text-lg text-stone max-w-reading">
+          <p className="text-lg text-text-tertiary dark:text-secondary-400 max-w-reading">
             Help us maintain and improve the security infrastructure that protects the Web3 ecosystem. Your contribution directly funds development, security audits, and infrastructure costs.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
+      <div className="border-t border-border-primary dark:border-secondary-700" />
 
       {/* Cancelled Message */}
       {cancelled && (
@@ -167,24 +167,24 @@ export default function ContributePage() {
       <Section className="py-32">
         <Container>
           <div className="max-w-md mx-auto">
-            <div className="bg-white border border-line rounded-2xl p-8 shadow-large">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-2xl p-8 shadow-large">
               <div className="text-center mb-8">
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-crimson to-pink-500 rounded-full mb-4">
                   <Heart className="w-8 h-8 text-white fill-current" />
                 </div>
-                <h2 className="text-2xl font-semibold text-ink mb-2">Make a Contribution</h2>
-                <p className="text-base text-stone">
+                <h2 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-2">Make a Contribution</h2>
+                <p className="text-base text-text-tertiary dark:text-secondary-400">
                   Enter an amount and choose your payment method
                 </p>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <label className="block text-base font-medium text-ink mb-3" htmlFor="amount">
+                  <label className="block text-base font-medium text-text-primary dark:text-secondary-100 mb-3" htmlFor="amount">
                     Contribution Amount
                   </label>
                   <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-stone" />
+                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-tertiary dark:text-secondary-400" />
                     <input
                       id="amount"
                       type="text"
@@ -192,13 +192,13 @@ export default function ContributePage() {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="25.00"
-                      className="w-full px-3 py-4 pl-10 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
+                      className="w-full px-3 py-4 pl-10 text-lg border border-border-primary dark:border-secondary-700 rounded-lg bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100 placeholder-text-tertiary dark:placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-700/30 focus:border-primary-700 transition-colors duration-200"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-base font-medium text-ink mb-3" htmlFor="email">
+                  <label className="block text-base font-medium text-text-primary dark:text-secondary-100 mb-3" htmlFor="email">
                     Email (for receipt / reference)
                   </label>
                   <input
@@ -207,7 +207,7 @@ export default function ContributePage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full px-3 py-4 text-lg border border-line rounded-lg bg-white text-ink placeholder-stone focus:outline-none focus:ring-2 focus:ring-cobalt/30 focus:border-cobalt transition-colors duration-200"
+                    className="w-full px-3 py-4 text-lg border border-border-primary dark:border-secondary-700 rounded-lg bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100 placeholder-text-tertiary dark:placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-700/30 focus:border-primary-700 transition-colors duration-200"
                   />
                 </div>
 
@@ -215,7 +215,7 @@ export default function ContributePage() {
                   <button
                     onClick={handleStripeContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-cobalt hover:bg-cobalt/90 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-primary-700 dark:bg-primary-600 hover:bg-primary-800 dark:hover:bg-primary-700 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-700/30 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingCard ? (
                       <>
@@ -233,7 +233,7 @@ export default function ContributePage() {
                   <button
                     onClick={handleCryptoContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-white border border-line hover:bg-mist rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-text-primary dark:text-secondary-100 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 hover:bg-background-tertiary dark:hover:bg-secondary-800 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-700/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Pay with ETH, USDC, BTC and more - Secured by Coinbase Commerce"
                   >
                     {loadingCrypto ? (

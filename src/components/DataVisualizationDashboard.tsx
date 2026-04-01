@@ -9,10 +9,12 @@ import {
   MiniChart 
 } from './charts'
 import { Button } from './ui/Button'
-import { 
-  Shield, 
-  RefreshCw
+import {
+  Shield,
+  RefreshCw,
+  AlertTriangle
 } from 'lucide-react'
+import { InlineError } from '@/components/ErrorBoundary'
 
 interface AllowanceData {
   chain_id: number
@@ -41,15 +43,17 @@ import { CHAIN_NAMES } from '@/config/chains'
 
 const chainNames = CHAIN_NAMES
 
-export function DataVisualizationDashboard({ 
-  data, 
-  onRefresh 
+export function DataVisualizationDashboard({
+  data,
+  onRefresh
 }: DataVisualizationDashboardProps) {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('30d')
+  const [processingError, setProcessingError] = useState<string | null>(null)
 
   // Process data for visualizations
   const processedData = useMemo(() => {
     if (!data?.length) return null
+    try {
 
     // Chain distribution
     const chainDistribution = data.reduce((acc, item) => {

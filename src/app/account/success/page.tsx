@@ -89,6 +89,11 @@ export default function CheckoutSuccessPage() {
                       ? 'Your subscription is active. All premium features are now unlocked.'
                       : 'Your payment is being processed. Features will unlock shortly.'}
                   </p>
+                  {plan === 'free' && pollCount >= 15 && (
+                    <p className="text-xs text-semantic-warning-600 mt-2">
+                      If your plan isn&apos;t updating, please contact support or try refreshing.
+                    </p>
+                  )}
                 </div>
                 <div className="pt-4">
                   <Button
