@@ -10,6 +10,7 @@ import {
   CheckCircle,
   Clock,
   Shield,
+  ShieldCheck,
   Zap
 } from 'lucide-react'
 
@@ -92,12 +93,12 @@ export default function AllowanceTable({
   if (!data?.length) {
     return (
       <div className="text-center py-12" role="region" aria-label="No allowances found">
-        <div className="w-16 h-16 bg-background-light dark:bg-secondary-800 rounded-full flex items-center justify-center mx-auto mb-4" aria-hidden="true">
-          <Shield className="w-8 h-8 text-text-tertiary dark:text-secondary-500" />
+        <div className="w-16 h-16 bg-semantic-success-50 dark:bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4" aria-hidden="true">
+          <ShieldCheck className="w-8 h-8 text-semantic-success-500" />
         </div>
-        <h3 className="mobbin-heading-3 text-text-primary dark:text-secondary-100 mb-2">No allowances found</h3>
+        <h3 className="mobbin-heading-3 text-semantic-success-700 dark:text-semantic-success-300 mb-2">No active approvals</h3>
         <p className="mobbin-body text-text-secondary dark:text-secondary-400 mb-6 max-w-md mx-auto">
-          This wallet has no token approvals. Run a scan to check for allowances across supported chains.
+          Great news — your wallet has no token approvals. You&apos;re safe! Run a scan to double-check across all supported chains.
         </p>
         <Button
           onClick={onRefresh}
@@ -127,13 +128,13 @@ export default function AllowanceTable({
   return (
     <div className="space-y-4">
       {/* Action Bar */}
-      <div className="flex items-center justify-between" role="toolbar" aria-label="Token approval actions">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3" role="toolbar" aria-label="Token approval actions">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
           <Button
             onClick={selectRisky}
             variant="secondary"
             size="sm"
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 min-h-[44px]"
             aria-label={`Select ${risky.length} risky token approvals`}
           >
             <AlertTriangle className="w-4 h-4" aria-hidden="true" />
@@ -145,7 +146,7 @@ export default function AllowanceTable({
             variant="primary"
             size="sm"
             loading={busy}
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 min-h-[44px]"
             aria-label={busy ? `Revoking ${progress ?? ''}` : `Revoke ${selectedRows.length} selected approvals`}
             aria-describedby={!canRevoke ? 'view-only-access' : !revokeAllowed ? 'connect-wallet-to-revoke' : undefined}
           >
@@ -155,7 +156,7 @@ export default function AllowanceTable({
         </div>
 
         {selectedRows.length > 0 && (
-          <Badge variant="info" className="flex items-center gap-1" role="status" aria-live="polite">
+          <Badge variant="info" className="flex items-center justify-center gap-1" role="status" aria-live="polite">
             <CheckCircle className="w-3 h-3" aria-hidden="true" />
             {selectedRows.length} selected
           </Badge>
@@ -168,8 +169,93 @@ export default function AllowanceTable({
         <div id="connect-wallet-to-revoke">Connect the selected wallet to revoke approvals</div>
       </div>
 
-      {/* Modern Data Grid */}
-      <div className="border border-border-primary dark:border-secondary-700 rounded-xl overflow-hidden bg-white dark:bg-secondary-900/60 backdrop-blur-xs shadow-subtle dark:shadow-dark-subtle">
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-3">
+        {data.map((r, i) => (
+          <div
+            key={i}
+            className={`rounded-xl border p-4 transition-colors duration-100 ${
+              sel[keyOf(r)]
+                ? 'border-primary-300 bg-primary-50/50 dark:border-primary-700 dark:bg-primary-900/10'
+                : 'border-border-primary dark:border-secondary-700 bg-white dark:bg-secondary-900/60'
+            }`}
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={!!sel[keyOf(r)]}
+                  onChange={() => toggle(r)}
+                  className="rounded border-border-primary dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-secondary-800 min-w-[18px] min-h-[18px]"
+                  aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval`}
+                />
+                <div>
+                  <span className="font-medium text-text-primary dark:text-secondary-100">
+                    {r.token_symbol || r.token_name || 'Unknown'}
+                  </span>
+                  <span className="text-xs text-text-tertiary dark:text-secondary-500 font-mono ml-2">
+                    {r.token_address.slice(0, 6)}...{r.token_address.slice(-4)}
+                  </span>
+                </div>
+              </div>
+              <div className="flex gap-1">
+                {r.is_unlimited && (
+                  <Badge variant="danger" className="text-xs flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3" />
+                    High
+                  </Badge>
+                )}
+                {r.risk_flags?.includes('STALE') && (
+                  <Badge variant="warning" className="text-xs flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    Stale
+                  </Badge>
+                )}
+                {!r.is_unlimited && !r.risk_flags?.includes('STALE') && (
+                  <Badge variant="success" className="text-xs flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />
+                    Safe
+                  </Badge>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs">
+              <div>
+                <span className="text-text-secondary dark:text-secondary-400">Spender:</span>
+                <span className="ml-1 font-medium text-text-primary dark:text-secondary-100">
+                  {r.spender_label || `${r.spender_address.slice(0, 6)}...${r.spender_address.slice(-4)}`}
+                </span>
+              </div>
+              <div>
+                <span className="text-text-secondary dark:text-secondary-400">Chain:</span>
+                <Badge variant="secondary" className="text-xs ml-1">
+                  {CHAIN_NAMES[r.chain_id] || `${r.chain_id}`}
+                </Badge>
+              </div>
+              <div>
+                <span className="text-text-secondary dark:text-secondary-400">Amount:</span>
+                <span className="ml-1 font-mono font-medium text-text-primary dark:text-secondary-200">
+                  {r.is_unlimited ? '∞ Unlimited' : (() => {
+                    if (r.token_decimals != null) {
+                      const amountBigInt = BigInt(r.amount)
+                      return amountBigInt === BigInt(0) ? '0' :
+                        Number((amountBigInt / BigInt(10 ** r.token_decimals)).toString())
+                    }
+                    return r.amount
+                  })()}
+                </span>
+              </div>
+              <div>
+                <span className="text-text-secondary dark:text-secondary-400">Type:</span>
+                <Badge variant="outline" className="text-xs ml-1">{r.standard}</Badge>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table Layout */}
+      <div className="hidden md:block border border-border-primary dark:border-secondary-700 rounded-xl overflow-hidden bg-white dark:bg-secondary-900/60 backdrop-blur-xs shadow-subtle dark:shadow-dark-subtle">
         <div className="overflow-x-auto">
           <table className="w-full text-sm" role="table" aria-label="Token allowances">
             <caption className="sr-only">Token approval allowances with risk assessment and management options</caption>

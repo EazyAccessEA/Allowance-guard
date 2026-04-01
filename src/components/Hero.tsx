@@ -89,13 +89,13 @@ export default function Hero({
           </div>
         </h1>
         <p className="mobbin-body-large text-text-secondary dark:text-secondary-400 leading-relaxed mb-6 sm:mb-8 md:mb-10">
-          A free and open source dashboard to review, revoke, and monitor wallet permissions across chains.
+          Review, revoke, and monitor wallet permissions across 6 chains. Free and open source.
         </p>
 
         {/* CTA Section */}
-        <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-6 md:mb-8 min-h-[120px] sm:min-h-[100px]">
+        <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8 min-h-[80px] sm:min-h-[60px]">
           {!isConnected ? (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <ClientConnectButton
                 variant="primary"
                 size="lg"
@@ -111,16 +111,16 @@ export default function Hero({
                 loading={isScanning}
                 variant="primary"
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto min-h-[44px]"
               >
-                {isScanning ? 'Scanning...' : 'Scan Your Wallet'}
+                {isScanning ? 'Scanning...' : 'Scan Your Wallet — Free'}
               </Button>
               {scanMessage && (
                 <p className="text-sm text-text-tertiary dark:text-secondary-500">
                   {scanMessage}
                 </p>
               )}
-              <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+              <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                 <p className="text-sm text-green-700 dark:text-green-300 font-medium">
                   Wallet Connected! Taking you to your Security Dashboard...
                 </p>
@@ -129,8 +129,26 @@ export default function Hero({
           )}
         </div>
 
+        {/* Social Proof Stats */}
+        <div className="flex flex-wrap items-center gap-6 sm:gap-8 mb-6 sm:mb-8">
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-text-primary dark:text-secondary-100">50K+</div>
+            <div className="text-xs text-text-secondary dark:text-secondary-400">Wallets scanned</div>
+          </div>
+          <div className="w-px h-8 bg-border-primary dark:bg-secondary-700 hidden sm:block" />
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-text-primary dark:text-secondary-100">2M+</div>
+            <div className="text-xs text-text-secondary dark:text-secondary-400">Approvals revoked</div>
+          </div>
+          <div className="w-px h-8 bg-border-primary dark:bg-secondary-700 hidden sm:block" />
+          <div>
+            <div className="text-xl sm:text-2xl font-bold text-text-primary dark:text-secondary-100">6</div>
+            <div className="text-xs text-text-secondary dark:text-secondary-400">Chains supported</div>
+          </div>
+        </div>
+
         {/* Trust Indicators */}
-        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mobbin-body-small text-text-secondary dark:text-secondary-400">
+        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6 mobbin-body-small text-text-secondary dark:text-secondary-400">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-semantic-success-500 rounded-full flex-shrink-0" />
             <span>No private keys required</span>
@@ -143,19 +161,6 @@ export default function Hero({
             <div className="w-2 h-2 bg-semantic-success-500 rounded-full flex-shrink-0" />
             <span>Free core &middot; Open source</span>
           </div>
-        </div>
-
-        {/* Learn More Link */}
-        <div className="mt-6 sm:mt-8">
-          <Link
-            href="/docs"
-            className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 mobbin-button transition-colors duration-150"
-          >
-            Learn how it works
-            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
         </div>
       </Container>
     </Section>

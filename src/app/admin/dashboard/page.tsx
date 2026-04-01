@@ -83,8 +83,8 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab('overview')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'overview'
-                    ? 'bg-white text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-white/50'
+                    ? 'bg-background-primary dark:bg-secondary-800 text-primary-accent shadow-sm'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-background-primary/50 dark:hover:bg-secondary-800/50'
                 }`}
               >
                 Overview
@@ -93,8 +93,8 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab('audit')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'audit'
-                    ? 'bg-white text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-white/50'
+                    ? 'bg-background-primary dark:bg-secondary-800 text-primary-accent shadow-sm'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-background-primary/50 dark:hover:bg-secondary-800/50'
                 }`}
               >
                 Audit Logs
@@ -103,8 +103,8 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab('performance')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'performance'
-                    ? 'bg-white text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-white/50'
+                    ? 'bg-background-primary dark:bg-secondary-800 text-primary-accent shadow-sm'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-background-primary/50 dark:hover:bg-secondary-800/50'
                 }`}
               >
                 Performance

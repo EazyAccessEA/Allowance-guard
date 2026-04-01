@@ -82,12 +82,13 @@ export default function ContactPage() {
           videoSrc="/V3AG.mp4"
         />
         {/* Gradient overlay for better text readability */}
-        <div 
-          className="absolute inset-0"
+        <div
+          className="absolute inset-0 dark:hidden"
           style={{
             background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
+        <div className="absolute inset-0 hidden dark:block bg-secondary-900/90" />
         
         <Container className="relative text-left max-w-4xl z-10">
           <h1 className="mobbin-display-1 text-text-primary mb-6 mobbin-fade-in">How Can We Help?</h1>
@@ -100,7 +101,7 @@ export default function ContactPage() {
       <div className="border-t border-border-primary" />
 
       {/* Section 1: Quick Help Search */}
-      <Section className="py-32 bg-gray-50">
+      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Quick Help Search</h2>
@@ -272,7 +273,7 @@ export default function ContactPage() {
       </Section>
 
       {/* Section 3: Community & Async Support - Mobbin Layout */}
-      <Section className="py-32 bg-gray-50">
+      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
         <Container className="max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">

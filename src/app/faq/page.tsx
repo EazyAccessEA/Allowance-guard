@@ -13,12 +13,13 @@ export default function FAQPage() {
         <VideoBackground videoSrc="/V3AG.mp4" />
         
         {/* Gradient overlay */}
-        <div 
-          className="absolute inset-0 z-10"
+        <div
+          className="absolute inset-0 z-10 dark:hidden"
           style={{
             background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
+        <div className="absolute inset-0 z-10 hidden dark:block bg-secondary-900/90" />
         
         <Container className="relative z-10">
           <div className="max-w-4xl">

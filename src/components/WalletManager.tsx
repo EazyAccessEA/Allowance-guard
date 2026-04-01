@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { load, save } from '@/lib/storage'
 import { HexButton } from './HexButton'
+import { Wallet } from 'lucide-react'
 
 type Saved = { address: string; label: string }
 
@@ -21,12 +22,14 @@ export default function WalletManager({
   const [saved, setSaved] = useState<Saved[]>(() => load<Saved[]>(KEY, []))
   const [addr, setAddr] = useState('')
   const [label, setLabel] = useState('')
+  const [validationError, setValidationError] = useState<string | null>(null)
 
   useEffect(() => { onSavedChange?.(saved) }, [saved, onSavedChange])
 
   function add() {
+    setValidationError(null)
     const a = normalize(addr)
-    if (!/^0x[a-f0-9]{40}$/.test(a)) return alert('Enter a valid 0x address')
+    if (!/^0x[a-f0-9]{40}$/.test(a)) { setValidationError('Enter a valid 0x address'); return }
     const exists = saved.find(s => s.address === a)
     const next = exists ? saved.map(s => (s.address === a ? { ...s, label: label || s.label } : s)) : [...saved, { address: a, label: label || a.slice(0, 10) }]
     setSaved(next); save(KEY, next); setAddr(''); setLabel('')
@@ -52,6 +55,18 @@ export default function WalletManager({
                placeholder="Label (optional)" value={label} onChange={e => setLabel(e.target.value)} />
         <HexButton onClick={add}>Save</HexButton>
       </div>
+
+      {validationError && (
+        <p className="text-sm text-red-600" role="alert">{validationError}</p>
+      )}
+
+      {saved.length === 0 && (
+        <div className="text-center py-6">
+          <Wallet className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
+          <p className="text-sm text-text-secondary">No saved wallets yet</p>
+          <p className="text-xs text-text-tertiary mt-1">Add a wallet address above to get started.</p>
+        </div>
+      )}
 
       {saved.length > 0 && (
         <div className="flex items-center gap-2">

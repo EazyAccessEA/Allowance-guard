@@ -68,7 +68,7 @@ function UsageStat({
               </span>
             </p>
             {!isUnlimited && limit > 0 && (
-              <div className="mt-2 h-2 w-full rounded-full bg-gray-100 overflow-hidden">
+              <div className="mt-2 h-2 w-full rounded-full bg-gray-100 dark:bg-secondary-700 overflow-hidden">
                 <div
                   className={cn(
                     'h-full rounded-full transition-all',
@@ -199,8 +199,8 @@ export default function UsagePage() {
                 <Card key={i}>
                   <CardContent className="py-5">
                     <div className="animate-pulse space-y-3">
-                      <div className="h-4 bg-gray-200 rounded w-1/2" />
-                      <div className="h-8 bg-gray-200 rounded w-3/4" />
+                      <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-1/2" />
+                      <div className="h-8 bg-neutral-200 dark:bg-secondary-700 rounded w-3/4" />
                     </div>
                   </CardContent>
                 </Card>

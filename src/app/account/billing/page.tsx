@@ -20,8 +20,11 @@ import {
   ExternalLink,
   Check,
   Clock,
+  Receipt,
 } from 'lucide-react'
 import { useUserPlan } from '@/hooks/useUserPlan'
+import { InlineError } from '@/components/ErrorBoundary'
+import EmptyState from '@/components/EmptyState'
 
 const PLANS: { key: ConsumerPlan; features: string[] }[] = [
   {
@@ -60,9 +63,11 @@ const PLANS: { key: ConsumerPlan; features: string[] }[] = [
 export default function BillingPage() {
   const { plan: currentPlan, status: planStatus, currentPeriodEnd } = useUserPlan()
   const [portalLoading, setPortalLoading] = useState(false)
+  const [portalError, setPortalError] = useState<string | null>(null)
 
   async function openBillingPortal() {
     setPortalLoading(true)
+    setPortalError(null)
     try {
       const res = await fetch('/api/billing/portal', { method: 'POST' })
       if (res.ok) {
@@ -70,7 +75,11 @@ export default function BillingPage() {
         if (url) window.location.href = url
       } else if (res.status === 404) {
         window.location.href = '/pricing'
+      } else {
+        setPortalError('Failed to open billing portal. Please try again.')
       }
+    } catch {
+      setPortalError('Network error. Please check your connection and try again.')
     } finally {
       setPortalLoading(false)
     }
@@ -139,6 +148,9 @@ export default function BillingPage() {
                 >
                   Billing Portal
                 </Button>
+              )}
+              {portalError && (
+                <InlineError message={portalError} onRetry={openBillingPortal} />
               )}
             </CardContent>
           </Card>
@@ -235,15 +247,11 @@ export default function BillingPage() {
               <CardTitle>Payment History</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center justify-center py-10 text-center">
-                <Clock className="h-8 w-8 text-text-secondary mb-2" />
-                <p className="text-sm font-medium text-text-primary">
-                  Coming soon
-                </p>
-                <p className="text-xs text-text-secondary mt-1">
-                  Payment history and invoices will appear here.
-                </p>
-              </div>
+              <EmptyState
+                icon={Receipt}
+                title="No payment history yet"
+                description="Payment history and invoices will appear here once you have an active subscription."
+              />
             </CardContent>
           </Card>
         </div>

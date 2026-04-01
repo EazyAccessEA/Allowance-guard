@@ -84,11 +84,8 @@ export default function Header({ isConnected }: HeaderProps) {
 
           {/* Desktop Navigation — Floating Pill */}
           <nav className="hidden lg:flex items-center gap-1 px-2 py-1.5 bg-background-secondary/60 dark:bg-secondary-800/50 backdrop-blur-glass rounded-full border border-border-primary/30 dark:border-secondary-700/40 shadow-glass dark:shadow-dark-subtle">
-            <NavLink href="/blog" current={pathname?.startsWith('/blog') ?? false}>
-              Blog
-            </NavLink>
-            <NavLink href="/docs" current={pathname?.startsWith('/docs') ?? false}>
-              Docs
+            <NavLink href="/" current={pathname === '/'}>
+              Scan
             </NavLink>
             <NavLink href="/features" current={pathname === '/features'}>
               Features
@@ -96,8 +93,11 @@ export default function Header({ isConnected }: HeaderProps) {
             <NavLink href="/pricing" current={pathname === '/pricing'}>
               Pricing
             </NavLink>
-            <NavLink href="/settings" current={pathname === '/settings'}>
-              Settings
+            <NavLink href="/docs" current={pathname?.startsWith('/docs') ?? false}>
+              Docs
+            </NavLink>
+            <NavLink href="/blog" current={pathname?.startsWith('/blog') ?? false}>
+              Blog
             </NavLink>
           </nav>
 

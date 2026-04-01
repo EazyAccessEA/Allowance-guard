@@ -9,10 +9,12 @@ import {
   MiniChart 
 } from './charts'
 import { Button } from './ui/Button'
-import { 
-  Shield, 
-  RefreshCw
+import {
+  Shield,
+  RefreshCw,
+  AlertTriangle
 } from 'lucide-react'
+import { InlineError } from '@/components/ErrorBoundary'
 
 interface AllowanceData {
   chain_id: number
@@ -41,15 +43,17 @@ import { CHAIN_NAMES } from '@/config/chains'
 
 const chainNames = CHAIN_NAMES
 
-export function DataVisualizationDashboard({ 
-  data, 
-  onRefresh 
+export function DataVisualizationDashboard({
+  data,
+  onRefresh
 }: DataVisualizationDashboardProps) {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d'>('30d')
+  const [processingError, setProcessingError] = useState<string | null>(null)
 
   // Process data for visualizations
   const processedData = useMemo(() => {
     if (!data?.length) return null
+    try {
 
     // Chain distribution
     const chainDistribution = data.reduce((acc, item) => {
@@ -107,7 +111,22 @@ export function DataVisualizationDashboard({
       trustDistribution,
       riskTrend
     }
+    } catch (err) {
+      setProcessingError(err instanceof Error ? err.message : 'Failed to process data')
+      return null
+    }
   }, [data])
+
+  if (processingError) {
+    return (
+      <div className="space-y-6">
+        <InlineError
+          message={processingError}
+          onRetry={onRefresh}
+        />
+      </div>
+    )
+  }
 
   if (!processedData) {
     return (
