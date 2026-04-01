@@ -1,15 +1,31 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
 import QueryStream from 'pg-query-stream'
+import { getSession } from '@/lib/auth'
+import { checkFeature } from '@/lib/feature-gate'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
+  // Feature gate: export requires Pro+ plan
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+  }
+
+  const access = await checkFeature(session.user_id as number, 'export')
+  if (!access.allowed) {
+    return NextResponse.json(
+      { error: 'CSV export requires a Pro or Sentinel plan', requiredPlan: access.requiredPlan },
+      { status: 403 },
+    )
+  }
+
   const { searchParams } = new URL(req.url)
   const wallet = (searchParams.get('wallet') || '').toLowerCase()
   const riskOnly = (searchParams.get('riskOnly') || 'false') === 'true'
-  
+
   if (!/^0x[a-f0-9]{40}$/.test(wallet)) {
     return NextResponse.json({ error: 'Invalid wallet' }, { status: 400 })
   }
