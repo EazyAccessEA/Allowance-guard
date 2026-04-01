@@ -10,16 +10,26 @@ jobs:
       NEXT_PUBLIC_E2E: "1"
       E2E_FAKE_PAYMENTS: "1"
       E2E_FAKE_EMAIL: "1"
-      # If your app needs DB:
       DATABASE_URL: ${{ secrets.DATABASE_URL_CI }}
-      # If using Redis in tests, add REDIS_URL too (or skip redis paths)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 18, cache: 'pnpm' }
+        with:
+          node-version: '20'
       - run: corepack enable
       - run: pnpm i --frozen-lockfile
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Dependency audit
+        run: pnpm audit --audit-level=high
+        continue-on-error: true  # Advisory only — don't block on upstream vulnerabilities
+
       - run: npx playwright install --with-deps
       - run: pnpm build
-      - run: pnpm -s playwright test --reporter=list
-    continue-on-error: true  # Don't fail the build if E2E tests fail
+      - name: Run E2E tests
+        run: pnpm -s playwright test --reporter=list
