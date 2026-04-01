@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import Hero from '@/components/Hero'
 import { LazySection } from '@/components/LazySection'
+import { WalletErrorBoundary, RpcErrorBoundary } from '@/components/ErrorBoundary'
 import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScrollAnimation'
 import dynamicImport from 'next/dynamic'
 
@@ -15,27 +16,27 @@ import dynamicImport from 'next/dynamic'
 
 // Enhanced Dynamic Imports with Error Boundaries
 const StatisticsSection = dynamicImport(() => import('@/components/StatisticsSection'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64 w-full" />,
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-64 w-full" />,
   ssr: false // Prevent SSR issues
 })
 
 const AppArea = dynamicImport(() => import('@/components/AppArea'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />,
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-96 w-full" />,
   ssr: false
 })
 
 const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-48 w-full" />,
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-48 w-full" />,
   ssr: false
 })
 
 // Enhanced Error Boundary Component
 function ErrorFallback({ resetError }: { error: Error; resetError: () => void }) {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0A0E1A] flex items-center justify-center">
+    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 flex items-center justify-center">
       <div className="max-w-md mx-auto text-center p-6">
         <h2 className="mobbin-heading-2 text-text-primary dark:text-secondary-100 mb-4">Something went wrong</h2>
-        <p className="text-gray-600 dark:text-secondary-400 mb-6">We&apos;re working to fix this issue. Please try again.</p>
+        <p className="text-text-secondary dark:text-secondary-400 mb-6">We&apos;re working to fix this issue. Please try again.</p>
         <button
           onClick={resetError}
           className="bg-primary-700 text-white px-6 py-2 rounded-lg hover:bg-primary-800 transition-colors"
@@ -399,6 +400,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white dark:bg-[#0A0E1A]">
       {/* Hero Section - Content on top of global video/overlay */}
       <div className="relative z-20">
+        <WalletErrorBoundary>
         <Hero
           isConnected={isConnected}
           onScan={startScan}
@@ -406,6 +408,7 @@ export default function HomePage() {
           scanMessage={message}
           onWalletSelect={setSelectedWallet}
         />
+        </WalletErrorBoundary>
       </div>
 
       {/* Statistics Section - Inspired by DNA Payments */}
@@ -754,11 +757,12 @@ export default function HomePage() {
 
       {/* App Area - Only show when connected, hydrated, and wallet is explicitly selected */}
       {isHydrated && isConnected && selectedWallet && (
+        <RpcErrorBoundary>
         <LazySection>
-        <div 
+        <div
           id="security-dashboard"
-          className="scroll-mt-20" // Add scroll margin for better positioning
-          data-testid="security-dashboard" // Add test ID for easier debugging
+          className="scroll-mt-20"
+          data-testid="security-dashboard"
         >
         <AppArea
           isConnected={isConnected}
@@ -777,6 +781,7 @@ export default function HomePage() {
         />
         </div>
         </LazySection>
+        </RpcErrorBoundary>
       )}
 
       {/* Activity Timeline - Only show when wallet is selected and hydrated */}

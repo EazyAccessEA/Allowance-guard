@@ -20,36 +20,36 @@ type SearchState = {
 }
 
 export default function TokensPage() {
-  const [state, setState] = useState<SearchState>({ 
-    q: '', 
-    verified: true, 
-    fuzzy: true, 
-    minScore: 0, 
-    sort: 'relevance', 
-    offset: 0 
+  const [state, setState] = useState<SearchState>({
+    q: '',
+    verified: true,
+    fuzzy: true,
+    minScore: 0,
+    sort: 'relevance',
+    offset: 0
   })
-  
-  const onChange = useCallback((s: Partial<SearchState>) => 
-    setState((prev: SearchState) => ({ ...prev, ...s, offset: 0 })), 
+
+  const onChange = useCallback((s: Partial<SearchState>) =>
+    setState((prev: SearchState) => ({ ...prev, ...s, offset: 0 })),
   [])
-  
-  const apiState = useMemo(() => ({ 
-    ...state, 
-    setOffset: (n: number) => setState((p: SearchState) => ({ ...p, offset: n })) 
+
+  const apiState = useMemo(() => ({
+    ...state,
+    setOffset: (n: number) => setState((p: SearchState) => ({ ...p, offset: n }))
   }), [state])
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
-        
+
         <Container className="relative text-left max-w-4xl z-10">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-primary-accent/10 rounded-xl flex items-center justify-center">
@@ -57,13 +57,13 @@ export default function TokensPage() {
             </div>
             <div>
               <H1 className="mb-2">Token Discovery</H1>
-              <p className="text-stone text-lg">
+              <p className="text-text-tertiary dark:text-secondary-400 text-lg">
                 Explore and discover tokens across multiple blockchains
               </p>
             </div>
           </div>
-          
-          <div className="flex items-center gap-4 text-sm text-stone">
+
+          <div className="flex items-center gap-4 text-sm text-text-tertiary dark:text-secondary-400">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary-accent" />
               <span>Advanced fuzzy search</span>
@@ -76,7 +76,7 @@ export default function TokensPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
+      <div className="border-t border-border-primary dark:border-secondary-700" />
 
       {/* Search Section */}
       <Section className="py-16">

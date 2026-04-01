@@ -6,16 +6,21 @@ import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
 import ClientConnectButton from '@/components/ClientConnectButton'
+import { InlineError } from '@/components/ErrorBoundary'
 
 export default function SettingsPage() {
   const { address: connectedAddress, isConnected } = useAccount()
   const [selectedWallet] = useState<string | null>(null)
-  
+
+  // Policy loading state
+  const [policyLoading, setPolicyLoading] = useState(false)
+  const [policyError, setPolicyError] = useState<string | null>(null)
+
   // Email Alerts state
   const [email, setEmail] = useState('')
   const [riskOnly, setRiskOnly] = useState(true)
   const [subMsg, setSubMsg] = useState<string | null>(null)
-  
+
   // Risk Policy state
   const [policy, setPolicy] = useState<{
     min_risk_score: number
@@ -27,11 +32,11 @@ export default function SettingsPage() {
     chains: number[]
   } | null>(null)
   const [policyMsg, setPolicyMsg] = useState<string | null>(null)
-  
+
   // Slack state
   const [webhook, setWebhook] = useState('')
   const [slackMsg, setSlackMsg] = useState<string | null>(null)
-  
+
   // Share state
   const [shareToken, setShareToken] = useState<string | null>(null)
   const [shareMsg, setShareMsg] = useState<string | null>(null)
@@ -45,20 +50,29 @@ export default function SettingsPage() {
   // Load policy on mount
   const loadPolicy = useCallback(async () => {
     if (!targetWallet) return
-    const r = await fetch(`/api/policy?wallet=${targetWallet}`)
-    const j = await r.json()
-    setPolicy(j.policy ?? { 
-      min_risk_score: 0, 
-      unlimited_only: false, 
-      include_spenders: [], 
-      ignore_spenders: [], 
-      include_tokens: [], 
-      ignore_tokens: [], 
-      chains: [] 
-    })
+    setPolicyLoading(true)
+    setPolicyError(null)
+    try {
+      const r = await fetch(`/api/policy?wallet=${targetWallet}`)
+      if (!r.ok) throw new Error('Failed to load policy')
+      const j = await r.json()
+      setPolicy(j.policy ?? {
+        min_risk_score: 0,
+        unlimited_only: false,
+        include_spenders: [],
+        ignore_spenders: [],
+        include_tokens: [],
+        ignore_tokens: [],
+        chains: []
+      })
+    } catch (err) {
+      setPolicyError(err instanceof Error ? err.message : 'Failed to load policy')
+    } finally {
+      setPolicyLoading(false)
+    }
   }, [targetWallet])
 
-  useEffect(() => { 
+  useEffect(() => {
     if (targetWallet) {
       loadPolicy()
     }
@@ -68,7 +82,7 @@ export default function SettingsPage() {
   async function subscribe() {
     if (!email) return setSubMsg('Enter an email address')
     if (!targetWallet) return setSubMsg('Select or connect a wallet first')
-    
+
     const res = await fetch('/api/alerts/subscribe', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -78,7 +92,7 @@ export default function SettingsPage() {
         risk_only: riskOnly
       })
     })
-    
+
     const json = await res.json()
     if (!res.ok) return setSubMsg(json.error || 'Failed to subscribe')
     setSubMsg('Subscribed successfully')
@@ -87,7 +101,7 @@ export default function SettingsPage() {
   // Risk Policy functions
   async function savePolicy() {
     if (!targetWallet || !policy) return setPolicyMsg('Select a wallet and configure policy first')
-    
+
     const res = await fetch('/api/policy', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -96,7 +110,7 @@ export default function SettingsPage() {
         ...policy
       })
     })
-    
+
     const json = await res.json()
     if (!res.ok) return setPolicyMsg(json.error || 'Failed to save policy')
     setPolicyMsg('Policy saved')
@@ -106,7 +120,7 @@ export default function SettingsPage() {
   async function addSlack() {
     if (!webhook) return setSlackMsg('Enter a webhook URL')
     if (!targetWallet) return setSlackMsg('Select or connect a wallet first')
-    
+
     const res = await fetch('/api/slack/subscribe', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -115,7 +129,7 @@ export default function SettingsPage() {
         webhook_url: webhook
       })
     })
-    
+
     const json = await res.json()
     if (!res.ok) return setSlackMsg(json.error || 'Failed to add webhook')
     setSlackMsg('Webhook added')
@@ -146,7 +160,7 @@ export default function SettingsPage() {
   async function expireShareLink() {
     if (!targetWallet) return setShareMsg('Select or connect a wallet first')
     const r = await fetch('/api/share/expire', {
-      method: 'POST', 
+      method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ wallet: targetWallet })
     })
@@ -157,58 +171,58 @@ export default function SettingsPage() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-white text-ink">
+      <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
         <Section>
           <Container className="text-center">
             <H1 className="mb-6">Settings</H1>
-            <p className="text-base text-stone max-w-reading mx-auto mb-8">
+            <p className="text-base text-text-tertiary dark:text-secondary-400 max-w-reading mx-auto mb-8">
               Connect your wallet to access comprehensive settings and configure your security monitoring preferences.
             </p>
-            
+
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="border border-line rounded-md p-6 bg-mist">
-                  <h3 className="text-lg font-semibold text-ink mb-3">Email Alerts</h3>
-                  <p className="text-sm text-stone mb-3">
+                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Email Alerts</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Get notified when new approvals are detected on your wallets via Microsoft SMTP.
                   </p>
-                  <ul className="text-sm text-stone space-y-1">
+                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
                     <li>• Daily digest emails with risky approval summaries</li>
                     <li>• Risk-only filtering to reduce notification noise</li>
                     <li>• Customizable preferences per wallet address</li>
                   </ul>
                 </div>
 
-                <div className="border border-line rounded-md p-6 bg-mist">
-                  <h3 className="text-lg font-semibold text-ink mb-3">Risk Policy Configuration</h3>
-                  <p className="text-sm text-stone mb-3">
+                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Risk Policy Configuration</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Configure what counts as alert-worthy for your specific needs.
                   </p>
-                  <ul className="text-sm text-stone space-y-1">
+                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
                     <li>• Set minimum risk score thresholds</li>
                     <li>• Focus on unlimited approvals only</li>
                     <li>• Include/exclude specific addresses</li>
                   </ul>
                 </div>
 
-                <div className="border border-line rounded-md p-6 bg-mist">
-                  <h3 className="text-lg font-semibold text-ink mb-3">Slack Integration</h3>
-                  <p className="text-sm text-stone mb-3">
+                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Slack Integration</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Get daily digests directly in your Slack workspace.
                   </p>
-                  <ul className="text-sm text-stone space-y-1">
+                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
                     <li>• Webhook-based notifications</li>
                     <li>• Rich formatting with approval details</li>
                     <li>• Team collaboration features</li>
                   </ul>
                 </div>
 
-                <div className="border border-line rounded-md p-6 bg-mist">
-                  <h3 className="text-lg font-semibold text-ink mb-3">Public Share Links</h3>
-                  <p className="text-sm text-stone mb-3">
+                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Public Share Links</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Generate read-only links to share your wallet&apos;s approval status.
                   </p>
-                  <ul className="text-sm text-stone space-y-1">
+                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
                     <li>• Privacy controls (censor addresses/amounts)</li>
                     <li>• Risk-only filtering for public sharing</li>
                     <li>• Expiration dates for temporary access</li>
@@ -216,7 +230,7 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="bg-ink text-white rounded-md p-6">
+              <div className="bg-text-primary dark:bg-secondary-800 text-white rounded-md p-6">
                 <h3 className="text-lg font-semibold mb-2">Ready to get started?</h3>
                 <p className="text-sm opacity-90 mb-4">
                   Connect your wallet to access these settings and start monitoring your token approvals with custom alerts and policies.
@@ -225,7 +239,7 @@ export default function SettingsPage() {
                   Your wallet connection is secure and only used to identify which settings apply to your addresses.
                 </p>
                 <div className="flex justify-center">
-                  <ClientConnectButton 
+                  <ClientConnectButton
                     variant="primary"
                     className="px-8 py-3 text-base font-medium rounded-lg"
                   />
@@ -239,36 +253,36 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-ink">
-      
+    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
+
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         {/* Video Background */}
-        <VideoBackground 
+        <VideoBackground
           videoSrc="/V3AG.mp4"
         />
         {/* Gradient overlay for better text readability - 10% left, 45% right */}
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
-        
+
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Settings</H1>
-          <p className="text-base text-stone max-w-reading mb-12">
+          <p className="text-base text-text-tertiary dark:text-secondary-400 max-w-reading mb-12">
             Configure alerts, policies, and sharing options for your wallet.
           </p>
 
           <div className="space-y-12">
             {/* Email Alerts Card */}
-            <div className="border border-line rounded-md p-8">
+            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Email Alerts</H2>
-              <p className="text-base text-stone mb-6">
+              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Get notified when new approvals are detected on your wallets.
               </p>
-              
+
               <div className="space-y-4 max-w-md">
                 <div>
                   <input
@@ -276,193 +290,202 @@ export default function SettingsPage() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                    className="w-full px-4 py-3 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
-                    
+
                 <div className="flex items-center">
                   <input
                     type="checkbox"
                     id="riskOnly"
                     checked={riskOnly}
                     onChange={(e) => setRiskOnly(e.target.checked)}
-                    className="mr-3 focus:outline-none focus:ring-2 focus:ring-ink/30"
+                    className="mr-3 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   />
-                  <label htmlFor="riskOnly" className="text-base text-stone">
+                  <label htmlFor="riskOnly" className="text-base text-text-tertiary dark:text-secondary-400">
                     Only alert for high-risk approvals
                   </label>
                 </div>
-                
+
                 <button
                   onClick={subscribe}
-                  className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+                  className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   Subscribe to Alerts
                 </button>
-                
+
                 {subMsg && (
-                  <p className="text-base text-stone">{subMsg}</p>
+                  <p className="text-base text-text-tertiary dark:text-secondary-400">{subMsg}</p>
                 )}
               </div>
             </div>
 
             {/* Risk Policy Card */}
-            <div className="border border-line rounded-md p-8">
+            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Risk Policy</H2>
-              <p className="text-base text-stone mb-6">
+              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Configure what counts as alert-worthy for your wallet.
               </p>
-              
+
+              {policyLoading && !policy && (
+                <div className="animate-pulse space-y-4 max-w-2xl">
+                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-1/3"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-1/4"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-full"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-full"></div>
+                </div>
+              )}
+              {policyError && <InlineError message={policyError} onRetry={loadPolicy} />}
               {policy && (
                 <div className="space-y-6 max-w-2xl">
                   <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                    <label className="text-base text-stone font-medium w-32">Min risk score</label>
-                    <input 
-                      className="w-24 px-3 py-2 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30" 
+                    <label className="text-base text-text-tertiary dark:text-secondary-400 font-medium w-32">Min risk score</label>
+                    <input
+                      className="w-24 px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       type="number"
                       value={policy?.min_risk_score || 0}
                       onChange={e=>policy && setPolicy({...policy, min_risk_score: Number(e.target.value)})}
                     />
                   </div>
-                  
+
                   <label className="flex items-center gap-3">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      type="checkbox"
                       checked={policy?.unlimited_only || false}
                       onChange={e=>policy && setPolicy({...policy, unlimited_only: e.target.checked})}
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-ink/30"
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-stone">Only alert on UNLIMITED approvals</span>
+                    <span className="text-base text-text-tertiary dark:text-secondary-400">Only alert on UNLIMITED approvals</span>
                   </label>
-                  
+
                   <div className="grid grid-cols-1 gap-4">
                     <div>
-                      <div className="text-base text-stone font-medium mb-2">Include spenders (comma-separated)</div>
-                      <input 
-                        className="w-full px-3 py-2 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Include spenders (comma-separated)</div>
+                      <input
+                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.include_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
                     </div>
                     <div>
-                      <div className="text-base text-stone font-medium mb-2">Ignore spenders</div>
-                      <input 
-                        className="w-full px-3 py-2 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Ignore spenders</div>
+                      <input
+                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.ignore_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
                     </div>
                     <div>
-                      <div className="text-base text-stone font-medium mb-2">Include tokens</div>
-                      <input 
-                        className="w-full px-3 py-2 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Include tokens</div>
+                      <input
+                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.include_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
                     </div>
                     <div>
-                      <div className="text-base text-stone font-medium mb-2">Ignore tokens</div>
-                      <input 
-                        className="w-full px-3 py-2 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Ignore tokens</div>
+                      <input
+                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.ignore_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
                     </div>
                   </div>
-                  
-                  <button 
-                    onClick={savePolicy} 
-                    className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+
+                  <button
+                    onClick={savePolicy}
+                    className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Save Policy
                   </button>
-                  {policyMsg && <span className="text-base text-stone ml-4">{policyMsg}</span>}
+                  {policyMsg && <span className="text-base text-text-tertiary dark:text-secondary-400 ml-4">{policyMsg}</span>}
                 </div>
               )}
             </div>
 
             {/* Slack Alerts Card */}
-            <div className="border border-line rounded-md p-8">
+            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Slack Alerts</H2>
-              <p className="text-base text-stone mb-6">
+              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Get daily digests in your Slack workspace.
               </p>
-              
+
               <div className="space-y-4 max-w-md">
                 <div>
-                  <label className="block text-base text-stone font-medium mb-2">
+                  <label className="block text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">
                     Slack webhook URL:
                   </label>
-                  <input 
-                    className="w-full px-4 py-3 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30"
+                  <input
+                    className="w-full px-4 py-3 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="https://hooks.slack.com/services/..."
-                    value={webhook} 
-                    onChange={e=>setWebhook(e.target.value)} 
+                    value={webhook}
+                    onChange={e=>setWebhook(e.target.value)}
                   />
                 </div>
-                
-                <button 
-                  onClick={addSlack} 
-                  className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+
+                <button
+                  onClick={addSlack}
+                  className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   Add Webhook
                 </button>
                 {slackMsg && (
-                  <span className="text-base text-stone ml-4">
+                  <span className="text-base text-text-tertiary dark:text-secondary-400 ml-4">
                     {slackMsg}
                   </span>
                 )}
-                
-                <div className="bg-mist border border-line rounded-md p-4">
-                  <p className="text-sm text-stone">
-                    <strong>Tip:</strong> Create a webhook at <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink">api.slack.com/apps</a> → Create New App → Enable Incoming Webhooks → Add to channel
+
+                <div className="bg-background-tertiary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-md p-4">
+                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                    <strong>Tip:</strong> Create a webhook at <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="underline hover:text-text-primary dark:hover:text-secondary-100">api.slack.com/apps</a> &rarr; Create New App &rarr; Enable Incoming Webhooks &rarr; Add to channel
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Public Share Link Card */}
-            <div className="border border-line rounded-md p-8">
+            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Public Share Link</H2>
-              <p className="text-base text-stone mb-6">
+              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Generate a read-only link to share your wallet&apos;s approval status with others.
               </p>
-              
+
               <div className="space-y-4 max-w-2xl">
                 <div className="grid grid-cols-1 gap-4">
                   <label className="flex items-center gap-3">
-                    <input 
-                      type="checkbox" 
-                      checked={censorAddr} 
-                      onChange={e => setCensorAddr(e.target.checked)} 
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-ink/30"
+                    <input
+                      type="checkbox"
+                      checked={censorAddr}
+                      onChange={e => setCensorAddr(e.target.checked)}
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-stone">Censor addresses (0x1234…abcd)</span>
+                    <span className="text-base text-text-tertiary dark:text-secondary-400">Censor addresses (0x1234…abcd)</span>
                   </label>
                   <label className="flex items-center gap-3">
-                    <input 
-                      type="checkbox" 
-                      checked={censorAmt} 
-                      onChange={e => setCensorAmt(e.target.checked)} 
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-ink/30"
+                    <input
+                      type="checkbox"
+                      checked={censorAmt}
+                      onChange={e => setCensorAmt(e.target.checked)}
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-stone">Hide amounts</span>
+                    <span className="text-base text-text-tertiary dark:text-secondary-400">Hide amounts</span>
                   </label>
                   <label className="flex items-center gap-3">
-                    <input 
-                      type="checkbox" 
-                      checked={riskOnlyShare} 
-                      onChange={e => setRiskOnlyShare(e.target.checked)} 
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-ink/30"
+                    <input
+                      type="checkbox"
+                      checked={riskOnlyShare}
+                      onChange={e => setRiskOnlyShare(e.target.checked)}
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-stone">Risky only (UNLIMITED / STALE / risk&gt;0)</span>
+                    <span className="text-base text-text-tertiary dark:text-secondary-400">Risky only (UNLIMITED / STALE / risk&gt;0)</span>
                   </label>
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <span className="text-base text-stone w-32">Expire after (days)</span>
-                    <input 
-                      className="w-20 px-3 py-2 border border-line rounded-md focus:outline-none focus:ring-2 focus:ring-ink/30" 
+                    <span className="text-base text-text-tertiary dark:text-secondary-400 w-32">Expire after (days)</span>
+                    <input
+                      className="w-20 px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       type="number"
-                      value={expireDays} 
+                      value={expireDays}
                       onChange={e => setExpireDays(e.target.value ? Number(e.target.value) : '')}
                       placeholder="Never"
                     />
@@ -470,20 +493,20 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button 
-                    onClick={generateShare} 
-                    className="bg-cobalt text-white px-6 py-3 rounded-lg font-medium hover:bg-cobalt/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+                  <button
+                    onClick={generateShare}
+                    className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Generate / Rotate
                   </button>
-                  <button 
-                    onClick={expireShareLink} 
-                    className="bg-white text-ink border border-line px-6 py-3 rounded-lg font-medium hover:bg-mist transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                  <button
+                    onClick={expireShareLink}
+                    className="bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 border border-border-primary dark:border-secondary-700 px-6 py-3 rounded-lg font-medium hover:bg-background-tertiary dark:hover:bg-secondary-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Expire Link
                   </button>
                   {shareMsg && (
-                    <span className="text-base text-stone flex items-center">
+                    <span className="text-base text-text-tertiary dark:text-secondary-400 flex items-center">
                       {shareMsg}
                     </span>
                   )}
@@ -491,31 +514,31 @@ export default function SettingsPage() {
 
                 {shareToken && (
                   <div className="mt-4">
-                    <label className="block text-base text-stone font-medium mb-2">
+                    <label className="block text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">
                       Share URL:
                     </label>
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <input 
-                        className="flex-1 px-3 py-2 border border-line rounded-md font-mono text-sm focus:outline-none focus:ring-2 focus:ring-ink/30" 
-                        readOnly 
-                        value={shareUrl ?? ''} 
+                      <input
+                        className="flex-1 px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        readOnly
+                        value={shareUrl ?? ''}
                       />
                       <button
-                        onClick={async () => { 
+                        onClick={async () => {
                           await navigator.clipboard.writeText(shareUrl || '')
                           setShareMsg('URL copied to clipboard!')
                         }}
-                        className="bg-ink text-white px-4 py-2 rounded-md font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-ink/30"
+                        className="bg-text-primary dark:bg-secondary-700 text-white px-4 py-2 rounded-md font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-primary-500"
                       >
                         Copy
                       </button>
                     </div>
                   </div>
                 )}
-                
-                <div className="bg-mist border border-line rounded-md p-4">
-                  <p className="text-sm text-stone">
-                    <strong>Privacy:</strong> Share links are read-only and can be expired at any time. 
+
+                <div className="bg-background-tertiary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-md p-4">
+                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                    <strong>Privacy:</strong> Share links are read-only and can be expired at any time.
                     Addresses and amounts can be censored for privacy.
                   </p>
                 </div>

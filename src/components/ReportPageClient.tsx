@@ -37,31 +37,31 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
     setLoading(false)
   }, [wallet, riskOnly])
 
-  useEffect(() => { 
-    load() 
+  useEffect(() => {
+    load()
   }, [load])
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background-primary dark:bg-secondary-900">
       <Container className="py-8">
         <div className="print:hidden mb-8">
           <H1 className="mb-2">Allowance Guard — Report</H1>
-          <p className="text-text-tertiary text-sm">
-            Wallet: <span className="font-mono text-ink">{wallet}</span>
+          <p className="text-text-tertiary dark:text-secondary-400 text-sm">
+            Wallet: <span className="font-mono text-text-primary dark:text-secondary-100">{wallet}</span>
           </p>
           <div className="mt-4 flex items-center gap-4">
-            <label className="text-sm flex items-center gap-2">
-              <input 
-                type="checkbox" 
-                checked={riskOnly} 
+            <label className="text-sm flex items-center gap-2 text-text-primary dark:text-secondary-100">
+              <input
+                type="checkbox"
+                checked={riskOnly}
                 onChange={e => setRiskOnly(e.target.checked)}
-                className="rounded border-line"
+                className="rounded border-border-primary dark:border-secondary-700"
               />
               Risky only (UNLIMITED / STALE / risk &gt; 0)
             </label>
-            <button 
-              onClick={() => window.print()} 
-              className="rounded border border-cobalt text-cobalt px-4 py-2 text-sm hover:bg-cobalt hover:text-white transition-colors duration-200"
+            <button
+              onClick={() => window.print()}
+              className="rounded border border-primary-700 dark:border-primary-400 text-primary-700 dark:text-primary-400 px-4 py-2 text-sm hover:bg-primary-700 dark:hover:bg-primary-600 hover:text-white transition-colors duration-200"
             >
               Print / Save as PDF
             </button>
@@ -72,30 +72,30 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
           <div className="mt-8">
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
-                <div className="w-12 h-12 border-4 border-cobalt border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-text-tertiary">Loading allowances...</p>
+                <div className="w-12 h-12 border-4 border-primary-700 dark:border-primary-400 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-text-tertiary dark:text-secondary-400">Loading allowances...</p>
               </div>
             </div>
           </div>
         ) : (
           <>
             <div className="print:block hidden mb-4">
-              <h1 className="text-2xl font-bold text-ink">Allowance Guard — Report</h1>
-              <p className="text-sm text-text-tertiary mt-1">
+              <h1 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Allowance Guard — Report</h1>
+              <p className="text-sm text-text-tertiary dark:text-secondary-400 mt-1">
                 Wallet: <span className="font-mono">{wallet}</span>
               </p>
-              <p className="text-sm text-text-tertiary">
+              <p className="text-sm text-text-tertiary dark:text-secondary-400">
                 Generated: {new Date().toLocaleString()}
               </p>
-              <p className="text-sm text-text-tertiary">
+              <p className="text-sm text-text-tertiary dark:text-secondary-400">
                 Filter: {riskOnly ? 'Risky approvals only' : 'All approvals'}
               </p>
             </div>
 
             <section className="mt-6">
-              <table className="w-full text-sm print:text-[11px] border-collapse">
+              <table className="w-full text-sm print:text-[11px] border-collapse text-text-primary dark:text-secondary-100">
                 <thead className="text-left">
-                  <tr className="border-b border-line">
+                  <tr className="border-b border-border-primary dark:border-secondary-700">
                     <th className="pb-2 pr-4">Chain</th>
                     <th className="pb-2 pr-4">Token</th>
                     <th className="pb-2 pr-4">Spender</th>
@@ -108,13 +108,13 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
                 <tbody>
                   {rows.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-text-tertiary">
+                      <td colSpan={7} className="py-8 text-center text-text-tertiary dark:text-secondary-400">
                         No allowances found
                       </td>
                     </tr>
                   ) : (
                     rows.map((r, i) => (
-                      <tr key={i} className="border-b border-line/50">
+                      <tr key={i} className="border-b border-border-primary/50 dark:border-secondary-700/50">
                         <td className="py-2 pr-4">{r.chain_id}</td>
                         <td className="py-2 pr-4 font-mono text-xs">
                           {r.token_symbol || r.token_name || r.token_address}
@@ -148,7 +148,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
               </table>
             </section>
 
-            <section className="print:block hidden mt-8 text-[10px] text-text-tertiary border-t border-line pt-4">
+            <section className="print:block hidden mt-8 text-[10px] text-text-tertiary dark:text-secondary-400 border-t border-border-primary dark:border-secondary-700 pt-4">
               <p>Generated {new Date().toLocaleString()} • www.allowanceguard.com</p>
               <p className="mt-1">Tip: Revoke UNLIMITED approvals first for better security.</p>
             </section>

@@ -156,7 +156,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
           <div 
             ref={menuRef}
             id="mobile-menu"
-            className="fixed inset-0 h-screen w-screen bg-white shadow-2xl transition-all duration-300 ease-out z-[102]"
+            className="fixed inset-0 h-screen w-screen bg-background-primary dark:bg-secondary-900 shadow-2xl transition-all duration-300 ease-out z-[102]"
             style={{ 
               transform: isOpen 
                 ? 'translateX(0)' 
@@ -166,7 +166,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
           >
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-teal-50">
+              <div className="flex items-center justify-between p-6 border-b border-border-primary dark:border-secondary-700 bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-secondary-800 dark:to-secondary-800">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 flex items-center justify-center">
                     <Image 
@@ -178,8 +178,8 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     />
                   </div>
                   <div>
-                    <h2 id="mobile-menu-title" className="mobbin-heading-1 text-gray-900">Allowance Guard</h2>
-                    <p className="mobbin-body text-gray-600">Secure Token Approvals</p>
+                    <h2 id="mobile-menu-title" className="mobbin-heading-1 text-text-primary dark:text-secondary-100">Allowance Guard</h2>
+                    <p className="mobbin-body text-text-secondary dark:text-secondary-400">Secure Token Approvals</p>
                   </div>
                 </div>
                 <Button
@@ -205,7 +205,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     />
                   </div>
                   {isConnected && (
-                    <p className="text-green-600 mt-4 mobbin-body">✓ Wallet Connected</p>
+                    <p className="text-semantic-success-600 dark:text-semantic-success-400 mt-4 mobbin-body">Wallet Connected</p>
                   )}
                 </div>
 
@@ -217,8 +217,8 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                       href={item.href}
                       className={`block p-6 rounded-2xl transition-all duration-200 ${
                         pathname === item.href
-                          ? 'bg-blue-50 text-blue-600 border-2 border-blue-200'
-                          : 'text-gray-700 hover:bg-gray-50 border-2 border-transparent'
+                          ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 border-2 border-primary-200 dark:border-primary-700'
+                          : 'text-text-primary dark:text-secondary-200 hover:bg-background-secondary dark:hover:bg-secondary-800 border-2 border-transparent'
                       }`}
                       onClick={() => setIsOpen(false)}
                     >
@@ -230,7 +230,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                       </div>
                     </Link>
                   )) : (
-                    <div className="text-center text-gray-500 py-8">
+                    <div className="text-center text-text-secondary dark:text-secondary-400 py-8">
                       <p className="mobbin-body">No navigation items available</p>
                     </div>
                   )}

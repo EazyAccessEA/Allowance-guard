@@ -532,10 +532,11 @@ Chain names, IDs, and metadata are defined in 3+ separate files.
 
 ---
 
-## Phase 3 — Frontend & UX Overhaul (Week 3–5)
+## Phase 3 — Frontend & UX Overhaul (Week 3–5) ✅
 
 **Council members addressed**: Frontend Engineer (B), Product Manager (C), CEO (C-)
 **Goal**: Fix broken user journeys, remove mock data, and make every flow work end-to-end.
+**Status**: Complete
 
 ### 3.1 — Fix Broken User Journeys
 
@@ -569,9 +570,9 @@ Fix:
 - Display current API key with copy button and regeneration option
 
 **Acceptance criteria**:
-- [ ] Journey 1: Complete paid conversion loop verified end-to-end
-- [ ] Journey 2: Team creation, invitation, and member joining all functional
-- [ ] Journey 3: API usage dashboard visible to API key holders
+- [x] Journey 1: Complete paid conversion loop verified end-to-end
+- [x] Journey 2: Team creation, invitation, and member joining all functional
+- [x] Journey 3: API usage dashboard visible to API key holders
 
 ### 3.2 — Fix OnboardingChecklist Mock Data
 
@@ -601,9 +602,9 @@ Create `GET /api/user/onboarding` that checks:
 - `hadRevoke`: user has at least one revocation record
 
 **Acceptance criteria**:
-- [ ] Checklist reflects actual user progress
-- [ ] Checklist updates in real-time as user completes steps
-- [ ] Unauthenticated users see "Connect wallet" as first step
+- [x] Checklist reflects actual user progress
+- [x] Checklist updates in real-time as user completes steps
+- [x] Unauthenticated users see "Connect wallet" as first step
 
 ### 3.3 — Add Loading States and Error Boundaries
 
@@ -625,10 +626,10 @@ Create `GET /api/user/onboarding` that checks:
 4. Add error states with retry buttons for failed API calls
 
 **Acceptance criteria**:
-- [ ] No uncaught errors crash the page
-- [ ] All async data has loading skeletons
-- [ ] Failed operations show error message with retry button
-- [ ] Wallet connection failure shows helpful recovery message
+- [x] No uncaught errors crash the page
+- [x] All async data has loading skeletons
+- [x] Failed operations show error message with retry button
+- [x] Wallet connection failure shows helpful recovery message
 
 ### 3.4 — Add Empty States
 
@@ -650,10 +651,10 @@ Currently missing for:
 ```
 
 **Acceptance criteria**:
-- [ ] Every list/table view has an empty state
-- [ ] Empty states are helpful (explain what the feature does)
-- [ ] Locked features show upgrade prompt in empty state
-- [ ] "No approvals" is celebrated (positive empty state)
+- [x] Every list/table view has an empty state
+- [x] Empty states are helpful (explain what the feature does)
+- [x] Locked features show upgrade prompt in empty state
+- [x] "No approvals" is celebrated (positive empty state)
 
 ### 3.5 — Mobile UX Improvements
 
@@ -665,10 +666,10 @@ Currently missing for:
 - Wallet address display should be truncated with copy button
 
 **Acceptance criteria**:
-- [ ] All pages functional at 375px width
-- [ ] Tables use responsive card layout on mobile
-- [ ] Navigation works on mobile
-- [ ] Touch targets are at least 44x44px
+- [x] All pages functional at 375px width
+- [x] Tables use responsive card layout on mobile
+- [x] Navigation works on mobile
+- [x] Touch targets are at least 44x44px
 
 ### 3.6 — Design Refresh: Modern 2026 Aesthetic
 
@@ -696,11 +697,11 @@ The current design feels dated. Key updates:
    - Verify font loading (self-hosted Satoshi, Inter, JetBrains Mono)
 
 **Acceptance criteria**:
-- [ ] Hero section has clear CTA and social proof
-- [ ] Navigation is clean and functional on all breakpoints
-- [ ] Dashboard layout is modern and card-based
-- [ ] Dark mode passes WCAG AA contrast checks
-- [ ] `prefers-reduced-motion` respected for all animations
+- [x] Hero section has clear CTA and social proof
+- [x] Navigation is clean and functional on all breakpoints
+- [x] Dashboard layout is modern and card-based
+- [x] Dark mode passes WCAG AA contrast checks
+- [x] `prefers-reduced-motion` respected for all animations
 
 ---
 
