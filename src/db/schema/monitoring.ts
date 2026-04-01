@@ -61,3 +61,22 @@ export const monitoringEvents = pgTable('monitoring_events', {
   typeIdx: index('monitoring_events_event_type_idx').on(t.eventType),
   createdIdx: index('monitoring_events_created_at_idx').on(t.createdAt),
 }))
+
+/**
+ * Monitoring snapshots — stores the last-seen state of allowances per wallet.
+ * Used by change detection to compare current state against previous scan.
+ */
+export const monitoringSnapshots = pgTable('monitoring_snapshots', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  walletAddress: text('wallet_address').notNull(),
+  chainId: integer('chain_id').notNull(),
+  tokenAddress: text('token_address').notNull(),
+  spenderAddress: text('spender_address').notNull(),
+  amount: text('amount').notNull().default('0'),
+  isUnlimited: boolean('is_unlimited').notNull().default(false),
+  riskScore: integer('risk_score').default(0),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  walletIdx: index('monitoring_snapshots_wallet_address_idx').on(t.walletAddress),
+  walletChainIdx: index('monitoring_snapshots_wallet_chain_idx').on(t.walletAddress, t.chainId),
+}))

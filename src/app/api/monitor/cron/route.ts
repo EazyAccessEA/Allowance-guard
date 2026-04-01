@@ -9,7 +9,10 @@
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { getDueMonitors, enqueueMonitorScans, detectChanges, dispatchAlerts } from '@/lib/monitoring'
+import { evaluateRules, executeRuleMatches } from '@/lib/rule-engine'
+import { dispatchWebhookEvent } from '@/lib/webhook-dispatcher'
 import { secureLogger } from '@/lib/secure-logger'
+import { pool } from '@/lib/db'
 
 export const runtime = 'nodejs'
 export const maxDuration = 60 // seconds
@@ -68,15 +71,58 @@ async function handleCron(req: NextRequest) {
       }
     }
 
+    // 4. Piggyback rule evaluation for Sentinel users
+    let rulesEvaluated = 0
+    let ruleMatches = 0
+    try {
+      const { rows: sentinelUsers } = await pool.query(
+        `SELECT DISTINCT rr.user_id
+         FROM revocation_rules rr
+         JOIN subscriptions s ON s.user_id = rr.user_id
+         WHERE rr.enabled = TRUE
+           AND s.status = 'active'
+           AND s.plan IN ('sentinel', 'sentinel_yearly')
+         LIMIT 100`,
+      )
+
+      for (const { user_id: userId } of sentinelUsers) {
+        try {
+          const matches = await evaluateRules(userId)
+          rulesEvaluated++
+          if (matches.length > 0) {
+            ruleMatches += matches.length
+            await executeRuleMatches(matches)
+            for (const match of matches) {
+              await dispatchWebhookEvent(userId, 'rule.triggered', {
+                ruleId: match.rule.id,
+                ruleName: match.rule.name,
+                action: match.rule.action,
+                wallet: match.allowance.wallet_address,
+                chainId: match.allowance.chain_id,
+              }).catch(() => {})
+            }
+          }
+        } catch (err) {
+          secureLogger.error('Rule evaluation failed for user in cron', { userId, err })
+        }
+      }
+    } catch (err) {
+      secureLogger.error('Rule evaluation phase failed', { err })
+    }
+
     secureLogger.info('Monitoring cron completed', {
       scanned: queued.length,
       alertsSent: alertResults.length,
+      rulesEvaluated,
+      ruleMatches,
     })
 
     return NextResponse.json({
       ok: true,
       queued: queued.length,
       alerts: alertResults,
+      rulesEvaluated,
+      ruleMatches,
     })
   } catch (error) {
     secureLogger.error('Monitoring cron failed', { error })
