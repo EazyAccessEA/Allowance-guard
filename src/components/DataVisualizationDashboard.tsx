@@ -111,7 +111,22 @@ export function DataVisualizationDashboard({
       trustDistribution,
       riskTrend
     }
+    } catch (err) {
+      setProcessingError(err instanceof Error ? err.message : 'Failed to process data')
+      return null
+    }
   }, [data])
+
+  if (processingError) {
+    return (
+      <div className="space-y-6">
+        <InlineError
+          message={processingError}
+          onRetry={onRefresh}
+        />
+      </div>
+    )
+  }
 
   if (!processedData) {
     return (

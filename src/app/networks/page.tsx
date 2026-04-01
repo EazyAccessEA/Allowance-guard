@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2, H3 } from '@/components/ui/Heading'
-import { 
-  CheckCircle, 
-  Clock, 
-  Calendar, 
-  ExternalLink, 
+import {
+  CheckCircle,
+  Clock,
+  Calendar,
+  ExternalLink,
   Network,
   Info
 } from 'lucide-react'
@@ -23,7 +23,7 @@ export default function NetworksPage() {
       try {
         const response = await fetch('/api/networks/roadmap')
         const result = await response.json()
-        
+
         if (result.success) {
           setData(result.data)
         } else {
@@ -42,15 +42,15 @@ export default function NetworksPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background-secondary dark:bg-secondary-900">
         <Container>
           <Section className="py-16">
             <div className="animate-pulse">
-              <div className="h-12 bg-gray-200 rounded w-1/3 mb-8"></div>
+              <div className="h-12 bg-neutral-200 dark:bg-secondary-700 rounded w-1/3 mb-8"></div>
               <div className="space-y-4">
-                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-1/2"></div>
+                <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-3/4"></div>
+                <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-1/4"></div>
               </div>
             </div>
           </Section>
@@ -74,12 +74,12 @@ export default function NetworksPage() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background-secondary dark:bg-secondary-900">
         <Container>
           <Section className="py-16">
             <div className="text-center">
-              <H1 className="text-red-600 mb-4">Error Loading Networks</H1>
-              <p className="text-gray-600 mb-6">{error || 'Failed to load networks data'}</p>
+              <H1 className="text-red-600 dark:text-red-400 mb-4">Error Loading Networks</H1>
+              <p className="text-text-secondary dark:text-secondary-400 mb-6">{error || 'Failed to load networks data'}</p>
               <button
                 onClick={retryFetch}
                 className="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
@@ -94,41 +94,41 @@ export default function NetworksPage() {
   }
 
   const NetworkCard = ({ network }: { network: NetworkSummary }) => (
-    <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
+    <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
           <div className={`p-2 rounded-full ${
-            network.status === 'live' 
-              ? 'bg-green-100 text-green-600' 
-              : 'bg-yellow-100 text-yellow-600'
+            network.status === 'live'
+              ? 'bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400'
+              : 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
           }`}>
             {network.status === 'live' ? <CheckCircle size={20} /> : <Clock size={20} />}
           </div>
           <div>
-            <H3 className="text-lg font-semibold text-gray-900">{network.name}</H3>
-            <p className="text-sm text-gray-500">Chain ID: {network.chainId}</p>
+            <H3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">{network.name}</H3>
+            <p className="text-sm text-text-tertiary dark:text-secondary-500">Chain ID: {network.chainId}</p>
           </div>
         </div>
         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
           network.status === 'live'
-            ? 'bg-green-100 text-green-800'
-            : 'bg-yellow-100 text-yellow-800'
+            ? 'bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300'
+            : 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300'
         }`}>
           {network.status === 'live' ? 'Live' : 'Planned'}
         </span>
       </div>
-      
+
       {network.description && (
-        <p className="text-gray-600 mb-4">{network.description}</p>
+        <p className="text-text-secondary dark:text-secondary-400 mb-4">{network.description}</p>
       )}
-      
+
       {network.features && network.features.length > 0 && (
         <div className="mb-4">
           <div className="flex flex-wrap gap-2">
             {network.features.map((feature, index) => (
               <span
                 key={index}
-                className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md"
+                className="px-2 py-1 bg-background-tertiary dark:bg-secondary-800 text-text-secondary dark:text-secondary-300 text-xs rounded-md"
               >
                 {feature}
               </span>
@@ -136,8 +136,8 @@ export default function NetworksPage() {
           </div>
         </div>
       )}
-      
-      <div className="flex items-center justify-between text-sm text-gray-500">
+
+      <div className="flex items-center justify-between text-sm text-text-tertiary dark:text-secondary-500">
         {network.status === 'live' && network.since && (
           <div className="flex items-center space-x-1">
             <Calendar size={14} />
@@ -150,7 +150,7 @@ export default function NetworksPage() {
             <span>Target: {network.targetMonth}</span>
           </div>
         )}
-        <ExternalLink size={14} className="text-gray-400" />
+        <ExternalLink size={14} className="text-text-tertiary dark:text-secondary-500" />
       </div>
     </div>
   )
@@ -159,24 +159,24 @@ export default function NetworksPage() {
     <div className="border-l-4 border-blue-500 pl-4 py-2">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2">
-          <Calendar size={16} className="text-gray-500" />
-          <span className="font-medium text-gray-900">{entry.date}</span>
+          <Calendar size={16} className="text-text-tertiary dark:text-secondary-500" />
+          <span className="font-medium text-text-primary dark:text-secondary-100">{entry.date}</span>
           {entry.version && (
-            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+            <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 text-xs rounded">
               v{entry.version}
             </span>
           )}
         </div>
       </div>
-      <p className="text-gray-600 mb-2">{entry.notes}</p>
+      <p className="text-text-secondary dark:text-secondary-400 mb-2">{entry.notes}</p>
       {entry.added && entry.added.length > 0 && (
         <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-500">Added chains:</span>
+          <span className="text-sm text-text-tertiary dark:text-secondary-500">Added chains:</span>
           <div className="flex space-x-1">
             {entry.added.map((chainId, index) => (
               <span
                 key={index}
-                className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded"
+                className="px-2 py-1 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 text-xs rounded"
               >
                 {chainId}
               </span>
@@ -188,58 +188,58 @@ export default function NetworksPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background-secondary dark:bg-secondary-900">
       <Container>
         <Section className="py-16">
           {/* Header */}
           <div className="text-center mb-12">
-            <H1 className="text-4xl font-bold text-gray-900 mb-4">
+            <H1 className="text-4xl font-bold text-text-primary dark:text-secondary-100 mb-4">
               Supported Networks
             </H1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              AllowanceGuard supports multiple blockchain networks with comprehensive 
+            <p className="text-xl text-text-secondary dark:text-secondary-400 max-w-3xl mx-auto">
+              AllowanceGuard supports multiple blockchain networks with comprehensive
               token approval monitoring and risk assessment capabilities.
             </p>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-green-100 text-green-600 rounded-full mx-auto mb-4">
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 text-center">
+              <div className="flex items-center justify-center w-12 h-12 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full mx-auto mb-4">
                 <CheckCircle size={24} />
               </div>
-              <H3 className="text-2xl font-bold text-gray-900 mb-2">
+              <H3 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-2">
                 {data.supported.length}
               </H3>
-              <p className="text-gray-600">Live Networks</p>
+              <p className="text-text-secondary dark:text-secondary-400">Live Networks</p>
             </div>
-            
-            <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full mx-auto mb-4">
+
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 text-center">
+              <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 rounded-full mx-auto mb-4">
                 <Clock size={24} />
               </div>
-              <H3 className="text-2xl font-bold text-gray-900 mb-2">
+              <H3 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-2">
                 {data.planned.length}
               </H3>
-              <p className="text-gray-600">Planned Networks</p>
+              <p className="text-text-secondary dark:text-secondary-400">Planned Networks</p>
             </div>
-            
-            <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
-              <div className="flex items-center justify-center w-12 h-12 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
+
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 text-center">
+              <div className="flex items-center justify-center w-12 h-12 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full mx-auto mb-4">
                 <Network size={24} />
               </div>
-              <H3 className="text-2xl font-bold text-gray-900 mb-2">
+              <H3 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-2">
                 {data.supported.length + data.planned.length}
               </H3>
-              <p className="text-gray-600">Total Networks</p>
+              <p className="text-text-secondary dark:text-secondary-400">Total Networks</p>
             </div>
           </div>
 
           {/* Live Networks */}
           <div className="mb-16">
             <div className="flex items-center space-x-3 mb-8">
-              <CheckCircle className="text-green-600" size={24} />
-              <H2 className="text-2xl font-bold text-gray-900">Live Networks</H2>
+              <CheckCircle className="text-green-600 dark:text-green-400" size={24} />
+              <H2 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Live Networks</H2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.supported.map((network) => (
@@ -251,8 +251,8 @@ export default function NetworksPage() {
           {/* Planned Networks */}
           <div className="mb-16">
             <div className="flex items-center space-x-3 mb-8">
-              <Clock className="text-yellow-600" size={24} />
-              <H2 className="text-2xl font-bold text-gray-900">Planned Networks</H2>
+              <Clock className="text-yellow-600 dark:text-yellow-400" size={24} />
+              <H2 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Planned Networks</H2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.planned.map((network) => (
@@ -264,10 +264,10 @@ export default function NetworksPage() {
           {/* Changelog */}
           <div className="mb-16">
             <div className="flex items-center space-x-3 mb-8">
-              <Calendar className="text-blue-600" size={24} />
-              <H2 className="text-2xl font-bold text-gray-900">Recent Updates</H2>
+              <Calendar className="text-blue-600 dark:text-blue-400" size={24} />
+              <H2 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Recent Updates</H2>
             </div>
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6">
               <div className="space-y-6">
                 {data.changelog.slice(0, 5).map((entry, index) => (
                   <ChangelogEntry key={index} entry={entry} />
@@ -277,20 +277,20 @@ export default function NetworksPage() {
           </div>
 
           {/* Metadata */}
-          <div className="bg-blue-50 rounded-lg border border-blue-200 p-6">
+          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 p-6">
             <div className="flex items-start space-x-3">
-              <Info className="text-blue-600 mt-1" size={20} />
+              <Info className="text-blue-600 dark:text-blue-400 mt-1" size={20} />
               <div>
-                <H3 className="text-lg font-semibold text-blue-900 mb-2">
+                <H3 className="text-lg font-semibold text-blue-900 dark:text-blue-200 mb-2">
                   Data Freshness
                 </H3>
-                <p className="text-blue-800 mb-2">
+                <p className="text-blue-800 dark:text-blue-300 mb-2">
                   Last updated: {data.metadata.lastUpdated}
                 </p>
-                <p className="text-blue-800 mb-2">
+                <p className="text-blue-800 dark:text-blue-300 mb-2">
                   Next review: {data.metadata.nextReview}
                 </p>
-                <p className="text-blue-800">
+                <p className="text-blue-800 dark:text-blue-300">
                   Version: {data.metadata.version}
                 </p>
               </div>
