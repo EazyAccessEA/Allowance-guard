@@ -1,4 +1,8 @@
 /**
+ * @jest-environment node
+ */
+
+/**
  * CSRF Protection Tests
  *
  * Verify that state-changing requests require valid CSRF tokens,

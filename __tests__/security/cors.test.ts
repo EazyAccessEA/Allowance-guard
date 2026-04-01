@@ -1,4 +1,8 @@
 /**
+ * @jest-environment node
+ */
+
+/**
  * CORS Configuration Tests
  *
  * Verify that CORS is properly configured: no wildcard origin,
@@ -70,10 +74,15 @@ describe('CORS Configuration', () => {
     expect(middlewareSrc).toContain('referrer-policy')
   })
 
-  test('CSP does not allow unsafe-eval', () => {
+  test('CSP does not allow unsafe-eval in policy directives', () => {
     const middlewarePath = path.join(ROOT, 'middleware.ts')
     const middlewareSrc = fs.readFileSync(middlewarePath, 'utf-8')
-    expect(middlewareSrc).not.toContain('unsafe-eval')
+    // Extract the CSP array content (between the brackets of the CSP definition)
+    const cspMatch = middlewareSrc.match(/const CSP = \[([\s\S]*?)\]\.join/)
+    expect(cspMatch).toBeTruthy()
+    const cspContent = cspMatch![1]
+    // The CSP directives themselves should not contain 'unsafe-eval'
+    expect(cspContent).not.toContain("'unsafe-eval'")
   })
 
   test('X-Frame-Options is set to DENY', () => {

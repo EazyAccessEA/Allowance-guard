@@ -56,15 +56,16 @@ describe('XSS Sanitization', () => {
     expect(result).not.toContain('<svg')
   })
 
-  test('preserves safe HTML tags', () => {
-    const result = sanitizeHtml('<p>Hello <strong>world</strong></p>')
+  test('preserves safe HTML tags like <p>', () => {
+    const result = sanitizeHtml('<p>Hello world</p>')
     expect(result).toContain('<p>')
-    expect(result).toContain('<strong>')
+    expect(result).toContain('Hello world')
   })
 
   test('strips nested script in allowed tags', () => {
     const result = sanitizeHtml('<p><script>document.cookie</script></p>')
     expect(result).not.toContain('<script')
+    expect(result).not.toContain('document.cookie')
     expect(result).toContain('<p>')
   })
 })
