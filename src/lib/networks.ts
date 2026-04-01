@@ -131,6 +131,9 @@ export const isSupportedChainId = (id: number): id is SupportedChainId =>
 /** ---------- Backward compatibility ---------- */
 export const NETWORKS = CHAINS
 
+/** ---------- Re-exports from centralized chain config ---------- */
+export { CHAIN_NAMES, CHAIN_BY_ID, SUPPORTED_CHAINS as CHAIN_META_LIST } from '@/config/chains'
+
 /** ---------- Legacy functions (maintained for compatibility) ---------- */
 export function enabledChainIds(): Array<1|42161|8453|10|137|43114|56> {
   return (Object.values(CHAINS).filter(c => c.enabled).map(c => c.id) as Array<1|42161|8453|10|137|43114|56>)

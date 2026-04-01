@@ -1,68 +1,63 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { secureLogger } from '@/lib/secure-logger'
+import { getGasEstimate, getAllGasEstimates } from '@/lib/gas'
+import { SUPPORTED_CHAIN_IDS } from '@/config/chains'
 
 /**
  * GET /api/gas-estimate
  *
- * Returns current gas price (gwei) and ETH price (USD).
- * Uses public APIs with a cache to avoid excessive calls.
+ * Chain-aware gas estimation. Supports L2 gas models (Arbitrum, OP Stack).
+ *
+ * Query params:
+ *   chainId (optional) — get estimate for a specific chain
+ *   If omitted, returns estimates for all supported chains.
+ *
+ * Backward compatible: still returns gasPriceGwei and ethPriceUsd at top level
+ * (from Ethereum mainnet) for existing consumers.
  */
-
-// Simple in-memory cache (TTL: 60 seconds)
-let cachedData: { gasPriceGwei: number; ethPriceUsd: number; fetchedAt: number } | null = null
-const CACHE_TTL_MS = 60_000
-
-export async function GET() {
-  // Return cached data if fresh
-  if (cachedData && Date.now() - cachedData.fetchedAt < CACHE_TTL_MS) {
-    return NextResponse.json(cachedData)
-  }
-
-  let gasPriceGwei = 25 // fallback
-  let ethPriceUsd = 3200 // fallback
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const chainIdParam = searchParams.get('chainId')
 
   try {
-    // Fetch gas price from eth_gasPrice RPC (use first available RPC)
-    const rpcUrl = process.env.ETH_RPC_URL ?? process.env.NEXT_PUBLIC_ETH_RPC_URL
-    if (rpcUrl) {
-      const gasRes = await fetch(rpcUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          jsonrpc: '2.0',
-          method: 'eth_gasPrice',
-          params: [],
-          id: 1,
-        }),
-        signal: AbortSignal.timeout(5000),
-      })
-      const gasJson = await gasRes.json()
-      if (gasJson.result) {
-        gasPriceGwei = Math.round(parseInt(gasJson.result, 16) / 1e9)
+    if (chainIdParam) {
+      // Single chain
+      const chainId = parseInt(chainIdParam, 10)
+      if (!SUPPORTED_CHAIN_IDS.includes(chainId)) {
+        return NextResponse.json(
+          { error: `Unsupported chain: ${chainId}` },
+          { status: 400 },
+        )
       }
+      const estimate = await getGasEstimate(chainId)
+      return NextResponse.json({
+        // Backward compat fields
+        gasPriceGwei: estimate.gasPriceGwei,
+        ethPriceUsd: estimate.nativeTokenPriceUsd,
+        // Full estimate
+        estimate,
+      })
     }
+
+    // All chains
+    const estimates = await getAllGasEstimates()
+
+    // Backward compat: extract mainnet values
+    const mainnet = estimates.find(e => e.chainId === 1)
+
+    return NextResponse.json({
+      // Backward compat
+      gasPriceGwei: mainnet?.gasPriceGwei ?? 25,
+      ethPriceUsd: mainnet?.nativeTokenPriceUsd ?? 3200,
+      // Full per-chain estimates
+      estimates,
+    })
   } catch (err) {
-    secureLogger.warn('Failed to fetch gas price', { err })
+    secureLogger.error('Gas estimation failed', { err })
+    return NextResponse.json({
+      gasPriceGwei: 25,
+      ethPriceUsd: 3200,
+      estimates: [],
+    })
   }
-
-  try {
-    // Fetch ETH price from CoinGecko (free, no key needed)
-    const priceRes = await fetch(
-      'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
-      { signal: AbortSignal.timeout(5000) },
-    )
-    const priceJson = await priceRes.json()
-    if (priceJson.ethereum?.usd) {
-      ethPriceUsd = priceJson.ethereum.usd
-    }
-  } catch (err) {
-    secureLogger.warn('Failed to fetch ETH price', { err })
-  }
-
-  cachedData = { gasPriceGwei, ethPriceUsd, fetchedAt: Date.now() }
-
-  return NextResponse.json({
-    gasPriceGwei,
-    ethPriceUsd,
-  })
 }

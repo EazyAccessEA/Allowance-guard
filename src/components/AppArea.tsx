@@ -28,6 +28,10 @@ const BulkRevokePanel = dynamic(() => import('@/components/BulkRevokePanel'), {
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-32 w-full" />
 })
 
+const Permit2Panel = dynamic(() => import('@/components/Permit2Panel'), {
+  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32 w-full" />
+})
+
 const DataVisualizationDashboard = dynamic(() => import('@/components/DataVisualizationDashboard').then(mod => ({ default: mod.DataVisualizationDashboard })), {
   loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />
 })
@@ -355,6 +359,12 @@ export default function AppArea({
                   selectedWallet={selectedWallet}
                   connectedAddress={connectedAddress}
                   canRevoke={canRevoke}
+                />
+
+                {/* Permit2 Approvals Scanner */}
+                <Permit2Panel
+                  walletAddress={selectedWallet}
+                  connectedAddress={connectedAddress}
                 />
 
                 <Card>
