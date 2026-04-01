@@ -37,14 +37,9 @@ interface DataVisualizationDashboardProps {
   onRefresh?: () => void
 }
 
-const chainNames: Record<number, string> = {
-  1: 'Ethereum',
-  8453: 'Base',
-  42161: 'Arbitrum',
-  137: 'Polygon',
-  10: 'Optimism',
-  43114: 'Avalanche'
-}
+import { CHAIN_NAMES } from '@/config/chains'
+
+const chainNames = CHAIN_NAMES
 
 export function DataVisualizationDashboard({ 
   data, 

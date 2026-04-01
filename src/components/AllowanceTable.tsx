@@ -33,14 +33,7 @@ type Row = {
   risk_flags: string[]
 }
 
-const chainNames: Record<number, string> = {
-  1: 'Ethereum',
-  8453: 'Base',
-  42161: 'Arbitrum',
-  137: 'Polygon',
-  10: 'Optimism',
-  43114: 'Avalanche'
-}
+import { CHAIN_NAMES } from '@/config/chains'
 
 export default function AllowanceTable({
   data,
@@ -215,7 +208,7 @@ export default function AllowanceTable({
 
                   <td className="px-4 py-3.5">
                     <Badge variant="secondary" className="text-xs">
-                      {chainNames[r.chain_id] || `Chain ${r.chain_id}`}
+                      {CHAIN_NAMES[r.chain_id] || `Chain ${r.chain_id}`}
                     </Badge>
                   </td>
 
