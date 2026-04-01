@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
 
     await auditUser(
       'compliance_export',
-      session.user_id,
+      session.user_id as number,
       exportType,
       { format, filters, rowCount: result.rowCount },
     )
