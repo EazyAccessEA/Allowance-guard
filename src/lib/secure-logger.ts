@@ -37,7 +37,7 @@ const SENSITIVE_PATTERNS = [
 ]
 
 // Redact sensitive information from objects
-function redactSensitive(obj: unknown): unknown {
+export function redactSensitive(obj: unknown): unknown {
   if (typeof obj === 'string') {
     return redactSensitiveString(obj)
   }
