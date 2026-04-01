@@ -21,7 +21,7 @@ export default function PreferencesPage() {
     // Load existing preferences if user is logged in
     const savedEmail = localStorage.getItem('ag.userEmail')
     const savedPrefs = localStorage.getItem('ag.preferences')
-    
+
     if (savedEmail) setEmail(savedEmail)
     if (savedPrefs) {
       try {
@@ -51,7 +51,7 @@ export default function PreferencesPage() {
 
       setStatus('success')
       setMessage('Your preferences have been saved successfully!')
-      
+
       // Clear success message after 3 seconds
       setTimeout(() => {
         setStatus('idle')
@@ -68,9 +68,9 @@ export default function PreferencesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background-primary dark:bg-secondary-900">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-background-primary dark:bg-secondary-900 border-b border-border-primary dark:border-secondary-700">
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
@@ -81,7 +81,7 @@ export default function PreferencesPage() {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Allowance Guard</h1>
+            <h1 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Allowance Guard</h1>
           </div>
         </div>
       </header>
@@ -89,23 +89,23 @@ export default function PreferencesPage() {
       {/* Content */}
       <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Notification Preferences</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold text-text-primary dark:text-secondary-100 mb-4">Notification Preferences</h1>
+          <p className="text-text-secondary dark:text-secondary-400">
             Manage how and when you receive security alerts and updates from Allowance Guard.
           </p>
         </div>
 
         <form onSubmit={handleSave} className="space-y-8">
           {/* Email Settings */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Mail className="w-5 h-5 text-blue-600 mr-2" />
-              <h2 className="text-xl font-semibold text-gray-900">Email Settings</h2>
+              <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
+              <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Email Settings</h2>
             </div>
-            
+
             <div className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-2">
                   Email Address
                 </label>
                 <input
@@ -113,11 +113,11 @@ export default function PreferencesPage() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 min-h-[44px] border border-border-primary dark:border-secondary-600 rounded-lg bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="Enter your email address"
                   required
                 />
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-text-tertiary dark:text-secondary-500 mt-1">
                   We&apos;ll use this to send you security alerts and updates.
                 </p>
               </div>
@@ -125,106 +125,106 @@ export default function PreferencesPage() {
           </div>
 
           {/* Alert Preferences */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Bell className="w-5 h-5 text-green-600 mr-2" />
-              <h2 className="text-xl font-semibold text-gray-900">Alert Preferences</h2>
+              <Bell className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+              <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Alert Preferences</h2>
             </div>
-            
+
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between min-h-[44px]">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Email Alerts</h3>
-                  <p className="text-sm text-gray-500">Receive security alerts via email</p>
+                  <h3 className="text-sm font-medium text-text-primary dark:text-secondary-100">Email Alerts</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-500">Receive security alerts via email</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
+                <label className="relative inline-flex items-center cursor-pointer min-w-[44px] min-h-[44px] justify-center">
                   <input
                     type="checkbox"
                     checked={preferences.emailAlerts}
                     onChange={(e) => handlePreferenceChange('emailAlerts', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cobalt/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cobalt"></div>
+                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between min-h-[44px]">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Risk-Only Alerts</h3>
-                  <p className="text-sm text-gray-500">Only receive alerts for high-risk approvals</p>
+                  <h3 className="text-sm font-medium text-text-primary dark:text-secondary-100">Risk-Only Alerts</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-500">Only receive alerts for high-risk approvals</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
+                <label className="relative inline-flex items-center cursor-pointer min-w-[44px] min-h-[44px] justify-center">
                   <input
                     type="checkbox"
                     checked={preferences.riskOnly}
                     onChange={(e) => handlePreferenceChange('riskOnly', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cobalt/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cobalt"></div>
+                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between min-h-[44px]">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Daily Digest</h3>
-                  <p className="text-sm text-gray-500">Receive a daily summary of your wallet status</p>
+                  <h3 className="text-sm font-medium text-text-primary dark:text-secondary-100">Daily Digest</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-500">Receive a daily summary of your wallet status</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
+                <label className="relative inline-flex items-center cursor-pointer min-w-[44px] min-h-[44px] justify-center">
                   <input
                     type="checkbox"
                     checked={preferences.dailyDigest}
                     onChange={(e) => handlePreferenceChange('dailyDigest', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cobalt/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cobalt"></div>
+                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between min-h-[44px]">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Weekly Summary</h3>
-                  <p className="text-sm text-gray-500">Receive a weekly overview of your security status</p>
+                  <h3 className="text-sm font-medium text-text-primary dark:text-secondary-100">Weekly Summary</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-500">Receive a weekly overview of your security status</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
+                <label className="relative inline-flex items-center cursor-pointer min-w-[44px] min-h-[44px] justify-center">
                   <input
                     type="checkbox"
                     checked={preferences.weeklySummary}
                     onChange={(e) => handlePreferenceChange('weeklySummary', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cobalt/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cobalt"></div>
+                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
             </div>
           </div>
 
           {/* Slack Integration */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Settings className="w-5 h-5 text-purple-600 mr-2" />
-              <h2 className="text-xl font-semibold text-gray-900">Slack Integration</h2>
+              <Settings className="w-5 h-5 text-purple-600 dark:text-purple-400 mr-2" />
+              <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Slack Integration</h2>
             </div>
-            
+
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between min-h-[44px]">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-900">Slack Alerts</h3>
-                  <p className="text-sm text-gray-500">Receive alerts in your Slack workspace</p>
+                  <h3 className="text-sm font-medium text-text-primary dark:text-secondary-100">Slack Alerts</h3>
+                  <p className="text-sm text-text-tertiary dark:text-secondary-500">Receive alerts in your Slack workspace</p>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
+                <label className="relative inline-flex items-center cursor-pointer min-w-[44px] min-h-[44px] justify-center">
                   <input
                     type="checkbox"
                     checked={preferences.slackAlerts}
                     onChange={(e) => handlePreferenceChange('slackAlerts', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cobalt/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-cobalt"></div>
+                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
               {preferences.slackAlerts && (
                 <div>
-                  <label htmlFor="webhook" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="webhook" className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-2">
                     Slack Webhook URL
                   </label>
                   <input
@@ -232,11 +232,11 @@ export default function PreferencesPage() {
                     id="webhook"
                     value={preferences.webhookUrl}
                     onChange={(e) => handlePreferenceChange('webhookUrl', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 min-h-[44px] border border-border-primary dark:border-secondary-600 rounded-lg bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="https://hooks.slack.com/services/..."
                   />
-                  <p className="text-sm text-gray-500 mt-1">
-                    <a href="/docs" className="text-blue-600 hover:text-blue-800">
+                  <p className="text-sm text-text-tertiary dark:text-secondary-500 mt-1">
+                    <a href="/docs" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300">
                       Learn how to set up Slack webhooks
                     </a>
                   </p>
@@ -248,9 +248,9 @@ export default function PreferencesPage() {
           {/* Status Message */}
           {message && (
             <div className={`p-4 rounded-lg flex items-center ${
-              status === 'success' 
-                ? 'bg-green-50 border border-green-200 text-green-800' 
-                : 'bg-red-50 border border-red-200 text-red-800'
+              status === 'success'
+                ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300'
+                : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300'
             }`}>
               {status === 'success' ? (
                 <CheckCircle className="w-5 h-5 mr-2" />
@@ -266,7 +266,7 @@ export default function PreferencesPage() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 bg-cobalt hover:bg-cobalt/90 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30 flex items-center disabled:cursor-not-allowed"
+              className="px-6 py-3 min-h-[44px] bg-primary-700 dark:bg-primary-600 hover:bg-primary-800 dark:hover:bg-primary-500 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 flex items-center disabled:cursor-not-allowed"
             >
               {status === 'loading' ? (
                 <>
@@ -283,24 +283,24 @@ export default function PreferencesPage() {
         </form>
 
         {/* Help Section */}
-        <div className="mt-12 bg-gray-50 border border-gray-200 rounded-lg p-6">
+        <div className="mt-12 bg-background-secondary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
           <div className="flex items-center mb-4">
-            <Shield className="w-5 h-5 text-gray-600 mr-2" />
-            <h3 className="text-lg font-semibold text-gray-900">Need Help?</h3>
+            <Shield className="w-5 h-5 text-text-secondary dark:text-secondary-400 mr-2" />
+            <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Need Help?</h3>
           </div>
-          <p className="text-gray-600 mb-4">
+          <p className="text-text-secondary dark:text-secondary-400 mb-4">
             If you have questions about your notification preferences or need assistance, we&apos;re here to help.
           </p>
           <div className="space-y-2">
-            <a href="/contact" className="text-blue-600 hover:text-blue-800 text-sm">
+            <a href="/contact" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">
               Contact Support
             </a>
-            <span className="text-gray-400 mx-2">•</span>
-            <a href="/faq" className="text-blue-600 hover:text-blue-800 text-sm">
+            <span className="text-text-tertiary dark:text-secondary-500 mx-2">•</span>
+            <a href="/faq" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">
               FAQ
             </a>
-            <span className="text-gray-400 mx-2">•</span>
-            <a href="/docs" className="text-blue-600 hover:text-blue-800 text-sm">
+            <span className="text-text-tertiary dark:text-secondary-500 mx-2">•</span>
+            <a href="/docs" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">
               Documentation
             </a>
           </div>
@@ -308,16 +308,16 @@ export default function PreferencesPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-50 border-t border-gray-200 mt-16">
+      <footer className="bg-background-secondary dark:bg-secondary-800 border-t border-border-primary dark:border-secondary-700 mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
           <div className="text-center">
-            <p className="text-gray-600 text-sm">
+            <p className="text-text-secondary dark:text-secondary-400 text-sm">
               © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
             <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
+              <a href="/terms" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>

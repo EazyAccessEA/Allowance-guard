@@ -28,9 +28,9 @@ export function CodeExample({ tabs }: CodeExampleProps) {
   }
 
   return (
-    <div className="border-2 border-ag-line rounded-lg overflow-hidden">
+    <div className="border-2 border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden">
       {/* Language tabs */}
-      <div className="flex items-center bg-ag-panel border-b-2 border-ag-line">
+      <div className="flex items-center bg-background-secondary dark:bg-secondary-800 border-b-2 border-border-primary dark:border-secondary-700">
         <div className="flex">
           {tabs.map((tab, i) => (
             <button
@@ -39,8 +39,8 @@ export function CodeExample({ tabs }: CodeExampleProps) {
               className={cn(
                 'px-4 py-2 text-xs font-medium transition-colors',
                 i === activeTab
-                  ? 'text-ag-text bg-ag-bg border-b-2 border-[#00C2B3] -mb-[2px]'
-                  : 'text-ag-muted hover:text-ag-text',
+                  ? 'text-text-primary dark:text-secondary-100 bg-background-primary dark:bg-secondary-900 border-b-2 border-primary-600 dark:border-primary-400 -mb-[2px]'
+                  : 'text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100',
               )}
             >
               {tab.label}
@@ -49,15 +49,15 @@ export function CodeExample({ tabs }: CodeExampleProps) {
         </div>
         <button
           onClick={copyToClipboard}
-          className="ml-auto mr-3 text-xs text-ag-muted hover:text-ag-text transition-colors"
+          className="ml-auto mr-3 text-xs text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100 transition-colors"
         >
           {copied ? 'Copied!' : 'Copy'}
         </button>
       </div>
 
       {/* Code content */}
-      <pre className="bg-ag-bg p-4 overflow-x-auto">
-        <code className="text-sm font-mono text-ag-text">{tabs[activeTab].code}</code>
+      <pre className="bg-background-primary dark:bg-secondary-900 p-4 overflow-x-auto">
+        <code className="text-sm font-mono text-text-primary dark:text-secondary-100">{tabs[activeTab].code}</code>
       </pre>
     </div>
   )
