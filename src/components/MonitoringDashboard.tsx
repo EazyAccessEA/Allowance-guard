@@ -18,6 +18,7 @@ import {
   RefreshCw,
   Clock,
 } from 'lucide-react'
+import { InlineError } from '@/components/ErrorBoundary'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -63,17 +64,20 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
   const [events, setEvents] = useState<MonitoringEvent[]>([])
   const [config, setConfig] = useState<MonitorConfig | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const pageSize = 20
 
   const loadData = useCallback(async () => {
     setLoading(true)
+    setError(null)
     try {
       const [eventsRes, configRes] = await Promise.all([
         fetch(`/api/monitor/events?wallet=${wallet}&limit=${pageSize}&offset=${(page - 1) * pageSize}`),
         fetch(`/api/monitor?wallet=${wallet}`),
       ])
+      if (!eventsRes.ok || !configRes.ok) throw new Error('Failed to load monitoring data')
       const eventsJson = await eventsRes.json()
       const configJson = await configRes.json()
 
@@ -81,7 +85,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
       setTotal(eventsJson.total ?? 0)
       setConfig(configJson.monitor ?? null)
     } catch {
-      // silently fail
+      setError('Failed to load monitoring data')
     } finally {
       setLoading(false)
     }
@@ -205,8 +209,21 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
           </div>
         </CardHeader>
         <CardContent>
-          {loading && events.length === 0 ? (
-            <div className="text-sm text-text-secondary">Loading events...</div>
+          {error ? (
+            <InlineError message={error} onRetry={loadData} />
+          ) : loading && events.length === 0 ? (
+            <div className="animate-pulse space-y-3">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-border-primary">
+                  <div className="w-4 h-4 bg-gray-200 rounded-full mt-0.5"></div>
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+                    <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : events.length === 0 ? (
             <div className="text-center py-8">
               <BellOff className="w-8 h-8 text-text-tertiary mx-auto mb-2" />

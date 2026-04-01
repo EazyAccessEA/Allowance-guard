@@ -118,7 +118,7 @@ export default function ContributePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
       
       {/* Hero Section */}
       <Section className="relative pt-20 pb-24 sm:pt-24 sm:pb-32 overflow-hidden">

@@ -1,8 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { Loader2 } from 'lucide-react'
 
 export default function InvitePage({ params }: { params: Promise<{ token: string }> }) {
   const [msg, setMsg] = useState('Accepting invite…')
+  const [accepting, setAccepting] = useState(true)
   useEffect(() => {
     (async () => {
       const resolvedParams = await params
@@ -11,8 +13,17 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
       const r = await fetch('/api/invites/accept',{ method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ token: resolvedParams.token }) })
       const j = await r.json()
       if (!r.ok) setMsg(j.error || 'Invite invalid'); else setMsg('Invite accepted! Redirecting…')
+      setAccepting(false)
       setTimeout(() => { window.location.href = '/' }, 1500)
     })()
   }, [params])
-  return <main className="mx-auto max-w-xl px-6 py-10"><h1 className="text-xl font-semibold">Team Invite</h1><p className="mt-3 text-sm">{msg}</p></main>
+  return (
+    <main className="mx-auto max-w-xl px-6 py-10 text-text-primary dark:text-secondary-100">
+      <h1 className="text-xl font-semibold">Team Invite</h1>
+      <p className="mt-3 text-sm flex items-center gap-2">
+        {accepting && <Loader2 className="h-5 w-5 animate-spin" />}
+        {msg}
+      </p>
+    </main>
+  )
 }

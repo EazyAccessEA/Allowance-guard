@@ -59,6 +59,19 @@ export default function NetworksPage() {
     )
   }
 
+  function retryFetch() {
+    setLoading(true)
+    setError(null)
+    fetch('/api/networks/roadmap')
+      .then(r => r.json())
+      .then(result => {
+        if (result.success) setData(result.data)
+        else setError(result.error || 'Failed to fetch networks data')
+      })
+      .catch(() => setError('Network error occurred'))
+      .finally(() => setLoading(false))
+  }
+
   if (error || !data) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -66,7 +79,13 @@ export default function NetworksPage() {
           <Section className="py-16">
             <div className="text-center">
               <H1 className="text-red-600 mb-4">Error Loading Networks</H1>
-              <p className="text-gray-600">{error || 'Failed to load networks data'}</p>
+              <p className="text-gray-600 mb-6">{error || 'Failed to load networks data'}</p>
+              <button
+                onClick={retryFetch}
+                className="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
+              >
+                Try Again
+              </button>
             </div>
           </Section>
         </Container>

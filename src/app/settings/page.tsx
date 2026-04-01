@@ -6,11 +6,16 @@ import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
 import ClientConnectButton from '@/components/ClientConnectButton'
+import { InlineError } from '@/components/ErrorBoundary'
 
 export default function SettingsPage() {
   const { address: connectedAddress, isConnected } = useAccount()
   const [selectedWallet] = useState<string | null>(null)
-  
+
+  // Policy loading state
+  const [policyLoading, setPolicyLoading] = useState(false)
+  const [policyError, setPolicyError] = useState<string | null>(null)
+
   // Email Alerts state
   const [email, setEmail] = useState('')
   const [riskOnly, setRiskOnly] = useState(true)
@@ -45,17 +50,26 @@ export default function SettingsPage() {
   // Load policy on mount
   const loadPolicy = useCallback(async () => {
     if (!targetWallet) return
-    const r = await fetch(`/api/policy?wallet=${targetWallet}`)
-    const j = await r.json()
-    setPolicy(j.policy ?? { 
-      min_risk_score: 0, 
-      unlimited_only: false, 
-      include_spenders: [], 
-      ignore_spenders: [], 
-      include_tokens: [], 
-      ignore_tokens: [], 
-      chains: [] 
-    })
+    setPolicyLoading(true)
+    setPolicyError(null)
+    try {
+      const r = await fetch(`/api/policy?wallet=${targetWallet}`)
+      if (!r.ok) throw new Error('Failed to load policy')
+      const j = await r.json()
+      setPolicy(j.policy ?? {
+        min_risk_score: 0,
+        unlimited_only: false,
+        include_spenders: [],
+        ignore_spenders: [],
+        include_tokens: [],
+        ignore_tokens: [],
+        chains: []
+      })
+    } catch (err) {
+      setPolicyError(err instanceof Error ? err.message : 'Failed to load policy')
+    } finally {
+      setPolicyLoading(false)
+    }
   }, [targetWallet])
 
   useEffect(() => { 
@@ -312,8 +326,21 @@ export default function SettingsPage() {
               <p className="text-base text-stone mb-6">
                 Configure what counts as alert-worthy for your wallet.
               </p>
-              
-              {policy && (
+
+              {policyLoading && !policy && (
+                <div className="animate-pulse space-y-4 max-w-2xl">
+                  <div className="h-10 bg-gray-200 rounded w-1/3"></div>
+                  <div className="h-10 bg-gray-200 rounded w-1/4"></div>
+                  <div className="h-10 bg-gray-200 rounded w-full"></div>
+                  <div className="h-10 bg-gray-200 rounded w-full"></div>
+                </div>
+              )}
+
+              {policyError && (
+                <InlineError message={policyError} onRetry={loadPolicy} />
+              )}
+
+              {policy && !policyError && (
                 <div className="space-y-6 max-w-2xl">
                   <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
                     <label className="text-base text-stone font-medium w-32">Min risk score</label>

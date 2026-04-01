@@ -61,7 +61,7 @@ function BillingToggle({
         }
         className={cn(
           'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2',
-          billingPeriod === 'yearly' ? 'bg-primary-700' : 'bg-neutral-300'
+          billingPeriod === 'yearly' ? 'bg-primary-700' : 'bg-neutral-300 dark:bg-secondary-600'
         )}
       >
         <span
@@ -80,7 +80,7 @@ function BillingToggle({
         Yearly
       </span>
       {billingPeriod === 'yearly' && (
-        <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
+        <span className="rounded-full bg-green-100 dark:bg-green-900/40 px-2 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">
           Save up to 34%
         </span>
       )}
