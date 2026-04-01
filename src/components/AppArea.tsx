@@ -13,27 +13,27 @@ import {
 
 // Dynamic imports for heavy components
 const WalletManager = dynamic(() => import('@/components/WalletManager'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32 w-full" />
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-32 w-full" />
 })
 
 const AllowanceTable = dynamic(() => import('@/components/AllowanceTable'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-64 w-full" />
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-64 w-full" />
 })
 
 const WalletSecurity = dynamic(() => import('@/components/WalletSecurity'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-48 w-full" />
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-48 w-full" />
 })
 
 const BulkRevokePanel = dynamic(() => import('@/components/BulkRevokePanel'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32 w-full" />
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-32 w-full" />
 })
 
 const Permit2Panel = dynamic(() => import('@/components/Permit2Panel'), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-32 w-full" />
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-32 w-full" />
 })
 
 const DataVisualizationDashboard = dynamic(() => import('@/components/DataVisualizationDashboard').then(mod => ({ default: mod.DataVisualizationDashboard })), {
-  loading: () => <div className="animate-pulse bg-gray-200 rounded h-96 w-full" />
+  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-96 w-full" />
 })
 import { useState, useEffect, useCallback } from 'react'
 import {
