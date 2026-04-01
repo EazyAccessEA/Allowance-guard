@@ -104,8 +104,9 @@ async function getArbitrumGasPrice(chainId: number): Promise<{ gasPriceGwei: num
     ])
 
     const l2GasPriceGwei = Number(formatGwei(gasPrice))
-    // arbPrices[0] is perL2Tx, [1] is perL1CalldataUnit (in wei)
-    const l1DataFeeWei = (arbPrices as bigint[])[1] ?? BigInt(0)
+    // arbPrices is a readonly tuple of 6 bigints: [perL2Tx, perL1CalldataUnit, ...]
+    const pricesTuple = arbPrices as readonly [bigint, bigint, bigint, bigint, bigint, bigint]
+    const l1DataFeeWei = pricesTuple[1] ?? BigInt(0)
     const l1DataFeeGwei = Number(formatGwei(l1DataFeeWei))
 
     return { gasPriceGwei: l2GasPriceGwei, l1DataFeeGwei }
