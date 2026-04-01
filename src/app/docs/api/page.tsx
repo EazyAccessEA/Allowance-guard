@@ -74,7 +74,7 @@ Content-Type: application/json`}
       </Section>
 
       {/* Endpoints */}
-      <Section className="py-32 bg-mist/30">
+      <Section className="py-32 bg-background-tertiary dark:bg-secondary-800">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8">Endpoints</H2>
@@ -355,7 +355,7 @@ Content-Type: application/json`}
       </Section>
 
       {/* Advanced Topics */}
-      <Section className="py-32 bg-mist/30">
+      <Section className="py-32 bg-background-tertiary dark:bg-secondary-800">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8">Advanced</H2>

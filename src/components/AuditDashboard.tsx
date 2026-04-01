@@ -296,7 +296,7 @@ export default function AuditDashboard() {
         {logs.length === 0 && !loading && !error && (
           <div className="py-4">
             <EmptyState
-              icon={FileText}
+              icon={<FileText className="h-8 w-8" />}
               title="No audit logs found"
               description="No audit logs match the current filters. Try adjusting your filter criteria."
             />

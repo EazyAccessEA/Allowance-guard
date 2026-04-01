@@ -248,7 +248,7 @@ export default function BillingPage() {
             </CardHeader>
             <CardContent>
               <EmptyState
-                icon={Receipt}
+                icon={<Receipt className="h-8 w-8" />}
                 title="No payment history yet"
                 description="Payment history and invoices will appear here once you have an active subscription."
               />
