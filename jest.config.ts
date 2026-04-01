@@ -18,7 +18,7 @@ const config: Config = {
   },
   moduleNameMapper: {
     // Support path aliases from tsconfig.json if you use them
-    '^@/(.*)$': '<rootDir>/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
     // Stub out CSS/asset imports
     '\\.(css|less|scss|sass)$': '<rootDir>/test/styleStub.js',
   },
