@@ -313,30 +313,30 @@ export default function AppArea({
           <main className="lg:col-span-8">
             {/* Tab Navigation */}
             <div className="mb-8">
-              <nav className="flex space-x-1 bg-background-secondary p-1 rounded-lg border border-border-primary">
+              <nav className="flex space-x-1 bg-background-secondary p-1 rounded-lg border border-border-primary overflow-x-auto">
                 <button
                   onClick={() => setActiveTab('allowances')}
-                  className={`flex-1 py-3 px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 ${
+                  className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'allowances'
                       ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
                       : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
                   }`}
                 >
-                  Token Allowances
+                  <span className="hidden sm:inline">Token </span>Allowances
                 </button>
                 <button
                   onClick={() => setActiveTab('security')}
-                  className={`flex-1 py-3 px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 ${
+                  className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'security'
                       ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
                       : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
                   }`}
                 >
-                  Security Dashboard
+                  Security
                 </button>
                 <button
                   onClick={() => setActiveTab('analytics')}
-                  className={`flex-1 py-3 px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 ${
+                  className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'analytics'
                       ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
                       : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'

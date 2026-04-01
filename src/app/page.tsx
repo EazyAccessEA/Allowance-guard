@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import Hero from '@/components/Hero'
 import { LazySection } from '@/components/LazySection'
+import { WalletErrorBoundary, RpcErrorBoundary } from '@/components/ErrorBoundary'
 import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScrollAnimation'
 import dynamicImport from 'next/dynamic'
 
@@ -399,6 +400,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-white dark:bg-[#0A0E1A]">
       {/* Hero Section - Content on top of global video/overlay */}
       <div className="relative z-20">
+        <WalletErrorBoundary>
         <Hero
           isConnected={isConnected}
           onScan={startScan}
@@ -406,6 +408,7 @@ export default function HomePage() {
           scanMessage={message}
           onWalletSelect={setSelectedWallet}
         />
+        </WalletErrorBoundary>
       </div>
 
       {/* Statistics Section - Inspired by DNA Payments */}
@@ -754,11 +757,12 @@ export default function HomePage() {
 
       {/* App Area - Only show when connected, hydrated, and wallet is explicitly selected */}
       {isHydrated && isConnected && selectedWallet && (
+        <RpcErrorBoundary>
         <LazySection>
-        <div 
+        <div
           id="security-dashboard"
-          className="scroll-mt-20" // Add scroll margin for better positioning
-          data-testid="security-dashboard" // Add test ID for easier debugging
+          className="scroll-mt-20"
+          data-testid="security-dashboard"
         >
         <AppArea
           isConnected={isConnected}
@@ -777,6 +781,7 @@ export default function HomePage() {
         />
         </div>
         </LazySection>
+        </RpcErrorBoundary>
       )}
 
       {/* Activity Timeline - Only show when wallet is selected and hydrated */}

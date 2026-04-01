@@ -9,18 +9,22 @@ import PlanBadge from '@/components/PlanBadge'
 import { useUserPlan } from '@/hooks/useUserPlan'
 import { useQueryClient } from '@tanstack/react-query'
 import { CheckCircle, Loader2 } from 'lucide-react'
+import { Toast } from '@/components/ui/Alert'
 import type { ConsumerPlan } from '@/lib/plans'
+import { getPlanDisplayName } from '@/lib/plans'
 
 export default function CheckoutSuccessPage() {
   const queryClient = useQueryClient()
   const { plan } = useUserPlan()
   const [pollCount, setPollCount] = useState(0)
   const [ready, setReady] = useState(false)
+  const [showToast, setShowToast] = useState(false)
 
   // Poll for subscription update (webhooks can be delayed)
   useEffect(() => {
     if (plan !== 'free') {
       setReady(true)
+      setShowToast(true)
       return
     }
 
@@ -49,6 +53,16 @@ export default function CheckoutSuccessPage() {
 
   return (
     <Section size="sm" background="muted">
+      <Toast
+        isVisible={showToast}
+        onDismiss={() => setShowToast(false)}
+        variant="success"
+        title={`Welcome to ${getPlanDisplayName(plan as ConsumerPlan)}!`}
+        duration={5000}
+        position="top-center"
+      >
+        Your features are now unlocked.
+      </Toast>
       <Container size="sm">
         <Card className="text-center">
           <CardContent className="py-12 space-y-6">
