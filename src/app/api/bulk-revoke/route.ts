@@ -76,14 +76,13 @@ export async function POST(req: NextRequest) {
       return acc
     }, {} as Record<number, typeof allowances>)
 
-    // Gas estimates per standard
+    // Gas estimates per standard (each revocation is an individual tx)
     const GAS_PER_STANDARD: Record<string, number> = {
       ERC20: 48_000,
       ERC721: 55_000,
       ERC1155: 52_000,
     }
     const TX_BASE_GAS = 21_000
-    const BATCH_DISCOUNT_PER_TX = 0.12
 
     // Calculate per-tx gas
     const perTxGas = allowances.map((a: { standard: string }) =>
@@ -91,19 +90,9 @@ export async function POST(req: NextRequest) {
     )
 
     const totalAllowances = allowances.length
-    const totalGasIndividual = perTxGas.reduce(
+    const totalEstimatedGas = perTxGas.reduce(
       (sum: number, gas: number) => sum + gas + TX_BASE_GAS, 0,
     )
-
-    // Batch savings
-    const batchSavings = totalAllowances > 1
-      ? (totalAllowances - 1) * TX_BASE_GAS +
-        perTxGas.slice(1).reduce((sum: number, gas: number) => sum + Math.floor(gas * BATCH_DISCOUNT_PER_TX), 0)
-      : 0
-    const totalGasBatch = totalGasIndividual - batchSavings
-    const savingsPercent = totalGasIndividual > 0
-      ? Math.round((batchSavings / totalGasIndividual) * 100)
-      : 0
 
     const estimatedTime = totalAllowances * 3000 // ~3 seconds per transaction
 
@@ -117,24 +106,22 @@ export async function POST(req: NextRequest) {
           const chainTxGas = (chainAllowances as typeof allowances).map(
             (a: { standard: string }) => GAS_PER_STANDARD[a.standard] ?? 48_000,
           )
-          const chainGasIndividual = chainTxGas.reduce(
+          const chainGas = chainTxGas.reduce(
             (sum: number, gas: number) => sum + gas + TX_BASE_GAS, 0,
           )
           return {
             chainId: parseInt(chainId),
             count: (chainAllowances as typeof allowances).length,
-            estimatedGas: chainGasIndividual,
+            estimatedGas: chainGas,
             estimatedTime: (chainAllowances as typeof allowances).length * 3000,
           }
         }),
-        totalEstimatedGas: totalGasIndividual,
-        totalEstimatedGasBatch: totalGasBatch,
-        gasSavings: batchSavings,
-        savingsPercent,
+        totalEstimatedGas,
         totalEstimatedTime: estimatedTime,
         strategy,
         batchSize,
         delayMs,
+        note: 'Each revocation is a separate on-chain transaction. Gas estimates are approximate.',
       },
       instructions: {
         message: 'This endpoint provides planning information for bulk revoke operations. Actual revocation must be performed client-side using wallet transactions.',

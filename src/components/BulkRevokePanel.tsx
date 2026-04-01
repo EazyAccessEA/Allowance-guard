@@ -13,7 +13,6 @@ import {
   ChevronDown,
   ChevronUp,
   X,
-  TrendingDown,
   Fuel,
   DollarSign,
 } from 'lucide-react'
@@ -45,16 +44,13 @@ interface BulkRevokePanelProps {
 }
 
 // ---------------------------------------------------------------------------
-// Gas Savings Calculator
+// Gas Cost Estimator (honest — no fabricated batch discounts)
 // ---------------------------------------------------------------------------
 
 const GAS_PER_ERC20_REVOKE = 48_000
 const GAS_PER_ERC721_REVOKE = 55_000
 const GAS_PER_ERC1155_REVOKE = 52_000
-// Batch revocation amortizes fixed tx overhead (~21k gas base) across N txs
 const TX_BASE_GAS = 21_000
-// Batch discount: shared calldata overhead savings per additional tx
-const BATCH_DISCOUNT_PER_TX = 0.12
 
 function estimateGasForRow(row: AllowanceRow): number {
   switch (row.standard) {
@@ -64,12 +60,11 @@ function estimateGasForRow(row: AllowanceRow): number {
   }
 }
 
-function GasSavingsCalculator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
+function GasCostEstimator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
   const [gasPrice, setGasPrice] = useState<number | null>(null)
   const [ethPrice, setEthPrice] = useState<number | null>(null)
 
   useEffect(() => {
-    // Fetch live gas price estimate
     fetch('/api/gas-estimate')
       .then(r => r.json())
       .then(data => {
@@ -77,101 +72,72 @@ function GasSavingsCalculator({ selectedRows }: { selectedRows: AllowanceRow[] }
         if (data.ethPriceUsd) setEthPrice(data.ethPriceUsd)
       })
       .catch(() => {
-        // Use reasonable defaults
         setGasPrice(25)
         setEthPrice(3200)
       })
   }, [])
 
-  // Calculate gas for each row
+  // Each revocation is an individual transaction — no batching discount
   const perRowGas = selectedRows.map(estimateGasForRow)
-  const totalGasIndividual = perRowGas.reduce(
+  const totalGas = perRowGas.reduce(
     (sum, gas) => sum + gas + TX_BASE_GAS,
     0,
   )
 
-  // Batch savings: first tx pays full base, subsequent txs save the base overhead
-  // Plus per-tx calldata discount
-  const batchSavings = selectedRows.length > 1
-    ? (selectedRows.length - 1) * TX_BASE_GAS +
-      perRowGas.slice(1).reduce((sum, gas) => sum + Math.floor(gas * BATCH_DISCOUNT_PER_TX), 0)
-    : 0
+  const currentGasPrice = gasPrice ?? 25
+  const currentEthPrice = ethPrice ?? 3200
 
-  const totalGasBatch = totalGasIndividual - batchSavings
-  const savingsPercent = totalGasIndividual > 0
-    ? Math.round((batchSavings / totalGasIndividual) * 100)
-    : 0
-
-  // Convert to ETH and USD
-  const currentGasPrice = gasPrice ?? 25 // gwei
-  const currentEthPrice = ethPrice ?? 3200 // USD
-
-  const costIndividualEth = (totalGasIndividual * currentGasPrice) / 1e9
-  const costBatchEth = (totalGasBatch * currentGasPrice) / 1e9
-  const savingsEth = costIndividualEth - costBatchEth
-
-  const costIndividualUsd = costIndividualEth * currentEthPrice
-  const costBatchUsd = costBatchEth * currentEthPrice
-  const savingsUsd = savingsEth * currentEthPrice
+  const totalCostEth = (totalGas * currentGasPrice) / 1e9
+  const totalCostUsd = totalCostEth * currentEthPrice
 
   // Group by chain for breakdown
   const byChain = selectedRows.reduce((acc, row, i) => {
     const key = row.chain_id
     if (!acc[key]) acc[key] = { count: 0, gas: 0 }
     acc[key].count++
-    acc[key].gas += perRowGas[i]
+    acc[key].gas += perRowGas[i] + TX_BASE_GAS
     return acc
   }, {} as Record<number, { count: number; gas: number }>)
 
   return (
     <div className="border-t border-neutral-borders pt-4 mb-4">
-      <div className="p-4 bg-green-50 border border-green-200 rounded-lg space-y-3">
+      <div className="p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg space-y-3">
         <div className="flex items-center gap-2">
-          <Fuel className="w-5 h-5 text-green-600" />
-          <h4 className="text-sm font-semibold text-green-800">Gas Savings Estimate</h4>
+          <Fuel className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-200">Gas Cost Estimate</h4>
         </div>
 
-        {/* Main comparison */}
+        {/* Total cost */}
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <div className="text-xs text-green-600 mb-1">Individual</div>
-            <div className="text-sm font-bold text-green-900">
-              {(totalGasIndividual / 1000).toFixed(0)}k gas
-            </div>
-            <div className="text-xs text-green-600">
-              ${costIndividualUsd.toFixed(2)}
+            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Transactions</div>
+            <div className="text-sm font-bold text-blue-900 dark:text-blue-100">
+              {selectedRows.length}
             </div>
           </div>
           <div>
-            <div className="text-xs text-green-600 mb-1">Batch</div>
-            <div className="text-sm font-bold text-green-900">
-              {(totalGasBatch / 1000).toFixed(0)}k gas
-            </div>
-            <div className="text-xs text-green-600">
-              ${costBatchUsd.toFixed(2)}
+            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Total Gas</div>
+            <div className="text-sm font-bold text-blue-900 dark:text-blue-100">
+              {(totalGas / 1000).toFixed(0)}k
             </div>
           </div>
           <div>
-            <div className="text-xs text-green-600 mb-1">You Save</div>
-            <div className="text-sm font-bold text-green-700 flex items-center justify-center gap-1">
-              <TrendingDown className="w-3 h-3" />
-              {savingsPercent}%
-            </div>
-            <div className="text-xs font-medium text-green-700 flex items-center justify-center gap-0.5">
+            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Est. Cost</div>
+            <div className="text-sm font-bold text-blue-900 dark:text-blue-100 flex items-center justify-center gap-0.5">
               <DollarSign className="w-3 h-3" />
-              {savingsUsd.toFixed(2)}
+              {totalCostUsd.toFixed(2)}
             </div>
           </div>
         </div>
 
         {/* Per-chain breakdown */}
         {Object.keys(byChain).length > 1 && (
-          <div className="border-t border-green-200 pt-2">
-            <div className="text-xs text-green-600 mb-1">Per-chain breakdown</div>
+          <div className="border-t border-blue-200 dark:border-blue-800 pt-2">
+            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Per-chain breakdown</div>
             <div className="flex flex-wrap gap-2">
               {Object.entries(byChain).map(([chainId, { count, gas }]) => (
-                <span key={chainId} className="text-xs text-green-700 bg-green-100 rounded px-2 py-0.5">
-                  Chain {chainId}: {count} txs • {(gas / 1000).toFixed(0)}k gas
+                <span key={chainId} className="text-xs text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/50 rounded px-2 py-0.5">
+                  Chain {chainId}: {count} txs &bull; {(gas / 1000).toFixed(0)}k gas
                 </span>
               ))}
             </div>
@@ -179,12 +145,12 @@ function GasSavingsCalculator({ selectedRows }: { selectedRows: AllowanceRow[] }
         )}
 
         {/* Gas price info */}
-        <div className="text-[10px] text-green-500 flex items-center gap-2">
+        <div className="text-[10px] text-blue-500 dark:text-blue-400 flex items-center gap-2">
           <span>Gas: {currentGasPrice} gwei</span>
-          <span>•</span>
+          <span>&bull;</span>
           <span>ETH: ${currentEthPrice.toLocaleString()}</span>
-          <span>•</span>
-          <span>Estimates only — actual costs may vary</span>
+          <span>&bull;</span>
+          <span>Each revocation is a separate on-chain transaction</span>
         </div>
       </div>
     </div>
@@ -497,9 +463,9 @@ export default function BulkRevokePanel({
           </div>
         )}
 
-        {/* Gas Savings Calculator */}
+        {/* Gas Cost Estimate */}
         {selectedRows.length > 0 && (
-          <GasSavingsCalculator selectedRows={selectedRows} />
+          <GasCostEstimator selectedRows={selectedRows} />
         )}
 
         {/* Warnings */}
