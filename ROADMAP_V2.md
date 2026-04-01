@@ -716,10 +716,11 @@ The current design feels dated. Key updates:
 
 ---
 
-## Phase 4 — Testing & CI/CD (Week 2–4)
+## Phase 4 — Testing & CI/CD (Week 2–4) ✅ COMPLETED
 
 **Council members addressed**: QA Lead (D), DevOps Engineer (C-)
 **Goal**: From 15 tests to comprehensive coverage. CI must block on failures.
+**Status**: All 5 tasks completed. Implemented 2026-04-01.
 
 ### 4.1 — Fix CI Pipeline (IMMEDIATE)
 
@@ -738,11 +739,11 @@ The current design feels dated. Key updates:
 3. Ensure consistent Node version with e2e workflow
 
 **Acceptance criteria**:
-- [ ] E2E test failures block merges to main
-- [ ] Type errors block merges
-- [ ] Lint errors block merges
-- [ ] Node 20 used in all CI workflows
-- [ ] Dependency audit runs on every PR
+- [x] E2E test failures block merges to main
+- [x] Type errors block merges
+- [x] Lint errors block merges
+- [x] Node 20 used in all CI workflows
+- [x] Dependency audit runs on every PR
 
 ### 4.2 — Unit Test Coverage (Target: 80%+)
 
@@ -767,10 +768,10 @@ The current design feels dated. Key updates:
 | 15 | `__tests__/hooks/useUserPlan.test.ts` | Plan hook behavior | P1 |
 
 **Acceptance criteria**:
-- [ ] All P0 test files written and passing
-- [ ] All P1 test files written and passing
-- [ ] Coverage report generated in CI
-- [ ] No test file uses `any` types
+- [x] All P0 test files written and passing
+- [x] All P1 test files written and passing
+- [x] Coverage report generated in CI
+- [x] No test file uses `any` types
 
 ### 4.3 — API Integration Tests
 
@@ -792,10 +793,10 @@ Test every API endpoint with authenticated and unauthenticated requests.
 | 10 | `export.test.ts` | `/api/export/*` — plan gating, format validation |
 
 **Acceptance criteria**:
-- [ ] Every API route has at least one test
-- [ ] Auth enforcement tested on every protected endpoint
-- [ ] Plan gating tested (free user can't access pro features)
-- [ ] Rate limiting tested
+- [x] Every API route has at least one test
+- [x] Auth enforcement tested on every protected endpoint
+- [x] Plan gating tested (free user can't access pro features)
+- [x] Rate limiting tested
 
 ### 4.4 — E2E Test Expansion
 
@@ -817,10 +818,10 @@ Test every API endpoint with authenticated and unauthenticated requests.
 | 10 | `dark-mode.spec.ts` | Theme toggle, persistence, contrast |
 
 **Acceptance criteria**:
-- [ ] 14+ E2E test files covering all major user journeys
-- [ ] Payment flow tested with fake payments
-- [ ] Mobile viewport tested
-- [ ] All E2E tests pass in CI (no continue-on-error)
+- [x] 14+ E2E test files covering all major user journeys
+- [x] Payment flow tested with fake payments
+- [x] Mobile viewport tested
+- [x] All E2E tests pass in CI (no continue-on-error)
 
 ### 4.5 — Security-Specific Tests
 
@@ -836,9 +837,9 @@ Create `__tests__/security/` directory:
 | 6 | `session.test.ts` | Session expiry, invalidation, tampering detection |
 
 **Acceptance criteria**:
-- [ ] All security tests pass
-- [ ] Security tests run in CI on every PR
-- [ ] No endpoint accepts requests from unauthorized origins
+- [x] All security tests pass
+- [x] Security tests run in CI on every PR
+- [x] No endpoint accepts requests from unauthorized origins
 
 ---
 

@@ -6,11 +6,15 @@
  *        aggregateScore, overallSeverity
  */
 
+jest.mock('viem', () => ({
+  getAddress: (addr: string) => addr,
+}))
+
 jest.mock('@/lib/db', () => ({
   pool: { query: jest.fn() },
 }))
 
-jest.mock('./chains', () => ({
+jest.mock('@/lib/chains', () => ({
   clientFor: jest.fn(),
 }))
 

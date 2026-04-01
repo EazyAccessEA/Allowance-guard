@@ -1,4 +1,8 @@
 /**
+ * @jest-environment node
+ */
+
+/**
  * Tests for POST /api/scan
  */
 

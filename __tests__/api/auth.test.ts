@@ -1,4 +1,8 @@
 /**
+ * @jest-environment node
+ */
+
+/**
  * Tests that all protected endpoints return 401 without a valid session.
  */
 

@@ -5,7 +5,7 @@
  *        scanPermit2Allowances
  */
 
-jest.mock('./chains', () => ({
+jest.mock('@/lib/chains', () => ({
   clientFor: jest.fn(),
 }))
 
@@ -19,7 +19,7 @@ jest.mock('viem', () => ({
   parseAbi: (fragments: string[]) => fragments,
 }))
 
-import { clientFor } from './chains'
+import { clientFor } from '@/lib/chains'
 import {
   PERMIT2_ADDRESS,
   KNOWN_PERMIT2_SPENDERS,
