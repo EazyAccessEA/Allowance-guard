@@ -68,7 +68,7 @@ export async function GET(req: NextRequest) {
     for (const row of tokenQuery.rows) {
       const cid = Number(row.chain_id)
       if (!tokensByChain[cid]) tokensByChain[cid] = []
-      tokensByChain[cid].push(getAddress(row.token_address) as Address)
+      tokensByChain[cid].push(getAddress(row.token_address as string) as Address)
     }
 
     let results: Permit2Allowance[]
