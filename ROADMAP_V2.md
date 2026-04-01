@@ -536,7 +536,18 @@ Chain names, IDs, and metadata are defined in 3+ separate files.
 
 **Council members addressed**: Frontend Engineer (B), Product Manager (C), CEO (C-)
 **Goal**: Fix broken user journeys, remove mock data, and make every flow work end-to-end.
-**Status**: Complete
+**Status**: Complete (full-site expansion applied)
+
+> **Full-site Phase 3 expansion (April 2026)**: In addition to the 6 core tasks below,
+> Phase 3 quality standards were applied site-wide across every page:
+> - **Error boundaries**: 26 per-route `layout.tsx` files wrapping pages in `ErrorBoundary`, `WalletErrorBoundary`, `CheckoutErrorBoundary`, or `RpcErrorBoundary` variants
+> - **Dark mode**: All pages updated to use design tokens with `dark:` variants — replaced legacy `text-ink`/`text-stone`/`bg-cobalt`, broken `ag-*` classes, and hardcoded `bg-white`/`text-gray-*` throughout
+> - **Loading states**: Skeleton loaders and `Loader2` spinners for all async data
+> - **Error states**: `InlineError` with retry buttons on all API-dependent views
+> - **Empty states**: `EmptyState` component with positive/upgrade variants on all list views
+> - **Mobile UX**: Card layouts for tables <md, 44×44px touch targets, responsive navigation
+> - **Pages updated**: docs, docs/api-reference, docs/api, docs/integration, blog, faq, contact, settings, networks, share, tokens, features, contribute, unsubscribe, invite, pricing, account, account/billing, account/usage, admin/dashboard, success, cancel, terms, privacy
+> - **Components updated**: AuditDashboard, ActivityTimeline, PlanBadge, ProNudge, SupportNudge, MobileNavigation, WalletManager, DataVisualizationDashboard, PricingTable, AllowanceTable, AppArea, Hero, Header, ReportPageClient, all docs/* components
 
 ### 3.1 — Fix Broken User Journeys
 

@@ -77,35 +77,35 @@ export function ApiPlayground({
   }
 
   return (
-    <div className="border-2 border-ag-line rounded-lg overflow-hidden">
-      <div className="bg-ag-panel p-4 border-b-2 border-ag-line">
-        <h4 className="text-sm font-bold text-ag-text mb-3">Try it out</h4>
+    <div className="border-2 border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden">
+      <div className="bg-background-secondary dark:bg-secondary-800 p-4 border-b-2 border-border-primary dark:border-secondary-700">
+        <h4 className="text-sm font-bold text-text-primary dark:text-secondary-100 mb-3">Try it out</h4>
 
         {/* API Key */}
         <div className="mb-3">
-          <label className="block text-xs text-ag-muted mb-1">API Key</label>
+          <label className="block text-xs text-text-secondary dark:text-secondary-400 mb-1">API Key</label>
           <input
             type="password"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             placeholder="ag_live_..."
-            className="w-full px-3 py-2 bg-ag-bg border border-ag-line rounded text-sm font-mono text-ag-text placeholder:text-ag-muted/50 focus:outline-none focus:border-[#00C2B3]"
+            className="w-full px-3 py-2 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded text-sm font-mono text-text-primary dark:text-secondary-100 placeholder:text-text-secondary/50 dark:placeholder:text-secondary-400/50 focus:outline-none focus:border-primary-600 dark:focus:border-primary-400"
           />
         </div>
 
         {/* Query params for GET */}
         {method === 'GET' && defaultParams && (
           <div className="space-y-2 mb-3">
-            <label className="block text-xs text-ag-muted">Query Parameters</label>
+            <label className="block text-xs text-text-secondary dark:text-secondary-400">Query Parameters</label>
             {Object.entries(params).map(([key, value]) => (
               <div key={key} className="flex gap-2">
-                <span className="px-2 py-1.5 bg-ag-bg border border-ag-line rounded text-xs font-mono text-ag-muted min-w-[100px]">
+                <span className="px-2 py-1.5 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded text-xs font-mono text-text-secondary dark:text-secondary-400 min-w-[100px]">
                   {key}
                 </span>
                 <input
                   value={value}
                   onChange={(e) => setParams((p) => ({ ...p, [key]: e.target.value }))}
-                  className="flex-1 px-3 py-1.5 bg-ag-bg border border-ag-line rounded text-sm font-mono text-ag-text focus:outline-none focus:border-[#00C2B3]"
+                  className="flex-1 px-3 py-1.5 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded text-sm font-mono text-text-primary dark:text-secondary-100 focus:outline-none focus:border-primary-600 dark:focus:border-primary-400"
                 />
               </div>
             ))}
@@ -115,12 +115,12 @@ export function ApiPlayground({
         {/* Body for POST */}
         {method === 'POST' && (
           <div className="mb-3">
-            <label className="block text-xs text-ag-muted mb-1">Request Body</label>
+            <label className="block text-xs text-text-secondary dark:text-secondary-400 mb-1">Request Body</label>
             <textarea
               value={body}
               onChange={(e) => setBody(e.target.value)}
               rows={5}
-              className="w-full px-3 py-2 bg-ag-bg border border-ag-line rounded text-sm font-mono text-ag-text focus:outline-none focus:border-[#00C2B3] resize-y"
+              className="w-full px-3 py-2 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded text-sm font-mono text-text-primary dark:text-secondary-100 focus:outline-none focus:border-primary-600 dark:focus:border-primary-400 resize-y"
             />
           </div>
         )}
@@ -128,7 +128,7 @@ export function ApiPlayground({
         <button
           onClick={handleSend}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 bg-[#00C2B3] text-white rounded font-medium text-sm hover:bg-[#00C2B3]/80 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded font-medium text-sm disabled:opacity-50 transition-colors"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />
@@ -144,7 +144,7 @@ export function ApiPlayground({
         <div className="p-4">
           {status !== null && (
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs text-ag-muted">Status:</span>
+              <span className="text-xs text-text-secondary dark:text-secondary-400">Status:</span>
               <span
                 className={`text-xs font-mono font-bold ${
                   status < 300 ? 'text-emerald-400' : status < 500 ? 'text-amber-400' : 'text-red-400'
@@ -154,8 +154,8 @@ export function ApiPlayground({
               </span>
             </div>
           )}
-          <pre className="bg-ag-bg border border-ag-line rounded p-4 overflow-x-auto">
-            <code className="text-xs font-mono text-ag-text">{response}</code>
+          <pre className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded p-4 overflow-x-auto">
+            <code className="text-xs font-mono text-text-primary dark:text-secondary-100">{response}</code>
           </pre>
         </div>
       )}

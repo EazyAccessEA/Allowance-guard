@@ -42,16 +42,16 @@ export function ApiEndpoint({
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className="border-2 border-ag-line rounded-lg overflow-hidden mb-6">
+    <div className="border-2 border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden mb-6">
       {/* Header */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center gap-3 p-4 bg-ag-panel hover:bg-ag-panel/80 transition-colors text-left"
+        className="w-full flex items-center gap-3 p-4 bg-background-secondary dark:bg-secondary-800 hover:bg-background-secondary/80 dark:hover:bg-secondary-800/80 transition-colors text-left"
       >
         {expanded ? (
-          <ChevronDown className="w-4 h-4 text-ag-muted shrink-0" />
+          <ChevronDown className="w-4 h-4 text-text-secondary dark:text-secondary-400 shrink-0" />
         ) : (
-          <ChevronRight className="w-4 h-4 text-ag-muted shrink-0" />
+          <ChevronRight className="w-4 h-4 text-text-secondary dark:text-secondary-400 shrink-0" />
         )}
         <span
           className={cn(
@@ -61,9 +61,9 @@ export function ApiEndpoint({
         >
           {method}
         </span>
-        <code className="text-sm font-mono text-ag-text">{path}</code>
+        <code className="text-sm font-mono text-text-primary dark:text-secondary-100">{path}</code>
         {auth && (
-          <span className="ml-auto text-xs text-ag-muted border border-ag-line rounded px-2 py-0.5">
+          <span className="ml-auto text-xs text-text-secondary dark:text-secondary-400 border border-border-primary dark:border-secondary-700 rounded px-2 py-0.5">
             Auth required
           </span>
         )}
@@ -71,38 +71,38 @@ export function ApiEndpoint({
 
       {/* Expanded details */}
       {expanded && (
-        <div className="p-4 border-t-2 border-ag-line space-y-4">
-          <p className="text-sm text-ag-muted">{description}</p>
+        <div className="p-4 border-t-2 border-border-primary dark:border-secondary-700 space-y-4">
+          <p className="text-sm text-text-secondary dark:text-secondary-400">{description}</p>
 
           {/* Query/URL parameters */}
           {params && params.length > 0 && (
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wide text-ag-muted mb-2">
+              <h4 className="text-xs font-bold uppercase tracking-wide text-text-secondary dark:text-secondary-400 mb-2">
                 Parameters
               </h4>
-              <div className="border border-ag-line rounded overflow-hidden">
+              <div className="border border-border-primary dark:border-secondary-700 rounded overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-ag-panel text-left">
-                      <th className="px-3 py-2 font-medium text-ag-muted">Name</th>
-                      <th className="px-3 py-2 font-medium text-ag-muted">Type</th>
-                      <th className="px-3 py-2 font-medium text-ag-muted">Required</th>
-                      <th className="px-3 py-2 font-medium text-ag-muted">Description</th>
+                    <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Name</th>
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Type</th>
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Required</th>
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Description</th>
                     </tr>
                   </thead>
                   <tbody>
                     {params.map((p) => (
-                      <tr key={p.name} className="border-t border-ag-line">
-                        <td className="px-3 py-2 font-mono text-xs text-ag-text">{p.name}</td>
-                        <td className="px-3 py-2 font-mono text-xs text-ag-muted">{p.type}</td>
+                      <tr key={p.name} className="border-t border-border-primary dark:border-secondary-700">
+                        <td className="px-3 py-2 font-mono text-xs text-text-primary dark:text-secondary-100">{p.name}</td>
+                        <td className="px-3 py-2 font-mono text-xs text-text-secondary dark:text-secondary-400">{p.type}</td>
                         <td className="px-3 py-2">
                           {p.required ? (
                             <span className="text-xs text-red-400">required</span>
                           ) : (
-                            <span className="text-xs text-ag-muted">optional</span>
+                            <span className="text-xs text-text-secondary dark:text-secondary-400">optional</span>
                           )}
                         </td>
-                        <td className="px-3 py-2 text-xs text-ag-muted">{p.description}</td>
+                        <td className="px-3 py-2 text-xs text-text-secondary dark:text-secondary-400">{p.description}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -114,32 +114,32 @@ export function ApiEndpoint({
           {/* Body parameters */}
           {bodyParams && bodyParams.length > 0 && (
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wide text-ag-muted mb-2">
+              <h4 className="text-xs font-bold uppercase tracking-wide text-text-secondary dark:text-secondary-400 mb-2">
                 Request Body (JSON)
               </h4>
-              <div className="border border-ag-line rounded overflow-hidden">
+              <div className="border border-border-primary dark:border-secondary-700 rounded overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-ag-panel text-left">
-                      <th className="px-3 py-2 font-medium text-ag-muted">Field</th>
-                      <th className="px-3 py-2 font-medium text-ag-muted">Type</th>
-                      <th className="px-3 py-2 font-medium text-ag-muted">Required</th>
-                      <th className="px-3 py-2 font-medium text-ag-muted">Description</th>
+                    <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Field</th>
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Type</th>
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Required</th>
+                      <th className="px-3 py-2 font-medium text-text-secondary dark:text-secondary-400">Description</th>
                     </tr>
                   </thead>
                   <tbody>
                     {bodyParams.map((p) => (
-                      <tr key={p.name} className="border-t border-ag-line">
-                        <td className="px-3 py-2 font-mono text-xs text-ag-text">{p.name}</td>
-                        <td className="px-3 py-2 font-mono text-xs text-ag-muted">{p.type}</td>
+                      <tr key={p.name} className="border-t border-border-primary dark:border-secondary-700">
+                        <td className="px-3 py-2 font-mono text-xs text-text-primary dark:text-secondary-100">{p.name}</td>
+                        <td className="px-3 py-2 font-mono text-xs text-text-secondary dark:text-secondary-400">{p.type}</td>
                         <td className="px-3 py-2">
                           {p.required ? (
                             <span className="text-xs text-red-400">required</span>
                           ) : (
-                            <span className="text-xs text-ag-muted">optional</span>
+                            <span className="text-xs text-text-secondary dark:text-secondary-400">optional</span>
                           )}
                         </td>
-                        <td className="px-3 py-2 text-xs text-ag-muted">{p.description}</td>
+                        <td className="px-3 py-2 text-xs text-text-secondary dark:text-secondary-400">{p.description}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -150,11 +150,11 @@ export function ApiEndpoint({
 
           {/* Response example */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wide text-ag-muted mb-2">
+            <h4 className="text-xs font-bold uppercase tracking-wide text-text-secondary dark:text-secondary-400 mb-2">
               Response Example
             </h4>
-            <pre className="bg-ag-bg border border-ag-line rounded p-4 overflow-x-auto">
-              <code className="text-xs font-mono text-ag-text">{responseExample}</code>
+            <pre className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded p-4 overflow-x-auto">
+              <code className="text-xs font-mono text-text-primary dark:text-secondary-100">{responseExample}</code>
             </pre>
           </div>
 

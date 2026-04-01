@@ -148,7 +148,7 @@ export default function ContactPage() {
       </Section>
 
       {/* Section 2: Direct Contact Channels */}
-      <Section className="py-32 bg-background-secondary">
+      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Direct Lines of Communication</h2>
@@ -161,8 +161,8 @@ export default function ContactPage() {
             {/* Channel 1: Standard Support */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1">
               <div className="p-8">
-                <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mb-6">
-                  <Mail className="w-8 h-8 text-primary-700" />
+                <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mb-6">
+                  <Mail className="w-8 h-8 text-primary-700 dark:text-primary-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">General Support & Questions</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -197,8 +197,8 @@ export default function ContactPage() {
             {/* Channel 2: Security Emergency */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-error-50 rounded-2xl flex items-center justify-center mb-6">
-                  <Shield className="w-8 h-8 text-semantic-error-500" />
+                <div className="w-16 h-16 bg-semantic-error-50 dark:bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mb-6">
+                  <Shield className="w-8 h-8 text-semantic-error-500 dark:text-semantic-error-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Report a Security Vulnerability</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -242,8 +242,8 @@ export default function ContactPage() {
             {/* Channel 3: Business & Partnerships */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-success-50 rounded-2xl flex items-center justify-center mb-6">
-                  <Users className="w-8 h-8 text-semantic-success-500" />
+                <div className="w-16 h-16 bg-semantic-success-50 dark:bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mb-6">
+                  <Users className="w-8 h-8 text-semantic-success-500 dark:text-semantic-success-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Partnerships & Press</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -288,8 +288,8 @@ export default function ContactPage() {
             {/* Discord */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MessageCircle className="w-8 h-8 text-primary-700" />
+                <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <MessageCircle className="w-8 h-8 text-primary-700 dark:text-primary-400" />
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">Discord</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
@@ -311,8 +311,8 @@ export default function ContactPage() {
             {/* X (formerly Twitter) */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-neutral-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-neutral-600" viewBox="0 0 24 24" fill="currentColor">
+                <div className="w-16 h-16 bg-neutral-100 dark:bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-neutral-600 dark:text-secondary-400" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
                 </div>
@@ -338,8 +338,8 @@ export default function ContactPage() {
             {/* GitHub */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-neutral-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Github className="w-8 h-8 text-neutral-600" />
+                <div className="w-16 h-16 bg-neutral-100 dark:bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Github className="w-8 h-8 text-neutral-600 dark:text-secondary-400" />
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">GitHub</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
@@ -362,7 +362,7 @@ export default function ContactPage() {
       </Section>
 
       {/* Section 4: Trust & Transparency - Mobbin Style */}
-      <Section className="py-32 bg-background-secondary">
+      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
         <Container className="max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
@@ -377,8 +377,8 @@ export default function ContactPage() {
             {/* Expected Response Time */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-warning-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Clock className="w-8 h-8 text-semantic-warning-500" />
+                <div className="w-16 h-16 bg-semantic-warning-50 dark:bg-semantic-warning-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Clock className="w-8 h-8 text-semantic-warning-500 dark:text-semantic-warning-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Expected Response Time</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed">
@@ -390,8 +390,8 @@ export default function ContactPage() {
             {/* Privacy Assurance */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-success-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Lock className="w-8 h-8 text-semantic-success-500" />
+                <div className="w-16 h-16 bg-semantic-success-50 dark:bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Lock className="w-8 h-8 text-semantic-success-500 dark:text-semantic-success-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Privacy Assurance</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed">
@@ -403,8 +403,8 @@ export default function ContactPage() {
             {/* PGP Key */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-error-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Shield className="w-8 h-8 text-semantic-error-500" />
+                <div className="w-16 h-16 bg-semantic-error-50 dark:bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Shield className="w-8 h-8 text-semantic-error-500 dark:text-semantic-error-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Encrypt Sensitive Information</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">

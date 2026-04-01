@@ -103,7 +103,7 @@ export default function PrivacyPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">Your Privacy Rights</H2>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Access & Control</h3>
                     <p className="text-stone text-sm">
                       Use the app without creating an account. All wallet scans are processed 
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
                     </p>
                   </div>
                   
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Email Management</h3>
                     <p className="text-stone text-sm">
                       Unsubscribe from emails anytime using the link in any email. 
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
                     </p>
                   </div>
                   
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Data Deletion</h3>
                     <p className="text-stone text-sm">
                       Request deletion of your email data by contacting us at 
@@ -127,7 +127,7 @@ export default function PrivacyPage() {
                     </p>
                   </div>
                   
-                  <div className="bg-ag-panel p-6 rounded-lg">
+                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                     <h3 className="text-lg font-medium mb-3">Transparency</h3>
                     <p className="text-stone text-sm">
                       This is open source software. You can review exactly how your data 
@@ -154,7 +154,7 @@ export default function PrivacyPage() {
               {/* Contact */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">Questions About Privacy?</H2>
-                <div className="bg-ag-panel p-6 rounded-lg">
+                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
                   <p className="text-stone mb-4">
                     We&apos;re committed to transparency. If you have questions about our privacy practices 
                     or want to exercise your rights, contact us:

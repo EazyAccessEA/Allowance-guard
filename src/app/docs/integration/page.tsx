@@ -165,7 +165,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
   })`
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-blue-100" />

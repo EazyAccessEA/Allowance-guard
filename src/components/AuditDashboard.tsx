@@ -84,11 +84,11 @@ export default function AuditDashboard() {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'text-red-600 bg-red-50'
-      case 'high': return 'text-orange-600 bg-orange-50'
-      case 'medium': return 'text-yellow-600 bg-yellow-50'
-      case 'low': return 'text-green-600 bg-green-50'
-      default: return 'text-gray-600 bg-gray-50'
+      case 'critical': return 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20'
+      case 'high': return 'text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-900/20'
+      case 'medium': return 'text-yellow-600 bg-yellow-50 dark:text-yellow-400 dark:bg-yellow-900/20'
+      case 'low': return 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20'
+      default: return 'text-neutral-600 bg-neutral-50 dark:text-secondary-400 dark:bg-secondary-800'
     }
   }
 
@@ -99,9 +99,9 @@ export default function AuditDashboard() {
       case 'authorization': return 'text-purple-600'
       case 'data_access': return 'text-green-600'
       case 'data_modification': return 'text-orange-600'
-      case 'system': return 'text-gray-600'
+      case 'system': return 'text-neutral-600 dark:text-secondary-400'
       case 'compliance': return 'text-indigo-600'
-      default: return 'text-gray-600'
+      default: return 'text-neutral-600 dark:text-secondary-400'
     }
   }
 
@@ -109,13 +109,13 @@ export default function AuditDashboard() {
     return (
       <div className="p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
+          <div className="h-8 bg-neutral-200 dark:bg-secondary-700 rounded w-1/4 mb-4"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-24 bg-gray-200 rounded"></div>
+              <div key={i} className="h-24 bg-neutral-200 dark:bg-secondary-700 rounded"></div>
             ))}
           </div>
-          <div className="h-96 bg-gray-200 rounded"></div>
+          <div className="h-96 bg-neutral-200 dark:bg-secondary-700 rounded"></div>
         </div>
       </div>
     )
@@ -132,41 +132,41 @@ export default function AuditDashboard() {
   return (
     <div className="p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Audit Dashboard</h1>
-        <p className="text-gray-600">Monitor system activities and security events</p>
+        <h1 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Audit Dashboard</h1>
+        <p className="text-text-secondary dark:text-secondary-400">Monitor system activities and security events</p>
       </div>
 
       {/* Statistics Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white p-4 rounded-lg border border-gray-200">
-            <div className="text-2xl font-bold text-gray-900">{stats.totalEvents.toLocaleString()}</div>
-            <div className="text-sm text-gray-600">Total Events</div>
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
+            <div className="text-2xl font-bold text-text-primary dark:text-secondary-100">{stats.totalEvents.toLocaleString()}</div>
+            <div className="text-sm text-text-secondary dark:text-secondary-400">Total Events</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border border-gray-200">
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
             <div className="text-2xl font-bold text-red-600">{stats.eventsBySeverity.critical || 0}</div>
-            <div className="text-sm text-gray-600">Critical Events</div>
+            <div className="text-sm text-text-secondary dark:text-secondary-400">Critical Events</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border border-gray-200">
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
             <div className="text-2xl font-bold text-orange-600">{stats.eventsBySeverity.high || 0}</div>
-            <div className="text-sm text-gray-600">High Severity</div>
+            <div className="text-sm text-text-secondary dark:text-secondary-400">High Severity</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border border-gray-200">
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
             <div className="text-2xl font-bold text-blue-600">{stats.eventsByActorType.user || 0}</div>
-            <div className="text-sm text-gray-600">User Actions</div>
+            <div className="text-sm text-text-secondary dark:text-secondary-400">User Actions</div>
           </div>
         </div>
       )}
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-lg border border-gray-200 mb-6">
+      <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Actor Type</label>
+            <label className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-1">Actor Type</label>
             <select
               value={filters.actorType}
               onChange={(e) => setFilters({ ...filters, actorType: e.target.value })}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="user">User</option>
@@ -176,11 +176,11 @@ export default function AuditDashboard() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+            <label className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-1">Category</label>
             <select
               value={filters.category}
               onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="security">Security</option>
@@ -193,11 +193,11 @@ export default function AuditDashboard() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Severity</label>
+            <label className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-1">Severity</label>
             <select
               value={filters.severity}
               onChange={(e) => setFilters({ ...filters, severity: e.target.value })}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="critical">Critical</option>
@@ -207,21 +207,21 @@ export default function AuditDashboard() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Action</label>
+            <label className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-1">Action</label>
             <input
               type="text"
               value={filters.action}
               onChange={(e) => setFilters({ ...filters, action: e.target.value })}
               placeholder="Search actions..."
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Limit</label>
+            <label className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-1">Limit</label>
             <select
               value={filters.limit}
               onChange={(e) => setFilters({ ...filters, limit: parseInt(e.target.value) })}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value={25}>25</option>
               <option value={50}>50</option>
@@ -233,42 +233,42 @@ export default function AuditDashboard() {
       </div>
 
       {/* Audit Logs Table */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="px-4 py-3 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">Recent Audit Logs</h2>
+      <div className="bg-background-primary dark:bg-secondary-800 rounded-lg border border-border-primary dark:border-secondary-700 overflow-hidden">
+        <div className="px-4 py-3 border-b border-border-primary dark:border-secondary-700">
+          <h2 className="text-lg font-medium text-text-primary dark:text-secondary-100">Recent Audit Logs</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-neutral-200 dark:divide-secondary-700">
+            <thead className="bg-neutral-50 dark:bg-secondary-700">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actor</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Severity</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">IP</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Path</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-text-tertiary dark:text-secondary-400 uppercase tracking-wider">Time</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-text-tertiary dark:text-secondary-400 uppercase tracking-wider">Actor</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-text-tertiary dark:text-secondary-400 uppercase tracking-wider">Action</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-text-tertiary dark:text-secondary-400 uppercase tracking-wider">Category</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-text-tertiary dark:text-secondary-400 uppercase tracking-wider">Severity</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-text-tertiary dark:text-secondary-400 uppercase tracking-wider">IP</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-text-tertiary dark:text-secondary-400 uppercase tracking-wider">Path</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-background-primary dark:bg-secondary-800 divide-y divide-neutral-200 dark:divide-secondary-700">
               {logs.map((log) => (
-                <tr key={log.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 text-sm text-gray-900">
+                <tr key={log.id} className="hover:bg-neutral-50 dark:hover:bg-secondary-700">
+                  <td className="px-4 py-3 text-sm text-text-primary dark:text-secondary-100">
                     {new Date(log.createdAt).toLocaleString()}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-900">
+                  <td className="px-4 py-3 text-sm text-text-primary dark:text-secondary-100">
                     <div>
                       <div className="font-medium">{log.actorType}</div>
                       {log.actorId && (
-                        <div className="text-gray-500 text-xs">{log.actorId}</div>
+                        <div className="text-text-tertiary dark:text-secondary-400 text-xs">{log.actorId}</div>
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-900">
+                  <td className="px-4 py-3 text-sm text-text-primary dark:text-secondary-100">
                     <div>
                       <div className="font-medium">{log.action}</div>
                       {log.subject && (
-                        <div className="text-gray-500 text-xs">{log.subject}</div>
+                        <div className="text-text-tertiary dark:text-secondary-400 text-xs">{log.subject}</div>
                       )}
                     </div>
                   </td>
@@ -282,10 +282,10 @@ export default function AuditDashboard() {
                       {log.severity}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-900">
+                  <td className="px-4 py-3 text-sm text-text-primary dark:text-secondary-100">
                     {log.ip || '-'}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-900">
+                  <td className="px-4 py-3 text-sm text-text-primary dark:text-secondary-100">
                     {log.path || '-'}
                   </td>
                 </tr>
@@ -296,7 +296,7 @@ export default function AuditDashboard() {
         {logs.length === 0 && !loading && !error && (
           <div className="py-4">
             <EmptyState
-              icon={FileText}
+              icon={<FileText className="h-8 w-8" />}
               title="No audit logs found"
               description="No audit logs match the current filters. Try adjusting your filter criteria."
             />
@@ -306,21 +306,21 @@ export default function AuditDashboard() {
 
       {/* Pagination */}
       <div className="mt-4 flex items-center justify-between">
-        <div className="text-sm text-gray-700">
+        <div className="text-sm text-text-secondary dark:text-secondary-300">
           Showing {filters.offset + 1} to {Math.min(filters.offset + filters.limit, logs.length)} of {logs.length} results
         </div>
         <div className="flex space-x-2">
           <button
             onClick={() => setFilters({ ...filters, offset: Math.max(0, filters.offset - filters.limit) })}
             disabled={filters.offset === 0}
-            className="px-3 py-1 text-sm border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 text-sm border border-border-primary dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
           <button
             onClick={() => setFilters({ ...filters, offset: filters.offset + filters.limit })}
             disabled={logs.length < filters.limit}
-            className="px-3 py-1 text-sm border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 text-sm border border-border-primary dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>
