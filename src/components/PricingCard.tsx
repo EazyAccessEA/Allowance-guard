@@ -1,8 +1,8 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
-import { Check, X } from 'lucide-react'
+import { Check, X, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   type ConsumerPlan,
@@ -81,7 +81,52 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
   const savingsPercent = isPaid ? getYearlySavingsPercent(plan as PaidPlan) : 0
 
   const ctaText = plan === 'free' ? 'Get Started' : `Upgrade to ${displayName}`
-  const ctaHref = plan === 'free' ? '/' : '/pricing'
+
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+
+  async function handleUpgrade() {
+    setCheckoutLoading(true)
+    setCheckoutError(null)
+
+    try {
+      const res = await fetch('/api/billing/create-subscription', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ plan, interval: billingPeriod }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          // User not logged in — redirect to login
+          window.location.href = '/login?redirect=/pricing'
+          return
+        }
+        setCheckoutError(data.error ?? 'Something went wrong')
+        return
+      }
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
+      }
+    } catch {
+      setCheckoutError('Network error. Please try again.')
+    } finally {
+      setCheckoutLoading(false)
+    }
+  }
+
+  const ctaClassName = cn(
+    'mb-6 inline-flex items-center justify-center rounded-base px-4 py-2.5 text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2',
+    highlighted
+      ? 'bg-primary-700 text-white shadow-sm hover:bg-primary-800 active:bg-primary-900'
+      : isPaid
+        ? 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400'
+        : 'border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-500',
+    checkoutLoading && 'opacity-70 cursor-wait',
+  )
 
   return (
     <div
@@ -127,21 +172,29 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       </div>
 
       {/* CTA */}
-      <Link
-        href={ctaHref}
-        data-plan={plan}
-        data-billing={billingPeriod}
-        className={cn(
-          'mb-6 inline-flex items-center justify-center rounded-base px-4 py-2.5 text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2',
-          highlighted
-            ? 'bg-primary-700 text-white shadow-sm hover:bg-primary-800 active:bg-primary-900'
-            : isPaid
-              ? 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400'
-              : 'border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-500'
-        )}
-      >
-        {ctaText}
-      </Link>
+      {isPaid ? (
+        <button
+          onClick={handleUpgrade}
+          disabled={checkoutLoading}
+          className={ctaClassName}
+        >
+          {checkoutLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Redirecting to checkout...
+            </>
+          ) : (
+            ctaText
+          )}
+        </button>
+      ) : (
+        <Link href="/" className={ctaClassName}>
+          {ctaText}
+        </Link>
+      )}
+      {checkoutError && (
+        <p className="mb-4 -mt-4 text-xs text-red-600">{checkoutError}</p>
+      )}
 
       {/* Features list */}
       <ul className="flex flex-col gap-3" role="list">
