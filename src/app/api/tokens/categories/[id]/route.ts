@@ -18,7 +18,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  if (!ADMIN_USER_IDS.includes(session.user_id)) {
+  if (!ADMIN_USER_IDS.includes(session.user_id as number)) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
@@ -39,7 +39,7 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  if (!ADMIN_USER_IDS.includes(session.user_id)) {
+  if (!ADMIN_USER_IDS.includes(session.user_id as number)) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
