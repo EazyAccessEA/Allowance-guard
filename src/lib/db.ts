@@ -1,9 +1,28 @@
-// lib/db.ts
-import { Pool } from 'pg'
+// lib/db.ts — Standardized on Neon serverless HTTP driver
+// Replaces the previous pg Pool to avoid connection exhaustion in serverless.
+// Exports a pool-compatible interface so existing code continues to work.
+import { neon } from '@neondatabase/serverless'
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+const DATABASE_URL = process.env.DATABASE_URL
+if (!DATABASE_URL) {
+  throw new Error('DATABASE_URL is not set')
+}
 
-// Export db as an alias for pool for compatibility
+const sql = neon(DATABASE_URL)
+
+/**
+ * Pool-compatible wrapper around Neon serverless HTTP driver.
+ * Supports `pool.query(text, params)` — the interface used by all existing code.
+ * Each call is a stateless HTTP request, no persistent connections.
+ */
+export const pool = {
+  async query(text: string, params?: unknown[]): Promise<{ rows: Record<string, unknown>[]; rowCount: number }> {
+    const rows = await sql(text, params as (string | number | boolean | null | undefined)[]) as Record<string, unknown>[]
+    return { rows, rowCount: rows.length }
+  },
+}
+
+// Alias for compatibility
 export const db = pool
 
 export async function upsertAllowance(a: {
