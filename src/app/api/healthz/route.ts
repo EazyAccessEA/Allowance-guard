@@ -1,58 +1,86 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
 import { cacheHealthCheck } from '@/lib/cache'
+import { redisHealthCheck } from '@/lib/redis'
 import { getBlockNumber } from 'viem/actions'
 import { clientFor } from '@/lib/chains'
 import { enabledChainIds } from '@/lib/networks'
+import pkg from '../../../../package.json'
 
 export const runtime = 'nodejs'
 
+// Track uptime from first request
+let startedAt: number | null = null
+
+async function timedCheck<T>(fn: () => Promise<T>): Promise<{ result: T; latencyMs: number }> {
+  const start = Date.now()
+  const result = await fn()
+  return { result, latencyMs: Date.now() - start }
+}
+
 export async function GET() {
-  const out: { ok: boolean; checks: Record<string, string | Record<string, string>> } = { ok: true, checks: {} }
+  if (!startedAt) startedAt = Date.now()
 
-  // Basic app health
-  out.checks.app = 'ok'
+  const services: Record<string, { status: string; latency_ms?: number; details?: string }> = {}
+  let overallOk = true
 
-  // DB check
-  try { 
-    await pool.query('SELECT 1')
-    out.checks.db = 'ok' 
-  } catch (e: unknown) { 
-    out.ok = false
-    out.checks.db = e instanceof Error ? e.message : 'Unknown error'
-  }
-
-  // Cache check (using database-based cache)
+  // Database check
   try {
-    const cacheResult = await cacheHealthCheck()
-    out.checks.cache = cacheResult.ok ? 'ok' : cacheResult.message
-  } catch (e: unknown) { 
-    // Don't fail overall health check for cache issues
-    out.checks.cache = e instanceof Error ? e.message : 'Unknown error'
+    const { latencyMs } = await timedCheck(() => pool.query('SELECT 1'))
+    services.database = { status: 'ok', latency_ms: latencyMs }
+  } catch (e: unknown) {
+    overallOk = false
+    services.database = { status: 'error', details: e instanceof Error ? e.message : 'Unknown error' }
   }
 
-  // RPC check (Ethereum mainnet as sentinel)
+  // Redis check
   try {
-    const client = clientFor(1) // Use the new CHAINS configuration
-    const n = await getBlockNumber(client)
-    out.checks.rpc = `ok:${n}`
-  } catch (e: unknown) { 
-    // Don't fail the entire health check for RPC issues
-    out.checks.rpc = e instanceof Error ? e.message : 'Unknown error'
+    const redis = await redisHealthCheck()
+    services.redis = {
+      status: redis.ok ? 'ok' : 'degraded',
+      latency_ms: redis.latencyMs,
+      ...(redis.ok ? {} : { details: redis.message }),
+    }
+  } catch {
+    services.redis = { status: 'unavailable', details: 'Redis not configured' }
   }
 
-  // Per-chain health checks
-  const chainChecks: Record<string, string> = {}
-  for (const id of enabledChainIds()) {
+  // Cache check
+  try {
+    const cache = await cacheHealthCheck()
+    services.cache = {
+      status: cache.ok ? 'ok' : 'degraded',
+      details: cache.ok ? cache.backend : cache.message,
+    }
+  } catch (e: unknown) {
+    services.cache = { status: 'error', details: e instanceof Error ? e.message : 'Unknown error' }
+  }
+
+  // RPC checks per chain
+  const chainIds = enabledChainIds()
+  for (const id of chainIds) {
+    const chainKey = `rpc_${id}`
     try {
-      const bn = await getBlockNumber(clientFor(id))
-      chainChecks[id] = `ok:${bn}`
+      const { result: blockNum, latencyMs } = await timedCheck(() => getBlockNumber(clientFor(id)))
+      services[chainKey] = { status: 'ok', latency_ms: latencyMs, details: `block:${blockNum}` }
     } catch (e: unknown) {
-      // Don't fail the entire health check for individual chain issues
-      chainChecks[id] = `fail:${e instanceof Error ? e.message?.slice(0,120) : 'Unknown error'}`
+      // Individual chain failures don't fail the overall health check
+      services[chainKey] = {
+        status: 'degraded',
+        details: e instanceof Error ? e.message.slice(0, 120) : 'Unknown error',
+      }
     }
   }
-  out.checks.chains = chainChecks
 
-  return NextResponse.json(out, { status: out.ok ? 200 : 503 })
+  const uptimeSeconds = startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0
+
+  const response = {
+    status: overallOk ? 'healthy' : 'unhealthy',
+    version: pkg.version,
+    uptime_seconds: uptimeSeconds,
+    services,
+    timestamp: new Date().toISOString(),
+  }
+
+  return NextResponse.json(response, { status: overallOk ? 200 : 503 })
 }
