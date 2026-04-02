@@ -23,6 +23,16 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'open-source-stronger-our-license-update',
+    title: 'Open Source, Stronger: Our License Update to AGPL-3.0',
+    subtitle: 'Why We Switched Licenses and What It Means for You',
+    excerpt: 'AllowanceGuard is moving from GPL-3.0 to AGPL-3.0 with a commercial dual-license option. The core tool stays free and open source — this change protects the community and sustains the project for the long run.',
+    publishedAt: '2026-04-02',
+    readTime: '5 min read',
+    category: 'Community',
+    featured: false
+  },
+  {
     slug: 'hardware-wallets-and-multisigs-elevating-your-security',
     title: 'Hardware Wallets and Multisigs: Elevating Your Security',
     subtitle: 'From Digital Convenience to Physical Security',
