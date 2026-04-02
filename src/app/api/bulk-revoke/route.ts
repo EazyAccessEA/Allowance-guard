@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auditUserAction } from '@/lib/audit-enhanced'
 import { secureLogger } from '@/lib/secure-logger'
 import { getSession } from '@/lib/auth'
+import { trackEvent } from '@/lib/analytics'
 
 export async function POST(req: NextRequest) {
   const session = await getSession()
@@ -40,6 +41,12 @@ export async function POST(req: NextRequest) {
         }, { status: 400 })
       }
     }
+
+    // Track revoke_initiated analytics event
+    trackEvent('revoke_initiated', {
+      userId: session.user_id as number,
+      metadata: { walletAddress, allowanceCount: allowances.length, strategy },
+    })
 
     // Audit the bulk revoke request
     await auditUserAction(
