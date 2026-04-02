@@ -243,6 +243,7 @@ export default function Footer() {
                 <Link href="/sla" className="hover:text-primary-400 transition-colors">SLA</Link>
                 <Link href="/refund" className="hover:text-primary-400 transition-colors">Refunds</Link>
                 <Link href="/dpa" className="hover:text-primary-400 transition-colors">DPA</Link>
+                <a href="https://allowanceguard.instatus.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">Status</a>
               </div>
               <span className="text-sm text-secondary-400">&copy; 2025 Allowance Guard</span>
             </div>
