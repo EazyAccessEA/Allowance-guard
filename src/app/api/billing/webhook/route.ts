@@ -4,6 +4,7 @@ import { stripe, syncSubscription } from '@/lib/billing'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
 import { withReq } from '@/lib/logger'
 import { reportError } from '@/lib/rollbar'
+import { pool } from '@/lib/db'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -63,6 +64,20 @@ export async function POST(req: Request) {
 
         // Map Stripe statuses to our internal statuses
         await syncSubscription(subscription)
+
+        // Track cancellation timestamp for re-engagement emails
+        if (event.type === 'customer.subscription.deleted' && subscription.status === 'canceled') {
+          await pool.query(
+            `UPDATE subscriptions
+             SET cancelled_at = NOW(), re_engagement_email_sent = FALSE
+             WHERE stripe_subscription_id = $1`,
+            [subscription.id],
+          )
+          L.info('billing.webhook.cancellation_tracked', {
+            subscriptionId: subscription.id,
+            userId: subscription.metadata?.ag_user_id,
+          })
+        }
 
         await auditWebhook('stripe', event.type, subscription.id, {
           plan: subscription.metadata?.ag_plan,
