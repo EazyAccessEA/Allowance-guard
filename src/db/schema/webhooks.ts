@@ -21,8 +21,10 @@ export const webhooks = pgTable('webhooks', {
   teamId: bigint('team_id', { mode: 'number' }),
   name: text('name').notNull(),
   url: text('url').notNull(),
-  /** HMAC signing secret (hashed before storage) */
+  /** HMAC signing secret (SHA-256 hashed before storage) */
   secret: text('secret').notNull(),
+  /** First 8 chars of hash for display identification */
+  secretPrefix: text('secret_prefix'),
   /** Event types to subscribe to */
   events: jsonb('events').notNull().default([]),
   enabled: boolean('enabled').notNull().default(true),
