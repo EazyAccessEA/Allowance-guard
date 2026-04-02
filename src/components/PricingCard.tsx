@@ -11,6 +11,7 @@ import {
   getPlanDisplayName,
   formatPrice,
 } from '@/lib/plans'
+import { trackClientEvent } from '@/lib/analytics'
 
 interface PricingCardProps {
   plan: 'free' | 'pro' | 'sentinel'
@@ -89,6 +90,9 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
     setCheckoutLoading(true)
     setCheckoutError(null)
 
+    // Track upgrade_clicked analytics event
+    trackClientEvent('upgrade_clicked', { plan, billingPeriod })
+
     try {
       const res = await fetch('/api/billing/create-subscription', {
         method: 'POST',
@@ -109,6 +113,8 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       }
 
       if (data.checkoutUrl) {
+        // Track checkout_started before redirect
+        trackClientEvent('checkout_started', { plan, billingPeriod })
         window.location.href = data.checkoutUrl
       }
     } catch {

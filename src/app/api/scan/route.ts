@@ -7,6 +7,7 @@ import { scanRateLimit } from '@/lib/rate-limit'
 import { incrScan } from '@/lib/metrics'
 import { validateRequest } from '@/middleware/validation'
 import { scanRequestSchema } from '@/lib/validation'
+import { trackEvent } from '@/lib/analytics'
 
 export const runtime = 'nodejs'
 
@@ -51,6 +52,11 @@ export async function POST(req: Request) {
     
     // Increment scan counter
     await incrScan()
+
+    // Track scan_started analytics event
+    trackEvent('scan_started', {
+      metadata: { walletAddress: addr, chains: chainIds },
+    })
     
     L.info('Enqueueing wallet scan', { address: addr, chains: chainIds })
     
