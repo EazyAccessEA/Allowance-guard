@@ -235,8 +235,16 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className="flex items-center justify-center md:justify-end gap-4 text-sm text-secondary-400">
-              <span>&copy; 2025 Allowance Guard</span>
+            <div className="flex flex-col items-center md:items-end gap-3">
+              <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 text-sm text-secondary-400">
+                <Link href="/terms" className="hover:text-primary-400 transition-colors">Terms</Link>
+                <Link href="/privacy" className="hover:text-primary-400 transition-colors">Privacy</Link>
+                <Link href="/cookies" className="hover:text-primary-400 transition-colors">Cookies</Link>
+                <Link href="/sla" className="hover:text-primary-400 transition-colors">SLA</Link>
+                <Link href="/refund" className="hover:text-primary-400 transition-colors">Refunds</Link>
+                <Link href="/dpa" className="hover:text-primary-400 transition-colors">DPA</Link>
+              </div>
+              <span className="text-sm text-secondary-400">&copy; 2025 Allowance Guard</span>
             </div>
           </div>
         </div>
