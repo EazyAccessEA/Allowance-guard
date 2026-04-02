@@ -87,7 +87,7 @@ async function handleCron(req: NextRequest) {
 
       for (const { user_id: userId } of sentinelUsers) {
         try {
-          const matches = await evaluateRules(userId)
+          const matches = await evaluateRules(Number(userId))
           rulesEvaluated++
           if (matches.length > 0) {
             ruleMatches += matches.length

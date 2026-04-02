@@ -1,41 +1,59 @@
-GNU GENERAL PUBLIC LICENSE
-Version 3, 29 June 2007
+GNU AFFERO GENERAL PUBLIC LICENSE
+Version 3, 19 November 2007
 
-Copyright (C) 2024 Allowance Guard Team
+Copyright (C) 2024-2026 Allowance Guard Team
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+---
+
+COMMERCIAL LICENSE OPTION
+
+AllowanceGuard is available under a dual license:
+
+1. AGPL-3.0 (this file) — for open-source and non-commercial use
+2. Commercial License — for organizations that cannot comply with AGPL-3.0
+
+The AGPL-3.0 requires that if you modify AllowanceGuard and make it available
+over a network (e.g., as a web service), you must release your complete source
+code under the same license. If your use case does not permit this, a
+commercial license is available.
+
+For commercial licensing inquiries, contact: legal.support@allowanceguard.com
+
+See LICENSE_STRATEGY.md for the full rationale behind this licensing decision.
 
 ---
 
 ADDITIONAL TERMS FOR ALLOWANCE GUARD
 
-1. SECURITY NOTICE: This software is provided for educational and research purposes. 
-   Users are responsible for conducting their own security audits before use in 
+1. SECURITY NOTICE: This software is provided for educational and research purposes.
+   Users are responsible for conducting their own security audits before use in
    production environments.
 
-2. NO FINANCIAL ADVICE: This software does not provide financial advice. Users are 
+2. NO FINANCIAL ADVICE: This software does not provide financial advice. Users are
    responsible for their own financial decisions and risk management.
 
-3. LIABILITY LIMITATION: The authors and contributors shall not be liable for any 
-   direct, indirect, incidental, special, consequential, or punitive damages, 
-   including but not limited to loss of funds, data, or profits, arising from the 
+3. LIABILITY LIMITATION: The authors and contributors shall not be liable for any
+   direct, indirect, incidental, special, consequential, or punitive damages,
+   including but not limited to loss of funds, data, or profits, arising from the
    use of this software.
 
-4. THIRD-PARTY SERVICES: This software may integrate with third-party services. 
+4. THIRD-PARTY SERVICES: This software may integrate with third-party services.
    Users are responsible for compliance with those services' terms of use.
 
-5. MODIFICATIONS: Any modifications to this software must maintain the same license 
+5. MODIFICATIONS: Any modifications to this software must maintain the same license
    terms and include appropriate attribution.
 
 For questions about this license, contact: legal.support@allowanceguard.com

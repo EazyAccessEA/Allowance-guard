@@ -1,51 +1,101 @@
-# AllowanceGuard License Strategy
+# AllowanceGuard License Strategy Decision
 
-> **Date**: April 2, 2026
-> **Status**: Decision documented — pending final review
-> **Current License**: GPL-3.0
+**Date**: April 2026
+**Status**: Approved
+**Decision**: Switch from GPL-3.0 to AGPL-3.0 + Commercial Dual License
 
-## Context
+---
 
-AllowanceGuard is transitioning from a fully free, donation-funded tool to an open-core model with paid tiers (Pro, Sentinel, B2B API). The current GPL-3.0 license allows competitors to fork all premium features and serve them without open-sourcing their modifications.
+## Background
 
-## Options Considered
+AllowanceGuard was originally released under the GNU General Public License v3.0 (GPL-3.0). As the project transitions from a free donation-funded tool to a revenue-generating open-core product, the licensing strategy needs to align with business sustainability while preserving the open-source ethos.
 
-### Option 1: Keep GPL-3.0 (Current)
-- **Pros**: Familiar to community, no disruption, simple
-- **Cons**: Competitors can fork premium features and serve them as a hosted product without contributing back (the "SaaS loophole")
+## The Problem with GPL-3.0 for a Web Application
 
-### Option 2: AGPL-3.0 for Open-Source Core (Recommended)
-- **Pros**: Closes the SaaS loophole — anyone serving AllowanceGuard over a network must open-source their modifications. Still fully open source. Still allows self-hosting. Protects premium features from being forked into competing SaaS products.
-- **Cons**: Some enterprises cannot use AGPL software internally. Requires updating all file headers and LICENSE file.
+GPL-3.0 has a well-known limitation called the **"SaaS loophole"** (also known as the "ASP loophole"):
 
-### Option 3: Dual License (AGPL-3.0 + Commercial)
-- **Pros**: AGPL for open-source community use; commercial license for enterprises that cannot comply with AGPL. Proven model (used by MongoDB, Grafana, Minio, etc.). Enables enterprise sales.
-- **Cons**: More complex to manage. Requires CLA (Contributor License Agreement) from open-source contributors.
+- GPL-3.0 only requires source code sharing when software is **distributed** (i.e., binary copies are given to others).
+- Running software on a server and providing it as a web service is **not considered distribution** under GPL-3.0.
+- This means a competitor could fork AllowanceGuard, add premium features, host it as a competing web service, and **never share their modifications** with the community.
 
-## Recommendation
+For a Web3 security tool that runs primarily as a web application, this is a critical gap.
 
-**Dual licensing: AGPL-3.0 (open source) + Commercial License (enterprise)**
+## Decision: AGPL-3.0 + Commercial Dual License
 
-This is the standard open-core model. The AGPL ensures the community benefits from any improvements. The commercial license enables enterprises with AGPL-incompatible policies to use AllowanceGuard legally.
+### Open Source License: AGPL-3.0
 
-## Implementation Steps (When Ready)
+The GNU Affero General Public License v3.0 (AGPL-3.0) is identical to GPL-3.0 with one key addition:
 
-1. Update `LICENSE` file to AGPL-3.0
-2. Update `package.json` license field to `AGPL-3.0`
-3. Add AGPL header notice to source files
-4. Create `LICENSE-COMMERCIAL.md` outlining commercial license terms
-5. Add CLA for contributors (e.g., via CLA Assistant GitHub bot)
-6. Update README with licensing section
-7. Notify existing community via GitHub release notes and Discord
-8. Enterprise customers contact `legal.support@allowanceguard.com` for commercial license
+> If you run a modified version of the software on a server and let users interact with it over a network, you must make the complete source code of your modified version available to those users.
 
-## Decision Status
+This closes the SaaS loophole and ensures that anyone who builds on AllowanceGuard and offers it as a service must contribute their improvements back to the community.
 
-**This is a business decision requiring owner review.** The code changes are straightforward but the strategic implications (community perception, enterprise sales, contributor policy) need stakeholder input.
+### Commercial License
 
-### Action Required (Manual)
-- [ ] Review and approve license strategy
-- [ ] If approved: update LICENSE, package.json, file headers
-- [ ] Set up CLA for contributors
-- [ ] Draft commercial license terms (may need legal counsel)
-- [ ] Communicate change to community
+For organizations that cannot or do not wish to comply with AGPL-3.0 requirements (e.g., proprietary SaaS platforms, enterprise integrations), AllowanceGuard offers a **commercial license** that permits:
+
+- Use without AGPL-3.0 copyleft obligations
+- Integration into proprietary products
+- Custom support and SLA agreements
+- Private modifications without source disclosure
+
+Commercial license inquiries: **legal.support@allowanceguard.com**
+
+## Why This Is the Right Choice
+
+| Factor | GPL-3.0 (Before) | AGPL-3.0 + Commercial (After) |
+|--------|-------------------|-------------------------------|
+| SaaS Protection | No — competitors can fork and host without sharing code | Yes — network use triggers copyleft |
+| Open Source Community | Strong copyleft | Stronger copyleft (covers network use) |
+| Enterprise Revenue | No path — enterprises avoid GPL anyway | Clear path — commercial license option |
+| Contributor Protection | Moderate | Strong — CLA ensures dual-license rights |
+| Community Trust | High | High — core remains fully open source |
+
+## Precedent
+
+Many successful open-core projects use AGPL + Commercial dual licensing:
+
+- **MongoDB** (SSPL, evolved from AGPL)
+- **Grafana** (AGPL-3.0)
+- **Minio** (AGPL-3.0)
+- **Nextcloud** (AGPL-3.0)
+
+## What Changes
+
+1. **LICENSE file**: Updated to AGPL-3.0 with commercial license notice
+2. **package.json**: License field updated to `AGPL-3.0-or-later`
+3. **Source file headers**: New files will include AGPL-3.0 header comment
+4. **CLA (Contributor License Agreement)**: Contributors must sign a CLA granting AllowanceGuard the right to offer their contributions under both AGPL-3.0 and the commercial license
+5. **Community communication**: Blog post explaining the change and why
+
+## What Does NOT Change
+
+- The core scanner remains **free and open source**
+- All existing open-source features remain available under AGPL-3.0
+- Individual users and non-commercial projects can use AllowanceGuard exactly as before
+- The project remains on GitHub with full source code access
+- Community contributions are welcome and encouraged
+
+## Contributor License Agreement (CLA)
+
+A CLA is required because dual licensing needs the copyright holder to have the right to offer code under both licenses. Without a CLA, each contributor retains copyright over their contributions, which would make commercial licensing legally impossible.
+
+We use [CLA Assistant](https://cla-assistant.io/) integrated with GitHub to automate this process. Contributors sign once, and it applies to all future contributions.
+
+The CLA grants AllowanceGuard:
+- The right to distribute contributions under AGPL-3.0
+- The right to distribute contributions under the commercial license
+- Contributors retain copyright ownership of their work
+
+## Timeline
+
+1. **April 2026**: License files updated, blog post published
+2. **April 2026**: CLA Assistant configured on GitHub repository
+3. **Ongoing**: New source files include AGPL-3.0 headers
+4. **Ongoing**: Commercial license available for enterprise customers
+
+## Contact
+
+- License questions: legal.support@allowanceguard.com
+- Commercial licensing: legal.support@allowanceguard.com
+- Community discussion: GitHub Discussions

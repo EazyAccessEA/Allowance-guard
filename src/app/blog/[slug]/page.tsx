@@ -171,6 +171,103 @@ const fullContent = Object.values(blogContent).join('\n')
 // Blog posts data - in a real app, this would come from a CMS or database
 const blogPosts: BlogPost[] = [
   {
+    slug: 'open-source-stronger-our-license-update',
+    title: 'Open Source, Stronger: Our License Update to AGPL-3.0',
+    subtitle: 'Why We Switched Licenses and What It Means for You',
+    content: `
+      <p>Today we are making an important change to how AllowanceGuard is licensed. We are moving from the <strong>GNU General Public License v3.0 (GPL-3.0)</strong> to the <strong>GNU Affero General Public License v3.0 (AGPL-3.0)</strong>, with a commercial dual-license option for enterprise users.</p>
+
+      <p>We want to be upfront about what this means, why we are doing it, and what it changes (and does not change) for you.</p>
+
+      <h2>What Is Changing?</h2>
+
+      <p>The license that governs AllowanceGuard&apos;s source code is changing from GPL-3.0 to AGPL-3.0. We are also introducing a <strong>commercial license option</strong> for organizations that need it.</p>
+
+      <p>In plain language:</p>
+
+      <ul>
+        <li><strong>AGPL-3.0</strong> is nearly identical to GPL-3.0, with one addition: if someone takes our code, modifies it, and runs it as a web service, they must share their modifications with users. GPL-3.0 only requires this when you distribute the actual software binary.</li>
+        <li><strong>Commercial license</strong> is an alternative for companies that cannot open-source their own code. They can license AllowanceGuard commercially instead of complying with AGPL-3.0.</li>
+      </ul>
+
+      <h2>Why Are We Doing This?</h2>
+
+      <p>AllowanceGuard is a web application. Under GPL-3.0, a competitor could fork our entire codebase — including premium features — host it as their own web service, and <strong>never share a single line of their modifications</strong> with the community. This is known as the "SaaS loophole" in GPL-3.0.</p>
+
+      <p>AGPL-3.0 closes that loophole. If someone builds on AllowanceGuard and offers it as a network service, they must contribute their improvements back. This protects the community that built this tool.</p>
+
+      <p>The commercial license exists because we are building AllowanceGuard into a sustainable business. Some enterprise customers have policies that prevent them from using AGPL-licensed software. The commercial license gives them a path to use AllowanceGuard while supporting the project financially.</p>
+
+      <h2>What Does NOT Change?</h2>
+
+      <p>This is the most important part:</p>
+
+      <ul>
+        <li><strong>The core scanner is still free and open source.</strong> You can scan your wallets, check your allowances, and revoke risky approvals without paying anything. Always.</li>
+        <li><strong>All existing open-source features remain available under AGPL-3.0.</strong> Nothing is being taken away.</li>
+        <li><strong>Individual users are completely unaffected.</strong> If you use AllowanceGuard through our website, nothing changes for you at all.</li>
+        <li><strong>Community contributions are still welcome.</strong> The project is still on GitHub, still open source, still community-driven.</li>
+        <li><strong>If you have forked AllowanceGuard for personal or non-commercial use</strong>, AGPL-3.0 works exactly the same as GPL-3.0 for you.</li>
+      </ul>
+
+      <h2>Who Is Affected?</h2>
+
+      <p>The only people affected by this change are organizations that:</p>
+
+      <ol>
+        <li>Take AllowanceGuard&apos;s source code</li>
+        <li>Modify it</li>
+        <li>Run it as a web service for others</li>
+        <li>Do <strong>not</strong> want to share their modifications</li>
+      </ol>
+
+      <p>Under GPL-3.0, this was allowed. Under AGPL-3.0, they must either share their source code or purchase a commercial license. We think that is fair.</p>
+
+      <h2>What About Contributors?</h2>
+
+      <p>We are introducing a <strong>Contributor License Agreement (CLA)</strong> for new contributions. This is a standard practice for dual-licensed open-source projects. The CLA:</p>
+
+      <ul>
+        <li>Grants AllowanceGuard the right to offer your contributions under both AGPL-3.0 and the commercial license</li>
+        <li><strong>You keep full copyright ownership of your work</strong></li>
+        <li>Is signed once, automatically, through GitHub using CLA Assistant</li>
+      </ul>
+
+      <p>Projects like MongoDB, Grafana, Nextcloud, and Minio all use a similar model. It is the industry standard for sustainable open-source businesses.</p>
+
+      <h2>The Big Picture</h2>
+
+      <p>We started AllowanceGuard because Web3 security should be accessible to everyone. That has not changed. The core tool is free, open source, and always will be.</p>
+
+      <p>But building and maintaining a security tool that people depend on costs real money — servers, API calls, security audits, development time. The dual license model lets us sustain the project without compromising on openness:</p>
+
+      <ul>
+        <li><strong>Community users</strong> get a stronger copyleft license that protects the ecosystem</li>
+        <li><strong>Enterprise customers</strong> get a licensing option that fits their compliance needs</li>
+        <li><strong>The project</strong> gets a sustainable revenue path that funds continued development</li>
+      </ul>
+
+      <p>Everyone wins.</p>
+
+      <h2>Questions?</h2>
+
+      <p>If you have questions about the license change, you can:</p>
+
+      <ul>
+        <li>Open a discussion on our <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" class="text-primary-accent hover:text-primary-accent/80 underline">GitHub repository</a></li>
+        <li>Email us at <strong>legal.support@allowanceguard.com</strong> for licensing questions</li>
+        <li>Email us at <strong>support@allowanceguard.com</strong> for general questions</li>
+      </ul>
+
+      <p>Thank you for being part of the AllowanceGuard community. We are building something that matters, and we are doing it in the open.</p>
+    `,
+    publishedAt: '2026-04-02',
+    readTime: '5 min read',
+    category: 'Community',
+    featured: false,
+    tags: ['open-source', 'license', 'agpl', 'community']
+  },
+  {
     slug: 'hardware-wallets-and-multisigs-elevating-your-security',
     title: 'Hardware Wallets and Multisigs: Elevating Your Security',
     subtitle: 'From Digital Convenience to Physical Security',

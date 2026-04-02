@@ -6,7 +6,7 @@ AllowanceGuard is a **Web3 wallet security platform** that helps users monitor, 
 
 - **Live site**: https://www.allowanceguard.com
 - **Repo**: https://github.com/EazyAccessEA/Allowance-guard
-- **License**: GPL-3.0 (open-source core)
+- **License**: AGPL-3.0 + Commercial dual license (open-source core)
 - **Version**: 1.14.9+
 
 ## Tech Stack
