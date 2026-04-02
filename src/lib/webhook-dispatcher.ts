@@ -7,6 +7,7 @@
 import { createHmac, randomUUID } from 'crypto'
 import { pool } from '@/lib/db'
 import { secureLogger } from '@/lib/secure-logger'
+import { sendMail } from '@/lib/mailer'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -133,11 +134,82 @@ async function updateWebhookState(webhookId: string, success: boolean): Promise<
       [webhookId],
     )
     // Auto-disable after too many consecutive failures
-    await pool.query(
-      `UPDATE webhooks SET enabled = FALSE WHERE id = $1 AND failure_count >= $2`,
+    const { rowCount } = await pool.query(
+      `UPDATE webhooks SET enabled = FALSE WHERE id = $1 AND failure_count >= $2 AND enabled = TRUE RETURNING id`,
       [webhookId, MAX_FAILURE_COUNT],
     )
+
+    // Send email notification when a webhook is auto-disabled
+    if (rowCount && rowCount > 0) {
+      notifyWebhookDisabled(webhookId).catch((err) =>
+        secureLogger.error('Failed to send webhook disable notification', { webhookId, err }),
+      )
+    }
   }
+}
+
+// ---------------------------------------------------------------------------
+// Webhook disabled email notification
+// ---------------------------------------------------------------------------
+
+async function notifyWebhookDisabled(webhookId: string): Promise<void> {
+  // Look up the webhook details and owner email
+  const { rows } = await pool.query(
+    `SELECT w.name, w.url, w.failure_count, u.email
+     FROM webhooks w
+     JOIN users u ON u.id = w.user_id
+     WHERE w.id = $1`,
+    [webhookId],
+  )
+
+  const webhook = rows[0] as { name: string; url: string; failure_count: number; email: string } | undefined
+  if (!webhook?.email) return
+
+  const webhookName = webhook.name || 'Unnamed webhook'
+  const maskedUrl = webhook.url.length > 60
+    ? webhook.url.slice(0, 50) + '...' + webhook.url.slice(-10)
+    : webhook.url
+
+  const subject = `Webhook "${webhookName}" has been auto-disabled`
+  const html = `
+    <h2 style="color: #0F172A; margin: 0 0 16px 0;">Webhook Auto-Disabled</h2>
+    <p style="color: #475569; font-size: 14px; line-height: 1.6;">
+      Your webhook <strong>${webhookName}</strong> has been automatically disabled
+      after <strong>${webhook.failure_count}</strong> consecutive delivery failures.
+    </p>
+
+    <div style="background: #FEF2F2; border-left: 4px solid #EF4444; padding: 12px 16px; margin: 16px 0; border-radius: 4px;">
+      <p style="margin: 0; color: #991B1B; font-size: 13px;">
+        <strong>Endpoint:</strong> ${maskedUrl}
+      </p>
+    </div>
+
+    <h3 style="color: #0F172A; margin: 20px 0 8px 0; font-size: 14px;">What happened?</h3>
+    <p style="color: #475569; font-size: 14px; line-height: 1.6;">
+      We tried to deliver events to your webhook endpoint, but it returned errors
+      or was unreachable ${webhook.failure_count} times in a row. To prevent further
+      failed deliveries, we automatically paused it.
+    </p>
+
+    <h3 style="color: #0F172A; margin: 20px 0 8px 0; font-size: 14px;">How to fix it</h3>
+    <ol style="color: #475569; font-size: 14px; line-height: 1.8; padding-left: 20px;">
+      <li>Check that your endpoint is online and accepting POST requests</li>
+      <li>Verify it returns a 2xx status code on success</li>
+      <li>Go to <strong>Settings &rarr; Webhooks</strong> in your AllowanceGuard dashboard</li>
+      <li>Re-enable the webhook once the issue is resolved</li>
+    </ol>
+
+    <div style="margin-top: 24px;">
+      <a href="${process.env.NEXT_PUBLIC_APP_URL || 'https://www.allowanceguard.com'}/settings"
+         style="display: inline-block; background: #00C2B3; color: #ffffff; padding: 10px 24px;
+                border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px;">
+        Go to Webhook Settings
+      </a>
+    </div>
+  `
+
+  await sendMail(webhook.email, subject, html)
+  secureLogger.info('Webhook disable notification sent', { webhookId, to: webhook.email })
 }
 
 // ---------------------------------------------------------------------------

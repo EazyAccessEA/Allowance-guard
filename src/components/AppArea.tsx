@@ -51,6 +51,7 @@ import { useDisconnect } from 'wagmi'
 import PlanBadge from '@/components/PlanBadge'
 import ProNudge from '@/components/ProNudge'
 import FeatureLock from '@/components/FeatureLock'
+import UpgradeModal from '@/components/UpgradeModal'
 import { useUserPlan } from '@/hooks/useUserPlan'
 
 interface AppAreaProps {
@@ -90,6 +91,7 @@ export default function AppArea({
   const [selectedRows, setSelectedRows] = useState<typeof rows>([])
   const [isDisconnecting, setIsDisconnecting] = useState(false)
   const { plan: userPlan } = useUserPlan()
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
 
   const loadMonitor = useCallback(async () => {
     const target = selectedWallet || connectedAddress
@@ -378,18 +380,26 @@ export default function AppArea({
                       </div>
                       {currentWallet && (
                         userPlan === 'free' ? (
-                          <FeatureLock feature="Export reports" requiredPlan="pro">
-                            <div className="flex items-center gap-2">
-                              <Button variant="secondary" size="sm" className="flex items-center gap-2" disabled>
-                                <Download className="w-4 h-4" />
-                                CSV
-                              </Button>
-                              <Button variant="secondary" size="sm" className="flex items-center gap-2" disabled>
-                                <FileText className="w-4 h-4" />
-                                PDF
-                              </Button>
-                            </div>
-                          </FeatureLock>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="flex items-center gap-2"
+                              onClick={() => setShowUpgradeModal(true)}
+                            >
+                              <Download className="w-4 h-4" />
+                              CSV
+                            </Button>
+                            <Button
+                              variant="secondary"
+                              size="sm"
+                              className="flex items-center gap-2"
+                              onClick={() => setShowUpgradeModal(true)}
+                            >
+                              <FileText className="w-4 h-4" />
+                              PDF
+                            </Button>
+                          </div>
                         ) : (
                           <div className="flex items-center gap-2">
                             <Button
@@ -495,6 +505,13 @@ export default function AppArea({
           </main>
         </div>
       </Container>
+
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+        feature="PDF & CSV Export"
+        requiredPlan="Pro"
+      />
     </Section>
   )
 }
