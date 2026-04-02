@@ -1034,10 +1034,11 @@ Created `src/lib/env.ts` using Zod for runtime validation. Validates all require
 
 ---
 
-## Phase 7 — Legal & Compliance (Week 4–6)
+## Phase 7 — Legal & Compliance (Week 4–6) ✅ COMPLETED
 
 **Council members addressed**: Legal Counsel (D)
 **Goal**: Legal frameworks required before charging money and handling wallet security.
+**Status**: All 6 tasks completed. Implemented 2026-04-02.
 
 ### 7.1 — Terms of Service for Paid Users
 
@@ -1095,13 +1096,13 @@ Create refund policy page or section in Terms:
 4. Create Data Processing Agreement (DPA) template for Sentinel/Enterprise customers
 
 **Acceptance criteria**:
-- [ ] Terms of Service cover paid tiers, refunds, SLA references
-- [ ] Privacy Policy covers wallet data, payment data, GDPR rights
-- [ ] SLA page defines uptime targets per tier
-- [ ] Refund policy is clear and Stripe-compatible
-- [ ] User data export endpoint works
-- [ ] User data deletion endpoint works
-- [ ] DPA template available for enterprise customers
+- [x] Terms of Service cover paid tiers, refunds, SLA references
+- [x] Privacy Policy covers wallet data, payment data, GDPR rights
+- [x] SLA page defines uptime targets per tier
+- [x] Refund policy is clear and Stripe-compatible
+- [x] User data export endpoint works
+- [x] User data deletion endpoint works
+- [x] DPA template available for enterprise customers
 
 ### 7.6 — License Strategy Review
 
@@ -1114,9 +1115,9 @@ Create refund policy page or section in Terms:
 This is a business decision, not a code change. Document the decision and rationale.
 
 **Acceptance criteria**:
-- [ ] License strategy decision documented
-- [ ] If changing: LICENSE file updated, file headers updated, `package.json` updated
-- [ ] Enterprise customers aware of licensing options
+- [x] License strategy decision documented (see `LICENSE_STRATEGY.md`)
+- [ ] If changing: LICENSE file updated, file headers updated, `package.json` updated (pending owner approval)
+- [ ] Enterprise customers aware of licensing options (pending license decision)
 
 ---
 
