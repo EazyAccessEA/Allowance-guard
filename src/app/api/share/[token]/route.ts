@@ -23,7 +23,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ token: 
     : baseSql + ` ORDER BY is_unlimited DESC, amount::numeric DESC LIMIT 500`
 
   const { rows } = await pool.query(sql, [share.wallet_address.toLowerCase()])
-  const data = transformRowsForShare(rows, {
+  const data = transformRowsForShare(rows as { chain_id: number; token_address: string; spender_address: string; standard: string; allowance_type: string; amount: string; is_unlimited: boolean; risk_flags: string[] }[], {
     maskAddrs: !!share.censor_addresses,
     hideAmounts: !!share.censor_amounts
   })

@@ -42,32 +42,20 @@ export async function getJob(id: number) {
 
 /** Claim up to N jobs for processing (SKIP LOCKED allows multiple processors). */
 export async function claimPending(limit = 3) {
-  const client = await pool.connect()
-  try {
-    await client.query('BEGIN')
-    const { rows } = await client.query(
-      `SELECT id FROM jobs
+  // Atomic claim: select + update in a single statement via CTE
+  const { rows: jobs } = await pool.query(
+    `WITH claimed AS (
+       SELECT id FROM jobs
        WHERE status='pending'
        ORDER BY created_at ASC
-       FOR UPDATE SKIP LOCKED
-       LIMIT $1`, [limit]
-    )
-    if (!rows.length) { await client.query('COMMIT'); return [] }
-    const ids = rows.map(r => r.id)
-    await client.query(
-      `UPDATE jobs SET status='running', started_at=NOW(), updated_at=NOW(), attempts=attempts+1
-       WHERE id = ANY($1::bigint[])`,
-      [ids]
-    )
-    await client.query('COMMIT')
-    const { rows: jobs } = await pool.query(`SELECT * FROM jobs WHERE id = ANY($1::bigint[])`, [ids])
-    return jobs as JobRow[]
-  } catch (e) {
-    await client.query('ROLLBACK')
-    throw e
-  } finally {
-    client.release()
-  }
+       LIMIT $1
+     )
+     UPDATE jobs SET status='running', started_at=NOW(), updated_at=NOW(), attempts=attempts+1
+     FROM claimed WHERE jobs.id = claimed.id
+     RETURNING jobs.*`,
+    [limit]
+  )
+  return jobs as JobRow[]
 }
 
 export async function finishJob(id: number, ok: boolean, error?: string) {

@@ -139,7 +139,7 @@ export async function evaluateRules(userId: number): Promise<RuleMatch[]> {
 
   if (wallets.length === 0) return []
 
-  const walletAddresses = wallets.map((w: { wallet_address: string }) => w.wallet_address.toLowerCase())
+  const walletAddresses = wallets.map((w) => (w.wallet_address as string).toLowerCase())
 
   const { rows: allowances } = await pool.query(
     `SELECT chain_id, token_address, spender_address, standard, allowance_type,
@@ -151,7 +151,7 @@ export async function evaluateRules(userId: number): Promise<RuleMatch[]> {
 
   const matches: RuleMatch[] = []
 
-  for (const rule of rules as RevocationRule[]) {
+  for (const rule of rules as unknown as RevocationRule[]) {
     const conditions = (rule.conditions as RuleCondition[]) ?? []
     if (conditions.length === 0) continue
 
@@ -166,7 +166,7 @@ export async function evaluateRules(userId: number): Promise<RuleMatch[]> {
     }
 
     // Filter allowances by rule scope
-    const scopedAllowances = (allowances as Allowance[]).filter((a) => {
+    const scopedAllowances = (allowances as unknown as Allowance[]).filter((a) => {
       // Check wallet scope
       if (rule.wallets.length > 0) {
         const ruleWallets = (rule.wallets as string[]).map(w => w.toLowerCase())
@@ -271,7 +271,7 @@ export async function getUserRules(userId: number): Promise<RevocationRule[]> {
     `SELECT * FROM revocation_rules WHERE user_id = $1 ORDER BY created_at DESC`,
     [userId],
   )
-  return rows as RevocationRule[]
+  return rows as unknown as RevocationRule[]
 }
 
 export async function createRule(
@@ -301,7 +301,7 @@ export async function createRule(
       data.maxExecutionsPerDay ?? 10,
     ],
   )
-  return rows[0] as RevocationRule
+  return rows[0] as unknown as RevocationRule
 }
 
 export async function updateRule(
@@ -341,7 +341,7 @@ export async function updateRule(
     params,
   )
 
-  return (rows[0] as RevocationRule) ?? null
+  return (rows[0] as unknown as RevocationRule) ?? null
 }
 
 export async function deleteRule(userId: number, ruleId: string): Promise<boolean> {

@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
   }
 
   const payloadStr = JSON.stringify(testPayload)
-  const signature = createHmac('sha256', webhook.secret).update(payloadStr).digest('hex')
+  const signature = createHmac('sha256', webhook.secret as string).update(payloadStr).digest('hex')
 
   try {
     const controller = new AbortController()

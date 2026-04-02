@@ -93,7 +93,13 @@ export async function POST(req: NextRequest) {
       baseParams,
     )
 
-    const current = currentRows[0]
+    const raw = currentRows[0] ?? {}
+    const current = {
+      total: Number(raw.total ?? 0),
+      unlimited: Number(raw.unlimited ?? 0),
+      highRisk: Number(raw.highRisk ?? raw.high_risk ?? 0),
+      mediumRisk: Number(raw.mediumRisk ?? raw.medium_risk ?? 0),
+    }
     const beforeScore = computeRiskScore(current)
 
     // Simulated state (after revocation)
@@ -127,7 +133,13 @@ export async function POST(req: NextRequest) {
     }
 
     const { rows: afterRows } = await pool.query(afterQuery, afterParams)
-    const after = afterRows[0]
+    const afterRaw = afterRows[0] ?? {}
+    const after = {
+      total: Number(afterRaw.total ?? 0),
+      unlimited: Number(afterRaw.unlimited ?? 0),
+      highRisk: Number(afterRaw.highRisk ?? afterRaw.high_risk ?? 0),
+      mediumRisk: Number(afterRaw.mediumRisk ?? afterRaw.medium_risk ?? 0),
+    }
     const afterScore = computeRiskScore(after)
     const revokedCount = current.total - after.total
 

@@ -22,7 +22,7 @@ export async function getPolicy(wallet: string): Promise<Policy> {
        FROM alert_policies WHERE wallet_address=$1`,
     [wallet]
   )
-  return rows[0] ?? {
+  return (rows[0] as unknown as Policy) ?? {
     min_risk_score: 0, unlimited_only: false,
     include_spenders: [], ignore_spenders: [],
     include_tokens: [],  ignore_tokens: [],

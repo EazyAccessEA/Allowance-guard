@@ -76,7 +76,17 @@ export async function GET(req: NextRequest) {
       params,
     )
 
-    const stats = rows[0]
+    const raw = rows[0] ?? {}
+    const stats = {
+      total_allowances: Number(raw.total_allowances ?? 0),
+      unlimited_allowances: Number(raw.unlimited_allowances ?? 0),
+      high_risk_count: Number(raw.high_risk_count ?? 0),
+      medium_risk_count: Number(raw.medium_risk_count ?? 0),
+      low_risk_count: Number(raw.low_risk_count ?? 0),
+      max_risk_score: Number(raw.max_risk_score ?? 0),
+      avg_risk_score: Number(raw.avg_risk_score ?? 0),
+      chains_with_allowances: Number(raw.chains_with_allowances ?? 0),
+    }
 
     // Compute overall wallet risk score (0-100)
     let overallScore = 0

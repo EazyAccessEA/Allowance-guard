@@ -85,7 +85,8 @@ async function handleCron(req: NextRequest) {
          LIMIT 100`,
       )
 
-      for (const { user_id: userId } of sentinelUsers) {
+      for (const row of sentinelUsers) {
+        const userId = row.user_id as number
         try {
           const matches = await evaluateRules(userId)
           rulesEvaluated++

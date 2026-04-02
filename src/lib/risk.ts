@@ -35,11 +35,11 @@ export async function refreshRiskForWallet(wallet: string, deep = false) {
 
     const input: RiskInput = {
       chainId: Number(r.chain_id),
-      tokenAddress: r.token_address,
-      spenderAddress: r.spender_address,
-      amount: r.amount,
-      isUnlimited: r.is_unlimited,
-      lastSeenBlock: r.last_seen_block,
+      tokenAddress: r.token_address as string,
+      spenderAddress: r.spender_address as string,
+      amount: r.amount as string,
+      isUnlimited: r.is_unlimited as boolean,
+      lastSeenBlock: r.last_seen_block as string,
       currentBlock: tip,
     }
 

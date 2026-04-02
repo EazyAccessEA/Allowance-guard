@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     // 4) dedupe against existing submissions
     {
       const q = `SELECT status FROM token_submissions WHERE chain_id = $1 AND token_address = $2 LIMIT 1`
-      const r = await pool.query<{ status: string }>(q, [body.chainId, tokenAddress])
+      const r = await pool.query(q, [body.chainId, tokenAddress])
       if (r.rowCount && r.rows.length > 0) {
         return NextResponse.json({ success: false, error: `Token already submitted (${r.rows[0].status})` }, { status: 409 })
       }
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
       body.logoUrl ?? null,
       body.submittedBy
     ]
-    const res = await pool.query<{ id: string }>(insertSql, params)
+    const res = await pool.query(insertSql, params)
 
     return NextResponse.json({
       success: true,

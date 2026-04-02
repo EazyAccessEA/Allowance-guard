@@ -17,7 +17,7 @@ type AllowRow = {
 }
 
 async function fetchRisky(wallet: string) {
-  const { rows } = await pool.query<AllowRow>(
+  const { rows } = await pool.query(
     `SELECT chain_id, token_address, spender_address, standard, allowance_type, amount, is_unlimited, last_seen_block, risk_flags, risk_score
      FROM allowances
      WHERE wallet_address = $1 AND (is_unlimited = true OR risk_score > 0 OR ARRAY['STALE']::text[] && risk_flags)
@@ -29,7 +29,7 @@ async function fetchRisky(wallet: string) {
 }
 
 async function fetchRiskRows(wallet: string) {
-  const { rows } = await pool.query<AllowRow>(
+  const { rows } = await pool.query(
     `SELECT chain_id, token_address, spender_address, standard, allowance_type, amount,
             is_unlimited, last_seen_block, risk_flags, risk_score
        FROM allowances
@@ -137,7 +137,7 @@ export async function sendDailyDigests() {
       // Skip if risk_only is true and no risky items found
       if (s.risk_only && risky.length === 0) continue
 
-      const html = renderHtml(w, risky)
+      const html = renderHtml(w, risky as AllowRow[])
       const subject = risky.length
         ? `Allowance Guard — ${risky.length} risky approval${risky.length > 1 ? 's' : ''} detected`
         : `Allowance Guard — Daily summary (all clear)`
@@ -168,7 +168,7 @@ export async function sendSlackDigests() {
     const wallet = (s.wallet_address as string).toLowerCase()
     const rows = await fetchRiskRows(wallet)
     const policy = await getPolicy(wallet)
-    const filtered = applyPolicy(rows, policy)
+    const filtered = applyPolicy(rows as AllowRow[], policy)
 
     if (s.risk_only && filtered.length === 0) continue
 

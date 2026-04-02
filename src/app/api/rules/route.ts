@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   }
 
   // Feature gate: automatedRules requires Sentinel
-  const access = await checkFeature(session.userId, 'automatedRules')
+  const access = await checkFeature(session.user_id as number, 'automatedRules')
   if (!access.allowed) {
     return NextResponse.json(
       { error: 'Automated rules require the Sentinel plan', requiredPlan: access.requiredPlan },
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     )
   }
 
-  const rules = await getUserRules(session.userId)
+  const rules = await getUserRules(session.user_id as number)
   return NextResponse.json({ rules })
 }
 
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
   }
 
-  const access = await checkFeature(session.userId, 'automatedRules')
+  const access = await checkFeature(session.user_id as number, 'automatedRules')
   if (!access.allowed) {
     return NextResponse.json(
       { error: 'Automated rules require the Sentinel plan', requiredPlan: access.requiredPlan },
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const rule = await createRule(session.userId, {
+    const rule = await createRule(session.user_id as number, {
       name,
       description,
       wallets,
@@ -103,7 +103,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
   }
 
-  const access = await checkFeature(session.userId, 'automatedRules')
+  const access = await checkFeature(session.user_id as number, 'automatedRules')
   if (!access.allowed) {
     return NextResponse.json(
       { error: 'Automated rules require the Sentinel plan', requiredPlan: access.requiredPlan },
@@ -118,7 +118,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: 'ruleId is required' }, { status: 400 })
   }
 
-  const rule = await updateRule(session.userId, ruleId, updates)
+  const rule = await updateRule(session.user_id as number, ruleId, updates)
   if (!rule) {
     return NextResponse.json({ error: 'Rule not found' }, { status: 404 })
   }
@@ -142,7 +142,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: 'id parameter required' }, { status: 400 })
   }
 
-  const deleted = await deleteRule(session.userId, ruleId)
+  const deleted = await deleteRule(session.user_id as number, ruleId)
   if (!deleted) {
     return NextResponse.json({ error: 'Rule not found' }, { status: 404 })
   }

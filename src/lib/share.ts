@@ -55,7 +55,7 @@ export async function getShareByToken(token: string): Promise<ShareRow | null> {
        FROM shared_reports WHERE token=$1`,
     [token]
   )
-  return rows[0] || null
+  return (rows[0] as unknown as ShareRow) || null
 }
 
 export function transformRowsForShare(rows: {

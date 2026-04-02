@@ -67,7 +67,7 @@ export function getEnv(): Env {
 
   if (!result.success) {
     const issues = result.error.issues
-      .map((i: { path: (string | number)[]; message: string }) => `  - ${i.path.join('.')}: ${i.message}`)
+      .map((i) => `  - ${i.path.join('.')}: ${i.message}`)
       .join('\n')
     throw new Error(
       `\n❌ Environment variable validation failed:\n${issues}\n\nPlease check your .env.local or deployment environment.\n`

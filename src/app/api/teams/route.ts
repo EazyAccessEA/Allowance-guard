@@ -42,30 +42,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Team name is required' }, { status: 400 })
   }
 
-  const client = await pool.connect()
   try {
-    await client.query('BEGIN')
-    const t = await client.query(
+    const t = await pool.query(
       `INSERT INTO teams (name, description, owner_id) VALUES ($1, $2, $3) RETURNING id, name, description`,
       [name.trim(), description?.trim() || null, s.user_id],
     )
-    await client.query(
+    await pool.query(
       `INSERT INTO team_members (team_id, user_id, role) VALUES ($1, $2, 'owner')`,
       [t.rows[0].id, s.user_id],
     )
-    // Log team creation activity
-    await client.query(
+    await pool.query(
       `INSERT INTO team_activity (team_id, user_id, action, subject, details)
        VALUES ($1, $2, 'team_created', $3, $4)`,
       [t.rows[0].id, s.user_id, name.trim(), JSON.stringify({ description: description?.trim() || null })],
     )
-    await client.query('COMMIT')
     return NextResponse.json({ ok: true, team: t.rows[0] }, { status: 201 })
   } catch (e) {
-    await client.query('ROLLBACK')
-    throw e
-  } finally {
-    client.release()
+    console.error('Failed to create team', e)
+    return NextResponse.json({ error: 'Failed to create team' }, { status: 500 })
   }
 }
 
@@ -125,7 +119,6 @@ export async function PUT(req: NextRequest) {
     params,
   )
 
-  // Log activity
   await pool.query(
     `INSERT INTO team_activity (team_id, user_id, action, subject, details)
      VALUES ($1, $2, 'team_updated', $3, $4)`,
