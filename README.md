@@ -45,7 +45,7 @@ Allowance Guard scans your wallet, scores the risk of every active approval, and
 
 The core scanner is **free and open source**. Always.
 
-### API Access ###
+### API Access 
 
 Build wallet security into your product with the AllowanceGuard API.
 
