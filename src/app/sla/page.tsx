@@ -210,13 +210,35 @@ export default function SLAPage() {
                 <H2 className="text-2xl font-semibold mb-4">Monitoring &amp; Status</H2>
                 <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg text-stone">
                   <p className="mb-3">
-                    We monitor service health using automated systems. During incidents:
+                    We monitor service health using automated systems. Real-time status is available on our{' '}
+                    <a
+                      href="https://allowanceguard.instatus.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cobalt hover:underline font-medium"
+                    >
+                      public status page
+                    </a>.
+                    During incidents:
                   </p>
                   <ul className="space-y-2 text-sm">
                     <li>• Sentinel and API Growth/Enterprise customers receive email notifications for P0/P1 incidents</li>
+                    <li>• Status page is updated within 15 minutes of a confirmed P0 incident</li>
                     <li>• Post-incident reports are published for any downtime exceeding 30 minutes</li>
-                    <li>• Scheduled maintenance is announced at least 48 hours in advance</li>
+                    <li>• Scheduled maintenance is announced at least 48 hours in advance via email and status page</li>
                   </ul>
+                  <p className="mt-4 text-sm">
+                    Subscribe to updates at{' '}
+                    <a
+                      href="https://allowanceguard.instatus.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-cobalt hover:underline"
+                    >
+                      allowanceguard.instatus.com
+                    </a>{' '}
+                    to receive incident notifications via email.
+                  </p>
                 </div>
               </div>
 

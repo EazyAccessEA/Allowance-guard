@@ -366,6 +366,54 @@ export async function sendThankYouEmail({
   return sendMail(to, 'Thank you for supporting Allowance Guard! 💝', content)
 }
 
+// Re-engagement email for cancelled users (sent ~7 days after cancellation)
+export async function sendReEngagementEmail(to: string, plan: string) {
+  const planLabel = plan.includes('sentinel') ? 'Sentinel' : 'Pro'
+
+  const content = `
+    <h2>We Miss You!</h2>
+    <p>We noticed you recently cancelled your <strong>${planLabel}</strong> subscription. We're sorry to see you go, and we wanted to check in.</p>
+
+    <div class="alert-box">
+      <h3 style="margin-top: 0;">Here's what you're missing:</h3>
+      <ul style="margin-bottom: 0;">
+        ${planLabel === 'Sentinel' ? `
+        <li>Monitoring up to 50 wallets across 6 chains</li>
+        <li>Automated revocation rules protecting your assets 24/7</li>
+        <li>Team dashboard with role-based access</li>
+        <li>Compliance-ready audit logs</li>
+        <li>Webhook integrations and priority support</li>
+        ` : `
+        <li>Unlimited wallet scanning across all 6 chains</li>
+        <li>Continuous monitoring with real-time email alerts</li>
+        <li>Batch revocation with gas savings</li>
+        <li>Historical risk timeline for your approvals</li>
+        <li>Export audit reports (PDF/CSV)</li>
+        `}
+      </ul>
+    </div>
+
+    <div class="success-box">
+      <h3 style="margin-top: 0;">Come back and save 20%</h3>
+      <p style="margin-bottom: 0;">
+        We'd love to have you back. Use code <strong>COMEBACK20</strong> at checkout to get 20% off your next 3 months.
+      </p>
+    </div>
+
+    <p style="text-align: center;">
+      <a href="https://allowanceguard.com/pricing?reactivate=true&code=COMEBACK20" class="button">Reactivate My ${planLabel} Plan</a>
+    </p>
+
+    <p style="color: #6b7280; font-size: 14px;">
+      Your free account is still active — you can continue scanning up to 3 wallets at any time.
+      If you have feedback on how we can improve, we'd genuinely love to hear it at
+      <a href="mailto:support@allowanceguard.com" style="color: #3b82f6;">support@allowanceguard.com</a>.
+    </p>
+  `
+
+  return sendMail(to, `We miss you! Come back to Allowance Guard ${planLabel}`, content)
+}
+
 // Test function for SMTP configuration
 export async function testSMTPConnection() {
   try {
