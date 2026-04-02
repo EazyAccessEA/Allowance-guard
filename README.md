@@ -10,7 +10,7 @@
 
 ---
 
-## What is Allowance Guard?
+## What is Allowance Guard???
 
 Every time you interact with a DeFi protocol, you grant it permission to move your tokens. These **token approvals** persist indefinitely — even after you stop using the protocol. If that contract is compromised, your tokens are at risk.
 
