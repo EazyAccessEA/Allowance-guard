@@ -103,7 +103,8 @@ jobs:
             const claComment = comments.data.find(
               (c) =>
                 c.user.login.toLowerCase() === author.toLowerCase() &&
-                /I have read and agree to the.*Contributor License Agreement/i.test(c.body)
+                (/I confirm that I have read and agree to the AllowanceGuard CLA/i.test(c.body) ||
+                 /I have read and agree to the.*Contributor License Agreement/i.test(c.body))
             );
 
             if (claComment) {
@@ -152,9 +153,9 @@ Hi @${author}, thanks for your contribution! Before we can merge this PR, you ne
 
 1. **Option A (recommended):** Edit your PR description and check the CLA checkbox, then push a new commit or re-open the PR to re-trigger this check.
 2. **Option B:** Comment on this PR with:
-   > I have read and agree to the AllowanceGuard Contributor License Agreement.
+   > I confirm that I have read and agree to the AllowanceGuard CLA v1.1 for this Contribution and all future Contributions.
 
-The CLA grants AllowanceGuard the right to distribute your contributions under both AGPL-3.0 and our commercial license. **You retain full copyright ownership** of your work.
+The CLA grants AllowanceGuard the right to distribute your contributions under both AGPL-3.0 and our commercial license. **You retain full copyright ownership** of your work. See the full [CLA v1.1](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/CLA.md) for details.
 
 _This is an automated message._`,
               });

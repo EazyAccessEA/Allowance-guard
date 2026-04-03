@@ -447,15 +447,20 @@ AllowanceGuard uses a dual license model (AGPL-3.0 + Commercial). To make this p
 
 - Grants AllowanceGuard the right to distribute your contributions under both AGPL-3.0 and our commercial license
 - Grants a patent license covering your contributed code
+- Includes a warranty disclaimer and indemnification clause for corporate contributors
 - **You retain full copyright ownership** of your contributions
 
 ### How to Sign
 
-**By submitting a pull request, you agree to the CLA.** Your first PR serves as your signature. No separate forms or third-party services required.
+**By submitting a pull request, you agree to the CLA.** To create a binding record, include this statement in your PR description or as a comment:
+
+> I confirm that I have read and agree to the AllowanceGuard CLA v1.1 for this Contribution and all future Contributions.
+
+A bot will remind you if you forget.
 
 **Contributing on behalf of an organization?** An authorized representative must comment on the PR with:
 
-> I have read and agree to the AllowanceGuard Contributor License Agreement on behalf of [Organization Name].
+> I have read and agree to the AllowanceGuard Contributor License Agreement v1.1 on behalf of [Organization Name]. I confirm that the organisation has granted the necessary permissions.
 
 ### Why a CLA?
 
