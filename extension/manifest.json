@@ -3,6 +3,20 @@
   "name": "AllowanceGuard — Wallet Protection",
   "version": "2.0.0",
   "description": "Pre-transaction protection: detect risky approve(), permit(), and setApprovalForAll() calls before you sign",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "allowanceguard@allowanceguard.com",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "websiteContent",
+          "websiteActivity",
+          "financialAndPaymentInfo"
+        ],
+        "optional": ["technicalAndInteraction"]
+      }
+    }
+  },
   "permissions": [
     "activeTab",
     "storage",
@@ -20,6 +34,7 @@
     }
   ],
   "background": {
+    "scripts": ["background.js"],
     "service_worker": "background.js"
   },
   "action": {

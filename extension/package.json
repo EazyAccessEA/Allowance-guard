@@ -9,7 +9,11 @@
     "copy-icons": "cp -r icons dist/",
     "dev": "npm run build && npm run watch",
     "watch": "nodemon --watch src --ext js,html,json --exec 'npm run build'",
-    "package": "npm run build && cd dist && zip -r ../allowance-guard-extension.zip .",
+    "package": "npm run package:chrome",
+    "verify:manifest": "node scripts/verify-extension-manifest.cjs",
+    "package:chrome": "npm run build && npm run verify:manifest && cd dist && zip -r ../allowance-guard-extension-chrome.zip .",
+    "package:firefox": "npm run build && npm run verify:manifest && cd dist && zip -r ../allowance-guard-extension-firefox.zip .",
+    "package:all": "npm run build && npm run verify:manifest && cd dist && zip -r ../allowance-guard-extension-chrome.zip . && zip -r ../allowance-guard-extension-firefox.zip .",
     "test": "echo 'Extension tests would go here'",
     "lint": "echo 'Extension linting would go here'"
   },
@@ -25,7 +29,7 @@
     "blockchain"
   ],
   "author": "Allowance Guard Team",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "https://github.com/EazyAccessEA/Allowance-guard"

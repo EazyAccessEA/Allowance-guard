@@ -1,10 +1,8 @@
 /**
  * AllowanceGuard Browser Extension - Popup Script
- * 
- * This script handles the extension popup UI:
- * 1. Display current status and settings
- * 2. Show statistics
- * 3. Handle user interactions
+ *
+ * Displays protection status, daily stats, tier badge,
+ * and links to dashboard/settings.
  */
 
 class AllowanceGuardPopup {
@@ -13,15 +11,8 @@ class AllowanceGuardPopup {
   }
 
   async init() {
-    console.log('🛡️ AllowanceGuard Extension: Popup loaded');
-    
-    // Load settings and update UI
     await this.loadSettings();
-    
-    // Load statistics
     await this.loadStats();
-    
-    // Setup event listeners
     this.setupEventListeners();
   }
 
@@ -29,6 +20,7 @@ class AllowanceGuardPopup {
     try {
       const settings = await this.getSettings();
       this.updateStatusUI(settings.enabled);
+      this.updateTierBadge(settings.userTier || 'free');
     } catch (error) {
       console.error('Error loading settings:', error);
     }
@@ -36,107 +28,96 @@ class AllowanceGuardPopup {
 
   async loadStats() {
     try {
+      const response = await this.sendMessage({ type: 'GET_STATS' });
+      if (response?.success) {
+        const stats = response.data;
+        document.getElementById('scansToday').textContent = stats.scansToday;
+        document.getElementById('warningsToday').textContent = stats.warningsToday;
+        document.getElementById('blockedToday').textContent = stats.blockedToday;
+      }
+    } catch {
+      // Fallback to local calculation
       const events = await this.getEvents();
-      const today = new Date().toDateString();
-      
-      // Count scans and warnings from today
-      const todayEvents = events.filter(event => 
-        new Date(event.timestamp).toDateString() === today
-      );
-      
-      const scansToday = todayEvents.filter(event => 
-        event.type === 'risk_assessment'
-      ).length;
-      
-      const warningsBlocked = todayEvents.filter(event => 
-        event.type === 'warning_shown' && event.riskLevel >= 3
-      ).length;
-      
-      document.getElementById('scansToday').textContent = scansToday;
-      document.getElementById('warningsBlocked').textContent = warningsBlocked;
-    } catch (error) {
-      console.error('Error loading stats:', error);
-      document.getElementById('scansToday').textContent = '0';
-      document.getElementById('warningsBlocked').textContent = '0';
+      const now = Date.now();
+      const dayMs = 24 * 60 * 60 * 1000;
+      const todayEvents = events.filter((e) => now - e.timestamp < dayMs);
+
+      document.getElementById('scansToday').textContent =
+        todayEvents.filter((e) => e.type === 'risk_assessment').length;
+      document.getElementById('warningsToday').textContent =
+        todayEvents.filter((e) => e.type === 'warning_shown').length;
+      document.getElementById('blockedToday').textContent =
+        todayEvents.filter((e) => e.type === 'warning_shown' && e.riskLevel >= 3).length;
     }
   }
 
   setupEventListeners() {
-    // Toggle switch
-    const toggle = document.getElementById('toggle');
-    toggle.addEventListener('click', () => {
-      this.toggleExtension();
-    });
-    
-    // Settings button
-    const settingsBtn = document.getElementById('settingsBtn');
-    settingsBtn.addEventListener('click', () => {
-      this.openSettings();
+    document.getElementById('toggle').addEventListener('click', () => this.toggleExtension());
+    document.getElementById('settingsBtn').addEventListener('click', () => {
+      chrome.tabs.create({ url: 'https://www.allowanceguard.com/settings' });
     });
   }
 
   updateStatusUI(enabled) {
-    const statusIndicator = document.getElementById('statusIndicator');
-    const statusText = document.getElementById('statusText');
+    const indicator = document.getElementById('statusIndicator');
+    const text = document.getElementById('statusText');
     const toggle = document.getElementById('toggle');
-    
+
     if (enabled) {
-      statusIndicator.classList.remove('inactive');
-      statusIndicator.classList.add('active');
-      statusText.textContent = 'Protection Active';
+      indicator.className = 'status-indicator active';
+      text.textContent = 'Protection Active';
       toggle.classList.add('active');
     } else {
-      statusIndicator.classList.remove('active');
-      statusIndicator.classList.add('inactive');
-      statusText.textContent = 'Protection Disabled';
+      indicator.className = 'status-indicator inactive';
+      text.textContent = 'Protection Disabled';
       toggle.classList.remove('active');
     }
   }
 
-  async toggleExtension() {
-    try {
-      const settings = await this.getSettings();
-      const newEnabled = !settings.enabled;
-      
-      await this.updateSettings({ enabled: newEnabled });
-      this.updateStatusUI(newEnabled);
-      
-      // Log the toggle event
-      await this.logEvent({
-        type: 'extension_toggled',
-        enabled: newEnabled,
-        timestamp: Date.now()
-      });
-      
-      // Notify content scripts of the change
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        if (tabs[0]) {
-          chrome.tabs.sendMessage(tabs[0].id, {
-            type: 'EXTENSION_TOGGLED',
-            enabled: newEnabled
-          });
-        }
-      });
-    } catch (error) {
-      console.error('Error toggling extension:', error);
+  updateTierBadge(tier) {
+    const badge = document.getElementById('tierBadge');
+    const upgradeWrap = document.getElementById('upgradeWrap');
+
+    const tierNames = { free: 'Free', pro: 'Pro', sentinel: 'Sentinel' };
+    badge.textContent = tierNames[tier] || 'Free';
+    badge.className = `tier-badge tier-${tier || 'free'}`;
+
+    if (tier === 'free') {
+      upgradeWrap.innerHTML = `
+        <a href="https://www.allowanceguard.com/pricing" target="_blank" class="btn btn-upgrade">
+          Upgrade for Enhanced Protection
+        </a>
+      `;
+    } else {
+      upgradeWrap.innerHTML = '';
     }
   }
 
-  openSettings() {
-    // Open settings page in a new tab
-    chrome.tabs.create({
-      url: 'https://www.allowanceguard.com/settings'
+  async toggleExtension() {
+    const settings = await this.getSettings();
+    const newEnabled = !settings.enabled;
+    await this.updateSettings({ enabled: newEnabled });
+    this.updateStatusUI(newEnabled);
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { type: 'EXTENSION_TOGGLED', enabled: newEnabled });
+      }
+    });
+  }
+
+  sendMessage(msg) {
+    return new Promise((resolve) => {
+      chrome.runtime.sendMessage(msg, resolve);
     });
   }
 
   async getSettings() {
     return new Promise((resolve) => {
-      chrome.storage.sync.get({
-        enabled: true,
-        riskThreshold: 2,
-        showNotifications: true,
-        apiEndpoint: 'https://www.allowanceguard.com'
-      }, resolve);
+      chrome.storage.sync.get(
+        { enabled: true, riskThreshold: 2, showNotifications: true, apiEndpoint: 'https://www.allowanceguard.com', userTier: 'free' },
+        resolve,
+      );
     });
   }
 
@@ -148,30 +129,9 @@ class AllowanceGuardPopup {
 
   async getEvents() {
     return new Promise((resolve) => {
-      chrome.storage.local.get(['events'], (result) => {
-        resolve(result.events || []);
-      });
-    });
-  }
-
-  async logEvent(eventData) {
-    return new Promise((resolve) => {
-      chrome.storage.local.get(['events'], (result) => {
-        const events = result.events || [];
-        events.push(eventData);
-        
-        // Keep only last 100 events
-        if (events.length > 100) {
-          events.splice(0, events.length - 100);
-        }
-        
-        chrome.storage.local.set({ events }, resolve);
-      });
+      chrome.storage.local.get(['events'], (result) => resolve(result.events || []));
     });
   }
 }
 
-// Initialize the popup when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  new AllowanceGuardPopup();
-});
+document.addEventListener('DOMContentLoaded', () => new AllowanceGuardPopup());
