@@ -1,10 +1,10 @@
 # AllowanceGuard Contributor License Agreement
 
-**Version 1.1 — April 2026**
+**Version 1.2 — April 2026**
 
 Thank you for your interest in contributing to AllowanceGuard ("the Project"), maintained by EazyAccessEA ("the Maintainer"). This Contributor License Agreement ("Agreement") defines the terms under which you ("Contributor") submit Contributions to the Project.
 
-**By submitting a Contribution (as defined below) to this repository, you agree to these terms. For organizations, an authorised representative must agree as set out in Section 8.**
+**By submitting a Contribution (as defined below) to this repository, you agree to these terms. For organisations, an authorised representative must agree as set out in Section 9.**
 
 ## 1. Definitions
 
@@ -20,6 +20,8 @@ This grant includes the right to distribute Contributions under:
 
 - **AGPL-3.0-or-later** (the Project's open-source license), and
 - **A commercial license** offered by the Maintainer to third parties.
+
+**Clarification for commercial sublicensing:** For the avoidance of doubt, the commercial sublicense granted to the Maintainer includes the right to license Contributions as part of a proprietary product, including white-label, OEM, embedded, and Software-as-a-Service (SaaS) offerings, without any requirement to release source code of the larger work.
 
 To the extent permitted by applicable law, you waive any moral rights (including rights of attribution and integrity) in your Contributions, solely to the extent necessary to allow the Maintainer to exercise the rights granted in this Section 2. Where moral rights cannot be waived, you agree not to assert them in a manner that interferes with the Maintainer's exercise of the licensed rights.
 
@@ -67,17 +69,19 @@ The Maintainer agrees that all Contributions will be made available under at lea
 
 ## 9. Execution / How to Agree
 
-**By submitting a pull request, you acknowledge that you have read and agree to this Agreement.**
+By submitting a pull request, you acknowledge that you have read and agree to this Agreement.
 
 To create a legally binding record, you must also include the following statement in the pull request description or as a comment (a bot may remind you):
 
-> `I confirm that I have read and agree to the AllowanceGuard CLA v1.1 for this Contribution and all future Contributions.`
+> `I confirm that I have read and agree to the AllowanceGuard CLA v1.2 for this Contribution and all future Contributions.`
 
 **If you are contributing on behalf of an organisation**, please have an authorised representative comment on the pull request with:
 
-> `I have read and agree to the AllowanceGuard Contributor License Agreement v1.1 on behalf of [Organization Name]. I confirm that the organisation has granted the necessary permissions.`
+> `I have read and agree to the AllowanceGuard Contributor License Agreement v1.2 on behalf of [Organization Name]. I confirm that the organisation has granted the necessary permissions.`
 
 For automation, the Maintainer may require a signed CLA stored in a repository or a third-party CLA service (e.g., CLA Assistant). The method described here is sufficient for most open-source projects, but the Maintainer reserves the right to request a separate signed PDF for large Contributions.
+
+Organisations that require a formal paper trail may use the [Corporate Contributor Addendum](./CORPORATE_ADDENDUM.md).
 
 ## 10. Scope, Duration & Termination
 

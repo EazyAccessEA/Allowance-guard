@@ -454,13 +454,15 @@ AllowanceGuard uses a dual license model (AGPL-3.0 + Commercial). To make this p
 
 **By submitting a pull request, you agree to the CLA.** To create a binding record, include this statement in your PR description or as a comment:
 
-> I confirm that I have read and agree to the AllowanceGuard CLA v1.1 for this Contribution and all future Contributions.
+> I confirm that I have read and agree to the AllowanceGuard CLA v1.2 for this Contribution and all future Contributions.
 
 A bot will remind you if you forget.
 
 **Contributing on behalf of an organization?** An authorized representative must comment on the PR with:
 
-> I have read and agree to the AllowanceGuard Contributor License Agreement v1.1 on behalf of [Organization Name]. I confirm that the organisation has granted the necessary permissions.
+> I have read and agree to the AllowanceGuard Contributor License Agreement v1.2 on behalf of [Organization Name]. I confirm that the organisation has granted the necessary permissions.
+
+Organisations that require a formal signed document may use the [Corporate Contributor Addendum](./CORPORATE_ADDENDUM.md).
 
 ### Why a CLA?
 

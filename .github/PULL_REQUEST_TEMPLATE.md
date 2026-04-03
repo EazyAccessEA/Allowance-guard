@@ -28,9 +28,11 @@ Brief description of changes.
 
 ## Contributor License Agreement
 
-- [ ] I have read and agree to the [AllowanceGuard Contributor License Agreement](../CLA.md)
+- [ ] I have read and agree to the [AllowanceGuard Contributor License Agreement v1.2](../CLA.md)
 
-> By submitting this pull request, I confirm that my contributions are made under the terms of the AllowanceGuard CLA. I understand that my contributions may be distributed under both the AGPL-3.0 license and a commercial license.
+> I confirm that I have read and agree to the AllowanceGuard CLA v1.2 for this Contribution and all future Contributions.
 >
 > If contributing on behalf of an organization, please comment below:
-> "I have read and agree to the AllowanceGuard Contributor License Agreement on behalf of [Organization Name]."
+> "I have read and agree to the AllowanceGuard Contributor License Agreement v1.2 on behalf of [Organization Name]. I confirm that the organisation has granted the necessary permissions."
+>
+> Organisations that require a formal signed document may use the [Corporate Contributor Addendum](../CORPORATE_ADDENDUM.md).

@@ -153,9 +153,11 @@ Hi @${author}, thanks for your contribution! Before we can merge this PR, you ne
 
 1. **Option A (recommended):** Edit your PR description and check the CLA checkbox, then push a new commit or re-open the PR to re-trigger this check.
 2. **Option B:** Comment on this PR with:
-   > I confirm that I have read and agree to the AllowanceGuard CLA v1.1 for this Contribution and all future Contributions.
+   > I confirm that I have read and agree to the AllowanceGuard CLA v1.2 for this Contribution and all future Contributions.
 
-The CLA grants AllowanceGuard the right to distribute your contributions under both AGPL-3.0 and our commercial license. **You retain full copyright ownership** of your work. See the full [CLA v1.1](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/CLA.md) for details.
+The CLA grants AllowanceGuard the right to distribute your contributions under both AGPL-3.0 and our commercial license. **You retain full copyright ownership** of your work. See the full [CLA v1.2](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/CLA.md) for details.
+
+Organisations that require a formal signed document may use the [Corporate Contributor Addendum](https://github.com/${context.repo.owner}/${context.repo.repo}/blob/main/CORPORATE_ADDENDUM.md).
 
 _This is an automated message._`,
               });
