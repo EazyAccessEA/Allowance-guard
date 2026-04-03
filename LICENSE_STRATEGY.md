@@ -80,17 +80,18 @@ Many successful open-core projects use AGPL + Commercial dual licensing:
 
 A CLA is required because dual licensing needs the copyright holder to have the right to offer code under both licenses. Without a CLA, each contributor retains copyright over their contributions, which would make commercial licensing legally impossible.
 
-We use [CLA Assistant](https://cla-assistant.io/) integrated with GitHub to automate this process. Contributors sign once, and it applies to all future contributions.
+AllowanceGuard uses its own CLA documented in [`CLA.md`](./CLA.md). By submitting a pull request, contributors agree to the terms of the CLA. No third-party service is required.
 
 The CLA grants AllowanceGuard:
 - The right to distribute contributions under AGPL-3.0
 - The right to distribute contributions under the commercial license
-- Contributors retain copyright ownership of their work
+- A patent license covering contributed code
+- Contributors retain full copyright ownership of their work
 
 ## Timeline
 
 1. **April 2026**: License files updated, blog post published
-2. **April 2026**: CLA Assistant configured on GitHub repository
+2. **April 2026**: Custom CLA added to repository (`CLA.md`)
 3. **Ongoing**: New source files include AGPL-3.0 headers
 4. **Ongoing**: Commercial license available for enterprise customers
 
