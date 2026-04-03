@@ -2,9 +2,7 @@
  * Cron endpoint for webhook delivery retry processing.
  *
  * Retries failed webhook deliveries that haven't exhausted their retry budget.
- * Designed to be called every 5 minutes via Vercel Cron.
- *
- * Security: protected by CRON_SECRET or CRON_JOBS_API_KEY header.
+ * Called every 5 minutes via cron-job.org.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
@@ -18,18 +16,6 @@ const TIMEOUT_MS = 10_000
 const MAX_RETRIES = 3
 const MAX_FAILURE_COUNT = 10
 
-function verifyCronSecret(req: NextRequest): NextResponse | null {
-  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
-  if (!cronSecret) {
-    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
-  }
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  return null
-}
-
 function signPayload(payload: string, secret: string): string {
   return createHmac('sha256', secret).update(payload).digest('hex')
 }
@@ -42,10 +28,7 @@ export async function POST(req: NextRequest) {
   return handleProcess(req)
 }
 
-async function handleProcess(req: NextRequest) {
-  const authError = verifyCronSecret(req)
-  if (authError) return authError
-
+async function handleProcess(_req: NextRequest) {
   const startTime = Date.now()
   let retried = 0
   let succeeded = 0

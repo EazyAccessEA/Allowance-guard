@@ -73,10 +73,10 @@ Every state-changing or data-exposing endpoint must require authentication. Use 
 
 | # | Endpoint | File | Fix |
 |---|----------|------|-----|
-| 1 | `POST /api/jobs/process` | `src/app/api/jobs/process/route.ts` | Require `CRON_SECRET` — fail CLOSED (reject if env var missing) |
+| 1 | `POST /api/jobs/process` | `src/app/api/jobs/process/route.ts` | Called via cron-job.org (no auth required — cron-job.org handles scheduling) |
 | 2 | `POST /api/bulk-revoke` | `src/app/api/bulk-revoke/route.ts` | Add `requireSession()`, verify wallet ownership via session |
 | 3 | `GET/POST /api/monitor` | `src/app/api/monitor/route.ts` | Add `requireSession()`, scope queries to session user |
-| 4 | `GET /api/monitor/cron` | `src/app/api/monitor/cron/route.ts` | Fix fail-open: reject if `CRON_SECRET` is not set |
+| 4 | `GET /api/monitor/cron` | `src/app/api/monitor/cron/route.ts` | Called via cron-job.org (no auth required — cron-job.org handles scheduling) |
 | 5 | `POST /api/share/create` | `src/app/api/share/create/route.ts` | Add `requireSession()` |
 | 6 | `GET/POST /api/audit/logs` | `src/app/api/audit/logs/route.ts` | Add `requireSession()`, scope to user's own logs; POST requires admin role |
 | 7 | `GET/POST /api/preferences` | `src/app/api/preferences/route.ts` | Add `requireSession()`, remove email-based lookup (use session user ID) |
@@ -97,21 +97,8 @@ export async function POST(req: Request) {
 }
 ```
 
-**CRON_SECRET pattern** (fail-closed):
-```typescript
-const cronSecret = process.env.CRON_SECRET
-if (!cronSecret) {
-  return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
-}
-const authHeader = req.headers.get('authorization')
-if (authHeader !== `Bearer ${cronSecret}`) {
-  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-}
-```
-
 **Acceptance criteria**:
-- [x] Every endpoint in the table returns 401 without a valid session (or CRON_SECRET for cron routes)
-- [x] CRON routes reject when `CRON_SECRET` is not set (fail-closed)
+- [x] Every endpoint in the table returns 401 without a valid session (cron routes are called by cron-job.org)
 - [x] All queries are scoped to the authenticated user (no cross-user data access)
 - [ ] Integration tests verify auth enforcement for each endpoint
 
@@ -946,7 +933,7 @@ Created `src/lib/env.ts` using Zod for runtime validation. Validates all require
    - Conditions: amount > threshold, spender age > days, risk score > level, token in list
    - Actions: auto-revoke, alert, flag for review
 2. Create cron endpoint `GET /api/rules/evaluate`:
-   - Protected by `CRON_SECRET`
+   - Called via cron-job.org every 15 minutes
    - Iterates over all active Sentinel users with rules
    - Evaluates rules against latest allowance data
    - Executes actions (queue revocation transactions, send alerts)
@@ -1132,18 +1119,18 @@ This is a business decision, not a code change. Document the decision and ration
 `cleanup_old_audit_data()` and `cleanup_old_performance_data()` SQL functions exist but no cron job calls them.
 
 **Implementation**:
-1. Create `GET /api/jobs/cleanup` (CRON_SECRET protected):
+1. Create `GET /api/jobs/cleanup` (called via cron-job.org):
    - Call `cleanup_old_audit_data()` — retain 90 days
    - Call `cleanup_old_performance_data()` — retain 30 days
    - Archive `webhook_deliveries` older than 30 days (delete after archival or hard delete)
    - Archive `usage_records` older than 90 days to aggregated daily totals
    - Delete expired sessions
    - Log cleanup results (rows deleted per table)
-2. Schedule cron to run daily at 03:00 UTC via Vercel cron or external scheduler
+2. Schedule cron to run daily at 03:00 UTC via cron-job.org
 3. Add table partitioning for `monitoring_events` (partition by month) — create new migration
 
 **Acceptance criteria**:
-- [x] Cleanup cron runs daily (`GET /api/jobs/cleanup`, Vercel cron at 03:00 UTC)
+- [x] Cleanup cron runs daily (`GET /api/jobs/cleanup`, cron-job.org at 03:00 UTC)
 - [x] Audit logs retained for 90 days, then deleted
 - [x] Performance data retained for 30 days
 - [x] Webhook deliveries cleaned after 30 days
