@@ -269,7 +269,7 @@ export async function dispatchWebhookEvent(
     data,
   }
 
-  const matching = (webhooks as RegisteredWebhook[]).filter(
+  const matching = (webhooks as unknown as RegisteredWebhook[]).filter(
     (w) => {
       const events = Array.isArray(w.events) ? w.events : []
       return events.length === 0 || events.includes(event)
@@ -304,7 +304,7 @@ export async function dispatchTeamWebhookEvent(
     data,
   }
 
-  const matching = (webhooks as RegisteredWebhook[]).filter(
+  const matching = (webhooks as unknown as RegisteredWebhook[]).filter(
     (w) => {
       const events = Array.isArray(w.events) ? w.events : []
       return events.length === 0 || events.includes(event)

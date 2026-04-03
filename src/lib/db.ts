@@ -17,7 +17,7 @@ const sql = neon(DATABASE_URL)
  */
 export const pool = {
   async query(text: string, params?: unknown[]): Promise<{ rows: Record<string, unknown>[]; rowCount: number }> {
-    const rows = await sql(text, params as (string | number | boolean | null | undefined)[]) as Record<string, unknown>[]
+    const rows = await (sql as unknown as (text: string, params?: unknown[]) => Promise<Record<string, unknown>[]>)(text, params)
     return { rows, rowCount: rows.length }
   },
 }

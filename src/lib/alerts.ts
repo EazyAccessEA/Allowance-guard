@@ -17,7 +17,7 @@ type AllowRow = {
 }
 
 async function fetchRisky(wallet: string) {
-  const { rows } = await pool.query<AllowRow>(
+  const { rows } = await pool.query(
     `SELECT chain_id, token_address, spender_address, standard, allowance_type, amount, is_unlimited, last_seen_block, risk_flags, risk_score
      FROM allowances
      WHERE wallet_address = $1 AND (is_unlimited = true OR risk_score > 0 OR ARRAY['STALE']::text[] && risk_flags)
@@ -25,11 +25,11 @@ async function fetchRisky(wallet: string) {
      LIMIT 500`,
      [wallet]
   )
-  return rows
+  return rows as unknown as AllowRow[]
 }
 
 async function fetchRiskRows(wallet: string) {
-  const { rows } = await pool.query<AllowRow>(
+  const { rows } = await pool.query(
     `SELECT chain_id, token_address, spender_address, standard, allowance_type, amount,
             is_unlimited, last_seen_block, risk_flags, risk_score
        FROM allowances
@@ -39,7 +39,7 @@ async function fetchRiskRows(wallet: string) {
       LIMIT 1000`,
     [wallet]
   )
-  return rows
+  return rows as unknown as AllowRow[]
 }
 
 function renderHtml(wallet: string, rows: AllowRow[]) {
