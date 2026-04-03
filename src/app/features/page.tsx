@@ -3,7 +3,7 @@ import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
 import Link from 'next/link'
-import { Eye, Settings } from 'lucide-react'
+import { Eye, Settings, Puzzle, Globe } from 'lucide-react'
 import VideoBackground from '@/components/VideoBackground'
 
 export default function FeaturesPage() {
@@ -110,6 +110,38 @@ export default function FeaturesPage() {
           </div>
         </Container>
       </Section>
+
+      {/* Browser Extension */}
+      <Section className="py-32">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <H2 className="mb-12">Browser Extension</H2>
+
+            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1">
+              <div className="p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <Puzzle className="w-6 h-6 text-primary-700" />
+                  <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Real-Time Transaction Screening</h3>
+                </div>
+                <p className="text-base text-text-tertiary dark:text-secondary-400 leading-relaxed mb-6">
+                  The Allowance Guard browser extension warns you before you sign risky approvals — directly inside your browser. It analyses every token approval request in real time, flagging unlimited allowances, suspicious contracts, and known threats before you click confirm. No need to open the dashboard; protection travels with you across every dApp.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
+                    <Globe className="w-4 h-4" />
+                    Chrome &middot; Pending Approval
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
+                    Firefox &middot; Pending Approval
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <div className="border-t border-border-primary" />
 
       {/* Call to Action */}
       <Section className="py-32">
