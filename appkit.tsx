@@ -6,9 +6,7 @@ import { mainnet, arbitrum, base } from "@reown/appkit/networks";
 import { cookieStorage, createStorage } from "@wagmi/core";
 
 // 1. Get projectId at https://cloud.reown.com
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!;
-
-if (!projectId) throw new Error('Project ID is not defined');
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? '';
 
 // 2. Create a metadata object
 const metadata = {
@@ -32,15 +30,18 @@ const wagmiAdapter = new WagmiAdapter({
 });
 
 // 4. Create the AppKit instance - OUTSIDE React component as per docs
-createAppKit({
-  adapters: [wagmiAdapter],
-  metadata: metadata,
-  networks: [mainnet, arbitrum, base],
-  projectId,
-  features: {
-    analytics: false, // Disable analytics to prevent Coinbase API calls
-  },
-});
+// Guard against missing projectId to prevent blank-page crashes in production
+if (projectId) {
+  createAppKit({
+    adapters: [wagmiAdapter],
+    metadata: metadata,
+    networks: [mainnet, arbitrum, base],
+    projectId,
+    features: {
+      analytics: false, // Disable analytics to prevent Coinbase API calls
+    },
+  });
+}
 
 export { wagmiAdapter };
 

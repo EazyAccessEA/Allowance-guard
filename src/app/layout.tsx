@@ -14,10 +14,9 @@ import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 // import PerformanceMonitor from '@/components/PerformanceMonitor' // Disabled due to missing API endpoint
 import { AppKit } from '../../appkit'
 
-// Sophisticated Static Generation Strategy
-export const dynamic = 'force-static'
-export const revalidate = 3600 // 1 hour ISR
-export const fetchCache = 'force-cache'
+// Allow dynamic rendering — the app uses client-side Web3 providers,
+// cookies, and real-time data that cannot be statically generated.
+export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 
 const inter = localFont({
