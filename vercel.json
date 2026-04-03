@@ -2,16 +2,24 @@
   "regions": ["lhr1"],
   "crons": [
     {
+      "path": "/api/jobs/cleanup",
+      "schedule": "0 3 * * *"
+    },
+    {
       "path": "/api/monitor/cron",
       "schedule": "*/15 * * * *"
     },
     {
-      "path": "/api/email/cron",
-      "schedule": "0 10 * * *"
+      "path": "/api/rules/evaluate",
+      "schedule": "*/15 * * * *"
     },
     {
-      "path": "/api/jobs/cleanup",
-      "schedule": "0 3 * * *"
+      "path": "/api/webhooks/process",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/email/cron",
+      "schedule": "0 10 * * *"
     }
   ],
   "functions": {
