@@ -112,16 +112,30 @@ BEGIN
   END IF;
 END $$;
 
--- 3. Stale detection for risk_snapshots (only if table exists)
+-- 3. Stale detection for risk_snapshots (only if table + column exist)
 DO $$
+DECLARE
+  ts_col TEXT;
 BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'risk_snapshots') THEN
-    EXECUTE '
-      CREATE OR REPLACE VIEW risk_snapshots_with_staleness AS
-      SELECT *, (created_at < NOW() - INTERVAL ''24 hours'') AS is_stale
-      FROM risk_snapshots
-    ';
-    RAISE NOTICE 'Created view risk_snapshots_with_staleness';
+    -- Find the timestamp column (could be created_at or checked_at)
+    SELECT column_name INTO ts_col
+    FROM information_schema.columns
+    WHERE table_name = 'risk_snapshots'
+      AND data_type IN ('timestamp with time zone', 'timestamp without time zone')
+    ORDER BY ordinal_position
+    LIMIT 1;
+
+    IF ts_col IS NOT NULL THEN
+      EXECUTE format(
+        'CREATE OR REPLACE VIEW risk_snapshots_with_staleness AS
+         SELECT *, (%I < NOW() - INTERVAL ''24 hours'') AS is_stale
+         FROM risk_snapshots', ts_col
+      );
+      RAISE NOTICE 'Created view risk_snapshots_with_staleness using column %', ts_col;
+    ELSE
+      RAISE NOTICE 'Skipping risk_snapshots_with_staleness (no timestamp column found)';
+    END IF;
   ELSE
     RAISE NOTICE 'Skipping risk_snapshots_with_staleness (table missing)';
   END IF;
@@ -131,12 +145,14 @@ END $$;
 -- 8.1 — Month-based index for monitoring_events (only if table exists)
 -- ============================================================================
 
+-- DATE_TRUNC is not IMMUTABLE, so we use a simple btree index on created_at instead
+-- which PostgreSQL can still use for month-based range queries efficiently
 DO $$
 BEGIN
   IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'monitoring_events') THEN
-    CREATE INDEX IF NOT EXISTS idx_monitoring_events_month
-      ON monitoring_events (DATE_TRUNC('month', created_at));
-    RAISE NOTICE 'Created index idx_monitoring_events_month';
+    CREATE INDEX IF NOT EXISTS idx_monitoring_events_created_at_month
+      ON monitoring_events (created_at);
+    RAISE NOTICE 'Created index idx_monitoring_events_created_at_month';
   ELSE
     RAISE NOTICE 'Skipping monitoring_events index (table missing)';
   END IF;
