@@ -18,12 +18,12 @@ type AllowRow = {
 type Drift = AllowRow & { prev_amount: string, prev_unlimited: boolean }
 
 async function listCurrent(wallet: string): Promise<AllowRow[]> {
-  const { rows } = await pool.query<AllowRow>(
+  const { rows } = await pool.query(
     `SELECT chain_id, token_address, spender_address, allowance_type, amount, is_unlimited, risk_score, risk_flags
        FROM allowances WHERE wallet_address=$1`,
     [wallet]
   )
-  return rows
+  return rows as unknown as AllowRow[]
 }
 
 async function loadAlertState(wallet: string) {
@@ -66,23 +66,14 @@ function computeDrift(rows: AllowRow[], prev: Map<string,{amt:string; unlim:bool
 
 async function updateAlertState(wallet: string, drifts: Drift[]) {
   if (!drifts.length) return
-  const client = await pool.connect()
-  try {
-    await client.query('BEGIN')
-    for (const d of drifts) {
-      await client.query(
-        `INSERT INTO alert_state (wallet_address, chain_id, token_address, spender_address, allowance_type, last_amount, last_unlimited, last_notified_at)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,NOW())
-         ON CONFLICT (wallet_address,chain_id,token_address,spender_address,allowance_type)
-         DO UPDATE SET last_amount=$6, last_unlimited=$7, last_notified_at=NOW()`,
-        [wallet, d.chain_id, d.token_address, d.spender_address, d.allowance_type, d.amount, d.is_unlimited]
-      )
-    }
-    await client.query('COMMIT')
-  } catch (e) {
-    await client.query('ROLLBACK'); throw e
-  } finally {
-    client.release()
+  for (const d of drifts) {
+    await pool.query(
+      `INSERT INTO alert_state (wallet_address, chain_id, token_address, spender_address, allowance_type, last_amount, last_unlimited, last_notified_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,NOW())
+       ON CONFLICT (wallet_address,chain_id,token_address,spender_address,allowance_type)
+       DO UPDATE SET last_amount=$6, last_unlimited=$7, last_notified_at=NOW()`,
+      [wallet, d.chain_id, d.token_address, d.spender_address, d.allowance_type, d.amount, d.is_unlimited]
+    )
   }
 }
 
