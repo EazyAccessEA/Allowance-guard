@@ -4,21 +4,22 @@ import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
 import { useState } from 'react'
-import { 
-  FileText, 
-  Rocket, 
-  Globe, 
-  AlertTriangle, 
-  Mail, 
-  Lock, 
-  Settings, 
-  Wrench, 
+import {
+  FileText,
+  Rocket,
+  Globe,
+  AlertTriangle,
+  Mail,
+  Lock,
+  Settings,
+  Wrench,
   HelpCircle,
   Search,
   Shield,
   Bell,
   Zap,
-  Users
+  Users,
+  Puzzle
 } from 'lucide-react'
 
 export default function DocsPage() {
@@ -30,6 +31,7 @@ export default function DocsPage() {
     { id: 'core-concepts', title: 'Core Concepts', icon: Shield },
     { id: 'usage-guides', title: 'Usage Guides', icon: Wrench },
     { id: 'advanced-topics', title: 'Advanced Topics', icon: Settings },
+    { id: 'browser-extension', title: 'Browser Extension', icon: Puzzle },
     { id: 'troubleshooting', title: 'Troubleshooting', icon: HelpCircle }
   ]
 
@@ -889,6 +891,65 @@ export default function DocsPage() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'browser-extension':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 id="browser-extension" className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Browser Extension</h2>
+              <p className="text-base text-text-secondary dark:text-secondary-400 mb-6">
+                The Allowance Guard browser extension brings real-time transaction risk assessment directly into your browser. Get warnings before you sign risky approvals, without needing to visit the dashboard.
+              </p>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Available On</h3>
+              <div className="space-y-4 mb-8">
+                <div className="mobbin-card p-6">
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Google Chrome</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400 mb-2">
+                    Available on the Chrome Web Store. Works with all Chromium-based browsers including Brave, Edge, and Opera.
+                  </p>
+                  <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Pending Approval</span>
+                </div>
+                <div className="mobbin-card p-6">
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Mozilla Firefox</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400 mb-2">
+                    Available on Firefox Add-ons. Fully compatible with the latest Firefox releases.
+                  </p>
+                  <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Pending Approval</span>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">What the Extension Does</h3>
+              <div className="space-y-4 mb-8">
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Pre-Signing Risk Assessment</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">
+                    Before you approve a transaction, the extension analyses the contract and approval amount, warning you if it detects an unlimited approval, a known malicious spender, or other red flags.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Quick Allowance Overview</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">
+                    Click the extension icon to see a summary of your current active approvals and overall risk score without leaving the page you are on.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Non-Custodial &amp; Privacy-First</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">
+                    The extension never accesses your private keys. It reads only public blockchain data and communicates with the Allowance Guard API for risk analysis. No tracking, no analytics on your browsing.
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">How to Install</h3>
+              <div className="space-y-4 text-base text-text-secondary dark:text-secondary-400">
+                <p><strong>1. Download:</strong> Visit the Chrome Web Store or Firefox Add-ons page (links will be active once store approval is complete) and click &quot;Add to Browser&quot;.</p>
+                <p><strong>2. Connect:</strong> After installation, click the Allowance Guard icon in your toolbar and connect your wallet address. No private keys are required — just your public address.</p>
+                <p><strong>3. Browse safely:</strong> The extension runs in the background. Whenever a dApp asks you to sign a token approval, the extension will show a risk popup before you confirm.</p>
               </div>
             </div>
           </div>
