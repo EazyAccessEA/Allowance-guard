@@ -61,6 +61,11 @@ async function fetchNativePrice(coingeckoId: string): Promise<number> {
     'ethereum': 3200,
     'matic-network': 0.70,
     'avalanche-2': 35,
+    'binancecoin': 600,
+    'fantom': 0.50,
+    'mantle': 0.80,
+    'xdai': 1.00,
+    'celo': 0.50,
   }
 
   try {
@@ -79,7 +84,7 @@ async function fetchNativePrice(coingeckoId: string): Promise<number> {
  * Get gas price for a standard (non-L2) chain via eth_gasPrice RPC.
  */
 async function getStandardGasPrice(chainId: number): Promise<{ gasPriceGwei: number; l1DataFeeGwei: number }> {
-  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56)
+  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101 | 5000 | 100 | 59144 | 534352 | 42220)
   const gasPrice = await client.getGasPrice()
   return {
     gasPriceGwei: Number(formatGwei(gasPrice)),
@@ -91,7 +96,7 @@ async function getStandardGasPrice(chainId: number): Promise<{ gasPriceGwei: num
  * Get gas price for Arbitrum (includes L1 data posting costs).
  */
 async function getArbitrumGasPrice(chainId: number): Promise<{ gasPriceGwei: number; l1DataFeeGwei: number }> {
-  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56)
+  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101 | 5000 | 100 | 59144 | 534352 | 42220)
 
   try {
     const [gasPrice, arbPrices] = await Promise.all([
@@ -120,7 +125,7 @@ async function getArbitrumGasPrice(chainId: number): Promise<{ gasPriceGwei: num
  * Get gas price for OP Stack chains (Optimism, Base) — includes L1 data fee.
  */
 async function getOpStackGasPrice(chainId: number): Promise<{ gasPriceGwei: number; l1DataFeeGwei: number }> {
-  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56)
+  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101 | 5000 | 100 | 59144 | 534352 | 42220)
 
   try {
     const [gasPrice, l1BaseFee] = await Promise.all([

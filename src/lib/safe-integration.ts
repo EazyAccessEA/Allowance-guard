@@ -39,6 +39,11 @@ const SAFE_TX_SERVICE: Record<number, string> = {
   56: 'https://safe-transaction-bsc.safe.global',
   324: 'https://safe-transaction-zksync.safe.global',
   1101: 'https://safe-transaction-polygon-zkevm.safe.global',
+  5000: 'https://safe-transaction-mantle.safe.global',
+  100: 'https://safe-transaction-gnosis-chain.safe.global',
+  59144: 'https://safe-transaction-linea.safe.global',
+  534352: 'https://safe-transaction-scroll.safe.global',
+  42220: 'https://safe-transaction-celo.safe.global',
 }
 
 export interface SafeInfo {

@@ -347,6 +347,11 @@ export default function TeamDashboardPage({
                   <option value={250}>Fantom</option>
                   <option value={324}>zkSync Era</option>
                   <option value={1101}>Polygon zkEVM</option>
+                  <option value={5000}>Mantle</option>
+                  <option value={100}>Gnosis</option>
+                  <option value={59144}>Linea</option>
+                  <option value={534352}>Scroll</option>
+                  <option value={42220}>Celo</option>
                 </select>
               </div>
             </CardContent>

@@ -178,7 +178,7 @@ export async function scanPermit2Allowances(
   if (!SUPPORTED_CHAIN_IDS.includes(chainId)) return []
   if (tokens.length === 0) return []
 
-  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56)
+  const client = clientFor(chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101 | 5000 | 100 | 59144 | 534352 | 42220)
   const now = Math.floor(Date.now() / 1000)
   const results: Permit2Allowance[] = []
 

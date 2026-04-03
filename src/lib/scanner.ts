@@ -23,7 +23,7 @@ async function rangeChunks(from: bigint, to: bigint) {
   return res
 }
 
-export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453|10|137|43114|56) {
+export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220) {
   const w = wallet.toLowerCase() as `0x${string}`
   const c = clientFor(chainId)
   const tip = await latestBlock(c)
@@ -86,7 +86,7 @@ export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453|10
   }
 }
 
-export async function scanWalletOnAllChains(wallet: string, chainIds?: Array<1|42161|8453|10|137|43114|56>) {
+export async function scanWalletOnAllChains(wallet: string, chainIds?: Array<1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220>) {
   const ids = (chainIds && chainIds.length) ? chainIds : enabledChainIds()
   for (const id of ids) {
     await scanWalletOnChain(wallet, id)

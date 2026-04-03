@@ -11,14 +11,22 @@ import { trackEvent } from '@/lib/analytics'
 
 export const runtime = 'nodejs'
 
-const MAP: Record<string, 1|42161|8453|10|137|43114|56> = { 
-  eth: 1, 
-  arb: 42161, 
+const MAP: Record<string, 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220> = {
+  eth: 1,
+  arb: 42161,
   base: 8453,
   op: 10,
   polygon: 137,
   avalanche: 43114,
-  bsc: 56
+  bsc: 56,
+  fantom: 250,
+  zksync: 324,
+  'polygon-zkevm': 1101,
+  mantle: 5000,
+  gnosis: 100,
+  linea: 59144,
+  scroll: 534352,
+  celo: 42220
 }
 
 export async function POST(req: Request) {
