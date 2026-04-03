@@ -2,9 +2,7 @@
  * Cron endpoint for rule evaluation.
  *
  * Evaluates all enabled revocation rules for Sentinel-tier users.
- * Designed to be called every 15 minutes via Vercel Cron or external scheduler.
- *
- * Security: protected by CRON_SECRET or CRON_JOBS_API_KEY header.
+ * Called every 15 minutes via cron-job.org.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { evaluateRules, executeRuleMatches } from '@/lib/rule-engine'
@@ -23,17 +21,7 @@ export async function POST(req: NextRequest) {
   return handleEvaluate(req)
 }
 
-async function handleEvaluate(req: NextRequest) {
-  // Verify cron secret — fail CLOSED if not configured
-  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
-  if (!cronSecret) {
-    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
-  }
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+async function handleEvaluate(_req: NextRequest) {
   try {
     // Find all Sentinel users with enabled rules (plan-gated)
     const { rows: sentinelUsers } = await pool.query(

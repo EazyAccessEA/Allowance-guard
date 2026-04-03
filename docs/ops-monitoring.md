@@ -40,12 +40,12 @@ Allowance Guard includes comprehensive operational monitoring to track costs, us
 
 #### `/api/alerts/health`
 - **Purpose:** Health monitoring with alerts
-- **Schedule:** Every 10 minutes via Vercel cron
+- **Schedule:** Every 10 minutes via cron-job.org
 - **Alerts:** Slack + email when health degrades
 
 #### `/api/alerts/daily`
 - **Purpose:** Daily ops reports + user digests
-- **Schedule:** Daily at 8:05 AM UTC via Vercel cron
+- **Schedule:** Daily at 8:05 AM UTC via cron-job.org
 - **Features:** Combines user digests with ops monitoring
 
 ## Environment Variables
@@ -111,7 +111,7 @@ curl "https://www.allowanceguard.com/api/alerts/daily"
 - Verify Slack webhook URL is working
 
 ### 2. Cron Jobs
-Vercel cron jobs are configured in `vercel.json`:
+Cron jobs are managed externally via [cron-job.org](https://cron-job.org):
 - Health monitoring: Every 10 minutes
 - Daily reports: Daily at 8:05 AM UTC
 
@@ -139,7 +139,7 @@ Vercel cron jobs are configured in `vercel.json`:
 - Check token is properly URL-encoded
 
 **Daily reports not sending:**
-- Check Vercel cron job status
+- Check cron-job.org job status
 - Verify email configuration
 - Check console logs for errors
 
@@ -194,4 +194,4 @@ For ops monitoring issues:
 2. Review console logs for errors
 3. Test endpoints manually
 4. Verify environment variables
-5. Check Vercel cron job status
+5. Check cron-job.org job status

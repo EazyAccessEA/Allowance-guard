@@ -1,11 +1,9 @@
 /**
  * Cron endpoint for lifecycle emails.
  *
- * Designed to be called by Vercel Cron (or external scheduler) once per day.
+ * Called once per day via cron-job.org.
  * Currently handles:
  * - Re-engagement emails: sent ~7 days after subscription cancellation
- *
- * Security: protected by CRON_SECRET or CRON_JOBS_API_KEY header.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
@@ -23,16 +21,7 @@ export async function POST(req: NextRequest) {
   return handleCron(req)
 }
 
-async function handleCron(req: NextRequest) {
-  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
-  if (!cronSecret) {
-    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
-  }
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+async function handleCron(_req: NextRequest) {
   try {
     // Find users who cancelled ~7 days ago and haven't received re-engagement email
     // Window: 6-8 days ago to handle cron timing variance
