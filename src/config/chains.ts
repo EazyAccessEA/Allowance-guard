@@ -21,8 +21,9 @@ export type ChainMeta = {
 }
 
 /**
- * The 10 officially supported chains.
+ * The 15 officially supported chains.
  * Phase 9.5: expanded from 6 to 10 chains (added BSC, Fantom, zkSync Era, Polygon zkEVM).
+ * Phase 9.5b: expanded from 10 to 15 chains (added Mantle, Gnosis, Linea, Scroll, Celo).
  */
 export const SUPPORTED_CHAINS: readonly ChainMeta[] = [
   {
@@ -155,6 +156,72 @@ export const SUPPORTED_CHAINS: readonly ChainMeta[] = [
     gasModel: 'standard',
     blockTimeSec: 5,
     coingeckoId: 'ethereum',
+  },
+  // --- Phase 9.5b: Expansion to 15 chains ---
+  {
+    id: 5000,
+    name: 'Mantle',
+    slug: 'mantle',
+    symbol: 'MNT',
+    nativeDecimals: 18,
+    explorer: 'https://mantlescan.xyz',
+    explorerApi: 'https://api.mantlescan.xyz/api',
+    logo: '/chains/mantle.svg',
+    gasModel: 'standard',
+    blockTimeSec: 2,
+    coingeckoId: 'mantle',
+  },
+  {
+    id: 100,
+    name: 'Gnosis',
+    slug: 'gnosis',
+    symbol: 'xDAI',
+    nativeDecimals: 18,
+    explorer: 'https://gnosisscan.io',
+    explorerApi: 'https://api.gnosisscan.io/api',
+    logo: '/chains/gnosis.svg',
+    gasModel: 'standard',
+    blockTimeSec: 5,
+    coingeckoId: 'xdai',
+  },
+  {
+    id: 59144,
+    name: 'Linea',
+    slug: 'linea',
+    symbol: 'ETH',
+    nativeDecimals: 18,
+    explorer: 'https://lineascan.build',
+    explorerApi: 'https://api.lineascan.build/api',
+    logo: '/chains/linea.svg',
+    gasModel: 'standard',
+    blockTimeSec: 2,
+    coingeckoId: 'ethereum',
+  },
+  {
+    id: 534352,
+    name: 'Scroll',
+    slug: 'scroll',
+    symbol: 'ETH',
+    nativeDecimals: 18,
+    explorer: 'https://scroll.blockscout.com',
+    explorerApi: 'https://scroll.blockscout.com/api',
+    logo: '/chains/scroll.svg',
+    gasModel: 'standard',
+    blockTimeSec: 3,
+    coingeckoId: 'ethereum',
+  },
+  {
+    id: 42220,
+    name: 'Celo',
+    slug: 'celo',
+    symbol: 'CELO',
+    nativeDecimals: 18,
+    explorer: 'https://celoscan.io',
+    explorerApi: 'https://api.celoscan.io/api',
+    logo: '/chains/celo.svg',
+    gasModel: 'standard',
+    blockTimeSec: 5,
+    coingeckoId: 'celo',
   },
 ] as const
 

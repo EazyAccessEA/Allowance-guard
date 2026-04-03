@@ -1,6 +1,6 @@
 // lib/chains.ts
 import { createPublicClient, http, fallback, defineChain, type Transport, type PublicClient, type Chain } from 'viem'
-import { mainnet, arbitrum, base, optimism, polygon, avalanche, bsc, fantom, zkSync, polygonZkEvm } from 'viem/chains'
+import { mainnet, arbitrum, base, optimism, polygon, avalanche, bsc, fantom, zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo } from 'viem/chains'
 import { CHAINS, type RpcEndpoint } from './networks'
 import { incrRpc } from '@/lib/metrics'
 
@@ -53,10 +53,15 @@ const MAP: Record<number, Chain> = {
   250: fantom,
   324: zkSync,
   1101: polygonZkEvm,
+  5000: mantle,
+  100: gnosis,
+  59144: linea,
+  534352: scroll,
+  42220: celo,
 }
 
 const cache = new Map<number, PublicClient>()
-export function clientFor(id: 1|42161|8453|10|137|43114|56|250|324|1101): PublicClient {
+export function clientFor(id: 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220): PublicClient {
   const hit = cache.get(id); if (hit) return hit
   const cfg = CHAINS[id]
   const chain = MAP[id]

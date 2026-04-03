@@ -149,6 +149,63 @@ export const CHAINS: Record<number, ChainCfg> = {
     ]),
     explorer: 'https://zkevm.polygonscan.com',
     enabled: !disabledSet.has('1101')
+  },
+
+  // --- Phase 9.5b: Expansion to 15 chains ---
+  5000: {
+    id: 5000,
+    name: 'Mantle',
+    symbol: 'MNT',
+    rpcs: envList('MANTLE_RPC_URLS', [
+      'https://rpc.mantle.xyz',
+      'https://rpc.ankr.com/mantle'
+    ]),
+    explorer: 'https://mantlescan.xyz',
+    enabled: !disabledSet.has('5000')
+  },
+  100: {
+    id: 100,
+    name: 'Gnosis',
+    symbol: 'xDAI',
+    rpcs: envList('GNOSIS_RPC_URLS', [
+      'https://rpc.gnosischain.com',
+      'https://rpc.ankr.com/gnosis'
+    ]),
+    explorer: 'https://gnosisscan.io',
+    enabled: !disabledSet.has('100')
+  },
+  59144: {
+    id: 59144,
+    name: 'Linea',
+    symbol: 'ETH',
+    rpcs: envList('LINEA_RPC_URLS', [
+      'https://rpc.linea.build',
+      'https://rpc.ankr.com/linea'
+    ]),
+    explorer: 'https://lineascan.build',
+    enabled: !disabledSet.has('59144')
+  },
+  534352: {
+    id: 534352,
+    name: 'Scroll',
+    symbol: 'ETH',
+    rpcs: envList('SCROLL_RPC_URLS', [
+      'https://rpc.scroll.io',
+      'https://rpc.ankr.com/scroll'
+    ]),
+    explorer: 'https://scroll.blockscout.com',
+    enabled: !disabledSet.has('534352')
+  },
+  42220: {
+    id: 42220,
+    name: 'Celo',
+    symbol: 'CELO',
+    rpcs: envList('CELO_RPC_URLS', [
+      'https://forno.celo.org',
+      'https://rpc.ankr.com/celo'
+    ]),
+    explorer: 'https://celoscan.io',
+    enabled: !disabledSet.has('42220')
   }
 } as const
 
@@ -170,8 +227,8 @@ export const NETWORKS = CHAINS
 export { CHAIN_NAMES, CHAIN_BY_ID, SUPPORTED_CHAINS as CHAIN_META_LIST } from '@/config/chains'
 
 /** ---------- Legacy functions (maintained for compatibility) ---------- */
-export function enabledChainIds(): Array<1|42161|8453|10|137|43114|56|250|324|1101> {
-  return (Object.values(CHAINS).filter(c => c.enabled).map(c => c.id) as Array<1|42161|8453|10|137|43114|56|250|324|1101>)
+export function enabledChainIds(): Array<1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220> {
+  return (Object.values(CHAINS).filter(c => c.enabled).map(c => c.id) as Array<1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220>)
 }
 
 export function explorerTx(chainId: number, tx: string) {
