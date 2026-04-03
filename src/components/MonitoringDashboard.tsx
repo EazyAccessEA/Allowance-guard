@@ -19,6 +19,7 @@ import {
   Clock,
 } from 'lucide-react'
 import { InlineError } from '@/components/ErrorBoundary'
+import EmptyState from '@/components/EmptyState'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -225,13 +226,12 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
               ))}
             </div>
           ) : events.length === 0 ? (
-            <div className="text-center py-8">
-              <BellOff className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
-              <p className="text-sm text-text-secondary">No monitoring events yet</p>
-              <p className="text-xs text-text-tertiary mt-1">
-                Events will appear here when changes are detected in your wallet&apos;s approvals.
-              </p>
-            </div>
+            <EmptyState
+              icon={<BellOff className="w-7 h-7" />}
+              title="No monitoring events yet"
+              description="Events will appear here when changes are detected in your wallet's approvals."
+              upgradePlan="pro"
+            />
           ) : (
             <>
               <div className="space-y-3">

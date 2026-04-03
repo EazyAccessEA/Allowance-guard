@@ -13,6 +13,50 @@ function generateUUID(): string {
 /** Your public origin (no trailing slash) */
 const ORIGIN = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, '') || 'http://localhost:3000'
 
+/* ── CSRF protection ─────────────────────────────────────────────────── */
+const CSRF_COOKIE = 'ag_csrf'
+const CSRF_HEADER = 'x-csrf-token'
+const STATE_CHANGING_METHODS = new Set(['POST', 'PUT', 'DELETE', 'PATCH'])
+const CSRF_EXEMPT_PREFIXES = [
+  '/api/v1/',           // B2B API (API key auth)
+  '/api/stripe/',       // Stripe webhooks
+  '/api/coinbase/',     // Coinbase webhooks
+  '/api/jobs/',         // CRON routes
+  '/api/monitor/cron',  // CRON route
+  '/api/rules/evaluate',// CRON route
+  '/api/email/cron',    // CRON route
+  '/api/webhooks/process', // CRON route
+  '/api/healthz',       // Health check
+  '/api/readiness',     // Readiness check
+  '/api/alerts/daily',  // Cron-triggered
+]
+
+function isCsrfExempt(pathname: string): boolean {
+  return CSRF_EXEMPT_PREFIXES.some(prefix => pathname.startsWith(prefix))
+}
+
+/**
+ * Validate CSRF token on state-changing requests from the browser.
+ * Returns a 403 response if invalid, or null if valid/exempt.
+ */
+function checkCsrf(req: NextRequest): NextResponse | null {
+  if (!STATE_CHANGING_METHODS.has(req.method)) return null
+  if (isCsrfExempt(req.nextUrl.pathname)) return null
+
+  // Skip if no session cookie — request will fail auth anyway
+  const sessionCookie = req.cookies.get('ag_sess')?.value
+  if (!sessionCookie) return null
+
+  const csrfCookie = req.cookies.get(CSRF_COOKIE)?.value
+  const csrfHeader = req.headers.get(CSRF_HEADER)
+
+  if (!csrfCookie || !csrfHeader || csrfCookie !== csrfHeader) {
+    return NextResponse.json({ error: 'Invalid CSRF token' }, { status: 403 })
+  }
+
+  return null
+}
+
 /** Sophisticated Bot Detection with User-Agent Analysis */
 const BOT_PATTERNS = {
   // Search Engine Bots (High Priority - Never Rate Limit)
@@ -198,14 +242,21 @@ export async function middleware(req: NextRequest) {
       return applySecurityHeaders(applyCORS(response, req, botInfo), botInfo)
     }
     
-    // 3. Create base response (rate limiting handled at route level via Redis)
+    // 3. CSRF validation — reject state-changing requests with bad/missing token
+    const csrfBlock = checkCsrf(req)
+    if (csrfBlock) {
+      csrfBlock.headers.set('x-request-id', requestId)
+      return csrfBlock
+    }
+
+    // 4. Create base response (rate limiting handled at route level via Redis)
     let response = NextResponse.next()
     response.headers.set('x-request-id', requestId)
     
-    // 4. Apply security headers with bot optimizations
+    // 5. Apply security headers with bot optimizations
     response = applySecurityHeaders(response, botInfo)
 
-    // 5. Apply CORS with bot awareness
+    // 6. Apply CORS with bot awareness
     response = applyCORS(response, req, botInfo)
     
     return response
