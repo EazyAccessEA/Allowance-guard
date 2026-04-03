@@ -1,15 +1,17 @@
 {
   "name": "allowance-guard-extension",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "AllowanceGuard Browser Extension - Protect your wallet from risky token approvals",
   "private": true,
   "scripts": {
-    "build": "npm run copy-files && npm run copy-icons",
-    "copy-files": "cp src/*.js dist/ && cp popup.html dist/ && cp manifest.json dist/",
-    "copy-icons": "cp -r icons dist/",
+    "build": "npm run build:chrome",
+    "build:chrome": "mkdir -p dist && cp src/background.js src/content.js src/popup.js dist/ && cp popup.html dist/ && cp manifest.json dist/ && cp -r icons dist/",
+    "build:firefox": "mkdir -p dist-firefox && cp src/background.firefox.js dist-firefox/background.js && cp src/content.js dist-firefox/ && cp src/popup.js dist-firefox/ && cp popup.html dist-firefox/ && cp manifest.firefox.json dist-firefox/manifest.json && cp -r icons dist-firefox/",
     "dev": "npm run build && npm run watch",
     "watch": "nodemon --watch src --ext js,html,json --exec 'npm run build'",
-    "package": "npm run build && cd dist && zip -r ../allowance-guard-extension.zip .",
+    "package": "npm run package:chrome && npm run package:firefox",
+    "package:chrome": "npm run build:chrome && cd dist && zip -r ../allowance-guard-chrome.zip .",
+    "package:firefox": "npm run build:firefox && cd dist-firefox && zip -r ../allowance-guard-firefox.zip .",
     "test": "echo 'Extension tests would go here'",
     "lint": "echo 'Extension linting would go here'"
   },

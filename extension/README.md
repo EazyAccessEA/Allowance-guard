@@ -67,24 +67,31 @@ Use the included test wallet demo to verify functionality:
 
 ```
 extension/
-├── manifest.json          # Extension manifest (Manifest v3)
+├── manifest.json              # Chrome manifest (Manifest v3)
+├── manifest.firefox.json      # Firefox manifest (Manifest v2)
 ├── src/
-│   ├── content.js         # Content script for transaction monitoring
-│   ├── background.js      # Service worker for API communication
-│   └── popup.js          # Popup UI logic
-├── popup.html            # Extension popup UI
-├── icons/                # Extension icons
+│   ├── content.js             # Content script for transaction monitoring
+│   ├── background.js          # Service worker (Chrome)
+│   ├── background.firefox.js  # Background script (Firefox)
+│   └── popup.js               # Popup UI logic
+├── popup.html                 # Extension popup UI
+├── icons/                     # Extension icons
 ├── demo/
-│   └── test-wallet.html  # Test wallet simulation
-├── dist/                 # Built extension files
-└── package.json          # Build configuration
+│   └── test-wallet.html       # Test wallet simulation
+├── dist/                      # Built Chrome extension files
+├── dist-firefox/              # Built Firefox extension files
+└── package.json               # Build configuration
 ```
 
 ### Build Commands
 
-- `npm run build` - Build the extension for production
+- `npm run build` - Build the Chrome extension (Manifest v3)
+- `npm run build:chrome` - Build the Chrome extension (Manifest v3)
+- `npm run build:firefox` - Build the Firefox extension (Manifest v2)
 - `npm run dev` - Build and watch for changes
-- `npm run package` - Create a ZIP file for distribution
+- `npm run package` - Create ZIP files for both Chrome and Firefox
+- `npm run package:chrome` - Create Chrome ZIP (`allowance-guard-chrome.zip`)
+- `npm run package:firefox` - Create Firefox ZIP (`allowance-guard-firefox.zip`)
 - `npm run test` - Run extension tests
 - `npm run lint` - Lint extension code
 
@@ -176,6 +183,15 @@ This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) 
 - **Discord**: [AllowanceGuard Community](https://discord.gg/allowanceguard)
 
 ## Changelog
+
+### v2.0.0
+- Firefox support (Manifest v2 adaptation)
+- Pre-transaction protection: intercept approve(), permit(), permit2(), setApprovalForAll()
+- EIP-2612 gasless permit detection
+- Approval amount modifier (unlimited to exact)
+- Pro/Sentinel tier enhanced analysis
+- Welcome page on first install
+- Separate Chrome and Firefox build scripts
 
 ### v1.0.0
 - Initial release
