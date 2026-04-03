@@ -1,7 +1,7 @@
 # AllowanceGuard CLA — Legal Review Checklist
 
 **Status**: Pending review
-**Owner**: EazyAccessEA
+**Owner**: EazyAccess Ltd
 **Created**: April 2026
 
 This checklist covers items that require **your personal action** before the CLA is fully enforceable. The CLA document (`CLA.md`) and automation are in place, but a qualified lawyer should review these areas.
@@ -10,13 +10,13 @@ This checklist covers items that require **your personal action** before the CLA
 
 ## Lawyer Review Items
 
-- [ ] **Governing law (Section 10)** — Currently set to "England and Wales". Confirm this is correct for your legal entity. If EazyAccessEA is registered elsewhere, update accordingly.
+- [ ] **Governing law (Section 10)** — Currently set to "England and Wales". Confirm this is correct for your legal entity. If EazyAccess Ltd is registered elsewhere, update accordingly.
 
 - [ ] **Patent grant (Section 3)** — Confirm the patent grant language is appropriate for your jurisdiction and business model. The defensive termination clause (patents revoke if a contributor sues) is standard but should be validated.
 
 - [ ] **"Sign-by-PR" enforceability (Section 8)** — Confirm that a pull request submission constitutes valid acceptance of the CLA in your jurisdiction. Some jurisdictions may require more explicit consent (e.g., click-through or email confirmation).
 
-- [ ] **Copyright assignment vs. license grant (Section 2)** — The CLA currently uses a **license grant** (contributor keeps ownership). If you need a **copyright assignment** instead (full transfer of ownership to EazyAccessEA), the CLA must be rewritten. License grants are more contributor-friendly and more commonly accepted.
+- [ ] **Copyright assignment vs. license grant (Section 2)** — The CLA currently uses a **license grant** (contributor keeps ownership). If you need a **copyright assignment** instead (full transfer of ownership to EazyAccess Ltd), the CLA must be rewritten. License grants are more contributor-friendly and more commonly accepted.
 
 - [ ] **Sublicensing scope (Section 2)** — The CLA grants sublicensing rights. Confirm this is broad enough for your commercial license model (e.g., if you offer white-label or OEM deals).
 

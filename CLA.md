@@ -2,7 +2,7 @@
 
 **Version 1.2 — April 2026**
 
-Thank you for your interest in contributing to AllowanceGuard ("the Project"), maintained by EazyAccessEA ("the Maintainer"). This Contributor License Agreement ("Agreement") defines the terms under which you ("Contributor") submit Contributions to the Project.
+Thank you for your interest in contributing to AllowanceGuard ("the Project"), maintained by EazyAccess Ltd ("the Maintainer"). This Contributor License Agreement ("Agreement") defines the terms under which you ("Contributor") submit Contributions to the Project.
 
 **By submitting a Contribution (as defined below) to this repository, you agree to these terms. For organisations, an authorised representative must agree as set out in Section 9.**
 
