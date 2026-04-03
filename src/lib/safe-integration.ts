@@ -28,22 +28,22 @@ const ERC20_ABI = parseAbi([
   'function approve(address spender, uint256 amount) returns (bool)',
 ])
 
-// Safe transaction service API URLs by chain
+// Safe transaction service API URLs by chain (new gateway format)
 const SAFE_TX_SERVICE: Record<number, string> = {
-  1: 'https://safe-transaction-mainnet.safe.global',
-  42161: 'https://safe-transaction-arbitrum.safe.global',
-  8453: 'https://safe-transaction-base.safe.global',
-  10: 'https://safe-transaction-optimism.safe.global',
-  137: 'https://safe-transaction-polygon.safe.global',
-  43114: 'https://safe-transaction-avalanche.safe.global',
-  56: 'https://safe-transaction-bsc.safe.global',
-  324: 'https://safe-transaction-zksync.safe.global',
-  1101: 'https://safe-transaction-polygon-zkevm.safe.global',
-  5000: 'https://safe-transaction-mantle.safe.global',
-  100: 'https://safe-transaction-gnosis-chain.safe.global',
-  59144: 'https://safe-transaction-linea.safe.global',
-  534352: 'https://safe-transaction-scroll.safe.global',
-  42220: 'https://safe-transaction-celo.safe.global',
+  1: 'https://api.safe.global/tx-service/eth',
+  42161: 'https://api.safe.global/tx-service/arb1',
+  8453: 'https://api.safe.global/tx-service/base',
+  10: 'https://api.safe.global/tx-service/oeth',
+  137: 'https://api.safe.global/tx-service/pol',
+  43114: 'https://api.safe.global/tx-service/avax',
+  56: 'https://api.safe.global/tx-service/bnb',
+  324: 'https://api.safe.global/tx-service/zksync',
+  1101: 'https://api.safe.global/tx-service/zkevm',
+  5000: 'https://api.safe.global/tx-service/mantle',
+  100: 'https://api.safe.global/tx-service/gno',
+  59144: 'https://api.safe.global/tx-service/linea',
+  534352: 'https://api.safe.global/tx-service/scr',
+  42220: 'https://api.safe.global/tx-service/celo',
 }
 
 export interface SafeInfo {
