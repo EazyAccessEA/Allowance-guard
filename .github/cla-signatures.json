@@ -1,0 +1,11 @@
+{
+  "_comment": "CLA signatories for AllowanceGuard. Add contributors who have signed the CLA outside of the PR process (e.g., via email or prior agreement). The GitHub Action also accepts CLA acknowledgment via PR checkbox or PR comment.",
+  "signatories": [
+    {
+      "github_username": "EazyAccessEA",
+      "name": "EazyAccessEA (Project Owner)",
+      "signed_date": "2026-04-03",
+      "note": "Project owner — exempt"
+    }
+  ]
+}

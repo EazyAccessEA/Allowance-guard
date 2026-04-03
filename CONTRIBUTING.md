@@ -439,16 +439,40 @@ Brief description of changes.
 - **Follow the code of conduct**
 - **Provide constructive feedback**
 
+## 📜 Contributor License Agreement (CLA)
+
+AllowanceGuard uses a dual license model (AGPL-3.0 + Commercial). To make this possible, all contributors must agree to our [Contributor License Agreement](./CLA.md).
+
+### What the CLA Does
+
+- Grants AllowanceGuard the right to distribute your contributions under both AGPL-3.0 and our commercial license
+- Grants a patent license covering your contributed code
+- **You retain full copyright ownership** of your contributions
+
+### How to Sign
+
+**By submitting a pull request, you agree to the CLA.** Your first PR serves as your signature. No separate forms or third-party services required.
+
+**Contributing on behalf of an organization?** An authorized representative must comment on the PR with:
+
+> I have read and agree to the AllowanceGuard Contributor License Agreement on behalf of [Organization Name].
+
+### Why a CLA?
+
+Dual licensing requires the project maintainer to have the right to offer code under both licenses. Without a CLA, each contributor retains exclusive copyright, making the commercial license legally impossible. The CLA solves this while letting you keep ownership of your work.
+
+For full details, read the complete [CLA](./CLA.md).
+
 ## 📄 License
 
-This project is licensed under the **GNU General Public License v3.0**. By contributing, you agree that your contributions will be licensed under the same license.
+This project is licensed under **AGPL-3.0-or-later** with a commercial dual-license option. By contributing, you agree that your contributions will be licensed under the terms described in the [CLA](./CLA.md). See [LICENSE_STRATEGY.md](./LICENSE_STRATEGY.md) for details.
 
 ## 🎉 Thank You!
 
-Thank you for contributing to Allowance Guard! Your contributions help make DeFi safer for everyone. Together, we're building a more secure and transparent DeFi ecosystem.
+Thank you for contributing to AllowanceGuard! Your contributions help make DeFi safer for everyone. Together, we're building a more secure and transparent DeFi ecosystem.
 
 ---
 
 **Ready to contribute?** Start by forking the repository and checking out our [good first issues](https://github.com/EazyAccessEA/Allowance-guard/labels/good%20first%20issue)!
 
-*Last updated: September 2024*
+*Last updated: April 2026*
