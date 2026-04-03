@@ -21,8 +21,9 @@ export type ChainMeta = {
 }
 
 /**
- * The 10 officially supported chains.
+ * The 15 officially supported chains.
  * Phase 9.5: expanded from 6 to 10 chains (added BSC, Fantom, zkSync Era, Polygon zkEVM).
+ * Phase 9.5b: expanded from 10 to 15 chains (added Mantle, Gnosis, Linea, Scroll, Celo).
  */
 export const SUPPORTED_CHAINS: readonly ChainMeta[] = [
   {

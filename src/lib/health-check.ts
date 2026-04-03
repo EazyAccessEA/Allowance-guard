@@ -10,7 +10,7 @@ export async function run() {
     const chainIds = getSupportedChainIds(true) // Only enabled chains
     const blockNumbers = await Promise.all(
       chainIds.map(async (id) => {
-        const client = clientFor(id as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56) // Type assertion for supported chains
+        const client = clientFor(id as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101 | 5000 | 100 | 59144 | 534352 | 42220)
         const block = await getBlockNumber(client)
         return { chainId: id, block }
       })
