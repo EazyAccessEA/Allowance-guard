@@ -10,19 +10,6 @@ import { withTimeout } from '@/lib/retry'
 import { cacheDel } from '@/lib/cache'
 import { reportError } from '@/lib/rollbar'
 
-function verifyCronSecret(req: NextRequest): NextResponse | null {
-  // Supports both CRON_SECRET and CRON_JOBS_API_KEY for backwards compatibility
-  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
-  if (!cronSecret) {
-    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
-  }
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  return null
-}
-
 async function handle(job: JobRow) {
   if (job.type !== 'scan_wallet') throw new Error(`Unknown job type: ${job.type}`)
   const { wallet, chains } = job.payload as { wallet: string; chains: number[] }
@@ -52,10 +39,7 @@ async function handle(job: JobRow) {
   apiLogger.info('Scan job completed', { jobId: job.id, wallet })
 }
 
-export async function POST(req: NextRequest) {
-  const authError = verifyCronSecret(req)
-  if (authError) return authError
-
+export async function POST(_req: NextRequest) {
   try {
     const jobs = await claimPending(2) // small batch
     let done = 0
@@ -83,5 +67,5 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  return POST(req)
+  return POST(req as NextRequest)
 }

@@ -1,11 +1,9 @@
 /**
  * Cron endpoint for continuous monitoring.
  *
- * Designed to be called by Vercel Cron (or external scheduler) every ~15 minutes.
+ * Called every ~15 minutes via cron-job.org.
  * Picks wallets due for re-scan, enqueues scan jobs, then runs change detection
  * and dispatches alerts for any completed scans.
- *
- * Security: protected by CRON_SECRET or CRON_JOBS_API_KEY header.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { getDueMonitors, enqueueMonitorScans, detectChanges, dispatchAlerts } from '@/lib/monitoring'
@@ -25,18 +23,7 @@ export async function POST(req: NextRequest) {
   return handleCron(req)
 }
 
-async function handleCron(req: NextRequest) {
-  // Verify cron secret — fail CLOSED if not configured
-  // Supports both CRON_SECRET and CRON_JOBS_API_KEY for backwards compatibility
-  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
-  if (!cronSecret) {
-    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
-  }
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+async function handleCron(_req: NextRequest) {
   try {
     // 1. Find wallets due for re-scan
     const dueMonitors = await getDueMonitors(25)

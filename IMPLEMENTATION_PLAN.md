@@ -183,7 +183,7 @@
 > - `src/db/schema/policies.ts` — revocation_rules + rule_executions tables
 > - `src/lib/monitoring.ts` — Monitoring logic, change detection, alert dispatch (email/Slack)
 > - `src/lib/rule-engine.ts` — Rule condition evaluator, rule execution engine, CRUD helpers
-> - `src/app/api/monitor/cron/route.ts` — Vercel Cron handler (every 15 min)
+> - `src/app/api/monitor/cron/route.ts` — Cron handler (every 15 min via cron-job.org)
 > - `src/app/api/monitor/events/route.ts` — GET/POST monitoring events
 > - `src/app/api/history/route.ts` — Historical wallet events query
 > - `src/app/api/history/risk/route.ts` — Risk snapshots over time
@@ -199,7 +199,7 @@
 > - `src/db/schema.ts` — Added Phase 4 schema exports
 > - `src/components/BulkRevokePanel.tsx` — Full gas savings calculator with live pricing
 > - `src/app/api/bulk-revoke/route.ts` — Per-standard gas estimates + batch savings
-> - `vercel.json` — Added cron schedule for monitoring
+> - Cron schedules managed via cron-job.org (not Vercel Cron)
 
 ### 4.1 Continuous Monitoring
 - [x] `src/db/schema/monitoring.ts` — monitored_wallets + monitoring_events tables

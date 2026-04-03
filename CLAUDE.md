@@ -153,6 +153,7 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 - Log significant actions via `src/lib/audit.ts`.
 - B2B API routes live under `/api/v1/` and use API key auth.
 - Consumer routes use session auth.
+- Cron routes (cleanup, monitoring, rules, webhooks, email) are called by [cron-job.org](https://cron-job.org) — no `CRON_SECRET` auth. Do not add Vercel Cron schedules to `vercel.json`.
 
 ### Database
 - Use Drizzle ORM for all queries. No raw SQL.
