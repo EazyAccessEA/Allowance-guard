@@ -75,7 +75,7 @@ export default function DocsPage() {
   const faqItems = [
     {
       question: "How does AllowanceGuard work?",
-      answer: "AllowanceGuard scans your wallet across Ethereum, Arbitrum, and Base networks using direct RPC calls. It identifies ERC-20 and ERC-721 approvals, calculates risk scores, and provides one-click revocation through your connected wallet."
+      answer: "AllowanceGuard scans your wallet across 15 EVM chains using direct RPC calls. It identifies ERC-20 and ERC-721 approvals, calculates risk scores, and provides one-click revocation through your connected wallet."
     },
     {
       question: "What makes an approval risky?",
@@ -132,7 +132,7 @@ export default function DocsPage() {
               <div className="space-y-4 mb-6">
                 <div>
                   <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Comprehensive Network Coverage</h4>
-                  <p className="text-base text-text-secondary dark:text-secondary-400">Full support for Ethereum, Arbitrum, and Base networks with continuous expansion to additional EVM-compatible chains based on user demand and security considerations.</p>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">Full support for 15 EVM chains including Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, BSC, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, and Celo.</p>
                 </div>
                 <div>
                   <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Advanced Risk Intelligence</h4>

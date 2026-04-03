@@ -158,7 +158,7 @@ export default function FAQPage() {
                 <div className="p-8">
                   <h3 className="mobbin-heading-3 text-text-primary mb-6">Which wallets and chains do you support?</h3>
                   <p className="mobbin-body-large text-text-secondary leading-relaxed">
-                    We currently support all Ethereum Virtual Machine (EVM) compatible wallets like MetaMask, Coinbase Wallet, and WalletConnect. Our initial focus is on the Ethereum mainnet, Arbitrum, and Base networks. Support for other chains like Polygon, Optimism, and Avalanche is on our development roadmap. We use standard wallet connection protocols, so any wallet that supports these protocols will work with our platform. We continuously expand our network support based on user demand and security considerations.
+                    We support all Ethereum Virtual Machine (EVM) compatible wallets like MetaMask, Coinbase Wallet, and WalletConnect. AllowanceGuard currently covers 15 chains: Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, BNB Smart Chain, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, and Celo. We use standard wallet connection protocols, so any wallet that supports these protocols will work with our platform. We continuously expand our network support based on user demand and security considerations.
                   </p>
                 </div>
               </div>

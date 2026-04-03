@@ -315,21 +315,29 @@ Content-Type: application/json`}
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">1</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Ethereum Mainnet</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
-                  </tr>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">42161</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Arbitrum One</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">8453</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Base</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
-                  </tr>
+                  {[
+                    { id: '1', name: 'Ethereum Mainnet' },
+                    { id: '42161', name: 'Arbitrum One' },
+                    { id: '8453', name: 'Base' },
+                    { id: '10', name: 'Optimism' },
+                    { id: '137', name: 'Polygon' },
+                    { id: '43114', name: 'Avalanche' },
+                    { id: '56', name: 'BNB Smart Chain' },
+                    { id: '250', name: 'Fantom' },
+                    { id: '324', name: 'zkSync Era' },
+                    { id: '1101', name: 'Polygon zkEVM' },
+                    { id: '5000', name: 'Mantle' },
+                    { id: '100', name: 'Gnosis' },
+                    { id: '59144', name: 'Linea' },
+                    { id: '534352', name: 'Scroll' },
+                    { id: '42220', name: 'Celo' },
+                  ].map((chain, i, arr) => (
+                    <tr key={chain.id} className={i < arr.length - 1 ? 'border-b border-border-primary dark:border-secondary-700/50' : ''}>
+                      <td className="py-2 font-mono text-text-primary dark:text-secondary-100">{chain.id}</td>
+                      <td className="py-2 text-text-tertiary dark:text-secondary-400">{chain.name}</td>
+                      <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

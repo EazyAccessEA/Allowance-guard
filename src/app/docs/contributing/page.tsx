@@ -210,7 +210,7 @@ export default function ContributingPage() {
                 {expandedSection === 'future' && (
                   <div className="px-8 pb-8 animate-fade-in expand-enter">
                     <p className="text-lg text-stone leading-relaxed">
-                      Your contributions enable us to build specific, upcoming features that will significantly expand Allowance Guard&apos;s capabilities. These include multi-chain support for Polygon, Arbitrum, Solana, and other major networks, enhanced risk intelligence data feeds powered by machine learning, mobile applications for iOS and Android, advanced team collaboration features, and integration with popular DeFi protocols for seamless user experiences.
+                      Your contributions enable us to build specific, upcoming features that will significantly expand Allowance Guard&apos;s capabilities. These include expanding beyond our current 15 EVM chains, enhanced risk intelligence data feeds powered by machine learning, mobile applications for iOS and Android, advanced team collaboration features, and integration with popular DeFi protocols for seamless user experiences.
                     </p>
                   </div>
                 )}
