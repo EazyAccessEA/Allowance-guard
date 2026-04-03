@@ -11,11 +11,14 @@ export const dynamic = 'force-dynamic'
  * Calls existing cleanup functions and performs additional data pruning.
  */
 export async function GET(req: NextRequest) {
-  // Verify CRON_SECRET to prevent unauthorized access
+  // Verify cron secret — fail CLOSED if not configured
+  // Supports both CRON_SECRET and CRON_JOBS_API_KEY for backwards compatibility
+  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
+  if (!cronSecret) {
+    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
+  }
   const authHeader = req.headers.get('authorization')
-  const cronSecret = process.env.CRON_SECRET
-
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
