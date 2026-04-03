@@ -24,7 +24,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Multi-chain (6 chains)',
+    label: 'Multi-chain (15 chains)',
     values: {
       free: false,
       pro: true,

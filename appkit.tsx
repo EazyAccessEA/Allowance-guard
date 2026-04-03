@@ -2,7 +2,7 @@
 
 import { createAppKit } from "@reown/appkit/react";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet, arbitrum, base } from "@reown/appkit/networks";
+import { mainnet, arbitrum, base, polygon, optimism, avalanche, bsc, fantom, zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo } from "@reown/appkit/networks";
 import { cookieStorage, createStorage } from "@wagmi/core";
 
 // 1. Get projectId at https://cloud.reown.com
@@ -26,7 +26,7 @@ const wagmiAdapter = new WagmiAdapter({
   storage: createStorage({ storage: cookieStorage }),
   ssr: true,
   projectId,
-  networks: [mainnet, arbitrum, base]
+  networks: [mainnet, arbitrum, base, polygon, optimism, avalanche, bsc, fantom, zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo]
 });
 
 // 4. Create the AppKit instance - OUTSIDE React component as per docs
@@ -35,7 +35,7 @@ if (projectId) {
   createAppKit({
     adapters: [wagmiAdapter],
     metadata: metadata,
-    networks: [mainnet, arbitrum, base],
+    networks: [mainnet, arbitrum, base, polygon, optimism, avalanche, bsc, fantom, zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo],
     projectId,
     features: {
       analytics: false, // Disable analytics to prevent Coinbase API calls

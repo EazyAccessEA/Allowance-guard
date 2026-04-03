@@ -89,7 +89,7 @@ export default function Hero({
           </div>
         </h1>
         <p className="mobbin-body-large text-text-secondary dark:text-secondary-400 leading-relaxed mb-6 sm:mb-8 md:mb-10">
-          Review, revoke, and monitor wallet permissions across 6 chains. Free and open source.
+          Review, revoke, and monitor wallet permissions across 15 chains. Free and open source.
         </p>
 
         {/* CTA Section */}
@@ -142,7 +142,7 @@ export default function Hero({
           </div>
           <div className="w-px h-8 bg-border-primary dark:bg-secondary-700 hidden sm:block" />
           <div>
-            <div className="text-xl sm:text-2xl font-bold text-text-primary dark:text-secondary-100">6</div>
+            <div className="text-xl sm:text-2xl font-bold text-text-primary dark:text-secondary-100">15</div>
             <div className="text-xs text-text-secondary dark:text-secondary-400">Chains supported</div>
           </div>
         </div>
