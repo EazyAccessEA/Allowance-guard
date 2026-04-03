@@ -114,6 +114,41 @@ export const CHAINS: Record<number, ChainCfg> = {
     ]),
     explorer: 'https://bscscan.com',
     enabled: !disabledSet.has('56')
+  },
+
+  // --- Phase 9.5: New chains ---
+  250: {
+    id: 250,
+    name: 'Fantom',
+    symbol: 'FTM',
+    rpcs: envList('FANTOM_RPC_URLS', [
+      'https://rpc.ftm.tools',
+      'https://rpc.ankr.com/fantom'
+    ]),
+    explorer: 'https://ftmscan.com',
+    enabled: !disabledSet.has('250')
+  },
+  324: {
+    id: 324,
+    name: 'zkSync Era',
+    symbol: 'ETH',
+    rpcs: envList('ZKSYNC_RPC_URLS', [
+      'https://mainnet.era.zksync.io',
+      'https://rpc.ankr.com/zksync_era'
+    ]),
+    explorer: 'https://explorer.zksync.io',
+    enabled: !disabledSet.has('324')
+  },
+  1101: {
+    id: 1101,
+    name: 'Polygon zkEVM',
+    symbol: 'ETH',
+    rpcs: envList('POLYGON_ZKEVM_RPC_URLS', [
+      'https://zkevm-rpc.com',
+      'https://rpc.ankr.com/polygon_zkevm'
+    ]),
+    explorer: 'https://zkevm.polygonscan.com',
+    enabled: !disabledSet.has('1101')
   }
 } as const
 
@@ -135,8 +170,8 @@ export const NETWORKS = CHAINS
 export { CHAIN_NAMES, CHAIN_BY_ID, SUPPORTED_CHAINS as CHAIN_META_LIST } from '@/config/chains'
 
 /** ---------- Legacy functions (maintained for compatibility) ---------- */
-export function enabledChainIds(): Array<1|42161|8453|10|137|43114|56> {
-  return (Object.values(CHAINS).filter(c => c.enabled).map(c => c.id) as Array<1|42161|8453|10|137|43114|56>)
+export function enabledChainIds(): Array<1|42161|8453|10|137|43114|56|250|324|1101> {
+  return (Object.values(CHAINS).filter(c => c.enabled).map(c => c.id) as Array<1|42161|8453|10|137|43114|56|250|324|1101>)
 }
 
 export function explorerTx(chainId: number, tx: string) {

@@ -73,7 +73,7 @@ export function factorStale(input: RiskInput): RiskFactor | null {
 // ---------------------------------------------------------------------------
 export async function factorSpenderIsEOA(input: RiskInput): Promise<RiskFactor | null> {
   try {
-    const client = clientFor(input.chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56)
+    const client = clientFor(input.chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101)
     const code = await client.getCode({ address: getAddress(input.spenderAddress) as Address })
     if (code && code !== '0x') return null // has code = is contract
 
@@ -96,7 +96,7 @@ const EIP1967_IMPL_SLOT = '0x360894a13ba1a3210667c828492db2b21e54ebd381cf6ba6ec6
 
 export async function factorProxy(input: RiskInput): Promise<RiskFactor | null> {
   try {
-    const client = clientFor(input.chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56)
+    const client = clientFor(input.chainId as 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101)
     const slot = await client.getStorageAt({
       address: getAddress(input.spenderAddress) as Address,
       slot: EIP1967_IMPL_SLOT,
