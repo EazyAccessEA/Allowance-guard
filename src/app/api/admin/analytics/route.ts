@@ -1,67 +1,54 @@
-/**
- * Admin Analytics API — Phase 8.3
- *
- * Returns analytics data for the admin dashboard.
- * Requires admin authentication.
- */
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
-import { getFunnelSummary, getRevenueMetrics, getApiUsageByTier } from '@/lib/analytics'
 import { pool } from '@/lib/db'
 
-async function isAdmin(userId: number): Promise<boolean> {
-  const { rows } = await pool.query(
-    `SELECT role FROM users WHERE id = $1`,
-    [userId],
-  )
-  return rows[0]?.role === 'admin'
-}
-
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await getSession()
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
-  if (!(await isAdmin(Number(session.user_id)))) {
+
+  // Check admin role
+  const { rows: userRows } = await pool.query(
+    `SELECT role FROM users WHERE id = $1`,
+    [session.user_id],
+  )
+  if (!userRows[0] || userRows[0].role !== 'admin') {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
-  const url = new URL(req.url)
-  const days = Math.min(Number(url.searchParams.get('days') || 30), 365)
-
   try {
-    const [funnel, revenue, apiUsage] = await Promise.all([
-      getFunnelSummary(days),
-      getRevenueMetrics(),
-      getApiUsageByTier(days),
-    ])
+    // Funnel data (last 30 days)
+    const { rows: funnel } = await pool.query(`
+      SELECT
+        event_name,
+        DATE_TRUNC('day', created_at)::text AS event_day,
+        COUNT(*)::int AS event_count,
+        COUNT(DISTINCT user_id)::int AS unique_users
+      FROM analytics_events
+      WHERE created_at > NOW() - INTERVAL '30 days'
+      GROUP BY event_name, DATE_TRUNC('day', created_at)
+      ORDER BY event_day DESC, event_name
+    `)
 
-    // Top features by usage
-    const { rows: featureUsage } = await pool.query(
-      `SELECT event_name, COUNT(*) AS count
-       FROM analytics_events
-       WHERE event_category = 'feature'
-         AND created_at > NOW() - INTERVAL '1 day' * $1
-       GROUP BY event_name
-       ORDER BY count DESC
-       LIMIT 10`,
-      [days],
-    )
+    // Revenue summary
+    const { rows: revenue } = await pool.query(`
+      SELECT
+        plan,
+        status,
+        COUNT(*)::int AS subscriber_count,
+        COUNT(*) FILTER (WHERE status = 'active')::int AS active_count,
+        COUNT(*) FILTER (WHERE status = 'canceled')::int AS cancelled_count,
+        COUNT(*) FILTER (WHERE status = 'trialing')::int AS trialing_count,
+        COUNT(*) FILTER (WHERE cancelled_at IS NOT NULL
+          AND cancelled_at > NOW() - INTERVAL '30 days')::int AS recent_cancellations
+      FROM subscriptions
+      GROUP BY plan, status
+    `)
 
-    return NextResponse.json({
-      period: { days },
-      funnel,
-      revenue,
-      apiUsage,
-      topFeatures: featureUsage.map((r) => ({
-        feature: String(r.event_name),
-        count: Number(r.count),
-      })),
-    })
+    return NextResponse.json({ funnel, revenue })
   } catch (err) {
-    return NextResponse.json(
-      { error: 'Failed to fetch analytics', details: err instanceof Error ? err.message : String(err) },
-      { status: 500 },
-    )
+    console.error('[admin/analytics] Error:', err)
+    return NextResponse.json({ error: 'Failed to load analytics' }, { status: 500 })
   }
 }

@@ -1,143 +1,125 @@
-/**
- * Admin Feature Flags API — Phase 8.4
- *
- * CRUD operations for feature flags. Admin-only.
- */
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
-import { getAllFlags, createFlag, updateFlag, deleteFlag } from '@/lib/feature-flags'
 import { pool } from '@/lib/db'
+import { invalidateFlagCache } from '@/lib/feature-flags'
 
-async function isAdmin(userId: number): Promise<boolean> {
+async function requireAdmin() {
+  const session = await getSession()
+  if (!session) return null
+
   const { rows } = await pool.query(
     `SELECT role FROM users WHERE id = $1`,
-    [userId],
+    [session.user_id],
   )
-  return rows[0]?.role === 'admin'
+  if (!rows[0] || rows[0].role !== 'admin') return null
+  return session
 }
 
-async function requireAdmin(req: NextRequest) {
-  const session = await getSession()
-  if (!session) {
-    return { error: NextResponse.json({ error: 'Unauthorized' }, { status: 401 }) }
+// GET — list all flags
+export async function GET() {
+  const admin = await requireAdmin()
+  if (!admin) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
-  if (!(await isAdmin(Number(session.user_id)))) {
-    return { error: NextResponse.json({ error: 'Forbidden' }, { status: 403 }) }
-  }
-  return { session }
+
+  const { rows } = await pool.query(
+    `SELECT id, name, description, rollout_percentage, target_plans, enabled, created_at, updated_at
+     FROM feature_flags
+     ORDER BY created_at DESC`,
+  )
+  return NextResponse.json({ flags: rows })
 }
 
-/** GET — List all flags */
-export async function GET(req: NextRequest) {
-  const auth = await requireAdmin(req)
-  if ('error' in auth && auth.error) return auth.error
-
-  try {
-    const flags = await getAllFlags()
-    return NextResponse.json({ flags })
-  } catch (err) {
-    return NextResponse.json(
-      { error: 'Failed to fetch flags', details: err instanceof Error ? err.message : String(err) },
-      { status: 500 },
-    )
-  }
-}
-
-/** POST — Create a new flag */
+// POST — create a new flag
 export async function POST(req: NextRequest) {
-  const auth = await requireAdmin(req)
-  if ('error' in auth && auth.error) return auth.error
-
-  try {
-    const body = await req.json()
-    const { name, description, enabled, rolloutPercentage, targetPlans } = body
-
-    if (!name || typeof name !== 'string' || name.trim().length === 0) {
-      return NextResponse.json({ error: 'Name is required' }, { status: 400 })
-    }
-
-    if (rolloutPercentage !== undefined && (rolloutPercentage < 0 || rolloutPercentage > 100)) {
-      return NextResponse.json({ error: 'Rollout percentage must be 0-100' }, { status: 400 })
-    }
-
-    const flag = await createFlag({
-      name: name.trim(),
-      description: description?.trim(),
-      enabled: Boolean(enabled),
-      rolloutPercentage: Number(rolloutPercentage ?? 0),
-      targetPlans: Array.isArray(targetPlans) ? targetPlans : [],
-    })
-
-    return NextResponse.json({ flag }, { status: 201 })
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err)
-    if (msg.includes('duplicate key') || msg.includes('unique')) {
-      return NextResponse.json({ error: 'Flag name already exists' }, { status: 409 })
-    }
-    return NextResponse.json({ error: 'Failed to create flag', details: msg }, { status: 500 })
+  const admin = await requireAdmin()
+  if (!admin) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
+
+  const body = await req.json()
+  const { name, description, rollout_percentage, target_plans } = body
+
+  if (!name || typeof name !== 'string') {
+    return NextResponse.json({ error: 'Name is required' }, { status: 400 })
+  }
+
+  const rollout = Math.max(0, Math.min(100, parseInt(rollout_percentage) || 0))
+  const plans = Array.isArray(target_plans) ? target_plans : []
+
+  const { rows } = await pool.query(
+    `INSERT INTO feature_flags (name, description, rollout_percentage, target_plans, enabled)
+     VALUES ($1, $2, $3, $4, false)
+     RETURNING id, name`,
+    [name, description || null, rollout, JSON.stringify(plans)],
+  )
+
+  invalidateFlagCache()
+  return NextResponse.json({ flag: rows[0] }, { status: 201 })
 }
 
-/** PUT — Update a flag */
-export async function PUT(req: NextRequest) {
-  const auth = await requireAdmin(req)
-  if ('error' in auth && auth.error) return auth.error
-
-  try {
-    const body = await req.json()
-    const { id, description, enabled, rolloutPercentage, targetPlans } = body
-
-    if (!id || typeof id !== 'string') {
-      return NextResponse.json({ error: 'Flag ID is required' }, { status: 400 })
-    }
-
-    if (rolloutPercentage !== undefined && (rolloutPercentage < 0 || rolloutPercentage > 100)) {
-      return NextResponse.json({ error: 'Rollout percentage must be 0-100' }, { status: 400 })
-    }
-
-    const flag = await updateFlag(id, {
-      description,
-      enabled,
-      rolloutPercentage,
-      targetPlans,
-    })
-
-    if (!flag) {
-      return NextResponse.json({ error: 'Flag not found' }, { status: 404 })
-    }
-
-    return NextResponse.json({ flag })
-  } catch (err) {
-    return NextResponse.json(
-      { error: 'Failed to update flag', details: err instanceof Error ? err.message : String(err) },
-      { status: 500 },
-    )
+// PATCH — update a flag (toggle enabled, change rollout)
+export async function PATCH(req: NextRequest) {
+  const admin = await requireAdmin()
+  if (!admin) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
+
+  const body = await req.json()
+  const { id, enabled, rollout_percentage, target_plans } = body
+
+  if (!id) {
+    return NextResponse.json({ error: 'Flag id is required' }, { status: 400 })
+  }
+
+  const updates: string[] = []
+  const params: unknown[] = []
+  let paramIdx = 1
+
+  if (typeof enabled === 'boolean') {
+    updates.push(`enabled = $${paramIdx++}`)
+    params.push(enabled)
+  }
+  if (typeof rollout_percentage === 'number') {
+    updates.push(`rollout_percentage = $${paramIdx++}`)
+    params.push(Math.max(0, Math.min(100, rollout_percentage)))
+  }
+  if (Array.isArray(target_plans)) {
+    updates.push(`target_plans = $${paramIdx++}`)
+    params.push(JSON.stringify(target_plans))
+  }
+
+  if (updates.length === 0) {
+    return NextResponse.json({ error: 'No updates provided' }, { status: 400 })
+  }
+
+  updates.push(`updated_at = NOW()`)
+  params.push(id)
+
+  await pool.query(
+    `UPDATE feature_flags SET ${updates.join(', ')} WHERE id = $${paramIdx}`,
+    params,
+  )
+
+  invalidateFlagCache()
+  return NextResponse.json({ ok: true })
 }
 
-/** DELETE — Remove a flag */
+// DELETE — remove a flag
 export async function DELETE(req: NextRequest) {
-  const auth = await requireAdmin(req)
-  if ('error' in auth && auth.error) return auth.error
-
-  try {
-    const url = new URL(req.url)
-    const id = url.searchParams.get('id')
-
-    if (!id) {
-      return NextResponse.json({ error: 'Flag ID is required' }, { status: 400 })
-    }
-
-    const deleted = await deleteFlag(id)
-    if (!deleted) {
-      return NextResponse.json({ error: 'Flag not found' }, { status: 404 })
-    }
-
-    return NextResponse.json({ ok: true })
-  } catch (err) {
-    return NextResponse.json(
-      { error: 'Failed to delete flag', details: err instanceof Error ? err.message : String(err) },
-      { status: 500 },
-    )
+  const admin = await requireAdmin()
+  if (!admin) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
+
+  const body = await req.json()
+  const { id } = body
+
+  if (!id) {
+    return NextResponse.json({ error: 'Flag id is required' }, { status: 400 })
+  }
+
+  await pool.query(`DELETE FROM feature_flags WHERE id = $1`, [id])
+  invalidateFlagCache()
+  return NextResponse.json({ ok: true })
 }

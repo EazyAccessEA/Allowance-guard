@@ -116,7 +116,7 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
       GROUP BY tm.chain_id, tm.token_address
     ) sub
   `
-  const countRes = await pool.query<{ total: string }>(countSql, params)
+  const countRes = await pool.query(countSql, params)
   const total = Number(countRes.rows[0]?.total ?? 0)
 
   // ORDER & SCORE
@@ -204,6 +204,6 @@ export async function searchTokens(filters: TokenSearchFilters): Promise<{ token
     ORDER BY ${orderBy}
     LIMIT $${p} OFFSET $${p + 1}
   `
-  const dataRes = await pool.query<TokenSearchResult>(dataSql, [...params, safeLimit, safeOffset])
-  return { tokens: dataRes.rows, total }
+  const dataRes = await pool.query(dataSql, [...params, safeLimit, safeOffset])
+  return { tokens: dataRes.rows as unknown as TokenSearchResult[], total }
 }

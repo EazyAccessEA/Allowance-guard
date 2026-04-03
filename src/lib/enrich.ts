@@ -39,7 +39,7 @@ export async function enrichWallet(wallet: string) {
 
   for (const r of uniq) {
     // token metadata
-    await enrichTokenMeta(Number(r.chain_id), r.token_address, r.standard)
+    await enrichTokenMeta(Number(r.chain_id), String(r.token_address), String(r.standard))
 
     // spender label (if known or missing)
     const chainId = Number(r.chain_id)

@@ -9,28 +9,21 @@ import {
 } from 'drizzle-orm/pg-core'
 
 /**
- * Analytics events — funnel and usage tracking for business decisions.
- * Events: wallet_connected, scan_started, scan_completed, revoke_initiated,
- * revoke_completed, upgrade_clicked, checkout_started, checkout_completed,
- * trial_started, trial_converted, etc.
+ * Analytics events — funnel tracking for business decisions.
+ * Tracks key user actions like scans, revokes, upgrades, and checkouts.
  */
 export const analyticsEvents = pgTable('analytics_events', {
   id: uuid('id').defaultRandom().primaryKey(),
   userId: integer('user_id'),
   sessionId: text('session_id'),
   eventName: text('event_name').notNull(),
-  eventCategory: text('event_category').notNull().default('general'),
-  properties: jsonb('properties').default({}),
-  pageUrl: text('page_url'),
-  referrer: text('referrer'),
+  metadata: jsonb('metadata').default({}),
+  ipAddress: text('ip_address'),
   userAgent: text('user_agent'),
-  /** Hashed IP for privacy-safe geo/fraud detection */
-  ipHash: text('ip_hash'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => ({
-  userIdx: index('analytics_events_user_id_idx').on(t.userId),
-  eventNameIdx: index('analytics_events_event_name_idx').on(t.eventName),
-  categoryIdx: index('analytics_events_category_idx').on(t.eventCategory),
-  createdIdx: index('analytics_events_created_at_idx').on(t.createdAt),
-  nameCreatedIdx: index('analytics_events_name_created_idx').on(t.eventName, t.createdAt),
+  userIdx: index('idx_analytics_events_user_id').on(t.userId),
+  eventIdx: index('idx_analytics_events_event_name').on(t.eventName),
+  createdIdx: index('idx_analytics_events_created_at').on(t.createdAt),
+  userEventIdx: index('idx_analytics_events_user_event').on(t.userId, t.eventName, t.createdAt),
 }))

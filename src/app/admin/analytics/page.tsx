@@ -1,342 +1,167 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
-import { Badge } from '@/components/ui/Badge'
-import {
-  BarChart3,
-  TrendingUp,
-  Users,
-  DollarSign,
-  Activity,
-  RefreshCw,
-  Zap,
-} from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { cn } from '@/lib/utils'
 
-interface FunnelItem {
+interface FunnelRow {
   event_name: string
-  count: number
+  event_day: string
+  event_count: number
   unique_users: number
 }
 
-interface RevenueData {
-  totalActive: number
-  byPlan: Array<{ plan: string; count: number }>
-  churnRate: number
-  trialCount: number
-  newLast30d: number
-}
-
-interface ApiUsageItem {
+interface RevenueSummary {
   plan: string
-  total_calls: number
-  unique_keys: number
-}
-
-interface FeatureItem {
-  feature: string
-  count: number
-}
-
-interface AnalyticsData {
-  period: { days: number }
-  funnel: FunnelItem[]
-  revenue: RevenueData
-  apiUsage: ApiUsageItem[]
-  topFeatures: FeatureItem[]
-}
-
-// Plan price mapping for MRR calculation
-const PLAN_PRICES: Record<string, number> = {
-  pro: 9.99,
-  pro_yearly: 79 / 12,
-  sentinel: 49.99,
-  sentinel_yearly: 499 / 12,
-  api_developer: 39,
-  api_growth: 149,
+  status: string
+  subscriber_count: number
+  active_count: number
+  cancelled_count: number
+  trialing_count: number
+  recent_cancellations: number
 }
 
 export default function AdminAnalyticsPage() {
-  const [data, setData] = useState<AnalyticsData | null>(null)
+  const [funnel, setFunnel] = useState<FunnelRow[]>([])
+  const [revenue, setRevenue] = useState<RevenueSummary[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [days, setDays] = useState(30)
-
-  const fetchData = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const res = await fetch(`/api/admin/analytics?days=${days}`)
-      if (!res.ok) throw new Error(await res.text())
-      const json = await res.json()
-      setData(json)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load analytics')
-    } finally {
-      setLoading(false)
-    }
-  }, [days])
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
-
-  const calculateMRR = (byPlan: Array<{ plan: string; count: number }>) => {
-    return byPlan.reduce((sum, p) => sum + (PLAN_PRICES[p.plan] || 0) * p.count, 0)
-  }
+    async function load() {
+      try {
+        const res = await fetch('/api/admin/analytics')
+        if (!res.ok) throw new Error('Failed to load analytics')
+        const data = await res.json()
+        setFunnel(data.funnel ?? [])
+        setRevenue(data.revenue ?? [])
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Unknown error')
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [])
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background-light flex items-center justify-center">
-        <RefreshCw className="w-8 h-8 animate-spin text-primary-accent" />
+      <div className="p-8 text-center text-text-secondary">
+        Loading analytics...
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background-light">
-        <Section className="py-8">
-          <Container>
-            <Card>
-              <CardContent className="p-8 text-center">
-                <p className="text-semantic-danger mb-4">{error}</p>
-                <button onClick={fetchData} className="text-primary-accent hover:underline">
-                  Retry
-                </button>
-              </CardContent>
-            </Card>
-          </Container>
-        </Section>
+      <div className="p-8 text-center text-red-600">
+        Error: {error}
       </div>
     )
   }
 
-  if (!data) return null
+  // Aggregate funnel events
+  const funnelTotals = funnel.reduce<Record<string, { count: number; users: number }>>((acc, row) => {
+    if (!acc[row.event_name]) acc[row.event_name] = { count: 0, users: 0 }
+    acc[row.event_name].count += row.event_count
+    acc[row.event_name].users += row.unique_users
+    return acc
+  }, {})
 
-  const mrr = calculateMRR(data.revenue.byPlan)
+  // Aggregate revenue
+  const totalActive = revenue.reduce((sum, r) => sum + (r.active_count || 0), 0)
+  const totalCancelled = revenue.reduce((sum, r) => sum + (r.cancelled_count || 0), 0)
+  const totalTrialing = revenue.reduce((sum, r) => sum + (r.trialing_count || 0), 0)
 
   return (
-    <div className="min-h-screen bg-background-light">
-      <Section className="py-8">
-        <Container>
-          {/* Header */}
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-neutral-text mb-2">Revenue & Analytics</h1>
-              <p className="text-neutral-text">Business metrics and conversion funnels</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <select
-                value={days}
-                onChange={(e) => setDays(Number(e.target.value))}
-                className="px-3 py-2 border border-neutral-borders rounded-lg bg-background-primary text-neutral-text text-sm"
+    <div className="space-y-8 p-6">
+      <h1 className="text-2xl font-bold text-text-primary">Analytics Dashboard</h1>
+      <p className="text-sm text-text-secondary">
+        Business metrics from the last 30 days. Admin access required.
+      </p>
+
+      {/* Revenue Summary */}
+      <section>
+        <h2 className="mb-4 text-lg font-semibold text-text-primary">Revenue Overview</h2>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <StatCard label="Active Subscribers" value={totalActive} />
+          <StatCard label="Trialing" value={totalTrialing} />
+          <StatCard label="Cancelled (30d)" value={totalCancelled} color="red" />
+        </div>
+
+        {revenue.length > 0 && (
+          <div className="mt-4 overflow-x-auto rounded-lg border border-border-primary">
+            <table className="w-full text-sm">
+              <thead className="bg-background-light">
+                <tr>
+                  <th className="px-4 py-2 text-left font-medium text-text-secondary">Plan</th>
+                  <th className="px-4 py-2 text-left font-medium text-text-secondary">Status</th>
+                  <th className="px-4 py-2 text-right font-medium text-text-secondary">Count</th>
+                  <th className="px-4 py-2 text-right font-medium text-text-secondary">Active</th>
+                  <th className="px-4 py-2 text-right font-medium text-text-secondary">Recent Cancellations</th>
+                </tr>
+              </thead>
+              <tbody>
+                {revenue.map((r, i) => (
+                  <tr key={i} className="border-t border-border-primary">
+                    <td className="px-4 py-2 font-medium capitalize text-text-primary">{r.plan}</td>
+                    <td className="px-4 py-2 text-text-secondary">{r.status}</td>
+                    <td className="px-4 py-2 text-right text-text-primary">{r.subscriber_count}</td>
+                    <td className="px-4 py-2 text-right text-text-primary">{r.active_count}</td>
+                    <td className="px-4 py-2 text-right text-text-primary">{r.recent_cancellations}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {/* Funnel Events */}
+      <section>
+        <h2 className="mb-4 text-lg font-semibold text-text-primary">Funnel Events (30 days)</h2>
+        {Object.keys(funnelTotals).length === 0 ? (
+          <p className="text-sm text-text-secondary">No events tracked yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {Object.entries(funnelTotals).map(([name, data]) => (
+              <div
+                key={name}
+                className="rounded-lg border border-border-primary bg-background-primary p-4"
               >
-                <option value={7}>Last 7 days</option>
-                <option value={30}>Last 30 days</option>
-                <option value={90}>Last 90 days</option>
-              </select>
-              <button
-                onClick={fetchData}
-                className="p-2 border border-neutral-borders rounded-lg hover:bg-background-primary/50 transition-colors"
-              >
-                <RefreshCw className="w-4 h-4 text-neutral-text" />
-              </button>
-            </div>
+                <p className="text-xs font-medium uppercase tracking-wide text-text-secondary">
+                  {name.replace(/_/g, ' ')}
+                </p>
+                <p className="mt-1 text-2xl font-bold text-text-primary">{data.count}</p>
+                <p className="text-xs text-text-secondary">{data.users} unique users</p>
+              </div>
+            ))}
           </div>
+        )}
+      </section>
+    </div>
+  )
+}
 
-          {/* Revenue KPIs */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-semantic-success/10 rounded-lg flex items-center justify-center">
-                    <DollarSign className="w-6 h-6 text-semantic-success" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-neutral-text">MRR</p>
-                    <p className="text-2xl font-bold text-neutral-text">${mrr.toFixed(2)}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary-accent/10 rounded-lg flex items-center justify-center">
-                    <Users className="w-6 h-6 text-primary-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-neutral-text">Active Subscribers</p>
-                    <p className="text-2xl font-bold text-neutral-text">{data.revenue.totalActive}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-semantic-warning/10 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-semantic-warning" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-neutral-text">Churn Rate</p>
-                    <p className="text-2xl font-bold text-neutral-text">
-                      {(data.revenue.churnRate * 100).toFixed(1)}%
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-info/10 rounded-lg flex items-center justify-center">
-                    <Zap className="w-6 h-6 text-info" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-neutral-text">Trials Active</p>
-                    <p className="text-2xl font-bold text-neutral-text">{data.revenue.trialCount}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            {/* Subscribers by Plan */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-primary-accent" />
-                  Subscribers by Plan
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {data.revenue.byPlan.length === 0 ? (
-                  <p className="text-neutral-text text-sm">No active subscribers yet</p>
-                ) : (
-                  <div className="space-y-3">
-                    {data.revenue.byPlan.map((p) => (
-                      <div key={p.plan} className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Badge variant="secondary">{p.plan}</Badge>
-                        </div>
-                        <div className="text-right">
-                          <span className="font-semibold text-neutral-text">{p.count}</span>
-                          <span className="text-sm text-neutral-text ml-2">
-                            (${((PLAN_PRICES[p.plan] || 0) * p.count).toFixed(0)}/mo)
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <div className="mt-4 pt-4 border-t border-neutral-borders text-sm text-neutral-text">
-                  New last 30 days: <strong>{data.revenue.newLast30d}</strong>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Conversion Funnel */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-primary-accent" />
-                  Conversion Funnel ({days}d)
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {data.funnel.length === 0 ? (
-                  <p className="text-neutral-text text-sm">No funnel events tracked yet</p>
-                ) : (
-                  <div className="space-y-3">
-                    {data.funnel.map((f) => (
-                      <div key={f.event_name} className="flex items-center justify-between">
-                        <span className="text-sm text-neutral-text font-mono">
-                          {f.event_name.replace(/_/g, ' ')}
-                        </span>
-                        <div className="text-right">
-                          <span className="font-semibold text-neutral-text">{f.count}</span>
-                          <span className="text-xs text-neutral-text ml-2">
-                            ({f.unique_users} users)
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* API Usage by Tier */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-primary-accent" />
-                  API Usage by Tier ({days}d)
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {data.apiUsage.length === 0 ? (
-                  <p className="text-neutral-text text-sm">No API usage recorded yet</p>
-                ) : (
-                  <div className="space-y-3">
-                    {data.apiUsage.map((u) => (
-                      <div key={u.plan} className="flex items-center justify-between">
-                        <Badge variant="secondary">{u.plan}</Badge>
-                        <div className="text-right">
-                          <span className="font-semibold text-neutral-text">
-                            {u.total_calls.toLocaleString()} calls
-                          </span>
-                          <span className="text-xs text-neutral-text ml-2">
-                            ({u.unique_keys} keys)
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Top Features */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-primary-accent" />
-                  Top Features ({days}d)
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {data.topFeatures.length === 0 ? (
-                  <p className="text-neutral-text text-sm">No feature usage tracked yet</p>
-                ) : (
-                  <div className="space-y-3">
-                    {data.topFeatures.map((f) => (
-                      <div key={f.feature} className="flex items-center justify-between">
-                        <span className="text-sm text-neutral-text font-mono">
-                          {f.feature.replace(/_/g, ' ')}
-                        </span>
-                        <span className="font-semibold text-neutral-text">
-                          {f.count.toLocaleString()}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        </Container>
-      </Section>
+function StatCard({
+  label,
+  value,
+  color = 'default',
+}: {
+  label: string
+  value: number
+  color?: 'default' | 'red'
+}) {
+  return (
+    <div className="rounded-lg border border-border-primary bg-background-primary p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-text-secondary">{label}</p>
+      <p
+        className={cn(
+          'mt-1 text-3xl font-bold',
+          color === 'red' ? 'text-red-600' : 'text-text-primary',
+        )}
+      >
+        {value}
+      </p>
     </div>
   )
 }

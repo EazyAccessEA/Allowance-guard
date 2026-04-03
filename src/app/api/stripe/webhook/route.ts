@@ -7,6 +7,7 @@ import { notifySlackDonation } from '@/lib/notify'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
 import { reportError } from '@/lib/rollbar'
 import { withReq } from '@/lib/logger'
+import { trackEvent } from '@/lib/analytics'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -61,7 +62,13 @@ export async function POST(req: Request) {
 
       await notifySlackDonation({ amount, currency, email, sessionId: session.id })
       await auditWebhook('stripe', 'checkout.session.completed', session.id, { amount, currency, email })
-      console.log('✅ Donation recorded:', { session_id: session.id, event_id: event.id, amount, currency, email })
+
+      // Track checkout_completed analytics event
+      trackEvent('checkout_completed', {
+        metadata: { amount, currency, email, stripeSessionId: session.id },
+      })
+
+      console.log('Donation recorded:', { session_id: session.id, event_id: event.id, amount, currency, email })
     } else {
       console.log(`ℹ️ Unhandled event: ${event.type}`)
     }

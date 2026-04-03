@@ -326,37 +326,37 @@ export async function getAuditLogs(options: {
   // Get total count
   const countQuery = `SELECT COUNT(*) as total FROM audit_logs ${whereClause}`
   const { rows: countRows } = await pool.query(countQuery, queryParams)
-  const total = parseInt(countRows[0].total)
-  
+  const total = parseInt(String(countRows[0].total))
+
   // Get logs
   const logsQuery = `
-    SELECT 
-      id, created_at, actor_type, actor_id, action, subject, meta, 
+    SELECT
+      id, created_at, actor_type, actor_id, action, subject, meta,
       ip, path, user_agent, session_id, severity, category
-    FROM audit_logs 
+    FROM audit_logs
     ${whereClause}
-    ORDER BY created_at DESC 
+    ORDER BY created_at DESC
     LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
   `
-  
+
   queryParams.push(limit, offset)
   const { rows } = await pool.query(logsQuery, queryParams)
-  
+
   return {
     logs: rows.map(row => ({
-      id: row.id,
-      createdAt: row.created_at,
-      actorType: row.actor_type,
-      actorId: row.actor_id,
-      action: row.action,
-      subject: row.subject,
-      meta: row.meta,
-      ip: row.ip,
-      path: row.path,
-      userAgent: row.user_agent,
-      sessionId: row.session_id,
-      severity: row.severity,
-      category: row.category
+      id: row.id as number,
+      createdAt: row.created_at as Date,
+      actorType: row.actor_type as string,
+      actorId: row.actor_id as string | null,
+      action: row.action as string,
+      subject: row.subject as string | null,
+      meta: row.meta as Record<string, unknown>,
+      ip: row.ip as string | null,
+      path: row.path as string | null,
+      userAgent: row.user_agent as string | null,
+      sessionId: row.session_id as string | null,
+      severity: row.severity as string,
+      category: row.category as string
     })),
     total
   }
@@ -395,7 +395,7 @@ export async function getAuditStats(options: {
   // Total events
   const totalQuery = `SELECT COUNT(*) as total FROM audit_logs ${whereClause}`
   const { rows: totalRows } = await pool.query(totalQuery, queryParams)
-  const totalEvents = parseInt(totalRows[0].total)
+  const totalEvents = parseInt(String(totalRows[0].total))
   
   // Events by category
   const categoryQuery = `
@@ -405,36 +405,36 @@ export async function getAuditStats(options: {
     ORDER BY count DESC
   `
   const { rows: categoryRows } = await pool.query(categoryQuery, queryParams)
-  const eventsByCategory = categoryRows.reduce((acc, row) => {
-    acc[row.category] = parseInt(row.count)
-    return acc
-  }, {} as Record<string, number>)
-  
+  const eventsByCategory: Record<string, number> = {}
+  for (const row of categoryRows) {
+    eventsByCategory[String(row.category)] = parseInt(String(row.count))
+  }
+
   // Events by severity
   const severityQuery = `
-    SELECT severity, COUNT(*) as count 
+    SELECT severity, COUNT(*) as count
     FROM audit_logs ${whereClause}
-    GROUP BY severity 
+    GROUP BY severity
     ORDER BY count DESC
   `
   const { rows: severityRows } = await pool.query(severityQuery, queryParams)
-  const eventsBySeverity = severityRows.reduce((acc, row) => {
-    acc[row.severity] = parseInt(row.count)
-    return acc
-  }, {} as Record<string, number>)
-  
+  const eventsBySeverity: Record<string, number> = {}
+  for (const row of severityRows) {
+    eventsBySeverity[String(row.severity)] = parseInt(String(row.count))
+  }
+
   // Events by actor type
   const actorTypeQuery = `
-    SELECT actor_type, COUNT(*) as count 
+    SELECT actor_type, COUNT(*) as count
     FROM audit_logs ${whereClause}
     GROUP BY actor_type 
     ORDER BY count DESC
   `
   const { rows: actorTypeRows } = await pool.query(actorTypeQuery, queryParams)
-  const eventsByActorType = actorTypeRows.reduce((acc, row) => {
-    acc[row.actor_type] = parseInt(row.count)
-    return acc
-  }, {} as Record<string, number>)
+  const eventsByActorType: Record<string, number> = {}
+  for (const row of actorTypeRows) {
+    eventsByActorType[String(row.actor_type)] = parseInt(String(row.count))
+  }
   
   // Top actions
   const actionsQuery = `
@@ -446,8 +446,8 @@ export async function getAuditStats(options: {
   `
   const { rows: actionsRows } = await pool.query(actionsQuery, queryParams)
   const topActions = actionsRows.map(row => ({
-    action: row.action,
-    count: parseInt(row.count)
+    action: String(row.action),
+    count: parseInt(String(row.count))
   }))
   
   // Top actors
@@ -461,15 +461,15 @@ export async function getAuditStats(options: {
   `
   const { rows: actorsRows } = await pool.query(actorsQuery, queryParams)
   const topActors = actorsRows.map(row => ({
-    actorId: row.actor_id,
-    count: parseInt(row.count)
+    actorId: String(row.actor_id),
+    count: parseInt(String(row.count))
   }))
   
   return {
     totalEvents,
-    eventsByCategory,
-    eventsBySeverity,
-    eventsByActorType,
+    eventsByCategory: eventsByCategory as Record<string, number>,
+    eventsBySeverity: eventsBySeverity as Record<string, number>,
+    eventsByActorType: eventsByActorType as Record<string, number>,
     topActions,
     topActors
   }

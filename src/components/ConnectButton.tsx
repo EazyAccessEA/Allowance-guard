@@ -1,9 +1,10 @@
 'use client'
 
 import { useAccount, useDisconnect } from 'wagmi'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAppKit } from '@reown/appkit/react'
 import { Button } from '@/components/ui/Button'
+import { trackClientEvent } from '@/lib/analytics'
 
 type Variant = 'primary' | 'secondary' | 'ghost'
 
@@ -21,9 +22,18 @@ export default function ConnectButton({
   const { disconnect } = useDisconnect()
   const [isConnecting, setIsConnecting] = useState(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
-  
+  const prevConnected = useRef(false)
+
   // Use AppKit hook per Reown documentation
   const { open } = useAppKit()
+
+  // Track wallet_connected when connection state changes to connected
+  useEffect(() => {
+    if (isConnected && !prevConnected.current && address) {
+      trackClientEvent('wallet_connected', { address })
+    }
+    prevConnected.current = isConnected
+  }, [isConnected, address])
 
   const handleConnect = async () => {
     try {

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   try {
     const { amount } = await readCurrentAllowance({
       chainId: Number(r.chain_id),
-      standard: r.standard,
+      standard: r.standard as "ERC20" | "ERC721" | "ERC1155",
       owner: r.wallet_address as `0x${string}`,
       token: r.token_address as `0x${string}`,
       spender: r.spender_address as `0x${string}`

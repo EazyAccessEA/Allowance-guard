@@ -40,34 +40,25 @@ export async function getJob(id: number) {
   return rows[0] || null
 }
 
-/** Claim up to N jobs for processing (SKIP LOCKED allows multiple processors). */
+/** Claim up to N jobs for processing. */
 export async function claimPending(limit = 3) {
-  const client = await pool.connect()
-  try {
-    await client.query('BEGIN')
-    const { rows } = await client.query(
-      `SELECT id FROM jobs
+  // Neon serverless driver doesn't support pool.connect(); use sequential queries.
+  // Use an UPDATE ... RETURNING pattern to atomically claim pending jobs.
+  const { rows } = await pool.query(
+    `UPDATE jobs SET status='running', started_at=NOW(), updated_at=NOW(), attempts=attempts+1
+     WHERE id IN (
+       SELECT id FROM jobs
        WHERE status='pending'
        ORDER BY created_at ASC
-       FOR UPDATE SKIP LOCKED
-       LIMIT $1`, [limit]
-    )
-    if (!rows.length) { await client.query('COMMIT'); return [] }
-    const ids = rows.map(r => r.id)
-    await client.query(
-      `UPDATE jobs SET status='running', started_at=NOW(), updated_at=NOW(), attempts=attempts+1
-       WHERE id = ANY($1::bigint[])`,
-      [ids]
-    )
-    await client.query('COMMIT')
-    const { rows: jobs } = await pool.query(`SELECT * FROM jobs WHERE id = ANY($1::bigint[])`, [ids])
-    return jobs as JobRow[]
-  } catch (e) {
-    await client.query('ROLLBACK')
-    throw e
-  } finally {
-    client.release()
-  }
+       LIMIT $1
+     )
+     RETURNING id`,
+    [limit]
+  )
+  if (!rows.length) return []
+  const ids = rows.map((r: Record<string, unknown>) => r.id)
+  const { rows: jobs } = await pool.query(`SELECT * FROM jobs WHERE id = ANY($1::bigint[])`, [ids])
+  return jobs as unknown as JobRow[]
 }
 
 export async function finishJob(id: number, ok: boolean, error?: string) {
