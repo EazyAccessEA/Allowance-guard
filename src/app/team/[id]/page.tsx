@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Alert } from '@/components/ui/Alert'
 import TeamPortfolioView from '@/components/team/TeamPortfolioView'
 import TeamActivityLog from '@/components/team/TeamActivityLog'
+import SafeDashboard from '@/components/team/SafeDashboard'
 import {
   Users,
   Wallet,
@@ -16,6 +17,7 @@ import {
   UserPlus,
   Download,
   RefreshCw,
+  Lock,
 } from 'lucide-react'
 
 // ---------------------------------------------------------------------------
@@ -55,7 +57,9 @@ export default function TeamDashboardPage({
   const [members, setMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState<'portfolio' | 'activity' | 'members'>('portfolio')
+  const [activeTab, setActiveTab] = useState<'portfolio' | 'activity' | 'members' | 'safe'>('portfolio')
+  const [safeAddress, setSafeAddress] = useState('')
+  const [safeChainId, setSafeChainId] = useState(1)
 
   const loadTeam = useCallback(async () => {
     setLoading(true)
@@ -235,6 +239,17 @@ export default function TeamDashboardPage({
           <Users className="w-4 h-4 inline mr-1.5" />
           Members
         </button>
+        <button
+          onClick={() => setActiveTab('safe')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === 'safe'
+              ? 'border-primary-accent text-primary-accent'
+              : 'border-transparent text-text-secondary hover:text-text-primary'
+          }`}
+        >
+          <Lock className="w-4 h-4 inline mr-1.5" />
+          Safe Multi-Sig
+        </button>
       </div>
 
       {/* Tab Content */}
@@ -294,6 +309,57 @@ export default function TeamDashboardPage({
             )}
           </CardContent>
         </Card>
+      )}
+
+      {activeTab === 'safe' && (
+        <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Lock className="w-5 h-5" />
+                Safe Multi-Sig Wallet
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-text-secondary mb-4">
+                Enter a Safe (Gnosis Safe) address to view and manage its token approvals.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="text"
+                  placeholder="0x... Safe address"
+                  value={safeAddress}
+                  onChange={(e) => setSafeAddress(e.target.value)}
+                  className="flex-1 px-4 py-2 border border-border-primary rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+                <select
+                  value={safeChainId}
+                  onChange={(e) => setSafeChainId(Number(e.target.value))}
+                  className="px-4 py-2 border border-border-primary rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                >
+                  <option value={1}>Ethereum</option>
+                  <option value={42161}>Arbitrum</option>
+                  <option value={8453}>Base</option>
+                  <option value={137}>Polygon</option>
+                  <option value={10}>Optimism</option>
+                  <option value={43114}>Avalanche</option>
+                  <option value={56}>BNB Smart Chain</option>
+                  <option value={250}>Fantom</option>
+                  <option value={324}>zkSync Era</option>
+                  <option value={1101}>Polygon zkEVM</option>
+                </select>
+              </div>
+            </CardContent>
+          </Card>
+
+          {safeAddress && (
+            <SafeDashboard
+              safeAddress={safeAddress}
+              chainId={safeChainId}
+              userTier="sentinel"
+            />
+          )}
+        </div>
       )}
     </div>
   )
