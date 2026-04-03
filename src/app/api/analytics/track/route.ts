@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
     const ua = req.headers.get('user-agent') ?? null
 
     await trackEvent(event, {
-      userId: session?.user_id ?? null,
-      sessionId: session?.session_id?.toString() ?? null,
+      userId: session?.user_id ? Number(session.user_id) : null,
+      sessionId: session?.session_id ? String(session.session_id) : null,
       metadata,
       ipAddress: ip,
       userAgent: ua,

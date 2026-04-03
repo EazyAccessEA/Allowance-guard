@@ -20,8 +20,8 @@ export async function getTokenCategories(): Promise<CategoryRow[]> {
     GROUP BY tc.id, tc.name, tc.description, tc.icon, tc.color
     ORDER BY LOWER(tc.name) ASC
   `
-  const { rows } = await pool.query<CategoryRow>(q)
-  return rows
+  const { rows } = await pool.query(q)
+  return rows as unknown as CategoryRow[]
 }
 
 export async function ensureCategory(name: string, meta: {
@@ -72,31 +72,22 @@ export async function deleteCategory(id: number) {
 
 export async function replaceTokenCategories(chainId: number, tokenAddress: string, categoryIds: number[]) {
   const addr = normalizeAddress(tokenAddress)
-  const client = await pool.connect()
-  try {
-    await client.query('BEGIN')
-    await client.query(
-      'DELETE FROM token_category_mappings WHERE chain_id = $1 AND token_address = $2',
-      [chainId, addr]
-    )
-    if (categoryIds.length) {
-      const values: string[] = []
-      const params: (number | string)[] = []
-      let i = 1
-      for (const catId of categoryIds) {
-        values.push(`($${i++}, $${i++}, $${i++})`)
-        params.push(chainId, addr, catId)
-      }
-      await client.query(
-        `INSERT INTO token_category_mappings (chain_id, token_address, category_id) VALUES ${values.join(',')}`,
-        params
-      )
+  // Neon serverless driver doesn't support pool.connect(); use sequential queries.
+  await pool.query(
+    'DELETE FROM token_category_mappings WHERE chain_id = $1 AND token_address = $2',
+    [chainId, addr]
+  )
+  if (categoryIds.length) {
+    const values: string[] = []
+    const params: (number | string)[] = []
+    let i = 1
+    for (const catId of categoryIds) {
+      values.push(`($${i++}, $${i++}, $${i++})`)
+      params.push(chainId, addr, catId)
     }
-    await client.query('COMMIT')
-  } catch (e) {
-    await client.query('ROLLBACK')
-    throw e
-  } finally {
-    client.release()
+    await pool.query(
+      `INSERT INTO token_category_mappings (chain_id, token_address, category_id) VALUES ${values.join(',')}`,
+      params
+    )
   }
 }

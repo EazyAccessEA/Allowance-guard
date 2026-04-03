@@ -48,7 +48,7 @@ export async function saveTokenMeta(chainId: number, token: string, standard:'ER
 export async function enrichTokenMeta(chainId: number, token: string, standardGuess?: string) {
   token = token.toLowerCase()
   const current = await getTokenMeta(chainId, token)
-  if (current && isFresh(current.updated_iso)) return current
+  if (current && isFresh((current as Record<string, unknown>).updated_iso as string | undefined)) return current
 
   const client = clientFor(chainId as 1|42161|8453|10|137|43114|56)
   let standard:'ERC20'|'ERC721'|'ERC1155'|'UNKNOWN' = 'UNKNOWN'

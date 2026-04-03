@@ -55,7 +55,7 @@ export async function getDueMonitors(limit = 25): Promise<MonitoredWallet[]> {
      LIMIT $1`,
     [limit],
   )
-  return rows as MonitoredWallet[]
+  return rows as unknown as MonitoredWallet[]
 }
 
 // ---------------------------------------------------------------------------
@@ -374,7 +374,7 @@ export async function getUserMonitors(userId: number): Promise<MonitoredWallet[]
     `SELECT * FROM monitored_wallets WHERE user_id = $1 ORDER BY created_at DESC`,
     [userId],
   )
-  return rows as MonitoredWallet[]
+  return rows as unknown as MonitoredWallet[]
 }
 
 export async function getMonitorEvents(
@@ -397,7 +397,7 @@ export async function getMonitorEvents(
   ])
 
   return {
-    events: events as MonitoringEvent[],
+    events: events as unknown as MonitoringEvent[],
     total: (countRows[0]?.count as number) ?? 0,
   }
 }

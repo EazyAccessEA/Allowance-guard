@@ -120,11 +120,11 @@ export async function POST(req: NextRequest) {
     )
 
     const stats = spenderStats[0]
-    if (stats?.high_risk_count > 0) {
+    if (Number(stats?.high_risk_count) > 0) {
       flags.push({
         code: 'SPENDER_HAS_RISKY_HISTORY',
         severity: 'critical',
-        message: `This spender has ${stats.high_risk_count} high-risk allowance(s) across wallets`,
+        message: `This spender has ${Number(stats.high_risk_count)} high-risk allowance(s) across wallets`,
       })
       riskScore += 20
     }

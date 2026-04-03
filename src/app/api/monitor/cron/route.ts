@@ -93,7 +93,7 @@ async function handleCron(req: NextRequest) {
             ruleMatches += matches.length
             await executeRuleMatches(matches)
             for (const match of matches) {
-              await dispatchWebhookEvent(userId, 'rule.triggered', {
+              await dispatchWebhookEvent(Number(userId), 'rule.triggered', {
                 ruleId: match.rule.id,
                 ruleName: match.rule.name,
                 action: match.rule.action,

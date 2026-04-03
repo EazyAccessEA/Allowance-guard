@@ -103,10 +103,11 @@ export async function cacheDel(pattern: string): Promise<void> {
         // Use SCAN + DEL for wildcard patterns
         let cursor = 0
         do {
-          const result = await redis.scan(cursor, { MATCH: pattern, COUNT: 100 })
-          cursor = result.cursor
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const result = await (redis as any).scan(cursor, { MATCH: pattern, COUNT: 100 })
+          cursor = Number(result.cursor)
           if (result.keys.length > 0) {
-            await redis.del(result.keys)
+            await redis.del(result.keys as unknown as string[])
           }
         } while (cursor !== 0)
       } else {

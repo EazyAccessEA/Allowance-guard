@@ -80,12 +80,12 @@ export async function GET(req: NextRequest) {
 
     // Compute overall wallet risk score (0-100)
     let overallScore = 0
-    if (stats.total_allowances > 0) {
+    if (Number(stats.total_allowances) > 0) {
       // Weight: unlimited allowances are highest risk
-      const unlimitedWeight = Math.min(stats.unlimited_allowances * 15, 50)
-      const highRiskWeight = Math.min(stats.high_risk_count * 10, 30)
-      const mediumRiskWeight = Math.min(stats.medium_risk_count * 3, 15)
-      const volumeWeight = Math.min(Math.floor(stats.total_allowances / 5), 5)
+      const unlimitedWeight = Math.min(Number(stats.unlimited_allowances) * 15, 50)
+      const highRiskWeight = Math.min(Number(stats.high_risk_count) * 10, 30)
+      const mediumRiskWeight = Math.min(Number(stats.medium_risk_count) * 3, 15)
+      const volumeWeight = Math.min(Math.floor(Number(stats.total_allowances) / 5), 5)
       overallScore = Math.min(unlimitedWeight + highRiskWeight + mediumRiskWeight + volumeWeight, 100)
     }
 

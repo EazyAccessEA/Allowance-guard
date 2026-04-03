@@ -15,8 +15,9 @@ export async function POST() {
   `)
   const queued: Array<{wallet:string, jobId:number}> = []
   for (const r of rows) {
-    const jobId = await enqueueScan(r.wallet_address.toLowerCase(), enabledChainIds())
-    queued.push({ wallet: r.wallet_address, jobId })
+    const addr = String(r.wallet_address)
+    const jobId = await enqueueScan(addr.toLowerCase(), enabledChainIds())
+    queued.push({ wallet: addr, jobId })
   }
   return NextResponse.json({ ok: true, queued })
 }
