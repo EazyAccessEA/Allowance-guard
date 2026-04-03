@@ -21,8 +21,8 @@ export type ChainMeta = {
 }
 
 /**
- * The 6 officially supported chains.
- * BSC (56) is defined in networks.ts but NOT advertised — exclude from frontend.
+ * The 10 officially supported chains.
+ * Phase 9.5: expanded from 6 to 10 chains (added BSC, Fantom, zkSync Era, Polygon zkEVM).
  */
 export const SUPPORTED_CHAINS: readonly ChainMeta[] = [
   {
@@ -102,6 +102,59 @@ export const SUPPORTED_CHAINS: readonly ChainMeta[] = [
     gasModel: 'avalanche',
     blockTimeSec: 2,
     coingeckoId: 'avalanche-2',
+  },
+  // --- Phase 9.5: New chains ---
+  {
+    id: 56,
+    name: 'BNB Smart Chain',
+    slug: 'bsc',
+    symbol: 'BNB',
+    nativeDecimals: 18,
+    explorer: 'https://bscscan.com',
+    explorerApi: 'https://api.bscscan.com/api',
+    logo: '/chains/bsc.svg',
+    gasModel: 'standard',
+    blockTimeSec: 3,
+    coingeckoId: 'binancecoin',
+  },
+  {
+    id: 250,
+    name: 'Fantom',
+    slug: 'fantom',
+    symbol: 'FTM',
+    nativeDecimals: 18,
+    explorer: 'https://ftmscan.com',
+    explorerApi: 'https://api.ftmscan.com/api',
+    logo: '/chains/fantom.svg',
+    gasModel: 'standard',
+    blockTimeSec: 1,
+    coingeckoId: 'fantom',
+  },
+  {
+    id: 324,
+    name: 'zkSync Era',
+    slug: 'zksync',
+    symbol: 'ETH',
+    nativeDecimals: 18,
+    explorer: 'https://explorer.zksync.io',
+    explorerApi: 'https://block-explorer-api.mainnet.zksync.io/api',
+    logo: '/chains/zksync.svg',
+    gasModel: 'standard',
+    blockTimeSec: 1,
+    coingeckoId: 'ethereum',
+  },
+  {
+    id: 1101,
+    name: 'Polygon zkEVM',
+    slug: 'polygon-zkevm',
+    symbol: 'ETH',
+    nativeDecimals: 18,
+    explorer: 'https://zkevm.polygonscan.com',
+    explorerApi: 'https://api-zkevm.polygonscan.com/api',
+    logo: '/chains/polygon-zkevm.svg',
+    gasModel: 'standard',
+    blockTimeSec: 5,
+    coingeckoId: 'ethereum',
   },
 ] as const
 

@@ -97,7 +97,7 @@ AllowanceGuard uses an **open-core model**:
 
 ### Pro Tier ($9.99/month or $79/year)
 - Unlimited wallets
-- Multi-chain portfolio view (all 6 chains)
+- Multi-chain portfolio view (all 10 chains)
 - Continuous monitoring with email/Telegram alerts
 - Batch revocation with gas savings display
 - Historical risk timeline
@@ -244,6 +244,10 @@ E2E_FAKE_EMAIL=true       # Skip email sending in tests
 4. Polygon
 5. Optimism
 6. Avalanche
+7. BNB Smart Chain (BSC)
+8. Fantom
+9. zkSync Era
+10. Polygon zkEVM
 
 ## Common Commands
 
@@ -261,7 +265,7 @@ pnpm run migrate      # Run database migrations
 | Factor | AllowanceGuard | Revoke.cash | Blowfish |
 |--------|---------------|-------------|----------|
 | Model | Open-core freemium | Free / Donations | B2B API (paid) |
-| Chains | 6 | 100+ | 10+ |
+| Chains | 10 | 100+ | 10+ |
 | Unique | Time Machine, Batch Revoke, Gas Savings | Browser Extension, 100 chains | Real-time tx simulation |
 | Revenue | Subscriptions + API + Enterprise | Unsolved | B2B contracts |
 
