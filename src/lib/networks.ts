@@ -193,7 +193,7 @@ export const CHAINS: Record<number, ChainCfg> = {
       'https://rpc.scroll.io',
       'https://rpc.ankr.com/scroll'
     ]),
-    explorer: 'https://scrollscan.com',
+    explorer: 'https://scroll.blockscout.com',
     enabled: !disabledSet.has('534352')
   },
   42220: {
