@@ -16,6 +16,7 @@ import {
   RefreshCw,
   Download,
 } from 'lucide-react'
+import EmptyState from '@/components/EmptyState'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -134,13 +135,11 @@ export default function TeamActivityLog({ teamId }: TeamActivityLogProps) {
         {loading && activities.length === 0 ? (
           <div className="text-sm text-text-secondary">Loading activity...</div>
         ) : activities.length === 0 ? (
-          <div className="text-center py-8">
-            <Activity className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
-            <p className="text-sm text-text-secondary">No activity recorded yet</p>
-            <p className="text-xs text-text-tertiary mt-1">
-              Team actions will appear here as members interact with team resources.
-            </p>
-          </div>
+          <EmptyState
+            icon={<Activity className="w-7 h-7" />}
+            title="No activity recorded yet"
+            description="Team actions will appear here as members interact with team resources."
+          />
         ) : (
           <>
             <div className="space-y-3">

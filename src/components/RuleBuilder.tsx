@@ -21,6 +21,7 @@ import {
   ChevronUp,
   Check,
 } from 'lucide-react'
+import EmptyState from '@/components/EmptyState'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -412,12 +413,13 @@ export default function RuleBuilder() {
         <div className="text-sm text-text-secondary">Loading rules...</div>
       ) : rules.length === 0 && !creating ? (
         <Card>
-          <CardContent className="text-center py-8">
-            <Shield className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
-            <p className="text-sm text-text-secondary">No automated rules configured</p>
-            <p className="text-xs text-text-tertiary mt-1">
-              Create rules to automatically monitor and act on risky approvals.
-            </p>
+          <CardContent>
+            <EmptyState
+              icon={<Shield className="w-7 h-7" />}
+              title="No automated rules configured"
+              description="Create rules to automatically monitor and act on risky approvals."
+              upgradePlan="sentinel"
+            />
           </CardContent>
         </Card>
       ) : (
