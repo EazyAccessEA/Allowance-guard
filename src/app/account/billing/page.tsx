@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Section from '@/components/ui/Section'
 import Container from '@/components/ui/Container'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
@@ -21,10 +21,53 @@ import {
   Check,
   Clock,
   Receipt,
+  Download,
+  FileText,
+  Loader2,
 } from 'lucide-react'
 import { useUserPlan } from '@/hooks/useUserPlan'
 import { InlineError } from '@/components/ErrorBoundary'
 import EmptyState from '@/components/EmptyState'
+
+interface Invoice {
+  stripeInvoiceId: string
+  amountDue: number
+  amountPaid: number
+  currency: string
+  status: string
+  plan: string | null
+  periodStart: string | null
+  periodEnd: string | null
+  hostedInvoiceUrl: string | null
+  invoicePdfUrl: string | null
+  invoiceNumber: string | null
+  description: string | null
+  attemptCount: number
+  paidAt: string | null
+  createdAt: string
+}
+
+function formatInvoiceAmount(minorUnits: number, currency: string): string {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(minorUnits / 100)
+}
+
+function invoiceStatusBadge(status: string) {
+  switch (status) {
+    case 'paid':
+      return <Badge variant="success" size="sm">Paid</Badge>
+    case 'open':
+      return <Badge variant="warning" size="sm">Open</Badge>
+    case 'past_due':
+      return <Badge variant="warning" size="sm">Past Due</Badge>
+    case 'draft':
+      return <Badge variant="secondary" size="sm">Draft</Badge>
+    case 'uncollectible':
+    case 'void':
+      return <Badge variant="destructive" size="sm">{status === 'void' ? 'Void' : 'Uncollectible'}</Badge>
+    default:
+      return <Badge variant="secondary" size="sm">{status}</Badge>
+  }
+}
 
 const PLANS: { key: ConsumerPlan; features: string[] }[] = [
   {
@@ -64,6 +107,33 @@ export default function BillingPage() {
   const { plan: currentPlan, status: planStatus, currentPeriodEnd } = useUserPlan()
   const [portalLoading, setPortalLoading] = useState(false)
   const [portalError, setPortalError] = useState<string | null>(null)
+  const [invoices, setInvoices] = useState<Invoice[]>([])
+  const [invoicesLoading, setInvoicesLoading] = useState(true)
+  const [invoicesError, setInvoicesError] = useState<string | null>(null)
+
+  const fetchInvoices = useCallback(async () => {
+    setInvoicesLoading(true)
+    setInvoicesError(null)
+    try {
+      const res = await fetch('/api/billing/invoices')
+      if (res.ok) {
+        const data = await res.json()
+        setInvoices(data.invoices ?? [])
+      } else if (res.status === 401) {
+        setInvoices([])
+      } else {
+        setInvoicesError('Failed to load invoices.')
+      }
+    } catch {
+      setInvoicesError('Network error loading invoices.')
+    } finally {
+      setInvoicesLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchInvoices()
+  }, [fetchInvoices])
 
   async function openBillingPortal() {
     setPortalLoading(true)
@@ -244,14 +314,101 @@ export default function BillingPage() {
           {/* Payment history */}
           <Card>
             <CardHeader>
-              <CardTitle>Payment History</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>Payment History</CardTitle>
+                {invoices.length > 0 && (
+                  <span className="text-xs text-text-secondary">
+                    {invoices.length} invoice{invoices.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
             </CardHeader>
             <CardContent>
-              <EmptyState
-                icon={<Receipt className="h-8 w-8" />}
-                title="No payment history yet"
-                description="Payment history and invoices will appear here once you have an active subscription."
-              />
+              {invoicesLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-6 w-6 animate-spin text-text-secondary" />
+                  <span className="ml-2 text-sm text-text-secondary">Loading invoices…</span>
+                </div>
+              ) : invoicesError ? (
+                <InlineError message={invoicesError} onRetry={fetchInvoices} />
+              ) : invoices.length === 0 ? (
+                <EmptyState
+                  icon={<Receipt className="h-8 w-8" />}
+                  title="No payment history yet"
+                  description="Payment history and invoices will appear here once you have an active subscription."
+                />
+              ) : (
+                <div className="overflow-x-auto -mx-2">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border-primary text-left text-text-secondary">
+                        <th className="px-2 py-2 font-medium">Invoice</th>
+                        <th className="px-2 py-2 font-medium">Date</th>
+                        <th className="px-2 py-2 font-medium">Amount</th>
+                        <th className="px-2 py-2 font-medium">Status</th>
+                        <th className="px-2 py-2 font-medium">Plan</th>
+                        <th className="px-2 py-2 font-medium text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {invoices.map((inv) => (
+                        <tr key={inv.stripeInvoiceId} className="border-b border-border-primary last:border-0 hover:bg-background-secondary transition-colors">
+                          <td className="px-2 py-3 font-mono text-xs">
+                            {inv.invoiceNumber ?? inv.stripeInvoiceId.slice(0, 12)}
+                          </td>
+                          <td className="px-2 py-3 text-text-secondary">
+                            {new Date(inv.createdAt).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                          </td>
+                          <td className="px-2 py-3 font-medium">
+                            {formatInvoiceAmount(
+                              inv.status === 'paid' ? inv.amountPaid : inv.amountDue,
+                              inv.currency,
+                            )}
+                          </td>
+                          <td className="px-2 py-3">
+                            {invoiceStatusBadge(inv.status)}
+                          </td>
+                          <td className="px-2 py-3 text-text-secondary">
+                            {inv.plan ? getPlanDisplayName(inv.plan as ConsumerPlan) : '—'}
+                          </td>
+                          <td className="px-2 py-3 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              {inv.invoicePdfUrl && (
+                                <a
+                                  href={inv.invoicePdfUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 transition-colors"
+                                  title="Download PDF"
+                                >
+                                  <Download className="h-3.5 w-3.5" />
+                                  PDF
+                                </a>
+                              )}
+                              {inv.hostedInvoiceUrl && (
+                                <a
+                                  href={inv.hostedInvoiceUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 transition-colors"
+                                  title="View invoice"
+                                >
+                                  <FileText className="h-3.5 w-3.5" />
+                                  View
+                                </a>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
