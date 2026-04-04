@@ -13,7 +13,6 @@ import {
   Wallet,
   Shield,
   Activity,
-  Settings,
   UserPlus,
   Download,
   RefreshCw,

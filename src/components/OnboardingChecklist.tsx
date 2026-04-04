@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAccount } from 'wagmi'
-import { Wallet, Search, Save, Shield, Loader2 } from 'lucide-react'
+import { Wallet, Search, Save, Shield } from 'lucide-react'
 
 interface OnboardingState {
   hadScan: boolean

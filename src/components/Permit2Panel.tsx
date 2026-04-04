@@ -11,7 +11,6 @@ import {
   Shield,
   ShieldAlert,
   Clock,
-  ExternalLink,
   RefreshCw,
 } from 'lucide-react'
 
@@ -57,7 +56,7 @@ const riskLabels: Record<string, string> = {
   critical: 'Critical',
 }
 
-export default function Permit2Panel({ walletAddress, connectedAddress }: Permit2PanelProps) {
+export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
   const [data, setData] = useState<Permit2ScanResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)

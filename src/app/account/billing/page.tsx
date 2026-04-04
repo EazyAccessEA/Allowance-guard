@@ -19,7 +19,6 @@ import {
   ArrowLeft,
   ExternalLink,
   Check,
-  Clock,
   Receipt,
   Download,
   FileText,
@@ -63,7 +62,7 @@ function invoiceStatusBadge(status: string) {
       return <Badge variant="secondary" size="sm">Draft</Badge>
     case 'uncollectible':
     case 'void':
-      return <Badge variant="destructive" size="sm">{status === 'void' ? 'Void' : 'Uncollectible'}</Badge>
+      return <Badge variant="danger" size="sm">{status === 'void' ? 'Void' : 'Uncollectible'}</Badge>
     default:
       return <Badge variant="secondary" size="sm">{status}</Badge>
   }

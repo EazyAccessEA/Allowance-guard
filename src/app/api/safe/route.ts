@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
   }
 
-  const feature = await checkFeature(session.userId, 'teams')
+  const feature = await checkFeature(Number(session.user_id), 'teams')
   if (!feature.allowed) {
     return NextResponse.json(
       { error: 'Sentinel tier required for multi-sig integration', requiredPlan: feature.requiredPlan },
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
   }
 
-  const feature = await checkFeature(session.userId, 'teams')
+  const feature = await checkFeature(Number(session.user_id), 'teams')
   if (!feature.allowed) {
     return NextResponse.json(
       { error: 'Sentinel tier required', requiredPlan: feature.requiredPlan },
