@@ -42,7 +42,7 @@ const PLACEHOLDER: AccountData = {
 
 export default function AccountPage() {
   const [data, setData] = useState<AccountData>(PLACEHOLDER)
-  const [loading, setLoading] = useState(true)
+  const [, setLoading] = useState(true)
 
   useEffect(() => {
     let cancelled = false

@@ -8,7 +8,7 @@
 // All estimates are cached in Redis (60s TTL) when available.
 
 import { clientFor } from './chains'
-import { getChainMeta, type ChainMeta } from '@/config/chains'
+import { getChainMeta } from '@/config/chains'
 import { parseAbi, formatGwei } from 'viem'
 import { secureLogger } from './secure-logger'
 

@@ -243,14 +243,14 @@ export async function getSafeAllowances(
     params,
   )
 
-  return rows.map((r) => ({
+  return rows.map((r: Record<string, unknown>) => ({
     chainId: Number(r.chain_id),
-    tokenAddress: r.token_address,
-    spenderAddress: r.spender_address,
-    tokenSymbol: r.token_symbol,
-    spenderLabel: r.spender_label,
-    amount: r.amount,
-    isUnlimited: r.is_unlimited,
+    tokenAddress: r.token_address as string,
+    spenderAddress: r.spender_address as string,
+    tokenSymbol: (r.token_symbol as string) ?? null,
+    spenderLabel: (r.spender_label as string) ?? null,
+    amount: r.amount as string,
+    isUnlimited: r.is_unlimited as boolean,
     riskScore: Number(r.risk_score),
   }))
 }

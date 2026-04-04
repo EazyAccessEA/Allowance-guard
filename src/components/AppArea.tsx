@@ -50,7 +50,6 @@ import {
 import { useDisconnect } from 'wagmi'
 import PlanBadge from '@/components/PlanBadge'
 import ProNudge from '@/components/ProNudge'
-import FeatureLock from '@/components/FeatureLock'
 import UpgradeModal from '@/components/UpgradeModal'
 import { useUserPlan } from '@/hooks/useUserPlan'
 

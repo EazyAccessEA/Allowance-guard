@@ -1,5 +1,5 @@
 // lib/chains.ts
-import { createPublicClient, http, fallback, defineChain, type Transport, type PublicClient, type Chain } from 'viem'
+import { createPublicClient, http, fallback, type Transport, type PublicClient, type Chain } from 'viem'
 import { mainnet, arbitrum, base, optimism, polygon, avalanche, bsc, fantom, zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo } from 'viem/chains'
 import { CHAINS, type RpcEndpoint } from './networks'
 import { incrRpc } from '@/lib/metrics'

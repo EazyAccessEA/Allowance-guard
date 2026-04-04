@@ -9,7 +9,6 @@ import {
   AlertTriangle,
   CheckCircle,
   Clock,
-  Shield,
   ShieldCheck,
   Zap
 } from 'lucide-react'

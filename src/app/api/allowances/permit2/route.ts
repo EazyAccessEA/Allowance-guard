@@ -5,7 +5,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getAddress, isAddress, type Address } from 'viem'
-import { getSession } from '@/lib/auth'
 import { limitHit } from '@/lib/ratelimit'
 import { pool } from '@/lib/db'
 import { scanPermit2Allowances, scanAllChainsPermit2, type Permit2Allowance } from '@/lib/permit2'

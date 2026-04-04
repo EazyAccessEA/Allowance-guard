@@ -228,9 +228,10 @@ export async function upsertInvoice(invoice: Stripe.Invoice): Promise<void> {
   }
 
   const customerId = typeof invoice.customer === 'string' ? invoice.customer : (invoice.customer as Stripe.Customer)?.id ?? ''
-  const subscriptionId = typeof invoice.subscription === 'string'
-    ? invoice.subscription
-    : (invoice.subscription as Stripe.Subscription)?.id ?? null
+  const rawSub = (invoice as unknown as Record<string, unknown>).subscription
+  const subscriptionId = typeof rawSub === 'string'
+    ? rawSub
+    : (rawSub as Stripe.Subscription | null)?.id ?? null
 
   // Extract plan: try invoice line item metadata first, then fall back to subscription metadata
   let plan: string | null = null
@@ -240,11 +241,11 @@ export async function upsertInvoice(invoice: Stripe.Invoice): Promise<void> {
       break
     }
   }
-  if (!plan && invoice.subscription) {
+  if (!plan && rawSub) {
     // Fall back to subscription metadata stored in our DB
-    const subId = typeof invoice.subscription === 'string'
-      ? invoice.subscription
-      : (invoice.subscription as Stripe.Subscription)?.id
+    const subId = typeof rawSub === 'string'
+      ? rawSub
+      : (rawSub as Stripe.Subscription)?.id
     if (subId) {
       const { rows: planRows } = await pool.query(
         `SELECT plan FROM subscriptions WHERE stripe_subscription_id = $1 LIMIT 1`,

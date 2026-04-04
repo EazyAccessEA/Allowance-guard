@@ -165,9 +165,9 @@ function assessRisk(amount: bigint, expiration: number, spenderLabel: string | n
  * We query ERC20 Approval events from the Permit2 contract to discover tokens.
  */
 export async function getPermit2TokensFromEvents(
-  client: PublicClient,
-  owner: Address,
-  chainId: number,
+  _client: PublicClient,
+  _owner: Address,
+  _chainId: number,
 ): Promise<Address[]> {
   // Query Transfer/Approval events is expensive. Instead, we check known
   // popular tokens. In production, we'd index events or use a subgraph.
