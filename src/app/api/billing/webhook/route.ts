@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { stripe, syncSubscription, upsertInvoice, getUserEmailById } from '@/lib/billing'
-import { sendPaymentReceiptEmail, sendPaymentFailedEmail, sendTrialEndingEmail } from '@/lib/invoice-emails'
+import { sendPaymentReceiptEmail, sendPaymentFailedEmail, sendTrialEndingEmail, sendExpiringCardEmail } from '@/lib/invoice-emails'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
 import { withReq } from '@/lib/logger'
 import { reportError } from '@/lib/rollbar'
@@ -19,6 +19,7 @@ export const dynamic = 'force-dynamic'
  * - invoice.finalized
  * - invoice.payment_succeeded
  * - invoice.payment_failed
+ * - customer.source.expiring
  */
 export async function POST(req: Request) {
   const L = withReq(req)
@@ -249,6 +250,57 @@ export async function POST(req: Request) {
         } catch (emailErr) {
           L.error('billing.webhook.failed_email_failed', {
             invoiceId: invoice.id,
+            error: emailErr instanceof Error ? emailErr.message : 'Unknown',
+          })
+        }
+        break
+      }
+
+      // ----- Expiring card -----
+      case 'customer.source.expiring': {
+        const source = event.data.object as Stripe.Card
+
+        const custId = typeof source.customer === 'string' ? source.customer : (source.customer as Stripe.Customer)?.id
+        L.info('billing.webhook.card_expiring', {
+          cardLast4: source.last4,
+          brand: source.brand,
+          expMonth: source.exp_month,
+          expYear: source.exp_year,
+          customerId: custId,
+        })
+
+        await auditWebhook('stripe', 'customer.source.expiring', custId ?? null, {
+          cardLast4: source.last4,
+          brand: source.brand,
+          expMonth: source.exp_month,
+          expYear: source.exp_year,
+        })
+
+        // Send expiring card email
+        try {
+          if (custId) {
+            const { rows: subRows } = await pool.query(
+              `SELECT user_id, plan FROM subscriptions WHERE stripe_customer_id = $1 AND status IN ('active','trialing','past_due') LIMIT 1`,
+              [custId],
+            )
+            const uid = subRows[0]?.user_id as number | undefined
+            const plan = (subRows[0]?.plan as string) ?? null
+            if (uid) {
+              const email = await getUserEmailById(uid)
+              if (email) {
+                await sendExpiringCardEmail(email, {
+                  cardBrand: source.brand ?? 'Card',
+                  cardLast4: source.last4 ?? '****',
+                  expMonth: source.exp_month,
+                  expYear: source.exp_year,
+                  plan,
+                })
+              }
+            }
+          }
+        } catch (emailErr) {
+          L.error('billing.webhook.expiring_card_email_failed', {
+            customerId: custId,
             error: emailErr instanceof Error ? emailErr.message : 'Unknown',
           })
         }

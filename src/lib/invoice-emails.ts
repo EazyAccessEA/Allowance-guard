@@ -4,6 +4,7 @@
  * - sendPaymentReceiptEmail: sent on invoice.payment_succeeded
  * - sendPaymentFailedEmail: sent on invoice.payment_failed
  * - sendTrialEndingEmail: sent on customer.subscription.trial_will_end
+ * - sendExpiringCardEmail: sent on customer.source.expiring
  */
 import { sendMail } from '@/lib/mailer'
 import { getPlanDisplayName } from '@/lib/plans'
@@ -178,4 +179,59 @@ export async function sendTrialEndingEmail(to: string, data: TrialEndingData) {
   `
 
   return sendMail(to, `Your ${planLabel} Trial Ends ${data.trialEnd}`, content)
+}
+
+// ---------------------------------------------------------------------------
+// Expiring card
+// ---------------------------------------------------------------------------
+
+export interface ExpiringCardData {
+  cardBrand: string   // e.g. "Visa", "Mastercard"
+  cardLast4: string   // e.g. "4242"
+  expMonth: number
+  expYear: number
+  plan: string | null
+}
+
+export async function sendExpiringCardEmail(to: string, data: ExpiringCardData) {
+  const planLabel = data.plan ? getPlanDisplayName(data.plan as ConsumerPlan) : 'AllowanceGuard'
+  const expDate = `${String(data.expMonth).padStart(2, '0')}/${data.expYear}`
+
+  const content = `
+    <div class="alert-box">
+      <h2 style="margin-top: 0;">Your Card Is Expiring Soon</h2>
+      <p style="margin-bottom: 0;">The ${data.cardBrand} card ending in <strong>${data.cardLast4}</strong> expires <strong>${expDate}</strong>.</p>
+    </div>
+
+    <h2>Why this matters</h2>
+    <p>Your <strong>${planLabel}</strong> subscription will fail to renew if your payment method expires. To avoid any interruption to your service, please update your card before it expires.</p>
+
+    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+        <tr>
+          <td style="padding: 8px 0; color: #6b7280;">Card</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: 600;">${data.cardBrand} •••• ${data.cardLast4}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #6b7280;">Expires</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: 600;">${expDate}</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #6b7280;">Subscription</td>
+          <td style="padding: 8px 0; text-align: right; font-weight: 600;">${planLabel}</td>
+        </tr>
+      </table>
+    </div>
+
+    <p style="text-align: center;">
+      <a href="https://www.allowanceguard.com/account/billing" class="button">Update Payment Method</a>
+    </p>
+
+    <p style="color: #6b7280; font-size: 14px; margin-top: 24px;">
+      Updating takes less than a minute through our billing portal. If you need help, contact us at
+      <a href="mailto:support@allowanceguard.com" style="color: #3b82f6;">support@allowanceguard.com</a>.
+    </p>
+  `
+
+  return sendMail(to, `Action Required: Your ${data.cardBrand} •••• ${data.cardLast4} is expiring`, content)
 }
