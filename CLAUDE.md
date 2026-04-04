@@ -9,6 +9,10 @@ AllowanceGuard is a **Web3 wallet security platform** that helps users monitor, 
 - **License**: AGPL-3.0 + Commercial dual license (open-source core)
 - **Version**: 1.14.9+
 
+## Workflow Rules
+
+1. **Plan first.** Before making any code changes, outline a plan: identify affected files, describe the approach, and list the steps. Only start implementation after the plan is clear.
+
 ## Tech Stack
 
 | Layer | Technology |
