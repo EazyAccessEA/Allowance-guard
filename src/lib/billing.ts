@@ -76,6 +76,13 @@ export async function createCheckoutSession(opts: CreateSubscriptionOptions): Pr
         ag_user_id: String(opts.userId),
         ag_plan: opts.plan,
       },
+      invoice_settings: {
+        custom_fields: [
+          { name: 'Product', value: 'Allowance Guard' },
+          { name: 'Plan', value: opts.plan.replace(/_/g, ' ').replace(/\bapi\b/i, 'API').replace(/\b\w/g, c => c.toUpperCase()) },
+        ],
+        footer: 'Allowance Guard is a product of Eazy Access Ltd | https://allowanceguard.com | support@allowanceguard.com',
+      },
     },
     metadata: {
       ag_user_id: String(opts.userId),
