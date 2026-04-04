@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { stripe, syncSubscription, upsertInvoice, getUserEmailById } from '@/lib/billing'
 import { sendPaymentReceiptEmail, sendPaymentFailedEmail, sendTrialEndingEmail, sendExpiringCardEmail } from '@/lib/invoice-emails'
+import { upgradeApiKeyPlan, downgradeApiKeysToFree } from '@/lib/api-keys'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
 import { withReq } from '@/lib/logger'
 import { reportError } from '@/lib/rollbar'
@@ -102,6 +103,19 @@ export async function POST(req: Request) {
 
         // Map Stripe statuses to our internal statuses
         await syncSubscription(subscription)
+
+        // Sync API key tier when an API plan subscription changes
+        const subPlan = subscription.metadata?.ag_plan ?? ''
+        const subUserId = subscription.metadata?.ag_user_id ? parseInt(subscription.metadata.ag_user_id, 10) : null
+        if (subUserId && (subPlan === 'api_developer' || subPlan === 'api_growth')) {
+          if (subscription.status === 'active') {
+            await upgradeApiKeyPlan(subUserId, subPlan)
+            L.info('billing.webhook.api_keys_upgraded', { userId: subUserId, plan: subPlan })
+          } else if (subscription.status === 'canceled') {
+            await downgradeApiKeysToFree(subUserId)
+            L.info('billing.webhook.api_keys_downgraded', { userId: subUserId })
+          }
+        }
 
         // Track cancellation timestamp for re-engagement emails
         if (event.type === 'customer.subscription.deleted' && subscription.status === 'canceled') {
