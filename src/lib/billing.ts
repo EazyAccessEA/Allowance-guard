@@ -2,6 +2,7 @@ import Stripe from 'stripe'
 import { pool } from '@/lib/db'
 import { apiLogger } from '@/lib/logger'
 import type { ConsumerPlan } from '@/lib/plans'
+import { getPlanDisplayName } from '@/lib/plans'
 
 // ---------------------------------------------------------------------------
 // Stripe client
@@ -12,6 +13,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
 })
 
 export { stripe }
+
+// ---------------------------------------------------------------------------
+// Custom invoice branding constants
+// ---------------------------------------------------------------------------
+
+const INVOICE_FOOTER = 'AllowanceGuard — Web3 wallet security. Core tool: free and open source. Always.\nhttps://www.allowanceguard.com | support@allowanceguard.com'
+
+/**
+ * Build custom_fields array for Stripe invoices.
+ * Stripe allows up to 2 custom fields on invoices.
+ */
+function invoiceCustomFields(plan: string, userId: number): Stripe.Checkout.SessionCreateParams.InvoiceCreation.InvoiceData.CustomField[] {
+  return [
+    { name: 'Plan', value: getPlanDisplayName(plan as ConsumerPlan) },
+    { name: 'Account ID', value: `AG-${userId}` },
+  ]
+}
 
 // ---------------------------------------------------------------------------
 // Customer management
@@ -32,10 +50,16 @@ export async function getOrCreateCustomer(userId: number, email: string): Promis
     return rows[0].stripe_customer_id as string
   }
 
-  // Create new Stripe customer
+  // Create new Stripe customer with invoice branding defaults
   const customer = await stripe.customers.create({
     email,
     metadata: { ag_user_id: String(userId) },
+    invoice_settings: {
+      custom_fields: [
+        { name: 'Account ID', value: `AG-${userId}` },
+      ],
+      footer: INVOICE_FOOTER,
+    },
   })
 
   apiLogger.info('stripe.customer.created', { userId, customerId: customer.id })
@@ -78,6 +102,16 @@ export async function createCheckoutSession(opts: CreateSubscriptionOptions): Pr
     metadata: {
       ag_user_id: String(opts.userId),
       ag_plan: opts.plan,
+    },
+    // Custom invoice branding — applied to every invoice generated from this subscription
+    invoice_creation: {
+      enabled: true,
+      invoice_data: {
+        description: `AllowanceGuard ${getPlanDisplayName(opts.plan as ConsumerPlan)} subscription`,
+        custom_fields: invoiceCustomFields(opts.plan, opts.userId),
+        footer: INVOICE_FOOTER,
+        rendering_options: { amount_tax_display: 'include_inclusive_tax' },
+      },
     },
   }
 
@@ -165,6 +199,160 @@ export async function syncSubscription(sub: Stripe.Subscription): Promise<void> 
     plan,
     status: sub.status,
   })
+}
+
+// ---------------------------------------------------------------------------
+// Invoice persistence (called from webhook)
+// ---------------------------------------------------------------------------
+
+/**
+ * Upsert an invoice record from a Stripe Invoice object.
+ * Called by the webhook handler on invoice.finalized, invoice.payment_succeeded, invoice.payment_failed.
+ */
+export async function upsertInvoice(invoice: Stripe.Invoice): Promise<void> {
+  // Resolve user_id from the customer's subscription metadata or from our DB
+  let userId: number | null = null
+
+  // Try to find user from subscriptions table via customer ID
+  const { rows } = await pool.query(
+    `SELECT user_id FROM subscriptions WHERE stripe_customer_id = $1 LIMIT 1`,
+    [typeof invoice.customer === 'string' ? invoice.customer : (invoice.customer as Stripe.Customer)?.id],
+  )
+  if (rows[0]?.user_id) {
+    userId = rows[0].user_id as number
+  }
+
+  if (!userId) {
+    apiLogger.warn('billing.invoice.upsert.no_user', { invoiceId: invoice.id })
+    return
+  }
+
+  const customerId = typeof invoice.customer === 'string' ? invoice.customer : (invoice.customer as Stripe.Customer)?.id ?? ''
+  const subscriptionId = typeof invoice.subscription === 'string'
+    ? invoice.subscription
+    : (invoice.subscription as Stripe.Subscription)?.id ?? null
+
+  // Extract plan from subscription metadata or invoice lines
+  let plan: string | null = null
+  if (invoice.lines?.data?.[0]?.metadata?.ag_plan) {
+    plan = invoice.lines.data[0].metadata.ag_plan
+  }
+
+  await pool.query(
+    `INSERT INTO invoices (
+       id, user_id, stripe_invoice_id, stripe_customer_id, stripe_subscription_id,
+       amount_due, amount_paid, currency, status, plan,
+       period_start, period_end, hosted_invoice_url, invoice_pdf_url,
+       invoice_number, description, attempt_count, paid_at,
+       created_at, updated_at
+     ) VALUES (
+       gen_random_uuid(), $1, $2, $3, $4,
+       $5, $6, $7, $8, $9,
+       to_timestamp($10), to_timestamp($11), $12, $13,
+       $14, $15, $16, $17,
+       NOW(), NOW()
+     )
+     ON CONFLICT (stripe_invoice_id) DO UPDATE SET
+       amount_due = EXCLUDED.amount_due,
+       amount_paid = EXCLUDED.amount_paid,
+       status = EXCLUDED.status,
+       hosted_invoice_url = EXCLUDED.hosted_invoice_url,
+       invoice_pdf_url = EXCLUDED.invoice_pdf_url,
+       invoice_number = EXCLUDED.invoice_number,
+       attempt_count = EXCLUDED.attempt_count,
+       paid_at = EXCLUDED.paid_at,
+       updated_at = NOW()`,
+    [
+      userId,
+      invoice.id,
+      customerId,
+      subscriptionId,
+      invoice.amount_due ?? 0,
+      invoice.amount_paid ?? 0,
+      invoice.currency ?? 'usd',
+      invoice.status ?? 'draft',
+      plan,
+      invoice.period_start ?? 0,
+      invoice.period_end ?? 0,
+      invoice.hosted_invoice_url ?? null,
+      invoice.invoice_pdf ?? null,
+      invoice.number ?? null,
+      invoice.description ?? null,
+      invoice.attempt_count ?? 0,
+      invoice.status === 'paid' ? new Date().toISOString() : null,
+    ],
+  )
+
+  apiLogger.info('billing.invoice.upserted', {
+    userId,
+    invoiceId: invoice.id,
+    status: invoice.status,
+    amount: invoice.amount_paid,
+  })
+}
+
+/**
+ * Fetch invoices for a user from local DB, ordered by most recent first.
+ */
+export async function getUserInvoices(userId: number, limit = 50): Promise<InvoiceRecord[]> {
+  const { rows } = await pool.query(
+    `SELECT
+       stripe_invoice_id, amount_due, amount_paid, currency, status, plan,
+       period_start, period_end, hosted_invoice_url, invoice_pdf_url,
+       invoice_number, description, attempt_count, paid_at, created_at
+     FROM invoices
+     WHERE user_id = $1
+     ORDER BY created_at DESC
+     LIMIT $2`,
+    [userId, limit],
+  )
+
+  return rows.map((r) => ({
+    stripeInvoiceId: r.stripe_invoice_id as string,
+    amountDue: r.amount_due as number,
+    amountPaid: r.amount_paid as number,
+    currency: r.currency as string,
+    status: r.status as string,
+    plan: r.plan as string | null,
+    periodStart: r.period_start ? new Date(r.period_start as string).toISOString() : null,
+    periodEnd: r.period_end ? new Date(r.period_end as string).toISOString() : null,
+    hostedInvoiceUrl: r.hosted_invoice_url as string | null,
+    invoicePdfUrl: r.invoice_pdf_url as string | null,
+    invoiceNumber: r.invoice_number as string | null,
+    description: r.description as string | null,
+    attemptCount: r.attempt_count as number,
+    paidAt: r.paid_at ? new Date(r.paid_at as string).toISOString() : null,
+    createdAt: new Date(r.created_at as string).toISOString(),
+  }))
+}
+
+export interface InvoiceRecord {
+  stripeInvoiceId: string
+  amountDue: number
+  amountPaid: number
+  currency: string
+  status: string
+  plan: string | null
+  periodStart: string | null
+  periodEnd: string | null
+  hostedInvoiceUrl: string | null
+  invoicePdfUrl: string | null
+  invoiceNumber: string | null
+  description: string | null
+  attemptCount: number
+  paidAt: string | null
+  createdAt: string
+}
+
+/**
+ * Look up user email by user_id (for sending invoice emails).
+ */
+export async function getUserEmailById(userId: number): Promise<string | null> {
+  const { rows } = await pool.query(
+    `SELECT email FROM users WHERE id = $1 LIMIT 1`,
+    [userId],
+  )
+  return (rows[0]?.email as string) ?? null
 }
 
 // ---------------------------------------------------------------------------
