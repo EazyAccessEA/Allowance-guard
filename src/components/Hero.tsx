@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/Button'
 import Container from '@/components/ui/Container'

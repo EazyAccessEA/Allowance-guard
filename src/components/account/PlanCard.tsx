@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import PlanBadge from '@/components/PlanBadge'
-import { cn } from '@/lib/utils'
 import {
   type ConsumerPlan,
   getPlanDisplayName,

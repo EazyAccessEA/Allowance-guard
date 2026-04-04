@@ -4,7 +4,7 @@
  * Generates timestamped audit reports for institutional compliance.
  * Supports JSON, CSV formats with full audit trails.
  */
-import { randomBytes, randomUUID } from 'crypto'
+import { randomBytes } from 'crypto'
 import { pool } from '@/lib/db'
 import { secureLogger } from '@/lib/secure-logger'
 

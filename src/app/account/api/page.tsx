@@ -5,7 +5,6 @@ import Section from '@/components/ui/Section'
 import Container from '@/components/ui/Container'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { Badge } from '@/components/ui/Badge'
 import { Input } from '@/components/ui/Input'
 import PlanBadge from '@/components/PlanBadge'
 import { cn } from '@/lib/utils'
@@ -14,9 +13,6 @@ import {
   Key,
   Copy,
   Check,
-  RefreshCw,
-  BarChart3,
-  Zap,
   ArrowRight,
   Trash2,
   Plus,

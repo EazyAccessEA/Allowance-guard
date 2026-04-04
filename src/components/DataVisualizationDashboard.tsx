@@ -11,8 +11,7 @@ import {
 import { Button } from './ui/Button'
 import {
   Shield,
-  RefreshCw,
-  AlertTriangle
+  RefreshCw
 } from 'lucide-react'
 import { InlineError } from '@/components/ErrorBoundary'
 

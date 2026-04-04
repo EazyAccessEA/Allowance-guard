@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Shield, Users, AlertTriangle, FileText, Copy, ExternalLink, Lock } from 'lucide-react'
+import { Shield, Users, AlertTriangle, FileText, Copy, Lock } from 'lucide-react'
 
 interface SafeInfo {
   address: string

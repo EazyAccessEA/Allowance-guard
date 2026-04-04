@@ -193,7 +193,7 @@ export async function POST(req: Request) {
             const user = await resolveUserFromCustomer(custId, L)
             if (user) {
               await sendPaymentReceiptEmail(user.email, {
-                invoiceNumber: invoice.number ?? invoice.id,
+                invoiceNumber: invoice.number ?? invoice.id ?? 'unknown',
                 amountPaid: invoice.amount_paid ?? 0,
                 currency: invoice.currency ?? 'usd',
                 plan: invoice.lines?.data?.[0]?.metadata?.ag_plan ?? null,
@@ -303,7 +303,7 @@ export async function POST(req: Request) {
             const user = await resolveUserFromCustomer(custId, L)
             if (user) {
               await sendPaymentFailedEmail(user.email, {
-                invoiceNumber: invoice.number ?? invoice.id,
+                invoiceNumber: invoice.number ?? invoice.id ?? 'unknown',
                 amountDue: invoice.amount_due ?? 0,
                 currency: invoice.currency ?? 'usd',
                 attemptCount: invoice.attempt_count ?? 1,
@@ -341,9 +341,10 @@ export async function POST(req: Request) {
         })
 
         // If there's an associated invoice, update it in our DB
-        if (charge.invoice) {
+        const chargeInvoice = (charge as unknown as Record<string, unknown>).invoice as string | { id: string } | null | undefined
+        if (chargeInvoice) {
           try {
-            const invoiceId = typeof charge.invoice === 'string' ? charge.invoice : charge.invoice.id
+            const invoiceId = typeof chargeInvoice === 'string' ? chargeInvoice : chargeInvoice.id
             const stripeInvoice = await stripe.invoices.retrieve(invoiceId)
             await upsertInvoice(stripeInvoice)
           } catch (refundErr) {
