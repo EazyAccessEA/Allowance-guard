@@ -178,16 +178,20 @@ export const CONSUMER_PRICES: Record<Exclude<ConsumerPlan, 'free'>, PlanPrice> =
   },
 }
 
-export const API_PRICES: Record<Exclude<ApiPlan, 'api_free' | 'api_enterprise'>, Pick<PlanPrice, 'monthlyPence' | 'currency' | 'stripePriceIdMonthly'>> = {
+export const API_PRICES: Record<Exclude<ApiPlan, 'api_free' | 'api_enterprise'>, PlanPrice> = {
   api_developer: {
     monthlyPence: 3900,
+    yearlyPence: 37400, // $374/yr — 20% off vs monthly ($468)
     currency: 'usd',
     stripePriceIdMonthly: process.env.STRIPE_PRICE_API_DEVELOPER ?? '',
+    stripePriceIdYearly: process.env.STRIPE_PRICE_API_DEVELOPER_YEARLY ?? '',
   },
   api_growth: {
     monthlyPence: 14900,
+    yearlyPence: 149000, // $1,490/yr — 17% off vs monthly ($1,788)
     currency: 'usd',
     stripePriceIdMonthly: process.env.STRIPE_PRICE_API_GROWTH ?? '',
+    stripePriceIdYearly: process.env.STRIPE_PRICE_API_GROWTH_YEARLY ?? '',
   },
 }
 

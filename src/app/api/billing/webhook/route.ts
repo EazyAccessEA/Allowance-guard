@@ -5,6 +5,7 @@ import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_gua
 import { withReq } from '@/lib/logger'
 import { reportError } from '@/lib/rollbar'
 import { pool } from '@/lib/db'
+import { sendFailedPaymentEmail } from '@/lib/mailer'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -148,7 +149,22 @@ export async function POST(req: Request) {
           attemptCount: invoice.attempt_count,
         })
 
-        // TODO: Send failed payment email notification to user
+        // Send failed payment email notification
+        try {
+          const customer = await stripe.customers.retrieve(invoice.customer as string)
+          if (customer && !customer.deleted && customer.email) {
+            const plan = invoice.subscription_details?.metadata?.ag_plan ?? 'pro'
+            await sendFailedPaymentEmail(customer.email, plan, invoice.attempt_count ?? 1)
+            L.info('billing.webhook.failed_payment_email_sent', {
+              email: customer.email,
+              attemptCount: invoice.attempt_count,
+            })
+          }
+        } catch (emailErr) {
+          L.error('billing.webhook.failed_payment_email_error', {
+            error: emailErr instanceof Error ? emailErr.message : 'Unknown error',
+          })
+        }
         break
       }
 
