@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireUser } from '@/lib/auth'
 import { getUserInvoices } from '@/lib/billing'
+import { limitOrThrow } from '@/lib/ratelimit'
 import { withReq } from '@/lib/logger'
 
 export const runtime = 'nodejs'
@@ -16,6 +17,9 @@ export async function GET(req: Request) {
   const L = withReq(req)
 
   try {
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+    await limitOrThrow(ip, 'billing-invoices')
+
     const session = await requireUser()
     const invoices = await getUserInvoices(session.user_id as number)
 
@@ -23,6 +27,9 @@ export async function GET(req: Request) {
   } catch (error) {
     if (error instanceof Error && error.message === 'UNAUTHENTICATED') {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+    }
+    if (error instanceof Error && error.message === 'Rate limit exceeded') {
+      return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
     }
     L.error('billing.invoices.list.failed', {
       error: error instanceof Error ? error.message : 'Unknown error',

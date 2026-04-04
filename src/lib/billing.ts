@@ -232,11 +232,33 @@ export async function upsertInvoice(invoice: Stripe.Invoice): Promise<void> {
     ? invoice.subscription
     : (invoice.subscription as Stripe.Subscription)?.id ?? null
 
-  // Extract plan from subscription metadata or invoice lines
+  // Extract plan: try invoice line item metadata first, then fall back to subscription metadata
   let plan: string | null = null
-  if (invoice.lines?.data?.[0]?.metadata?.ag_plan) {
-    plan = invoice.lines.data[0].metadata.ag_plan
+  for (const line of invoice.lines?.data ?? []) {
+    if (line.metadata?.ag_plan) {
+      plan = line.metadata.ag_plan
+      break
+    }
   }
+  if (!plan && invoice.subscription) {
+    // Fall back to subscription metadata stored in our DB
+    const subId = typeof invoice.subscription === 'string'
+      ? invoice.subscription
+      : (invoice.subscription as Stripe.Subscription)?.id
+    if (subId) {
+      const { rows: planRows } = await pool.query(
+        `SELECT plan FROM subscriptions WHERE stripe_subscription_id = $1 LIMIT 1`,
+        [subId],
+      )
+      if (planRows[0]?.plan) {
+        plan = planRows[0].plan as string
+      }
+    }
+  }
+
+  // Convert timestamps: use null instead of 0 to avoid epoch date (1970-01-01)
+  const periodStartTs = invoice.period_start && invoice.period_start > 0 ? invoice.period_start : null
+  const periodEndTs = invoice.period_end && invoice.period_end > 0 ? invoice.period_end : null
 
   await pool.query(
     `INSERT INTO invoices (
@@ -248,7 +270,8 @@ export async function upsertInvoice(invoice: Stripe.Invoice): Promise<void> {
      ) VALUES (
        gen_random_uuid(), $1, $2, $3, $4,
        $5, $6, $7, $8, $9,
-       to_timestamp($10), to_timestamp($11), $12, $13,
+       ${periodStartTs ? 'to_timestamp($10)' : '$10::timestamptz'}, ${periodEndTs ? 'to_timestamp($11)' : '$11::timestamptz'},
+       $12, $13,
        $14, $15, $16, $17,
        NOW(), NOW()
      )
@@ -272,8 +295,8 @@ export async function upsertInvoice(invoice: Stripe.Invoice): Promise<void> {
       invoice.currency ?? 'usd',
       invoice.status ?? 'draft',
       plan,
-      invoice.period_start ?? 0,
-      invoice.period_end ?? 0,
+      periodStartTs,
+      periodEndTs,
       invoice.hosted_invoice_url ?? null,
       invoice.invoice_pdf ?? null,
       invoice.number ?? null,

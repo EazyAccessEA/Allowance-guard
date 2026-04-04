@@ -10,6 +10,39 @@ import { pool } from '@/lib/db'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+/** Resolve user_id and email from a Stripe customer ID. */
+async function resolveUserFromCustomer(
+  custId: string | undefined,
+  L: ReturnType<typeof withReq>,
+): Promise<{ userId: number; email: string } | null> {
+  if (!custId) return null
+
+  const { rows } = await pool.query(
+    `SELECT user_id, plan FROM subscriptions WHERE stripe_customer_id = $1 LIMIT 1`,
+    [custId],
+  )
+  const userId = rows[0]?.user_id as number | undefined
+  if (!userId) return null
+
+  const email = await getUserEmailById(userId)
+  if (!email) {
+    L.warn('billing.webhook.user_email_missing', { userId, customerId: custId })
+    return null
+  }
+
+  return { userId, email }
+}
+
+/** Extract customer ID string from Stripe's polymorphic customer field. */
+function extractCustomerId(customer: string | Stripe.Customer | Stripe.DeletedCustomer | null): string | undefined {
+  if (!customer) return undefined
+  return typeof customer === 'string' ? customer : customer.id
+}
+
 /**
  * POST /api/billing/webhook
  *
@@ -19,6 +52,9 @@ export const dynamic = 'force-dynamic'
  * - invoice.finalized
  * - invoice.payment_succeeded
  * - invoice.payment_failed
+ * - invoice.voided
+ * - invoice.marked_uncollectible
+ * - charge.refunded
  * - customer.source.expiring
  */
 export async function POST(req: Request) {
@@ -136,34 +172,53 @@ export async function POST(req: Request) {
           currency: invoice.currency,
         })
 
-        // Send payment receipt email
-        try {
-          const custId = typeof invoice.customer === 'string' ? invoice.customer : (invoice.customer as Stripe.Customer)?.id
-          const { rows: subRows } = await pool.query(
-            `SELECT user_id FROM subscriptions WHERE stripe_customer_id = $1 LIMIT 1`,
-            [custId],
-          )
-          const uid = subRows[0]?.user_id as number | undefined
-          if (uid) {
-            const email = await getUserEmailById(uid)
-            if (email) {
-              await sendPaymentReceiptEmail(email, {
+        // Send payment receipt email — skip zero-amount invoices (trials, prorations)
+        if ((invoice.amount_paid ?? 0) > 0) {
+          try {
+            const custId = extractCustomerId(invoice.customer)
+            const user = await resolveUserFromCustomer(custId, L)
+            if (user) {
+              await sendPaymentReceiptEmail(user.email, {
                 invoiceNumber: invoice.number ?? invoice.id,
                 amountPaid: invoice.amount_paid ?? 0,
                 currency: invoice.currency ?? 'usd',
                 plan: invoice.lines?.data?.[0]?.metadata?.ag_plan ?? null,
-                periodEnd: invoice.period_end ? new Date(invoice.period_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : null,
+                periodEnd: invoice.period_end
+                  ? new Date(invoice.period_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                  : null,
                 hostedInvoiceUrl: invoice.hosted_invoice_url ?? null,
                 invoicePdfUrl: invoice.invoice_pdf ?? null,
               })
             }
+          } catch (emailErr) {
+            L.error('billing.webhook.receipt_email_failed', {
+              invoiceId: invoice.id,
+              error: emailErr instanceof Error ? emailErr.message : 'Unknown',
+            })
           }
-        } catch (emailErr) {
-          L.error('billing.webhook.receipt_email_failed', {
-            invoiceId: invoice.id,
-            error: emailErr instanceof Error ? emailErr.message : 'Unknown',
-          })
         }
+        break
+      }
+
+      case 'invoice.voided':
+      case 'invoice.marked_uncollectible': {
+        const invoice = event.data.object as Stripe.Invoice
+
+        // Update invoice status in local DB
+        await upsertInvoice(invoice)
+
+        L.info('billing.webhook.invoice.status_change', {
+          type: event.type,
+          invoiceId: invoice.id,
+          status: invoice.status,
+          customerId: invoice.customer,
+        })
+
+        await auditWebhook('stripe', event.type, invoice.id ?? null, {
+          status: invoice.status,
+          amount: invoice.amount_due,
+          currency: invoice.currency,
+        })
         break
       }
 
@@ -195,6 +250,8 @@ export async function POST(req: Request) {
                   ? new Date(subscription.trial_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
                   : 'soon',
               })
+            } else {
+              L.warn('billing.webhook.user_email_missing', { userId: uid, subscriptionId: subscription.id })
             }
           }
         } catch (emailErr) {
@@ -225,18 +282,13 @@ export async function POST(req: Request) {
           attemptCount: invoice.attempt_count,
         })
 
-        // Send failed payment email notification
-        try {
-          const custId = typeof invoice.customer === 'string' ? invoice.customer : (invoice.customer as Stripe.Customer)?.id
-          const { rows: subRows } = await pool.query(
-            `SELECT user_id FROM subscriptions WHERE stripe_customer_id = $1 LIMIT 1`,
-            [custId],
-          )
-          const uid = subRows[0]?.user_id as number | undefined
-          if (uid) {
-            const email = await getUserEmailById(uid)
-            if (email) {
-              await sendPaymentFailedEmail(email, {
+        // Send failed payment email — skip zero-amount invoices
+        if ((invoice.amount_due ?? 0) > 0) {
+          try {
+            const custId = extractCustomerId(invoice.customer)
+            const user = await resolveUserFromCustomer(custId, L)
+            if (user) {
+              await sendPaymentFailedEmail(user.email, {
                 invoiceNumber: invoice.number ?? invoice.id,
                 amountDue: invoice.amount_due ?? 0,
                 currency: invoice.currency ?? 'usd',
@@ -246,12 +298,46 @@ export async function POST(req: Request) {
                   : null,
               })
             }
+          } catch (emailErr) {
+            L.error('billing.webhook.failed_email_failed', {
+              invoiceId: invoice.id,
+              error: emailErr instanceof Error ? emailErr.message : 'Unknown',
+            })
           }
-        } catch (emailErr) {
-          L.error('billing.webhook.failed_email_failed', {
-            invoiceId: invoice.id,
-            error: emailErr instanceof Error ? emailErr.message : 'Unknown',
-          })
+        }
+        break
+      }
+
+      // ----- Refunds -----
+      case 'charge.refunded': {
+        const charge = event.data.object as Stripe.Charge
+        const custId = extractCustomerId(charge.customer)
+
+        L.info('billing.webhook.charge.refunded', {
+          chargeId: charge.id,
+          amountRefunded: charge.amount_refunded,
+          currency: charge.currency,
+          customerId: custId,
+        })
+
+        await auditWebhook('stripe', 'charge.refunded', charge.id, {
+          amountRefunded: charge.amount_refunded,
+          currency: charge.currency,
+          customerId: custId,
+        })
+
+        // If there's an associated invoice, update it in our DB
+        if (charge.invoice) {
+          try {
+            const invoiceId = typeof charge.invoice === 'string' ? charge.invoice : charge.invoice.id
+            const stripeInvoice = await stripe.invoices.retrieve(invoiceId)
+            await upsertInvoice(stripeInvoice)
+          } catch (refundErr) {
+            L.error('billing.webhook.refund_invoice_sync_failed', {
+              chargeId: charge.id,
+              error: refundErr instanceof Error ? refundErr.message : 'Unknown',
+            })
+          }
         }
         break
       }
@@ -295,6 +381,8 @@ export async function POST(req: Request) {
                   expYear: source.exp_year,
                   plan,
                 })
+              } else {
+                L.warn('billing.webhook.user_email_missing', { userId: uid, customerId: custId })
               }
             }
           }

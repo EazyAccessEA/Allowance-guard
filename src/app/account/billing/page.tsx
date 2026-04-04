@@ -57,6 +57,8 @@ function invoiceStatusBadge(status: string) {
       return <Badge variant="success" size="sm">Paid</Badge>
     case 'open':
       return <Badge variant="warning" size="sm">Open</Badge>
+    case 'past_due':
+      return <Badge variant="warning" size="sm">Past Due</Badge>
     case 'draft':
       return <Badge variant="secondary" size="sm">Draft</Badge>
     case 'uncollectible':
