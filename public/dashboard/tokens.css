@@ -1,0 +1,171 @@
+/* ============================================================
+   AllowanceGuard Design Tokens — CSS Custom Properties
+   Source of truth: src/design/tokens.ts
+   ============================================================ */
+
+:root {
+  /* --- Primary (Serum Teal) --- */
+  --color-primary-50:  #F0FDFA;
+  --color-primary-100: #CCFBF1;
+  --color-primary-200: #99F6E4;
+  --color-primary-300: #5EEAD4;
+  --color-primary-400: #2DD4BF;
+  --color-primary-500: #00C2B3;
+  --color-primary-600: #00A896;
+  --color-primary-700: #008B7A;
+  --color-primary-800: #006B5F;
+  --color-primary-900: #004B44;
+
+  /* --- Secondary (Slate) --- */
+  --color-secondary-50:  #F8FAFC;
+  --color-secondary-100: #F1F5F9;
+  --color-secondary-200: #E2E8F0;
+  --color-secondary-300: #CBD5E1;
+  --color-secondary-400: #94A3B8;
+  --color-secondary-500: #64748B;
+  --color-secondary-600: #475569;
+  --color-secondary-700: #334155;
+  --color-secondary-800: #1E293B;
+  --color-secondary-900: #0F172A;
+
+  /* --- Semantic — Success --- */
+  --color-success-50:  #F0FDF4;
+  --color-success-500: #22C55E;
+  --color-success-600: #16A34A;
+
+  /* --- Semantic — Warning --- */
+  --color-warning-50:  #FFFBEB;
+  --color-warning-500: #F59E0B;
+  --color-warning-600: #D97706;
+
+  /* --- Semantic — Error --- */
+  --color-error-50:  #FEF2F2;
+  --color-error-500: #EF4444;
+  --color-error-600: #DC2626;
+
+  /* --- Semantic — Info --- */
+  --color-info-50:  #F0F9FF;
+  --color-info-500: #0EA5E9;
+
+  /* --- Dark Mode Surfaces --- */
+  --dark-bg-primary:   #0A0E1A;
+  --dark-bg-secondary: #111827;
+  --dark-bg-tertiary:  #1E293B;
+  --dark-bg-elevated:  #263244;
+  --dark-bg-overlay:   rgba(0, 0, 0, 0.6);
+
+  /* --- Dark Mode Text --- */
+  --dark-text-primary:   #F1F5F9;
+  --dark-text-secondary: #94A3B8;
+  --dark-text-tertiary:  #64748B;
+
+  /* --- Dark Mode Borders --- */
+  --dark-border-primary:   #1E293B;
+  --dark-border-secondary: #334155;
+  --dark-border-tertiary:  #475569;
+  --dark-border-focus:     #00C2B3;
+
+  /* --- Glass / Glassmorphism --- */
+  --glass-surface:      rgba(17, 24, 39, 0.7);
+  --glass-surface-hover: rgba(30, 41, 59, 0.8);
+  --glass-border:       rgba(71, 85, 105, 0.4);
+
+  /* --- Typography --- */
+  --font-heading: 'Satoshi', 'Inter', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Menlo', 'Monaco', monospace;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+
+  --leading-tight:  1.25;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  --tracking-heading: -0.02em;
+  --tracking-display: -0.03em;
+  --tracking-body:    0;
+  --tracking-caption:  0.025em;
+
+  --weight-normal:   400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-extrabold: 800;
+
+  /* --- Spacing (4px grid) --- */
+  --space-0:  0;
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* --- Layout --- */
+  --container-max:    1200px;
+  --container-narrow: 800px;
+  --container-wide:   1400px;
+  --nav-height:       4rem;
+  --nav-height-mobile: 3.5rem;
+
+  /* --- Border Radius --- */
+  --radius-sm:   0.125rem;
+  --radius-base: 0.5rem;
+  --radius-md:   0.75rem;
+  --radius-lg:   1rem;
+  --radius-xl:   1.5rem;
+  --radius-full: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-large:  0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-focus:  0 0 0 3px rgba(0, 194, 179, 0.15);
+  --shadow-focus-error: 0 0 0 3px rgba(239, 68, 68, 0.15);
+
+  /* --- Motion --- */
+  --duration-instant: 0ms;
+  --duration-fast:    150ms;
+  --duration-base:    250ms;
+  --duration-slow:    500ms;
+
+  --ease:         cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* --- Z-Index --- */
+  --z-dropdown: 1000;
+  --z-sticky:   1020;
+  --z-fixed:    1030;
+  --z-modal-bg: 1040;
+  --z-modal:    1050;
+  --z-tooltip:  1070;
+  --z-toast:    1080;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
