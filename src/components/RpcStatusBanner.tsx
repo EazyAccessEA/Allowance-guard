@@ -1,24 +1,35 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 export default function RpcStatusBanner() {
   const [bad, setBad] = useState(false)
-  
+  const failCount = useRef(0)
+
   useEffect(() => {
     let t: NodeJS.Timeout
-    
+
     const ping = async () => {
-      try { 
+      try {
         const r = await fetch('/api/healthz', { cache: 'no-store' })
-        const j = await r.json()
-        setBad(String(j.checks?.rpc || '').startsWith('fail') || 
-               Object.values(j.checks?.chains || {}).some((status: unknown) => String(status).startsWith('fail')))
-      } catch { 
-        setBad(true) 
+        if (r.ok) {
+          const j = await r.json()
+          const rpcBad = String(j.checks?.rpc || '').startsWith('fail') ||
+                 Object.values(j.checks?.chains || {}).some((status: unknown) => String(status).startsWith('fail'))
+          setBad(rpcBad)
+          failCount.current = rpcBad ? failCount.current + 1 : 0
+        } else {
+          failCount.current++
+          setBad(true)
+        }
+      } catch {
+        failCount.current++
+        setBad(true)
       }
-      t = setTimeout(ping, 30000) // Check every 30 seconds
+      // Back off: 30s → 60s → 120s → max 5min on repeated failures
+      const delay = Math.min(30000 * Math.pow(2, Math.min(failCount.current, 4)), 300000)
+      t = setTimeout(ping, delay)
     }
-    
+
     ping()
     return () => clearTimeout(t)
   }, [])
