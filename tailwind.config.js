@@ -176,12 +176,12 @@ module.exports = {
         warning: '#F59E0B',
       },
       fontFamily: {
-        // Mobbin-Inspired Typography System
-        'heading': ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui'], // For headings
-        'sans': ['Inter', 'ui-sans-serif', 'system-ui'], // For body text
-        'display': ['Satoshi', 'Inter', 'ui-sans-serif', 'system-ui'], // For large displays
-        'caption': ['Inter', 'ui-sans-serif', 'system-ui'], // For small text
-        'button': ['Inter', 'ui-sans-serif', 'system-ui'], // For buttons and CTAs
+        // Design System Typography — Space Grotesk for display, Inter for body
+        'heading': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
+        'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
+        'display': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
+        'caption': ['Inter', 'ui-sans-serif', 'system-ui'],
+        'button': ['Inter', 'ui-sans-serif', 'system-ui'],
       },
       fontSize: {
         // Mobbin-Inspired Typography Scale (Mobile-first with systematic scaling)
