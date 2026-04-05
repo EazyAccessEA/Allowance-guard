@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AllowanceGuard — Security Dashboard</title>
+  <meta name="description" content="Monitor, assess, and revoke token approvals across multiple blockchains.">
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Skip Navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="AllowanceGuard home">
+        <span class="nav__logo-icon" aria-hidden="true">◆</span>
+        <span class="nav__logo-text">AllowanceGuard</span>
+      </a>
+      <div class="nav__links" role="menubar">
+        <a href="#" class="nav__link nav__link--active" role="menuitem">Dashboard</a>
+        <a href="#" class="nav__link" role="menuitem">Features</a>
+        <a href="../pricing/" class="nav__link" role="menuitem">Pricing</a>
+        <a href="#" class="nav__link" role="menuitem">Docs</a>
+      </div>
+      <div class="nav__wallet">
+        <span class="nav__chain-badge" aria-label="Connected to Ethereum">
+          <span class="nav__chain-dot nav__chain-dot--eth" aria-hidden="true"></span>
+          Ethereum
+        </span>
+        <button class="nav__wallet-btn" aria-label="Connected wallet 0x1a2B...3c4D">
+          <span class="nav__avatar" aria-hidden="true"></span>
+          <span class="nav__address">0x1a2B...3c4D</span>
+        </button>
+      </div>
+      <button class="nav__mobile-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span class="nav__hamburger" aria-hidden="true"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content" class="main">
+
+    <!-- Summary Stats -->
+    <section class="stats" aria-label="Security summary">
+      <div class="stats__grid">
+        <article class="stat-card" aria-label="Total approvals: 24">
+          <span class="stat-card__label">Total Approvals</span>
+          <span class="stat-card__value" id="stat-total">24</span>
+        </article>
+        <article class="stat-card stat-card--warning" aria-label="At-risk approvals: 7">
+          <span class="stat-card__label">At-Risk</span>
+          <span class="stat-card__value" id="stat-risk">7</span>
+          <span class="stat-card__badge stat-card__badge--warning" aria-hidden="true">⚠</span>
+        </article>
+        <article class="stat-card" aria-label="Value exposed: $142,850">
+          <span class="stat-card__label">Value Exposed</span>
+          <span class="stat-card__value" id="stat-value">$142,850</span>
+        </article>
+        <article class="stat-card" aria-label="Security score: 72 out of 100">
+          <span class="stat-card__label">Security Score</span>
+          <div class="stat-card__gauge">
+            <svg class="gauge" viewBox="0 0 80 80" aria-hidden="true">
+              <circle class="gauge__track" cx="40" cy="40" r="34" />
+              <circle class="gauge__fill" cx="40" cy="40" r="34" id="gauge-fill" />
+            </svg>
+            <span class="stat-card__score" id="stat-score">72</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Time Machine + Chain Filters -->
+    <section class="controls" aria-label="Dashboard controls">
+      <div class="controls__row">
+        <!-- Chain Filter Pills -->
+        <div class="filters" role="group" aria-label="Filter by chain">
+          <button class="filter-pill filter-pill--active" data-chain="all">All</button>
+          <button class="filter-pill" data-chain="Ethereum">Ethereum</button>
+          <button class="filter-pill" data-chain="Polygon">Polygon</button>
+          <button class="filter-pill" data-chain="Arbitrum">Arbitrum</button>
+          <button class="filter-pill" data-chain="Base">Base</button>
+          <button class="filter-pill" data-chain="Optimism">Optimism</button>
+          <button class="filter-pill" data-chain="Avalanche">Avalanche</button>
+        </div>
+        <!-- Time Machine Toggle -->
+        <div class="time-machine">
+          <label class="time-machine__label" for="time-machine-toggle">
+            <span class="time-machine__icon" aria-hidden="true">⏳</span>
+            Time Machine
+          </label>
+          <button
+            class="time-machine__toggle"
+            id="time-machine-toggle"
+            role="switch"
+            aria-checked="false"
+            aria-label="Toggle Time Machine simulation"
+          >
+            <span class="time-machine__slider"></span>
+          </button>
+          <span class="time-machine__badge" id="tm-badge" hidden>Simulated</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Approval Table -->
+    <section class="table-section" aria-label="Token approvals">
+      <div class="table-wrap">
+        <table class="approval-table" id="approval-table">
+          <thead>
+            <tr>
+              <th class="approval-table__th approval-table__th--check">
+                <input type="checkbox" id="select-all" aria-label="Select all approvals">
+              </th>
+              <th class="approval-table__th">Token</th>
+              <th class="approval-table__th">Spender</th>
+              <th class="approval-table__th">Amount</th>
+              <th class="approval-table__th">Risk</th>
+              <th class="approval-table__th">Chain</th>
+              <th class="approval-table__th">Last Active</th>
+              <th class="approval-table__th approval-table__th--action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state" hidden>
+        <div class="empty-state__icon" aria-hidden="true">🔍</div>
+        <h3 class="empty-state__title">No approvals found</h3>
+        <p class="empty-state__text" id="empty-state-text">
+          No token approvals match your current filters.
+        </p>
+      </div>
+    </section>
+
+    <!-- Batch Action Toolbar -->
+    <div class="batch-bar" id="batch-bar" hidden aria-live="polite">
+      <span class="batch-bar__count" id="batch-count">0 selected</span>
+      <button class="batch-bar__btn" id="batch-revoke">
+        <span aria-hidden="true">✕</span> Revoke Selected
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Mobile Card Template (hidden, used by JS for responsive view) -->
+  <template id="mobile-card-template">
+    <article class="mobile-card">
+      <div class="mobile-card__header">
+        <input type="checkbox" class="mobile-card__check" aria-label="Select">
+        <div class="mobile-card__token"></div>
+        <div class="mobile-card__risk"></div>
+      </div>
+      <div class="mobile-card__body">
+        <div class="mobile-card__row">
+          <span class="mobile-card__label">Spender</span>
+          <span class="mobile-card__value mobile-card__value--mono"></span>
+        </div>
+        <div class="mobile-card__row">
+          <span class="mobile-card__label">Amount</span>
+          <span class="mobile-card__value"></span>
+        </div>
+        <div class="mobile-card__row">
+          <span class="mobile-card__label">Chain</span>
+          <span class="mobile-card__value"></span>
+        </div>
+        <div class="mobile-card__row">
+          <span class="mobile-card__label">Last Active</span>
+          <span class="mobile-card__value"></span>
+        </div>
+      </div>
+      <div class="mobile-card__footer">
+        <button class="btn btn--ghost-destructive">Revoke</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

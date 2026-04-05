@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AllowanceGuard — Pricing</title>
+  <meta name="description" content="Simple, transparent pricing. Core scanner free forever. Premium for power users.">
+  <link rel="stylesheet" href="../dashboard/tokens.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Skip Navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="AllowanceGuard home">
+        <span class="nav__logo-icon" aria-hidden="true">◆</span>
+        <span class="nav__logo-text">AllowanceGuard</span>
+      </a>
+      <div class="nav__links" role="menubar">
+        <a href="../dashboard/" class="nav__link" role="menuitem">Dashboard</a>
+        <a href="#" class="nav__link" role="menuitem">Features</a>
+        <a href="#" class="nav__link nav__link--active" role="menuitem">Pricing</a>
+        <a href="#" class="nav__link" role="menuitem">Docs</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content" class="main">
+
+    <!-- Header -->
+    <header class="pricing-header">
+      <h1 class="pricing-header__title">Simple, transparent pricing</h1>
+      <p class="pricing-header__subtitle">
+        Core scanner: free and open source. Always.<br>
+        Premium monitoring and API access for power users and teams.
+      </p>
+    </header>
+
+    <!-- Billing Toggle -->
+    <div class="billing-toggle" role="group" aria-label="Billing period">
+      <button class="billing-toggle__option billing-toggle__option--active"
+              id="toggle-monthly" aria-pressed="true">Monthly</button>
+      <button class="billing-toggle__option"
+              id="toggle-yearly" aria-pressed="false">
+        Yearly
+        <span class="billing-toggle__badge">Save 20%</span>
+      </button>
+      <span class="billing-toggle__indicator" id="toggle-indicator" aria-hidden="true"></span>
+    </div>
+
+    <!-- Tier Cards -->
+    <section class="tiers" aria-label="Pricing tiers">
+      <div class="tiers__grid">
+
+        <!-- Free -->
+        <article class="tier-card" aria-labelledby="tier-free-name">
+          <div class="tier-card__head">
+            <h2 class="tier-card__name" id="tier-free-name">Free</h2>
+            <div class="tier-card__price">
+              <span class="tier-card__amount">$0</span>
+              <span class="tier-card__period">/month</span>
+            </div>
+            <p class="tier-card__desc">Essential wallet security</p>
+          </div>
+          <ul class="tier-card__features" aria-label="Free tier features">
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Scan up to 3 wallets</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Single-chain view</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Manual revocation</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Basic risk labels</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Community support</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Multi-chain portfolio</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Email alerts</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Batch revocation</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Export reports</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Team features</li>
+          </ul>
+          <button class="tier-card__cta tier-card__cta--ghost">Get Started</button>
+        </article>
+
+        <!-- Pro (highlighted) -->
+        <article class="tier-card tier-card--popular" aria-labelledby="tier-pro-name">
+          <span class="tier-card__badge">Most Popular</span>
+          <div class="tier-card__head">
+            <h2 class="tier-card__name" id="tier-pro-name">Pro</h2>
+            <div class="tier-card__price">
+              <span class="tier-card__amount" data-monthly="$9.99" data-yearly="$6.66">$9.99</span>
+              <span class="tier-card__period" data-monthly="/month" data-yearly="/mo — $79/yr">/month</span>
+            </div>
+            <p class="tier-card__desc">Complete protection for power users</p>
+          </div>
+          <ul class="tier-card__features" aria-label="Pro tier features">
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Everything in Free</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Unlimited wallets</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Multi-chain portfolio (10 chains)</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Email &amp; Telegram alerts</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Batch revocation + gas savings</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Historical risk timeline</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Export reports (PDF/CSV)</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Priority support</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Team dashboard</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Automated rules</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Compliance logs</li>
+            <li class="feature feature--no"><span aria-hidden="true">✗</span> Webhook integrations</li>
+          </ul>
+          <button class="tier-card__cta tier-card__cta--primary">Start Pro Trial</button>
+        </article>
+
+        <!-- Sentinel -->
+        <article class="tier-card tier-card--sentinel" aria-labelledby="tier-sentinel-name">
+          <div class="tier-card__head">
+            <h2 class="tier-card__name" id="tier-sentinel-name">Sentinel</h2>
+            <div class="tier-card__price">
+              <span class="tier-card__amount" data-monthly="$49.99" data-yearly="$41.58">$49.99</span>
+              <span class="tier-card__period" data-monthly="/month" data-yearly="/mo — $499/yr">/month</span>
+            </div>
+            <p class="tier-card__desc">Enterprise-grade for teams &amp; DAOs</p>
+          </div>
+          <ul class="tier-card__features" aria-label="Sentinel tier features">
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Everything in Pro</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Monitor up to 50 wallets</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Team dashboard with RBAC</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Automated revocation rules</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Compliance-ready audit logs</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Webhook integrations</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Priority support</li>
+            <li class="feature feature--yes"><span aria-hidden="true">✓</span> Custom onboarding</li>
+          </ul>
+          <button class="tier-card__cta tier-card__cta--outline">Contact Sales</button>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Feature Comparison Table -->
+    <section class="comparison" aria-label="Feature comparison">
+      <h2 class="comparison__title">Compare all features</h2>
+      <div class="comparison__wrap">
+        <table class="comparison__table" id="comparison-table">
+          <thead>
+            <tr>
+              <th class="comparison__th">Feature</th>
+              <th class="comparison__th comparison__th--tier">Free</th>
+              <th class="comparison__th comparison__th--tier comparison__th--highlight">Pro</th>
+              <th class="comparison__th comparison__th--tier">Sentinel</th>
+            </tr>
+          </thead>
+          <tbody id="comparison-body">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="bottom-cta">
+      <h2 class="bottom-cta__title">Need more?</h2>
+      <p class="bottom-cta__text">Talk to us about Enterprise — custom limits, SLAs, and dedicated support.</p>
+      <button class="tier-card__cta tier-card__cta--outline">Contact Sales</button>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
