@@ -1,8 +1,5 @@
 'use client'
-import { useAccount } from 'wagmi'
-import { useState, useEffect, useCallback } from 'react'
-import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
+
 import Hero from '@/components/Hero'
 import TrustStats from '@/components/TrustStats'
 import HowItWorks from '@/components/HowItWorks'
@@ -12,23 +9,24 @@ import Testimonials from '@/components/Testimonials'
 import ChainLogoCarousel from '@/components/ChainLogoCarousel'
 import { LazySection } from '@/components/LazySection'
 import { WalletErrorBoundary, RpcErrorBoundary } from '@/components/ErrorBoundary'
-import { APIClient } from '@/lib/api-client'
+import Container from '@/components/ui/Container'
+import Section from '@/components/ui/Section'
+import { useDashboard } from '@/hooks/useDashboard'
 import dynamicImport from 'next/dynamic'
 
-// Dynamic imports for heavy components
 const StatisticsSection = dynamicImport(() => import('@/components/StatisticsSection'), {
   loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-64 w-full" />,
-  ssr: false
+  ssr: false,
 })
 
 const AppArea = dynamicImport(() => import('@/components/AppArea'), {
   loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-96 w-full" />,
-  ssr: false
+  ssr: false,
 })
 
 const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
   loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-48 w-full" />,
-  ssr: false
+  ssr: false,
 })
 
 function ErrorFallback({ resetError }: { error: Error; resetError: () => void }) {
@@ -49,186 +47,25 @@ function ErrorFallback({ resetError }: { error: Error; resetError: () => void })
 }
 
 export default function HomePage() {
-  const { address: connectedAddress, isConnected } = useAccount()
-  const [selectedWallet, setSelectedWallet] = useState<string | null>(null)
-  const [isHydrated, setIsHydrated] = useState(false)
-  const [rows, setRows] = useState<{
-    chain_id: number
-    token_address: string
-    spender_address: string
-    standard: string
-    allowance_type: string
-    amount: string
-    is_unlimited: boolean
-    last_seen_block: string
-    risk_score: number
-    risk_flags: string[]
-  }[]>([])
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(25)
-  const [total, setTotal] = useState(0)
-  const [pending, setPending] = useState(false)
-  const [, setJobId] = useState<number | null>(null)
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState<Error | null>(null)
-
-  const fetchAllowances = useCallback(async (addr: string, p = page, ps = pageSize) => {
-    try {
-      const json = await APIClient.getAllowances(addr, p, ps)
-      setRows(json.allowances || [])
-      setTotal(json.total || 0)
-      setError(null)
-    } catch (err) {
-      handleError(err as Error, 'fetchAllowances')
-    }
-  }, [page, pageSize])
-
-  useEffect(() => {
-    setIsHydrated(true)
-  }, [])
-
-  useEffect(() => {
-    if (isConnected && connectedAddress && !selectedWallet) {
-      setSelectedWallet(connectedAddress)
-    }
-  }, [isConnected, connectedAddress, selectedWallet])
-
-  useEffect(() => {
-    if (selectedWallet && isHydrated) {
-      fetchAllowances(selectedWallet)
-    }
-  }, [selectedWallet, isHydrated, fetchAllowances])
-
-  // Auto-scroll to Security Dashboard when wallet connects
-  useEffect(() => {
-    if (isConnected && selectedWallet && isHydrated) {
-      const scrollToDashboard = () => {
-        const el = document.getElementById('security-dashboard')
-        if (el) {
-          el.classList.add('animate-pulse')
-          const rect = el.getBoundingClientRect()
-          window.scrollTo({
-            top: rect.top + window.pageYOffset - 80,
-            behavior: 'smooth'
-          })
-          setTimeout(() => el.classList.remove('animate-pulse'), 1000)
-          return true
-        }
-        return false
-      }
-
-      const tryScroll = (attempt = 1) => {
-        if (scrollToDashboard()) return
-        if (attempt < 5) {
-          setTimeout(() => tryScroll(attempt + 1), attempt * 500)
-        }
-      }
-
-      setTimeout(() => tryScroll(), 100)
-    }
-  }, [isConnected, selectedWallet, isHydrated])
-
-  const handleError = (err: Error, context: string) => {
-    console.error(`Error in ${context}:`, err)
-    setError(err)
-    setMessage(`Error: ${err.message}`)
-  }
-
-  const resetError = () => {
-    setError(null)
-    setMessage('')
-  }
-
-  async function startScan() {
-    const target = selectedWallet || connectedAddress
-    if (!target) {
-      setMessage('Select or connect a wallet first')
-      return
-    }
-    if (pending) return
-
-    setPending(true)
-    setMessage('Queuing…')
-    setError(null)
-
-    try {
-      const scanResult = await APIClient.startScan(target, ['eth', 'arb', 'base'])
-
-      if (!scanResult.jobId) {
-        throw new Error('Failed to get job ID from scan response')
-      }
-
-      setJobId(scanResult.jobId)
-      setMessage(`Scan queued (#${scanResult.jobId})`)
-
-      if (process.env.NODE_ENV !== 'production') {
-        fetch('/api/jobs/process', { method: 'POST' }).catch(() => {})
-      }
-
-      let attempts = 0
-      const maxAttempts = 40
-
-      while (attempts < maxAttempts) {
-        await new Promise(r => setTimeout(r, 3000))
-        attempts++
-
-        try {
-          const status = await APIClient.getJobStatus(scanResult.jobId)
-
-          if (status.status === 'succeeded') {
-            setMessage('Scan complete')
-            break
-          }
-
-          if (status.status === 'failed') {
-            throw new Error(`Scan failed: ${status.error || 'Unknown error'}`)
-          }
-
-          setMessage(`Scanning… (attempt ${status.attempts || attempts})`)
-        } catch (pollError) {
-          console.error('Polling error:', pollError)
-          if (attempts >= maxAttempts) {
-            throw new Error('Scan timed out - please try again')
-          }
-        }
-      }
-
-      try {
-        await Promise.allSettled([
-          APIClient.refreshRisk(target),
-          APIClient.enrichData(target)
-        ])
-        await fetchAllowances(target, 1, pageSize)
-      } catch (postScanError) {
-        console.error('Post-scan tasks failed:', postScanError)
-      }
-    } catch (err) {
-      handleError(err as Error, 'startScan')
-    } finally {
-      setPending(false)
-    }
-  }
-
-  const handlePage = async (newPage: number) => {
-    setPage(newPage)
-    if (selectedWallet) {
-      await fetchAllowances(selectedWallet, newPage, pageSize)
-    }
-  }
-
-  const handlePageSize = async (newPageSize: number) => {
-    setPageSize(newPageSize)
-    setPage(1)
-    if (selectedWallet) {
-      await fetchAllowances(selectedWallet, 1, newPageSize)
-    }
-  }
-
-  const handleRefresh = async () => {
-    if (selectedWallet) {
-      await fetchAllowances(selectedWallet, page, pageSize)
-    }
-  }
+  const {
+    connectedAddress,
+    isConnected,
+    selectedWallet,
+    setSelectedWallet,
+    isHydrated,
+    rows,
+    total,
+    page,
+    pageSize,
+    pending,
+    message,
+    error,
+    startScan,
+    handlePage,
+    handlePageSize,
+    handleRefresh,
+    resetError,
+  } = useDashboard()
 
   if (error) {
     return <ErrorFallback error={error} resetError={resetError} />
@@ -249,39 +86,23 @@ export default function HomePage() {
         </WalletErrorBoundary>
       </div>
 
-      {/* Trust Statistics */}
+      {/* Marketing sections */}
       <TrustStats />
-
-      {/* How It Works */}
       <HowItWorks />
 
-      {/* Statistics — lazy loaded */}
       <LazySection>
         <StatisticsSection />
       </LazySection>
 
-      {/* Features */}
       <FeaturesPreview />
-
-      {/* CTA */}
-      <CTABand
-        isConnected={isConnected}
-        onScan={startScan}
-        isScanning={pending}
-      />
-
-      {/* Testimonials */}
+      <CTABand isConnected={isConnected} onScan={startScan} isScanning={pending} />
       <Testimonials />
 
-      {/* Security Dashboard — visible when wallet connected */}
+      {/* Security Dashboard — inline when wallet connected */}
       {isHydrated && isConnected && selectedWallet && (
         <RpcErrorBoundary>
           <LazySection>
-            <div
-              id="security-dashboard"
-              className="scroll-mt-20"
-              data-testid="security-dashboard"
-            >
+            <div id="security-dashboard" className="scroll-mt-20" data-testid="security-dashboard">
               <AppArea
                 isConnected={isConnected}
                 selectedWallet={selectedWallet}
@@ -311,7 +132,7 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* Chain Logo Carousel */}
+      {/* Chain Logos */}
       <ChainLogoCarousel />
     </div>
   )
