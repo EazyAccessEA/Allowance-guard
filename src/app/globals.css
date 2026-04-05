@@ -223,6 +223,7 @@ w3m-modal w3m-close-button:hover {
   --motion-duration-base: 200ms;
   --motion-duration-slow: 300ms;
   --motion-easing-natural: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-easing-gentle: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   
   /* Fireart Shadows */
@@ -329,8 +330,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
-  transition: background-color var(--motion-duration-base) var(--motion-easing-gentle), 
-              color var(--motion-duration-base) var(--motion-easing-gentle);
+  transition: background-color var(--motion-duration-base) var(--motion-easing-natural),
+              color var(--motion-duration-base) var(--motion-easing-natural);
   font-size: 16px;
   font-weight: 400;
   min-height: 100vh;
@@ -390,10 +391,9 @@ button {
   transition: none;
 }
 
-/* Ensure minimum touch target size */
-button, a, input, select, textarea {
+/* Ensure minimum touch target size for interactive controls (not inline links) */
+button, input, select, textarea {
   min-height: var(--a11y-target-min);
-  min-width: var(--a11y-target-min);
 }
 
 /* Selection styles */
@@ -402,8 +402,8 @@ button, a, input, select, textarea {
   color: var(--primary-foreground);
 }
 
-/* Smooth transitions for theme switching */
-* {
+/* Theme switching transitions applied via class to avoid hydration mismatch */
+.dark * {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 

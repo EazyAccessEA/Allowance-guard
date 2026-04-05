@@ -20,12 +20,16 @@ export default function CookieBanner() {
 
   useEffect(() => {
     // Check if user has already made a choice
-    const cookieConsent = localStorage.getItem('allowance-guard-cookie-consent')
-    if (!cookieConsent) {
+    try {
+      const cookieConsent = localStorage.getItem('allowance-guard-cookie-consent')
+      if (!cookieConsent) {
+        setIsVisible(true)
+      } else {
+        const savedPreferences = JSON.parse(cookieConsent)
+        setPreferences(savedPreferences)
+      }
+    } catch {
       setIsVisible(true)
-    } else {
-      const savedPreferences = JSON.parse(cookieConsent)
-      setPreferences(savedPreferences)
     }
   }, [])
 
