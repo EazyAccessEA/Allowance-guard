@@ -1,7 +1,5 @@
-import Stripe from 'stripe'
 import { NextResponse } from 'next/server'
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-08-27.basil' })
+import { stripe } from '@/lib/billing'
 
 export async function POST(req: Request) {
   try {

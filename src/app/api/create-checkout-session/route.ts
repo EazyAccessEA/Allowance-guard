@@ -1,13 +1,9 @@
 // src/app/api/create-checkout-session/route.ts (App Router)
-import Stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { headers as nextHeaders } from 'next/headers'
 import { limitOrThrow } from '@/lib/ratelimit'
 import crypto from 'crypto'
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-08-27.basil',
-})
+import { stripe } from '@/lib/billing'
 
 export async function POST(req: Request) {
   try {

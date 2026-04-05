@@ -8,11 +8,24 @@ import { getPlanDisplayName } from '@/lib/plans'
 // Stripe client
 // ---------------------------------------------------------------------------
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
-  apiVersion: '2025-08-27.basil',
-})
+// Lazy-initialise so the module can be imported without crashing when
+// STRIPE_SECRET_KEY is absent (e.g. during Next.js build).
+let _stripe: Stripe | null = null
+function getStripe(): Stripe {
+  if (!_stripe) {
+    const key = process.env.STRIPE_SECRET_KEY
+    if (!key) throw new Error('STRIPE_SECRET_KEY is not set')
+    _stripe = new Stripe(key, { apiVersion: '2025-08-27.basil' })
+  }
+  return _stripe
+}
 
-export { stripe }
+/** Lazy proxy so callers can use `stripe.customers.create(...)` as before */
+export const stripe: Stripe = new Proxy({} as Stripe, {
+  get(_target, prop, receiver) {
+    return Reflect.get(getStripe(), prop, receiver)
+  },
+})
 
 // ---------------------------------------------------------------------------
 // Custom invoice branding constants

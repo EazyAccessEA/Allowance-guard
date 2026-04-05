@@ -8,6 +8,13 @@ import { CodeExample } from '@/components/docs/CodeExample'
 import { ApiPlayground } from '@/components/docs/ApiPlayground'
 import { Key, Shield, Zap, Globe, AlertTriangle, Activity } from 'lucide-react'
 
+const rateLimits = [
+  { plan: 'Free', daily: '100', burst: '10', price: '$0' },
+  { plan: 'Developer', daily: '10,000', burst: '60', price: '$39/mo' },
+  { plan: 'Growth', daily: '100,000', burst: '300', price: '$149/mo' },
+  { plan: 'Enterprise', daily: 'Unlimited', burst: 'Unlimited', price: 'Custom' },
+]
+
 export default function ApiReferencePage() {
   return (
     <Section>
@@ -103,30 +110,14 @@ data = res.json()['data']`,
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Free</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">100</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">10</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$0</td>
-                  </tr>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Developer</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">10,000</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">60</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$39/mo</td>
-                  </tr>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Growth</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">100,000</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">300</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$149/mo</td>
-                  </tr>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Enterprise</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">Unlimited</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">Unlimited</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">Custom</td>
-                  </tr>
+                  {rateLimits.map((r) => (
+                    <tr key={r.plan} className="border-t border-border-primary dark:border-secondary-700">
+                      <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">{r.plan}</td>
+                      <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">{r.daily}</td>
+                      <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">{r.burst}</td>
+                      <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">{r.price}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
