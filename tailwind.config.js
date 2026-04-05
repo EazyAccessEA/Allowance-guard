@@ -163,6 +163,40 @@ module.exports = {
           },
         },
         
+        // Redesign: Crimson Signal (new primary identity)
+        crimson: {
+          50: '#FEF2F2',
+          100: '#FEE2E2',
+          200: '#FECACA',
+          300: '#FCA5A5',
+          400: '#F87171',
+          500: '#E53E3E',
+          600: '#DC2626',
+          700: '#B91C1C',
+          800: '#991B1B',
+          900: '#7F1D1D',
+        },
+        // Redesign: Volt Mint (accent — rare, powerful)
+        volt: {
+          50: '#ECFFFE',
+          100: '#C6FFF8',
+          200: '#8AFAED',
+          300: '#4AEADB',
+          400: '#1AD6C5',
+          500: '#00F0C8',
+          600: '#00C2A0',
+          700: '#009E82',
+          800: '#007A64',
+          900: '#005546',
+        },
+        // Redesign: Dark surfaces
+        surface: {
+          base: '#0B1120',
+          raised: '#151D2E',
+          overlay: '#1E293B',
+          elevated: '#263244',
+        },
+
         // Legacy support
         ink: '#0A0A0A',
         stone: '#6B7280',
@@ -289,6 +323,9 @@ module.exports = {
         // Glow effects
         'glow-primary': '0 0 20px rgba(0, 194, 179, 0.3)',
         'glow-primary-lg': '0 0 40px rgba(0, 194, 179, 0.2)',
+        // Redesign: Crimson glow
+        'glow-crimson': '0 0 20px rgba(229, 62, 62, 0.25)',
+        'glow-crimson-lg': '0 0 40px rgba(229, 62, 62, 0.15)',
       },
       backdropBlur: {
         'xs': '2px',
