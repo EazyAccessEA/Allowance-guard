@@ -4,11 +4,19 @@
 import { neon } from '@neondatabase/serverless'
 
 const DATABASE_URL = process.env.DATABASE_URL
-if (!DATABASE_URL) {
-  throw new Error('DATABASE_URL is not set')
-}
 
-const sql = neon(DATABASE_URL)
+// Lazy-initialise so the module can be imported without crashing when
+// DATABASE_URL is absent (e.g. during client-side bundling or preview deploys).
+let _sql: ReturnType<typeof neon> | null = null
+function sql(text: string, params?: unknown[]) {
+  if (!_sql) {
+    if (!DATABASE_URL) {
+      throw new Error('DATABASE_URL is not set')
+    }
+    _sql = neon(DATABASE_URL)
+  }
+  return (_sql as (text: string, params?: unknown[]) => Promise<Record<string, unknown>[]>)(text, params)
+}
 
 /**
  * Pool-compatible wrapper around Neon serverless HTTP driver.
@@ -17,7 +25,7 @@ const sql = neon(DATABASE_URL)
  */
 export const pool = {
   async query(text: string, params?: unknown[]): Promise<{ rows: Record<string, unknown>[]; rowCount: number }> {
-    const rows = await (sql as unknown as (text: string, params?: unknown[]) => Promise<Record<string, unknown>[]>)(text, params)
+    const rows = await sql(text, params)
     return { rows, rowCount: rows.length }
   },
 }
