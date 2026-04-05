@@ -15,7 +15,7 @@ function sql(text: string, params?: unknown[]) {
     }
     _sql = neon(DATABASE_URL)
   }
-  return (_sql as (text: string, params?: unknown[]) => Promise<Record<string, unknown>[]>)(text, params)
+  return (_sql as unknown as (text: string, params?: unknown[]) => Promise<Record<string, unknown>[]>)(text, params)
 }
 
 /**
