@@ -19,12 +19,13 @@ import { AppKit } from '../../appkit'
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 
-// Display font: Inter ExtraBold/Bold with tighter tracking for headlines.
-// Space Grotesk can replace this when font files are bundled locally.
-const interDisplay = localFont({
+// Display font: Space Grotesk for headlines and hero text
+const spaceGrotesk = localFont({
   src: [
-    { path: '../../public/fonts/Inter_24pt-Bold.ttf', weight: '700', style: 'normal' },
-    { path: '../../public/fonts/Inter_24pt-ExtraBold.ttf', weight: '800', style: 'normal' },
+    { path: '../../public/fonts/SpaceGrotesk-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/SpaceGrotesk-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/SpaceGrotesk-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/SpaceGrotesk-Bold.ttf', weight: '700', style: 'normal' },
   ],
   display: 'swap',
   variable: '--font-display',
@@ -265,7 +266,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className={`${inter.className} ${interDisplay.variable} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} ${spaceGrotesk.variable} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <ThemeProvider>
@@ -288,7 +289,7 @@ export default function RootLayout({
           __html: `
             :root {
               --font-mono: ${jetbrainsMono.style.fontFamily};
-              --font-display: ${interDisplay.style.fontFamily};
+              --font-display: ${spaceGrotesk.style.fontFamily};
             } 
             code, pre, .font-mono { 
               font-family: var(--font-mono); 

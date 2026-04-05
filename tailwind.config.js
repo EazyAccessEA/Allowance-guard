@@ -195,8 +195,8 @@ module.exports = {
         '4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700', letterSpacing: '-0.03em' }], // 36px - XL headings
         '5xl': ['3rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.035em' }], // 48px - Display headings
         '6xl': ['3.75rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.04em' }], // 60px - Large display
-        '7xl': ['4.5rem', { lineHeight: '1.05', fontWeight: '800', letterSpacing: '-0.045em' }], // 72px - Hero headings
-        '8xl': ['6rem', { lineHeight: '1', fontWeight: '800', letterSpacing: '-0.05em' }], // 96px - Massive display
+        '7xl': ['4.5rem', { lineHeight: '1.05', fontWeight: '700', letterSpacing: '-0.045em' }], // 72px - Hero headings
+        '8xl': ['6rem', { lineHeight: '1', fontWeight: '700', letterSpacing: '-0.05em' }], // 96px - Massive display
       },
       letterSpacing: {
         // Enhanced Letter Spacing - Sketch-Inspired
