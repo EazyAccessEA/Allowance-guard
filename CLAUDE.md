@@ -192,26 +192,35 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 - Payment flows testable with `E2E_FAKE_PAYMENTS=true`.
 - Email flows testable with `E2E_FAKE_EMAIL=true`.
 
-## Design System
+## Design System — REDESIGN IN PROGRESS
 
-### Colors (Serum Teal theme)
-- **Primary**: `#00C2B3` (Serum Teal)
-- **Backgrounds**: `#FFFFFF`, `#F8FAFC`, `#F1F5F9` (light), `#0A0E1A`, `#111827`, `#1E293B` (dark)
-- **Text**: `#0F172A` primary, `#475569` secondary, `#64748B` tertiary
-- **Semantic**: Success `#22C55E`, Warning `#F59E0B`, Error `#EF4444`, Info `#0EA5E9`
+> **Authority**: The design system is governed by the redesign specs in `docs/`. The old "PuredgeOS" system is deprecated. All new UI work must follow the redesign process.
 
-### Typography
-- **Headings**: Satoshi (bold, tight letter-spacing)
-- **Body**: Inter (regular) — self-hosted via `next/font/local` from `public/fonts/`
-- **Mono**: JetBrains Mono (code, wallet addresses, token amounts) — self-hosted via `next/font/local` from `public/fonts/`
+### Design Spec Documents (source of truth)
+- `docs/allowanceguard-1-strategy-spec (3).md` — Part 1: Strategy & Design Language (Phases 1–4)
+- `docs/allowanceguard-2-build (3).md` — Part 2: Build specifications (Phases 5–7)
 
-### Motion
-- Fast: 150ms (button interactions)
-- Base: 250ms (modal transitions)
-- Slow: 500ms (complex animations)
-- Respect `prefers-reduced-motion`
+### The Five Laws (from the redesign spec)
+1. **Saturation Over Safety** — whatever the colours, OWN them. Push saturation. Push contrast.
+2. **Strip, Then Amplify** — kill everything that doesn't earn space. Make what survives impossible to ignore.
+3. **Materiality** — surfaces feel crafted. Subtle grain, engineered depth, tactile quality. Not flat.
+4. **One Signature Move** — one recurring visual element that brands every page without a logo.
+5. **Confidence in the Departure** — break clean from PuredgeOS. No soft transition. Own the new identity.
 
-### Component Library
+### Design Directives
+- **Type**: Display = declarations. Aggressive scale contrast. Body with backbone.
+- **Colour**: Every colour earns its place. Accent = punctuation (rare, powerful). Council decides palette.
+- **Motion**: Sharp easing, choreographed entrances, scroll as revelation. `prefers-reduced-motion` mandatory.
+- **Imagery**: Editorial, not stock. Bold cropping. No filler.
+- **Layout**: Break the grid with purpose. Whitespace as confidence. Density contrast.
+
+### Design Council Process
+Colours, typography, spacing, and component specs are produced through the Design Council process (six architects: Maren/Visual, Idris/Motion, Sable/UX, Kael/Systems, Noor/Accessibility with veto power, Thane/Performance). Output is a **Design Tokens Handbook** with CSS custom properties that becomes the implementation spec.
+
+### Current Tokens (legacy, to be replaced)
+Until the council process produces the new handbook, `src/design/tokens.ts` remains active. Do not extend it — new work should wait for the redesign output.
+
+### Component Library (existing, to be redesigned)
 Located in `src/components/ui/`:
 - `Button.tsx` — CVA variants: primary, secondary, ghost, destructive, outline
 - `Card.tsx` — With CardHeader, CardTitle, CardContent, CardFooter
@@ -307,12 +316,13 @@ pnpm run migrate      # Run database migrations
 - Compliance audit export
 - Webhook system for integrations
 
-### Phase 6 — Design Upgrade ✅
-- Dark mode system with theme provider
-- Glassmorphism card system
-- Navigation redesign (floating pill nav)
-- Animated hero background
-- Radial gauge for wallet security score
+### Phase 6 — Design Upgrade ✅ → REDESIGN IN PROGRESS
+- Dark mode system with theme provider ✅ (existing, under review)
+- Glassmorphism card system ✅ (existing, under review)
+- Navigation redesign (floating pill nav) ✅ (existing, under review)
+- Animated hero background ✅ (existing, under review)
+- Radial gauge for wallet security score ✅ (existing, under review)
+- **Full visual redesign per new spec** 🔄 — see `docs/allowanceguard-1-strategy-spec (3).md` and `docs/allowanceguard-2-build (3).md`
 
 ## Do Not
 
