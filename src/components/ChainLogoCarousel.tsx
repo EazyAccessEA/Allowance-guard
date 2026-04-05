@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-const chains = [
+const CHAINS = [
   { src: '/ethereum-logo-landscape-purple.png', alt: 'Ethereum', width: 140 },
   { src: '/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg', alt: 'Arbitrum', width: 120 },
   { src: '/Base_lockup_2color.svg', alt: 'Base', width: 120 },
@@ -8,24 +8,6 @@ const chains = [
   { src: '/OPTIMISM-B.svg', alt: 'Optimism', width: 120 },
   { src: '/AvalancheLogo_Horizontal_4C_Primary.svg', alt: 'Avalanche', width: 120 },
 ]
-
-function LogoSet() {
-  return (
-    <div className="flex items-center gap-16 lg:gap-24 flex-shrink-0">
-      {chains.map((c) => (
-        <div key={c.alt} className="flex items-center">
-          <Image
-            src={c.src}
-            alt={c.alt}
-            width={c.width}
-            height={32}
-            className="h-8 w-auto brightness-0 invert"
-          />
-        </div>
-      ))}
-    </div>
-  )
-}
 
 export default function ChainLogoCarousel() {
   return (
@@ -39,12 +21,12 @@ export default function ChainLogoCarousel() {
       {/* Mobile: Stacked Logos */}
       <div className="block sm:hidden">
         <div className="flex flex-col items-center gap-6 px-4">
-          {chains.map((c) => (
-            <div key={c.alt} className="flex items-center">
+          {CHAINS.map((chain) => (
+            <div key={chain.alt} className="flex items-center">
               <Image
-                src={c.src}
-                alt={c.alt}
-                width={c.width}
+                src={chain.src}
+                alt={chain.alt}
+                width={chain.width}
                 height={32}
                 className="h-8 w-auto brightness-0 invert"
               />
@@ -53,12 +35,27 @@ export default function ChainLogoCarousel() {
         </div>
       </div>
 
-      {/* Desktop: Continuous Scrolling */}
+      {/* Desktop: Continuous Scrolling — three sets for seamless loop */}
       <div className="hidden sm:block w-screen relative overflow-hidden h-12 -ml-4 sm:-ml-6 lg:-ml-8">
         <div className="flex items-center gap-16 lg:gap-24 animate-scroll h-12 whitespace-nowrap">
-          <LogoSet />
-          <LogoSet />
-          <LogoSet />
+          {[0, 1, 2].map((setIndex) => (
+            <div
+              key={setIndex}
+              className="flex items-center gap-16 lg:gap-24 flex-shrink-0"
+            >
+              {CHAINS.map((chain) => (
+                <div key={`${setIndex}-${chain.alt}`} className="flex items-center">
+                  <Image
+                    src={chain.src}
+                    alt={chain.alt}
+                    width={chain.width}
+                    height={32}
+                    className="h-8 w-auto brightness-0 invert"
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </div>

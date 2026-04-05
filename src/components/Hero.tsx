@@ -51,7 +51,7 @@ export default function Hero({
         </div>
 
         {/* Headline — 7xl, Space Grotesk, aggressive scale contrast */}
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] text-white mb-6 sm:mb-8">
+        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white mb-6 sm:mb-8">
           Know what you&rsquo;ve{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-500">
             approved.

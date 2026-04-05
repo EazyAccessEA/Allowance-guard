@@ -1,7 +1,4 @@
-/**
- * APIClient — centralised fetch wrapper with retry + backoff.
- * Extracted from page.tsx so both the homepage and /dashboard can reuse it.
- */
+// API Client with retry logic and error handling for wallet scanning
 export class APIClient {
   private static async fetchWithRetry(
     url: string,
@@ -29,9 +26,7 @@ export class APIClient {
           try {
             const errorData = await response.json()
             console.error('API Error Details:', errorData)
-            throw new Error(
-              `Client error: ${response.status} - ${errorData.error || 'Unknown error'}`
-            )
+            throw new Error(`Client error: ${response.status} - ${errorData.error || 'Unknown error'}`)
           } catch {
             throw new Error(`Client error: ${response.status}`)
           }
@@ -47,18 +42,14 @@ export class APIClient {
 
         // Exponential backoff
         const delay = Math.pow(2, attempt) * 1000
-        await new Promise((resolve) => setTimeout(resolve, delay))
+        await new Promise(resolve => setTimeout(resolve, delay))
       }
     }
 
     throw lastError || new Error('Request failed after retries')
   }
 
-  static async getAllowances(
-    wallet: string,
-    page: number = 1,
-    pageSize: number = 25
-  ) {
+  static async getAllowances(wallet: string, page: number = 1, pageSize: number = 25) {
     if (typeof window === 'undefined') {
       throw new Error('API calls only available on client side')
     }
@@ -66,27 +57,26 @@ export class APIClient {
     const params = new URLSearchParams({
       wallet,
       page: page.toString(),
-      pageSize: pageSize.toString(),
+      pageSize: pageSize.toString()
     })
 
     const response = await this.fetchWithRetry(
       `/api/allowances?${params.toString()}`
     )
+
     return response.json()
   }
 
-  static async startScan(
-    walletAddress: string,
-    chains: string[] = ['eth', 'arb', 'base']
-  ) {
+  static async startScan(walletAddress: string, chains: string[] = ['eth', 'arb', 'base']) {
     if (typeof window === 'undefined') {
       throw new Error('API calls only available on client side')
     }
 
     const response = await this.fetchWithRetry('/api/scan', {
       method: 'POST',
-      body: JSON.stringify({ walletAddress, chains }),
+      body: JSON.stringify({ walletAddress, chains })
     })
+
     return response.json()
   }
 
@@ -106,8 +96,9 @@ export class APIClient {
 
     const response = await this.fetchWithRetry('/api/risk/refresh', {
       method: 'POST',
-      body: JSON.stringify({ wallet }),
+      body: JSON.stringify({ wallet })
     })
+
     return response.json()
   }
 
@@ -118,8 +109,9 @@ export class APIClient {
 
     const response = await this.fetchWithRetry('/api/enrich', {
       method: 'POST',
-      body: JSON.stringify({ wallet }),
+      body: JSON.stringify({ wallet })
     })
+
     return response.json()
   }
 }
