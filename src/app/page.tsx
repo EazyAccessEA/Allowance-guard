@@ -1,23 +1,24 @@
 'use client'
 import { useAccount } from 'wagmi'
 import { useState, useEffect, useCallback } from 'react'
-import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { Button } from '@/components/ui/Button'
-import ClientConnectButton from '@/components/ClientConnectButton'
 import Hero from '@/components/Hero'
+import TrustStats from '@/components/TrustStats'
+import HowItWorks from '@/components/HowItWorks'
+import FeaturesPreview from '@/components/FeaturesPreview'
+import CTABand from '@/components/CTABand'
+import Testimonials from '@/components/Testimonials'
+import ChainLogoCarousel from '@/components/ChainLogoCarousel'
 import { LazySection } from '@/components/LazySection'
 import { WalletErrorBoundary, RpcErrorBoundary } from '@/components/ErrorBoundary'
-import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScrollAnimation'
+import { APIClient } from '@/lib/api-client'
 import dynamicImport from 'next/dynamic'
 
-// Note: Static generation exports moved to layout.tsx for client components
-
-// Enhanced Dynamic Imports with Error Boundaries
+// Dynamic imports for heavy components
 const StatisticsSection = dynamicImport(() => import('@/components/StatisticsSection'), {
   loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-64 w-full" />,
-  ssr: false // Prevent SSR issues
+  ssr: false
 })
 
 const AppArea = dynamicImport(() => import('@/components/AppArea'), {
@@ -30,7 +31,6 @@ const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeli
   ssr: false
 })
 
-// Enhanced Error Boundary Component
 function ErrorFallback({ resetError }: { error: Error; resetError: () => void }) {
   return (
     <div className="min-h-screen bg-background-primary dark:bg-secondary-900 flex items-center justify-center">
@@ -46,126 +46,6 @@ function ErrorFallback({ resetError }: { error: Error; resetError: () => void })
       </div>
     </div>
   )
-}
-
-// Enhanced API Client with Retry Logic and Error Handling
-class APIClient {
-  private static async fetchWithRetry(
-    url: string, 
-    options: RequestInit = {}, 
-    maxRetries: number = 3
-  ): Promise<Response> {
-    let lastError: Error | null = null
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        const response = await fetch(url, {
-          ...options,
-          headers: {
-            'Content-Type': 'application/json',
-            ...options.headers,
-          },
-        })
-        
-        if (response.ok) {
-          return response
-        }
-        
-        // Don't retry on client errors (4xx)
-        if (response.status >= 400 && response.status < 500) {
-          try {
-            const errorData = await response.json()
-            console.error('API Error Details:', errorData)
-            throw new Error(`Client error: ${response.status} - ${errorData.error || 'Unknown error'}`)
-          } catch {
-            throw new Error(`Client error: ${response.status}`)
-          }
-        }
-        
-        throw new Error(`Server error: ${response.status}`)
-        
-      } catch (error) {
-        lastError = error as Error
-        
-        if (attempt === maxRetries) {
-          break
-        }
-        
-        // Exponential backoff
-        const delay = Math.pow(2, attempt) * 1000
-        await new Promise(resolve => setTimeout(resolve, delay))
-      }
-    }
-    
-    throw lastError || new Error('Request failed after retries')
-  }
-  
-  static async getAllowances(wallet: string, page: number = 1, pageSize: number = 25) {
-    if (typeof window === 'undefined') {
-      throw new Error('API calls only available on client side')
-    }
-    
-    // Create URLSearchParams to ensure proper encoding
-    const params = new URLSearchParams({
-      wallet,
-      page: page.toString(),
-      pageSize: pageSize.toString()
-    })
-    
-    const response = await this.fetchWithRetry(
-      `/api/allowances?${params.toString()}`
-    )
-    
-    return response.json()
-  }
-  
-  static async startScan(walletAddress: string, chains: string[] = ['eth', 'arb', 'base']) {
-    if (typeof window === 'undefined') {
-      throw new Error('API calls only available on client side')
-    }
-    
-    const response = await this.fetchWithRetry('/api/scan', {
-      method: 'POST',
-      body: JSON.stringify({ walletAddress, chains })
-    })
-    
-    return response.json()
-  }
-  
-  static async getJobStatus(jobId: number) {
-    if (typeof window === 'undefined') {
-      throw new Error('API calls only available on client side')
-    }
-    
-    const response = await this.fetchWithRetry(`/api/jobs/${jobId}`)
-    return response.json()
-  }
-  
-  static async refreshRisk(wallet: string) {
-    if (typeof window === 'undefined') {
-      throw new Error('API calls only available on client side')
-    }
-    
-    const response = await this.fetchWithRetry('/api/risk/refresh', {
-      method: 'POST',
-      body: JSON.stringify({ wallet })
-    })
-    
-    return response.json()
-  }
-  
-  static async enrichData(wallet: string) {
-    if (typeof window === 'undefined') {
-      throw new Error('API calls only available on client side')
-    }
-    
-    const response = await this.fetchWithRetry('/api/enrich', {
-      method: 'POST',
-      body: JSON.stringify({ wallet })
-    })
-    
-    return response.json()
-  }
 }
 
 export default function HomePage() {
@@ -192,96 +72,66 @@ export default function HomePage() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState<Error | null>(null)
 
-  // Enhanced fetch allowances with error handling
   const fetchAllowances = useCallback(async (addr: string, p = page, ps = pageSize) => {
     try {
       const json = await APIClient.getAllowances(addr, p, ps)
-    setRows(json.allowances || [])
-    setTotal(json.total || 0)
+      setRows(json.allowances || [])
+      setTotal(json.total || 0)
       setError(null)
     } catch (err) {
       handleError(err as Error, 'fetchAllowances')
     }
   }, [page, pageSize])
 
-  // Handle hydration to prevent SSR/client mismatch
   useEffect(() => {
     setIsHydrated(true)
   }, [])
 
-  // Auto-select connected wallet when user connects
   useEffect(() => {
     if (isConnected && connectedAddress && !selectedWallet) {
       setSelectedWallet(connectedAddress)
     }
   }, [isConnected, connectedAddress, selectedWallet])
 
-  // Auto-fetch allowances when wallet is selected
   useEffect(() => {
     if (selectedWallet && isHydrated) {
       fetchAllowances(selectedWallet)
     }
   }, [selectedWallet, isHydrated, fetchAllowances])
 
-  // Auto-scroll to Security Dashboard when wallet connects and is selected
+  // Auto-scroll to Security Dashboard when wallet connects
   useEffect(() => {
     if (isConnected && selectedWallet && isHydrated) {
-      console.log('🔄 Wallet connected, preparing to scroll to dashboard...')
-      
-      // Simple and reliable approach
       const scrollToDashboard = () => {
-        const dashboardElement = document.getElementById('security-dashboard')
-        if (dashboardElement) {
-          console.log('🎯 Scrolling to Security Dashboard...')
-          
-          // Add a subtle highlight effect before scrolling
-          dashboardElement.classList.add('animate-pulse')
-          
-          // Use a more reliable scroll approach
-          const elementRect = dashboardElement.getBoundingClientRect()
-          const absoluteElementTop = elementRect.top + window.pageYOffset
-          const offset = 80 // Account for header
-          
+        const el = document.getElementById('security-dashboard')
+        if (el) {
+          el.classList.add('animate-pulse')
+          const rect = el.getBoundingClientRect()
           window.scrollTo({
-            top: absoluteElementTop - offset,
+            top: rect.top + window.pageYOffset - 80,
             behavior: 'smooth'
           })
-          
-          // Remove highlight after scroll completes
-          setTimeout(() => {
-            dashboardElement.classList.remove('animate-pulse')
-          }, 1000)
-          
-          return true // Success
+          setTimeout(() => el.classList.remove('animate-pulse'), 1000)
+          return true
         }
-        return false // Not found
+        return false
       }
-      
-      // Try multiple times with different delays
+
       const tryScroll = (attempt = 1) => {
-        console.log(`🔄 Attempt ${attempt} to find dashboard...`)
-        
-        if (scrollToDashboard()) {
-          console.log('✅ Successfully scrolled to dashboard!')
-        } else if (attempt < 5) {
-          // Retry with increasing delay
+        if (scrollToDashboard()) return
+        if (attempt < 5) {
           setTimeout(() => tryScroll(attempt + 1), attempt * 500)
-        } else {
-          console.log('⚠️ Could not find dashboard after 5 attempts')
         }
       }
-      
-      // Start trying after a short delay
+
       setTimeout(() => tryScroll(), 100)
     }
   }, [isConnected, selectedWallet, isHydrated])
 
-
-  // Enhanced error handling
-  const handleError = (error: Error, context: string) => {
-    console.error(`Error in ${context}:`, error)
-    setError(error)
-    setMessage(`Error: ${error.message}`)
+  const handleError = (err: Error, context: string) => {
+    console.error(`Error in ${context}:`, err)
+    setError(err)
+    setMessage(`Error: ${err.message}`)
   }
 
   const resetError = () => {
@@ -289,58 +139,52 @@ export default function HomePage() {
     setMessage('')
   }
 
-  // Enhanced scan function with comprehensive error handling
   async function startScan() {
     const target = selectedWallet || connectedAddress
     if (!target) {
       setMessage('Select or connect a wallet first')
       return
     }
-    
-    if (pending) return // debounce protection
-    
+    if (pending) return
+
     setPending(true)
     setMessage('Queuing…')
     setError(null)
-    
+
     try {
-      // Start scan
       const scanResult = await APIClient.startScan(target, ['eth', 'arb', 'base'])
-      
+
       if (!scanResult.jobId) {
         throw new Error('Failed to get job ID from scan response')
       }
-      
+
       setJobId(scanResult.jobId)
       setMessage(`Scan queued (#${scanResult.jobId})`)
-      
-      // Optional: immediately ping the processor in dev
+
       if (process.env.NODE_ENV !== 'production') {
         fetch('/api/jobs/process', { method: 'POST' }).catch(() => {})
       }
-      
-      // Enhanced polling with better error handling
+
       let attempts = 0
       const maxAttempts = 40
-      
+
       while (attempts < maxAttempts) {
         await new Promise(r => setTimeout(r, 3000))
         attempts++
-        
+
         try {
           const status = await APIClient.getJobStatus(scanResult.jobId)
-          
+
           if (status.status === 'succeeded') {
-          setMessage('Scan complete')
-          break 
-        }
-          
+            setMessage('Scan complete')
+            break
+          }
+
           if (status.status === 'failed') {
             throw new Error(`Scan failed: ${status.error || 'Unknown error'}`)
           }
-          
+
           setMessage(`Scanning… (attempt ${status.attempts || attempts})`)
-          
         } catch (pollError) {
           console.error('Polling error:', pollError)
           if (attempts >= maxAttempts) {
@@ -348,21 +192,16 @@ export default function HomePage() {
           }
         }
       }
-      
-      // Post-scan tasks with error handling
+
       try {
         await Promise.allSettled([
           APIClient.refreshRisk(target),
           APIClient.enrichData(target)
         ])
-        
-      await fetchAllowances(target, 1, pageSize)
-        
+        await fetchAllowances(target, 1, pageSize)
       } catch (postScanError) {
         console.error('Post-scan tasks failed:', postScanError)
-        // Don't fail the entire scan for post-processing errors
       }
-      
     } catch (err) {
       handleError(err as Error, 'startScan')
     } finally {
@@ -391,400 +230,79 @@ export default function HomePage() {
     }
   }
 
-  // Enhanced error boundary
   if (error) {
     return <ErrorFallback error={error} resetError={resetError} />
   }
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0E1A]">
-      {/* Hero Section - Content on top of global video/overlay */}
+      {/* Hero */}
       <div className="relative z-20">
         <WalletErrorBoundary>
-        <Hero
-          isConnected={isConnected}
-          onScan={startScan}
-          isScanning={pending}
-          scanMessage={message}
-          onWalletSelect={setSelectedWallet}
-        />
+          <Hero
+            isConnected={isConnected}
+            onScan={startScan}
+            isScanning={pending}
+            scanMessage={message}
+            onWalletSelect={setSelectedWallet}
+          />
         </WalletErrorBoundary>
       </div>
 
-      {/* Statistics Section - Inspired by DNA Payments */}
-      <CascadingScrollAnimation direction="up" distance={60} delay={200}>
-        <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light dark:from-secondary-900 dark:to-[#0A0E1A]">
-          <Container>
-            <div className="max-w-6xl mx-auto">
-              <FadeInScale delay={100}>
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-text-primary dark:text-secondary-100 mb-4">
-                    Trusted by Security-Conscious Users
-                  </h2>
-                  <p className="text-xl text-text-secondary dark:text-secondary-400">
-                    Protecting digital assets across the Web3 ecosystem
-                  </p>
-                </div>
-              </FadeInScale>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-              <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
-                  50,000+
-                </div>
-                <div className="text-lg font-semibold text-text-primary mb-1">
-                  Wallets Secured
-                </div>
-                <div className="text-text-secondary">
-                  Monthly active users protecting their assets
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
-                  2M+
-                </div>
-                <div className="text-lg font-semibold text-text-primary mb-1">
-                  Allowances Analyzed
-                </div>
-                <div className="text-text-secondary">
-                  Token approvals scanned and risk-assessed
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
-                  24/7
-                </div>
-                <div className="text-lg font-semibold text-text-primary mb-1">
-                  Security Monitoring
-                </div>
-                <div className="text-text-secondary">
-                  Real-time threat detection and alerts
-                </div>
-              </div>
-                </div>
-            </div>
-          </Container>
-        </Section>
-      </CascadingScrollAnimation>
+      {/* Trust Statistics */}
+      <TrustStats />
 
-      {/* Trust Indicators */}
-      <Section className="py-8 bg-white dark:bg-[#0A0E1A]">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-text-secondary dark:text-secondary-400 font-medium">
-              No private keys required • Read-only access • Free core • Open source
-            </p>
-          </div>
-        </Container>
-      </Section>
+      {/* How It Works */}
+      <HowItWorks />
 
-      {/* How It Works Section */}
-      <CascadingScrollAnimation direction="up" distance={80} delay={400}>
-      <Section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0A0E1A]">
-        <Container>
-            <FadeInScale delay={200}>
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
-              How Allowance Guard Works
-            </h2>
-            <p className="text-xl text-text-secondary dark:text-secondary-400 leading-relaxed">
-              Three simple steps to secure your wallet and protect your assets.
-            </p>
-          </div>
-            </FadeInScale>
-
-            <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
-            <div className="text-center px-6 py-8">
-              <div className="w-20 h-20 bg-primary-accent/10 dark:bg-primary-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                <span className="text-3xl font-bold text-primary-accent">1</span>
-              </div>
-              <h3 className="text-2xl font-bold text-text-primary mb-6">Connect & Scan</h3>
-              <p className="text-lg text-text-secondary leading-relaxed">
-                Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control.
-              </p>
-            </div>
-            
-            <div className="text-center px-6 py-8">
-              <div className="w-20 h-20 bg-primary-accent/10 dark:bg-primary-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                <span className="text-3xl font-bold text-primary-accent">2</span>
-              </div>
-              <h3 className="text-2xl font-bold text-text-primary mb-6">Analyze & Understand</h3>
-              <p className="text-lg text-text-secondary leading-relaxed">
-                  Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.
-                </p>
-              </div>
-
-            <div className="text-center px-6 py-8">
-              <div className="w-20 h-20 bg-primary-accent/10 dark:bg-primary-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-                <span className="text-3xl font-bold text-primary-accent">3</span>
-              </div>
-              <h3 className="text-2xl font-bold text-text-primary mb-6">Act & Secure</h3>
-              <p className="text-lg text-text-secondary leading-relaxed">
-                Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.
-              </p>
-            </div>
-          </div>
-        </Container>
-      </Section>
-      </CascadingScrollAnimation>
-
-      {/* Statistics Section - Lazy Loaded with Error Boundary */}
+      {/* Statistics — lazy loaded */}
       <LazySection>
         <StatisticsSection />
       </LazySection>
 
-      {/* Features Section */}
-      <CascadingScrollAnimation direction="up" distance={70} delay={600}>
-      <Section className="py-16 sm:py-20 lg:py-24 bg-background-light dark:bg-secondary-900/50">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-              <FadeInScale delay={300}>
-            <div className="mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
-                Built for Security & Clarity
-              </h2>
-              <p className="text-xl text-text-secondary dark:text-secondary-400 leading-relaxed text-justify">
-                Every feature is designed with one goal: keeping your assets secure.
-              </p>
-            </div>
-              </FadeInScale>
-            
-              <div className="grid lg:grid-cols-2 gap-16">
-              <div className="space-y-12">
-                  <div className="px-6 py-8">
-                  <h3 className="text-2xl font-bold text-text-primary mb-6">Non-Custodial Security</h3>
-                  <p className="text-lg text-text-secondary leading-relaxed">
-                    Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet.
-                  </p>
-                </div>
+      {/* Features */}
+      <FeaturesPreview />
 
-                  <div className="px-6 py-8">
-                  <h3 className="text-2xl font-bold text-text-primary mb-6">Clarity-First Dashboard</h3>
-                  <p className="text-lg text-text-secondary leading-relaxed">
-                    Designed to enterprise standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.
-                  </p>
-                </div>
-              </div>
+      {/* CTA */}
+      <CTABand
+        isConnected={isConnected}
+        onScan={startScan}
+        isScanning={pending}
+      />
 
-              <div className="space-y-12">
-                  <div className="px-6 py-8">
-                  <h3 className="text-2xl font-bold text-text-primary mb-6">Advanced Risk Intelligence</h3>
-                  <p className="text-lg text-text-secondary leading-relaxed">
-                      Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.
-                    </p>
-                </div>
+      {/* Testimonials */}
+      <Testimonials />
 
-                  <div className="px-6 py-8">
-                  <h3 className="text-2xl font-bold text-text-primary mb-6">Gas-Efficient Revocation</h3>
-                  <p className="text-lg text-text-secondary leading-relaxed">
-                      Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.
-                    </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-      </CascadingScrollAnimation>
-
-      {/* Final CTA Section - Dark Background */}
-      <CascadingScrollAnimation direction="up" distance={80} delay={800}>
-        <Section className="py-16 sm:py-20 lg:py-24 bg-secondary-900 dark:bg-[#060A14] text-white">
-        <Container>
-            <FadeInScale delay={400}>
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-              Ready to Secure Your Wallet?
-            </h2>
-                <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              Complete your security audit in under a minute. No sign-up required, no email collection, just connect and scan.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              {!isConnected ? (
-                <ClientConnectButton 
-                  variant="primary" 
-                  size="lg"
-                  className="w-full sm:w-auto min-h-[44px] px-8 py-4 text-lg font-semibold"
-                />
-              ) : (
-                <Button
-                  onClick={startScan} 
-                  disabled={pending} 
-                  loading={pending}
-                  variant="primary"
-                  size="lg"
-                  className="w-full sm:w-auto min-h-[44px] px-8 py-4 text-lg font-semibold"
-                >
-                  {pending ? 'Scanning...' : 'Scan Your Wallet'}
-                </Button>
-              )}
-              <p className="text-base text-gray-300 leading-relaxed max-w-md text-center">
-                No sign-up required. No email. Just connect and scan.
-              </p>
-            </div>
-          </div>
-            </FadeInScale>
-        </Container>
-      </Section>
-      </CascadingScrollAnimation>
-
-
-      {/* Testimonials Section - Inspired by DNA Payments */}
-      <CascadingScrollAnimation direction="up" distance={60} delay={1000}>
-        <Section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0A0E1A]">
-          <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
-                Hear Why Our Users Choose Allowance Guard
-              </h2>
-              <p className="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto">
-                Real stories from security-conscious users who have protected their digital assets
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-text-primary">Sarah Chen</h4>
-                    <p className="text-sm text-text-secondary">DeFi Trader</p>
-                  </div>
-                </div>
-                <blockquote className="text-text-secondary leading-relaxed">
-                  &quot;I was shocked to find 15 unlimited approvals I had forgotten about. AllowanceGuard helped me clean up my wallet and sleep better at night. The risk assessment is incredibly detailed.&quot;
-                </blockquote>
-              </div>
-
-              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-text-primary">Marcus Rodriguez</h4>
-                    <p className="text-sm text-text-secondary">NFT Collector</p>
-                  </div>
-                </div>
-                <blockquote className="text-text-secondary leading-relaxed">
-                  &quot;As someone who interacts with dozens of dApps, I need to stay on top of my approvals. AllowanceGuard makes it simple and fast. The batch revocation feature saved me hours.&quot;
-                </blockquote>
-              </div>
-
-              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-text-primary">Alex Thompson</h4>
-                    <p className="text-sm text-text-secondary">DAO Member</p>
-                  </div>
-                </div>
-                <blockquote className="text-text-secondary leading-relaxed">
-                  &quot;The transparency of open-source code gives me confidence. I can see exactly what AllowanceGuard is doing with my data. No hidden fees, no data collection - just pure security.&quot;
-                </blockquote>
-              </div>
-
-              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-text-primary">Elena Volkov</h4>
-                    <p className="text-sm text-text-secondary">Smart Contract Developer</p>
-                  </div>
-                </div>
-                <blockquote className="text-text-secondary leading-relaxed">
-                  &quot;Multi-chain support is crucial for my work. Being able to check allowances across Ethereum, Arbitrum, and Base in one interface is a game-changer. The API integration is seamless.&quot;
-                </blockquote>
-              </div>
-
-              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-text-primary">David Kim</h4>
-                    <p className="text-sm text-text-secondary">Crypto Investor</p>
-                  </div>
-                </div>
-                <blockquote className="text-text-secondary leading-relaxed">
-                  &quot;The real-time monitoring alerts saved me from a potential exploit. I got notified about a suspicious contract before I could interact with it. This tool is essential for any serious investor.&quot;
-                </blockquote>
-              </div>
-
-              <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
-                    <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-text-primary">Lisa Wang</h4>
-                    <p className="text-sm text-text-secondary">Web3 Educator</p>
-                  </div>
-                </div>
-                <blockquote className="text-text-secondary leading-relaxed">
-                  &quot;I recommend AllowanceGuard to all my students. The educational content and clear explanations help them understand Web3 security. It&apos;s not just a tool, it&apos;s a learning platform.&quot;
-                </blockquote>
-              </div>
-            </div>
-          </div>
-        </Container>
-        </Section>
-      </CascadingScrollAnimation>
-
-
-      {/* App Area - Only show when connected, hydrated, and wallet is explicitly selected */}
+      {/* Security Dashboard — visible when wallet connected */}
       {isHydrated && isConnected && selectedWallet && (
         <RpcErrorBoundary>
-        <LazySection>
-        <div
-          id="security-dashboard"
-          className="scroll-mt-20"
-          data-testid="security-dashboard"
-        >
-        <AppArea
-          isConnected={isConnected}
-          selectedWallet={selectedWallet}
-          setSelectedWallet={setSelectedWallet}
-          rows={rows}
-          total={total}
-          page={page}
-          pageSize={pageSize}
-          onPage={handlePage}
-          onPageSize={handlePageSize}
-          onRefresh={handleRefresh}
-          connectedAddress={connectedAddress}
-          canRevoke={true}
-          loading={pending}
-        />
-        </div>
-        </LazySection>
+          <LazySection>
+            <div
+              id="security-dashboard"
+              className="scroll-mt-20"
+              data-testid="security-dashboard"
+            >
+              <AppArea
+                isConnected={isConnected}
+                selectedWallet={selectedWallet}
+                setSelectedWallet={setSelectedWallet}
+                rows={rows}
+                total={total}
+                page={page}
+                pageSize={pageSize}
+                onPage={handlePage}
+                onPageSize={handlePageSize}
+                onRefresh={handleRefresh}
+                connectedAddress={connectedAddress}
+                canRevoke={true}
+                loading={pending}
+              />
+            </div>
+          </LazySection>
         </RpcErrorBoundary>
       )}
 
-      {/* Activity Timeline - Only show when wallet is selected and hydrated */}
+      {/* Activity Timeline */}
       {isHydrated && selectedWallet && (
         <Section>
           <Container>
@@ -793,299 +311,8 @@ export default function HomePage() {
         </Section>
       )}
 
-      {/* Trust Section - Full Screen Width - Dark Background */}
-      <div className="py-12 sm:py-16 bg-secondary-900 dark:bg-[#060A14]">
-        <div className="w-full mb-6">
-          <p className="text-base text-gray-300 font-medium text-center">
-              Trusted by security-conscious users across
-            </p>
-        </div>
-        
-        {/* Mobile: Stacked Logos */}
-        <div className="block sm:hidden">
-          <div className="flex flex-col items-center gap-6 px-4">
-            {/* Ethereum */}
-            <div className="flex items-center">
-              <Image
-                src="/ethereum-logo-landscape-purple.png"
-                alt="Ethereum"
-                width={140}
-                height={32}
-                className="h-8 w-auto brightness-0 invert"
-              />
-            </div>
-            
-            {/* Arbitrum */}
-            <div className="flex items-center">
-              <Image
-                src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
-                alt="Arbitrum"
-                width={120}
-                height={32}
-                className="h-8 w-auto brightness-0 invert"
-              />
-            </div>
-            
-            {/* Base */}
-            <div className="flex items-center">
-              <Image
-                src="/Base_lockup_2color.svg"
-                alt="Base"
-                width={120}
-                height={32}
-                className="h-8 w-auto brightness-0 invert"
-              />
-            </div>
-            
-            {/* Polygon */}
-            <div className="flex items-center">
-              <Image
-                src="/Polygon Primary Dark.svg"
-                alt="Polygon"
-                width={120}
-                height={32}
-                className="h-8 w-auto brightness-0 invert"
-              />
-            </div>
-            
-            {/* Optimism */}
-            <div className="flex items-center">
-              <Image
-                src="/OPTIMISM-B.svg"
-                alt="Optimism"
-                width={120}
-                height={32}
-                className="h-8 w-auto brightness-0 invert"
-              />
-            </div>
-            
-            {/* Avalanche */}
-            <div className="flex items-center">
-              <Image
-                src="/AvalancheLogo_Horizontal_4C_Primary.svg"
-                alt="Avalanche"
-                width={120}
-                height={32}
-                className="h-8 w-auto brightness-0 invert"
-              />
-            </div>
-          </div>
-        </div>
-        
-        {/* Desktop: Full Screen Edge-to-Edge Continuous Scrolling */}
-        <div className="hidden sm:block w-screen relative overflow-hidden h-12 -ml-4 sm:-ml-6 lg:-ml-8">
-          <div className="flex items-center gap-16 lg:gap-24 animate-scroll h-12 whitespace-nowrap">
-            {/* First set of logos */}
-            <div className="flex items-center gap-16 lg:gap-24 flex-shrink-0">
-              {/* Ethereum */}
-              <div className="flex items-center">
-                <Image
-                  src="/ethereum-logo-landscape-purple.png"
-                  alt="Ethereum"
-                  width={140}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Arbitrum */}
-              <div className="flex items-center">
-                <Image
-                  src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
-                  alt="Arbitrum"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Base */}
-              <div className="flex items-center">
-                <Image
-                  src="/Base_lockup_2color.svg"
-                  alt="Base"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Polygon */}
-              <div className="flex items-center">
-                <Image
-                  src="/Polygon Primary Dark.svg"
-                  alt="Polygon"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Optimism */}
-              <div className="flex items-center">
-                <Image
-                  src="/OPTIMISM-B.svg"
-                  alt="Optimism"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Avalanche */}
-              <div className="flex items-center">
-                <Image
-                  src="/AvalancheLogo_Horizontal_4C_Primary.svg"
-                  alt="Avalanche"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-            </div>
-            
-            {/* Duplicate set for seamless loop */}
-            <div className="flex items-center gap-16 lg:gap-24 flex-shrink-0">
-              {/* Ethereum */}
-              <div className="flex items-center">
-                <Image
-                  src="/ethereum-logo-landscape-purple.png"
-                  alt="Ethereum"
-                  width={140}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Arbitrum */}
-              <div className="flex items-center">
-                <Image
-                  src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
-                  alt="Arbitrum"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Base */}
-              <div className="flex items-center">
-                <Image
-                  src="/Base_lockup_2color.svg"
-                  alt="Base"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Polygon */}
-              <div className="flex items-center">
-                <Image
-                  src="/Polygon Primary Dark.svg"
-                  alt="Polygon"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Optimism */}
-              <div className="flex items-center">
-                <Image
-                  src="/OPTIMISM-B.svg"
-                  alt="Optimism"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Avalanche */}
-              <div className="flex items-center">
-                <Image
-                  src="/AvalancheLogo_Horizontal_4C_Primary.svg"
-                  alt="Avalanche"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-            </div>
-            
-            {/* Third set for ultra-smooth scrolling */}
-            <div className="flex items-center gap-16 lg:gap-24 flex-shrink-0">
-              {/* Ethereum */}
-              <div className="flex items-center">
-                <Image
-                  src="/ethereum-logo-landscape-purple.png"
-                  alt="Ethereum"
-                  width={140}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Arbitrum */}
-              <div className="flex items-center">
-                <Image
-                  src="/0923_Arbitrum_Logos_Primary_horizontal_RGB.svg"
-                  alt="Arbitrum"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Base */}
-              <div className="flex items-center">
-                <Image
-                  src="/Base_lockup_2color.svg"
-                  alt="Base"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Polygon */}
-              <div className="flex items-center">
-                <Image
-                  src="/Polygon Primary Dark.svg"
-                  alt="Polygon"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Optimism */}
-              <div className="flex items-center">
-                <Image
-                  src="/OPTIMISM-B.svg"
-                  alt="Optimism"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-              
-              {/* Avalanche */}
-              <div className="flex items-center">
-                <Image
-                  src="/AvalancheLogo_Horizontal_4C_Primary.svg"
-                  alt="Avalanche"
-                  width={120}
-                  height={32}
-                  className="h-8 w-auto brightness-0 invert"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
+      {/* Chain Logo Carousel */}
+      <ChainLogoCarousel />
     </div>
   )
 }
