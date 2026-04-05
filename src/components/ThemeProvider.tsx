@@ -87,7 +87,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 }
 
 /** Compact theme toggle button */
-export function ThemeToggle({ className }: { className?: string }) {
+export function ThemeToggle({ className, variant }: { className?: string; variant?: 'default' | 'navbar' }) {
   const { theme, setTheme } = useTheme()
 
   const cycleTheme = () => {
@@ -96,10 +96,17 @@ export function ThemeToggle({ className }: { className?: string }) {
     setTheme(order[(idx + 1) % order.length])
   }
 
+  const isNavbar = variant === 'navbar'
+
   return (
     <button
       onClick={cycleTheme}
-      className={`relative inline-flex items-center justify-center w-9 h-9 rounded-lg border border-border-primary dark:border-secondary-700 bg-background-secondary dark:bg-secondary-800 hover:bg-background-tertiary dark:hover:bg-secondary-700 transition-colors duration-150 ${className ?? ''}`}
+      className={`relative inline-flex items-center justify-center w-9 h-9 rounded-md transition-colors duration-150
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+        ${isNavbar
+          ? 'text-slate-400 hover:text-white hover:bg-white/10 focus-visible:ring-crimson-500/40 focus-visible:ring-offset-surface-base'
+          : 'border border-border-primary dark:border-secondary-700 bg-background-secondary dark:bg-secondary-800 hover:bg-background-tertiary dark:hover:bg-secondary-700 focus-visible:ring-primary-500/40'
+        } ${className ?? ''}`}
       aria-label={`Current theme: ${theme}. Click to change.`}
       title={`Theme: ${theme}`}
     >
