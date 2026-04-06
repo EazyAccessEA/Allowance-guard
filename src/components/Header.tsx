@@ -110,7 +110,7 @@ export default function Header({ isConnected }: HeaderProps) {
                   AllowanceGuard
                 </span>
                 <span className="text-[11px] text-slate-400 leading-tight hidden sm:block tracking-wide uppercase">
-                  Secure Token Approvals
+                  Token Approval Security
                 </span>
               </div>
             </Link>

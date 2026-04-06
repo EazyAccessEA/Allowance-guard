@@ -13,28 +13,28 @@ interface ProNudgeProps {
 const nudgeConfig = {
   monitoring: {
     icon: Bell,
-    message: 'Get notified when new approvals appear',
+    message: 'Unlock continuous monitoring — get alerted when new approvals appear',
     borderColor: 'border-l-primary-500',
     iconColor: 'text-primary-600 dark:text-primary-400',
     bgColor: 'bg-primary-50 dark:bg-primary-900/20',
   },
   'batch-revoke': {
     icon: Layers,
-    message: 'Revoke multiple approvals in one click',
+    message: 'Unlock batch revoke — clear multiple approvals in one transaction',
     borderColor: 'border-l-semantic-info-500',
     iconColor: 'text-semantic-info-600 dark:text-semantic-info-400',
     bgColor: 'bg-semantic-info-50 dark:bg-semantic-info-900/20',
   },
   export: {
     icon: FileDown,
-    message: 'Export your security audit as PDF/CSV',
+    message: 'Unlock audit export — download your security report as PDF or CSV',
     borderColor: 'border-l-semantic-success-500',
     iconColor: 'text-semantic-success-600 dark:text-semantic-success-400',
     bgColor: 'bg-semantic-success-50 dark:bg-semantic-success-900/20',
   },
   alerts: {
     icon: Mail,
-    message: 'Set up email alerts for risky approvals',
+    message: 'Unlock email alerts — get notified when risky approvals are detected',
     borderColor: 'border-l-semantic-warning-500',
     iconColor: 'text-semantic-warning-600 dark:text-semantic-warning-400',
     bgColor: 'bg-semantic-warning-50 dark:bg-semantic-warning-900/20',
@@ -71,7 +71,7 @@ export const ProNudge: React.FC<ProNudgeProps> = ({ variant, className }) => {
         href="/pricing"
         className="shrink-0 text-sm font-medium text-primary-700 dark:text-primary-400 transition-colors duration-150 hover:text-primary-800 dark:hover:text-primary-300 hover:underline"
       >
-        Learn more
+        See plans
       </Link>
 
       <button

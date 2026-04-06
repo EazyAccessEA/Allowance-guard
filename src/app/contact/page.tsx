@@ -85,9 +85,9 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-secondary-900/90" />
         
         <Container className="relative text-left max-w-4xl z-10">
-          <h1 className="mobbin-display-1 text-text-primary mb-6 mobbin-fade-in">How Can We Help?</h1>
+          <h1 className="mobbin-display-1 text-text-primary mb-6 mobbin-fade-in">Get in Touch</h1>
           <p className="mobbin-body-large text-text-secondary leading-relaxed mb-8 mobbin-fade-in mobbin-stagger-1">
-            Find the fastest path to a solution below.
+            Find answers, report issues, or reach the team directly.
           </p>
         </Container>
       </Section>
@@ -98,9 +98,9 @@ export default function ContactPage() {
       <Section className="py-32 bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Quick Help Search</h2>
+            <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Search for Answers</h2>
             <p className="mobbin-body-large text-text-secondary leading-relaxed mb-12 mobbin-fade-in mobbin-stagger-1">
-              What do you need help with? Type a few keywords below.
+              Type a few keywords to find what you need.
             </p>
             
             {/* Search Input */}
@@ -145,9 +145,9 @@ export default function ContactPage() {
       <Section className="py-32 bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Direct Lines of Communication</h2>
+            <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Contact the Team</h2>
             <p className="mobbin-body-large text-text-secondary leading-relaxed mb-12 mobbin-fade-in mobbin-stagger-1">
-              Purpose-driven channels to ensure your query reaches the right team with the right context.
+              Each channel reaches the right team. Pick the one that fits your query.
             </p>
           </div>
           
@@ -160,7 +160,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">General Support & Questions</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  For help using Allowance Guard, billing inquiries, or general feedback. Our team strives to respond within 24 hours.
+                  Help with the product, billing questions, or general feedback. We respond within 24 hours.
                 </p>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center mobbin-caption text-text-tertiary">
@@ -196,7 +196,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Report a Security Vulnerability</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  If you&apos;ve discovered a potential security flaw or bug within our application, please report it responsibly here. We treat these reports with the highest priority and confidentiality.
+                  Found a security flaw or vulnerability? Report it here. We acknowledge within 2 hours and treat all reports with full confidentiality.
                 </p>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center mobbin-caption text-text-tertiary">
@@ -241,7 +241,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Partnerships & Press</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  Interested in integrating our data, writing about us, or exploring a partnership? Reach out to our business development team.
+                  Integrations, press, or partnership inquiries. We respond within 48 hours.
                 </p>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center mobbin-caption text-text-tertiary">
@@ -271,10 +271,10 @@ export default function ContactPage() {
         <Container className="max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
-              Join Our Community
+              Community
             </h2>
             <p className="mobbin-body-large text-text-secondary max-w-2xl mx-auto mobbin-fade-in mobbin-stagger-1">
-              Many users prefer to ask questions in a public forum or find existing answers.
+              Ask questions, share findings, and help shape the product.
             </p>
           </div>
           
@@ -287,7 +287,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">Discord</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
-                  Get real-time help from our community and developers. It&apos;s the best place for quick questions and discussions.
+                  Real-time help from the community and core team. Best for quick questions.
                 </p>
                 <a 
                   href="https://discord.gg/DsJ4Pa94"
@@ -312,7 +312,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">X</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
-                  Follow us for the latest announcements, updates, and security tips.
+                  Announcements, security tips, and release notes.
                 </p>
                 <a 
                   href="https://x.com/allowanceguard"
@@ -337,7 +337,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">GitHub</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
-                  Report technical bugs, view our open-source components, and contribute to the project&apos;s development.
+                  Report bugs, view source code, and contribute to the project.
                 </p>
                 <a 
                   href="https://github.com/EazyAccessEA/Allowance-guard"
@@ -360,10 +360,10 @@ export default function ContactPage() {
         <Container className="max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
-              Our Commitment to You
+              What to Expect
             </h2>
             <p className="mobbin-body-large text-text-secondary max-w-2xl mx-auto mobbin-fade-in mobbin-stagger-1">
-              We take your security and privacy seriously. Here&apos;s our commitment to you.
+              How we handle your inquiries and protect your information.
             </p>
           </div>
           
@@ -376,7 +376,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Expected Response Time</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed">
-                  We are committed to responding to all serious inquiries within one business day. Security vulnerability reports are acknowledged within 24 hours.
+                  All inquiries answered within one business day. Security reports acknowledged within 2 hours.
                 </p>
               </div>
             </div>
@@ -389,7 +389,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Privacy Assurance</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed">
-                  We value your privacy. Information you provide in your communication will be used solely to address your inquiry. For details, please review our Privacy Policy.
+                  Information you share is used only to resolve your inquiry. See our Privacy Policy for full details.
                 </p>
               </div>
             </div>
@@ -402,7 +402,7 @@ export default function ContactPage() {
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Encrypt Sensitive Information</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  For highly sensitive security reports, you may use our public PGP key to encrypt your message to security@allowanceguard.com.
+                  For sensitive security reports, encrypt your message to security@allowanceguard.com with our public PGP key.
                 </p>
                 <a 
                   href="/pgp-key.asc"
