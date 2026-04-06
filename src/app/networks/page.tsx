@@ -46,11 +46,11 @@ export default function NetworksPage() {
         <Container>
           <Section className="py-16">
             <div className="animate-pulse">
-              <div className="h-12 bg-neutral-200 dark:bg-secondary-700 rounded w-1/3 mb-8"></div>
+              <div className="h-12 bg-secondary-700 rounded w-1/3 mb-8"></div>
               <div className="space-y-4">
-                <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-1/2"></div>
-                <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-3/4"></div>
-                <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-1/4"></div>
+                <div className="h-4 bg-secondary-700 rounded w-1/2"></div>
+                <div className="h-4 bg-secondary-700 rounded w-3/4"></div>
+                <div className="h-4 bg-secondary-700 rounded w-1/4"></div>
               </div>
             </div>
           </Section>
@@ -94,7 +94,7 @@ export default function NetworksPage() {
   }
 
   const NetworkCard = ({ network }: { network: NetworkSummary }) => (
-    <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 hover:shadow-md transition-shadow">
+    <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-secondary-700 p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
           <div className={`p-2 rounded-full ${
@@ -204,7 +204,7 @@ export default function NetworksPage() {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 text-center">
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-secondary-700 p-6 text-center">
               <div className="flex items-center justify-center w-12 h-12 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full mx-auto mb-4">
                 <CheckCircle size={24} />
               </div>
@@ -214,7 +214,7 @@ export default function NetworksPage() {
               <p className="text-text-secondary dark:text-secondary-400">Live Networks</p>
             </div>
 
-            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 text-center">
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-secondary-700 p-6 text-center">
               <div className="flex items-center justify-center w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 rounded-full mx-auto mb-4">
                 <Clock size={24} />
               </div>
@@ -224,7 +224,7 @@ export default function NetworksPage() {
               <p className="text-text-secondary dark:text-secondary-400">Planned Networks</p>
             </div>
 
-            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6 text-center">
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-secondary-700 p-6 text-center">
               <div className="flex items-center justify-center w-12 h-12 bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full mx-auto mb-4">
                 <Network size={24} />
               </div>
@@ -267,7 +267,7 @@ export default function NetworksPage() {
               <Calendar className="text-blue-600 dark:text-blue-400" size={24} />
               <H2 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Recent Updates</H2>
             </div>
-            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-border-primary dark:border-secondary-700 p-6">
+            <div className="bg-background-primary dark:bg-secondary-900 rounded-lg border border-secondary-700 p-6">
               <div className="space-y-6">
                 {data.changelog.slice(0, 5).map((entry, index) => (
                   <ChangelogEntry key={index} entry={entry} />

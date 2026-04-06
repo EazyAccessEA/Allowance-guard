@@ -110,9 +110,9 @@ function CellValue({ value }: { value: string | boolean }) {
     return <span className="text-sm font-medium text-text-primary">{value}</span>
   }
   if (value) {
-    return <Check className="mx-auto h-5 w-5 text-green-600 dark:text-green-400" aria-label="Included" />
+    return <Check className="mx-auto h-5 w-5 text-emerald-400" aria-label="Included" />
   }
-  return <X className="mx-auto h-5 w-5 text-neutral-300 dark:text-secondary-600" aria-label="Not included" />
+  return <X className="mx-auto h-5 w-5 text-secondary-600" aria-label="Not included" />
 }
 
 export default function PricingTable() {
@@ -120,8 +120,8 @@ export default function PricingTable() {
     <div className="w-full overflow-x-auto">
       <table className="w-full min-w-[600px] border-collapse text-left">
         <thead>
-          <tr className="border-b border-border-primary">
-            <th className="py-4 pr-4 text-sm font-medium text-text-secondary">
+          <tr className="border-b border-secondary-700">
+            <th className="py-4 pr-4 text-sm font-medium text-slate-400">
               Feature
             </th>
             {PLANS.map((plan) => (
@@ -129,7 +129,7 @@ export default function PricingTable() {
                 key={plan}
                 className={cn(
                   'px-4 py-4 text-center text-sm font-medium',
-                  plan === 'pro' ? 'text-primary-700 dark:text-primary-400' : 'text-text-primary dark:text-secondary-100'
+                  plan === 'pro' ? 'text-amber-400' : 'text-white'
                 )}
               >
                 {getPlanDisplayName(plan)}
@@ -142,8 +142,8 @@ export default function PricingTable() {
             <tr
               key={row.label}
               className={cn(
-                'border-b border-border-primary',
-                idx % 2 === 1 && 'bg-neutral-50 dark:bg-secondary-800/50'
+                'border-b border-secondary-700',
+                idx % 2 === 1 && 'bg-secondary-800/50'
               )}
             >
               <td className="py-3 pr-4 text-sm text-text-primary">

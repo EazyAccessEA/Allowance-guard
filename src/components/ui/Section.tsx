@@ -27,11 +27,11 @@ export default function Section({
     '2xl': 'py-32 sm:py-40',    // 128px mobile, 160px desktop
   }
 
-  // Sketch-inspired background variants
+  // Midnight Amber background variants — dark-first
   const backgroundClasses = {
-    default: 'bg-white',
-    muted: 'bg-neutral-50',
-    accent: 'bg-primary/5',
+    default: 'bg-surface-base',
+    muted: 'bg-secondary-800/50',
+    accent: 'bg-amber-900/10',
     transparent: 'bg-transparent',
   }
 

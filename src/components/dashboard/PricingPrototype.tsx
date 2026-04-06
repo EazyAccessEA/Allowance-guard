@@ -107,7 +107,7 @@ export default function PricingPrototype() {
                   'relative flex flex-col rounded-xl border p-6 lg:p-8 transition-all duration-250',
                   tier.highlighted
                     ? 'border-primary-300 dark:border-primary-600 bg-background-primary dark:bg-dark-bg-secondary shadow-lg ring-1 ring-primary-200 dark:ring-primary-700 scale-[1.02]'
-                    : 'border-border-primary dark:border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary shadow-sm'
+                    : 'border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary shadow-sm'
                 )}
               >
                 {/* Badge */}
@@ -152,9 +152,9 @@ export default function PricingPrototype() {
                     tier.buttonVariant === 'primary' &&
                       'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md',
                     tier.buttonVariant === 'secondary' &&
-                      'bg-secondary-100 dark:bg-secondary-800 text-text-primary dark:text-secondary-200 hover:bg-secondary-200 dark:hover:bg-secondary-700 border border-border-primary dark:border-secondary-600',
+                      'bg-secondary-100 dark:bg-secondary-800 text-text-primary dark:text-secondary-200 hover:bg-secondary-200 dark:hover:bg-secondary-700 border border-secondary-700 dark:border-secondary-600',
                     tier.buttonVariant === 'ghost' &&
-                      'text-secondary-600 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-800 border border-border-primary dark:border-secondary-700'
+                      'text-secondary-600 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-800 border border-secondary-700'
                   )}
                 >
                   {tier.buttonLabel}
@@ -181,8 +181,8 @@ export default function PricingPrototype() {
         </div>
 
         {/* Feature comparison table */}
-        <div className="rounded-xl border border-border-primary dark:border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary overflow-hidden">
-          <div className="px-6 py-5 border-b border-border-primary dark:border-secondary-700">
+        <div className="rounded-xl border border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary overflow-hidden">
+          <div className="px-6 py-5 border-b border-secondary-700">
             <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">
               Compare plans
             </h2>
@@ -191,7 +191,7 @@ export default function PricingPrototype() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border-primary dark:border-secondary-700">
+                <tr className="border-b border-secondary-700">
                   <th className="text-left py-3 px-6 font-medium text-secondary-500 dark:text-secondary-400 min-w-[200px]">
                     Feature
                   </th>
@@ -211,7 +211,7 @@ export default function PricingPrototype() {
                   <tr
                     key={feature.name}
                     className={cn(
-                      'border-b border-border-primary/50 dark:border-secondary-800',
+                      'border-b border-secondary-700/50 dark:border-secondary-800',
                       i % 2 === 0
                         ? 'bg-background-primary dark:bg-dark-bg-secondary'
                         : 'bg-secondary-50/50 dark:bg-secondary-800/30'

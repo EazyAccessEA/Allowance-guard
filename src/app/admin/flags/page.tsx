@@ -125,14 +125,14 @@ export default function AdminFlagsPage() {
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             required
-            className="rounded-lg border border-border-primary bg-background-primary px-3 py-2 text-sm text-text-primary"
+            className="rounded-lg border border-secondary-700 bg-background-primary px-3 py-2 text-sm text-text-primary"
           />
           <input
             type="text"
             placeholder="Description (optional)"
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
-            className="rounded-lg border border-border-primary bg-background-primary px-3 py-2 text-sm text-text-primary"
+            className="rounded-lg border border-secondary-700 bg-background-primary px-3 py-2 text-sm text-text-primary"
           />
           <label className="flex items-center gap-1 text-sm text-text-secondary">
             Rollout %
@@ -142,7 +142,7 @@ export default function AdminFlagsPage() {
               max={100}
               value={newRollout}
               onChange={(e) => setNewRollout(parseInt(e.target.value) || 0)}
-              className="w-20 rounded-lg border border-border-primary bg-background-primary px-2 py-2 text-sm text-text-primary"
+              className="w-20 rounded-lg border border-secondary-700 bg-background-primary px-2 py-2 text-sm text-text-primary"
             />
           </label>
           <button
@@ -167,7 +167,7 @@ export default function AdminFlagsPage() {
             {flags.map((flag) => (
               <div
                 key={flag.id}
-                className="flex items-center justify-between rounded-lg border border-border-primary bg-background-primary p-4"
+                className="flex items-center justify-between rounded-lg border border-secondary-700 bg-background-primary p-4"
               >
                 <div>
                   <p className="font-medium text-text-primary">{flag.name}</p>
@@ -186,7 +186,7 @@ export default function AdminFlagsPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => toggleFlag(flag.id, !flag.enabled)}
-                    className="rounded-lg border border-border-primary px-3 py-1 text-xs font-medium text-text-primary hover:bg-background-light"
+                    className="rounded-lg border border-secondary-700 px-3 py-1 text-xs font-medium text-text-primary hover:bg-background-light"
                   >
                     {flag.enabled ? 'Disable' : 'Enable'}
                   </button>

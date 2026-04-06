@@ -173,7 +173,7 @@ export default function PortfolioRiskScore() {
   return (
     <div className="space-y-6">
       {/* Main score */}
-      <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6 text-center">
+      <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 text-center">
         <h2 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-4">
           Cross-Chain Portfolio Risk
         </h2>
@@ -209,7 +209,7 @@ export default function PortfolioRiskScore() {
         ].map(({ label, value, icon: Icon }) => (
           <div
             key={label}
-            className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-4 text-center"
+            className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-4 text-center"
           >
             <Icon className="h-5 w-5 mx-auto text-text-tertiary dark:text-secondary-500 mb-1" />
             <p className="text-2xl font-bold text-text-primary dark:text-secondary-100">{value}</p>
@@ -220,7 +220,7 @@ export default function PortfolioRiskScore() {
 
       {/* Per-chain breakdown */}
       {data.chains.length > 0 && (
-        <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6">
+        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6">
           <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 mb-3">
             Risk by Chain
           </h3>

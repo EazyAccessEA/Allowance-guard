@@ -99,7 +99,7 @@ export default function ApiKeyManager({
       <CardContent className="space-y-4">
         {/* Create form */}
         {showCreate && (
-          <div className="rounded-lg border border-border-primary p-4 space-y-3">
+          <div className="rounded-lg border border-secondary-700 p-4 space-y-3">
             <label
               htmlFor="api-key-name"
               className="block text-sm font-medium text-text-primary"
@@ -113,7 +113,7 @@ export default function ApiKeyManager({
               onChange={(e) => setNewKeyName(e.target.value)}
               placeholder="e.g. Production, Staging..."
               className={cn(
-                'w-full rounded-md border border-border-primary bg-background-primary px-3 py-2 text-sm',
+                'w-full rounded-md border border-secondary-700 bg-background-primary px-3 py-2 text-sm',
                 'text-text-primary placeholder:text-text-secondary',
                 'focus:outline-none focus:ring-2 focus:ring-primary-700 focus:ring-offset-2'
               )}
