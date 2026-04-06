@@ -25,14 +25,14 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
   return (
     <div
       className={cn(
-        'relative rounded-lg bg-white p-[1px]',
+        'relative rounded-lg bg-secondary-800 p-[1px]',
         'bg-gradient-to-r from-primary-500 via-primary-400 to-primary-600',
         className
       )}
       role="alert"
       aria-label={`Upgrade prompt for ${feature}`}
     >
-      <div className="relative rounded-lg bg-white p-6">
+      <div className="relative rounded-lg bg-secondary-800 p-6">
         {/* Dismiss button */}
         <button
           onClick={() => setDismissed(true)}
@@ -72,7 +72,7 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
               </Link>
               <button
                 onClick={() => setDismissed(true)}
-                className="inline-flex items-center justify-center rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-slate-300 transition-colors duration-150 hover:bg-neutral-50"
+                className="inline-flex items-center justify-center rounded-lg border border-secondary-700 bg-secondary-800 px-4 py-2 text-sm font-medium text-slate-300 transition-colors duration-150 hover:bg-secondary-800"
               >
                 Continue with Free
               </button>

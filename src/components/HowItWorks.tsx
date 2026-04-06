@@ -30,7 +30,7 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section className="relative py-24 sm:py-32 lg:py-40 bg-white dark:bg-[#0A0E1A] overflow-hidden">
+    <section className="relative py-24 sm:py-32 lg:py-40 bg-surface-base overflow-hidden">
       {/* Gradient transition from hero */}
       <div
         className="absolute inset-x-0 top-0 h-32 pointer-events-none"

@@ -35,7 +35,7 @@ export default function DocsPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary dark:border-secondary-700" />
+      <div className="border-t border-secondary-700" />
 
       {/* Main Content */}
       <Section>
@@ -80,7 +80,7 @@ export default function DocsPage() {
             {/* Right Sidebar - On This Page */}
             <div className="lg:col-span-3">
               <div className="sticky top-8">
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-4 bg-mist">
+                <div className="border border-secondary-700 rounded-md p-4 bg-mist">
                   <h4 className="text-sm font-semibold text-text-primary dark:text-secondary-100 mb-3">On this page</h4>
                   <nav className="space-y-2">
                     {headings.map((heading, index) => (

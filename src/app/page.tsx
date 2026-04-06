@@ -15,17 +15,17 @@ import { useDashboard } from '@/hooks/useDashboard'
 import dynamicImport from 'next/dynamic'
 
 const StatisticsSection = dynamicImport(() => import('@/components/StatisticsSection'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-64 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-64 w-full" />,
   ssr: false,
 })
 
 const AppArea = dynamicImport(() => import('@/components/AppArea'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-96 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-96 w-full" />,
   ssr: false,
 })
 
 const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-48 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-48 w-full" />,
   ssr: false,
 })
 

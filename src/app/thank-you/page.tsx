@@ -60,7 +60,7 @@ export default function ThankYouPage() {
       : null
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
       
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
@@ -100,7 +100,7 @@ export default function ThankYouPage() {
             </div>
 
             {/* Main Message */}
-            <h2 className="text-3xl font-semibold text-ink mb-6">
+            <h2 className="text-3xl font-semibold text-white mb-6">
               {status === 'verifying' ? 'Verifying Your Contribution...' : 
                status === 'failed' ? 'Contribution Verification Failed' : 
                'Contribution Successful'}
@@ -137,7 +137,7 @@ export default function ThankYouPage() {
             {/* Session ID Display */}
             {sessionId && (
               <div className="bg-mist/30 border border-line rounded-lg p-6 mb-8">
-                <h3 className="text-base font-medium text-ink mb-2">Confirmation Reference</h3>
+                <h3 className="text-base font-medium text-white mb-2">Confirmation Reference</h3>
                 <p className="text-sm text-stone font-mono break-all">
                   {sessionId}
                 </p>
@@ -160,7 +160,7 @@ export default function ThankYouPage() {
               {status === 'verified' && (
                 <Link
                   href="/contribute"
-                  className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-ink border border-line hover:bg-mist rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+                  className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-white border border-line hover:bg-mist rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
                 >
                   <Heart className="w-4 h-4" />
                   <span>Make Another Contribution</span>
@@ -170,28 +170,28 @@ export default function ThankYouPage() {
 
             {/* Impact Section */}
             <div className="bg-gradient-to-r from-mist/30 to-warm-gray/30 border border-line rounded-2xl p-8">
-              <h3 className="text-xl font-semibold text-ink mb-6">How Your Contribution Makes a Difference</h3>
+              <h3 className="text-xl font-semibold text-white mb-6">How Your Contribution Makes a Difference</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-ink">Development</h4>
+                  <h4 className="font-semibold text-white">Development</h4>
                   <p className="text-sm text-stone">
                     New features, security improvements, and user experience enhancements.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-ink">Infrastructure</h4>
+                  <h4 className="font-semibold text-white">Infrastructure</h4>
                   <p className="text-sm text-stone">
                     Reliable servers, databases, and ensuring 99.9% uptime.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-ink">Security Audits</h4>
+                  <h4 className="font-semibold text-white">Security Audits</h4>
                   <p className="text-sm text-stone">
                     Regular security assessments and penetration testing.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-ink">Community</h4>
+                  <h4 className="font-semibold text-white">Community</h4>
                   <p className="text-sm text-stone">
                     Open source development and educational resources.
                   </p>

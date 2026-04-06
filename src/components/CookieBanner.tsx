@@ -76,7 +76,7 @@ export default function CookieBanner() {
       {/* Cookie Banner — non-blocking bottom sheet */}
       <div className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl">
+          <div className="bg-secondary-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl">
             <div className="p-6 sm:p-8">
               {/* Header */}
               <div className="flex items-start justify-between mb-6">
@@ -104,7 +104,7 @@ export default function CookieBanner() {
               {!showSettings ? (
                 /* Main Banner Content */
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4 p-4 bg-background-secondary rounded-xl border border-border-primary">
+                  <div className="flex items-start gap-4 p-4 bg-background-secondary rounded-xl border border-secondary-700">
                     <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="mobbin-body text-text-primary mb-2">
@@ -117,7 +117,7 @@ export default function CookieBanner() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
                       <div className="flex items-center gap-2 mb-2">
                         <Shield className="w-4 h-4 text-green-500" />
                         <span className="mobbin-body-small font-medium text-text-primary">Essential</span>
@@ -126,7 +126,7 @@ export default function CookieBanner() {
                         Wallet connection, security tokens, session management
                       </p>
                     </div>
-                    <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
                       <div className="flex items-center gap-2 mb-2">
                         <Settings className="w-4 h-4 text-blue-500" />
                         <span className="mobbin-body-small font-medium text-text-primary">Preferences</span>
@@ -135,7 +135,7 @@ export default function CookieBanner() {
                         UI settings, alert preferences, wallet addresses
                       </p>
                     </div>
-                    <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
                       <div className="flex items-center gap-2 mb-2">
                         <Check className="w-4 h-4 text-purple-500" />
                         <span className="mobbin-body-small font-medium text-text-primary">Analytics</span>
@@ -156,13 +156,13 @@ export default function CookieBanner() {
                     </button>
                     <button
                       onClick={handleRejectAll}
-                      className="flex-1 px-6 py-3 border border-border-primary text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
+                      className="flex-1 px-6 py-3 border border-secondary-700 text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
                     >
                       Essential Only
                     </button>
                     <button
                       onClick={() => setShowSettings(true)}
-                      className="px-6 py-3 border border-border-primary text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
+                      className="px-6 py-3 border border-secondary-700 text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
                     >
                       Customize
                     </button>
@@ -193,7 +193,7 @@ export default function CookieBanner() {
 
                   <div className="space-y-4">
                     {/* Essential Cookies */}
-                    <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <Shield className="w-5 h-5 text-green-500" />
@@ -214,7 +214,7 @@ export default function CookieBanner() {
                     </div>
 
                     {/* Preference Cookies */}
-                    <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <Settings className="w-5 h-5 text-blue-500" />
@@ -244,7 +244,7 @@ export default function CookieBanner() {
                     </div>
 
                     {/* Analytics Cookies */}
-                    <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <Check className="w-5 h-5 text-purple-500" />
@@ -284,14 +284,14 @@ export default function CookieBanner() {
                     </button>
                     <button
                       onClick={() => setShowSettings(false)}
-                      className="px-6 py-3 border border-border-primary text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
+                      className="px-6 py-3 border border-secondary-700 text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
                     >
                       Back
                     </button>
                   </div>
 
                   {/* User Rights */}
-                  <div className="p-4 bg-background-secondary rounded-xl border border-border-primary">
+                  <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
                     <h5 className="mobbin-body font-medium text-text-primary mb-2">Your Rights</h5>
                     <ul className="space-y-1 mobbin-caption text-text-secondary">
                       <li>• Accept or reject non-essential cookies</li>
@@ -303,7 +303,7 @@ export default function CookieBanner() {
                   </div>
 
                   {/* Policy Links */}
-                  <div className="pt-4 border-t border-border-primary">
+                  <div className="pt-4 border-t border-secondary-700">
                     <p className="mobbin-caption text-text-secondary text-center mb-3">
                       Learn more about our policies:
                     </p>

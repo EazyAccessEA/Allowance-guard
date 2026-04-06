@@ -77,7 +77,7 @@ export default function WidgetPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-blue-100" />
@@ -272,7 +272,7 @@ export default function WidgetPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
               {/* React Installation */}
-              <div className="bg-white border border-line rounded-lg p-6">
+              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
                 <div className="flex items-center mb-4">
                   <Code className="mr-3 text-blue-600" size={24} />
                   <H3>React Installation</H3>
@@ -297,7 +297,7 @@ export default function WidgetPage() {
               </div>
 
               {/* HTML Installation */}
-              <div className="bg-white border border-line rounded-lg p-6">
+              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
                 <div className="flex items-center mb-4">
                   <Download className="mr-3 text-green-600" size={24} />
                   <H3>HTML Installation</H3>
@@ -332,7 +332,7 @@ export default function WidgetPage() {
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8 text-center">Widget Properties</H2>
             
-            <div className="bg-white border border-line rounded-lg overflow-hidden">
+            <div className="bg-secondary-800 border border-secondary-700 rounded-lg overflow-hidden">
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>

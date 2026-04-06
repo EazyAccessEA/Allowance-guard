@@ -219,7 +219,7 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
 
           {/* Mini risk chart (text-based sparkline) */}
           {riskHistory.length > 1 && (
-            <div className="mt-4 pt-4 border-t border-border-primary">
+            <div className="mt-4 pt-4 border-t border-secondary-700">
               <div className="text-xs text-text-secondary mb-2">Risk Score Over Time</div>
               <div className="flex items-end gap-1 h-16">
                 {riskHistory.map((s, i) => {
@@ -268,7 +268,7 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
         <CardContent>
           {/* Filters */}
           {showFilters && (
-            <div className="mb-4 pb-4 border-b border-border-primary">
+            <div className="mb-4 pb-4 border-b border-secondary-700">
               <div className="flex flex-wrap gap-2">
                 {[
                   { value: 'all', label: 'All Events' },
@@ -312,7 +312,7 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                     {/* Timeline dot */}
                     <div className="absolute left-2.5 mt-1.5 w-3 h-3 rounded-full border-2 border-background-primary bg-primary-accent" />
 
-                    <div className="flex-1 p-3 rounded-lg border border-border-primary bg-background-secondary">
+                    <div className="flex-1 p-3 rounded-lg border border-secondary-700 bg-background-secondary">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
                         {eventIcon(evt.event_type)}
                         <Badge variant={eventBadgeVariant(evt.event_type)}>
@@ -384,7 +384,7 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-4 pt-4 border-t border-border-primary">
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-700">
               <div className="text-sm text-text-secondary">
                 Page {page} of {totalPages}
               </div>

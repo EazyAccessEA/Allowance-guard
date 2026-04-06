@@ -245,7 +245,7 @@ export default function BillingPage() {
                         'rounded-lg border p-5 space-y-4 transition-all duration-150',
                         isCurrent
                           ? 'border-primary-300 bg-primary-50 ring-2 ring-primary-200'
-                          : 'border-border-primary bg-background-primary hover:border-primary-200'
+                          : 'border-secondary-700 bg-background-primary hover:border-primary-200'
                       )}
                     >
                       <div className="flex items-center justify-between">
@@ -340,7 +340,7 @@ export default function BillingPage() {
                 <div className="overflow-x-auto -mx-2">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-border-primary text-left text-text-secondary">
+                      <tr className="border-b border-secondary-700 text-left text-text-secondary">
                         <th className="px-2 py-2 font-medium">Invoice</th>
                         <th className="px-2 py-2 font-medium">Date</th>
                         <th className="px-2 py-2 font-medium">Amount</th>
@@ -351,7 +351,7 @@ export default function BillingPage() {
                     </thead>
                     <tbody>
                       {invoices.map((inv) => (
-                        <tr key={inv.stripeInvoiceId} className="border-b border-border-primary last:border-0 hover:bg-background-secondary transition-colors">
+                        <tr key={inv.stripeInvoiceId} className="border-b border-secondary-700 last:border-0 hover:bg-background-secondary transition-colors">
                           <td className="px-2 py-3 font-mono text-xs">
                             {inv.invoiceNumber ?? inv.stripeInvoiceId.slice(0, 12)}
                           </td>

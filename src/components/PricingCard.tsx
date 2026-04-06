@@ -130,7 +130,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       ? 'bg-amber-500 text-slate-900 shadow-sm hover:bg-amber-600 active:bg-amber-700'
       : isPaid
         ? 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400'
-        : 'border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-500',
+        : 'border border-neutral-400 bg-secondary-800 text-slate-200 hover:bg-secondary-800 hover:border-neutral-500',
     checkoutLoading && 'opacity-70 cursor-wait',
   )
 
@@ -140,7 +140,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
         'relative flex flex-col rounded-base border bg-background-primary p-6 shadow-sm transition-all duration-150',
         highlighted
           ? 'border-primary-700 shadow-md ring-1 ring-primary-700'
-          : 'border-border-primary'
+          : 'border-secondary-700'
       )}
     >
       {/* Most Popular badge */}

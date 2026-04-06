@@ -7,7 +7,7 @@ import VideoBackground from '@/components/VideoBackground'
 export default function CookiesPage() {
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
       
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
@@ -51,7 +51,7 @@ export default function CookiesPage() {
                 <H2 className="mb-4">2. Types of Cookies We Use</H2>
                 
                 <div className="border border-line rounded-md p-6 mb-6 bg-mist">
-                  <h3 className="text-lg text-ink mb-3">Essential Cookies</h3>
+                  <h3 className="text-lg text-white mb-3">Essential Cookies</h3>
                   <p className="text-base text-stone mb-3">
                     These cookies are necessary for the website to function properly. They cannot be disabled.
                   </p>
@@ -63,7 +63,7 @@ export default function CookiesPage() {
                 </div>
 
                 <div className="border border-line rounded-md p-6 mb-6 bg-mist">
-                  <h3 className="text-lg text-ink mb-3">Preference Cookies</h3>
+                  <h3 className="text-lg text-white mb-3">Preference Cookies</h3>
                   <p className="text-base text-stone mb-3">
                     These cookies remember your choices and preferences to improve your experience.
                   </p>
@@ -75,7 +75,7 @@ export default function CookiesPage() {
                 </div>
 
                 <div className="border border-line rounded-md p-6 mb-6 bg-mist">
-                  <h3 className="text-lg text-ink mb-3">Analytics Cookies</h3>
+                  <h3 className="text-lg text-white mb-3">Analytics Cookies</h3>
                   <p className="text-base text-stone mb-3">
                     These cookies help us understand how our service is used to improve it.
                   </p>
@@ -106,7 +106,7 @@ export default function CookiesPage() {
                 <H2 className="mb-4">4. Managing Your Cookie Preferences</H2>
                 
                 <div className="border border-line rounded-md p-6 mb-6 bg-mist">
-                  <h3 className="text-lg text-ink mb-3">Browser Settings</h3>
+                  <h3 className="text-lg text-white mb-3">Browser Settings</h3>
                   <p className="text-base text-stone mb-3">
                     You can control cookies through your browser settings:
                   </p>
@@ -119,7 +119,7 @@ export default function CookiesPage() {
                 </div>
 
                 <div className="border border-line rounded-md p-6 mb-6 bg-mist">
-                  <h3 className="text-lg text-ink mb-3">Important Note</h3>
+                  <h3 className="text-lg text-white mb-3">Important Note</h3>
                   <p className="text-base text-stone">
                     <strong>Disabling essential cookies may break core functionality</strong> of Allowance Guard, including wallet connection and scanning features.
                   </p>

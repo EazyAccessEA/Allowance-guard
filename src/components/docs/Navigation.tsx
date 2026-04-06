@@ -39,7 +39,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
         ))}
       </div>
       
-      <div className="mt-8 pt-6 border-t-2 border-border-primary dark:border-secondary-700">
+      <div className="mt-8 pt-6 border-t-2 border-secondary-700">
         <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 uppercase tracking-wide mb-4">
           Resources
         </h3>

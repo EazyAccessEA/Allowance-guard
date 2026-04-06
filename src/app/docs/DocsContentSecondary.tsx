@@ -20,7 +20,7 @@ export default function DocsContentSecondary({ section }: Props) {
                                        alert.type === 'Slack Integration' ? Bell :
                                        alert.type === 'Autonomous Monitoring' ? Zap : Bell
                   return (
-                    <div key={index} className="border border-border-primary dark:border-secondary-700 rounded-lg p-6 bg-background-primary dark:bg-secondary-800">
+                    <div key={index} className="border border-secondary-700 rounded-lg p-6 bg-background-primary dark:bg-secondary-800">
                       <div className="flex items-start gap-4 mb-4">
                         <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                           <IconComponent className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -55,7 +55,7 @@ export default function DocsContentSecondary({ section }: Props) {
               </p>
               
           <div className="space-y-6">
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Zap className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -73,7 +73,7 @@ export default function DocsContentSecondary({ section }: Props) {
                   </ol>
                 </div>
 
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Bell className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -91,7 +91,7 @@ export default function DocsContentSecondary({ section }: Props) {
                   </ul>
                 </div>
 
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Settings className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -132,7 +132,7 @@ export default function DocsContentSecondary({ section }: Props) {
 
               <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Team Roles</h3>
               <div className="space-y-4 mb-6">
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Users className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -143,7 +143,7 @@ export default function DocsContentSecondary({ section }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Shield className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -154,7 +154,7 @@ export default function DocsContentSecondary({ section }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Settings className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -165,7 +165,7 @@ export default function DocsContentSecondary({ section }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Search className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -189,7 +189,7 @@ export default function DocsContentSecondary({ section }: Props) {
 
               <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Team Features</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Users className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -200,7 +200,7 @@ export default function DocsContentSecondary({ section }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Mail className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -211,7 +211,7 @@ export default function DocsContentSecondary({ section }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Shield className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -222,7 +222,7 @@ export default function DocsContentSecondary({ section }: Props) {
                     </div>
                   </div>
                 </div>
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Bell className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -247,7 +247,7 @@ export default function DocsContentSecondary({ section }: Props) {
                 Revoking an approval means setting the allowance to zero, preventing the spender from accessing your tokens:
               </p>
               <div className="space-y-6">
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Lock className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -264,7 +264,7 @@ export default function DocsContentSecondary({ section }: Props) {
                     <li>Pay the gas fee to complete the revocation</li>
                   </ol>
                 </div>
-                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-start gap-4 mb-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
                       <AlertTriangle className="w-6 h-6 text-primary-600 dark:text-primary-400" />
@@ -308,7 +308,7 @@ export default function DocsContentSecondary({ section }: Props) {
               
               <div className="space-y-6">
                 {/* Email Alerts */}
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-mist">
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
                   <div className="flex items-center gap-3 mb-3">
                     <Mail className="w-5 h-5 text-text-primary dark:text-secondary-100" />
                     <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Email Alerts</h3>
@@ -325,7 +325,7 @@ export default function DocsContentSecondary({ section }: Props) {
                 </div>
 
                 {/* Risk Policy */}
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-mist">
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
                   <div className="flex items-center gap-3 mb-3">
                     <Shield className="w-5 h-5 text-text-primary dark:text-secondary-100" />
                     <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Risk Policy Configuration</h3>
@@ -343,7 +343,7 @@ export default function DocsContentSecondary({ section }: Props) {
                 </div>
 
                 {/* Slack Integration */}
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-mist">
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
                   <div className="flex items-center gap-3 mb-3">
                     <Bell className="w-5 h-5 text-text-primary dark:text-secondary-100" />
                     <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Slack Integration</h3>
@@ -360,7 +360,7 @@ export default function DocsContentSecondary({ section }: Props) {
           </div>
 
                 {/* Public Sharing */}
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-mist">
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
                   <div className="flex items-center gap-3 mb-3">
                     <Settings className="w-5 h-5 text-text-primary dark:text-secondary-100" />
                     <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Public Share Links</h3>
@@ -377,7 +377,7 @@ export default function DocsContentSecondary({ section }: Props) {
           </div>
 
                 {/* API Reference */}
-          <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-mist">
+          <div className="border border-secondary-700 rounded-md p-6 bg-mist">
                   <div className="flex items-center gap-3 mb-3">
                     <Settings className="w-5 h-5 text-text-primary dark:text-secondary-100" />
                     <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">API Endpoints</h3>
@@ -541,7 +541,7 @@ export default function DocsContentSecondary({ section }: Props) {
               <h2 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Frequently Asked Questions</h2>
           <div className="space-y-4">
                 {faqItems.map((item, index) => (
-                  <div key={index} className="border border-border-primary dark:border-secondary-700 rounded-md p-4 bg-mist">
+                  <div key={index} className="border border-secondary-700 rounded-md p-4 bg-mist">
                     <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Q: {item.question}</h4>
                     <p className="text-sm text-text-secondary dark:text-secondary-400">A: {item.answer}</p>
           </div>

@@ -121,7 +121,7 @@ export default function DocsContentPrimary({ section }: Props) {
             </p>
             <div className="space-y-6">
               {supportedNetworks.map((network) => (
-                <div key={network.chainId} className="flex items-center justify-between p-6 bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg">
+                <div key={network.chainId} className="flex items-center justify-between p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center">
                       <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />

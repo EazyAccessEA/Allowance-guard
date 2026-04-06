@@ -47,7 +47,7 @@ export default function ApprovalTable({
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm" role="grid">
           <thead>
-            <tr className="border-b border-border-primary dark:border-secondary-700">
+            <tr className="border-b border-secondary-700">
               <th className="w-10 py-3 px-2 text-left">
                 <input
                   type="checkbox"
@@ -92,7 +92,7 @@ export default function ApprovalTable({
                 <tr
                   key={approval.id}
                   className={cn(
-                    'border-b border-border-primary/50 dark:border-secondary-800 transition-all duration-150',
+                    'border-b border-secondary-700/50 dark:border-secondary-800 transition-all duration-150',
                     'hover:bg-secondary-50 dark:hover:bg-secondary-800/50',
                     isSelected && 'bg-primary-50/50 dark:bg-primary-900/10',
                     isDimmed && 'opacity-30 pointer-events-none'
@@ -197,7 +197,7 @@ export default function ApprovalTable({
               key={approval.id}
               className={cn(
                 'p-4 rounded-lg border transition-all duration-150',
-                'border-border-primary dark:border-secondary-700',
+                'border-secondary-700',
                 'bg-background-primary dark:bg-dark-bg-secondary',
                 isSelected && 'border-primary-300 dark:border-primary-700 bg-primary-50/30 dark:bg-primary-900/10',
                 isDimmed && 'opacity-30 pointer-events-none'

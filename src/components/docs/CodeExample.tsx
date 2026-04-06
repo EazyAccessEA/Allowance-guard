@@ -28,9 +28,9 @@ export function CodeExample({ tabs }: CodeExampleProps) {
   }
 
   return (
-    <div className="border-2 border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden">
+    <div className="border-2 border-secondary-700 rounded-lg overflow-hidden">
       {/* Language tabs */}
-      <div className="flex items-center bg-background-secondary dark:bg-secondary-800 border-b-2 border-border-primary dark:border-secondary-700">
+      <div className="flex items-center bg-background-secondary dark:bg-secondary-800 border-b-2 border-secondary-700">
         <div className="flex">
           {tabs.map((tab, i) => (
             <button

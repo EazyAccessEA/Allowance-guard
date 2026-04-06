@@ -207,7 +207,7 @@ export default function RootLayout({
             .focus\\:absolute:focus { position: absolute; }
             .focus\\:top-2:focus { top: 0.5rem; }
             .focus\\:left-2:focus { left: 0.5rem; }
-            .bg-white { background-color: white; }
+            .bg-white { background-color: #0F172A; }
             .border { border-width: 1px; }
             .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
             .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
@@ -278,7 +278,7 @@ export default function RootLayout({
         }} />
       </head>
       <body className={`${inter.className} ${spaceGrotesk.variable} ${instrumentSerif.variable} min-h-screen flex flex-col`}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-secondary-800 border border-secondary-700 px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <ThemeProvider>
         <RollbarProvider>

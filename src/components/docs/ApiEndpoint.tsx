@@ -42,7 +42,7 @@ export function ApiEndpoint({
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className="border-2 border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden mb-6">
+    <div className="border-2 border-secondary-700 rounded-lg overflow-hidden mb-6">
       {/* Header */}
       <button
         onClick={() => setExpanded(!expanded)}
@@ -63,7 +63,7 @@ export function ApiEndpoint({
         </span>
         <code className="text-sm font-mono text-text-primary dark:text-secondary-100">{path}</code>
         {auth && (
-          <span className="ml-auto text-xs text-text-secondary dark:text-secondary-400 border border-border-primary dark:border-secondary-700 rounded px-2 py-0.5">
+          <span className="ml-auto text-xs text-text-secondary dark:text-secondary-400 border border-secondary-700 rounded px-2 py-0.5">
             Auth required
           </span>
         )}
@@ -71,7 +71,7 @@ export function ApiEndpoint({
 
       {/* Expanded details */}
       {expanded && (
-        <div className="p-4 border-t-2 border-border-primary dark:border-secondary-700 space-y-4">
+        <div className="p-4 border-t-2 border-secondary-700 space-y-4">
           <p className="text-sm text-text-secondary dark:text-secondary-400">{description}</p>
 
           {/* Query/URL parameters */}
@@ -80,7 +80,7 @@ export function ApiEndpoint({
               <h4 className="text-xs font-bold uppercase tracking-wide text-text-secondary dark:text-secondary-400 mb-2">
                 Parameters
               </h4>
-              <div className="border border-border-primary dark:border-secondary-700 rounded overflow-hidden">
+              <div className="border border-secondary-700 rounded overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
@@ -92,7 +92,7 @@ export function ApiEndpoint({
                   </thead>
                   <tbody>
                     {params.map((p) => (
-                      <tr key={p.name} className="border-t border-border-primary dark:border-secondary-700">
+                      <tr key={p.name} className="border-t border-secondary-700">
                         <td className="px-3 py-2 font-mono text-xs text-text-primary dark:text-secondary-100">{p.name}</td>
                         <td className="px-3 py-2 font-mono text-xs text-text-secondary dark:text-secondary-400">{p.type}</td>
                         <td className="px-3 py-2">
@@ -117,7 +117,7 @@ export function ApiEndpoint({
               <h4 className="text-xs font-bold uppercase tracking-wide text-text-secondary dark:text-secondary-400 mb-2">
                 Request Body (JSON)
               </h4>
-              <div className="border border-border-primary dark:border-secondary-700 rounded overflow-hidden">
+              <div className="border border-secondary-700 rounded overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
@@ -129,7 +129,7 @@ export function ApiEndpoint({
                   </thead>
                   <tbody>
                     {bodyParams.map((p) => (
-                      <tr key={p.name} className="border-t border-border-primary dark:border-secondary-700">
+                      <tr key={p.name} className="border-t border-secondary-700">
                         <td className="px-3 py-2 font-mono text-xs text-text-primary dark:text-secondary-100">{p.name}</td>
                         <td className="px-3 py-2 font-mono text-xs text-text-secondary dark:text-secondary-400">{p.type}</td>
                         <td className="px-3 py-2">
@@ -153,7 +153,7 @@ export function ApiEndpoint({
             <h4 className="text-xs font-bold uppercase tracking-wide text-text-secondary dark:text-secondary-400 mb-2">
               Response Example
             </h4>
-            <pre className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded p-4 overflow-x-auto">
+            <pre className="bg-background-primary dark:bg-secondary-900 border border-secondary-700 rounded p-4 overflow-x-auto">
               <code className="text-xs font-mono text-text-primary dark:text-secondary-100">{responseExample}</code>
             </pre>
           </div>

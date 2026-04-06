@@ -5,7 +5,7 @@ import { H1 } from '@/components/ui/Heading'
 
 export default function ComingSoonPage() {
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
       
       <Section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
         <Container className="text-center">

@@ -176,7 +176,7 @@ export default function AllowanceTable({
             className={`rounded-xl border p-4 transition-colors duration-100 ${
               sel[keyOf(r)]
                 ? 'border-primary-300 bg-primary-50/50 dark:border-primary-700 dark:bg-primary-900/10'
-                : 'border-border-primary dark:border-secondary-700 bg-white dark:bg-secondary-900/60'
+                : 'border-secondary-700 bg-secondary-900/60'
             }`}
           >
             <div className="flex items-start justify-between mb-3">
@@ -185,7 +185,7 @@ export default function AllowanceTable({
                   type="checkbox"
                   checked={!!sel[keyOf(r)]}
                   onChange={() => toggle(r)}
-                  className="rounded border-border-primary dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-secondary-800 min-w-[18px] min-h-[18px]"
+                  className="rounded border-secondary-700 dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-secondary-800 min-w-[18px] min-h-[18px]"
                   aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval`}
                 />
                 <div>
@@ -254,11 +254,11 @@ export default function AllowanceTable({
       </div>
 
       {/* Desktop Table Layout */}
-      <div className="hidden md:block border border-border-primary dark:border-secondary-700 rounded-xl overflow-hidden bg-white dark:bg-secondary-900/60 backdrop-blur-xs shadow-subtle dark:shadow-dark-subtle">
+      <div className="hidden md:block border border-secondary-700 rounded-xl overflow-hidden bg-secondary-900/60 backdrop-blur-xs shadow-subtle dark:shadow-dark-subtle">
         <div className="overflow-x-auto">
           <table className="w-full text-sm" role="table" aria-label="Token allowances">
             <caption className="sr-only">Token approval allowances with risk assessment and management options</caption>
-            <thead className="bg-background-secondary/80 dark:bg-secondary-800/80 border-b border-border-primary dark:border-secondary-700">
+            <thead className="bg-background-secondary/80 dark:bg-secondary-800/80 border-b border-secondary-700">
               <tr>
                 <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 w-10">
                   <span className="sr-only">Select for bulk action</span>
@@ -286,7 +286,7 @@ export default function AllowanceTable({
                       type="checkbox"
                       checked={!!sel[keyOf(r)]}
                       onChange={() => toggle(r)}
-                      className="rounded border-border-primary dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-secondary-800"
+                      className="rounded border-secondary-700 dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-secondary-800"
                       aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval for ${r.spender_label || 'Unknown Contract'}`}
                     />
                   </td>
