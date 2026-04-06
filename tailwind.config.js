@@ -8,207 +8,177 @@ module.exports = {
   ],
   // Performance optimizations
   corePlugins: {
-    // Disable unused features for smaller bundle
     preflight: true,
     container: false,
     accessibility: true,
-    // Disable unused core plugins
     float: false,
     clear: false,
     skew: false,
     caretColor: false,
     sepia: false,
   },
-  // Optimize CSS purging
   safelist: [
-    // Keep essential classes that might be dynamically generated
     'animate-scroll',
     'brand-logos-mobile',
-    'mobbin-hover-lift',
-    'mobbin-focus-ring',
   ],
-  // Optimize for production
   future: {
     hoverOnlyWhenSupported: true,
   },
   theme: {
     extend: {
       colors: {
-        // Primary Color Scale — Crimson Signal (redesign)
+        // =============================================
+        // MONOCHROME PRO — Institutional Authority
+        // True black canvas. White commands action.
+        // Red is the ONLY color — reserved for danger.
+        // =============================================
+
+        // Primary — Pure White (action color)
         primary: {
-          50: '#FEF2F2',
-          100: '#FEE2E2',
-          200: '#FECACA',
-          300: '#FCA5A5',
-          400: '#F87171',
-          500: '#E53E3E',  // Brand primary — Crimson Signal
-          600: '#DC2626',
-          700: '#B91C1C',
-          800: '#991B1B',
-          900: '#7F1D1D',
-          foreground: '#FFFFFF',
-        },
-        
-        // Mobbin-Inspired Secondary Color Scale (9-step)
-        secondary: {
-          50: '#F8FAFC',
-          100: '#F1F5F9',
-          200: '#E2E8F0',
-          300: '#CBD5E1',
-          400: '#94A3B8',
-          500: '#64748B',
-          600: '#475569',
-          700: '#334155',
-          800: '#1E293B',
-          900: '#0F172A',
-        },
-        
-        // Mobbin-Inspired Neutral Color Scale (9-step)
-        neutral: {
           50: '#FAFAFA',
           100: '#F5F5F5',
           200: '#E5E5E5',
           300: '#D4D4D4',
-          400: '#A3A3A3',
-          500: '#737373',
-          600: '#525252',
-          700: '#404040',
-          800: '#262626',
-          900: '#171717',
-        },
-        
-        // Mobbin-Inspired Background System
-        background: {
-          primary: '#FFFFFF',
-          secondary: '#F8FAFC',
-          tertiary: '#F1F5F9',
-          inverse: '#0F172A',
-          // Legacy support
-          light: '#F9FAFB',
-          dark: '#111827',
-          white: '#FFFFFF',
-        },
-        
-        // Mobbin-Inspired Text System
-        text: {
-          primary: '#0F172A',
-          secondary: '#475569',
-          tertiary: '#64748B',  // Darker for better contrast
-          inverse: '#FFFFFF',
-          // Legacy support
-          muted: '#9CA3AF',
-        },
-        
-        // Mobbin-Inspired Border System
-        border: {
-          primary: '#E2E8F0',
-          secondary: '#CBD5E1',
-          tertiary: '#F1F5F9',
-          focus: '#E53E3E',
-          // Legacy support
-          DEFAULT: '#E5E7EB',
-        },
-        
-        // Mobbin-Inspired Semantic Color System
-        semantic: {
-          success: {
-            50: '#F0FDF4',
-            100: '#DCFCE7',
-            200: '#BBF7D0',
-            300: '#86EFAC',
-            400: '#4ADE80',
-            500: '#22C55E',
-            600: '#16A34A',
-            700: '#15803D',
-            800: '#166534',
-            900: '#14532D',
-          },
-          warning: {
-            50: '#FFFBEB',
-            100: '#FEF3C7',
-            200: '#FDE68A',
-            300: '#FCD34D',
-            400: '#FBBF24',
-            500: '#F59E0B',
-            600: '#D97706',
-            700: '#B45309',
-            800: '#92400E',
-            900: '#78350F',
-          },
-          error: {
-            50: '#FEF2F2',
-            100: '#FEE2E2',
-            200: '#FECACA',
-            300: '#FCA5A5',
-            400: '#F87171',
-            500: '#EF4444',
-            600: '#DC2626',
-            700: '#B91C1C',
-            800: '#991B1B',
-            900: '#7F1D1D',
-          },
-          info: {
-            50: '#F0F9FF',
-            100: '#E0F2FE',
-            200: '#BAE6FD',
-            300: '#7DD3FC',
-            400: '#38BDF8',
-            500: '#0EA5E9',
-            600: '#0284C7',
-            700: '#0369A1',
-            800: '#075985',
-            900: '#0C4A6E',
-          },
-        },
-        
-        // Redesign: Crimson Signal (new primary identity)
-        crimson: {
-          50: '#FEF2F2',
-          100: '#FEE2E2',
-          200: '#FECACA',
-          300: '#FCA5A5',
-          400: '#F87171',
-          500: '#E53E3E',
-          600: '#DC2626',
-          700: '#B91C1C',
-          800: '#991B1B',
-          900: '#7F1D1D',
-        },
-        // Redesign: Volt Mint (accent — rare, powerful)
-        volt: {
-          50: '#ECFFFE',
-          100: '#C6FFF8',
-          200: '#8AFAED',
-          300: '#4AEADB',
-          400: '#1AD6C5',
-          500: '#00F0C8',
-          600: '#00C2A0',
-          700: '#009E82',
-          800: '#007A64',
-          900: '#005546',
-        },
-        // Redesign: Dark surfaces
-        surface: {
-          base: '#0B1120',
-          raised: '#151D2E',
-          overlay: '#1E293B',
-          elevated: '#263244',
+          400: '#A1A1AA',
+          500: '#FFFFFF',   // Primary action — Pure White
+          600: '#E5E5E5',
+          700: '#D4D4D4',
+          800: '#A1A1AA',
+          900: '#71717A',
+          foreground: '#000000',
         },
 
-        // Legacy support
-        ink: '#0A0A0A',
-        stone: '#6B7280',
-        mist: '#F6F7F9',
-        line: '#E5E7EB',
-        cobalt: '#2563EB',
+        // Secondary — Zinc (monochrome structural scale)
+        secondary: {
+          50: '#FAFAFA',
+          100: '#F4F4F5',
+          200: '#E4E4E7',
+          300: '#D4D4D8',
+          400: '#A1A1AA',
+          500: '#71717A',
+          600: '#52525B',
+          700: '#3F3F46',
+          800: '#27272A',
+          900: '#18181B',
+        },
+
+        // Neutral — Zinc
+        neutral: {
+          50: '#FAFAFA',
+          100: '#F4F4F5',
+          200: '#E4E4E7',
+          300: '#D4D4D8',
+          400: '#A1A1AA',
+          500: '#71717A',
+          600: '#52525B',
+          700: '#3F3F46',
+          800: '#27272A',
+          900: '#18181B',
+        },
+
+        // Background System — True Black foundation
+        background: {
+          primary: '#000000',
+          secondary: '#0A0A0A',
+          tertiary: '#18181B',
+          inverse: '#FFFFFF',
+          light: '#FAFAFA',
+          dark: '#000000',
+          white: '#FFFFFF',
+        },
+
+        // Text System — high contrast on black
+        text: {
+          primary: '#FFFFFF',
+          secondary: '#A1A1AA',
+          tertiary: '#71717A',
+          inverse: '#000000',
+          muted: '#52525B',
+        },
+
+        // Border System — subtle zinc
+        border: {
+          primary: '#27272A',
+          secondary: '#3F3F46',
+          tertiary: '#18181B',
+          focus: '#FFFFFF',
+          DEFAULT: '#27272A',
+        },
+
+        // Semantic Colors
+        semantic: {
+          success: {
+            50: '#F0FDF4', 100: '#DCFCE7', 200: '#BBF7D0', 300: '#86EFAC',
+            400: '#4ADE80', 500: '#22C55E', 600: '#16A34A', 700: '#15803D',
+            800: '#166534', 900: '#14532D',
+          },
+          warning: {
+            50: '#FFFBEB', 100: '#FEF3C7', 200: '#FDE68A', 300: '#FCD34D',
+            400: '#FBBF24', 500: '#F59E0B', 600: '#D97706', 700: '#B45309',
+            800: '#92400E', 900: '#78350F',
+          },
+          error: {
+            50: '#FFF5F5', 100: '#FFE3E3', 200: '#FFC9C9', 300: '#FFA8A8',
+            400: '#FF8787', 500: '#FF4B4B', 600: '#E03E3E', 700: '#C53030',
+            800: '#9B2C2C', 900: '#742A2A',
+          },
+          info: {
+            50: '#F0F9FF', 100: '#E0F2FE', 200: '#BAE6FD', 300: '#7DD3FC',
+            400: '#38BDF8', 500: '#0EA5E9', 600: '#0284C7', 700: '#0369A1',
+            800: '#075985', 900: '#0C4A6E',
+          },
+        },
+
+        // Danger — Vibrant Crimson (THE color, the only one)
+        crimson: {
+          50: '#FFF5F5',
+          100: '#FFE3E3',
+          200: '#FFC9C9',
+          300: '#FFA8A8',
+          400: '#FF8787',
+          500: '#FF4B4B',   // Vibrant Crimson
+          600: '#E03E3E',
+          700: '#C53030',
+          800: '#9B2C2C',
+          900: '#742A2A',
+        },
+
+        // Volt Mint removed — monochrome palette has no teal.
+        // "volt" classes will resolve to accent grey for graceful fallback.
+        volt: {
+          50: '#FAFAFA',
+          100: '#F4F4F5',
+          200: '#E4E4E7',
+          300: '#D4D4D8',
+          400: '#A1A1AA',
+          500: '#71717A',
+          600: '#52525B',
+          700: '#3F3F46',
+          800: '#27272A',
+          900: '#18181B',
+        },
+
+        // Surface — True Black system
+        surface: {
+          base: '#000000',
+          raised: '#0A0A0A',
+          overlay: '#18181B',
+          elevated: '#27272A',
+        },
+
+        // Legacy support (mapped to monochrome)
+        ink: '#FFFFFF',
+        stone: '#71717A',
+        mist: '#18181B',
+        line: '#27272A',
+        cobalt: '#A1A1AA',
         white: '#FFFFFF',
-        danger: '#EF4444',
+        danger: '#FF4B4B',
         success: '#22C55E',
         info: '#0EA5E9',
         warning: '#F59E0B',
       },
       fontFamily: {
-        // Design System Typography — Space Grotesk display, Inter body, Instrument Serif editorial
         'heading': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
         'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
         'display': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
@@ -217,114 +187,103 @@ module.exports = {
         'button': ['Inter', 'ui-sans-serif', 'system-ui'],
       },
       fontSize: {
-        // Mobbin-Inspired Typography Scale (Mobile-first with systematic scaling)
-        'xs': ['0.75rem', { lineHeight: '1.25rem', fontWeight: '500', letterSpacing: '0.025em' }], // 12px - Mobile captions
-        'sm': ['0.875rem', { lineHeight: '1.375rem', fontWeight: '400', letterSpacing: '0.01em' }], // 14px - Mobile body
-        'base': ['1rem', { lineHeight: '1.5rem', fontWeight: '400', letterSpacing: '0' }], // 16px - Base body
-        'lg': ['1.125rem', { lineHeight: '1.625rem', fontWeight: '400', letterSpacing: '-0.01em' }], // 18px - Large body
-        'xl': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600', letterSpacing: '-0.01em' }], // 20px - Small headings
-        '2xl': ['1.5rem', { lineHeight: '2rem', fontWeight: '600', letterSpacing: '-0.02em' }], // 24px - Medium headings
-        '3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '700', letterSpacing: '-0.025em' }], // 30px - Large headings
-        '4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700', letterSpacing: '-0.03em' }], // 36px - XL headings
-        '5xl': ['3rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.035em' }], // 48px - Display headings
-        '6xl': ['3.75rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.04em' }], // 60px - Large display
-        '7xl': ['4.5rem', { lineHeight: '1.05', fontWeight: '700', letterSpacing: '-0.045em' }], // 72px - Hero headings
-        '8xl': ['6rem', { lineHeight: '1', fontWeight: '700', letterSpacing: '-0.05em' }], // 96px - Massive display
+        'xs': ['0.75rem', { lineHeight: '1.25rem', fontWeight: '500', letterSpacing: '0.025em' }],
+        'sm': ['0.875rem', { lineHeight: '1.375rem', fontWeight: '400', letterSpacing: '0.01em' }],
+        'base': ['1rem', { lineHeight: '1.5rem', fontWeight: '400', letterSpacing: '0' }],
+        'lg': ['1.125rem', { lineHeight: '1.625rem', fontWeight: '400', letterSpacing: '-0.01em' }],
+        'xl': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600', letterSpacing: '-0.01em' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem', fontWeight: '600', letterSpacing: '-0.02em' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '700', letterSpacing: '-0.025em' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem', fontWeight: '700', letterSpacing: '-0.03em' }],
+        '5xl': ['3rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.035em' }],
+        '6xl': ['3.75rem', { lineHeight: '1.1', fontWeight: '700', letterSpacing: '-0.04em' }],
+        '7xl': ['4.5rem', { lineHeight: '1.05', fontWeight: '700', letterSpacing: '-0.045em' }],
+        '8xl': ['6rem', { lineHeight: '1', fontWeight: '700', letterSpacing: '-0.05em' }],
       },
       letterSpacing: {
-        // Enhanced Letter Spacing - Sketch-Inspired
-        'heading': '-0.02em',    // -2% for headings (improved)
-        'body': '0',             // Default for body
-        'display': '-0.03em',    // -3% for display text
-        'caption': '0.025em',    // +2.5% for captions
-        'button': '0.01em',      // +1% for buttons
+        'heading': '-0.02em',
+        'body': '0',
+        'display': '-0.03em',
+        'caption': '0.025em',
+        'button': '0.01em',
       },
       spacing: {
-        // Mobbin-Inspired 4px/8px Grid System
-        '0': '0',           // 0px
-        '0.5': '0.125rem',  // 2px
-        '1': '0.25rem',     // 4px
-        '1.5': '0.375rem',  // 6px
-        '2': '0.5rem',      // 8px
-        '2.5': '0.625rem',  // 10px
-        '3': '0.75rem',     // 12px
-        '3.5': '0.875rem',  // 14px
-        '4': '1rem',        // 16px
-        '5': '1.25rem',     // 20px
-        '6': '1.5rem',      // 24px
-        '7': '1.75rem',     // 28px
-        '8': '2rem',        // 32px
-        '9': '2.25rem',     // 36px
-        '10': '2.5rem',     // 40px
-        '11': '2.75rem',    // 44px
-        '12': '3rem',       // 48px
-        '14': '3.5rem',     // 56px
-        '16': '4rem',       // 64px
-        '18': '4.5rem',     // 72px
-        '20': '5rem',       // 80px
-        '24': '6rem',       // 96px
-        '28': '7rem',       // 112px
-        '32': '8rem',       // 128px
-        '36': '9rem',       // 144px
-        '40': '10rem',      // 160px
-        '44': '11rem',      // 176px
-        '48': '12rem',      // 192px
-        '52': '13rem',      // 208px
-        '56': '14rem',      // 224px
-        '60': '15rem',      // 240px
-        '64': '16rem',      // 256px
-        '72': '18rem',      // 288px
-        '80': '20rem',      // 320px
-        '96': '24rem',      // 384px
-        
-        // Legacy semantic spacing (maintained for compatibility)
-        'xs': '0.5rem',  // 8px
-        'sm': '1rem',    // 16px
-        'md': '2rem',    // 32px
-        'lg': '4rem',    // 64px
-        'xl': '8rem',    // 128px
-        
-        // Legacy spacing
+        '0': '0',
+        '0.5': '0.125rem',
+        '1': '0.25rem',
+        '1.5': '0.375rem',
+        '2': '0.5rem',
+        '2.5': '0.625rem',
+        '3': '0.75rem',
+        '3.5': '0.875rem',
+        '4': '1rem',
+        '5': '1.25rem',
+        '6': '1.5rem',
+        '7': '1.75rem',
+        '8': '2rem',
+        '9': '2.25rem',
+        '10': '2.5rem',
+        '11': '2.75rem',
+        '12': '3rem',
+        '14': '3.5rem',
+        '16': '4rem',
         '18': '4.5rem',
+        '20': '5rem',
+        '24': '6rem',
+        '28': '7rem',
+        '32': '8rem',
+        '36': '9rem',
+        '40': '10rem',
+        '44': '11rem',
+        '48': '12rem',
+        '52': '13rem',
+        '56': '14rem',
+        '60': '15rem',
+        '64': '16rem',
+        '72': '18rem',
+        '80': '20rem',
+        '96': '24rem',
+        'xs': '0.5rem',
+        'sm': '1rem',
+        'md': '2rem',
+        'lg': '4rem',
+        'xl': '8rem',
         '88': '22rem',
         '128': '32rem',
         '144': '36rem',
       },
       maxWidth: {
-        'container': '1200px', // Container max-width
+        'container': '1200px',
         'wrap': '1120px',
         'reading': '720px',
       },
       borderRadius: {
-        'sm': '0.25rem',   // 4px
-        'DEFAULT': '0.5rem', // 8px - Design System standard
-        'md': '0.75rem',   // 12px
-        'lg': '1rem',      // 16px
-        'xl': '1.5rem',    // 24px
+        'sm': '0.25rem',
+        'DEFAULT': '0.5rem',
+        'md': '0.75rem',
+        'lg': '1rem',
+        'xl': '1.5rem',
         'full': '9999px',
       },
       boxShadow: {
-        // Professional Shadow System
-        'subtle': '0 1px 3px rgba(0, 0, 0, 0.1)',
-        'medium': '0 4px 6px rgba(0, 0, 0, 0.1)',
-        'large': '0 10px 15px rgba(0, 0, 0, 0.1)',
-        'focus': '0 0 0 3px rgba(229, 62, 62, 0.15)', // Crimson focus
-        'focus-danger': '0 0 0 3px rgba(239, 68, 68, 0.1)',
+        // Monochrome Pro shadow system — deeper shadows on true black
+        'subtle': '0 1px 3px rgba(0, 0, 0, 0.4)',
+        'medium': '0 4px 6px rgba(0, 0, 0, 0.4)',
+        'large': '0 10px 15px rgba(0, 0, 0, 0.5)',
+        'focus': '0 0 0 3px rgba(255, 255, 255, 0.15)',
+        'focus-danger': '0 0 0 3px rgba(255, 75, 75, 0.15)',
         'focus-success': '0 0 0 3px rgba(34, 197, 94, 0.1)',
         'focus-info': '0 0 0 3px rgba(14, 165, 233, 0.1)',
-        // Glass morphism shadows
-        'glass': '0 8px 32px rgba(0, 0, 0, 0.08)',
-        'glass-lg': '0 16px 48px rgba(0, 0, 0, 0.12)',
-        // Dark mode shadows
-        'dark-subtle': '0 1px 3px rgba(0, 0, 0, 0.3)',
-        'dark-medium': '0 4px 6px rgba(0, 0, 0, 0.3)',
-        'dark-large': '0 10px 15px rgba(0, 0, 0, 0.4)',
-        // Glow effects
-        'glow-primary': '0 0 20px rgba(229, 62, 62, 0.3)',
-        'glow-primary-lg': '0 0 40px rgba(229, 62, 62, 0.2)',
-        // Redesign: Crimson glow
-        'glow-crimson': '0 0 20px rgba(229, 62, 62, 0.25)',
-        'glow-crimson-lg': '0 0 40px rgba(229, 62, 62, 0.15)',
+        'glass': '0 8px 32px rgba(0, 0, 0, 0.3)',
+        'glass-lg': '0 16px 48px rgba(0, 0, 0, 0.4)',
+        'dark-subtle': '0 1px 3px rgba(0, 0, 0, 0.5)',
+        'dark-medium': '0 4px 6px rgba(0, 0, 0, 0.5)',
+        'dark-large': '0 10px 15px rgba(0, 0, 0, 0.6)',
+        // Danger glow — the ONLY glow in Monochrome Pro
+        'glow-primary': '0 0 20px rgba(255, 255, 255, 0.1)',
+        'glow-primary-lg': '0 0 40px rgba(255, 255, 255, 0.08)',
+        'glow-crimson': '0 0 20px rgba(255, 75, 75, 0.25)',
+        'glow-crimson-lg': '0 0 40px rgba(255, 75, 75, 0.15)',
       },
       backdropBlur: {
         'xs': '2px',
@@ -332,7 +291,6 @@ module.exports = {
         'glass-lg': '20px',
       },
       animation: {
-        // Enhanced Motion System - Sketch-Inspired
         'fade-in': 'fadeIn 250ms cubic-bezier(0.4, 0, 0.2, 1)',
         'slide-up': 'slideUp 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         'slide-in': 'slideIn 250ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -340,19 +298,8 @@ module.exports = {
         'button-press': 'buttonPress 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         'modal-in': 'modalIn 250ms cubic-bezier(0.4, 0, 0.2, 1)',
         'tab-switch': 'tabSwitch 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-
-        // Sketch-inspired additional animations
-        'sketch-fade-in': 'fadeIn 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        'sketch-slide-up': 'slideUp 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        'sketch-scale-in': 'scaleIn 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        'sketch-bounce': 'bounce 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55)',
-        'sketch-pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-
-        // Mesh gradient animation
         'mesh-shift': 'meshShift 15s ease infinite',
-        // Scroll reveal
         'scroll-reveal': 'scrollReveal 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
-        // Glow pulse
         'glow-pulse': 'glowPulse 3s ease-in-out infinite',
       },
       keyframes: {
@@ -385,17 +332,6 @@ module.exports = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        // Sketch-inspired additional keyframes
-        bounce: {
-          '0%, 20%, 53%, 80%, 100%': { transform: 'translate3d(0,0,0)' },
-          '40%, 43%': { transform: 'translate3d(0, -8px, 0)' },
-          '70%': { transform: 'translate3d(0, -4px, 0)' },
-          '90%': { transform: 'translate3d(0, -2px, 0)' },
-        },
-        pulse: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.5' },
-        },
         meshShift: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
@@ -405,11 +341,10 @@ module.exports = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         glowPulse: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(229, 62, 62, 0.15)' },
-          '50%': { boxShadow: '0 0 40px rgba(229, 62, 62, 0.3)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(255, 75, 75, 0.15)' },
+          '50%': { boxShadow: '0 0 40px rgba(255, 75, 75, 0.3)' },
         },
       },
-      // Professional Component Styles
       aria: {
         'current': 'current',
       },

@@ -66,11 +66,11 @@ w3m-modal-background {
   z-index: 9998 !important;
 }
 
-/* Enhanced AppKit modal styling to match Fireart design tokens */
+/* AppKit modal styling — Monochrome Pro */
 w3m-modal {
-  --w3m-background-color: var(--obsidian) !important; /* #1E1F23 */
-  --w3m-border-radius: 16px !important; /* card borderRadius */
-  --w3m-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1) !important; /* shadows.large */
+  --w3m-background-color: #18181B !important;
+  --w3m-border-radius: 16px !important;
+  --w3m-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Modal content styling */
@@ -149,84 +149,64 @@ w3m-modal w3m-close-button:hover {
 }
 
 :root {
-  /* AllowanceGuard Design Tokens — Crimson Signal System */
+  /* AllowanceGuard Design Tokens — Monochrome Pro */
+  /* "The Institutional Authority" — True Black + White + Red */
   /* Source: docs/design-tokens-handbook.md */
 
-  /* Primary — Crimson Signal */
-  --color-primary-50: #FEF2F2;
-  --color-primary-100: #FEE2E2;
-  --color-primary-200: #FECACA;
-  --color-primary-300: #FCA5A5;
-  --color-primary-400: #F87171;
-  --color-primary-500: #E53E3E;
-  --color-primary-600: #DC2626;
-  --color-primary-700: #B91C1C;
-  --color-primary-800: #991B1B;
-  --color-primary-900: #7F1D1D;
+  /* Monochrome Pro Palette */
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-danger: #FF4B4B;
 
-  /* Accent — Volt Mint */
-  --color-accent-50: #ECFFFE;
-  --color-accent-100: #C6FFF8;
-  --color-accent-200: #8AFAED;
-  --color-accent-300: #4AEADB;
-  --color-accent-400: #1AD6C5;
-  --color-accent-500: #00F0C8;
-  --color-accent-600: #00C2A0;
-  --color-accent-700: #009E82;
-  --color-accent-800: #007A64;
-  --color-accent-900: #005546;
-
-  /* Neutral — Slate */
-  --color-neutral-50: #F8FAFC;
-  --color-neutral-100: #F1F5F9;
-  --color-neutral-200: #E2E8F0;
-  --color-neutral-300: #CBD5E1;
-  --color-neutral-400: #94A3B8;
-  --color-neutral-500: #64748B;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1E293B;
-  --color-neutral-850: #151D2E;
-  --color-neutral-900: #0B1120;
-  --color-neutral-950: #060A14;
+  /* Neutral — Zinc scale */
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F4F4F5;
+  --color-neutral-200: #E4E4E7;
+  --color-neutral-300: #D4D4D8;
+  --color-neutral-400: #A1A1AA;
+  --color-neutral-500: #71717A;
+  --color-neutral-600: #52525B;
+  --color-neutral-700: #3F3F46;
+  --color-neutral-800: #27272A;
+  --color-neutral-900: #18181B;
+  --color-neutral-950: #09090B;
 
   /* Semantic */
   --color-success-500: #22C55E;
   --color-warning-500: #F59E0B;
-  --color-error-500: #EF4444;
+  --color-error-500: #FF4B4B;
   --color-info-500: #0EA5E9;
 
-  /* Light Mode Surfaces */
-  --surface-base: #FFFFFF;
-  --surface-raised: #F8FAFC;
-  --surface-overlay: #FFFFFF;
-  --surface-elevated: #FFFFFF;
+  /* Surface — True Black foundation */
+  --surface-base: #000000;
+  --surface-raised: #0A0A0A;
+  --surface-overlay: #18181B;
+  --surface-elevated: #27272A;
 
-  /* Mapped aliases (for component compatibility) */
+  /* Mapped aliases */
   --background: var(--surface-base);
-  --foreground: var(--color-neutral-900);
+  --foreground: var(--color-white);
   --muted: var(--color-neutral-400);
   --muted-foreground: var(--color-neutral-500);
-  --border: var(--color-neutral-200);
-  --input: var(--color-neutral-100);
-  --primary: var(--color-primary-500);
-  --primary-foreground: #ffffff;
-  --secondary: var(--color-accent-500);
-  --secondary-foreground: #ffffff;
-  --accent: var(--color-accent-500);
-  --accent-foreground: #ffffff;
-  --destructive: var(--color-error-500);
-  --destructive-foreground: #ffffff;
+  --border: var(--color-neutral-800);
+  --input: var(--color-neutral-800);
+  --primary: var(--color-white);
+  --primary-foreground: var(--color-black);
+  --secondary: var(--color-neutral-700);
+  --secondary-foreground: var(--color-neutral-300);
+  --accent: var(--color-neutral-400);
+  --accent-foreground: var(--color-black);
+  --destructive: var(--color-danger);
+  --destructive-foreground: var(--color-white);
   --success: var(--color-success-500);
   --warning: var(--color-warning-500);
-  --ring: var(--color-primary-500);
+  --ring: var(--color-white);
   --radius: 8px;
 
   /* Typography */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-  /* Legacy aliases */
   --font-heading: var(--font-display);
   --font-satoshi: var(--font-display);
   --font-inter: var(--font-body);
@@ -244,7 +224,6 @@ w3m-modal w3m-close-button:hover {
   --space-16: 4rem;
   --space-20: 5rem;
   --space-24: 6rem;
-  /* Legacy aliases */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -263,20 +242,18 @@ w3m-modal w3m-close-button:hover {
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-sharp: cubic-bezier(0.25, 0, 0, 1);
   --stagger: 50ms;
-  /* Legacy aliases */
   --motion-duration-fast: var(--duration-fast);
   --motion-duration-base: var(--duration-base);
   --motion-duration-slow: var(--duration-slow);
   --motion-easing-natural: var(--ease-default);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.15);
-  --shadow-glow-primary: 0 0 20px rgba(229,62,62,0.25);
-  --shadow-glow-accent: 0 0 20px rgba(0,240,200,0.25);
-  --shadow-focus: 0 0 0 3px rgba(229,62,62,0.2);
-  /* Legacy aliases */
+  /* Shadows — deeper on true black */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+  --shadow-glow-primary: 0 0 20px rgba(255,255,255,0.1);
+  --shadow-glow-accent: 0 0 20px rgba(255,75,75,0.25);
+  --shadow-focus: 0 0 0 3px rgba(255,255,255,0.15);
   --shadow-subtle: var(--shadow-sm);
   --shadow-medium: var(--shadow-md);
   --shadow-large: var(--shadow-lg);
@@ -285,77 +262,67 @@ w3m-modal w3m-close-button:hover {
   --a11y-focus-ring: 3px;
   --a11y-target-min: 44px;
 
-  /* Legacy color aliases (for existing component compat) */
+  /* Legacy color aliases (mapped to monochrome) */
   --obsidian: var(--color-neutral-900);
   --platinum: var(--color-neutral-50);
   --charcoal: var(--color-neutral-500);
-  --cobalt: var(--color-primary-500);
-  --teal: var(--color-accent-500);
-  --warm-gray: var(--color-neutral-100);
+  --cobalt: var(--color-neutral-400);
+  --teal: var(--color-neutral-400);
+  --warm-gray: var(--color-neutral-800);
   --emerald: var(--color-success-500);
   --amber: var(--color-warning-500);
-  --crimson: var(--color-error-500);
+  --crimson: var(--color-danger);
   --navy: var(--color-neutral-900);
+  --obsidian-hover: var(--color-neutral-800);
+  --charcoal-hover: var(--color-neutral-600);
 }
 
+/* Dark mode is the default in Monochrome Pro — same values */
 .dark {
-  /* Dark Mode — Crimson Signal System */
-  --surface-base: #0B1120;
-  --surface-raised: #151D2E;
-  --surface-overlay: #1E293B;
-  --surface-elevated: #263244;
+  --surface-base: #000000;
+  --surface-raised: #0A0A0A;
+  --surface-overlay: #18181B;
+  --surface-elevated: #27272A;
 
   --background: var(--surface-base);
-  --foreground: #F1F5F9;
-  --muted: #94A3B8;
-  --muted-foreground: #64748B;
+  --foreground: var(--color-white);
+  --muted: var(--color-neutral-400);
+  --muted-foreground: var(--color-neutral-500);
   --border: var(--color-neutral-800);
   --input: var(--color-neutral-800);
-  --primary: var(--color-primary-500);
-  --primary-foreground: #FFFFFF;
-  --secondary: var(--color-accent-500);
-  --secondary-foreground: var(--color-neutral-900);
-  --accent: var(--color-accent-400);
-  --accent-foreground: var(--color-neutral-900);
-  --destructive: var(--color-primary-400);
-  --destructive-foreground: var(--color-neutral-900);
-  --success: #4ADE80;
-  --warning: #FBBF24;
-  --ring: var(--color-primary-500);
+  --primary: var(--color-white);
+  --primary-foreground: var(--color-black);
+  --secondary: var(--color-neutral-700);
+  --secondary-foreground: var(--color-neutral-300);
+  --accent: var(--color-neutral-400);
+  --accent-foreground: var(--color-black);
+  --destructive: var(--color-danger);
+  --destructive-foreground: var(--color-white);
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --ring: var(--color-white);
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
-  --shadow-focus: 0 0 0 3px rgba(229, 62, 62, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --shadow-focus: 0 0 0 3px rgba(255, 255, 255, 0.15);
   --shadow-subtle: var(--shadow-sm);
   --shadow-medium: var(--shadow-md);
   --shadow-large: var(--shadow-lg);
 
   /* Glass */
-  --glass-bg: rgba(21, 29, 46, 0.75);
-  --glass-border: rgba(71, 85, 105, 0.3);
-  --glass-hover: rgba(30, 41, 59, 0.8);
+  --glass-bg: rgba(10, 10, 10, 0.80);
+  --glass-border: rgba(63, 63, 70, 0.3);
+  --glass-hover: rgba(24, 24, 27, 0.8);
 
   /* Legacy aliases */
-  --obsidian: #F1F5F9;
+  --obsidian: var(--color-white);
   --platinum: var(--surface-base);
-  --charcoal: #94A3B8;
+  --charcoal: var(--color-neutral-400);
   --warm-gray: var(--color-neutral-800);
-  --cobalt: var(--color-primary-500);
-  --teal: var(--color-accent-500);
+  --cobalt: var(--color-neutral-400);
+  --teal: var(--color-neutral-400);
   --navy: var(--surface-base);
-}
-
-/* Dark mode body background */
-.dark body {
-  background: linear-gradient(135deg,
-    #0B1120 0%,
-    #151D2E 25%,
-    #0F172A 50%,
-    #0B1628 75%,
-    #0B1120 100%
-  );
 }
 
 * {
@@ -376,30 +343,18 @@ body {
 
 body {
   color: var(--foreground);
-  /* Mobbin-Inspired Gradient Background */
-  background: linear-gradient(135deg, 
-    #F8FAFC 0%,     /* primary-50 */
-    #F1F5F9 25%,    /* secondary-100 */
-    #E2E8F0 50%,    /* secondary-200 */
-    #F0FDFA 75%,    /* primary-50 */
-    #F8FAFC 100%    /* primary-50 */
-  );
-  background-attachment: fixed;
-  background-size: 400% 400%;
-  animation: gradientShift 20s ease infinite;
+  /* Monochrome Pro — True Black */
+  background: #000000;
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.5;
+  line-height: 1.6;
   transition: background-color var(--motion-duration-base) var(--motion-easing-natural),
               color var(--motion-duration-base) var(--motion-easing-natural);
   font-size: 16px;
   font-weight: 400;
   min-height: 100vh;
-  
-  /* Accessibility Enhancements */
-  color: #1E293B; /* Ensure sufficient contrast */
-  line-height: 1.6; /* Improved readability */
+  color: #FFFFFF;
 }
 
 /* AG Hex System Components */
@@ -837,7 +792,7 @@ header {
     }
     
     .mobbin-hover-glow:hover {
-      box-shadow: 0 0 20px rgba(0, 194, 179, 0.3);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
     
     .mobbin-hover-slide {
@@ -890,8 +845,8 @@ header {
     }
     
     .mobbin-hover-color:hover {
-      background-color: rgba(0, 194, 179, 0.1);
-      border-color: rgba(0, 194, 179, 0.3);
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
     }
     
     /* Mobbin-Inspired Focus States */
@@ -901,12 +856,12 @@ header {
     
     .mobbin-focus-ring:focus {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(0, 194, 179, 0.2);
-      border-color: rgba(0, 194, 179, 0.5);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
     }
-    
+
     .mobbin-focus-ring:focus-visible {
-      outline: 2px solid rgba(0, 194, 179, 0.6);
+      outline: 2px solid rgba(255, 255, 255, 0.4);
       outline-offset: 2px;
     }
     

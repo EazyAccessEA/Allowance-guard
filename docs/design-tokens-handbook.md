@@ -19,86 +19,80 @@ All components use the `cn()` helper from `src/lib/utils.ts` for conditional cla
 
 ---
 
-## 2. Color System
+## 2. Color System — Monochrome Pro
 
-### 2.1 Primary Scale (Serum Teal)
+> **"The Institutional Authority"** — True black canvas. White commands action.
+> Red is the ONLY color, reserved exclusively for danger/threat states.
+> By keeping the site monochrome, the red "Revoke" button carries 10x more
+> visual weight because it's the only color on the page.
 
-Brand color: **#00C2B3**
+### 2.1 Core Palette
 
-| Step | Hex       | Usage                    |
-|------|-----------|--------------------------|
-| 50   | `#F0FDFA` | Tinted backgrounds       |
-| 100  | `#CCFBF1` | Hover backgrounds        |
-| 200  | `#99F6E4` | Light accents            |
-| 300  | `#5EEAD4` | Borders, dividers        |
-| 400  | `#2DD4BF` | Secondary buttons        |
-| 500  | `#00C2B3` | **Brand primary**        |
-| 600  | `#00A896` | Hover state              |
-| 700  | `#008B7A` | Active / pressed         |
-| 800  | `#006B5F` | Dark accents             |
-| 900  | `#004B44` | High-contrast text on light bg |
+| Token              | Hex       | Role                                    |
+|--------------------|-----------|-----------------------------------------|
+| Background         | `#000000` | **True Black** — the canvas             |
+| Primary Action     | `#FFFFFF` | **Pure White** — Connect Wallet, CTAs   |
+| Secondary Action   | transparent + `1px #3F3F46` | Outline buttons, secondary CTAs |
+| Danger Red         | `#FF4B4B` | **Vibrant Crimson** — revoke, threats   |
+| Accent/Neutral     | `#A1A1AA` | **Cool Grey** — labels, muted text     |
 
-### 2.2 Secondary Scale (Slate)
+### 2.2 Neutral Scale (Zinc)
 
-| Step | Hex       |
-|------|-----------|
-| 50   | `#F8FAFC` |
-| 100  | `#F1F5F9` |
-| 200  | `#E2E8F0` |
-| 300  | `#CBD5E1` |
-| 400  | `#94A3B8` |
-| 500  | `#64748B` |
-| 600  | `#475569` |
-| 700  | `#334155` |
-| 800  | `#1E293B` |
-| 900  | `#0F172A` |
+| Step | Hex       | Usage                  |
+|------|-----------|------------------------|
+| 50   | `#FAFAFA` | Lightest surfaces      |
+| 100  | `#F4F4F5` | Light backgrounds      |
+| 200  | `#E4E4E7` | Light borders          |
+| 300  | `#D4D4D8` | Dividers               |
+| 400  | `#A1A1AA` | **Cool Grey accent**   |
+| 500  | `#71717A` | Muted text             |
+| 600  | `#52525B` | Disabled text          |
+| 700  | `#3F3F46` | **Secondary borders**  |
+| 800  | `#27272A` | Card backgrounds       |
+| 900  | `#18181B` | Elevated surfaces      |
+| 950  | `#09090B` | Near-black             |
 
-### 2.3 Neutral Scale
-
-| Step | Hex       |
-|------|-----------|
-| 50   | `#FAFAFA` |
-| 100  | `#F5F5F5` |
-| 200  | `#E5E5E5` |
-| 300  | `#D4D4D4` |
-| 400  | `#A3A3A3` |
-| 500  | `#737373` |
-| 600  | `#525252` |
-| 700  | `#404040` |
-| 800  | `#262626` |
-| 900  | `#171717` |
-
-### 2.4 Background, Text, and Border
+### 2.3 Background, Text, and Border
 
 | Token                  | Hex       | Role                 |
 |------------------------|-----------|----------------------|
-| `background.primary`   | `#FFFFFF` | Page background      |
-| `background.secondary` | `#F8FAFC` | Section background   |
-| `background.tertiary`  | `#F1F5F9` | Muted background     |
-| `background.inverse`   | `#0F172A` | Dark background      |
-| `text.primary`         | `#0F172A` | High-emphasis text   |
-| `text.secondary`       | `#475569` | Medium-emphasis text |
-| `text.tertiary`        | `#64748B` | Low-emphasis text    |
-| `text.inverse`         | `#FFFFFF` | Text on dark bg      |
-| `border.primary`       | `#E2E8F0` | Default borders      |
-| `border.secondary`     | `#CBD5E1` | Stronger borders     |
-| `border.tertiary`      | `#F1F5F9` | Subtle borders       |
-| `border.focus`         | `#00C2B3` | Focus ring color     |
+| `background.primary`   | `#000000` | True Black base      |
+| `background.secondary` | `#0A0A0A` | Raised surface       |
+| `background.tertiary`  | `#18181B` | Overlay/cards        |
+| `background.inverse`   | `#FFFFFF` | White inverse        |
+| `text.primary`         | `#FFFFFF` | White on black       |
+| `text.secondary`       | `#A1A1AA` | Cool Grey            |
+| `text.tertiary`        | `#71717A` | Muted grey           |
+| `text.inverse`         | `#000000` | Black on white       |
+| `border.default`       | `#27272A` | Default borders      |
+| `border.strong`        | `#3F3F46` | Secondary borders    |
+| `border.focus`         | `#FFFFFF` | White focus ring     |
+
+### 2.4 Danger Scale (Vibrant Crimson)
+
+> The ONLY chromatic color. Reserved for threats, revocations, and risk.
+
+| Step | Hex       | Usage                  |
+|------|-----------|------------------------|
+| 50   | `#FFF5F5` | Danger tint            |
+| 100  | `#FFE3E3` | Light danger bg        |
+| 200  | `#FFC9C9` | Danger border light    |
+| 300  | `#FFA8A8` | Danger accents         |
+| 400  | `#FF8787` | Hover state            |
+| 500  | `#FF4B4B` | **Danger primary**     |
+| 600  | `#E03E3E` | Pressed state          |
+| 700  | `#C53030` | Active/dark            |
+| 800  | `#9B2C2C` | High contrast          |
+| 900  | `#742A2A` | Darkest danger         |
 
 ### 2.5 Semantic Colors
 
 | Step | Success (Green) | Warning (Amber) | Error (Red) | Info (Blue) |
 |------|-----------------|-----------------|-------------|-------------|
-| 50   | `#F0FDF4`       | `#FFFBEB`       | `#FEF2F2`   | `#F0F9FF`   |
-| 100  | `#DCFCE7`       | `#FEF3C7`       | `#FEE2E2`   | `#E0F2FE`   |
-| 200  | `#BBF7D0`       | `#FDE68A`       | `#FECACA`   | `#BAE6FD`   |
-| 300  | `#86EFAC`       | `#FCD34D`       | `#FCA5A5`   | `#7DD3FC`   |
-| 400  | `#4ADE80`       | `#FBBF24`       | `#F87171`   | `#38BDF8`   |
-| 500  | `#22C55E`       | `#F59E0B`       | `#EF4444`   | `#0EA5E9`   |
-| 600  | `#16A34A`       | `#D97706`       | `#DC2626`   | `#0284C7`   |
-| 700  | `#15803D`       | `#B45309`       | `#B91C1C`   | `#0369A1`   |
-| 800  | `#166534`       | `#92400E`       | `#991B1B`   | `#075985`   |
-| 900  | `#14532D`       | `#78350F`       | `#7F1D1D`   | `#0C4A6E`   |
+| 500  | `#22C55E`       | `#F59E0B`       | `#FF4B4B`   | `#0EA5E9`   |
+
+> Semantic colors are used functionally (status badges, alerts) but are NOT
+> part of the visual brand. Only danger red (`#FF4B4B`) is a brand element.
 
 ### 2.6 Semantic Backgrounds
 

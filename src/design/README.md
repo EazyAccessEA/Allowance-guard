@@ -1,14 +1,15 @@
 # AllowanceGuard Design System
 
 > **Source of truth**: `docs/design-tokens-handbook.md`
-> Old systems (PuredgeOS, Serum Teal) are deprecated.
+> **Palette**: Monochrome Pro — "The Institutional Authority"
+> Old systems (PuredgeOS, Serum Teal, Crimson Signal) are deprecated.
 
 ## Brand Principles
 
-1. **Controlled Aggression** — Bold colour, aggressive type scale, confident whitespace.
+1. **Controlled Aggression** — Bold type scale, confident whitespace, monochrome authority.
 2. **Earned Trust** — Open-source, on-chain metrics, no fabricated testimonials.
-3. **Relentless Clarity** — Dense data, clear hierarchy.
-4. **Tactile Precision** — Depth, grain, engineered layering.
+3. **Relentless Clarity** — Dense data, clear hierarchy. Red = danger, white = action.
+4. **Tactile Precision** — Depth, grain, engineered layering on true black.
 5. **Zero Compromise** — WCAG AA+, Core Web Vitals, keyboard-first.
 
 ## Visual Signature — The Slash
@@ -19,14 +20,18 @@ A 5-degree diagonal element that brands every page:
 - Button hover (diagonal sweep reveal)
 - Max 2 per viewport
 
-## Key Colours
+## Key Colours — Monochrome Pro
 
-| Role | Token | Hex |
-|------|-------|-----|
-| Primary | `--color-primary-500` | `#E53E3E` (Crimson Signal) |
-| Accent | `--color-accent-500` | `#00F0C8` (Volt Mint) |
-| Dark bg | `--surface-base` | `#0B1120` |
-| Light bg | `--surface-base` | `#FFFFFF` |
+| Role | Token | Hex | Why |
+|------|-------|-----|-----|
+| Background | `--surface-base` | `#000000` | True Black canvas |
+| Primary Action | `--primary` | `#FFFFFF` | Pure White — commands action |
+| Secondary Border | `--border-strong` | `#3F3F46` | Zinc 700 outline buttons |
+| Danger | `--destructive` | `#FF4B4B` | Vibrant Crimson — the ONLY color |
+| Accent/Neutral | `--muted` | `#A1A1AA` | Cool Grey — labels, muted text |
+
+> By keeping the site monochrome, the red "Revoke" button carries 10x
+> more weight because it's the only color on the page.
 
 ## Typography
 

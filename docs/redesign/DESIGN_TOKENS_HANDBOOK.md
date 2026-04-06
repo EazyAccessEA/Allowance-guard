@@ -14,34 +14,18 @@
 
 ---
 
-## Colours
+## Colours — Monochrome Pro
 
-### Primary — Volt Cyan
-```
---color-primary-50:  #ECFEFF
---color-primary-100: #CFFAFE
---color-primary-200: #A5F3FC
---color-primary-300: #67E8F9
---color-primary-400: #22D3EE
---color-primary-500: #00E5FF
---color-primary-600: #00B8D4
---color-primary-700: #0097A7
---color-primary-800: #00796B
---color-primary-900: #004D40
-```
+> **"The Institutional Authority"** — True black canvas. White commands action.
+> Red is the ONLY chromatic color, reserved exclusively for danger/threats.
 
-### Accent — Signal Amber
+### Core Palette
 ```
---color-accent-50:  #FFFBEB
---color-accent-100: #FEF3C7
---color-accent-200: #FDE68A
---color-accent-300: #FCD34D
---color-accent-400: #FBBF24
---color-accent-500: #FFB800
---color-accent-600: #D97706
---color-accent-700: #B45309
---color-accent-800: #92400E
---color-accent-900: #78350F
+Background:       #000000  (True Black)
+Primary Action:   #FFFFFF  (Pure White — Connect Wallet, CTAs)
+Secondary Action: transparent + 1px border #3F3F46
+Danger Red:       #FF4B4B  (Vibrant Crimson — revoke, threats, risk)
+Accent/Neutral:   #A1A1AA  (Cool Grey — labels, muted text)
 ```
 
 ### Neutral — Zinc
@@ -51,21 +35,35 @@
 --color-neutral-100: #F4F4F5
 --color-neutral-200: #E4E4E7
 --color-neutral-300: #D4D4D8
---color-neutral-400: #A1A1AA
+--color-neutral-400: #A1A1AA   (Cool Grey accent)
 --color-neutral-500: #71717A
 --color-neutral-600: #52525B
---color-neutral-700: #3F3F46
+--color-neutral-700: #3F3F46   (Secondary action border)
 --color-neutral-800: #27272A
 --color-neutral-900: #18181B
 --color-neutral-950: #09090B
 ```
 
-### Semantic
+### Danger — Vibrant Crimson (THE only color)
+```
+--color-danger-50:  #FFF5F5
+--color-danger-100: #FFE3E3
+--color-danger-200: #FFC9C9
+--color-danger-300: #FFA8A8
+--color-danger-400: #FF8787
+--color-danger-500: #FF4B4B   (Danger primary)
+--color-danger-600: #E03E3E
+--color-danger-700: #C53030
+--color-danger-800: #9B2C2C
+--color-danger-900: #742A2A
+```
+
+### Semantic (functional use only, not brand)
 ```
 --color-semantic-success: #22C55E
 --color-semantic-warning: #F59E0B
---color-semantic-error:   #EF4444
---color-semantic-info:    #3B82F6
+--color-semantic-error:   #FF4B4B
+--color-semantic-info:    #0EA5E9
 ```
 
 ### Risk Levels (always paired with icon + label)
@@ -73,7 +71,7 @@
 --color-risk-low:      #22C55E   (✓ Check icon)
 --color-risk-medium:   #F59E0B   (⚠ AlertTriangle icon)
 --color-risk-high:     #F97316   (▲ TrendingUp icon)
---color-risk-critical: #EF4444   (✕ X icon)
+--color-risk-critical: #FF4B4B   (✕ X icon)
 ```
 
 ### Background Mode: Dual (dark primary, light secondary)
