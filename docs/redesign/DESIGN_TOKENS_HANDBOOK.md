@@ -14,55 +14,65 @@
 
 ---
 
-## Colours — Monochrome Pro
+## Colours — Midnight Amber
 
-> **"The Institutional Authority"** — True black canvas. White commands action.
-> Red is the ONLY chromatic color, reserved exclusively for danger/threats.
+> **"The Warning System"** — Deep navy canvas. Amber = scanning/caution.
+> Red = danger only. Sky blue = safe/links.
 
 ### Core Palette
 ```
-Background:       #000000  (True Black)
-Primary Action:   #FFFFFF  (Pure White — Connect Wallet, CTAs)
-Secondary Action: transparent + 1px border #3F3F46
-Danger Red:       #FF4B4B  (Vibrant Crimson — revoke, threats, risk)
-Accent/Neutral:   #A1A1AA  (Cool Grey — labels, muted text)
+Background:       #0F172A  (Deep Navy)
+Primary Action:   #F59E0B  (Vivid Amber — CTAs, scanning)
+Safe/Links:       #38BDF8  (Sky Blue — replaces teal)
+Danger:           #EF4444  (Red — revoke, threats only)
+Headings:         #FFFFFF  (White — 17:1 contrast on navy)
+Body Text:        #CBD5E1  (Slate 300 — 10.6:1 contrast)
+Muted Text:       #94A3B8  (Slate 400 — 6.4:1 contrast)
+Background Glow:  #1E293B  (Faint — geometric lines)
 ```
 
-### Neutral — Zinc
+### Neutral — Slate
 ```
 --color-neutral-0:   #FFFFFF
---color-neutral-50:  #FAFAFA
---color-neutral-100: #F4F4F5
---color-neutral-200: #E4E4E7
---color-neutral-300: #D4D4D8
---color-neutral-400: #A1A1AA   (Cool Grey accent)
---color-neutral-500: #71717A
---color-neutral-600: #52525B
---color-neutral-700: #3F3F46   (Secondary action border)
---color-neutral-800: #27272A
---color-neutral-900: #18181B
---color-neutral-950: #09090B
+--color-neutral-50:  #F8FAFC
+--color-neutral-100: #F1F5F9
+--color-neutral-200: #E2E8F0
+--color-neutral-300: #CBD5E1   (Secondary text — 10.6:1)
+--color-neutral-400: #94A3B8   (Muted text — 6.4:1)
+--color-neutral-500: #64748B   (Decorative only — 3.6:1)
+--color-neutral-600: #475569
+--color-neutral-700: #334155   (Card borders)
+--color-neutral-800: #1E293B   (Raised surface)
+--color-neutral-900: #0F172A   (Base background)
+--color-neutral-950: #0A0F1E
 ```
 
-### Danger — Vibrant Crimson (THE only color)
+### Primary — Vivid Amber
 ```
---color-danger-50:  #FFF5F5
---color-danger-100: #FFE3E3
---color-danger-200: #FFC9C9
---color-danger-300: #FFA8A8
---color-danger-400: #FF8787
---color-danger-500: #FF4B4B   (Danger primary)
---color-danger-600: #E03E3E
---color-danger-700: #C53030
---color-danger-800: #9B2C2C
---color-danger-900: #742A2A
+--color-primary-50:  #FFFBEB
+--color-primary-100: #FEF3C7
+--color-primary-200: #FDE68A
+--color-primary-300: #FCD34D
+--color-primary-400: #FBBF24
+--color-primary-500: #F59E0B   (Primary action)
+--color-primary-600: #D97706
+--color-primary-700: #B45309
+--color-primary-800: #92400E
+--color-primary-900: #78350F
 ```
 
-### Semantic (functional use only, not brand)
+### Danger — Red (threats only)
+```
+--color-danger-500: #EF4444
+--color-danger-600: #DC2626
+--color-danger-700: #B91C1C
+```
+
+### Semantic
 ```
 --color-semantic-success: #22C55E
 --color-semantic-warning: #F59E0B
---color-semantic-error:   #FF4B4B
+--color-semantic-error:   #EF4444
 --color-semantic-info:    #0EA5E9
 ```
 
@@ -71,7 +81,7 @@ Accent/Neutral:   #A1A1AA  (Cool Grey — labels, muted text)
 --color-risk-low:      #22C55E   (✓ Check icon)
 --color-risk-medium:   #F59E0B   (⚠ AlertTriangle icon)
 --color-risk-high:     #F97316   (▲ TrendingUp icon)
---color-risk-critical: #FF4B4B   (✕ X icon)
+--color-risk-critical: #EF4444   (✕ X icon)
 ```
 
 ### Background Mode: Dual (dark primary, light secondary)

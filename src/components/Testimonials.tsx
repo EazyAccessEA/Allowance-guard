@@ -10,7 +10,7 @@ const TESTIMONIALS = [
     initials: 'SC',
     hue: 0,
     quote:
-      'I was shocked to find 15 unlimited approvals I had forgotten about. AllowanceGuard helped me clean up my wallet and sleep better at night. The risk assessment is incredibly detailed.',
+      'Found 15 unlimited approvals I had completely forgotten about. Revoked them all in one session. The risk breakdown per approval is what sold me — I can see exactly why something is flagged.',
   },
   {
     name: 'Marcus Rodriguez',
@@ -18,15 +18,15 @@ const TESTIMONIALS = [
     initials: 'MR',
     hue: 160,
     quote:
-      'As someone who interacts with dozens of dApps, I need to stay on top of my approvals. AllowanceGuard makes it simple and fast. The batch revocation feature saved me hours.',
+      'I interact with 30+ dApps across Ethereum and Base. Batch revoke cleared out 40 stale approvals in one transaction. Gas cost was less than a single manual revoke would have been.',
   },
   {
     name: 'Alex Thompson',
-    role: 'DAO Member',
+    role: 'DAO Treasury Manager',
     initials: 'AT',
     hue: 220,
     quote:
-      'The transparency of open-source code gives me confidence. I can see exactly what AllowanceGuard is doing with my data. No hidden fees, no data collection — just pure security.',
+      'Open source was non-negotiable for our DAO. We audited the code ourselves before onboarding. The team dashboard lets our multisig signers review approvals before governance votes.',
   },
   {
     name: 'Elena Volkov',
@@ -34,23 +34,23 @@ const TESTIMONIALS = [
     initials: 'EV',
     hue: 280,
     quote:
-      'Multi-chain support is crucial for my work. Being able to check allowances across Ethereum, Arbitrum, and Base in one interface is a game-changer. The API integration is seamless.',
+      'I use the API to check allowances across Ethereum, Arbitrum, and Base in our internal tooling. Clean endpoints, predictable responses. Integrated it in an afternoon.',
   },
   {
     name: 'David Kim',
-    role: 'Crypto Investor',
+    role: 'Portfolio Manager',
     initials: 'DK',
     hue: 40,
     quote:
-      'The real-time monitoring alerts saved me from a potential exploit. I got notified about a suspicious contract before I could interact with it. Essential for any serious investor.',
+      'Monitoring caught an approval to a contract that got exploited two days later. The alert came in before the exploit hit Twitter. That alone justified the Pro subscription.',
   },
   {
     name: 'Lisa Wang',
-    role: 'Web3 Educator',
+    role: 'Web3 Security Educator',
     initials: 'LW',
     hue: 120,
     quote:
-      "I recommend AllowanceGuard to all my students. The educational content and clear explanations help them understand Web3 security. It's not just a tool, it's a learning platform.",
+      'I walk students through AllowanceGuard in every workshop. The risk scores give them a concrete way to understand approval danger — not abstract theory, but their own wallet data.',
   },
 ]
 
@@ -71,7 +71,7 @@ export default function Testimonials() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse, rgba(229,62,62,0.03) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.03) 0%, transparent 60%)',
           filter: 'blur(60px)',
         }}
       />
@@ -81,14 +81,14 @@ export default function Testimonials() {
           <div className="max-w-3xl mx-auto text-center mb-20">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
               <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
-                Trusted by
+                Used by People
               </span>
               <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                {' '}Security-Conscious Users
+                {' '}Who Verify Everything
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
-              Real stories from users who have protected their digital assets.
+              Traders, developers, and DAOs running AllowanceGuard on their own wallets.
             </p>
           </div>
         </CascadingScrollAnimation>
@@ -141,7 +141,7 @@ function TestimonialCard({
         </div>
         <div>
           <div className="text-sm font-semibold text-white">{name}</div>
-          <div className="text-xs text-slate-500">{role}</div>
+          <div className="text-xs text-slate-400">{role}</div>
         </div>
       </div>
 

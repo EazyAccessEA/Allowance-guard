@@ -55,7 +55,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
                 type="checkbox"
                 checked={riskOnly}
                 onChange={e => setRiskOnly(e.target.checked)}
-                className="rounded border-border-primary dark:border-secondary-700"
+                className="rounded border-secondary-700"
               />
               Risky only (UNLIMITED / STALE / risk &gt; 0)
             </label>
@@ -95,7 +95,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
             <section className="mt-6">
               <table className="w-full text-sm print:text-[11px] border-collapse text-text-primary dark:text-secondary-100">
                 <thead className="text-left">
-                  <tr className="border-b border-border-primary dark:border-secondary-700">
+                  <tr className="border-b border-secondary-700">
                     <th className="pb-2 pr-4">Chain</th>
                     <th className="pb-2 pr-4">Token</th>
                     <th className="pb-2 pr-4">Spender</th>
@@ -114,7 +114,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
                     </tr>
                   ) : (
                     rows.map((r, i) => (
-                      <tr key={i} className="border-b border-border-primary/50 dark:border-secondary-700/50">
+                      <tr key={i} className="border-b border-secondary-700/50 dark:border-secondary-700/50">
                         <td className="py-2 pr-4">{r.chain_id}</td>
                         <td className="py-2 pr-4 font-mono text-xs">
                           {r.token_symbol || r.token_name || r.token_address}
@@ -148,7 +148,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
               </table>
             </section>
 
-            <section className="print:block hidden mt-8 text-[10px] text-text-tertiary dark:text-secondary-400 border-t border-border-primary dark:border-secondary-700 pt-4">
+            <section className="print:block hidden mt-8 text-[10px] text-text-tertiary dark:text-secondary-400 border-t border-secondary-700 pt-4">
               <p>Generated {new Date().toLocaleString()} • www.allowanceguard.com</p>
               <p className="mt-1">Tip: Revoke UNLIMITED approvals first for better security.</p>
             </section>

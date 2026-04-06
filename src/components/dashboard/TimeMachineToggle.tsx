@@ -19,7 +19,7 @@ export default function TimeMachineToggle({
         'flex items-center gap-3 px-4 py-3 rounded-lg border transition-all duration-250',
         enabled
           ? 'bg-primary-50 dark:bg-primary-900/20 border-primary-300 dark:border-primary-700'
-          : 'bg-background-primary dark:bg-dark-bg-secondary border-border-primary dark:border-secondary-700'
+          : 'bg-background-primary dark:bg-dark-bg-secondary border-secondary-700'
       )}
     >
       <button

@@ -1,71 +1,72 @@
 // AllowanceGuard Design Tokens
 // Source of truth: docs/design-tokens-handbook.md
-// Palette: "Monochrome Pro" — Institutional Authority
-// Philosophy: True black canvas. White commands action. Red signals danger.
-// By keeping the site monochrome, red carries 10x more weight.
+// Palette: "Midnight Amber" — The Warning System
+// Philosophy: Deep navy canvas. Amber = scanning/caution. Red = danger only.
+// Amber is the universal color for "Caution" and "Scanning."
 
 export const designTokens = {
   colors: {
-    // Primary Action — Pure White on True Black
+    // Primary Action — Vivid Amber (caution, scanning, CTAs)
     primary: {
-      50: '#FAFAFA',
-      100: '#F5F5F5',
-      200: '#E5E5E5',
-      300: '#D4D4D4',
-      400: '#A1A1AA',   // Cool Grey accent
-      500: '#FFFFFF',   // Primary action color (white)
-      600: '#E5E5E5',
-      700: '#D4D4D4',
-      800: '#A1A1AA',
-      900: '#71717A',
-      foreground: '#000000', // Text on primary buttons
+      50: '#FFFBEB',
+      100: '#FEF3C7',
+      200: '#FDE68A',
+      300: '#FCD34D',
+      400: '#FBBF24',
+      500: '#F59E0B',   // Vivid Amber — primary action
+      600: '#D97706',
+      700: '#B45309',
+      800: '#92400E',
+      900: '#78350F',
+      foreground: '#0F172A', // Dark text on amber buttons
     },
 
-    // Danger — Vibrant Crimson (the ONLY color on the page)
+    // Danger — Red (reserved for threats, revoke, risk)
     danger: {
-      50: '#FFF5F5',
-      100: '#FFE3E3',
-      200: '#FFC9C9',
-      300: '#FFA8A8',
-      400: '#FF8787',
-      500: '#FF4B4B',   // Vibrant Crimson — danger, revoke, threats
-      600: '#E03E3E',
-      700: '#C53030',
-      800: '#9B2C2C',
-      900: '#742A2A',
+      50: '#FEF2F2',
+      100: '#FEE2E2',
+      200: '#FECACA',
+      300: '#FCA5A5',
+      400: '#F87171',
+      500: '#EF4444',   // Danger Red
+      600: '#DC2626',
+      700: '#B91C1C',
+      800: '#991B1B',
+      900: '#7F1D1D',
       foreground: '#FFFFFF',
     },
 
-    // Accent/Neutral — Cool Grey
+    // Accent — Sky Blue (links, safe indicators)
     accent: {
-      50: '#FAFAFA',
-      100: '#F4F4F5',
-      200: '#E4E4E7',
-      300: '#D4D4D8',
-      400: '#A1A1AA',   // Cool Grey — accent/neutral
-      500: '#71717A',
-      600: '#52525B',
-      700: '#3F3F46',   // Secondary action border
-      800: '#27272A',
-      900: '#18181B',
+      50: '#F0F9FF',
+      100: '#E0F2FE',
+      200: '#BAE6FD',
+      300: '#7DD3FC',
+      400: '#38BDF8',   // Sky Blue — safe, links
+      500: '#0EA5E9',
+      600: '#0284C7',
+      700: '#0369A1',
+      800: '#075985',
+      900: '#0C4A6E',
     },
 
-    // Neutral — Zinc scale (monochrome backbone)
+    // Neutral — Slate (the structural backbone on deep navy)
     neutral: {
-      50: '#FAFAFA',
-      100: '#F4F4F5',
-      200: '#E4E4E7',
-      300: '#D4D4D8',
-      400: '#A1A1AA',
-      500: '#71717A',
-      600: '#52525B',
-      700: '#3F3F46',
-      800: '#27272A',
-      900: '#18181B',
-      950: '#09090B',
+      50: '#F8FAFC',
+      100: '#F1F5F9',
+      200: '#E2E8F0',
+      300: '#CBD5E1',   // Secondary text (10.6:1 on navy)
+      400: '#94A3B8',   // Muted text (6.4:1 on navy)
+      500: '#64748B',   // Decorative only (3.6:1)
+      600: '#475569',
+      700: '#334155',
+      800: '#1E293B',   // Background glow / raised surface
+      850: '#172033',
+      900: '#0F172A',   // Deep Navy — base background
+      950: '#0A0F1E',
     },
 
-    // Semantic (kept for functional use — only red is visually prominent)
+    // Semantic
     success: {
       50: '#F0FDF4', 100: '#DCFCE7', 200: '#BBF7D0', 300: '#86EFAC',
       400: '#4ADE80', 500: '#22C55E', 600: '#16A34A', 700: '#15803D',
@@ -77,9 +78,9 @@ export const designTokens = {
       800: '#92400E', 900: '#78350F',
     },
     error: {
-      50: '#FFF5F5', 100: '#FFE3E3', 200: '#FFC9C9', 300: '#FFA8A8',
-      400: '#FF8787', 500: '#FF4B4B', 600: '#E03E3E', 700: '#C53030',
-      800: '#9B2C2C', 900: '#742A2A',
+      50: '#FEF2F2', 100: '#FEE2E2', 200: '#FECACA', 300: '#FCA5A5',
+      400: '#F87171', 500: '#EF4444', 600: '#DC2626', 700: '#B91C1C',
+      800: '#991B1B', 900: '#7F1D1D',
     },
     info: {
       50: '#F0F9FF', 100: '#E0F2FE', 200: '#BAE6FD', 300: '#7DD3FC',
@@ -87,37 +88,37 @@ export const designTokens = {
       800: '#075985', 900: '#0C4A6E',
     },
 
-    // Surface system — True Black foundation
+    // Surface system — Deep Navy foundation
     surface: {
       dark: {
-        base: '#000000',        // True Black
-        raised: '#0A0A0A',      // Barely lifted
-        overlay: '#18181B',     // Cards, panels
-        elevated: '#27272A',    // Elevated cards
-        glass: 'rgba(10, 10, 10, 0.80)',
-        glassBorder: 'rgba(63, 63, 70, 0.3)',
+        base: '#0F172A',        // Deep Navy
+        raised: '#1E293B',      // Subtle lift
+        overlay: '#334155',     // Cards, panels
+        elevated: '#475569',    // Elevated elements
+        glass: 'rgba(30, 41, 59, 0.80)',
+        glassBorder: 'rgba(71, 85, 105, 0.3)',
       },
       light: {
         base: '#FFFFFF',
-        raised: '#FAFAFA',
+        raised: '#F8FAFC',
         overlay: '#FFFFFF',
         elevated: '#FFFFFF',
       },
     },
 
-    // Text — high contrast on true black
+    // Text — high contrast on deep navy
     text: {
-      primary: '#FFFFFF',       // Pure white on black
-      secondary: '#A1A1AA',     // Cool Grey
-      tertiary: '#71717A',      // Muted grey
-      inverse: '#000000',       // Black on white
+      primary: '#FFFFFF',       // White on navy (17:1)
+      secondary: '#CBD5E1',     // Slate 300 (10.6:1)
+      tertiary: '#94A3B8',      // Slate 400 (6.4:1)
+      inverse: '#0F172A',       // Navy on light bg
     },
 
-    // Border — subtle zinc borders
+    // Border
     border: {
-      default: '#27272A',
-      strong: '#3F3F46',        // Secondary action border
-      focus: '#FFFFFF',         // White focus ring
+      default: '#1E293B',       // Slate 800 — subtle
+      strong: '#334155',        // Slate 700
+      focus: '#F59E0B',         // Amber focus ring
     },
   },
 
@@ -179,12 +180,12 @@ export const designTokens = {
   },
 
   shadows: {
-    sm: '0 1px 2px rgba(0,0,0,0.3)',
-    md: '0 4px 12px rgba(0,0,0,0.4)',
-    lg: '0 12px 32px rgba(0,0,0,0.5)',
-    glowDanger: '0 0 20px rgba(255,75,75,0.25)',
-    glowWhite: '0 0 20px rgba(255,255,255,0.15)',
-    focus: '0 0 0 3px rgba(255,255,255,0.2)',
+    sm: '0 1px 2px rgba(0,0,0,0.2)',
+    md: '0 4px 12px rgba(0,0,0,0.3)',
+    lg: '0 12px 32px rgba(0,0,0,0.4)',
+    glowAmber: '0 0 20px rgba(245,158,11,0.25)',
+    glowDanger: '0 0 20px rgba(239,68,68,0.25)',
+    focus: '0 0 0 3px rgba(245,158,11,0.3)',
   },
 
   motion: {

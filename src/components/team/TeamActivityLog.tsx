@@ -154,7 +154,7 @@ export default function TeamActivityLog({ teamId }: TeamActivityLogProps) {
                 return (
                   <div
                     key={entry.id}
-                    className="flex items-start gap-3 p-3 rounded-lg border border-border-primary"
+                    className="flex items-start gap-3 p-3 rounded-lg border border-secondary-700"
                   >
                     <div className="mt-0.5">
                       <Icon className="w-4 h-4 text-text-secondary" />
@@ -185,7 +185,7 @@ export default function TeamActivityLog({ teamId }: TeamActivityLogProps) {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-border-primary">
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-700">
                 <div className="text-sm text-text-secondary">
                   Page {page} of {totalPages}
                 </div>

@@ -88,7 +88,7 @@ export default function KeysPage() {
           {loading ? (
             <div
               className={cn(
-                'rounded-lg border border-border-primary bg-background-primary p-12',
+                'rounded-lg border border-secondary-700 bg-background-primary p-12',
                 'flex items-center justify-center'
               )}
             >

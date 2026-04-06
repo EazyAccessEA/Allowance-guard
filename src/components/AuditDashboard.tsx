@@ -88,7 +88,7 @@ export default function AuditDashboard() {
       case 'high': return 'text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-900/20'
       case 'medium': return 'text-yellow-600 bg-yellow-50 dark:text-yellow-400 dark:bg-yellow-900/20'
       case 'low': return 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20'
-      default: return 'text-neutral-600 bg-neutral-50 dark:text-secondary-400 dark:bg-secondary-800'
+      default: return 'text-slate-400 bg-neutral-50 dark:text-secondary-400 dark:bg-secondary-800'
     }
   }
 
@@ -99,9 +99,9 @@ export default function AuditDashboard() {
       case 'authorization': return 'text-purple-600'
       case 'data_access': return 'text-green-600'
       case 'data_modification': return 'text-orange-600'
-      case 'system': return 'text-neutral-600 dark:text-secondary-400'
+      case 'system': return 'text-slate-400 dark:text-secondary-400'
       case 'compliance': return 'text-indigo-600'
-      default: return 'text-neutral-600 dark:text-secondary-400'
+      default: return 'text-slate-400 dark:text-secondary-400'
     }
   }
 
@@ -109,13 +109,13 @@ export default function AuditDashboard() {
     return (
       <div className="p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-neutral-200 dark:bg-secondary-700 rounded w-1/4 mb-4"></div>
+          <div className="h-8 bg-secondary-700 rounded w-1/4 mb-4"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-24 bg-neutral-200 dark:bg-secondary-700 rounded"></div>
+              <div key={i} className="h-24 bg-secondary-700 rounded"></div>
             ))}
           </div>
-          <div className="h-96 bg-neutral-200 dark:bg-secondary-700 rounded"></div>
+          <div className="h-96 bg-secondary-700 rounded"></div>
         </div>
       </div>
     )
@@ -139,19 +139,19 @@ export default function AuditDashboard() {
       {/* Statistics Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-secondary-700">
             <div className="text-2xl font-bold text-text-primary dark:text-secondary-100">{stats.totalEvents.toLocaleString()}</div>
             <div className="text-sm text-text-secondary dark:text-secondary-400">Total Events</div>
           </div>
-          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-secondary-700">
             <div className="text-2xl font-bold text-red-600">{stats.eventsBySeverity.critical || 0}</div>
             <div className="text-sm text-text-secondary dark:text-secondary-400">Critical Events</div>
           </div>
-          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-secondary-700">
             <div className="text-2xl font-bold text-orange-600">{stats.eventsBySeverity.high || 0}</div>
             <div className="text-sm text-text-secondary dark:text-secondary-400">High Severity</div>
           </div>
-          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700">
+          <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-secondary-700">
             <div className="text-2xl font-bold text-blue-600">{stats.eventsByActorType.user || 0}</div>
             <div className="text-sm text-text-secondary dark:text-secondary-400">User Actions</div>
           </div>
@@ -159,14 +159,14 @@ export default function AuditDashboard() {
       )}
 
       {/* Filters */}
-      <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-border-primary dark:border-secondary-700 mb-6">
+      <div className="bg-background-primary dark:bg-secondary-800 p-4 rounded-lg border border-secondary-700 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div>
             <label className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-1">Actor Type</label>
             <select
               value={filters.actorType}
               onChange={(e) => setFilters({ ...filters, actorType: e.target.value })}
-              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-secondary-700 dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="user">User</option>
@@ -180,7 +180,7 @@ export default function AuditDashboard() {
             <select
               value={filters.category}
               onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-secondary-700 dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="security">Security</option>
@@ -197,7 +197,7 @@ export default function AuditDashboard() {
             <select
               value={filters.severity}
               onChange={(e) => setFilters({ ...filters, severity: e.target.value })}
-              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-secondary-700 dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="critical">Critical</option>
@@ -213,7 +213,7 @@ export default function AuditDashboard() {
               value={filters.action}
               onChange={(e) => setFilters({ ...filters, action: e.target.value })}
               placeholder="Search actions..."
-              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-secondary-700 dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             />
           </div>
           <div>
@@ -221,7 +221,7 @@ export default function AuditDashboard() {
             <select
               value={filters.limit}
               onChange={(e) => setFilters({ ...filters, limit: parseInt(e.target.value) })}
-              className="w-full border border-border-primary dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-secondary-700 dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
             >
               <option value={25}>25</option>
               <option value={50}>50</option>
@@ -233,8 +233,8 @@ export default function AuditDashboard() {
       </div>
 
       {/* Audit Logs Table */}
-      <div className="bg-background-primary dark:bg-secondary-800 rounded-lg border border-border-primary dark:border-secondary-700 overflow-hidden">
-        <div className="px-4 py-3 border-b border-border-primary dark:border-secondary-700">
+      <div className="bg-background-primary dark:bg-secondary-800 rounded-lg border border-secondary-700 overflow-hidden">
+        <div className="px-4 py-3 border-b border-secondary-700">
           <h2 className="text-lg font-medium text-text-primary dark:text-secondary-100">Recent Audit Logs</h2>
         </div>
         <div className="overflow-x-auto">
@@ -252,7 +252,7 @@ export default function AuditDashboard() {
             </thead>
             <tbody className="bg-background-primary dark:bg-secondary-800 divide-y divide-neutral-200 dark:divide-secondary-700">
               {logs.map((log) => (
-                <tr key={log.id} className="hover:bg-neutral-50 dark:hover:bg-secondary-700">
+                <tr key={log.id} className="hover:bg-secondary-800 dark:hover:bg-secondary-700">
                   <td className="px-4 py-3 text-sm text-text-primary dark:text-secondary-100">
                     {new Date(log.createdAt).toLocaleString()}
                   </td>
@@ -313,14 +313,14 @@ export default function AuditDashboard() {
           <button
             onClick={() => setFilters({ ...filters, offset: Math.max(0, filters.offset - filters.limit) })}
             disabled={filters.offset === 0}
-            className="px-3 py-1 text-sm border border-border-primary dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 text-sm border border-secondary-700 dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
           <button
             onClick={() => setFilters({ ...filters, offset: filters.offset + filters.limit })}
             disabled={logs.length < filters.limit}
-            className="px-3 py-1 text-sm border border-border-primary dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 text-sm border border-secondary-700 dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>

@@ -15,7 +15,7 @@ export default function ContributingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
 
       {/* Hero Section with subtle animation */}
       <Section className="relative py-32 overflow-hidden">
@@ -46,18 +46,18 @@ export default function ContributingPage() {
         <Container>
           <div className="max-w-4xl mx-auto">
             <div className="animate-fade-in-up">
-              <h2 className="text-3xl font-semibold text-ink mb-12">The Why: Our Mission and Your Impact</h2>
+              <h2 className="text-3xl font-semibold text-white mb-12">The Why: Our Mission and Your Impact</h2>
             </div>
 
             <div className="space-y-8">
               {/* Enhanced paragraph 1 with card styling */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Shield className="w-6 h-6 text-primary-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Public Good Investment</h3>
+                    <h3 className="text-xl font-semibold text-white mb-4">Public Good Investment</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       Your contribution to Allowance Guard is not a payment for services rendered, but rather a contribution to a public good that benefits the entire Web3 ecosystem. Allowance Guard provides essential security infrastructure that protects millions of dollars in user funds by identifying and neutralizing dangerous token approvals before they can be exploited.
                     </p>
@@ -66,13 +66,13 @@ export default function ContributingPage() {
               </div>
 
               {/* Enhanced paragraph 2 with card styling */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Heart className="w-6 h-6 text-primary-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Collective Security</h3>
+                    <h3 className="text-xl font-semibold text-white mb-4">Collective Security</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       Every contribution, regardless of size, directly translates into a safer Web3 for everyone. When you support Allowance Guard, you are investing in collective security. Your contribution enables us to maintain and improve the tools that prevent catastrophic losses from approval-based attacks, which accounted for 73% of all DeFi exploits in 2024, resulting in over $3.2 billion in losses.
                     </p>
@@ -81,13 +81,13 @@ export default function ContributingPage() {
               </div>
 
               {/* Enhanced paragraph 3 with card styling */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Zap className="w-6 h-6 text-primary-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-ink mb-4">Industry Standards</h3>
+                    <h3 className="text-xl font-semibold text-white mb-4">Industry Standards</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       The impact of your support extends far beyond individual users. By funding Allowance Guard&apos;s development, you are helping to establish security standards and best practices that raise the bar for the entire industry. Your contribution helps create a more secure foundation upon which the future of decentralized finance can be built.
                     </p>
@@ -104,12 +104,12 @@ export default function ContributingPage() {
         <Container>
           <div className="max-w-4xl mx-auto">
             <div className="animate-fade-in-up">
-              <h2 className="text-3xl font-semibold text-ink mb-12">How Your Contribution Will Be Used</h2>
+              <h2 className="text-3xl font-semibold text-white mb-12">How Your Contribution Will Be Used</h2>
             </div>
 
             <div className="space-y-6">
               {/* Development Costs - Enhanced with expandable card */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-secondary-800 rounded-2xl shadow-sm border border-secondary-700 overflow-hidden">
                 <button
                   onClick={() => toggleSection('development')}
                   className="w-full p-8 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center justify-between micro-bounce"
@@ -118,7 +118,7 @@ export default function ContributingPage() {
                     <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
                       <Users className="w-6 h-6 text-blue-600" />
                     </div>
-                    <h3 className="text-2xl font-semibold text-ink">Development Costs</h3>
+                    <h3 className="text-2xl font-semibold text-white">Development Costs</h3>
                   </div>
                   {expandedSection === 'development' ? (
                     <ChevronUp className="w-6 h-6 text-gray-400" />
@@ -136,7 +136,7 @@ export default function ContributingPage() {
               </div>
 
               {/* Security and Audits - Enhanced with expandable card */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-secondary-800 rounded-2xl shadow-sm border border-secondary-700 overflow-hidden">
                 <button
                   onClick={() => toggleSection('security')}
                   className="w-full p-8 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center justify-between micro-bounce"
@@ -145,7 +145,7 @@ export default function ContributingPage() {
                     <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center">
                       <Lock className="w-6 h-6 text-red-600" />
                     </div>
-                    <h3 className="text-2xl font-semibold text-ink">Security and Audits</h3>
+                    <h3 className="text-2xl font-semibold text-white">Security and Audits</h3>
                   </div>
                   {expandedSection === 'security' ? (
                     <ChevronUp className="w-6 h-6 text-gray-400" />
@@ -163,7 +163,7 @@ export default function ContributingPage() {
               </div>
 
               {/* Infrastructure and Hosting - Enhanced with expandable card */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-secondary-800 rounded-2xl shadow-sm border border-secondary-700 overflow-hidden">
                 <button
                   onClick={() => toggleSection('infrastructure')}
                   className="w-full p-8 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center justify-between micro-bounce"
@@ -172,7 +172,7 @@ export default function ContributingPage() {
                     <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center">
                       <Server className="w-6 h-6 text-green-600" />
                     </div>
-                    <h3 className="text-2xl font-semibold text-ink">Infrastructure and Hosting</h3>
+                    <h3 className="text-2xl font-semibold text-white">Infrastructure and Hosting</h3>
                   </div>
                   {expandedSection === 'infrastructure' ? (
                     <ChevronUp className="w-6 h-6 text-gray-400" />
@@ -190,7 +190,7 @@ export default function ContributingPage() {
               </div>
 
               {/* Future Development - Enhanced with expandable card */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-secondary-800 rounded-2xl shadow-sm border border-secondary-700 overflow-hidden">
                 <button
                   onClick={() => toggleSection('future')}
                   className="w-full p-8 text-left hover:bg-gray-50 transition-colors duration-200 flex items-center justify-between micro-bounce"
@@ -199,7 +199,7 @@ export default function ContributingPage() {
                     <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
                       <Rocket className="w-6 h-6 text-purple-600" />
                     </div>
-                    <h3 className="text-2xl font-semibold text-ink">Future Development</h3>
+                    <h3 className="text-2xl font-semibold text-white">Future Development</h3>
                   </div>
                   {expandedSection === 'future' ? (
                     <ChevronUp className="w-6 h-6 text-gray-400" />
@@ -225,24 +225,24 @@ export default function ContributingPage() {
         <Container>
           <div className="max-w-4xl mx-auto">
             <div className="animate-fade-in-up">
-              <h2 className="text-3xl font-semibold text-ink mb-12">How to Contribute: Transparency in Action</h2>
+              <h2 className="text-3xl font-semibold text-white mb-12">How to Contribute: Transparency in Action</h2>
             </div>
 
             <div className="space-y-12">
               {/* Multiple Payment Options - Enhanced with card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <DollarSign className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink mb-6">Multiple Payment Options</h3>
+                    <h3 className="text-2xl font-semibold text-white mb-6">Multiple Payment Options</h3>
                     <p className="text-lg text-stone leading-relaxed mb-8">
                       We accept contributions through two secure payment methods: Stripe for traditional credit and debit cards, and Coinbase Commerce for cryptocurrency payments. Both options provide industry-standard encryption and fraud protection, giving you flexibility in how you choose to support the project.
                     </p>
 
                     <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 border border-primary-200">
-                      <h4 className="text-xl font-semibold text-ink mb-6 text-center">Make a Contribution</h4>
+                      <h4 className="text-xl font-semibold text-white mb-6 text-center">Make a Contribution</h4>
                       <p className="text-base text-stone mb-8 text-center">
                         Support Allowance Guard&apos;s development with a secure contribution. Choose between credit/debit cards or cryptocurrency payments.
                       </p>
@@ -255,13 +255,13 @@ export default function ContributingPage() {
               </div>
 
               {/* Security and Verification - Enhanced with card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Lock className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink mb-6">Security and Verification</h3>
+                    <h3 className="text-2xl font-semibold text-white mb-6">Security and Verification</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       All contributions are processed through trusted, secure payment processors. Stripe is a PCI-compliant payment processor trusted by millions of businesses worldwide, while Coinbase Commerce provides secure cryptocurrency payment processing. Your payment information is encrypted and never stored on our servers. We will never ask for contributions through unsolicited communications or direct messages.
                     </p>
@@ -270,13 +270,13 @@ export default function ContributingPage() {
               </div>
 
               {/* Recurring Contributions - Enhanced with card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Zap className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink mb-6">Recurring Contributions</h3>
+                    <h3 className="text-2xl font-semibold text-white mb-6">Recurring Contributions</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       For supporters who wish to provide ongoing support, we offer recurring contribution options that allow you to contribute regularly to the project&apos;s sustainability. These recurring contributions help us maintain consistent development velocity and plan for long-term infrastructure investments.
                     </p>
@@ -293,10 +293,10 @@ export default function ContributingPage() {
         <Container>
           <div className="max-w-4xl mx-auto">
             <div className="animate-fade-in-up">
-              <h2 className="text-3xl font-semibold text-ink mb-12">Our Commitment to Transparency</h2>
+              <h2 className="text-3xl font-semibold text-white mb-12">Our Commitment to Transparency</h2>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+            <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
               <div className="space-y-8">
                 <p className="text-lg text-stone leading-relaxed">
                   We maintain donor trust through complete transparency in how funds are used. We publish regular, public transparency reports that detail the total amount of funds received, a comprehensive breakdown of expenditures across all categories, and measurable progress on the development goals outlined above.
@@ -320,18 +320,18 @@ export default function ContributingPage() {
         <Container>
           <div className="max-w-4xl mx-auto">
             <div className="animate-fade-in-up">
-              <h2 className="text-3xl font-semibold text-ink mb-12">Alternative Ways to Support</h2>
+              <h2 className="text-3xl font-semibold text-white mb-12">Alternative Ways to Support</h2>
             </div>
 
             <div className="space-y-8">
               {/* Technical Contribution - Enhanced with card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Users className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink mb-6">Technical Contribution</h3>
+                    <h3 className="text-2xl font-semibold text-white mb-6">Technical Contribution</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       If you are a developer, your technical expertise is invaluable to the project. We encourage contributions to our open-source codebase on GitHub, including reviewing and resolving issues, submitting pull requests for bug fixes, developing new features, improving documentation, and enhancing security measures. Every line of code contributed helps strengthen the platform for all users.
                     </p>
@@ -340,13 +340,13 @@ export default function ContributingPage() {
               </div>
 
               {/* Community Advocacy - Enhanced with card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Heart className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink mb-6">Community Advocacy</h3>
+                    <h3 className="text-2xl font-semibold text-white mb-6">Community Advocacy</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       Your voice in the community is powerful social capital that helps spread awareness of Allowance Guard&apos;s mission. Share your positive experiences on X, Reddit, Discord communities, and other platforms where Web3 users gather. Your advocacy helps other users discover the tools they need to protect their assets and contributes to building a more security-conscious ecosystem.
                     </p>
@@ -355,13 +355,13 @@ export default function ContributingPage() {
               </div>
 
               {/* Feedback and Testing - Enhanced with card */}
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
+              <div className="bg-secondary-800 rounded-2xl p-8 shadow-sm border border-secondary-700 hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Zap className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-semibold text-ink mb-6">Feedback and Testing</h3>
+                    <h3 className="text-2xl font-semibold text-white mb-6">Feedback and Testing</h3>
                     <p className="text-lg text-stone leading-relaxed">
                       Power users who provide detailed feedback and participate in beta testing new features play a crucial role in improving the product for everyone. Your insights help us identify usability issues, prioritize feature development, and ensure that new functionality meets the real-world needs of the community. Your testing helps us deliver more reliable and user-friendly tools.
                     </p>
@@ -378,7 +378,7 @@ export default function ContributingPage() {
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <div className="animate-fade-in-up">
-              <h2 className="text-3xl font-semibold text-ink mb-8">Thank You</h2>
+              <h2 className="text-3xl font-semibold text-white mb-8">Thank You</h2>
               <p className="text-xl text-stone leading-relaxed">
                 Every contributor to Allowance Guard, whether through financial support, technical expertise, community advocacy, or thoughtful feedback, is a vital partner in our mission to secure the Web3 ecosystem. Your support enables us to continue providing essential security infrastructure that protects users and strengthens the foundation of decentralized finance.
               </p>

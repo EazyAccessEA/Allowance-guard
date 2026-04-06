@@ -7,32 +7,32 @@ import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 
 const FEATURES = [
   {
-    title: 'Non-Custodial Security',
+    title: 'Non-Custodial by Default',
     description:
-      'Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet.',
+      'Your keys stay in your wallet. We read public data, you sign every transaction. No permissions to move funds, ever.',
     Icon: LockShieldIcon,
-    accent: 'crimson' as const,
+    accent: 'amber' as const,
   },
   {
-    title: 'Clarity-First Dashboard',
+    title: 'Dashboard Built for Decisions',
     description:
-      'Designed to enterprise standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.',
+      'Every approval, risk score, and action in one view. No jargon. No hunting. See your security posture and act on it.',
     Icon: DashboardIcon,
-    accent: 'volt' as const,
+    accent: 'sky' as const,
   },
   {
-    title: 'Advanced Risk Intelligence',
+    title: 'Real-Time Risk Scoring',
     description:
-      'Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.',
+      'Each approval is scored against live threat data — flagging unlimited amounts, unverified code, and known exploit contracts.',
     Icon: BrainShieldIcon,
-    accent: 'crimson' as const,
+    accent: 'amber' as const,
   },
   {
-    title: 'Gas-Efficient Revocation',
+    title: 'Batch Revoke, Less Gas',
     description:
-      'Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.',
+      'Revoke multiple approvals in one transaction. Optimised contracts keep gas costs low so security stays affordable.',
     Icon: BatchGasIcon,
-    accent: 'volt' as const,
+    accent: 'sky' as const,
   },
 ]
 
@@ -53,7 +53,7 @@ export default function FeaturesPreview() {
         className="absolute top-1/4 -left-32 w-[500px] h-[500px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(circle, rgba(229,62,62,0.06) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 60%)',
           filter: 'blur(40px)',
         }}
       />
@@ -63,7 +63,7 @@ export default function FeaturesPreview() {
         className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(circle, rgba(0,240,200,0.04) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, rgba(56,189,248,0.04) 0%, transparent 60%)',
           filter: 'blur(40px)',
         }}
       />
@@ -80,7 +80,7 @@ export default function FeaturesPreview() {
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
-              Every feature is designed with one goal: keeping your assets secure.
+              Every feature earns its place. If it doesn&#39;t make your wallet safer, it doesn&#39;t ship.
             </p>
           </div>
         </CascadingScrollAnimation>
@@ -104,7 +104,7 @@ function FeatureCard({
   Icon,
   accent,
 }: (typeof FEATURES)[number]) {
-  const glowColor = accent === 'crimson' ? 'rgba(229,62,62,0.12)' : 'rgba(0,240,200,0.10)'
+  const glowColor = accent === 'amber' ? 'rgba(245,158,11,0.12)' : 'rgba(56,189,248,0.10)'
 
   return (
     <div className="group relative rounded-2xl p-8 lg:p-10 bg-white/[0.02] ring-1 ring-white/[0.06] transition-all duration-300 hover:ring-white/[0.12] hover:bg-white/[0.04]">

@@ -199,8 +199,8 @@ export default function UsagePage() {
                 <Card key={i}>
                   <CardContent className="py-5">
                     <div className="animate-pulse space-y-3">
-                      <div className="h-4 bg-neutral-200 dark:bg-secondary-700 rounded w-1/2" />
-                      <div className="h-8 bg-neutral-200 dark:bg-secondary-700 rounded w-3/4" />
+                      <div className="h-4 bg-secondary-700 rounded w-1/2" />
+                      <div className="h-8 bg-secondary-700 rounded w-3/4" />
                     </div>
                   </CardContent>
                 </Card>

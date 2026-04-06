@@ -25,58 +25,64 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
   return (
     <div
       className={cn(
-        'relative rounded-lg bg-white p-[1px]',
-        'bg-gradient-to-r from-primary-500 via-primary-400 to-primary-600',
+        'relative rounded-xl bg-white/[0.03] ring-1 ring-amber-500/30 p-5',
         className
       )}
       role="alert"
       aria-label={`Upgrade prompt for ${feature}`}
     >
-      <div className="relative rounded-lg bg-white p-6">
-        {/* Dismiss button */}
-        <button
-          onClick={() => setDismissed(true)}
-          className="absolute right-3 top-3 rounded-full p-1 text-neutral-400 transition-colors duration-150 hover:bg-neutral-100 hover:text-neutral-600"
-          aria-label="Dismiss upgrade prompt"
-        >
-          <X className="h-4 w-4" />
-        </button>
+      {/* Subtle amber glow */}
+      <div
+        className="absolute inset-0 rounded-xl pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'radial-gradient(ellipse at 0% 50%, rgba(245,158,11,0.06) 0%, transparent 60%)',
+        }}
+      />
 
-        <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left">
-          {/* Icon */}
-          <div className="mb-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-50 sm:mb-0 sm:mr-4">
-            <Lock className="h-6 w-6 text-primary-700" />
-          </div>
+      {/* Dismiss button */}
+      <button
+        onClick={() => setDismissed(true)}
+        className="absolute right-3 top-3 rounded-full p-1.5 text-slate-500 transition-colors duration-150 hover:bg-white/10 hover:text-slate-300"
+        aria-label="Dismiss upgrade prompt"
+      >
+        <X className="h-4 w-4" />
+      </button>
 
-          {/* Content */}
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-neutral-900">
-              Upgrade to unlock {feature}
-            </h3>
-            <p className="mt-1 text-sm text-neutral-500">
-              {currentLimit !== undefined
-                ? `You've reached the free tier limit of ${currentLimit} wallets. `
-                : ''}
-              Upgrade to Pro for unlimited wallets, multi-chain portfolio view,
-              continuous monitoring, batch revocation, and more.
-            </p>
+      <div className="relative flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-4">
+        {/* Icon */}
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500/10 ring-1 ring-amber-500/20">
+          <Lock className="h-5 w-5 text-amber-400" />
+        </div>
 
-            {/* CTAs */}
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/pricing"
-                className="inline-flex items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-150 hover:bg-primary-800 hover:shadow-md"
-              >
-                View Plans
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-              <button
-                onClick={() => setDismissed(true)}
-                className="inline-flex items-center justify-center rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition-colors duration-150 hover:bg-neutral-50"
-              >
-                Continue with Free
-              </button>
-            </div>
+        {/* Content */}
+        <div className="flex-1">
+          <h3 className="text-base font-semibold text-white">
+            Unlock {feature}
+          </h3>
+          <p className="mt-1 text-sm text-slate-400">
+            {currentLimit !== undefined
+              ? `You\u2019ve reached the free tier limit of ${currentLimit} wallets. `
+              : ''}
+            Upgrade to Pro for unlimited wallets, continuous monitoring,
+            batch revoke, and more.
+          </p>
+
+          {/* CTAs */}
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/pricing"
+              className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-150 hover:bg-amber-400"
+            >
+              View Plans
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+            <button
+              onClick={() => setDismissed(true)}
+              className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-slate-400 bg-white/[0.06] hover:bg-white/10 transition-colors duration-150"
+            >
+              Continue with Free
+            </button>
           </div>
         </div>
       </div>

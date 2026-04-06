@@ -1,15 +1,15 @@
 # AllowanceGuard Design System
 
 > **Source of truth**: `docs/design-tokens-handbook.md`
-> **Palette**: Monochrome Pro — "The Institutional Authority"
-> Old systems (PuredgeOS, Serum Teal, Crimson Signal) are deprecated.
+> **Palette**: Midnight Amber — "The Warning System"
+> Old systems (PuredgeOS, Serum Teal, Crimson Signal, Monochrome Pro) are deprecated.
 
 ## Brand Principles
 
-1. **Controlled Aggression** — Bold type scale, confident whitespace, monochrome authority.
+1. **Controlled Aggression** — Bold type scale, confident whitespace, amber authority.
 2. **Earned Trust** — Open-source, on-chain metrics, no fabricated testimonials.
-3. **Relentless Clarity** — Dense data, clear hierarchy. Red = danger, white = action.
-4. **Tactile Precision** — Depth, grain, engineered layering on true black.
+3. **Relentless Clarity** — Dense data, clear hierarchy. Amber = scanning, Red = danger only.
+4. **Tactile Precision** — Depth, grain, engineered layering on deep navy.
 5. **Zero Compromise** — WCAG AA+, Core Web Vitals, keyboard-first.
 
 ## Visual Signature — The Slash
@@ -20,18 +20,20 @@ A 5-degree diagonal element that brands every page:
 - Button hover (diagonal sweep reveal)
 - Max 2 per viewport
 
-## Key Colours — Monochrome Pro
+## Key Colours — Midnight Amber
 
-| Role | Token | Hex | Why |
-|------|-------|-----|-----|
-| Background | `--surface-base` | `#000000` | True Black canvas |
-| Primary Action | `--primary` | `#FFFFFF` | Pure White — commands action |
-| Secondary Border | `--border-strong` | `#3F3F46` | Zinc 700 outline buttons |
-| Danger | `--destructive` | `#FF4B4B` | Vibrant Crimson — the ONLY color |
-| Accent/Neutral | `--muted` | `#A1A1AA` | Cool Grey — labels, muted text |
+| Role | Token | Hex | Contrast on Navy | Why |
+|------|-------|-----|-----------------|-----|
+| Background | `--surface-base` | `#0F172A` | — | Deep Navy canvas |
+| Primary Action | `--primary` | `#F59E0B` | 6.4:1 AA | Vivid Amber — scanning, CTAs |
+| Safe/Links | `--accent` | `#38BDF8` | 7.2:1 AA | Sky Blue — safe states, links |
+| Danger | `--destructive` | `#EF4444` | 4.6:1 AA | Red — revoke, threats only |
+| Headings | white | `#FFFFFF` | 17:1 AAA | Pure white on navy |
+| Body Text | `--muted-foreground` | `#CBD5E1` | 10.6:1 AAA | Slate 300 — secondary text |
+| Muted | `--muted` | `#94A3B8` | 6.4:1 AA | Slate 400 — tertiary text |
 
-> By keeping the site monochrome, the red "Revoke" button carries 10x
-> more weight because it's the only color on the page.
+> Amber is the universal color for "Caution" and "Scanning."
+> It tells the user: "We are currently scanning and identifying risks."
 
 ## Typography
 

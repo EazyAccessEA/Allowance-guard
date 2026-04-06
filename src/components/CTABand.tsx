@@ -48,15 +48,15 @@ export default function CTABand({ isConnected, onScan, isScanning }: CTABandProp
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl sm:text-4xl lg:text-6xl tracking-tight leading-[1.05] mb-6">
               <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500">
-                Ready to Secure
+                Take Back
               </span>
               <br />
               <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-crimson-400 to-crimson-500">
-                Your Wallet?
+                Control.
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 leading-relaxed mb-10 max-w-xl mx-auto">
-              Complete your security audit in under a minute. No sign-up required.
+              Scan your wallet in under a minute. No account needed, no keys shared.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -81,8 +81,8 @@ export default function CTABand({ isConnected, onScan, isScanning }: CTABandProp
             </div>
 
             {/* Trust line */}
-            <p className="mt-6 text-sm text-slate-500">
-              No email collection &middot; Read-only access &middot; Open source
+            <p className="mt-6 text-sm text-slate-400">
+              No email required &middot; Read-only blockchain access &middot; Open source core
             </p>
           </div>
         </CascadingScrollAnimation>

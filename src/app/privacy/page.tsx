@@ -9,7 +9,7 @@ import Link from 'next/link'
 export default function PrivacyPage() {
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
 
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">

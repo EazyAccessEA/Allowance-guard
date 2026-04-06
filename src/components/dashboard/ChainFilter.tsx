@@ -32,7 +32,7 @@ export default function ChainFilter({ active, onChange, counts }: ChainFilterPro
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-secondary-900',
               isActive
                 ? 'bg-primary-500 text-white border-primary-500 shadow-sm dark:bg-primary-600 dark:border-primary-600'
-                : 'bg-background-primary dark:bg-secondary-800 text-secondary-600 dark:text-secondary-300 border-border-primary dark:border-secondary-700 hover:border-primary-300 dark:hover:border-primary-600 hover:text-primary-600 dark:hover:text-primary-400'
+                : 'bg-background-primary dark:bg-secondary-800 text-secondary-600 dark:text-secondary-300 border-secondary-700 hover:border-primary-300 dark:hover:border-primary-600 hover:text-primary-600 dark:hover:text-primary-400'
             )}
           >
             {dotColor && !isActive && (

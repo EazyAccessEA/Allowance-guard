@@ -15,17 +15,17 @@ import { useDashboard } from '@/hooks/useDashboard'
 import dynamicImport from 'next/dynamic'
 
 const StatisticsSection = dynamicImport(() => import('@/components/StatisticsSection'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-64 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-64 w-full" />,
   ssr: false,
 })
 
 const AppArea = dynamicImport(() => import('@/components/AppArea'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-96 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-96 w-full" />,
   ssr: false,
 })
 
 const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-48 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-48 w-full" />,
   ssr: false,
 })
 
@@ -34,7 +34,7 @@ function ErrorFallback({ resetError }: { error: Error; resetError: () => void })
     <div className="min-h-screen bg-background-primary dark:bg-secondary-900 flex items-center justify-center">
       <div className="max-w-md mx-auto text-center p-6">
         <h2 className="mobbin-heading-2 text-text-primary dark:text-secondary-100 mb-4">Something went wrong</h2>
-        <p className="text-text-secondary dark:text-secondary-400 mb-6">We&apos;re working to fix this issue. Please try again.</p>
+        <p className="text-text-secondary dark:text-secondary-400 mb-6">An unexpected error occurred. Try refreshing, or contact support if it persists.</p>
         <button
           onClick={resetError}
           className="bg-primary-700 text-white px-6 py-2 rounded-lg hover:bg-primary-800 transition-colors"

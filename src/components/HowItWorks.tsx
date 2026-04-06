@@ -9,28 +9,28 @@ const STEPS = [
     number: 1,
     title: 'Connect & Scan',
     description:
-      'Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control.',
+      'Link your wallet or paste any address. We read public blockchain data — your keys never leave your device.',
     Icon: ScanShieldIcon,
   },
   {
     number: 2,
-    title: 'Analyze & Understand',
+    title: 'See the Risk',
     description:
-      'Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.',
+      'Every approval gets a risk score. Unlimited amounts, unverified contracts, and known threats are flagged instantly.',
     Icon: AnalyzeIcon,
   },
   {
     number: 3,
-    title: 'Act & Secure',
+    title: 'Revoke & Secure',
     description:
-      'Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.',
+      'One click to revoke. Batch multiple approvals to save gas. Every transaction signs in your own wallet.',
     Icon: RevokeIcon,
   },
 ]
 
 export default function HowItWorks() {
   return (
-    <section className="relative py-24 sm:py-32 lg:py-40 bg-white dark:bg-[#0A0E1A] overflow-hidden">
+    <section className="relative py-24 sm:py-32 lg:py-40 bg-surface-base overflow-hidden">
       {/* Gradient transition from hero */}
       <div
         className="absolute inset-x-0 top-0 h-32 pointer-events-none"
@@ -45,7 +45,7 @@ export default function HowItWorks() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse, rgba(229,62,62,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 70%)',
         }}
       />
 
@@ -61,7 +61,7 @@ export default function HowItWorks() {
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
-              Three simple steps to secure your wallet and protect your assets.
+              From connection to revocation in under a minute. Three steps, full control.
             </p>
           </div>
         </CascadingScrollAnimation>
@@ -91,12 +91,12 @@ function StepCard({
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(229,62,62,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%)',
         }}
       />
 
       {/* Step number — small, confident */}
-      <div className="text-xs font-mono text-crimson-400/60 tracking-widest uppercase mb-6">
+      <div className="text-xs font-mono text-amber-400/60 tracking-widest uppercase mb-6">
         Step {String(number).padStart(2, '0')}
       </div>
 
@@ -107,7 +107,7 @@ function StepCard({
           className="absolute inset-0 blur-2xl pointer-events-none"
           aria-hidden="true"
           style={{
-            background: 'radial-gradient(circle, rgba(229,62,62,0.15) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)',
             mixBlendMode: 'plus-lighter',
           }}
         />

@@ -33,19 +33,22 @@ function NavLink({
     <Link
       href={href}
       className={`relative px-4 py-2 text-sm font-medium transition-colors
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-md
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base rounded-md
         ${current
           ? 'text-white'
-          : 'text-neutral-400 hover:text-white'
+          : 'text-slate-400 hover:text-white'
         }`}
       style={{ transitionDuration: '150ms', transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)' }}
     >
       {children}
-      {/* Monochrome active indicator — white underline */}
+      {/* Amber active indicator */}
       {current && (
         <span
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-5 bg-white rounded-full"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-5 bg-amber-500 rounded-full"
           aria-hidden="true"
+          style={{
+            boxShadow: '0 0 8px rgba(245, 158, 11, 0.4)',
+          }}
         />
       )}
     </Link>
@@ -73,12 +76,12 @@ export default function Header({ isConnected }: HeaderProps) {
       className="sticky top-0 z-50 w-full"
       style={{ transitionDuration: '300ms', transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)' }}
     >
-      {/* True Black surface */}
+      {/* Deep Navy surface */}
       <div
         className={`relative transition-all
           ${scrolled
-            ? 'bg-black/95 backdrop-blur-xl shadow-lg shadow-black/40'
-            : 'bg-black/80 backdrop-blur-md'
+            ? 'bg-surface-base/95 backdrop-blur-xl shadow-lg shadow-black/30'
+            : 'bg-surface-base/80 backdrop-blur-md'
           }`}
         style={{ transitionDuration: '300ms', transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)' }}
       >
@@ -88,7 +91,7 @@ export default function Header({ isConnected }: HeaderProps) {
             <Link
               href="/"
               className="flex items-center gap-3 group flex-shrink-0
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-md"
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 rounded-md"
             >
               <div className="relative w-8 h-8 sm:w-9 sm:h-9">
                 <Image
@@ -106,13 +109,13 @@ export default function Header({ isConnected }: HeaderProps) {
                 >
                   AllowanceGuard
                 </span>
-                <span className="text-[11px] text-neutral-500 leading-tight hidden sm:block tracking-wide uppercase">
-                  Secure Token Approvals
+                <span className="text-[11px] text-slate-400 leading-tight hidden sm:block tracking-wide uppercase">
+                  Token Approval Security
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation — muted grey, desaturated */}
             <nav
               className="hidden lg:flex items-center gap-1"
               aria-label="Main navigation"
@@ -135,8 +138,8 @@ export default function Header({ isConnected }: HeaderProps) {
                   <PlanBadge plan="free" size="sm" />
                   <Link
                     href="/account"
-                    className="px-3 py-1.5 text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-150
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-md"
+                    className="px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-white transition-colors duration-150
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 rounded-md"
                   >
                     Account
                   </Link>
@@ -146,11 +149,11 @@ export default function Header({ isConnected }: HeaderProps) {
                 </>
               ) : (
                 <>
-                  {/* Fix #1: Upgrade de-emphasized — plain text link, not bordered button */}
+                  {/* Upgrade — plain text link, muted grey (desaturated) */}
                   <Link
                     href="/pricing"
-                    className="px-3 py-1.5 text-sm font-medium text-neutral-500 hover:text-neutral-300 transition-colors duration-150
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-md"
+                    className="px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-slate-300 transition-colors duration-150
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 rounded-md"
                   >
                     Upgrade
                   </Link>
@@ -166,12 +169,13 @@ export default function Header({ isConnected }: HeaderProps) {
           </div>
         </div>
 
-        {/* Subtle bottom edge — white/grey on scroll, NOT crimson */}
+        {/* Amber bottom edge on scroll */}
         <div
           className="absolute bottom-0 left-0 right-0 h-px transition-opacity"
           style={{
             opacity: scrolled ? 1 : 0,
-            background: 'linear-gradient(90deg, transparent 0%, #3F3F46 20%, #3F3F46 80%, transparent 100%)',
+            background: 'linear-gradient(90deg, transparent 0%, #F59E0B 20%, #F59E0B 80%, transparent 100%)',
+            boxShadow: scrolled ? '0 1px 8px rgba(245, 158, 11, 0.2)' : 'none',
             transitionDuration: '400ms',
             transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)',
           }}

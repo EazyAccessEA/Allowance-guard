@@ -92,7 +92,7 @@ export default function AllowanceGuardWidget({
 
   const themeClasses = currentTheme === 'dark' 
     ? 'bg-gray-900 text-white border-gray-700' 
-    : 'bg-white text-gray-900 border-gray-200'
+    : 'bg-secondary-800 text-slate-200 border-secondary-700'
 
   if (error) {
     return (

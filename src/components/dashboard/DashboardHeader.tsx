@@ -14,7 +14,7 @@ export default function DashboardHeader({
   chain = 'Ethereum',
 }: DashboardHeaderProps) {
   return (
-    <header className="flex items-center justify-between px-4 lg:px-6 h-16 border-b border-border-primary dark:border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary">
+    <header className="flex items-center justify-between px-4 lg:px-6 h-16 border-b border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <Shield
@@ -53,7 +53,7 @@ export default function DashboardHeader({
           {chain}
         </span>
         <button
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-mono text-text-primary dark:text-secondary-200 bg-secondary-50 dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 hover:border-primary-300 dark:hover:border-primary-600 transition-colors duration-150"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-mono text-text-primary dark:text-secondary-200 bg-secondary-50 dark:bg-secondary-800 border border-secondary-700 hover:border-primary-300 dark:hover:border-primary-600 transition-colors duration-150"
           aria-label={`Connected wallet ${walletAddress}`}
         >
           {walletAddress}

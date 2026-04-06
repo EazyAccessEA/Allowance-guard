@@ -74,14 +74,14 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
         size="icon"
         onClick={() => setIsOpen(true)}
         className="lg:hidden h-10 w-10 text-slate-400 hover:text-white hover:bg-white/10 rounded-md
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500/40"
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
         aria-label="Open navigation menu"
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
       >
         <Menu className="h-5 w-5" />
         {!isConnected && (
-          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-crimson-500 rounded-full" aria-hidden="true" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-500 rounded-full" aria-hidden="true" />
         )}
       </Button>
 
@@ -126,7 +126,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                   >
                     AllowanceGuard
                   </h2>
-                  <p className="text-xs text-slate-500 uppercase tracking-wide">
+                  <p className="text-xs text-slate-400 uppercase tracking-wide">
                     Secure Token Approvals
                   </p>
                 </div>
@@ -136,7 +136,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 size="icon"
                 onClick={close}
                 className="h-10 w-10 text-slate-400 hover:text-white hover:bg-white/10 rounded-md
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500/40"
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
                 aria-label="Close navigation menu"
               >
                 <X className="h-5 w-5" />
@@ -155,7 +155,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                   />
                 </div>
                 {isConnected && (
-                  <p className="text-volt-500 mt-3 text-sm text-center font-medium">
+                  <p className="text-sky-400 mt-3 text-sm text-center font-medium">
                     Wallet Connected
                   </p>
                 )}
@@ -171,7 +171,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                       key={item.href}
                       href={item.href}
                       className={`flex items-center gap-4 px-4 py-4 rounded-lg transition-colors duration-150
-                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500/40
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40
                         ${active
                           ? 'bg-white/10 text-white'
                           : 'text-slate-400 hover:text-white hover:bg-white/5'
@@ -180,12 +180,12 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                     >
                       <Icon className="w-5 h-5 flex-shrink-0" />
                       <span className="text-base font-medium">{item.label}</span>
-                      {/* Active indicator — crimson dot */}
+                      {/* Active indicator — amber dot */}
                       {active && (
                         <span
-                          className="ml-auto w-1.5 h-1.5 bg-crimson-500 rounded-full"
+                          className="ml-auto w-1.5 h-1.5 bg-amber-500 rounded-full"
                           aria-hidden="true"
-                          style={{ boxShadow: '0 0 6px rgba(229, 62, 62, 0.5)' }}
+                          style={{ boxShadow: '0 0 6px rgba(245, 158, 11, 0.5)' }}
                         />
                       )}
                     </Link>
@@ -195,12 +195,12 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
 
               <div className="flex-1" />
 
-              {/* Signature crimson line at bottom */}
+              {/* Signature amber line at bottom */}
               <div
                 className="h-px mt-6"
                 style={{
-                  background: 'linear-gradient(90deg, transparent 0%, #E53E3E 30%, #E53E3E 70%, transparent 100%)',
-                  boxShadow: '0 0 8px rgba(229, 62, 62, 0.3)',
+                  background: 'linear-gradient(90deg, transparent 0%, #F59E0B 30%, #F59E0B 70%, transparent 100%)',
+                  boxShadow: '0 0 8px rgba(245, 158, 11, 0.3)',
                 }}
                 aria-hidden="true"
               />
