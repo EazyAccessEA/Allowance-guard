@@ -1,7 +1,7 @@
 'use client'
 
 import Hero from '@/components/Hero'
-import TrustStats from '@/components/TrustStats'
+// TrustStats removed — redundant with hero stats bar and trust dots
 import HowItWorks from '@/components/HowItWorks'
 import FeaturesPreview from '@/components/FeaturesPreview'
 import CTABand from '@/components/CTABand'
@@ -87,7 +87,6 @@ export default function HomePage() {
       </div>
 
       {/* Marketing sections */}
-      <TrustStats />
       <HowItWorks />
 
       <LazySection>
