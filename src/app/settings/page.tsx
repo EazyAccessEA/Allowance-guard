@@ -181,7 +181,7 @@ export default function SettingsPage() {
 
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
                   <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Email Alerts</h3>
                   <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Get notified when new approvals are detected on your wallets via Microsoft SMTP.
@@ -193,7 +193,7 @@ export default function SettingsPage() {
                   </ul>
                 </div>
 
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
                   <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Risk Policy Configuration</h3>
                   <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Configure what counts as alert-worthy for your specific needs.
@@ -205,7 +205,7 @@ export default function SettingsPage() {
                   </ul>
                 </div>
 
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
                   <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Slack Integration</h3>
                   <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Get daily digests directly in your Slack workspace.
@@ -217,7 +217,7 @@ export default function SettingsPage() {
                   </ul>
                 </div>
 
-                <div className="border border-border-primary dark:border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
+                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
                   <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Public Share Links</h3>
                   <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
                     Generate read-only links to share your wallet&apos;s approval status.
@@ -277,7 +277,7 @@ export default function SettingsPage() {
 
           <div className="space-y-12">
             {/* Email Alerts Card */}
-            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Email Alerts</H2>
               <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Get notified when new approvals are detected on your wallets.
@@ -290,7 +290,7 @@ export default function SettingsPage() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-3 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
 
@@ -321,7 +321,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Risk Policy Card */}
-            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Risk Policy</H2>
               <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Configure what counts as alert-worthy for your wallet.
@@ -341,7 +341,7 @@ export default function SettingsPage() {
                   <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
                     <label className="text-base text-text-tertiary dark:text-secondary-400 font-medium w-32">Min risk score</label>
                     <input
-                      className="w-24 px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-24 px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       type="number"
                       value={policy?.min_risk_score || 0}
                       onChange={e=>policy && setPolicy({...policy, min_risk_score: Number(e.target.value)})}
@@ -362,7 +362,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Include spenders (comma-separated)</div>
                       <input
-                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.include_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -370,7 +370,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Ignore spenders</div>
                       <input
-                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.ignore_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -378,7 +378,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Include tokens</div>
                       <input
-                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.include_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -386,7 +386,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Ignore tokens</div>
                       <input
-                        className="w-full px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.ignore_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -405,7 +405,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Slack Alerts Card */}
-            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Slack Alerts</H2>
               <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Get daily digests in your Slack workspace.
@@ -417,7 +417,7 @@ export default function SettingsPage() {
                     Slack webhook URL:
                   </label>
                   <input
-                    className="w-full px-4 py-3 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-3 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="https://hooks.slack.com/services/..."
                     value={webhook}
                     onChange={e=>setWebhook(e.target.value)}
@@ -436,7 +436,7 @@ export default function SettingsPage() {
                   </span>
                 )}
 
-                <div className="bg-background-tertiary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-md p-4">
+                <div className="bg-background-tertiary dark:bg-secondary-800 border border-secondary-700 rounded-md p-4">
                   <p className="text-sm text-text-tertiary dark:text-secondary-400">
                     <strong>Tip:</strong> Create a webhook at <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="underline hover:text-text-primary dark:hover:text-secondary-100">api.slack.com/apps</a> &rarr; Create New App &rarr; Enable Incoming Webhooks &rarr; Add to channel
                   </p>
@@ -445,7 +445,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Public Share Link Card */}
-            <div className="border border-border-primary dark:border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
               <H2 className="mb-3">Public Share Link</H2>
               <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
                 Generate a read-only link to share your wallet&apos;s approval status with others.
@@ -483,7 +483,7 @@ export default function SettingsPage() {
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <span className="text-base text-text-tertiary dark:text-secondary-400 w-32">Expire after (days)</span>
                     <input
-                      className="w-20 px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-20 px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                       type="number"
                       value={expireDays}
                       onChange={e => setExpireDays(e.target.value ? Number(e.target.value) : '')}
@@ -501,7 +501,7 @@ export default function SettingsPage() {
                   </button>
                   <button
                     onClick={expireShareLink}
-                    className="bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 border border-border-primary dark:border-secondary-700 px-6 py-3 rounded-lg font-medium hover:bg-background-tertiary dark:hover:bg-secondary-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 border border-secondary-700 px-6 py-3 rounded-lg font-medium hover:bg-background-tertiary dark:hover:bg-secondary-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Expire Link
                   </button>
@@ -519,7 +519,7 @@ export default function SettingsPage() {
                     </label>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <input
-                        className="flex-1 px-3 py-2 border border-border-primary dark:border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="flex-1 px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                         readOnly
                         value={shareUrl ?? ''}
                       />
@@ -536,7 +536,7 @@ export default function SettingsPage() {
                   </div>
                 )}
 
-                <div className="bg-background-tertiary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-md p-4">
+                <div className="bg-background-tertiary dark:bg-secondary-800 border border-secondary-700 rounded-md p-4">
                   <p className="text-sm text-text-tertiary dark:text-secondary-400">
                     <strong>Privacy:</strong> Share links are read-only and can be expired at any time.
                     Addresses and amounts can be censored for privacy.

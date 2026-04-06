@@ -10,12 +10,12 @@ import { useDashboard } from '@/hooks/useDashboard'
 import dynamicImport from 'next/dynamic'
 
 const AppArea = dynamicImport(() => import('@/components/AppArea'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-96 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-96 w-full" />,
   ssr: false,
 })
 
 const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
-  loading: () => <div className="animate-pulse bg-neutral-200 dark:bg-secondary-700 rounded h-48 w-full" />,
+  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-48 w-full" />,
   ssr: false,
 })
 
@@ -65,7 +65,7 @@ export default function DashboardPage() {
   // Not connected — prompt to connect
   if (isHydrated && !isConnected) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0A0E1A]">
+      <div className="min-h-screen bg-surface-base dark:bg-[#0A0E1A]">
         <Section className="py-24">
           <Container>
             <div className="max-w-lg mx-auto text-center">
@@ -92,7 +92,7 @@ export default function DashboardPage() {
   // Connected but no wallet selected yet (brief loading state)
   if (!isHydrated || !selectedWallet) {
     return (
-      <div className="min-h-screen bg-white dark:bg-[#0A0E1A] flex items-center justify-center">
+      <div className="min-h-screen bg-surface-base dark:bg-[#0A0E1A] flex items-center justify-center">
         <div className="animate-pulse text-text-secondary dark:text-secondary-400">
           Loading dashboard…
         </div>
@@ -101,9 +101,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0A0E1A]">
+    <div className="min-h-screen bg-surface-base dark:bg-[#0A0E1A]">
       {/* Scan bar */}
-      <Section className="py-6 bg-background-light dark:bg-secondary-900/50 border-b border-border-primary dark:border-secondary-700">
+      <Section className="py-6 bg-background-light dark:bg-secondary-900/50 border-b border-secondary-700">
         <Container>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>

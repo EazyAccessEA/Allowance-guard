@@ -291,7 +291,7 @@ export default function TeamDashboard() {
           <CardContent>
             {/* Invite Form */}
             {showInvite && (
-              <div className="mb-6 p-4 border border-border-primary rounded-lg space-y-3">
+              <div className="mb-6 p-4 border border-secondary-700 rounded-lg space-y-3">
                 <h4 className="text-sm font-semibold text-text-primary dark:text-secondary-100">Invite Member</h4>
                 <Input
                   label="Email"
@@ -305,7 +305,7 @@ export default function TeamDashboard() {
                   <select
                     value={inviteRole}
                     onChange={(e) => setInviteRole(e.target.value)}
-                    className="w-full border border-border-primary rounded-md px-3 py-2 text-sm bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100"
+                    className="w-full border border-secondary-700 rounded-md px-3 py-2 text-sm bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100"
                   >
                     <option value="viewer">Viewer</option>
                     <option value="editor">Editor</option>

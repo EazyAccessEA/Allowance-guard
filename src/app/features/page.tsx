@@ -33,7 +33,7 @@ export default function FeaturesPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
+      <div className="border-t border-secondary-700" />
 
       {/* Core Features */}
       <Section className="py-32">
@@ -141,7 +141,7 @@ export default function FeaturesPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
+      <div className="border-t border-secondary-700" />
 
       {/* Call to Action */}
       <Section className="py-32">

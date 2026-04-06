@@ -1,424 +1,557 @@
-import {
-  Mail, Bell, Zap, Users, Lock, AlertTriangle, Shield, Settings,
-  Eye, ChevronDown, ChevronRight, MessageCircle,
-} from 'lucide-react'
+import { Search, Mail, Bell, Zap, Users, Lock, AlertTriangle, Shield, Settings } from 'lucide-react'
 import { alertFeatures, apiEndpoints, faqItems } from './docs-data'
 
 interface Props { section: string }
 
-/** Docs content: alerts, monitoring, teams, revoking, api, browser-extension, troubleshooting, faq */
+/** Docs content sections: alerts through faq */
 export default function DocsContentSecondary({ section }: Props) {
   switch (section) {
-    case 'alerts':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="alerts-notifications" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              Alerts &amp; Notifications
-            </h2>
-            <p className="text-sm text-slate-400 mb-6">Stay informed with automated security alerts across multiple channels.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {alertFeatures.map((alert, index) => {
-                const icons = [Mail, Bell, Zap, Settings]
-                const Icon = icons[index] ?? Bell
-                return (
-                  <div key={index} className="rounded-xl p-5 bg-slate-800/40 border border-slate-700/50 hover:border-amber-500/20 transition-colors">
-                    <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
-                      <Icon className="w-4 h-4 text-amber-400" />
+      case 'alerts':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 id="alerts-notifications" className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Alerts & Notifications</h2>
+              <p className="text-base text-text-secondary dark:text-secondary-400 mb-6">
+                Stay informed about your wallet security with automated alerts:
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {alertFeatures.map((alert, index) => {
+                  const IconComponent = alert.type === 'Email Alerts' ? Mail : 
+                                       alert.type === 'Slack Integration' ? Bell :
+                                       alert.type === 'Autonomous Monitoring' ? Zap : Bell
+                  return (
+                    <div key={index} className="border border-secondary-700 rounded-lg p-6 bg-background-primary dark:bg-secondary-800">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <IconComponent className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">{alert.type}</h4>
+                          <p className="text-base text-text-secondary dark:text-secondary-400 mb-4">{alert.description}</p>
+                        </div>
+                      </div>
+                      <ul className="space-y-2 text-sm text-text-secondary dark:text-secondary-400">
+                        {alert.features.map((feature, fIndex) => (
+                          <li key={fIndex} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+          </div>
+                  )
+                })}
+        </div>
+    </div>
+          </div>
+        )
+      case 'monitoring':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 id="autonomous-monitoring" className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Autonomous Monitoring</h2>
+              <p className="text-base text-text-secondary dark:text-secondary-400 mb-6">
+                Enable continuous monitoring of your wallets with automatic rescans and instant drift detection. The system will alert you immediately when new approvals appear or existing ones change.
+              </p>
+              
+          <div className="space-y-6">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Zap className="w-6 h-6 text-primary-600 dark:text-primary-400" />
                     </div>
-                    <h4 className="text-sm font-semibold text-slate-200 mb-1">{alert.type}</h4>
-                    <p className="text-xs text-slate-400 mb-3">{alert.description}</p>
-                    <ul className="space-y-1">
-                      {alert.features.map((feature, fIndex) => (
-                        <li key={fIndex} className="flex items-center gap-2 text-xs text-slate-500">
-                          <span className="w-1 h-1 rounded-full bg-amber-500/60" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                    <div>
+                      <h3 id="how-it-works" className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">How It Works</h3>
+                    </div>
                   </div>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      )
-
-    case 'monitoring':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="autonomous-monitoring" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              Autonomous Monitoring
-            </h2>
-            <p className="text-sm text-slate-400 mb-6">
-              Continuous wallet monitoring with automatic rescans and instant drift detection.
-            </p>
-
-            <h3 id="how-it-works" className="text-lg font-semibold text-slate-100 mb-3">How It Works</h3>
-            <div className="space-y-2 mb-6">
-              {[
-                'Enable monitoring with a custom frequency (default: 12 hours).',
-                'System automatically rescans your wallet at set intervals.',
-                'Detects drift: new approvals, amount changes, unlimited flips.',
-                'Sends instant alerts via email and Slack.',
-                'Remembers past alerts to prevent spam.',
-              ].map((step, i) => (
-                <div key={i} className="flex items-start gap-3 p-2.5 text-xs text-slate-400">
-                  <span className="w-5 h-5 rounded bg-slate-700/50 flex items-center justify-center text-[10px] font-bold text-slate-300 shrink-0">{i + 1}</span>
-                  {step}
+                  <ol className="list-decimal list-inside space-y-2 text-base text-text-secondary dark:text-secondary-400 ml-16">
+                    <li>Enable monitoring for your wallet with a custom frequency (default: 12 hours)</li>
+                    <li>System automatically rescans your wallet at the specified intervals</li>
+                    <li>Detects drift: new approvals, amount changes, or unlimited flips</li>
+                    <li>Sends instant alerts via email and Slack when changes are detected</li>
+                    <li>Remembers what was alerted to prevent spam notifications</li>
+                  </ol>
                 </div>
-              ))}
-            </div>
 
-            <h3 id="drift-detection" className="text-lg font-semibold text-slate-100 mb-3">Drift Detection</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-              {[
-                { label: 'New Approvals', desc: 'Previously unseen token approvals' },
-                { label: 'Amount Growth', desc: 'Approvals that grew from zero' },
-                { label: 'Unlimited Flips', desc: 'Approvals that became unlimited' },
-                { label: 'Policy Filtering', desc: 'Only alerts matching your risk policy' },
-              ].map((d) => (
-                <div key={d.label} className="rounded-lg p-3 bg-slate-800/30 border border-slate-700/30">
-                  <h4 className="text-xs font-semibold text-slate-200">{d.label}</h4>
-                  <p className="text-xs text-slate-500 mt-0.5">{d.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <h3 id="configuration" className="text-lg font-semibold text-slate-100 mb-3">Configuration</h3>
-            <div className="space-y-2">
-              {[
-                { label: 'Enable/Disable', desc: 'Turn monitoring on or off per wallet' },
-                { label: 'Frequency', desc: 'Set rescan interval (minimum 30 minutes)' },
-                { label: 'Alert Channels', desc: 'Configure email and Slack notification preferences' },
-              ].map((c) => (
-                <div key={c.label} className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/30 border border-slate-700/30">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                  <div>
-                    <span className="text-xs font-semibold text-slate-200">{c.label}:</span>
-                    <span className="text-xs text-slate-400 ml-1">{c.desc}</span>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Bell className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h3 id="drift-detection" className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Drift Detection</h3>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )
-
-    case 'teams':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="teams-collaboration" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              Teams &amp; Collaboration
-            </h2>
-            <p className="text-sm text-slate-400 mb-6">
-              Collaborative wallet security with role-based access control for DAOs, treasuries, and organisations.
-            </p>
-
-            <h3 id="team-roles" className="text-lg font-semibold text-slate-100 mb-3">Roles</h3>
-            <div className="space-y-2 mb-6">
-              {[
-                { role: 'Owner', desc: 'Full control. Add/remove members, manage wallets, invite collaborators.', icon: Users, color: 'text-amber-400' },
-                { role: 'Admin', desc: 'Manage members, add wallets, send invites. Cannot remove owner.', icon: Shield, color: 'text-sky-400' },
-                { role: 'Editor', desc: 'Add wallets, invite viewers. Revoke approvals and manage monitoring.', icon: Settings, color: 'text-emerald-400' },
-                { role: 'Viewer', desc: 'Read-only. View approvals and scan results. Cannot revoke or modify.', icon: Eye, color: 'text-slate-400' },
-              ].map((r) => (
-                <div key={r.role} className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/40 border border-slate-700/50">
-                  <div className="w-8 h-8 rounded-lg bg-slate-700/50 flex items-center justify-center shrink-0">
-                    <r.icon className={`w-4 h-4 ${r.color}`} />
-                  </div>
-                  <div>
-                    <span className="text-sm font-semibold text-slate-200">{r.role}</span>
-                    <span className="text-xs text-slate-400 ml-2">{r.desc}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <h3 id="getting-started-with-teams" className="text-lg font-semibold text-slate-100 mb-3">Getting Started</h3>
-            <div className="space-y-2 mb-6">
-              {[
-                'Sign in via magic link authentication.',
-                'Click "New team" and enter a team name.',
-                'Add wallet addresses to monitor.',
-                'Send email invites with appropriate roles.',
-                'Control who can view, edit, or revoke.',
-              ].map((step, i) => (
-                <div key={i} className="flex items-start gap-3 p-2.5 text-xs text-slate-400">
-                  <span className="w-5 h-5 rounded bg-slate-700/50 flex items-center justify-center text-[10px] font-bold text-slate-300 shrink-0">{i + 1}</span>
-                  {step}
-                </div>
-              ))}
-            </div>
-
-            <h3 id="team-features" className="text-lg font-semibold text-slate-100 mb-3">Capabilities</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {[
-                { icon: Users, title: 'Shared Wallets', desc: 'Centralised monitoring for multiple addresses' },
-                { icon: Mail, title: 'Email Invites', desc: 'Secure invitations with role-based access' },
-                { icon: Shield, title: 'RBAC', desc: 'Owner, admin, editor, and viewer permissions' },
-                { icon: Bell, title: 'Team Monitoring', desc: 'Autonomous monitoring for team-managed wallets' },
-              ].map((f) => (
-                <div key={f.title} className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
-                    <f.icon className="w-4 h-4 text-amber-400" />
-                  </div>
-                  <h4 className="text-sm font-semibold text-slate-200">{f.title}</h4>
-                  <p className="text-xs text-slate-400 mt-0.5">{f.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )
-
-    case 'revoking':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="how-to-revoke-approvals" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              Revoking Approvals
-            </h2>
-            <p className="text-sm text-slate-400 mb-6">
-              Revoking sets the allowance to zero, preventing the spender from accessing your tokens.
-            </p>
-
-            <h3 id="using-the-dashboard" className="text-lg font-semibold text-slate-100 mb-3">Using the Dashboard</h3>
-            <div className="space-y-2 mb-6">
-              {[
-                'Connect your wallet and scan for approvals.',
-                'Find the approval you want to revoke.',
-                'Click the "Revoke" button.',
-                'Sign the transaction in your wallet.',
-                'Pay the gas fee to complete revocation.',
-              ].map((step, i) => (
-                <div key={i} className="flex items-start gap-3 p-2.5 text-xs text-slate-400">
-                  <span className="w-5 h-5 rounded bg-slate-700/50 flex items-center justify-center text-[10px] font-bold text-slate-300 shrink-0">{i + 1}</span>
-                  {step}
-                </div>
-              ))}
-            </div>
-
-            <h3 id="manual-revocation" className="text-lg font-semibold text-slate-100 mb-3">Important Notes</h3>
-            <div className="rounded-xl p-4 bg-amber-500/5 border border-amber-500/20">
-              <ul className="space-y-2 text-xs text-slate-300">
-                <li className="flex items-start gap-2"><AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> Each revocation requires a separate transaction and gas fee.</li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> Revoking doesn&apos;t affect already deposited or staked tokens.</li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> Some dApps may require re-approval for continued use.</li>
-                <li className="flex items-start gap-2"><AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" /> Revocation is preventative — it cannot recover stolen funds.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      )
-
-    case 'api':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="settings-configuration" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              API &amp; Settings
-            </h2>
-            <p className="text-sm text-slate-400 mb-6">
-              Configure monitoring preferences and access AllowanceGuard programmatically.
-            </p>
-
-            <div className="space-y-4 mb-8">
-              {[
-                { icon: Mail, title: 'Email Alerts', items: ['Daily digest with risky approval summaries', 'Risk-only filtering', 'Customisable per wallet'] },
-                { icon: Shield, title: 'Risk Policy', items: ['Minimum risk score thresholds', 'Unlimited approvals focus', 'Chain-specific policies'] },
-                { icon: Bell, title: 'Slack Integration', items: ['Webhook-based notifications', 'Rich formatting', 'Custom channel routing'] },
-                { icon: Settings, title: 'Public Share Links', items: ['Privacy controls (censor addresses/amounts)', 'Risk-only filtering', 'Expiration dates'] },
-              ].map((s) => (
-                <div key={s.title} className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                  <div className="flex items-center gap-2 mb-2">
-                    <s.icon className="w-4 h-4 text-amber-400" />
-                    <h3 className="text-sm font-semibold text-slate-200">{s.title}</h3>
-                  </div>
-                  <ul className="space-y-1 ml-6">
-                    {s.items.map((item, i) => (
-                      <li key={i} className="flex items-center gap-2 text-xs text-slate-400">
-                        <span className="w-1 h-1 rounded-full bg-slate-600" />
-                        {item}
-                      </li>
-                    ))}
+                  <p className="text-sm text-text-secondary dark:text-secondary-400 mb-3">The system detects the following types of changes:</p>
+                  <ul className="space-y-1 text-sm text-text-secondary dark:text-secondary-400">
+                    <li>• <strong>New Approvals:</strong> Previously unseen token approvals</li>
+                    <li>• <strong>Amount Growth:</strong> Approvals that grew from zero to a positive amount</li>
+                    <li>• <strong>Unlimited Flips:</strong> Approvals that became unlimited</li>
+                    <li>• <strong>Policy Filtering:</strong> Only alerts on approvals that match your risk policy</li>
                   </ul>
                 </div>
-              ))}
-            </div>
 
-            <h3 id="api-endpoints" className="text-lg font-semibold text-slate-100 mb-3">API Endpoints</h3>
-            <div className="rounded-xl overflow-hidden border border-slate-700/50">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="bg-slate-800/50">
-                    <th className="text-left px-3 py-2 text-[10px] text-slate-500 uppercase tracking-wide font-medium">Method</th>
-                    <th className="text-left px-3 py-2 text-[10px] text-slate-500 uppercase tracking-wide font-medium">Endpoint</th>
-                    <th className="text-left px-3 py-2 text-[10px] text-slate-500 uppercase tracking-wide font-medium">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {apiEndpoints.map((ep, index) => (
-                    <tr key={index} className="border-t border-slate-700/30">
-                      <td className="px-3 py-2">
-                        <span className="font-mono font-bold text-emerald-400">{ep.method}</span>
-                      </td>
-                      <td className="px-3 py-2 font-mono text-amber-400/80">{ep.endpoint}</td>
-                      <td className="px-3 py-2 text-slate-400">{ep.description}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Settings className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h3 id="configuration" className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Configuration</h3>
+                    </div>
+                  </div>
+                  <p className="text-base text-text-secondary dark:text-secondary-400 mb-4 ml-16">You can configure monitoring settings in the sidebar:</p>
+                  <ul className="space-y-2 text-base text-text-secondary dark:text-secondary-400 ml-16">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                      <span><strong>Enable/Disable:</strong> Turn monitoring on or off for each wallet</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                      <span><strong>Frequency:</strong> Set rescan interval (minimum 30 minutes)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                      <span><strong>Alerts:</strong> Configure email and Slack notification preferences</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )
+        )
 
-    case 'browser-extension':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="browser-extension" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              Browser Extension
-            </h2>
-            <p className="text-sm text-slate-400 mb-6">
-              Real-time transaction risk assessment directly in your browser. Get warnings before signing risky approvals.
-            </p>
+      case 'teams':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 id="teams-collaboration" className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Teams & Collaboration</h2>
+              <p className="text-base text-text-secondary dark:text-secondary-400 mb-6">
+                AllowanceGuard supports team collaboration with role-based access control. Create teams, invite members, and manage wallet access with different permission levels.
+              </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-              {[
-                { name: 'Google Chrome', note: 'Works with Brave, Edge, Opera', status: 'Pending Approval' },
-                { name: 'Mozilla Firefox', note: 'Latest Firefox releases', status: 'Pending Approval' },
-              ].map((b) => (
-                <div key={b.name} className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                  <h4 className="text-sm font-semibold text-slate-200 mb-1">{b.name}</h4>
-                  <p className="text-xs text-slate-400 mb-2">{b.note}</p>
-                  <span className="text-[10px] font-medium text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">{b.status}</span>
-                </div>
-              ))}
-            </div>
-
-            <h3 className="text-lg font-semibold text-slate-100 mb-3">Features</h3>
-            <div className="space-y-3 mb-6">
-              {[
-                { title: 'Pre-Signing Risk Assessment', desc: 'Analyses contract and approval amount before you sign. Warns on unlimited approvals, known malicious spenders, and other red flags.' },
-                { title: 'Quick Overview', desc: 'Click the extension icon for a summary of active approvals and overall risk score without leaving the current page.' },
-                { title: 'Non-Custodial & Privacy-First', desc: 'Never accesses private keys. Reads only public blockchain data. No tracking or browsing analytics.' },
-              ].map((f) => (
-                <div key={f.title} className="rounded-lg p-3 bg-slate-800/30 border border-slate-700/30">
-                  <h4 className="text-sm font-semibold text-slate-200 mb-0.5">{f.title}</h4>
-                  <p className="text-xs text-slate-400">{f.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <h3 className="text-lg font-semibold text-slate-100 mb-3">Installation</h3>
-            <div className="space-y-2">
-              {[
-                { step: '1', title: 'Download', desc: 'Visit the Chrome Web Store or Firefox Add-ons and click "Add to Browser".' },
-                { step: '2', title: 'Connect', desc: 'Click the icon in your toolbar. Enter your public wallet address — no private keys needed.' },
-                { step: '3', title: 'Browse safely', desc: 'The extension runs in the background and shows a risk popup whenever a dApp requests a token approval.' },
-              ].map((s) => (
-                <div key={s.step} className="flex items-start gap-3 p-3 rounded-lg bg-slate-800/30 border border-slate-700/30">
-                  <span className="w-6 h-6 rounded bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-xs font-bold text-amber-400 shrink-0">{s.step}</span>
-                  <div>
-                    <span className="text-xs font-semibold text-slate-200">{s.title}:</span>
-                    <span className="text-xs text-slate-400 ml-1">{s.desc}</span>
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Team Roles</h3>
+              <div className="space-y-4 mb-6">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Owner</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Full control over the team, including adding/removing members, managing wallets, and inviting collaborators.</p>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )
-
-    case 'troubleshooting':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="common-issues-solutions" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              Troubleshooting
-            </h2>
-
-            <div className="space-y-3 mb-8">
-              {[
-                { q: 'Why can\'t I see my allowances?', a: 'You may have no approvals (good!), or there\'s a network issue. Try switching networks, refreshing, or reconnecting your wallet.' },
-                { q: 'Why did my transaction fail?', a: 'Usually insufficient gas, network congestion, or nonce conflicts. Ensure you have enough ETH for gas and try increasing the gas price.' },
-                { q: 'Why is a known protocol flagged as risky?', a: 'Our engine errs on the side of caution. Unlimited approvals, unverified source, or past incidents can trigger flags. Review individually.' },
-                { q: 'Why is my scan slow?', a: 'Depends on approval count, network congestion, and indexer load. Scans process in the background — you can continue using the app.' },
-              ].map((item, i) => (
-                <div key={i} className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                  <h4 className="text-sm font-semibold text-slate-200 mb-1">{item.q}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.a}</p>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Shield className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Admin</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Can manage team members, add wallets, and invite users. Cannot remove the owner.</p>
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
-
-            <h3 id="glossary" className="text-lg font-semibold text-slate-100 mb-3">Glossary</h3>
-            <div className="overflow-x-auto mb-8">
-              <table className="w-full text-xs">
-                <tbody>
-                  {[
-                    { term: 'Allowance', def: 'Permission granted to a contract to spend a specific amount of your tokens.' },
-                    { term: 'Revocation', def: 'Setting an allowance to zero, removing spending permission.' },
-                    { term: 'Gas', def: 'Fee to execute blockchain transactions, paid to network validators.' },
-                    { term: 'Spender', def: 'Contract address with permission to spend your tokens (DEX, marketplace, etc.).' },
-                    { term: 'dApp', def: 'Decentralised application operating on blockchain without central authority.' },
-                    { term: 'Non-Custodial', def: 'Security model where users maintain full control of keys and funds.' },
-                  ].map((g) => (
-                    <tr key={g.term} className="border-b border-slate-700/30">
-                      <td className="py-2 pr-4 font-semibold text-amber-400/80 whitespace-nowrap">{g.term}</td>
-                      <td className="py-2 text-slate-400">{g.def}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <h3 id="getting-help" className="text-lg font-semibold text-slate-100 mb-3">Getting Help</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                <Mail className="w-4 h-4 text-amber-400 mb-2" />
-                <h4 className="text-xs font-semibold text-slate-200 mb-0.5">Support</h4>
-                <p className="text-[11px] text-slate-400">support@allowanceguard.com — typically within 24h.</p>
-              </div>
-              <div className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                <AlertTriangle className="w-4 h-4 text-amber-400 mb-2" />
-                <h4 className="text-xs font-semibold text-slate-200 mb-0.5">Bug Reports</h4>
-                <p className="text-[11px] text-slate-400">Report on GitHub with browser, wallet, network, and repro steps.</p>
-              </div>
-              <div className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                <MessageCircle className="w-4 h-4 text-amber-400 mb-2" />
-                <h4 className="text-xs font-semibold text-slate-200 mb-0.5">Community</h4>
-                <p className="text-[11px] text-slate-400">Follow on X for updates, security alerts, and discussions.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-
-    case 'faq':
-      return (
-        <div className="space-y-8">
-          <div>
-            <h2 id="frequently-asked-questions" className="text-2xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              FAQ
-            </h2>
-            <div className="space-y-3">
-              {faqItems.map((item, index) => (
-                <div key={index} className="rounded-xl p-4 bg-slate-800/40 border border-slate-700/50">
-                  <h4 className="text-sm font-semibold text-slate-200 mb-1.5">{item.question}</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">{item.answer}</p>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Settings className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Editor</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Can add wallets to the team and invite viewers. Can revoke approvals and manage monitoring settings.</p>
+                    </div>
+                  </div>
                 </div>
-              ))}
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Search className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Viewer</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Read-only access. Can view approvals and scan results but cannot revoke approvals or modify settings.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Getting Started with Teams</h3>
+              <ol className="list-decimal list-inside space-y-2 text-base text-text-secondary dark:text-secondary-400 mb-6">
+                <li><strong>Sign In:</strong> Use the email magic link authentication to create an account</li>
+                <li><strong>Create Team:</strong> Click &quot;New team&quot; and enter a team name</li>
+                <li><strong>Add Wallets:</strong> Add wallet addresses that your team needs to monitor</li>
+                <li><strong>Invite Members:</strong> Send email invites to collaborators with appropriate roles</li>
+                <li><strong>Manage Access:</strong> Control who can view, edit, or revoke approvals</li>
+              </ol>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Team Features</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Users className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Shared Wallets</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Add multiple wallet addresses to a team for centralized monitoring</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Email Invites</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Invite team members via secure email links with role-based access</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Shield className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Role-Based Access</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Control permissions with owner, admin, editor, and viewer roles</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Bell className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Team Monitoring</h4>
+                      <p className="text-base text-text-secondary dark:text-secondary-400">Set up autonomous monitoring for team-managed wallets</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )
+        )
 
-    default:
-      return null
-  }
+      case 'revoking':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">How to Revoke Approvals</h2>
+              <p className="text-base text-text-secondary dark:text-secondary-400 mb-6">
+                Revoking an approval means setting the allowance to zero, preventing the spender from accessing your tokens:
+              </p>
+              <div className="space-y-6">
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Lock className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Using AllowanceGuard</h4>
+                    </div>
+                  </div>
+                  <ol className="list-decimal list-inside space-y-2 text-base text-text-secondary dark:text-secondary-400 ml-16">
+                    <li>Connect your wallet and scan for approvals</li>
+                    <li>Find the approval you want to revoke</li>
+                    <li>Click the &quot;Revoke&quot; button</li>
+                    <li>Sign the transaction in your wallet</li>
+                    <li>Pay the gas fee to complete the revocation</li>
+                  </ol>
+                </div>
+                <div className="p-6 bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 bg-primary-50 dark:bg-primary-900/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <AlertTriangle className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Important Notes</h4>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 text-base text-text-secondary dark:text-secondary-400 ml-16">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Each revocation requires a separate transaction and gas fee</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Revoking doesn&apos;t affect already deposited or staked tokens</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Some dApps may require you to re-approve for continued functionality</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-400rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Revocation is preventative, not restorative for already stolen funds</span>
+                    </li>
+              </ul>
+    </div>
+      </div>
+            </div>
+          </div>
+        )
+
+      case 'api':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Settings & Configuration</h2>
+              <p className="text-base text-text-secondary dark:text-secondary-400 mb-6">
+                AllowanceGuard provides comprehensive settings to customize your security monitoring experience:
+              </p>
+              
+              <div className="space-y-6">
+                {/* Email Alerts */}
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Mail className="w-5 h-5 text-text-primary dark:text-secondary-100" />
+                    <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Email Alerts</h3>
+                  </div>
+                  <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4">
+                    Get notified when new approvals are detected on your wallets via Microsoft SMTP.
+                  </p>
+                  <ul className="space-y-2 text-sm text-text-secondary dark:text-secondary-400">
+                    <li>• Daily digest emails with risky approval summaries</li>
+                    <li>• Risk-only filtering to reduce notification noise</li>
+                    <li>• HTML templates with professional formatting</li>
+                    <li>• Customizable preferences per wallet address</li>
+                  </ul>
+                </div>
+
+                {/* Risk Policy */}
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Shield className="w-5 h-5 text-text-primary dark:text-secondary-100" />
+                    <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Risk Policy Configuration</h3>
+                  </div>
+                  <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4">
+                    Configure what counts as alert-worthy for your specific needs.
+                  </p>
+                  <ul className="space-y-2 text-sm text-text-secondary dark:text-secondary-400">
+                    <li>• Set minimum risk score thresholds</li>
+                    <li>• Focus on unlimited approvals only</li>
+                    <li>• Include/exclude specific spender addresses</li>
+                    <li>• Filter by token addresses</li>
+                    <li>• Chain-specific policies</li>
+                  </ul>
+                </div>
+
+                {/* Slack Integration */}
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Bell className="w-5 h-5 text-text-primary dark:text-secondary-100" />
+                    <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Slack Integration</h3>
+                  </div>
+                  <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4">
+                    Get daily digests directly in your Slack workspace.
+                  </p>
+                  <ul className="space-y-2 text-sm text-text-secondary dark:text-secondary-400">
+                    <li>• Webhook-based notifications</li>
+                    <li>• Rich formatting with approval details</li>
+                    <li>• Team collaboration features</li>
+                    <li>• Custom channel routing</li>
+            </ul>
+          </div>
+
+                {/* Public Sharing */}
+                <div className="border border-secondary-700 rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Settings className="w-5 h-5 text-text-primary dark:text-secondary-100" />
+                    <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Public Share Links</h3>
+                  </div>
+                  <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4">
+                    Generate read-only links to share your wallet&apos;s approval status.
+                  </p>
+                  <ul className="space-y-2 text-sm text-text-secondary dark:text-secondary-400">
+                    <li>• Privacy controls (censor addresses/amounts)</li>
+                    <li>• Risk-only filtering for public sharing</li>
+                    <li>• Expiration dates for temporary access</li>
+                    <li>• One-click link generation and rotation</li>
+                  </ul>
+          </div>
+
+                {/* API Reference */}
+          <div className="border border-secondary-700 rounded-md p-6 bg-mist">
+                  <div className="flex items-center gap-3 mb-3">
+                    <Settings className="w-5 h-5 text-text-primary dark:text-secondary-100" />
+                    <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">API Endpoints</h3>
+                  </div>
+                  <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4">
+                    Programmatic access to AllowanceGuard functionality:
+                  </p>
+                  <div className="space-y-2">
+                    {apiEndpoints.map((endpoint, index) => (
+                      <div key={index} className="flex items-center gap-3 text-sm">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-ink text-white">
+                          {endpoint.method}
+                        </span>
+                        <code className="font-mono text-text-primary dark:text-secondary-100">{endpoint.endpoint}</code>
+                        <span className="text-text-secondary dark:text-secondary-400">{endpoint.description}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'browser-extension':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 id="browser-extension" className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Browser Extension</h2>
+              <p className="text-base text-text-secondary dark:text-secondary-400 mb-6">
+                The Allowance Guard browser extension brings real-time transaction risk assessment directly into your browser. Get warnings before you sign risky approvals, without needing to visit the dashboard.
+              </p>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Available On</h3>
+              <div className="space-y-4 mb-8">
+                <div className="mobbin-card p-6">
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Google Chrome</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400 mb-2">
+                    Available on the Chrome Web Store. Works with all Chromium-based browsers including Brave, Edge, and Opera.
+                  </p>
+                  <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Pending Approval</span>
+                </div>
+                <div className="mobbin-card p-6">
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Mozilla Firefox</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400 mb-2">
+                    Available on Firefox Add-ons. Fully compatible with the latest Firefox releases.
+                  </p>
+                  <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Pending Approval</span>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">What the Extension Does</h3>
+              <div className="space-y-4 mb-8">
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Pre-Signing Risk Assessment</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">
+                    Before you approve a transaction, the extension analyses the contract and approval amount, warning you if it detects an unlimited approval, a known malicious spender, or other red flags.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Quick Allowance Overview</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">
+                    Click the extension icon to see a summary of your current active approvals and overall risk score without leaving the page you are on.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Non-Custodial &amp; Privacy-First</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">
+                    The extension never accesses your private keys. It reads only public blockchain data and communicates with the Allowance Guard API for risk analysis. No tracking, no analytics on your browsing.
+                  </p>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">How to Install</h3>
+              <div className="space-y-4 text-base text-text-secondary dark:text-secondary-400">
+                <p><strong>1. Download:</strong> Visit the Chrome Web Store or Firefox Add-ons page (links will be active once store approval is complete) and click &quot;Add to Browser&quot;.</p>
+                <p><strong>2. Connect:</strong> After installation, click the Allowance Guard icon in your toolbar and connect your wallet address. No private keys are required — just your public address.</p>
+                <p><strong>3. Browse safely:</strong> The extension runs in the background. Whenever a dApp asks you to sign a token approval, the extension will show a risk popup before you confirm.</p>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'troubleshooting':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 id="troubleshooting" className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Support & Troubleshooting</h2>
+              
+              <h3 id="common-issues" className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Common Issues and Solutions</h3>
+              <div className="space-y-6 mb-8">
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Why can&apos;t I see my allowances?</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">This could indicate several scenarios. First, you may genuinely have no token approvals, which is actually a good security posture. Second, there might be a network connectivity issue preventing the scan from completing. Third, the blockchain indexer might be experiencing delays. Try switching networks, refreshing the page, or reconnecting your wallet. If the problem persists, contact support with your wallet address and network information.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Why did my transaction fail?</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">Transaction failures are typically due to insufficient gas fees, network congestion, or nonce conflicts. Ensure you have enough ETH in your wallet to cover gas costs, and consider increasing the gas price for faster confirmation during network congestion. If the transaction fails due to a nonce issue, wait a few minutes before retrying. Some contracts may also require specific revocation methods or have additional security measures that prevent standard revocation.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Why is a known protocol flagged as risky?</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">Our risk engine uses multiple heuristics that may flag legitimate protocols for various reasons. A protocol might be flagged if it has unlimited approvals, unverified source code, or appears on security watchlists due to past incidents. The risk score is designed to err on the side of caution, encouraging users to review each approval individually. You can still use the protocol while being aware of the associated risks, or consider revoking the approval if you no longer need it.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Why is my scan taking so long?</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">Scan duration depends on several factors including the number of approvals, network congestion, and blockchain indexer performance. Wallets with extensive transaction history or many approvals may take several minutes to scan completely. The system processes scans in the background using a job queue, so you can continue using the application while the scan completes. If a scan appears stuck, try refreshing the page or reconnecting your wallet.</p>
+                </div>
+              </div>
+              
+              <h3 id="glossary" className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Glossary of Terms</h3>
+              <div className="space-y-4 mb-8">
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Allowance</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">A permission granted to a smart contract to spend a specific amount of your tokens. This is necessary for DeFi interactions but can become a security risk if left unchecked.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Revocation</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">The process of setting an allowance to zero, completely removing a contract&apos;s ability to spend your tokens. This is accomplished through a blockchain transaction.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Gas</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">The fee required to execute transactions on the Ethereum blockchain. Gas fees are paid to network validators and vary based on network congestion and transaction complexity.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Spender</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">The smart contract address that has been granted permission to spend your tokens. This is typically a DEX router, NFT marketplace, or other DeFi protocol.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">dApp</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">Decentralized application - a blockchain-based application that operates without central authority, typically requiring token approvals for functionality.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Non-Custodial</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">A security model where users maintain complete control over their private keys and funds, with no third party having access to their assets.</p>
+                </div>
+              </div>
+              
+              <h3 id="getting-help" className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-3">Getting Help</h3>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Technical Support</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">For technical issues, feature requests, or general questions, contact our support team at support@allowanceguard.com. We typically respond within 24 hours and can help with wallet connection issues, transaction problems, or platform-specific questions.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Bug Reports</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">If you encounter a bug or unexpected behavior, please report it on our GitHub repository with detailed information including your browser, wallet type, network, and steps to reproduce the issue. This helps us quickly identify and fix problems.</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Community Updates</h4>
+                  <p className="text-base text-text-secondary dark:text-secondary-400">Follow us on X for platform updates, security alerts, and community discussions. We regularly share security tips, new feature announcements, and important updates about the Web3 security landscape.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 'faq':
+        return (
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+                {faqItems.map((item, index) => (
+                  <div key={index} className="border border-secondary-700 rounded-md p-4 bg-mist">
+                    <h4 className="font-medium text-text-primary dark:text-secondary-100 mb-2">Q: {item.question}</h4>
+                    <p className="text-sm text-text-secondary dark:text-secondary-400">A: {item.answer}</p>
+          </div>
+            ))}
+              </div>
+            </div>
+          </div>
+        )
+
+      default:
+        return null
+    }
 }

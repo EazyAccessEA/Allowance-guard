@@ -59,7 +59,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
   const showDiscount = provider.discountEligible && discountPct > 0
 
   return (
-    <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl overflow-hidden">
+    <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl overflow-hidden">
       <div className="p-5">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
@@ -103,7 +103,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
               href={provider.coverUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center px-3 py-2.5 border border-border-primary dark:border-secondary-600 text-text-secondary dark:text-secondary-400 text-sm rounded-lg hover:bg-neutral-50 dark:hover:bg-secondary-700 transition-colors"
+              className="flex items-center justify-center px-3 py-2.5 border border-secondary-700 dark:border-secondary-600 text-text-secondary dark:text-secondary-400 text-sm rounded-lg hover:bg-secondary-800 dark:hover:bg-secondary-700 transition-colors"
             >
               <ExternalLink className="h-4 w-4" />
             </a>
@@ -124,7 +124,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
 
       {/* Pre-filled application form */}
       {expanded && isSentinel && (
-        <div className="border-t border-border-primary dark:border-secondary-700 p-5 bg-neutral-50 dark:bg-secondary-800/40">
+        <div className="border-t border-secondary-700 p-5 bg-secondary-800/40">
           <h4 className="text-sm font-semibold text-text-primary dark:text-secondary-100 mb-3">
             Pre-filled Application
           </h4>
@@ -135,7 +135,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
                 type="text"
                 readOnly
                 value={walletAddress}
-                className="w-full px-3 py-2 text-sm font-mono bg-white dark:bg-secondary-700 border border-border-primary dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
+                className="w-full px-3 py-2 text-sm font-mono bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -145,7 +145,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
                   type="text"
                   readOnly
                   value={`${riskScore}/100`}
-                  className="w-full px-3 py-2 text-sm bg-white dark:bg-secondary-700 border border-border-primary dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
+                  className="w-full px-3 py-2 text-sm bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
                 />
               </div>
               <div>
@@ -154,7 +154,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
                   type="text"
                   readOnly
                   value={showDiscount ? `Yes (${discountPct}%)` : 'No'}
-                  className="w-full px-3 py-2 text-sm bg-white dark:bg-secondary-700 border border-border-primary dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
+                  className="w-full px-3 py-2 text-sm bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
                 />
               </div>
             </div>

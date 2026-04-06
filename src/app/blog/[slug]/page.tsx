@@ -103,7 +103,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
+      <div className="border-t border-secondary-700" />
 
       {/* Article Content */}
       <Section className="py-16 bg-gray-50">
@@ -140,7 +140,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             {/* Navigation */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 pt-8 border-t border-border-primary bg-white rounded-lg p-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 pt-8 border-t border-secondary-700 bg-secondary-800 rounded-lg p-6">
               {prevPost ? (
                 <Link
                   href={`/blog/${prevPost.slug}`}

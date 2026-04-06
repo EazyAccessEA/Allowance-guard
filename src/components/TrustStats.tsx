@@ -61,7 +61,7 @@ export default function TrustStats() {
       </Section>
 
       {/* Trust Indicators */}
-      <Section className="py-8 bg-white dark:bg-[#0A0E1A]">
+      <Section className="py-8 bg-surface-base">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-lg text-text-secondary dark:text-secondary-400 font-medium">

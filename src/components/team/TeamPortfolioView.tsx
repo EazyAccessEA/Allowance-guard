@@ -155,7 +155,7 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
           ) : (
             <div className="space-y-3">
               {wallets.map((w) => (
-                <div key={w.wallet_address} className="border border-border-primary rounded-lg overflow-hidden">
+                <div key={w.wallet_address} className="border border-secondary-700 rounded-lg overflow-hidden">
                   <button
                     onClick={() => toggleWallet(w.wallet_address)}
                     className="w-full flex items-center justify-between p-4 hover:bg-background-secondary transition-colors text-left"
@@ -197,7 +197,7 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
 
                   {/* Expanded allowances */}
                   {expandedWallet === w.wallet_address && (
-                    <div className="border-t border-border-primary bg-background-secondary p-4">
+                    <div className="border-t border-secondary-700 bg-background-secondary p-4">
                       {!walletAllowances[w.wallet_address] ? (
                         <div className="text-sm text-text-secondary">Loading allowances...</div>
                       ) : walletAllowances[w.wallet_address].length === 0 ? (

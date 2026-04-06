@@ -44,7 +44,7 @@ export default function EmptyState({
           'flex h-16 w-16 items-center justify-center rounded-2xl mb-5',
           positive
             ? 'bg-semantic-success-50 dark:bg-semantic-success-900/20 text-semantic-success-500'
-            : 'bg-neutral-100 dark:bg-secondary-800 text-neutral-400 dark:text-secondary-500',
+            : 'bg-secondary-800 text-neutral-400 dark:text-secondary-500',
         )}
       >
         {icon}
