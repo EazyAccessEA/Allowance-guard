@@ -71,9 +71,12 @@ export default function FeaturesPreview() {
       <Container>
         <CascadingScrollAnimation direction="up" distance={40} delay={0}>
           <div className="max-w-3xl mb-20">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500">
-                Built for Security & Clarity
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
+              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500">
+                Built for
+              </span>
+              <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                {' '}Security & Clarity
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">

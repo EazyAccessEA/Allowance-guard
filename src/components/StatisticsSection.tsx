@@ -66,9 +66,12 @@ export default function StatisticsSection() {
               <div className="w-1.5 h-1.5 rounded-full bg-crimson-400 animate-pulse" />
               <span className="text-xs font-medium text-crimson-400 tracking-wide uppercase">Security Intelligence</span>
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
-                The Hidden Risk in Every Wallet
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
+              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
+                The Hidden Risk
+              </span>
+              <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                {' '}in Every Wallet
               </span>
             </h2>
             <p className="text-lg text-slate-400 leading-relaxed">
