@@ -10,6 +10,7 @@
 3. **Relentless Clarity**: Information hierarchy is razor-sharp. Every element earns its space. Clarity doesn't mean boring — it means zero wasted seconds.
 4. **Signature Presence**: Every page is unmistakably AllowanceGuard. Recognisable from a screenshot of any page, even without the logo.
 5. **Power to the User**: The user is in control. The UI communicates agency — "you can see everything, you can act on anything."
+6. **100% Commitment**: Every design decision goes to full intensity or doesn't happen at all. A tentative animation is worse than none. A half-styled divider undermines more than a missing one. If an element exists, it earns its space with conviction.
 
 ---
 
@@ -239,6 +240,51 @@ Base unit: **4px**
 - **Fade up:** opacity 0→1 + translateY(8px→0), `--duration-medium`, `--ease-default`
 - **Scale in:** opacity 0→1 + scale(0.95→1), `--duration-base`, `--ease-aggressive`
 - **Slide in:** translateX(-16px→0), `--duration-medium`, `--ease-default`
+- **Split text:** Words stagger in from below (translateY 100%→0 + opacity), `--duration-slow`, `--ease-default`, 80ms stagger per word
+- **Blur reveal:** opacity 0→1 + filter blur(12px→0px), `--duration-slow`, `--ease-default`
+- **Count up:** Number animates from 0→target with ease-out cubic, `--duration-slower`, scroll-triggered
+- **Draw in:** scaleX(0→1) with transformOrigin left, `--duration-slow`, `--ease-default`
+
+### Animation Philosophy
+
+Motion in AllowanceGuard serves **choreography, not decoration**. Every animation must earn its place.
+
+**Core principles:**
+1. **Scroll as revelation** — sections reveal as the user scrolls, not everything visible at once. The page unfolds like a narrative.
+2. **Choreographed entrances** — elements appear in sequence, not simultaneously. Headlines land first, supporting content materialises after. This creates rhythm.
+3. **Restraint over spectacle** — pick 2–3 effects per page and apply them with precision. More effects ≠ more polish. A page with six animations feels like a demo site, not a product.
+4. **Engineered confidence, not playfulness** — this is a security tool. Every interaction should feel precise and deliberate. No sparkles, no bounce, no whimsy.
+5. **100% commitment** — if an element animates, it animates with intention. If it's static, it's confidently static. No half-measures — a tentative animation is worse than none at all.
+
+### Animation Components (framer-motion)
+
+Reusable components in `src/components/ui/`:
+
+| Component | File | Purpose | Props |
+|-----------|------|---------|-------|
+| SplitText | `SplitText.tsx` | Word-by-word staggered headline reveal | `delay`, `stagger`, `renderWord` |
+| BlurText | `BlurText.tsx` | Blur-to-clear text materialisation | `delay`, `duration` |
+| CountUp | `CountUp.tsx` | Scroll-triggered animated number counter | `value`, `suffix`, `prefix`, `delay`, `duration` |
+
+All components respect `prefers-reduced-motion` via framer-motion's `useReducedMotion()` hook. When reduced motion is preferred, content renders instantly with no animation.
+
+### What to Use vs. What to Avoid
+
+**Use — effects that project trust and precision:**
+- **SplitText** on hero headlines — the best copy deserves an entrance
+- **BlurText** on subheadings — materialises after the headline lands, creates sequence
+- **CountUp** on stats/metrics — numbers that animate on scroll are a baseline expectation
+- **Fade up / Fade content** as scroll wrappers — sections reveal progressively
+- **Aurora / mesh gradients** as subtle hero backgrounds — muted, brand-coloured, adds materiality without distraction
+- **Draw-in lines** for brand dividers — the crimson signature line draws from left
+
+**Avoid — effects that undermine credibility:**
+- **Hyperspeed / warp / 3D scenes** — "portfolio site" energy, not security product energy
+- **Particle explosions / Ballpit** — spectacle without substance
+- **ClickSpark / confetti / playful interactions** — wrong tone for a tool that protects wallets
+- **Parallax scrolling** on content — creates motion sickness risk, adds complexity without value
+- **Hover-triggered animations on text** — text should be readable, not reactive
+- **Auto-playing loops on content elements** — background meshes can loop; content elements should animate once and settle
 
 ### Reduced Motion (mandatory root-level)
 ```css
@@ -286,6 +332,27 @@ Margin:    24px (desktop), 16px (mobile)
 ### Heroes
 - **HomepageHero**: default (with mesh bg, headline, stats, CTA)
 - **PageHero**: default (simple heading + breadcrumb)
+
+**Homepage Hero — Entrance Choreography:**
+
+The hero loads as a sequenced performance, not a static render. Each element has a precise entrance delay:
+
+| Delay | Element | Animation | Component |
+|-------|---------|-----------|-----------|
+| 0.0s | Eyebrow label | Fade up | `motion.div` |
+| 0.2s | Headline words | Stagger in word-by-word | `SplitText` |
+| 0.8s | Subheading | Blur-to-clear materialisation | `BlurText` |
+| 1.1s | CTA buttons | Fade up | `motion.div` |
+| 1.3s | Crimson divider | Draws in from left (scaleX) | `motion.div` |
+| 1.4–1.6s | Stats (50K+, 2M+, 10) | Count up from zero | `CountUp` |
+| 1.7s | Trust indicators | Fade up | `motion.div` |
+
+**Hero design rules:**
+- The headline is the centrepiece. It gets the most dramatic entrance (SplitText). The "approved." word retains its crimson gradient during animation.
+- Background mesh animates independently (CSS keyframes, not JS) — always subtle, never competing with content.
+- The crimson divider line is a **brand signature element**: thick enough to notice, drawn in from left to right. Either bold and deliberate or removed entirely — never tentative.
+- Stats should hit with authority: large display type, CountUp animation, generous vertical space. These are credibility numbers, not metadata.
+- Alignment must be committed: left-aligned content stays left-aligned. CTAs match the content alignment. No Z-shape eye paths.
 
 ### Buttons
 - **Button**: primary, secondary, ghost, destructive, outline
