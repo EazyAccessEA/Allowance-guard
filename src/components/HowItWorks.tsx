@@ -52,9 +52,12 @@ export default function HowItWorks() {
       <Container>
         <CascadingScrollAnimation direction="up" distance={40} delay={0}>
           <div className="max-w-3xl mx-auto text-center mb-20">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
-                How Allowance Guard Works
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
+              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
+                How Allowance Guard
+              </span>
+              <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
+                {' '}Works
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
