@@ -1,55 +1,71 @@
 // AllowanceGuard Design Tokens
 // Source of truth: docs/design-tokens-handbook.md
-// Old system (PuredgeOS / Serum Teal) is deprecated.
+// Palette: "Monochrome Pro" — Institutional Authority
+// Philosophy: True black canvas. White commands action. Red signals danger.
+// By keeping the site monochrome, red carries 10x more weight.
 
 export const designTokens = {
   colors: {
-    // Primary — Crimson Signal
+    // Primary Action — Pure White on True Black
     primary: {
-      50: '#FEF2F2',
-      100: '#FEE2E2',
-      200: '#FECACA',
-      300: '#FCA5A5',
-      400: '#F87171',
-      500: '#E53E3E', // Brand primary
-      600: '#DC2626',
-      700: '#B91C1C',
-      800: '#991B1B',
-      900: '#7F1D1D',
+      50: '#FAFAFA',
+      100: '#F5F5F5',
+      200: '#E5E5E5',
+      300: '#D4D4D4',
+      400: '#A1A1AA',   // Cool Grey accent
+      500: '#FFFFFF',   // Primary action color (white)
+      600: '#E5E5E5',
+      700: '#D4D4D4',
+      800: '#A1A1AA',
+      900: '#71717A',
+      foreground: '#000000', // Text on primary buttons
+    },
+
+    // Danger — Vibrant Crimson (the ONLY color on the page)
+    danger: {
+      50: '#FFF5F5',
+      100: '#FFE3E3',
+      200: '#FFC9C9',
+      300: '#FFA8A8',
+      400: '#FF8787',
+      500: '#FF4B4B',   // Vibrant Crimson — danger, revoke, threats
+      600: '#E03E3E',
+      700: '#C53030',
+      800: '#9B2C2C',
+      900: '#742A2A',
       foreground: '#FFFFFF',
     },
 
-    // Accent — Volt Mint (rare, powerful)
+    // Accent/Neutral — Cool Grey
     accent: {
-      50: '#ECFFFE',
-      100: '#C6FFF8',
-      200: '#8AFAED',
-      300: '#4AEADB',
-      400: '#1AD6C5',
-      500: '#00F0C8', // Accent primary
-      600: '#00C2A0',
-      700: '#009E82',
-      800: '#007A64',
-      900: '#005546',
+      50: '#FAFAFA',
+      100: '#F4F4F5',
+      200: '#E4E4E7',
+      300: '#D4D4D8',
+      400: '#A1A1AA',   // Cool Grey — accent/neutral
+      500: '#71717A',
+      600: '#52525B',
+      700: '#3F3F46',   // Secondary action border
+      800: '#27272A',
+      900: '#18181B',
     },
 
-    // Neutral — Slate
+    // Neutral — Zinc scale (monochrome backbone)
     neutral: {
-      50: '#F8FAFC',
-      100: '#F1F5F9',
-      200: '#E2E8F0',
-      300: '#CBD5E1',
-      400: '#94A3B8',
-      500: '#64748B',
-      600: '#475569',
-      700: '#334155',
-      800: '#1E293B',
-      850: '#151D2E',
-      900: '#0B1120',
-      950: '#060A14',
+      50: '#FAFAFA',
+      100: '#F4F4F5',
+      200: '#E4E4E7',
+      300: '#D4D4D8',
+      400: '#A1A1AA',
+      500: '#71717A',
+      600: '#52525B',
+      700: '#3F3F46',
+      800: '#27272A',
+      900: '#18181B',
+      950: '#09090B',
     },
 
-    // Semantic
+    // Semantic (kept for functional use — only red is visually prominent)
     success: {
       50: '#F0FDF4', 100: '#DCFCE7', 200: '#BBF7D0', 300: '#86EFAC',
       400: '#4ADE80', 500: '#22C55E', 600: '#16A34A', 700: '#15803D',
@@ -61,9 +77,9 @@ export const designTokens = {
       800: '#92400E', 900: '#78350F',
     },
     error: {
-      50: '#FEF2F2', 100: '#FEE2E2', 200: '#FECACA', 300: '#FCA5A5',
-      400: '#F87171', 500: '#EF4444', 600: '#DC2626', 700: '#B91C1C',
-      800: '#991B1B', 900: '#7F1D1D',
+      50: '#FFF5F5', 100: '#FFE3E3', 200: '#FFC9C9', 300: '#FFA8A8',
+      400: '#FF8787', 500: '#FF4B4B', 600: '#E03E3E', 700: '#C53030',
+      800: '#9B2C2C', 900: '#742A2A',
     },
     info: {
       50: '#F0F9FF', 100: '#E0F2FE', 200: '#BAE6FD', 300: '#7DD3FC',
@@ -71,37 +87,37 @@ export const designTokens = {
       800: '#075985', 900: '#0C4A6E',
     },
 
-    // Surface system (dark-first)
+    // Surface system — True Black foundation
     surface: {
       dark: {
-        base: '#0B1120',
-        raised: '#151D2E',
-        overlay: '#1E293B',
-        elevated: '#263244',
-        glass: 'rgba(21, 29, 46, 0.75)',
-        glassBorder: 'rgba(71, 85, 105, 0.3)',
+        base: '#000000',        // True Black
+        raised: '#0A0A0A',      // Barely lifted
+        overlay: '#18181B',     // Cards, panels
+        elevated: '#27272A',    // Elevated cards
+        glass: 'rgba(10, 10, 10, 0.80)',
+        glassBorder: 'rgba(63, 63, 70, 0.3)',
       },
       light: {
         base: '#FFFFFF',
-        raised: '#F8FAFC',
+        raised: '#FAFAFA',
         overlay: '#FFFFFF',
         elevated: '#FFFFFF',
       },
     },
 
-    // Text
+    // Text — high contrast on true black
     text: {
-      primary: '#0F172A',
-      secondary: '#475569',
-      tertiary: '#64748B',
-      inverse: '#F1F5F9',
+      primary: '#FFFFFF',       // Pure white on black
+      secondary: '#A1A1AA',     // Cool Grey
+      tertiary: '#71717A',      // Muted grey
+      inverse: '#000000',       // Black on white
     },
 
-    // Border
+    // Border — subtle zinc borders
     border: {
-      default: '#E2E8F0',
-      strong: '#CBD5E1',
-      focus: '#E53E3E',
+      default: '#27272A',
+      strong: '#3F3F46',        // Secondary action border
+      focus: '#FFFFFF',         // White focus ring
     },
   },
 
@@ -163,12 +179,12 @@ export const designTokens = {
   },
 
   shadows: {
-    sm: '0 1px 2px rgba(0,0,0,0.05)',
-    md: '0 4px 12px rgba(0,0,0,0.1)',
-    lg: '0 12px 32px rgba(0,0,0,0.15)',
-    glowPrimary: '0 0 20px rgba(229,62,62,0.25)',
-    glowAccent: '0 0 20px rgba(0,240,200,0.25)',
-    focus: '0 0 0 3px rgba(229,62,62,0.2)',
+    sm: '0 1px 2px rgba(0,0,0,0.3)',
+    md: '0 4px 12px rgba(0,0,0,0.4)',
+    lg: '0 12px 32px rgba(0,0,0,0.5)',
+    glowDanger: '0 0 20px rgba(255,75,75,0.25)',
+    glowWhite: '0 0 20px rgba(255,255,255,0.15)',
+    focus: '0 0 0 3px rgba(255,255,255,0.2)',
   },
 
   motion: {

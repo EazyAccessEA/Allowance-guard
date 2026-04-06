@@ -9,7 +9,7 @@ import SplitText from '@/components/ui/SplitText'
 import BlurText from '@/components/ui/BlurText'
 import CountUp from '@/components/ui/CountUp'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Shield, Search, Zap } from 'lucide-react'
+import { Shield, Search, CheckCircle } from 'lucide-react'
 
 interface HeroProps {
   isConnected: boolean
@@ -40,25 +40,25 @@ export default function Hero({
 
   return (
     <section
-      className="relative min-h-[85svh] flex items-center overflow-hidden bg-surface-base"
+      className="relative min-h-[85svh] flex items-center overflow-hidden bg-black"
       aria-label="Hero"
     >
-      {/* Vanta.js NET — interactive WebGL mesh, crimson on deep navy */}
+      {/* Vanta.js NET — monochrome mesh at 18% opacity */}
       <VantaHeroBackground />
 
-      {/* Gradient overlay for depth */}
+      {/* Fix #5: Radial gradient mask — pushes background behind text */}
       <div
         className="absolute inset-0 z-10"
         aria-hidden="true"
         style={{
           background:
-            'radial-gradient(ellipse 80% 50% at 50% 40%, rgba(229,62,62,0.06) 0%, transparent 70%), linear-gradient(to bottom, rgba(11,17,32,0.6) 0%, rgba(11,17,32,0.95) 100%)',
+            'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.2) 100%)',
         }}
       />
 
       {/* Content */}
       <Container className="relative z-20 max-w-5xl py-20 sm:py-28 lg:py-36">
-        {/* Eyebrow — first to appear */}
+        {/* Eyebrow */}
         <motion.div
           className="flex items-center gap-2 mb-6 sm:mb-8"
           variants={fadeUp}
@@ -66,20 +66,20 @@ export default function Hero({
           animate="visible"
           custom={0}
         >
-          <Shield className="w-4 h-4 text-crimson-400" aria-hidden="true" />
-          <span className="text-sm font-medium tracking-wide text-slate-400 uppercase">
+          <Shield className="w-4 h-4 text-neutral-400" aria-hidden="true" />
+          <span className="text-sm font-medium tracking-wide text-neutral-400 uppercase">
             Web3 Wallet Security
           </span>
         </motion.div>
 
-        {/* Headline — SplitText, words stagger in after eyebrow */}
+        {/* Headline — SplitText */}
         <SplitText
           className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white mb-6 sm:mb-8"
           delay={0.2}
           stagger={0.08}
           renderWord={(word) =>
             word === 'approved.' ? (
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-crimson-400 to-crimson-500">
+              <span className="text-crimson-500">
                 {word}
               </span>
             ) : (
@@ -90,43 +90,55 @@ export default function Hero({
           {"Know what you\u2019ve approved."}
         </SplitText>
 
-        {/* Subheadline — BlurText, materialises after headline lands */}
+        {/* Fix #2: Subheadline — 25% larger, medium weight, 1.5x line height */}
         <BlurText
-          className="max-w-2xl text-lg sm:text-xl text-slate-300 leading-relaxed mb-8 sm:mb-10"
+          className="max-w-2xl text-xl sm:text-2xl font-medium text-neutral-300 mb-8 sm:mb-10 leading-relaxed"
           delay={0.8}
         >
           Scan, assess, and revoke token approvals across 10 chains.
           Core tool: free and open source. Always.
         </BlurText>
 
-        {/* Dual CTAs — fade up after subheading */}
+        {/* Fix #1 & #4: CTAs consolidated + Trust indicators directly below */}
         <motion.div
-          className="flex flex-col gap-3 sm:gap-4 mb-10 sm:mb-12 min-h-[80px] sm:min-h-[60px]"
+          className="flex flex-col gap-4 mb-12 sm:mb-16 min-h-[80px] sm:min-h-[60px]"
           variants={fadeUp}
           initial={prefersReduced ? 'visible' : 'hidden'}
           animate="visible"
           custom={1.1}
         >
           {!isConnected ? (
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <ClientConnectButton
-                variant="primary"
-                size="lg"
-                className="w-full sm:w-auto"
-              />
-              <Button
-                variant="ghost"
-                size="lg"
-                className="w-full sm:w-auto text-volt-400 border border-volt-500/30 hover:border-volt-500/50 hover:bg-volt-500/10 hover:text-volt-300"
-                onClick={() => {
-                  const el = document.getElementById('main')
-                  el?.scrollIntoView({ behavior: 'smooth' })
-                }}
-              >
-                <Search className="w-4 h-4 mr-2" aria-hidden="true" />
-                Scan an Address
-              </Button>
-              <TestConnect onConnect={onWalletSelect} />
+            <div className="flex flex-col gap-5">
+              {/* Primary + Secondary CTAs */}
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                {/* Fix #1: Connect Wallet = sole primary CTA (white on black) */}
+                <ClientConnectButton
+                  variant="primary"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                />
+                {/* Fix #1: Scan = ghost/secondary style */}
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full sm:w-auto text-neutral-300 border-secondary-700 hover:border-secondary-500 hover:bg-secondary-800/50 hover:text-white"
+                  onClick={() => {
+                    const el = document.getElementById('main')
+                    el?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  <Search className="w-4 h-4 mr-2" aria-hidden="true" />
+                  Scan an Address
+                </Button>
+                <TestConnect onConnect={onWalletSelect} />
+              </div>
+
+              {/* Fix #4: Trust indicators — prominent, directly under CTAs */}
+              <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-5">
+                <TrustCheck label="No private keys required" />
+                <TrustCheck label="Read-only access" />
+                <TrustCheck label="Free core · Open source" />
+              </div>
             </div>
           ) : (
             <div className="flex flex-col gap-4">
@@ -141,12 +153,12 @@ export default function Hero({
                 {isScanning ? 'Scanning...' : 'Scan Your Wallet — Free'}
               </Button>
               {scanMessage && (
-                <p className="text-sm text-slate-400">
+                <p className="text-sm text-neutral-400">
                   {scanMessage}
                 </p>
               )}
-              <div className="p-3 bg-volt-900/20 border border-volt-700/40 rounded-lg">
-                <p className="text-sm text-volt-300 font-medium">
+              <div className="p-3 bg-secondary-800/40 border border-secondary-700 rounded-lg">
+                <p className="text-sm text-neutral-300 font-medium">
                   Wallet Connected! Taking you to your Security Dashboard...
                 </p>
               </div>
@@ -154,45 +166,29 @@ export default function Hero({
           )}
         </motion.div>
 
-        {/* Signature crimson line — draws in from left */}
+        {/* Signature line — white/grey on monochrome */}
         <motion.div
           className="h-px mb-8"
           aria-hidden="true"
           style={{
-            background: 'linear-gradient(90deg, #E53E3E 0%, rgba(229,62,62,0.3) 60%, transparent 100%)',
-            boxShadow: '0 0 8px rgba(229, 62, 62, 0.2)',
+            background: 'linear-gradient(90deg, #3F3F46 0%, rgba(63,63,70,0.3) 60%, transparent 100%)',
           }}
           initial={prefersReduced ? { scaleX: 1 } : { scaleX: 0, transformOrigin: 'left' }}
           animate={{ scaleX: 1, transformOrigin: 'left' }}
           transition={{ duration: 0.6, delay: 1.3, ease: [0.25, 0.1, 0.25, 1] }}
         />
 
-        {/* Stats bar — CountUp on scroll */}
+        {/* Fix #3: Stats — full-width horizontal bar, evenly distributed */}
         <motion.div
-          className="flex flex-wrap items-center gap-8 sm:gap-12"
+          className="grid grid-cols-3 gap-4 sm:gap-8 w-full"
           variants={fadeUp}
           initial={prefersReduced ? 'visible' : 'hidden'}
           animate="visible"
           custom={1.4}
         >
           <StatItem value={50000} suffix="+" label="Wallets scanned" delay={1.4} />
-          <StatDivider />
           <StatItem value={2000000} suffix="+" label="Approvals revoked" delay={1.5} />
-          <StatDivider />
           <StatItem value={10} label="Chains supported" delay={1.6} />
-        </motion.div>
-
-        {/* Trust indicators — staggered fade */}
-        <motion.div
-          className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6 mt-8 text-sm text-slate-400"
-          variants={fadeUp}
-          initial={prefersReduced ? 'visible' : 'hidden'}
-          animate="visible"
-          custom={1.7}
-        >
-          <TrustDot label="No private keys required" />
-          <TrustDot label="Read-only access" />
-          <TrustDot label="Free core · Open source" />
         </motion.div>
       </Container>
     </section>
@@ -211,31 +207,20 @@ function StatItem({
   delay: number
 }) {
   return (
-    <div>
+    <div className="text-center sm:text-left">
       <div className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
         <CountUp value={value} suffix={suffix} delay={delay} />
       </div>
-      <div className="text-xs sm:text-sm text-slate-400 mt-0.5">{label}</div>
+      <div className="text-xs sm:text-sm text-neutral-500 mt-0.5">{label}</div>
     </div>
   )
 }
 
-function StatDivider() {
+/** Fix #4: Green check icons instead of lightning bolts — signals safety */
+function TrustCheck({ label }: { label: string }) {
   return (
-    <div
-      className="w-px h-10 hidden sm:block"
-      aria-hidden="true"
-      style={{
-        background: 'linear-gradient(180deg, transparent, rgba(229,62,62,0.4), transparent)',
-      }}
-    />
-  )
-}
-
-function TrustDot({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <Zap className="w-3 h-3 text-volt-400 flex-shrink-0" aria-hidden="true" />
+    <div className="flex items-center gap-2 text-sm text-neutral-300">
+      <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" aria-hidden="true" />
       <span>{label}</span>
     </div>
   )
