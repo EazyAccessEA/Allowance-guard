@@ -1,7 +1,6 @@
 'use client'
 
 import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
 import { ScanShieldIcon, AnalyzeIcon, RevokeIcon } from '@/components/icons/HeroIcons'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 
