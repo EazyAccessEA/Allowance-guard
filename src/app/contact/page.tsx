@@ -82,13 +82,7 @@ export default function ContactPage() {
           videoSrc="/V3AG.mp4"
         />
         {/* Gradient overlay for better text readability */}
-        <div
-          className="absolute inset-0 dark:hidden"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        <div className="absolute inset-0 hidden dark:block bg-secondary-900/90" />
+        <div className="absolute inset-0 bg-secondary-900/90" />
         
         <Container className="relative text-left max-w-4xl z-10">
           <h1 className="mobbin-display-1 text-text-primary mb-6 mobbin-fade-in">How Can We Help?</h1>
@@ -98,10 +92,10 @@ export default function ContactPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
+      <div className="border-t border-secondary-700" />
 
       {/* Section 1: Quick Help Search */}
-      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
+      <Section className="py-32 bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Quick Help Search</h2>
@@ -118,7 +112,7 @@ export default function ContactPage() {
                   value={searchQuery}
                   onChange={handleSearchChange}
                   placeholder="e.g., 'transaction failed', 'risk score', 'revoke approval'"
-                  className="w-full pl-12 pr-4 py-4 mobbin-body border border-border-primary rounded-lg bg-background-primary text-text-primary placeholder-text-tertiary mobbin-focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-colors duration-200"
+                  className="w-full pl-12 pr-4 py-4 mobbin-body border border-secondary-700 rounded-lg bg-background-primary text-text-primary placeholder-text-tertiary mobbin-focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-colors duration-200"
                 />
               </div>
               
@@ -128,7 +122,7 @@ export default function ContactPage() {
                   {filteredFAQs.length > 0 ? (
                     <div className="p-6 space-y-6">
                       {filteredFAQs.map((faq, index) => (
-                        <div key={index} className="border-b border-border-primary/50 pb-6 last:border-b-0 last:pb-0 mobbin-fade-in mobbin-stagger-1">
+                        <div key={index} className="border-b border-secondary-700/50 pb-6 last:border-b-0 last:pb-0 mobbin-fade-in mobbin-stagger-1">
                           <h4 className="mobbin-heading-4 text-text-primary mb-3">{faq.question}</h4>
                           <p className="mobbin-body text-text-secondary leading-relaxed">{faq.answer}</p>
                         </div>
@@ -148,7 +142,7 @@ export default function ContactPage() {
       </Section>
 
       {/* Section 2: Direct Contact Channels */}
-      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
+      <Section className="py-32 bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Direct Lines of Communication</h2>
@@ -161,8 +155,8 @@ export default function ContactPage() {
             {/* Channel 1: Standard Support */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1">
               <div className="p-8">
-                <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mb-6">
-                  <Mail className="w-8 h-8 text-primary-700 dark:text-primary-400" />
+                <div className="w-16 h-16 bg-amber-900/20 rounded-2xl flex items-center justify-center mb-6">
+                  <Mail className="w-8 h-8 text-amber-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">General Support & Questions</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -177,7 +171,7 @@ export default function ContactPage() {
                     <CheckCircle className="w-4 h-4 mr-2" />
                     <a 
                       href="mailto:support@allowanceguard.com?subject=General Support Request"
-                      className="cursor-pointer hover:text-primary-700 transition-colors duration-200" 
+                      className="cursor-pointer hover:text-amber-500 transition-colors duration-200" 
                       title="Click to send email"
                     >
                       support@allowanceguard.com
@@ -186,7 +180,7 @@ export default function ContactPage() {
                 </div>
                 <a 
                   href="mailto:support@allowanceguard.com?subject=General Support Request"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
                 >
                   <Mail className="w-4 h-4 mr-2" />
                   Compose an email to Support
@@ -197,8 +191,8 @@ export default function ContactPage() {
             {/* Channel 2: Security Emergency */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-error-50 dark:bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mb-6">
-                  <Shield className="w-8 h-8 text-semantic-error-500 dark:text-semantic-error-400" />
+                <div className="w-16 h-16 bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mb-6">
+                  <Shield className="w-8 h-8 text-semantic-error-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Report a Security Vulnerability</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -230,7 +224,7 @@ export default function ContactPage() {
                   </a>
                   <a 
                     href="/.well-known/security.txt"
-                    className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-border-primary text-text-primary rounded-lg hover:bg-background-secondary transition-colors duration-200"
+                    className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-secondary-700 text-text-primary rounded-lg hover:bg-secondary-800 transition-colors duration-200"
                   >
                     <Download className="w-4 h-4 mr-2" />
                     View Security.txt
@@ -242,8 +236,8 @@ export default function ContactPage() {
             {/* Channel 3: Business & Partnerships */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-success-50 dark:bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mb-6">
-                  <Users className="w-8 h-8 text-semantic-success-500 dark:text-semantic-success-400" />
+                <div className="w-16 h-16 bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mb-6">
+                  <Users className="w-8 h-8 text-semantic-success-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Partnerships & Press</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -273,7 +267,7 @@ export default function ContactPage() {
       </Section>
 
       {/* Section 3: Community & Async Support - Mobbin Layout */}
-      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
+      <Section className="py-32 bg-secondary-900">
         <Container className="max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
@@ -288,8 +282,8 @@ export default function ContactPage() {
             {/* Discord */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MessageCircle className="w-8 h-8 text-primary-700 dark:text-primary-400" />
+                <div className="w-16 h-16 bg-amber-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <MessageCircle className="w-8 h-8 text-amber-400" />
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">Discord</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
@@ -299,7 +293,7 @@ export default function ContactPage() {
                   href="https://discord.gg/DsJ4Pa94"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Join our Discord Server
@@ -311,8 +305,8 @@ export default function ContactPage() {
             {/* X (formerly Twitter) */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-neutral-100 dark:bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-neutral-600 dark:text-secondary-400" viewBox="0 0 24 24" fill="currentColor">
+                <div className="w-16 h-16 bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-8 h-8 text-slate-400" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
                 </div>
@@ -324,7 +318,7 @@ export default function ContactPage() {
                   href="https://x.com/allowanceguard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
                 >
                   <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -338,8 +332,8 @@ export default function ContactPage() {
             {/* GitHub */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-neutral-100 dark:bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Github className="w-8 h-8 text-neutral-600 dark:text-secondary-400" />
+                <div className="w-16 h-16 bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Github className="w-8 h-8 text-slate-400" />
                 </div>
                 <h3 className="mobbin-heading-4 text-text-primary mb-4">GitHub</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
@@ -349,7 +343,7 @@ export default function ContactPage() {
                   href="https://github.com/EazyAccessEA/Allowance-guard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
                 >
                   <Github className="w-4 h-4 mr-2" />
                   View our GitHub
@@ -362,7 +356,7 @@ export default function ContactPage() {
       </Section>
 
       {/* Section 4: Trust & Transparency - Mobbin Style */}
-      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
+      <Section className="py-32 bg-secondary-900">
         <Container className="max-w-5xl">
           <div className="text-center mb-20">
             <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
@@ -377,8 +371,8 @@ export default function ContactPage() {
             {/* Expected Response Time */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-warning-50 dark:bg-semantic-warning-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Clock className="w-8 h-8 text-semantic-warning-500 dark:text-semantic-warning-400" />
+                <div className="w-16 h-16 bg-semantic-warning-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Clock className="w-8 h-8 text-semantic-warning-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Expected Response Time</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed">
@@ -390,8 +384,8 @@ export default function ContactPage() {
             {/* Privacy Assurance */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-success-50 dark:bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Lock className="w-8 h-8 text-semantic-success-500 dark:text-semantic-success-400" />
+                <div className="w-16 h-16 bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Lock className="w-8 h-8 text-semantic-success-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Privacy Assurance</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed">
@@ -403,8 +397,8 @@ export default function ContactPage() {
             {/* PGP Key */}
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3 text-center">
               <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-error-50 dark:bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Shield className="w-8 h-8 text-semantic-error-500 dark:text-semantic-error-400" />
+                <div className="w-16 h-16 bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Shield className="w-8 h-8 text-semantic-error-400" />
                 </div>
                 <h3 className="mobbin-heading-3 text-text-primary mb-4">Encrypt Sensitive Information</h3>
                 <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
@@ -412,7 +406,7 @@ export default function ContactPage() {
                 </p>
                 <a 
                   href="/pgp-key.asc"
-                  className="inline-flex items-center px-6 py-3 mobbin-caption font-medium mobbin-hover-lift mobbin-focus-ring text-primary-700 border border-primary-700 rounded-lg hover:bg-primary-700 hover:text-white transition-colors duration-200"
+                  className="inline-flex items-center px-6 py-3 mobbin-caption font-medium mobbin-hover-lift mobbin-focus-ring text-amber-400 border border-amber-500 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Download our PGP Key

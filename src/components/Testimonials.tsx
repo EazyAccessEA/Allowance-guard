@@ -71,7 +71,7 @@ export default function Testimonials() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse, rgba(229,62,62,0.03) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.03) 0%, transparent 60%)',
           filter: 'blur(60px)',
         }}
       />
@@ -141,7 +141,7 @@ function TestimonialCard({
         </div>
         <div>
           <div className="text-sm font-semibold text-white">{name}</div>
-          <div className="text-xs text-slate-500">{role}</div>
+          <div className="text-xs text-slate-400">{role}</div>
         </div>
       </div>
 

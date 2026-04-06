@@ -5,39 +5,39 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { getAccessibilityClasses, keyboardNavigation } from '@/lib/accessibility'
 
-// Monochrome Pro Button Variants
-// Primary = Pure White. Destructive = Vibrant Crimson. Everything else = zinc.
+// Midnight Amber Button Variants
+// Primary = Amber gradient. Destructive = Red. Links = Sky Blue.
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-base font-button transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20 focus-visible:ring-offset-2 focus-visible:ring-offset-black disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-base font-button transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        // Primary — Pure White button, black text
-        primary: 'bg-white text-black hover:bg-neutral-200 active:bg-neutral-300 shadow-sm hover:shadow-md',
+        // Primary — Amber gradient button, dark text (7.1:1 contrast)
+        primary: 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 font-semibold hover:from-amber-400 hover:to-amber-500 active:from-amber-600 active:to-amber-700 shadow-sm hover:shadow-glow-primary',
 
-        // Secondary — transparent with zinc border
-        secondary: 'border border-secondary-700 bg-transparent text-neutral-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
+        // Secondary — transparent with slate border
+        secondary: 'border border-secondary-700 bg-transparent text-slate-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
 
         // Ghost — no border, subtle hover
-        ghost: 'text-neutral-400 hover:bg-secondary-800 hover:text-white active:bg-secondary-700',
+        ghost: 'text-slate-400 hover:bg-secondary-800 hover:text-white active:bg-secondary-700',
 
-        // Destructive — Vibrant Crimson (THE color)
+        // Destructive — Danger Red (threats, revoke)
         destructive: 'bg-crimson-500 text-white hover:bg-crimson-600 active:bg-crimson-700 shadow-sm hover:shadow-glow-crimson',
 
-        // Outline — zinc border
-        outline: 'border border-secondary-700 bg-transparent text-neutral-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
+        // Outline — slate border
+        outline: 'border border-secondary-700 bg-transparent text-slate-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
 
-        // Link
-        link: 'text-neutral-400 underline-offset-4 hover:underline hover:text-white',
+        // Link — Sky Blue
+        link: 'text-sky-400 underline-offset-4 hover:underline hover:text-sky-300',
 
         // Semantic variants
         success: 'bg-semantic-success-500 text-white hover:bg-semantic-success-600 active:bg-semantic-success-700 shadow-sm',
-        warning: 'bg-semantic-warning-500 text-white hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm',
+        warning: 'bg-semantic-warning-500 text-slate-900 hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm',
         info: 'bg-semantic-info-500 text-white hover:bg-semantic-info-600 active:bg-semantic-info-700 shadow-sm',
 
-        // Subtle — barely-there zinc
-        subtle: 'bg-secondary-800 text-neutral-300 hover:bg-secondary-700 hover:text-white',
-        accent: 'bg-secondary-800 text-neutral-300 hover:bg-secondary-700 hover:text-white',
+        // Subtle — raised navy surface
+        subtle: 'bg-secondary-800 text-slate-300 hover:bg-secondary-700 hover:text-white',
+        accent: 'bg-amber-900/20 text-amber-300 hover:bg-amber-900/40 hover:text-amber-200',
       },
       size: {
         // Mobbin-inspired size variants with systematic scaling

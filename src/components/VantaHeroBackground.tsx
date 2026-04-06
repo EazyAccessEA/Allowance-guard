@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react'
 
 /**
  * Vanta.js NET effect — interactive WebGL mesh background.
- * Monochrome Pro: true black background, white/grey lines at LOW opacity (15-20%).
- * Radial gradient mask pushes the mesh behind text for legibility.
+ * Midnight Amber: deep navy background, faint slate lines at 10% opacity white.
+ * Lines look like a subtle watermark, not a design element.
  * Respects prefers-reduced-motion (renders static frame).
  */
 export default function VantaHeroBackground() {
@@ -41,13 +41,13 @@ export default function VantaHeroBackground() {
           scale: 1.0,
           scaleMobile: 1.0,
 
-          // === Monochrome Pro ===
-          // Background: True Black
-          backgroundColor: 0x000000,
-          // Lines + dots: cool grey — NOT crimson (red is reserved for danger)
-          color: 0x3F3F46,
+          // === Midnight Amber ===
+          // Background: Deep Navy
+          backgroundColor: 0x0F172A,
+          // Lines: faint #1E293B (background glow tone)
+          color: 0x1E293B,
 
-          // === Sparse mesh — confidence, not clutter ===
+          // === Sparse mesh ===
           points: 6,
           maxDistance: 20,
           spacing: 20,
@@ -69,7 +69,7 @@ export default function VantaHeroBackground() {
     }
   }, [])
 
-  // CSS fallback — monochrome gradients
+  // CSS fallback — navy gradient
   if (webglFailed) {
     return (
       <div
@@ -77,12 +77,12 @@ export default function VantaHeroBackground() {
         aria-hidden="true"
         style={{
           background: `
-            radial-gradient(ellipse 80% 60% at 20% 30%, rgba(63, 63, 70, 0.06) 0%, transparent 60%),
-            radial-gradient(ellipse 70% 50% at 80% 20%, rgba(63, 63, 70, 0.04) 0%, transparent 55%),
-            radial-gradient(ellipse 60% 70% at 50% 80%, rgba(63, 63, 70, 0.03) 0%, transparent 50%)
+            radial-gradient(ellipse 80% 60% at 20% 30%, rgba(30, 41, 59, 0.3) 0%, transparent 60%),
+            radial-gradient(ellipse 70% 50% at 80% 20%, rgba(30, 41, 59, 0.2) 0%, transparent 55%),
+            radial-gradient(ellipse 60% 70% at 50% 80%, rgba(30, 41, 59, 0.15) 0%, transparent 50%)
           `,
           backgroundSize: '200% 200%',
-          backgroundColor: '#000000',
+          backgroundColor: '#0F172A',
         }}
       />
     )
@@ -93,7 +93,7 @@ export default function VantaHeroBackground() {
       ref={vantaRef}
       className="absolute inset-0"
       aria-hidden="true"
-      style={{ opacity: 0.18 }}
+      style={{ opacity: 0.15 }}
     />
   )
 }

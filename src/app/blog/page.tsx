@@ -157,10 +157,10 @@ const blogPosts: BlogPost[] = [
 
 // Category configuration with colors
 const categoryConfig = {
-  Security: { color: 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800', gradient: 'from-red-50 to-red-100' },
-  Education: { color: 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800', gradient: 'from-blue-50 to-blue-100' },
-  Innovation: { color: 'bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border-yellow-200 dark:border-yellow-800', gradient: 'from-yellow-50 to-yellow-100' },
-  Community: { color: 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800', gradient: 'from-green-50 to-green-100' },
+  Security: { color: 'bg-red-900/30 text-red-300 border-red-800', gradient: 'from-red-900/30 to-red-900/40' },
+  Education: { color: 'bg-blue-900/30 text-blue-300 border-blue-800', gradient: 'from-blue-900/30 to-blue-900/40' },
+  Innovation: { color: 'bg-yellow-900/30 text-yellow-300 border-yellow-800', gradient: 'from-yellow-900/30 to-yellow-900/40' },
+  Community: { color: 'bg-green-900/30 text-green-300 border-green-800', gradient: 'from-green-900/30 to-green-900/40' },
 }
 
 export default function BlogPage() {
@@ -174,13 +174,7 @@ export default function BlogPage() {
         <VideoBackground videoSrc="/V3AG.mp4" />
         
         {/* Gradient overlay */}
-        <div
-          className="absolute inset-0 z-10 dark:hidden"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.80) 100%)'
-          }}
-        />
-        <div className="absolute inset-0 z-10 hidden dark:block bg-secondary-900/90" />
+        <div className="absolute inset-0 z-10 bg-secondary-900/90" />
         
         <Container className="relative z-10">
           <div className="max-w-4xl">
@@ -192,19 +186,19 @@ export default function BlogPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
+      <div className="border-t border-secondary-700" />
 
       {/* Featured Post Section */}
       {featuredPost && (
-        <Section className="py-16 sm:py-20 lg:py-24 bg-background-primary dark:bg-secondary-900">
+        <Section className="py-16 sm:py-20 lg:py-24 bg-secondary-900">
           <Container>
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12 sm:mb-16">
-                <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-medium mb-4 sm:mb-6">
+                <div className="inline-flex items-center gap-2 bg-amber-900/20 text-amber-400 px-4 py-2 rounded-full text-sm font-medium mb-4 sm:mb-6">
                   Featured Article
                 </div>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 mb-4 sm:mb-6">Our Most Important Insights</h2>
-                <p className="text-lg sm:text-xl text-text-secondary dark:text-secondary-400 max-w-3xl mx-auto">Essential guides and deep-dives into Web3 security</p>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-100 mb-4 sm:mb-6">Our Most Important Insights</h2>
+                <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto">Essential guides and deep-dives into Web3 security</p>
               </div>
               
               <article className="group">
@@ -281,12 +275,12 @@ export default function BlogPage() {
       )}
 
       {/* All Posts Section */}
-      <Section className="py-16 bg-background-primary dark:bg-secondary-900">
+      <Section className="py-16 bg-secondary-900">
         <Container>
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-text-primary dark:text-secondary-100 mb-4">All Articles</h2>
-              <p className="text-lg text-text-secondary dark:text-secondary-400">Explore our complete library of Web3 security content</p>
+              <h2 className="text-3xl font-bold text-secondary-100 mb-4">All Articles</h2>
+              <p className="text-lg text-slate-400">Explore our complete library of Web3 security content</p>
             </div>
 
             {/* Category Filter */}
@@ -311,7 +305,7 @@ export default function BlogPage() {
                 
                 return (
                   <article key={post.slug} className="group">
-                    <div className="bg-background-primary dark:bg-secondary-900 rounded-2xl border border-border-primary dark:border-secondary-700 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
+                    <div className="bg-secondary-900 rounded-2xl border border-secondary-700 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full">
                       {/* Add image if it exists with glassmorphism overlay */}
                       {post.image && (
                         <div className="relative h-48 overflow-hidden">
@@ -353,7 +347,7 @@ export default function BlogPage() {
                               </Badge>
                             </div>
                             
-                            <h3 className="text-xl font-bold text-text-primary dark:text-secondary-100 mb-3 group-hover:text-primary-600 transition-colors duration-300 line-clamp-2">
+                            <h3 className="text-xl font-bold text-secondary-100 mb-3 group-hover:text-amber-400 transition-colors duration-300 line-clamp-2">
                               <Link 
                                 href={`/blog/${post.slug}`}
                                 className="hover:text-primary-accent transition-colors duration-200"
@@ -364,26 +358,26 @@ export default function BlogPage() {
                           </>
                         )}
                         
-                        <p className="text-text-secondary dark:text-secondary-400 mb-4 leading-relaxed line-clamp-3 flex-grow">
+                        <p className="text-slate-400 mb-4 leading-relaxed line-clamp-3 flex-grow">
                           {post.excerpt}
                         </p>
                         
                         <div className="flex items-center justify-between mt-auto">
-                            <div className="flex items-center gap-4 text-xs text-text-tertiary dark:text-secondary-400">
+                            <div className="flex items-center gap-4 text-xs text-slate-400">
                             <div className="flex items-center gap-1">
-                              <span className="text-text-secondary dark:text-secondary-400">{new Date(post.publishedAt).toLocaleDateString('en-US', {
+                              <span className="text-slate-400">{new Date(post.publishedAt).toLocaleDateString('en-US', {
                                 month: 'short',
                                 day: 'numeric'
                               })}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <span className="text-text-secondary dark:text-secondary-400">{post.readTime}</span>
+                              <span className="text-slate-400">{post.readTime}</span>
                             </div>
                           </div>
                           
                           <Link 
                             href={`/blog/${post.slug}`}
-                            className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors duration-200"
+                            className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 font-medium text-sm transition-colors duration-200"
                           >
                             Read
                           </Link>
@@ -398,9 +392,9 @@ export default function BlogPage() {
             {/* Empty state for when there are no posts */}
             {blogPosts.length === 0 && (
               <div className="text-center py-16">
-                <div className="w-16 h-16 bg-background-tertiary dark:bg-secondary-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-secondary-800 rounded-full flex items-center justify-center mx-auto mb-4">
                 </div>
-                <p className="text-text-secondary dark:text-secondary-400 text-lg">No blog posts yet. Check back soon!</p>
+                <p className="text-slate-400 text-lg">No blog posts yet. Check back soon!</p>
               </div>
             )}
           </div>

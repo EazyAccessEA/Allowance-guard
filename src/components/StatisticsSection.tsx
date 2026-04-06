@@ -16,9 +16,9 @@ const RISKS = [
     title: 'Unlimited Approvals',
     description: 'Allow unlimited token spending, creating maximum risk exposure. Should be avoided whenever possible.',
     level: 'Critical',
-    color: '#E53E3E',
-    bgColor: 'rgba(229,62,62,0.06)',
-    ringColor: 'rgba(229,62,62,0.15)',
+    color: '#F59E0B',
+    bgColor: 'rgba(245,158,11,0.06)',
+    ringColor: 'rgba(245,158,11,0.15)',
   },
   {
     title: 'Abandoned Contracts',
@@ -40,20 +40,20 @@ const RISKS = [
 
 export default function StatisticsSection() {
   return (
-    <section className="relative py-24 sm:py-32 lg:py-40 bg-[#0A0E1A] overflow-hidden">
+    <section className="relative py-24 sm:py-32 lg:py-40 bg-[#0F172A] overflow-hidden">
       {/* Gradient transition */}
       <div
         className="absolute inset-x-0 top-0 h-40 pointer-events-none"
         aria-hidden="true"
-        style={{ background: 'linear-gradient(to bottom, #0A0E1A 0%, transparent 100%)' }}
+        style={{ background: 'linear-gradient(to bottom, #0F172A 0%, transparent 100%)' }}
       />
 
-      {/* Atmospheric crimson glow */}
+      {/* Atmospheric amber glow */}
       <div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse, rgba(229,62,62,0.05) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.05) 0%, transparent 60%)',
           filter: 'blur(60px)',
         }}
       />
@@ -62,9 +62,9 @@ export default function StatisticsSection() {
         {/* Section header */}
         <CascadingScrollAnimation direction="up" distance={40} delay={0}>
           <div className="max-w-3xl mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full ring-1 ring-crimson-500/20 bg-crimson-500/5 mb-6">
-              <div className="w-1.5 h-1.5 rounded-full bg-crimson-400 animate-pulse" />
-              <span className="text-xs font-medium text-crimson-400 tracking-wide uppercase">Security Intelligence</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full ring-1 ring-amber-500/20 bg-amber-500/5 mb-6">
+              <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              <span className="text-xs font-medium text-amber-400 tracking-wide uppercase">Security Intelligence</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
               <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
@@ -111,11 +111,11 @@ function StatCard({ value, prefix, suffix, label, sub, trend, trendNeg }: (typeo
         <CountUp value={value} suffix={suffix} duration={1.4} delay={0.3} />
       </div>
       <div className="text-sm font-medium text-slate-300 mb-1">{label}</div>
-      <p className="text-xs text-slate-500 leading-relaxed mb-2">{sub}</p>
+      <p className="text-xs text-slate-400 leading-relaxed mb-2">{sub}</p>
       {trend && (
         <span
           className="text-xs font-mono font-medium"
-          style={{ color: trendNeg ? '#F87171' : '#00F0C8' }}
+          style={{ color: trendNeg ? '#F87171' : '#38BDF8' }}
         >
           {trend}
         </span>

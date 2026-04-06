@@ -127,7 +127,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
   const ctaClassName = cn(
     'mb-6 inline-flex items-center justify-center rounded-base px-4 py-2.5 text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2',
     highlighted
-      ? 'bg-primary-700 text-white shadow-sm hover:bg-primary-800 active:bg-primary-900'
+      ? 'bg-amber-500 text-slate-900 shadow-sm hover:bg-amber-600 active:bg-amber-700'
       : isPaid
         ? 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400'
         : 'border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-500',

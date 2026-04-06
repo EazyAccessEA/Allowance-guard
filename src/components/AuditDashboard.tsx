@@ -88,7 +88,7 @@ export default function AuditDashboard() {
       case 'high': return 'text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-900/20'
       case 'medium': return 'text-yellow-600 bg-yellow-50 dark:text-yellow-400 dark:bg-yellow-900/20'
       case 'low': return 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20'
-      default: return 'text-neutral-600 bg-neutral-50 dark:text-secondary-400 dark:bg-secondary-800'
+      default: return 'text-slate-400 bg-neutral-50 dark:text-secondary-400 dark:bg-secondary-800'
     }
   }
 
@@ -99,9 +99,9 @@ export default function AuditDashboard() {
       case 'authorization': return 'text-purple-600'
       case 'data_access': return 'text-green-600'
       case 'data_modification': return 'text-orange-600'
-      case 'system': return 'text-neutral-600 dark:text-secondary-400'
+      case 'system': return 'text-slate-400 dark:text-secondary-400'
       case 'compliance': return 'text-indigo-600'
-      default: return 'text-neutral-600 dark:text-secondary-400'
+      default: return 'text-slate-400 dark:text-secondary-400'
     }
   }
 

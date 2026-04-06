@@ -14,12 +14,7 @@ export default function FAQPage() {
         
         {/* Gradient overlay */}
         <div
-          className="absolute inset-0 z-10 dark:hidden"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        <div className="absolute inset-0 z-10 hidden dark:block bg-secondary-900/90" />
+          className="absolute inset-0 z-10 bg-secondary-900/90" />
         
         <Container className="relative z-10">
           <div className="max-w-4xl">
@@ -31,7 +26,7 @@ export default function FAQPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary" />
+      <div className="border-t border-secondary-700" />
 
       {/* The Basics */}
       <Section className="py-32">
@@ -72,7 +67,7 @@ export default function FAQPage() {
       </Section>
 
       {/* Security & Privacy */}
-      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
+      <Section className="py-32 bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-12 mobbin-fade-in">Our Security Model and Your Privacy</h2>
@@ -148,7 +143,7 @@ export default function FAQPage() {
       </Section>
 
       {/* Technical & Support */}
-      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
+      <Section className="py-32 bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto">
             <h2 className="mobbin-heading-1 text-text-primary mb-12 mobbin-fade-in">Technical Details and Troubleshooting</h2>
@@ -260,7 +255,7 @@ export default function FAQPage() {
       </Section>
 
       {/* Support Section */}
-      <Section className="py-32 bg-background-secondary dark:bg-secondary-900">
+      <Section className="py-32 bg-secondary-900">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">
@@ -272,13 +267,13 @@ export default function FAQPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mobbin-fade-in">
               <a 
                 href="/contact" 
-                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-primary-700 text-white rounded-lg hover:bg-primary-800 transition-all duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-amber-500 text-slate-900 rounded-lg hover:bg-amber-400 transition-all duration-200"
               >
                 Contact Support
               </a>
               <a 
                 href="/docs" 
-                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-border-primary text-text-primary rounded-lg hover:bg-background-primary hover:text-text-primary transition-all duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-secondary-700 text-text-primary rounded-lg hover:bg-secondary-800 hover:text-text-primary transition-all duration-200"
               >
                 Documentation
               </a>

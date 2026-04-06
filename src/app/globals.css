@@ -66,11 +66,11 @@ w3m-modal-background {
   z-index: 9998 !important;
 }
 
-/* AppKit modal styling — Monochrome Pro */
+/* AppKit modal styling — Midnight Amber */
 w3m-modal {
-  --w3m-background-color: #18181B !important;
+  --w3m-background-color: #1E293B !important;
   --w3m-border-radius: 16px !important;
-  --w3m-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) !important;
+  --w3m-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Modal content styling */
@@ -149,58 +149,58 @@ w3m-modal w3m-close-button:hover {
 }
 
 :root {
-  /* AllowanceGuard Design Tokens — Monochrome Pro */
-  /* "The Institutional Authority" — True Black + White + Red */
+  /* AllowanceGuard Design Tokens — Midnight Amber */
+  /* "The Warning System" — Deep Navy + Amber + Red */
   /* Source: docs/design-tokens-handbook.md */
 
-  /* Monochrome Pro Palette */
-  --color-black: #000000;
-  --color-white: #FFFFFF;
-  --color-danger: #FF4B4B;
+  /* Midnight Amber Palette */
+  --color-amber: #F59E0B;
+  --color-danger: #EF4444;
+  --color-sky: #38BDF8;
 
-  /* Neutral — Zinc scale */
-  --color-neutral-50: #FAFAFA;
-  --color-neutral-100: #F4F4F5;
-  --color-neutral-200: #E4E4E7;
-  --color-neutral-300: #D4D4D8;
-  --color-neutral-400: #A1A1AA;
-  --color-neutral-500: #71717A;
-  --color-neutral-600: #52525B;
-  --color-neutral-700: #3F3F46;
-  --color-neutral-800: #27272A;
-  --color-neutral-900: #18181B;
-  --color-neutral-950: #09090B;
+  /* Neutral — Slate scale (navy-harmonious) */
+  --color-neutral-50: #F8FAFC;
+  --color-neutral-100: #F1F5F9;
+  --color-neutral-200: #E2E8F0;
+  --color-neutral-300: #CBD5E1;
+  --color-neutral-400: #94A3B8;
+  --color-neutral-500: #64748B;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1E293B;
+  --color-neutral-900: #0F172A;
+  --color-neutral-950: #0A0F1E;
 
   /* Semantic */
   --color-success-500: #22C55E;
   --color-warning-500: #F59E0B;
-  --color-error-500: #FF4B4B;
+  --color-error-500: #EF4444;
   --color-info-500: #0EA5E9;
 
-  /* Surface — True Black foundation */
-  --surface-base: #000000;
-  --surface-raised: #0A0A0A;
-  --surface-overlay: #18181B;
-  --surface-elevated: #27272A;
+  /* Surface — Deep Navy foundation */
+  --surface-base: #0F172A;
+  --surface-raised: #1E293B;
+  --surface-overlay: #334155;
+  --surface-elevated: #475569;
 
   /* Mapped aliases */
   --background: var(--surface-base);
-  --foreground: var(--color-white);
+  --foreground: #FFFFFF;
   --muted: var(--color-neutral-400);
-  --muted-foreground: var(--color-neutral-500);
+  --muted-foreground: var(--color-neutral-300);
   --border: var(--color-neutral-800);
   --input: var(--color-neutral-800);
-  --primary: var(--color-white);
-  --primary-foreground: var(--color-black);
+  --primary: var(--color-amber);
+  --primary-foreground: var(--color-neutral-900);
   --secondary: var(--color-neutral-700);
   --secondary-foreground: var(--color-neutral-300);
-  --accent: var(--color-neutral-400);
-  --accent-foreground: var(--color-black);
+  --accent: var(--color-sky);
+  --accent-foreground: var(--color-neutral-900);
   --destructive: var(--color-danger);
-  --destructive-foreground: var(--color-white);
+  --destructive-foreground: #FFFFFF;
   --success: var(--color-success-500);
   --warning: var(--color-warning-500);
-  --ring: var(--color-white);
+  --ring: var(--color-amber);
   --radius: 8px;
 
   /* Typography */
@@ -247,13 +247,13 @@ w3m-modal w3m-close-button:hover {
   --motion-duration-slow: var(--duration-slow);
   --motion-easing-natural: var(--ease-default);
 
-  /* Shadows — deeper on true black */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
-  --shadow-glow-primary: 0 0 20px rgba(255,255,255,0.1);
-  --shadow-glow-accent: 0 0 20px rgba(255,75,75,0.25);
-  --shadow-focus: 0 0 0 3px rgba(255,255,255,0.15);
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
+  --shadow-glow-primary: 0 0 20px rgba(245,158,11,0.25);
+  --shadow-glow-accent: 0 0 20px rgba(56,189,248,0.2);
+  --shadow-focus: 0 0 0 3px rgba(245,158,11,0.3);
   --shadow-subtle: var(--shadow-sm);
   --shadow-medium: var(--shadow-md);
   --shadow-large: var(--shadow-lg);
@@ -262,66 +262,66 @@ w3m-modal w3m-close-button:hover {
   --a11y-focus-ring: 3px;
   --a11y-target-min: 44px;
 
-  /* Legacy color aliases (mapped to monochrome) */
+  /* Legacy color aliases (mapped to Midnight Amber) */
   --obsidian: var(--color-neutral-900);
   --platinum: var(--color-neutral-50);
-  --charcoal: var(--color-neutral-500);
-  --cobalt: var(--color-neutral-400);
-  --teal: var(--color-neutral-400);
+  --charcoal: var(--color-neutral-400);
+  --cobalt: var(--color-sky);
+  --teal: var(--color-sky);
   --warm-gray: var(--color-neutral-800);
   --emerald: var(--color-success-500);
-  --amber: var(--color-warning-500);
+  --amber: var(--color-amber);
   --crimson: var(--color-danger);
   --navy: var(--color-neutral-900);
   --obsidian-hover: var(--color-neutral-800);
   --charcoal-hover: var(--color-neutral-600);
 }
 
-/* Dark mode is the default in Monochrome Pro — same values */
+/* Dark mode — same as default (Midnight Amber is dark-first) */
 .dark {
-  --surface-base: #000000;
-  --surface-raised: #0A0A0A;
-  --surface-overlay: #18181B;
-  --surface-elevated: #27272A;
+  --surface-base: #0F172A;
+  --surface-raised: #1E293B;
+  --surface-overlay: #334155;
+  --surface-elevated: #475569;
 
   --background: var(--surface-base);
-  --foreground: var(--color-white);
+  --foreground: #FFFFFF;
   --muted: var(--color-neutral-400);
-  --muted-foreground: var(--color-neutral-500);
+  --muted-foreground: var(--color-neutral-300);
   --border: var(--color-neutral-800);
   --input: var(--color-neutral-800);
-  --primary: var(--color-white);
-  --primary-foreground: var(--color-black);
+  --primary: var(--color-amber);
+  --primary-foreground: var(--color-neutral-900);
   --secondary: var(--color-neutral-700);
   --secondary-foreground: var(--color-neutral-300);
-  --accent: var(--color-neutral-400);
-  --accent-foreground: var(--color-black);
+  --accent: var(--color-sky);
+  --accent-foreground: var(--color-neutral-900);
   --destructive: var(--color-danger);
-  --destructive-foreground: var(--color-white);
+  --destructive-foreground: #FFFFFF;
   --success: #22C55E;
   --warning: #F59E0B;
-  --ring: var(--color-white);
+  --ring: var(--color-amber);
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
-  --shadow-focus: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --shadow-focus: 0 0 0 3px rgba(245, 158, 11, 0.3);
   --shadow-subtle: var(--shadow-sm);
   --shadow-medium: var(--shadow-md);
   --shadow-large: var(--shadow-lg);
 
   /* Glass */
-  --glass-bg: rgba(10, 10, 10, 0.80);
-  --glass-border: rgba(63, 63, 70, 0.3);
-  --glass-hover: rgba(24, 24, 27, 0.8);
+  --glass-bg: rgba(30, 41, 59, 0.80);
+  --glass-border: rgba(71, 85, 105, 0.3);
+  --glass-hover: rgba(51, 65, 85, 0.8);
 
   /* Legacy aliases */
-  --obsidian: var(--color-white);
+  --obsidian: #FFFFFF;
   --platinum: var(--surface-base);
   --charcoal: var(--color-neutral-400);
   --warm-gray: var(--color-neutral-800);
-  --cobalt: var(--color-neutral-400);
-  --teal: var(--color-neutral-400);
+  --cobalt: var(--color-sky);
+  --teal: var(--color-sky);
   --navy: var(--surface-base);
 }
 
@@ -343,8 +343,8 @@ body {
 
 body {
   color: var(--foreground);
-  /* Monochrome Pro — True Black */
-  background: #000000;
+  /* Midnight Amber — Deep Navy */
+  background: #0F172A;
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -792,7 +792,7 @@ header {
     }
     
     .mobbin-hover-glow:hover {
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
     }
     
     .mobbin-hover-slide {
@@ -845,8 +845,8 @@ header {
     }
     
     .mobbin-hover-color:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.15);
+      background-color: rgba(245, 158, 11, 0.08);
+      border-color: rgba(245, 158, 11, 0.25);
     }
     
     /* Mobbin-Inspired Focus States */
@@ -856,12 +856,12 @@ header {
     
     .mobbin-focus-ring:focus {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+      border-color: rgba(245, 158, 11, 0.5);
     }
 
     .mobbin-focus-ring:focus-visible {
-      outline: 2px solid rgba(255, 255, 255, 0.4);
+      outline: 2px solid rgba(245, 158, 11, 0.6);
       outline-offset: 2px;
     }
     
