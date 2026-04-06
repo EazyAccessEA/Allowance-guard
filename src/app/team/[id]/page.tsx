@@ -204,7 +204,7 @@ export default function TeamDashboardPage({
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 border-b border-border-primary">
+      <div className="flex gap-1 border-b border-secondary-700">
         <button
           onClick={() => setActiveTab('portfolio')}
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
@@ -284,7 +284,7 @@ export default function TeamDashboardPage({
                 {members.map((m) => (
                   <div
                     key={m.user_id}
-                    className="flex items-center justify-between p-3 rounded-lg border border-border-primary"
+                    className="flex items-center justify-between p-3 rounded-lg border border-secondary-700"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
@@ -329,12 +329,12 @@ export default function TeamDashboardPage({
                   placeholder="0x... Safe address"
                   value={safeAddress}
                   onChange={(e) => setSafeAddress(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-border-primary rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="flex-1 px-4 py-2 border border-secondary-700 rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                 />
                 <select
                   value={safeChainId}
                   onChange={(e) => setSafeChainId(Number(e.target.value))}
-                  className="px-4 py-2 border border-border-primary rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="px-4 py-2 border border-secondary-700 rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   <option value={1}>Ethereum</option>
                   <option value={42161}>Arbitrum</option>

@@ -129,7 +129,7 @@ export default function DashboardPrototype() {
         <div
           className={cn(
             'rounded-lg border bg-background-primary dark:bg-dark-bg-secondary',
-            'border-border-primary dark:border-secondary-700',
+            'border-secondary-700',
             timeMachine && 'ring-1 ring-primary-200 dark:ring-primary-800'
           )}
         >

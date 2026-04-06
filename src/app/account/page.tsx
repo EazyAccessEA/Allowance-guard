@@ -137,7 +137,7 @@ export default function AccountPage() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'group flex items-center gap-4 rounded-lg border border-border-primary bg-background-primary p-5',
+                  'group flex items-center gap-4 rounded-lg border border-secondary-700 bg-background-primary p-5',
                   'transition-all duration-150 hover:border-primary-300 hover:shadow-md'
                 )}
               >

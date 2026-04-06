@@ -76,7 +76,7 @@ export default function TokensPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary dark:border-secondary-700" />
+      <div className="border-t border-secondary-700" />
 
       {/* Search Section */}
       <Section className="py-16">

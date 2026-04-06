@@ -1,7 +1,10 @@
 'use client'
 
+import Container from '@/components/ui/Container'
+import Section from '@/components/ui/Section'
+import { H1, H2, H3 } from '@/components/ui/Heading'
 import { useState } from 'react'
-import { Copy, Check, Code, Terminal, Globe, Package, AlertTriangle, Zap, Clock, Shield } from 'lucide-react'
+import { Copy, Check, Code, Terminal, Globe, Package } from 'lucide-react'
 
 export default function APIExamplesPage() {
   const [copiedCode, setCopiedCode] = useState<string | null>(null)
@@ -13,20 +16,15 @@ export default function APIExamplesPage() {
   }
 
   const CodeBlock = ({ code, language, id }: { code: string; language: string; id: string }) => (
-    <div className="relative rounded-lg overflow-hidden border border-slate-700/50">
-      <div className="flex items-center justify-between bg-slate-800/80 px-4 py-2.5 border-b border-slate-700/50">
-        <span className="text-[10px] font-mono text-amber-500/70 uppercase tracking-wider">{language}</span>
-        <button
-          onClick={() => copyToClipboard(code, id)}
-          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-amber-400 transition-colors"
-          aria-label="Copy code"
-        >
-          {copiedCode === id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-          {copiedCode === id ? 'Copied' : 'Copy'}
-        </button>
-      </div>
-      <pre className="bg-[#0A0E1A] p-4 overflow-x-auto">
-        <code className="text-sm font-mono text-slate-300 leading-relaxed">{code}</code>
+    <div className="relative">
+      <button
+        onClick={() => copyToClipboard(code, id)}
+        className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+      >
+        {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
+      </button>
+      <pre className="bg-gray-900 text-gray-100 p-6 rounded-lg overflow-x-auto text-sm">
+        <code className={`language-${language}`}>{code}</code>
       </pre>
     </div>
   )
@@ -46,11 +44,11 @@ async function getAllowances(walletAddress) {
         }
       }
     )
-
+    
     if (!response.ok) {
       throw new Error(\`HTTP error! status: \${response.status}\`)
     }
-
+    
     const data = await response.json()
     return data
   } catch (error) {
@@ -88,7 +86,7 @@ def get_allowances(wallet_address, page=1, page_size=25):
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
-
+    
     try:
         response = requests.get(url, params=params, headers=headers)
         response.raise_for_status()
@@ -112,7 +110,7 @@ def get_risk_assessment(wallet_address, token_address, spender_address, chain_id
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     }
-
+    
     try:
         response = requests.post(url, json=data, headers=headers)
         response.raise_for_status()
@@ -124,11 +122,11 @@ def get_risk_assessment(wallet_address, token_address, spender_address, chain_id
 # Usage examples
 if __name__ == "__main__":
     wallet = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-
+    
     # Get all allowances
     allowances = get_allowances(wallet)
     print(f"Found {len(allowances['data'])} allowances")
-
+    
     # Assess risk for a specific approval
     risk = get_risk_assessment(
         wallet,
@@ -150,7 +148,7 @@ function AllowanceChecker({ walletAddress }) {
     const fetchAllowances = async () => {
       setLoading(true)
       setError(null)
-
+      
       try {
         const response = await fetch(
           \`https://www.allowanceguard.com/api/allowances?wallet=\${walletAddress}&page=1&pageSize=25\`,
@@ -161,11 +159,11 @@ function AllowanceChecker({ walletAddress }) {
             }
           }
         )
-
+        
         if (!response.ok) {
           throw new Error(\`HTTP error! status: \${response.status}\`)
         }
-
+        
         const data = await response.json()
         setAllowances(data.data || [])
       } catch (err) {
@@ -219,7 +217,7 @@ class AllowanceGuardAPI {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     }
-
+    
     if (apiKey) {
       this.headers['Authorization'] = \`Bearer \${apiKey}\`
     }
@@ -301,207 +299,154 @@ async function main() {
 
 main()`
 
-  const tips = [
-    {
-      icon: AlertTriangle,
-      title: 'Error Handling',
-      description: 'Always implement proper error handling for network requests and API responses.',
-      items: [
-        'Check HTTP status codes',
-        'Handle rate limiting (429 status)',
-        'Implement retry logic for transient failures',
-        'Validate response data structure',
-      ],
-    },
-    {
-      icon: Zap,
-      title: 'Performance',
-      description: 'Optimize your API usage for better performance and user experience.',
-      items: [
-        'Use pagination for large datasets',
-        'Implement client-side caching',
-        'Batch requests when possible',
-        'Use appropriate page sizes',
-      ],
-    },
-    {
-      icon: Clock,
-      title: 'Rate Limiting',
-      description: 'Respect rate limits to ensure reliable API access.',
-      items: [
-        '5 requests per minute for public access',
-        'Higher limits available with API key',
-        'Implement exponential backoff',
-        'Monitor rate limit headers',
-      ],
-    },
-    {
-      icon: Shield,
-      title: 'Security',
-      description: 'Follow security best practices when integrating the API.',
-      items: [
-        'Validate wallet addresses client-side',
-        'Sanitize user inputs',
-        'Use HTTPS for all requests',
-        'Store API keys securely',
-      ],
-    },
-  ]
-
   return (
-    <div className="min-h-screen bg-[#0A0E1A]">
+    <div className="min-h-screen bg-surface-base text-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-slate-700/50">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0E1A] via-[#0F172A] to-[#0A0E1A]" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.15em]">
-            API Documentation
-          </span>
-          <h1
-            className="mt-4 text-4xl sm:text-5xl font-bold text-slate-100 tracking-tight"
-            style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-          >
-            Code Examples
-          </h1>
-          <p className="mt-4 text-lg text-slate-400 leading-relaxed max-w-2xl">
-            Comprehensive code examples for integrating with the AllowanceGuard API
-            in multiple programming languages and frameworks.
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100" />
+        <Container className="relative text-left max-w-4xl z-10">
+          <H1 className="mb-6">API Examples & Code Samples</H1>
+          <p className="text-lg text-stone leading-relaxed mb-8">
+            Comprehensive code examples for integrating with the AllowanceGuard API in multiple programming languages and frameworks.
           </p>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
-      {/* Code Examples Grid */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="border-t border-line" />
 
-          {/* cURL */}
-          <div>
-            <div className="flex items-center mb-4">
-              <Terminal className="mr-3 text-amber-400" size={24} />
-              <h2
-                className="text-2xl font-bold text-slate-100"
-                style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-              >
-                cURL Examples
-              </h2>
+      {/* Language Tabs */}
+      <Section className="py-16">
+        <Container>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              
+              {/* cURL Examples */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Terminal className="mr-3 text-blue-600" size={24} />
+                  <H2>cURL Examples</H2>
+                </div>
+                <p className="text-stone mb-6">
+                  Command-line examples for testing the API directly.
+                </p>
+                <CodeBlock code={curlExample} language="bash" id="curl" />
+              </div>
+
+              {/* JavaScript Examples */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Code className="mr-3 text-yellow-600" size={24} />
+                  <H2>JavaScript/Node.js</H2>
+                </div>
+                <p className="text-stone mb-6">
+                  Vanilla JavaScript examples for both browser and Node.js environments.
+                </p>
+                <CodeBlock code={javascriptExample} language="javascript" id="javascript" />
+              </div>
+
+              {/* Python Examples */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Code className="mr-3 text-green-600" size={24} />
+                  <H2>Python</H2>
+                </div>
+                <p className="text-stone mb-6">
+                  Python examples using the requests library for API integration.
+                </p>
+                <CodeBlock code={pythonExample} language="python" id="python" />
+              </div>
+
+              {/* React Examples */}
+              <div>
+                <div className="flex items-center mb-6">
+                  <Globe className="mr-3 text-blue-500" size={24} />
+                  <H2>React Component</H2>
+                </div>
+                <p className="text-stone mb-6">
+                  React component example for displaying allowances in a web application.
+                </p>
+                <CodeBlock code={reactExample} language="jsx" id="react" />
+              </div>
+
+              {/* Node.js SDK */}
+              <div className="lg:col-span-2">
+                <div className="flex items-center mb-6">
+                  <Package className="mr-3 text-purple-600" size={24} />
+                  <H2>Node.js SDK Class</H2>
+                </div>
+                <p className="text-stone mb-6">
+                  Complete Node.js SDK class for easy integration into backend services.
+                </p>
+                <CodeBlock code={nodeExample} language="javascript" id="nodejs" />
+              </div>
+
             </div>
-            <p className="text-slate-400 mb-6">
-              Command-line examples for testing the API directly.
-            </p>
-            <CodeBlock code={curlExample} language="bash" id="curl" />
           </div>
-
-          {/* JavaScript */}
-          <div>
-            <div className="flex items-center mb-4">
-              <Code className="mr-3 text-amber-400" size={24} />
-              <h2
-                className="text-2xl font-bold text-slate-100"
-                style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-              >
-                JavaScript/Node.js
-              </h2>
-            </div>
-            <p className="text-slate-400 mb-6">
-              Vanilla JavaScript examples for both browser and Node.js environments.
-            </p>
-            <CodeBlock code={javascriptExample} language="javascript" id="javascript" />
-          </div>
-
-          {/* Python */}
-          <div>
-            <div className="flex items-center mb-4">
-              <Code className="mr-3 text-amber-400" size={24} />
-              <h2
-                className="text-2xl font-bold text-slate-100"
-                style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-              >
-                Python
-              </h2>
-            </div>
-            <p className="text-slate-400 mb-6">
-              Python examples using the requests library for API integration.
-            </p>
-            <CodeBlock code={pythonExample} language="python" id="python" />
-          </div>
-
-          {/* React */}
-          <div>
-            <div className="flex items-center mb-4">
-              <Globe className="mr-3 text-amber-400" size={24} />
-              <h2
-                className="text-2xl font-bold text-slate-100"
-                style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-              >
-                React Component
-              </h2>
-            </div>
-            <p className="text-slate-400 mb-6">
-              React component example for displaying allowances in a web application.
-            </p>
-            <CodeBlock code={reactExample} language="jsx" id="react" />
-          </div>
-
-          {/* Node.js SDK */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center mb-4">
-              <Package className="mr-3 text-amber-400" size={24} />
-              <h2
-                className="text-2xl font-bold text-slate-100"
-                style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-              >
-                Node.js SDK Class
-              </h2>
-            </div>
-            <p className="text-slate-400 mb-6">
-              Complete Node.js SDK class for easy integration into backend services.
-            </p>
-            <CodeBlock code={nodeExample} language="javascript" id="nodejs" />
-          </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
 
       {/* Integration Tips */}
-      <section className="border-t border-slate-700/50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <h2
-            className="text-3xl font-bold text-slate-100 mb-10"
-            style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-          >
-            Integration Tips
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {tips.map((tip) => (
-              <div
-                key={tip.title}
-                className="rounded-xl bg-slate-800/40 border border-slate-700/50 p-6"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <tip.icon className="w-5 h-5 text-amber-400" />
-                  <h3
-                    className="text-lg font-semibold text-slate-100"
-                    style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}
-                  >
-                    {tip.title}
-                  </h3>
-                </div>
-                <p className="text-slate-400 text-sm mb-4">{tip.description}</p>
-                <ul className="text-sm text-slate-400 space-y-2">
-                  {tip.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="text-amber-500/60 mt-0.5">&#8226;</span>
-                      {item}
-                    </li>
-                  ))}
+      <Section className="py-16 bg-mist/30">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            <H2 className="mb-8">Integration Tips</H2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+                <H3 className="mb-4">Error Handling</H3>
+                <p className="text-stone mb-4">
+                  Always implement proper error handling for network requests and API responses.
+                </p>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Check HTTP status codes</li>
+                  <li>• Handle rate limiting (429 status)</li>
+                  <li>• Implement retry logic for transient failures</li>
+                  <li>• Validate response data structure</li>
                 </ul>
               </div>
-            ))}
+
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+                <H3 className="mb-4">Performance</H3>
+                <p className="text-stone mb-4">
+                  Optimize your API usage for better performance and user experience.
+                </p>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Use pagination for large datasets</li>
+                  <li>• Implement client-side caching</li>
+                  <li>• Batch requests when possible</li>
+                  <li>• Use appropriate page sizes</li>
+                </ul>
+              </div>
+
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+                <H3 className="mb-4">Rate Limiting</H3>
+                <p className="text-stone mb-4">
+                  Respect rate limits to ensure reliable API access.
+                </p>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• 5 requests per minute for public access</li>
+                  <li>• Higher limits available with API key</li>
+                  <li>• Implement exponential backoff</li>
+                  <li>• Monitor rate limit headers</li>
+                </ul>
+              </div>
+
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+                <H3 className="mb-4">Security</H3>
+                <p className="text-stone mb-4">
+                  Follow security best practices when integrating the API.
+                </p>
+                <ul className="text-sm text-stone space-y-2">
+                  <li>• Validate wallet addresses client-side</li>
+                  <li>• Sanitize user inputs</li>
+                  <li>• Use HTTPS for all requests</li>
+                  <li>• Store API keys securely</li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </Container>
+      </Section>
     </div>
   )
 }

@@ -1,109 +1,75 @@
 'use client'
 
-import {
-  FileText, Rocket, Shield, Wrench, Settings, Puzzle, HelpCircle,
-  Bell, Activity, Users, RotateCcw, Code2, MessageCircle, BookOpen,
-  type LucideIcon,
-} from 'lucide-react'
-import { cn } from '@/lib/utils'
-
-interface NavItem {
-  id: string
-  label: string
-  icon: LucideIcon
-}
-
-interface NavGroup {
-  title: string
-  items: NavItem[]
-}
-
-const navGroups: NavGroup[] = [
-  {
-    title: 'Getting Started',
-    items: [
-      { id: 'overview', label: 'Overview', icon: FileText },
-      { id: 'getting-started', label: 'Quick Start', icon: Rocket },
-      { id: 'core-concepts', label: 'Core Concepts', icon: Shield },
-    ],
-  },
-  {
-    title: 'Using AllowanceGuard',
-    items: [
-      { id: 'usage-guides', label: 'Usage Guides', icon: Wrench },
-      { id: 'revoking', label: 'Revoking Approvals', icon: RotateCcw },
-      { id: 'alerts', label: 'Alerts', icon: Bell },
-      { id: 'monitoring', label: 'Monitoring', icon: Activity },
-      { id: 'teams', label: 'Teams', icon: Users },
-    ],
-  },
-  {
-    title: 'Developers',
-    items: [
-      { id: 'advanced-topics', label: 'Architecture', icon: Settings },
-      { id: 'api', label: 'API & Settings', icon: Code2 },
-      { id: 'browser-extension', label: 'Extension', icon: Puzzle },
-    ],
-  },
-  {
-    title: 'Support',
-    items: [
-      { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle },
-      { id: 'faq', label: 'FAQ', icon: MessageCircle },
-    ],
-  },
-]
+import { BookOpen, Rocket, Zap, Wrench, Shield, HelpCircle, MessageCircle } from 'lucide-react'
 
 interface NavigationProps {
   activeSection: string
   onSectionChange: (section: string) => void
 }
 
+const sections = [
+  { id: 'overview', label: 'Overview', icon: BookOpen },
+  { id: 'quickstart', label: 'Quick Start', icon: Rocket },
+  { id: 'features', label: 'Features', icon: Zap },
+  { id: 'api', label: 'API Reference', icon: Wrench },
+  { id: 'security', label: 'Security', icon: Shield },
+  { id: 'faq', label: 'FAQ', icon: HelpCircle },
+]
+
 export function Navigation({ activeSection, onSectionChange }: NavigationProps) {
   return (
-    <nav className="sticky top-24 space-y-6">
-      {navGroups.map((group) => (
-        <div key={group.title}>
-          <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-[0.15em] mb-2 px-3">
-            {group.title}
-          </h3>
-          <div className="space-y-0.5">
-            {group.items.map((item) => {
-              const isActive = activeSection === item.id
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onSectionChange(item.id)}
-                  className={cn(
-                    'w-full text-left px-3 py-2 rounded-lg text-sm flex items-center gap-2.5 transition-all duration-150',
-                    isActive
-                      ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent',
-                  )}
-                >
-                  <item.icon className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-400' : 'text-slate-500')} />
-                  {item.label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      ))}
-
-      {/* Resources */}
-      <div className="pt-4 border-t border-slate-700/50">
-        <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-[0.15em] mb-2 px-3">
+    <nav className="sticky top-24">
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 uppercase tracking-wide mb-4">
+          Documentation
+        </h3>
+        {sections.map((section) => (
+          <button
+            key={section.id}
+            onClick={() => onSectionChange(section.id)}
+            className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+              activeSection === section.id
+                ? 'bg-amber-500 text-slate-900'
+                : 'text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100 hover:bg-background-secondary dark:hover:bg-secondary-800'
+            }`}
+          >
+            <section.icon className="inline w-4 h-4 mr-2" />
+            {section.label}
+          </button>
+        ))}
+      </div>
+      
+      <div className="mt-8 pt-6 border-t-2 border-secondary-700">
+        <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 uppercase tracking-wide mb-4">
           Resources
         </h3>
-        <div className="space-y-0.5">
+        <div className="space-y-2">
           <a
             href="https://github.com/EazyAccessEA/Allowance-guard"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 rounded-lg transition-colors"
+            className="block px-3 py-2 text-sm text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100 hover:bg-background-secondary dark:hover:bg-secondary-800 transition-colors"
           >
-            <BookOpen className="w-4 h-4 text-slate-500" />
-            GitHub
+            <span className="mr-2">📦</span>
+            GitHub Repository
+          </a>
+          <a
+            href="https://discord.gg/allowanceguard"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-3 py-2 text-sm text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100 hover:bg-background-secondary dark:hover:bg-secondary-800 transition-colors"
+          >
+            <MessageCircle className="inline w-4 h-4 mr-2" />
+            Discord Community
+          </a>
+          <a
+            href="https://x.com/allowanceguard"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-3 py-2 text-sm text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100 hover:bg-background-secondary dark:hover:bg-secondary-800 transition-colors"
+          >
+            <span className="mr-2">𝕏</span>
+            X Updates
           </a>
         </div>
       </div>

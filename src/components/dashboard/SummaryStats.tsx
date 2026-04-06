@@ -59,7 +59,7 @@ export default function SummaryStats({
           key={stat.label}
           className={cn(
             'flex items-center gap-4 p-4 rounded-lg border transition-all duration-250',
-            'border-border-primary dark:border-secondary-700',
+            'border-secondary-700',
             'bg-background-primary dark:bg-dark-bg-secondary',
             isTimeMachine && 'border-primary-200 dark:border-primary-800 bg-primary-50/30 dark:bg-primary-900/10'
           )}

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Copy, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface CodeTab {
@@ -29,19 +28,19 @@ export function CodeExample({ tabs }: CodeExampleProps) {
   }
 
   return (
-    <div className="rounded-lg overflow-hidden border border-slate-700/50">
+    <div className="border-2 border-secondary-700 rounded-lg overflow-hidden">
       {/* Language tabs */}
-      <div className="flex items-center bg-slate-800/80 border-b border-slate-700/50">
+      <div className="flex items-center bg-background-secondary dark:bg-secondary-800 border-b-2 border-secondary-700">
         <div className="flex">
           {tabs.map((tab, i) => (
             <button
               key={tab.language}
               onClick={() => setActiveTab(i)}
               className={cn(
-                'px-4 py-2.5 text-xs font-medium font-mono transition-colors border-b-2 -mb-[1px]',
+                'px-4 py-2 text-xs font-medium transition-colors',
                 i === activeTab
-                  ? 'text-amber-400 border-amber-500 bg-[#0A0E1A]'
-                  : 'text-slate-400 border-transparent hover:text-slate-200 hover:bg-slate-700/30',
+                  ? 'text-text-primary dark:text-secondary-100 bg-background-primary dark:bg-secondary-900 border-b-2 border-primary-600 dark:border-primary-400 -mb-[2px]'
+                  : 'text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100',
               )}
             >
               {tab.label}
@@ -50,17 +49,15 @@ export function CodeExample({ tabs }: CodeExampleProps) {
         </div>
         <button
           onClick={copyToClipboard}
-          className="ml-auto mr-3 flex items-center gap-1.5 text-xs text-slate-400 hover:text-amber-400 transition-colors"
-          aria-label="Copy code"
+          className="ml-auto mr-3 text-xs text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100 transition-colors"
         >
-          {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-          {copied ? 'Copied' : 'Copy'}
+          {copied ? 'Copied!' : 'Copy'}
         </button>
       </div>
 
       {/* Code content */}
-      <pre className="bg-[#0A0E1A] p-4 overflow-x-auto">
-        <code className="text-sm font-mono text-slate-300 leading-relaxed">{tabs[activeTab].code}</code>
+      <pre className="bg-background-primary dark:bg-secondary-900 p-4 overflow-x-auto">
+        <code className="text-sm font-mono text-text-primary dark:text-secondary-100">{tabs[activeTab].code}</code>
       </pre>
     </div>
   )

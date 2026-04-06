@@ -138,8 +138,8 @@ export function EnhancedLoadingOverlay({
   return (
     <div className={`relative ${className}`}>
       {children}
-      <div className="absolute inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-white border border-neutral-borders rounded-lg p-6 shadow-large text-center max-w-sm mx-4">
+      <div className="absolute inset-0 bg-surface-base/90 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="bg-secondary-800 border border-secondary-borders rounded-lg p-6 shadow-large text-center max-w-sm mx-4">
           <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <LoadingSpinner size="lg" color="cobalt" variant="hex" />
           </div>

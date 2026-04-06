@@ -284,7 +284,7 @@ export default function RuleBuilder() {
                           const defaultValue = newType === 'boolean' ? true : newType === 'number' ? 0 : ''
                           updateCondition(idx, { field: newField, op: 'eq', value: defaultValue })
                         }}
-                        className="border border-border-primary rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                        className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
                       >
                         {CONDITION_FIELDS.map(f => (
                           <option key={f.value} value={f.value}>{f.label}</option>
@@ -294,7 +294,7 @@ export default function RuleBuilder() {
                       <select
                         value={cond.op}
                         onChange={e => updateCondition(idx, { op: e.target.value })}
-                        className="border border-border-primary rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                        className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
                       >
                         {(OPERATORS[fieldType] ?? OPERATORS.text).map(o => (
                           <option key={o.value} value={o.value}>{o.label}</option>
@@ -305,7 +305,7 @@ export default function RuleBuilder() {
                         <select
                           value={String(cond.value)}
                           onChange={e => updateCondition(idx, { value: e.target.value === 'true' })}
-                          className="border border-border-primary rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                          className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
                         >
                           <option value="true">True</option>
                           <option value="false">False</option>
@@ -314,7 +314,7 @@ export default function RuleBuilder() {
                         <select
                           value={String(cond.value)}
                           onChange={e => updateCondition(idx, { value: e.target.value })}
-                          className="border border-border-primary rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                          className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
                         >
                           {(fieldDef.options as string[]).map(opt => (
                             <option key={opt} value={opt}>{opt}</option>
@@ -361,7 +361,7 @@ export default function RuleBuilder() {
                     className={`p-3 rounded-lg border text-left transition-all ${
                       newAction === value
                         ? 'border-primary-accent bg-primary-50 ring-1 ring-primary-accent'
-                        : 'border-border-primary hover:border-primary-accent/50'
+                        : 'border-secondary-700 hover:border-primary-accent/50'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
@@ -396,7 +396,7 @@ export default function RuleBuilder() {
             )}
 
             {/* Submit */}
-            <div className="flex gap-2 justify-end pt-2 border-t border-border-primary">
+            <div className="flex gap-2 justify-end pt-2 border-t border-secondary-700">
               <Button onClick={() => { setCreating(false); resetForm() }} variant="ghost">
                 Cancel
               </Button>
@@ -457,7 +457,7 @@ export default function RuleBuilder() {
                 </div>
 
                 {isExpanded && (
-                  <CardContent className="border-t border-border-primary pt-3 space-y-3">
+                  <CardContent className="border-t border-secondary-700 pt-3 space-y-3">
                     {/* Conditions */}
                     <div>
                       <label className="text-xs font-medium text-text-secondary">Conditions</label>
@@ -496,7 +496,7 @@ export default function RuleBuilder() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex gap-2 justify-end pt-2 border-t border-border-primary">
+                    <div className="flex gap-2 justify-end pt-2 border-t border-secondary-700">
                       <Button
                         onClick={(e) => { e.stopPropagation(); toggleRule(rule.id, !rule.enabled) }}
                         variant="ghost"

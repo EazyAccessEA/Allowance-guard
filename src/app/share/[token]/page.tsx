@@ -53,13 +53,13 @@ export default function SharePage({ params }: { params: Promise<{ token: string 
           <div className="mt-6 overflow-x-auto">
             <table className="w-full text-sm text-text-primary dark:text-secondary-100">
               <thead className="text-left">
-                <tr className="border-b border-border-primary dark:border-secondary-700">
+                <tr className="border-b border-secondary-700">
                   <th className="pb-2 pr-4">Chain</th><th className="pb-2 pr-4">Token</th><th className="pb-2 pr-4">Spender</th><th className="pb-2 pr-4">Std</th><th className="pb-2 pr-4">Type</th><th className="pb-2 pr-4">Amount</th><th className="pb-2">Badges</th>
                 </tr>
               </thead>
               <tbody>
                 {data.items.map((r, i) => (
-                  <tr key={i} className="border-t border-border-primary dark:border-secondary-700">
+                  <tr key={i} className="border-t border-secondary-700">
                     <td className="py-2 pr-4">{r.chain_id}</td>
                     <td className="font-mono break-all py-2 pr-4">{r.token_address}</td>
                     <td className="font-mono break-all py-2 pr-4">{r.spender_address}</td>
