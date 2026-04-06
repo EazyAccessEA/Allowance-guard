@@ -369,8 +369,32 @@ Fonts are self-hosted via `next/font/local` from `public/fonts/`.
 | slideUp     | 300ms    | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` | transform, opacity |
 | scaleIn     | 200ms    | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` | transform, opacity |
 | buttonPress | 150ms    | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` | transform          |
+| splitText   | 500ms    | `cubic-bezier(0.25, 0.1, 0.25, 1)` | transform, opacity (per word, 80ms stagger) |
+| blurReveal  | 700ms    | `cubic-bezier(0.25, 0.1, 0.25, 1)` | opacity, filter        |
+| countUp     | 1200ms   | ease-out cubic | numeric value (scroll-triggered) |
+| drawIn      | 600ms    | `cubic-bezier(0.25, 0.1, 0.25, 1)` | transform scaleX       |
 
 Always respect `prefers-reduced-motion`. Disable non-essential animations when the user preference is set.
+
+### 8.4 Animation Philosophy
+
+Motion serves **choreography, not decoration**. Every animation earns its place.
+
+**Core principles:**
+1. **Scroll as revelation** — sections reveal as the user scrolls. The page unfolds as a narrative.
+2. **Choreographed entrances** — elements appear in sequence, not simultaneously. Headlines first, supporting content after. This creates rhythm.
+3. **Restraint over spectacle** — 2–3 effects per page maximum. More effects ≠ more polish.
+4. **Engineered confidence** — this is a security tool. Interactions feel precise and deliberate. No sparkles, no bounce, no whimsy.
+5. **100% commitment** — if it animates, it animates with intention. Tentative animation is worse than none.
+
+**Animation components** (framer-motion, `src/components/ui/`):
+- `SplitText` — word-by-word staggered headline entrance
+- `BlurText` — blur-to-clear text materialisation
+- `CountUp` — scroll-triggered animated number counter
+
+**Use:** SplitText on headlines, BlurText on subheadings, CountUp on stats, fade-up scroll wrappers, aurora/mesh backgrounds (muted), draw-in brand lines.
+
+**Avoid:** Hyperspeed/warp/3D scenes, particle explosions, click sparks, parallax on content, hover animations on text, auto-playing loops on content elements.
 
 ---
 
