@@ -81,7 +81,7 @@ export default function CTABand({ isConnected, onScan, isScanning }: CTABandProp
             </div>
 
             {/* Trust line */}
-            <p className="mt-6 text-sm text-slate-500">
+            <p className="mt-6 text-sm text-slate-400">
               No email collection &middot; Read-only access &middot; Open source
             </p>
           </div>

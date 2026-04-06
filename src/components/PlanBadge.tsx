@@ -14,7 +14,7 @@ const planConfig = {
   free: {
     label: 'Free',
     icon: null,
-    classes: 'border-neutral-200 bg-neutral-100 text-neutral-600 dark:border-secondary-600 dark:bg-secondary-800 dark:text-secondary-300',
+    classes: 'border-neutral-200 bg-neutral-100 text-slate-400 dark:border-secondary-600 dark:bg-secondary-800 dark:text-secondary-300',
   },
   pro: {
     label: 'Pro',

@@ -19,80 +19,92 @@ All components use the `cn()` helper from `src/lib/utils.ts` for conditional cla
 
 ---
 
-## 2. Color System — Monochrome Pro
+## 2. Color System — Midnight Amber
 
-> **"The Institutional Authority"** — True black canvas. White commands action.
-> Red is the ONLY color, reserved exclusively for danger/threat states.
-> By keeping the site monochrome, the red "Revoke" button carries 10x more
-> visual weight because it's the only color on the page.
+> **"The Warning System"** — Deep navy canvas. Amber = scanning/caution.
+> Red = danger only. Sky blue = safe/links.
+> Amber is the universal color for "Caution" and "Scanning."
 
 ### 2.1 Core Palette
 
-| Token              | Hex       | Role                                    |
-|--------------------|-----------|-----------------------------------------|
-| Background         | `#000000` | **True Black** — the canvas             |
-| Primary Action     | `#FFFFFF` | **Pure White** — Connect Wallet, CTAs   |
-| Secondary Action   | transparent + `1px #3F3F46` | Outline buttons, secondary CTAs |
-| Danger Red         | `#FF4B4B` | **Vibrant Crimson** — revoke, threats   |
-| Accent/Neutral     | `#A1A1AA` | **Cool Grey** — labels, muted text     |
+| Token              | Hex       | Contrast on Navy | Role                        |
+|--------------------|-----------|------------------|-----------------------------|
+| Background         | `#0F172A` | —                | **Deep Navy** — the canvas  |
+| Primary Action     | `#F59E0B` | 6.4:1 AA         | **Vivid Amber** — CTAs      |
+| Safe/Links         | `#38BDF8` | 7.2:1 AA         | **Sky Blue** — links, safe  |
+| Danger             | `#EF4444` | 4.6:1 AA (lg)    | **Red** — revoke, threats   |
+| Headings           | `#FFFFFF` | 17:1 AAA         | White — headlines            |
+| Secondary Text     | `#CBD5E1` | 10.6:1 AAA       | Slate 300 — body text       |
+| Muted Text         | `#94A3B8` | 6.4:1 AA         | Slate 400 — tertiary        |
+| Background Glow    | `#1E293B` | —                | Faint raised surfaces       |
 
-### 2.2 Neutral Scale (Zinc)
+### 2.2 Neutral Scale (Slate)
 
-| Step | Hex       | Usage                  |
-|------|-----------|------------------------|
-| 50   | `#FAFAFA` | Lightest surfaces      |
-| 100  | `#F4F4F5` | Light backgrounds      |
-| 200  | `#E4E4E7` | Light borders          |
-| 300  | `#D4D4D8` | Dividers               |
-| 400  | `#A1A1AA` | **Cool Grey accent**   |
-| 500  | `#71717A` | Muted text             |
-| 600  | `#52525B` | Disabled text          |
-| 700  | `#3F3F46` | **Secondary borders**  |
-| 800  | `#27272A` | Card backgrounds       |
-| 900  | `#18181B` | Elevated surfaces      |
-| 950  | `#09090B` | Near-black             |
+| Step | Hex       | Usage                    |
+|------|-----------|--------------------------|
+| 50   | `#F8FAFC` | Lightest (inverse bg)    |
+| 100  | `#F1F5F9` | Light accents            |
+| 200  | `#E2E8F0` | Light borders            |
+| 300  | `#CBD5E1` | **Secondary text** (10.6:1) |
+| 400  | `#94A3B8` | **Muted text** (6.4:1)  |
+| 500  | `#64748B` | Decorative only (3.6:1) |
+| 600  | `#475569` | Elevated surfaces       |
+| 700  | `#334155` | Card borders            |
+| 800  | `#1E293B` | **Raised surface**      |
+| 900  | `#0F172A` | **Base background**     |
+| 950  | `#0A0F1E` | Deepest                 |
 
 ### 2.3 Background, Text, and Border
 
 | Token                  | Hex       | Role                 |
 |------------------------|-----------|----------------------|
-| `background.primary`   | `#000000` | True Black base      |
-| `background.secondary` | `#0A0A0A` | Raised surface       |
-| `background.tertiary`  | `#18181B` | Overlay/cards        |
+| `background.primary`   | `#0F172A` | Deep Navy base       |
+| `background.secondary` | `#1E293B` | Raised surface       |
+| `background.tertiary`  | `#334155` | Overlay/cards        |
 | `background.inverse`   | `#FFFFFF` | White inverse        |
-| `text.primary`         | `#FFFFFF` | White on black       |
-| `text.secondary`       | `#A1A1AA` | Cool Grey            |
-| `text.tertiary`        | `#71717A` | Muted grey           |
-| `text.inverse`         | `#000000` | Black on white       |
-| `border.default`       | `#27272A` | Default borders      |
-| `border.strong`        | `#3F3F46` | Secondary borders    |
-| `border.focus`         | `#FFFFFF` | White focus ring     |
+| `text.primary`         | `#FFFFFF` | White on navy (17:1) |
+| `text.secondary`       | `#CBD5E1` | Slate 300 (10.6:1)  |
+| `text.tertiary`        | `#94A3B8` | Slate 400 (6.4:1)   |
+| `text.inverse`         | `#0F172A` | Navy on light bg     |
+| `border.default`       | `#1E293B` | Subtle borders       |
+| `border.strong`        | `#334155` | Visible borders      |
+| `border.focus`         | `#F59E0B` | Amber focus ring     |
 
-### 2.4 Danger Scale (Vibrant Crimson)
+### 2.4 Primary Scale (Vivid Amber)
 
-> The ONLY chromatic color. Reserved for threats, revocations, and risk.
+> The brand action color. Used for CTAs, scanning states, active indicators.
 
 | Step | Hex       | Usage                  |
 |------|-----------|------------------------|
-| 50   | `#FFF5F5` | Danger tint            |
-| 100  | `#FFE3E3` | Light danger bg        |
-| 200  | `#FFC9C9` | Danger border light    |
-| 300  | `#FFA8A8` | Danger accents         |
-| 400  | `#FF8787` | Hover state            |
-| 500  | `#FF4B4B` | **Danger primary**     |
-| 600  | `#E03E3E` | Pressed state          |
-| 700  | `#C53030` | Active/dark            |
-| 800  | `#9B2C2C` | High contrast          |
-| 900  | `#742A2A` | Darkest danger         |
+| 50   | `#FFFBEB` | Amber tint             |
+| 100  | `#FEF3C7` | Light amber bg         |
+| 200  | `#FDE68A` | Amber accents          |
+| 300  | `#FCD34D` | Highlight              |
+| 400  | `#FBBF24` | Hover state            |
+| 500  | `#F59E0B` | **Primary action**     |
+| 600  | `#D97706` | Pressed state          |
+| 700  | `#B45309` | Active/dark            |
+| 800  | `#92400E` | High contrast          |
+| 900  | `#78350F` | Darkest amber          |
 
-### 2.5 Semantic Colors
+### 2.5 Danger Scale (Red)
 
-| Step | Success (Green) | Warning (Amber) | Error (Red) | Info (Blue) |
-|------|-----------------|-----------------|-------------|-------------|
-| 500  | `#22C55E`       | `#F59E0B`       | `#FF4B4B`   | `#0EA5E9`   |
+> Reserved exclusively for threats, revocations, and risk.
 
-> Semantic colors are used functionally (status badges, alerts) but are NOT
-> part of the visual brand. Only danger red (`#FF4B4B`) is a brand element.
+| Step | Hex       | Usage                  |
+|------|-----------|------------------------|
+| 500  | `#EF4444` | **Danger primary**     |
+| 600  | `#DC2626` | Pressed state          |
+| 700  | `#B91C1C` | Active/dark            |
+
+### 2.6 Semantic Colors
+
+| Token   | Hex       | Contrast | Use |
+|---------|-----------|----------|-----|
+| Success | `#22C55E` | 5.1:1    | Safe approvals, connected |
+| Warning | `#F59E0B` | 6.4:1    | Caution states |
+| Error   | `#EF4444` | 4.6:1    | Danger, revoke |
+| Info    | `#0EA5E9` | 5.8:1    | Informational |
 
 ### 2.6 Semantic Backgrounds
 

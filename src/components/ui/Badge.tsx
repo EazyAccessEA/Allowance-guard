@@ -18,7 +18,7 @@ const badgeVariants = cva(
         warning: 'border-semantic-warning/20 dark:border-amber-800 bg-semanticBg-warning dark:bg-amber-900/30 text-semantic-warning dark:text-amber-300',
         info: 'border-semantic-info/20 dark:border-sky-800 bg-semanticBg-info dark:bg-sky-900/30 text-semantic-info dark:text-sky-300',
         outline: 'border-border-default dark:border-secondary-600 text-text-primary dark:text-secondary-200 bg-transparent',
-        secondary: 'border-slate-200 dark:border-secondary-600 bg-slate-100 dark:bg-secondary-800 text-slate-700 dark:text-secondary-300',
+        secondary: 'border-slate-200 dark:border-secondary-600 bg-slate-100 dark:bg-secondary-800 text-slate-300 dark:text-secondary-300',
       },
       size: {
         sm: 'px-2 py-0.5 text-xs',
