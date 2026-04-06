@@ -208,10 +208,11 @@ module.exports = {
         warning: '#F59E0B',
       },
       fontFamily: {
-        // Design System Typography — Space Grotesk for display, Inter for body
+        // Design System Typography — Space Grotesk display, Inter body, Instrument Serif editorial
         'heading': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
         'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
         'display': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
+        'serif': ['var(--font-serif)', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
         'caption': ['Inter', 'ui-sans-serif', 'system-ui'],
         'button': ['Inter', 'ui-sans-serif', 'system-ui'],
       },

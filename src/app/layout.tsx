@@ -32,6 +32,17 @@ const spaceGrotesk = localFont({
   preload: true,
 })
 
+// Editorial serif: Instrument Serif for premium section headlines
+const instrumentSerif = localFont({
+  src: [
+    { path: '../../public/fonts/InstrumentSerif-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/InstrumentSerif-Italic.ttf', weight: '400', style: 'italic' },
+  ],
+  display: 'swap',
+  variable: '--font-serif',
+  preload: false,
+})
+
 const inter = localFont({
   src: [
     { path: '../../public/fonts/Inter_18pt-Regular.ttf', weight: '400', style: 'normal' },
@@ -266,7 +277,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className={`${inter.className} ${spaceGrotesk.variable} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} ${spaceGrotesk.variable} ${instrumentSerif.variable} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <ThemeProvider>

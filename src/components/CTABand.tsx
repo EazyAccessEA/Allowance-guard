@@ -46,12 +46,12 @@ export default function CTABand({ isConnected, onScan, isScanning }: CTABandProp
       <Container>
         <CascadingScrollAnimation direction="up" distance={50} delay={0}>
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500">
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl tracking-tight leading-[1.05] mb-6">
+              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-slate-500">
                 Ready to Secure
               </span>
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-crimson-400 to-crimson-500">
+              <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-crimson-400 to-crimson-500">
                 Your Wallet?
               </span>
             </h2>
