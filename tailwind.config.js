@@ -34,20 +34,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Mobbin-Inspired Primary Color Scale (9-step)
+        // Primary Color Scale — Crimson Signal (redesign)
         primary: {
-          50: '#F0FDFA',
-          100: '#CCFBF1',
-          200: '#99F6E4',
-          300: '#5EEAD4',
-          400: '#2DD4BF',
-          500: '#00C2B3',  // Base Serum Teal
-          600: '#00A896',
-          700: '#008B7A',
-          800: '#006B5F',
-          900: '#004B44',
-          // Legacy support
-          accent: '#00C2B3',
+          50: '#FEF2F2',
+          100: '#FEE2E2',
+          200: '#FECACA',
+          300: '#FCA5A5',
+          400: '#F87171',
+          500: '#E53E3E',  // Brand primary — Crimson Signal
+          600: '#DC2626',
+          700: '#B91C1C',
+          800: '#991B1B',
+          900: '#7F1D1D',
           foreground: '#FFFFFF',
         },
         
@@ -106,7 +104,7 @@ module.exports = {
           primary: '#E2E8F0',
           secondary: '#CBD5E1',
           tertiary: '#F1F5F9',
-          focus: '#00C2B3',
+          focus: '#E53E3E',
           // Legacy support
           DEFAULT: '#E5E7EB',
         },
@@ -309,7 +307,7 @@ module.exports = {
         'subtle': '0 1px 3px rgba(0, 0, 0, 0.1)',
         'medium': '0 4px 6px rgba(0, 0, 0, 0.1)',
         'large': '0 10px 15px rgba(0, 0, 0, 0.1)',
-        'focus': '0 0 0 3px rgba(0, 194, 179, 0.1)', // Serum Teal focus
+        'focus': '0 0 0 3px rgba(229, 62, 62, 0.15)', // Crimson focus
         'focus-danger': '0 0 0 3px rgba(239, 68, 68, 0.1)',
         'focus-success': '0 0 0 3px rgba(34, 197, 94, 0.1)',
         'focus-info': '0 0 0 3px rgba(14, 165, 233, 0.1)',
@@ -321,8 +319,8 @@ module.exports = {
         'dark-medium': '0 4px 6px rgba(0, 0, 0, 0.3)',
         'dark-large': '0 10px 15px rgba(0, 0, 0, 0.4)',
         // Glow effects
-        'glow-primary': '0 0 20px rgba(0, 194, 179, 0.3)',
-        'glow-primary-lg': '0 0 40px rgba(0, 194, 179, 0.2)',
+        'glow-primary': '0 0 20px rgba(229, 62, 62, 0.3)',
+        'glow-primary-lg': '0 0 40px rgba(229, 62, 62, 0.2)',
         // Redesign: Crimson glow
         'glow-crimson': '0 0 20px rgba(229, 62, 62, 0.25)',
         'glow-crimson-lg': '0 0 40px rgba(229, 62, 62, 0.15)',
@@ -406,8 +404,8 @@ module.exports = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         glowPulse: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(0, 194, 179, 0.15)' },
-          '50%': { boxShadow: '0 0 40px rgba(0, 194, 179, 0.3)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(229, 62, 62, 0.15)' },
+          '50%': { boxShadow: '0 0 40px rgba(229, 62, 62, 0.3)' },
         },
       },
       // Professional Component Styles

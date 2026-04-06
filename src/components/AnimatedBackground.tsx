@@ -12,9 +12,9 @@ interface AnimatedBackgroundProps {
 }
 
 /**
- * CSS-only mesh gradient background — replaces image/video backgrounds.
+ * CSS-only mesh gradient background — Crimson Signal + Volt Mint.
  * Uses layered radial gradients with animation for a smooth shifting effect.
- * Respects prefers-reduced-motion. Supports dark mode.
+ * Respects prefers-reduced-motion. Dark-first design.
  */
 export default function AnimatedBackground({
   className,
@@ -33,14 +33,14 @@ export default function AnimatedBackground({
     },
     section: {
       background: `
-        radial-gradient(ellipse 60% 50% at 30% 40%, rgba(0, 194, 179, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 70% 60%, rgba(45, 212, 191, 0.06) 0%, transparent 50%)
+        radial-gradient(ellipse 60% 50% at 30% 40%, rgba(229, 62, 62, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 70% 60%, rgba(0, 240, 200, 0.04) 0%, transparent 50%)
       `,
       backgroundSize: '150% 150%',
     },
     subtle: {
       background: `
-        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0, 194, 179, 0.05) 0%, transparent 60%)
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(229, 62, 62, 0.04) 0%, transparent 60%)
       `,
       backgroundSize: '120% 120%',
     },
@@ -59,14 +59,14 @@ export default function AnimatedBackground({
     },
     section: {
       background: `
-        radial-gradient(ellipse 60% 50% at 30% 40%, rgba(0, 194, 179, 0.04) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 70% 60%, rgba(45, 212, 191, 0.03) 0%, transparent 50%)
+        radial-gradient(ellipse 60% 50% at 30% 40%, rgba(229, 62, 62, 0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 70% 60%, rgba(0, 240, 200, 0.03) 0%, transparent 50%)
       `,
       backgroundSize: '150% 150%',
     },
     subtle: {
       background: `
-        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0, 194, 179, 0.02) 0%, transparent 60%)
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(229, 62, 62, 0.02) 0%, transparent 60%)
       `,
       backgroundSize: '120% 120%',
     },

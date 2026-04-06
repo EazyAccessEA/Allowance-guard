@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/Badge'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import MobileNavigation from '@/components/MobileNavigation'
 import PlanBadge from '@/components/PlanBadge'
-import { ThemeToggle } from '@/components/ThemeProvider'
+// ThemeToggle removed from navbar — dark nav surface makes it irrelevant here.
+// Toggle lives in Settings / Footer instead.
 
 interface HeaderProps {
   isConnected: boolean
@@ -37,7 +38,7 @@ function NavLink({
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base rounded-md
         ${current
           ? 'text-white'
-          : 'text-slate-400 hover:text-white'
+          : 'text-slate-300 hover:text-white'
         }`}
       style={{ transitionDuration: '150ms', transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)' }}
     >
@@ -110,7 +111,7 @@ export default function Header({ isConnected }: HeaderProps) {
                 >
                   AllowanceGuard
                 </span>
-                <span className="text-[11px] text-slate-500 leading-tight hidden sm:block tracking-wide uppercase">
+                <span className="text-[11px] text-slate-400 leading-tight hidden sm:block tracking-wide uppercase">
                   Secure Token Approvals
                 </span>
               </div>
@@ -134,13 +135,12 @@ export default function Header({ isConnected }: HeaderProps) {
 
             {/* Desktop Actions */}
             <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
-              <ThemeToggle variant="navbar" />
               {isConnected ? (
                 <>
                   <PlanBadge plan="free" size="sm" />
                   <Link
                     href="/account"
-                    className="px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-white transition-colors duration-150
+                    className="px-3 py-1.5 text-sm font-medium text-slate-300 hover:text-white transition-colors duration-150
                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500/40 rounded-md"
                   >
                     Account
@@ -153,7 +153,7 @@ export default function Header({ isConnected }: HeaderProps) {
                 <>
                   <Link
                     href="/pricing"
-                    className="px-4 py-2 text-sm font-medium text-crimson-400 hover:text-crimson-300 transition-colors duration-150 rounded-md
+                    className="px-4 py-2 text-sm font-semibold text-crimson-400 hover:text-crimson-300 border border-crimson-500/30 hover:border-crimson-500/50 rounded-md transition-all duration-150
                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500/40"
                   >
                     Upgrade
@@ -165,7 +165,6 @@ export default function Header({ isConnected }: HeaderProps) {
 
             {/* Mobile Actions */}
             <div className="lg:hidden flex items-center gap-2 flex-shrink-0">
-              <ThemeToggle variant="navbar" />
               <MobileNavigation isConnected={isConnected} />
             </div>
           </div>
