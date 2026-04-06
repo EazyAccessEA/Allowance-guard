@@ -128,7 +128,7 @@ export function ApiPlayground({
         <button
           onClick={handleSend}
           disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded font-medium text-sm disabled:opacity-50 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded font-medium text-sm disabled:opacity-50 transition-colors"
         >
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />

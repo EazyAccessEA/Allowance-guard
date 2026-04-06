@@ -6,7 +6,6 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  // Performance optimizations
   corePlugins: {
     preflight: true,
     container: false,
@@ -28,84 +27,84 @@ module.exports = {
     extend: {
       colors: {
         // =============================================
-        // MONOCHROME PRO — Institutional Authority
-        // True black canvas. White commands action.
-        // Red is the ONLY color — reserved for danger.
+        // MIDNIGHT AMBER — The Warning System
+        // Deep navy canvas. Amber = scanning/caution.
+        // Red = danger only. Sky blue = safe/links.
         // =============================================
 
-        // Primary — Pure White (action color)
+        // Primary — Vivid Amber (action, CTA, scanning)
         primary: {
-          50: '#FAFAFA',
-          100: '#F5F5F5',
-          200: '#E5E5E5',
-          300: '#D4D4D4',
-          400: '#A1A1AA',
-          500: '#FFFFFF',   // Primary action — Pure White
-          600: '#E5E5E5',
-          700: '#D4D4D4',
-          800: '#A1A1AA',
-          900: '#71717A',
-          foreground: '#000000',
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B',   // Vivid Amber
+          600: '#D97706',
+          700: '#B45309',
+          800: '#92400E',
+          900: '#78350F',
+          foreground: '#0F172A',
         },
 
-        // Secondary — Zinc (monochrome structural scale)
+        // Secondary — Slate (structural)
         secondary: {
-          50: '#FAFAFA',
-          100: '#F4F4F5',
-          200: '#E4E4E7',
-          300: '#D4D4D8',
-          400: '#A1A1AA',
-          500: '#71717A',
-          600: '#52525B',
-          700: '#3F3F46',
-          800: '#27272A',
-          900: '#18181B',
+          50: '#F8FAFC',
+          100: '#F1F5F9',
+          200: '#E2E8F0',
+          300: '#CBD5E1',
+          400: '#94A3B8',
+          500: '#64748B',
+          600: '#475569',
+          700: '#334155',
+          800: '#1E293B',
+          900: '#0F172A',
         },
 
-        // Neutral — Zinc
+        // Neutral — Slate (same scale, navy-harmonious)
         neutral: {
-          50: '#FAFAFA',
-          100: '#F4F4F5',
-          200: '#E4E4E7',
-          300: '#D4D4D8',
-          400: '#A1A1AA',
-          500: '#71717A',
-          600: '#52525B',
-          700: '#3F3F46',
-          800: '#27272A',
-          900: '#18181B',
+          50: '#F8FAFC',
+          100: '#F1F5F9',
+          200: '#E2E8F0',
+          300: '#CBD5E1',
+          400: '#94A3B8',
+          500: '#64748B',
+          600: '#475569',
+          700: '#334155',
+          800: '#1E293B',
+          900: '#0F172A',
         },
 
-        // Background System — True Black foundation
+        // Background — Deep Navy foundation
         background: {
-          primary: '#000000',
-          secondary: '#0A0A0A',
-          tertiary: '#18181B',
+          primary: '#0F172A',
+          secondary: '#1E293B',
+          tertiary: '#334155',
           inverse: '#FFFFFF',
-          light: '#FAFAFA',
-          dark: '#000000',
+          light: '#F8FAFC',
+          dark: '#0F172A',
           white: '#FFFFFF',
         },
 
-        // Text System — high contrast on black
+        // Text — high contrast on navy
         text: {
-          primary: '#FFFFFF',
-          secondary: '#A1A1AA',
-          tertiary: '#71717A',
-          inverse: '#000000',
-          muted: '#52525B',
+          primary: '#FFFFFF',       // 17:1 on navy
+          secondary: '#CBD5E1',     // 10.6:1 on navy
+          tertiary: '#94A3B8',      // 6.4:1 on navy
+          inverse: '#0F172A',
+          muted: '#64748B',         // 3.6:1 — large text / decorative only
         },
 
-        // Border System — subtle zinc
+        // Border — slate tones
         border: {
-          primary: '#27272A',
-          secondary: '#3F3F46',
-          tertiary: '#18181B',
-          focus: '#FFFFFF',
-          DEFAULT: '#27272A',
+          primary: '#1E293B',
+          secondary: '#334155',
+          tertiary: '#0F172A',
+          focus: '#F59E0B',
+          DEFAULT: '#1E293B',
         },
 
-        // Semantic Colors
+        // Semantic
         semantic: {
           success: {
             50: '#F0FDF4', 100: '#DCFCE7', 200: '#BBF7D0', 300: '#86EFAC',
@@ -118,9 +117,9 @@ module.exports = {
             800: '#92400E', 900: '#78350F',
           },
           error: {
-            50: '#FFF5F5', 100: '#FFE3E3', 200: '#FFC9C9', 300: '#FFA8A8',
-            400: '#FF8787', 500: '#FF4B4B', 600: '#E03E3E', 700: '#C53030',
-            800: '#9B2C2C', 900: '#742A2A',
+            50: '#FEF2F2', 100: '#FEE2E2', 200: '#FECACA', 300: '#FCA5A5',
+            400: '#F87171', 500: '#EF4444', 600: '#DC2626', 700: '#B91C1C',
+            800: '#991B1B', 900: '#7F1D1D',
           },
           info: {
             50: '#F0F9FF', 100: '#E0F2FE', 200: '#BAE6FD', 300: '#7DD3FC',
@@ -129,51 +128,78 @@ module.exports = {
           },
         },
 
-        // Danger — Vibrant Crimson (THE color, the only one)
+        // Crimson — Danger Red (threats, revoke, risk)
         crimson: {
-          50: '#FFF5F5',
-          100: '#FFE3E3',
-          200: '#FFC9C9',
-          300: '#FFA8A8',
-          400: '#FF8787',
-          500: '#FF4B4B',   // Vibrant Crimson
-          600: '#E03E3E',
-          700: '#C53030',
-          800: '#9B2C2C',
-          900: '#742A2A',
+          50: '#FEF2F2',
+          100: '#FEE2E2',
+          200: '#FECACA',
+          300: '#FCA5A5',
+          400: '#F87171',
+          500: '#EF4444',   // Danger Red
+          600: '#DC2626',
+          700: '#B91C1C',
+          800: '#991B1B',
+          900: '#7F1D1D',
         },
 
-        // Volt Mint removed — monochrome palette has no teal.
-        // "volt" classes will resolve to accent grey for graceful fallback.
+        // Amber scale (explicit for gradient buttons)
+        amber: {
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B',
+          600: '#D97706',
+          700: '#B45309',
+          800: '#92400E',
+          900: '#78350F',
+        },
+
+        // Sky — safe blue (links, connected states)
+        sky: {
+          50: '#F0F9FF',
+          100: '#E0F2FE',
+          200: '#BAE6FD',
+          300: '#7DD3FC',
+          400: '#38BDF8',   // Sky Blue
+          500: '#0EA5E9',
+          600: '#0284C7',
+          700: '#0369A1',
+          800: '#075985',
+          900: '#0C4A6E',
+        },
+
+        // Volt — mapped to amber for backward compat
         volt: {
-          50: '#FAFAFA',
-          100: '#F4F4F5',
-          200: '#E4E4E7',
-          300: '#D4D4D8',
-          400: '#A1A1AA',
-          500: '#71717A',
-          600: '#52525B',
-          700: '#3F3F46',
-          800: '#27272A',
-          900: '#18181B',
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
+          500: '#F59E0B',
+          600: '#D97706',
+          700: '#B45309',
+          800: '#92400E',
+          900: '#78350F',
         },
 
-        // Surface — True Black system
+        // Surface — Deep Navy system
         surface: {
-          base: '#000000',
-          raised: '#0A0A0A',
-          overlay: '#18181B',
-          elevated: '#27272A',
+          base: '#0F172A',
+          raised: '#1E293B',
+          overlay: '#334155',
+          elevated: '#475569',
         },
 
-        // Legacy support (mapped to monochrome)
+        // Legacy aliases (mapped to Midnight Amber)
         ink: '#FFFFFF',
-        stone: '#71717A',
-        mist: '#18181B',
-        line: '#27272A',
-        cobalt: '#A1A1AA',
+        stone: '#94A3B8',
+        mist: '#1E293B',
+        line: '#1E293B',
+        cobalt: '#38BDF8',
         white: '#FFFFFF',
-        danger: '#FF4B4B',
+        danger: '#EF4444',
         success: '#22C55E',
         info: '#0EA5E9',
         warning: '#F59E0B',
@@ -266,24 +292,24 @@ module.exports = {
         'full': '9999px',
       },
       boxShadow: {
-        // Monochrome Pro shadow system — deeper shadows on true black
-        'subtle': '0 1px 3px rgba(0, 0, 0, 0.4)',
-        'medium': '0 4px 6px rgba(0, 0, 0, 0.4)',
-        'large': '0 10px 15px rgba(0, 0, 0, 0.5)',
-        'focus': '0 0 0 3px rgba(255, 255, 255, 0.15)',
-        'focus-danger': '0 0 0 3px rgba(255, 75, 75, 0.15)',
-        'focus-success': '0 0 0 3px rgba(34, 197, 94, 0.1)',
-        'focus-info': '0 0 0 3px rgba(14, 165, 233, 0.1)',
-        'glass': '0 8px 32px rgba(0, 0, 0, 0.3)',
-        'glass-lg': '0 16px 48px rgba(0, 0, 0, 0.4)',
-        'dark-subtle': '0 1px 3px rgba(0, 0, 0, 0.5)',
-        'dark-medium': '0 4px 6px rgba(0, 0, 0, 0.5)',
-        'dark-large': '0 10px 15px rgba(0, 0, 0, 0.6)',
-        // Danger glow — the ONLY glow in Monochrome Pro
-        'glow-primary': '0 0 20px rgba(255, 255, 255, 0.1)',
-        'glow-primary-lg': '0 0 40px rgba(255, 255, 255, 0.08)',
-        'glow-crimson': '0 0 20px rgba(255, 75, 75, 0.25)',
-        'glow-crimson-lg': '0 0 40px rgba(255, 75, 75, 0.15)',
+        'subtle': '0 1px 3px rgba(0, 0, 0, 0.3)',
+        'medium': '0 4px 6px rgba(0, 0, 0, 0.3)',
+        'large': '0 10px 15px rgba(0, 0, 0, 0.4)',
+        'focus': '0 0 0 3px rgba(245, 158, 11, 0.25)',
+        'focus-danger': '0 0 0 3px rgba(239, 68, 68, 0.2)',
+        'focus-success': '0 0 0 3px rgba(34, 197, 94, 0.15)',
+        'focus-info': '0 0 0 3px rgba(14, 165, 233, 0.15)',
+        'glass': '0 8px 32px rgba(0, 0, 0, 0.2)',
+        'glass-lg': '0 16px 48px rgba(0, 0, 0, 0.3)',
+        'dark-subtle': '0 1px 3px rgba(0, 0, 0, 0.4)',
+        'dark-medium': '0 4px 6px rgba(0, 0, 0, 0.4)',
+        'dark-large': '0 10px 15px rgba(0, 0, 0, 0.5)',
+        // Amber glow for primary actions
+        'glow-primary': '0 0 20px rgba(245, 158, 11, 0.25)',
+        'glow-primary-lg': '0 0 40px rgba(245, 158, 11, 0.15)',
+        // Danger glow for revoke/threat
+        'glow-crimson': '0 0 20px rgba(239, 68, 68, 0.25)',
+        'glow-crimson-lg': '0 0 40px rgba(239, 68, 68, 0.15)',
       },
       backdropBlur: {
         'xs': '2px',
@@ -341,8 +367,8 @@ module.exports = {
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         glowPulse: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(255, 75, 75, 0.15)' },
-          '50%': { boxShadow: '0 0 40px rgba(255, 75, 75, 0.3)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(245, 158, 11, 0.15)' },
+          '50%': { boxShadow: '0 0 40px rgba(245, 158, 11, 0.3)' },
         },
       },
       aria: {

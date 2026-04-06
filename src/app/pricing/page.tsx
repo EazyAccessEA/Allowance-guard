@@ -61,8 +61,8 @@ function BillingToggle({
           onChange(billingPeriod === 'monthly' ? 'yearly' : 'monthly')
         }
         className={cn(
-          'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2',
-          billingPeriod === 'yearly' ? 'bg-primary-700' : 'bg-neutral-300 dark:bg-secondary-600'
+          'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2',
+          billingPeriod === 'yearly' ? 'bg-amber-500' : 'bg-secondary-600'
         )}
       >
         <span
@@ -81,7 +81,7 @@ function BillingToggle({
         Yearly
       </span>
       {billingPeriod === 'yearly' && (
-        <span className="rounded-full bg-green-100 dark:bg-green-900/40 px-2 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">
+        <span className="rounded-full bg-green-900/40 px-2 py-0.5 text-xs font-medium text-green-300">
           Save up to 34%
         </span>
       )}
@@ -93,11 +93,11 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="border-b border-border-primary">
+    <div className="border-b border-secondary-700">
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-text-primary transition-colors duration-150 hover:text-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700"
+        className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-text-primary transition-colors duration-150 hover:text-amber-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
         aria-expanded={open}
       >
         {question}
@@ -187,10 +187,10 @@ export default function PricingPage() {
           <div className="w-full overflow-x-auto">
             <table className="w-full min-w-[600px] border-collapse text-left">
               <thead>
-                <tr className="border-b border-border-primary">
+                <tr className="border-b border-secondary-700">
                   <th className="py-4 pr-4 text-sm font-medium text-text-secondary">Feature</th>
                   <th className="px-4 py-4 text-center text-sm font-medium text-text-primary">Free</th>
-                  <th className="px-4 py-4 text-center text-sm font-medium text-primary-700 dark:text-primary-400">Developer</th>
+                  <th className="px-4 py-4 text-center text-sm font-medium text-amber-400">Developer</th>
                   <th className="px-4 py-4 text-center text-sm font-medium text-text-primary">Growth</th>
                   <th className="px-4 py-4 text-center text-sm font-medium text-text-primary">Enterprise</th>
                 </tr>
@@ -206,8 +206,8 @@ export default function PricingPage() {
                   <tr
                     key={row.label}
                     className={cn(
-                      'border-b border-border-primary',
-                      idx % 2 === 1 && 'bg-neutral-50 dark:bg-secondary-800/50'
+                      'border-b border-secondary-700',
+                      idx % 2 === 1 && 'bg-secondary-800/50'
                     )}
                   >
                     <td className="py-3 pr-4 text-sm text-text-primary">{row.label}</td>
@@ -215,9 +215,9 @@ export default function PricingPage() {
                       <td key={i} className="px-4 py-3 text-center text-sm">
                         {typeof val === 'boolean' ? (
                           val ? (
-                            <Check className="mx-auto h-5 w-5 text-green-600 dark:text-green-400" aria-label="Included" />
+                            <Check className="mx-auto h-5 w-5 text-emerald-400" aria-label="Included" />
                           ) : (
-                            <X className="mx-auto h-5 w-5 text-neutral-300 dark:text-secondary-600" aria-label="Not included" />
+                            <X className="mx-auto h-5 w-5 text-secondary-600" aria-label="Not included" />
                           )
                         ) : (
                           <span className="font-medium text-text-primary">{val}</span>

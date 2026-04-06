@@ -36,7 +36,7 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
         {/* Dismiss button */}
         <button
           onClick={() => setDismissed(true)}
-          className="absolute right-3 top-3 rounded-full p-1 text-neutral-400 transition-colors duration-150 hover:bg-neutral-100 hover:text-neutral-600"
+          className="absolute right-3 top-3 rounded-full p-1 text-neutral-400 transition-colors duration-150 hover:bg-neutral-100 hover:text-slate-400"
           aria-label="Dismiss upgrade prompt"
         >
           <X className="h-4 w-4" />
@@ -53,7 +53,7 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
             <h3 className="text-lg font-semibold text-neutral-900">
               Upgrade to unlock {feature}
             </h3>
-            <p className="mt-1 text-sm text-neutral-500">
+            <p className="mt-1 text-sm text-slate-400">
               {currentLimit !== undefined
                 ? `You've reached the free tier limit of ${currentLimit} wallets. `
                 : ''}
@@ -72,7 +72,7 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
               </Link>
               <button
                 onClick={() => setDismissed(true)}
-                className="inline-flex items-center justify-center rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition-colors duration-150 hover:bg-neutral-50"
+                className="inline-flex items-center justify-center rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-slate-300 transition-colors duration-150 hover:bg-neutral-50"
               >
                 Continue with Free
               </button>

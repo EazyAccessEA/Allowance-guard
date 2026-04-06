@@ -29,7 +29,7 @@ export default function ChainLogoCarousel() {
       />
 
       <div className="text-center mb-10">
-        <p className="text-sm font-medium text-slate-500 tracking-wide uppercase">
+        <p className="text-sm font-medium text-slate-400 tracking-wide uppercase">
           Securing wallets across
         </p>
       </div>

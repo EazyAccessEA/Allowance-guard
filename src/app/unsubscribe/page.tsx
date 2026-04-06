@@ -67,43 +67,43 @@ export default function UnsubscribePage() {
       title: 'All Notifications',
       description: 'Stop receiving all emails from Allowance Guard',
       icon: X,
-      color: 'text-red-600',
-      bgColor: 'bg-red-50',
-      borderColor: 'border-red-200'
+      color: 'text-red-400',
+      bgColor: 'bg-red-900/20',
+      borderColor: 'border-red-800'
     },
     {
       id: 'alerts',
       title: 'Security Alerts Only',
       description: 'Keep daily digest but stop receiving immediate security alerts',
       icon: Bell,
-      color: 'text-yellow-600',
-      bgColor: 'bg-yellow-50',
-      borderColor: 'border-yellow-200'
+      color: 'text-yellow-400',
+      bgColor: 'bg-yellow-900/20',
+      borderColor: 'border-yellow-800'
     },
     {
       id: 'digest',
       title: 'Daily Digest Only',
       description: 'Keep security alerts but stop receiving daily summary emails',
       icon: Mail,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200'
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-900/20',
+      borderColor: 'border-blue-800'
     },
     {
       id: 'marketing',
       title: 'Marketing Emails Only',
       description: 'Keep security notifications but stop receiving product updates',
       icon: Shield,
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200'
+      color: 'text-green-400',
+      bgColor: 'bg-green-900/20',
+      borderColor: 'border-green-800'
     }
   ]
 
   return (
-    <div className="min-h-screen bg-background-primary dark:bg-secondary-900">
+    <div className="min-h-screen bg-secondary-900">
       {/* Header */}
-      <header className="bg-background-primary dark:bg-secondary-900 border-b border-border-primary dark:border-secondary-700">
+      <header className="bg-secondary-900 border-b border-secondary-700">
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
@@ -114,7 +114,7 @@ export default function UnsubscribePage() {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Allowance Guard</h1>
+            <h1 className="text-2xl font-bold text-secondary-100">Allowance Guard</h1>
           </div>
         </div>
       </header>
@@ -122,22 +122,22 @@ export default function UnsubscribePage() {
       {/* Content */}
       <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-text-primary dark:text-secondary-100 mb-4">Unsubscribe</h1>
-          <p className="text-text-secondary dark:text-secondary-400">
+          <h1 className="text-3xl font-bold text-secondary-100 mb-4">Unsubscribe</h1>
+          <p className="text-slate-400">
             We&apos;re sorry to see you go. Choose what you&apos;d like to unsubscribe from below.
           </p>
         </div>
 
         <form onSubmit={handleUnsubscribe} className="space-y-8">
           {/* Email Input */}
-          <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+          <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
-              <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Email Address</h2>
+              <Mail className="w-5 h-5 text-blue-400 mr-2" />
+              <h2 className="text-xl font-semibold text-secondary-100">Email Address</h2>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-text-secondary dark:text-secondary-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-400 mb-2">
                 Enter the email address you want to unsubscribe
               </label>
               <input
@@ -145,19 +145,19 @@ export default function UnsubscribePage() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border border-border-primary dark:border-secondary-600 rounded-lg bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-secondary-600 rounded-lg bg-secondary-900 text-secondary-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="your.email@example.com"
                 required
               />
-              <p className="text-sm text-text-tertiary dark:text-secondary-500 mt-1">
+              <p className="text-sm text-slate-400 mt-1">
                 This must be the exact email address you used to subscribe.
               </p>
             </div>
           </div>
 
           {/* Unsubscribe Options */}
-          <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-6">What would you like to unsubscribe from?</h2>
+          <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-secondary-100 mb-6">What would you like to unsubscribe from?</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {unsubscribeOptions.map((option) => {
@@ -168,7 +168,7 @@ export default function UnsubscribePage() {
                     className={`relative cursor-pointer border-2 rounded-lg p-4 transition-all ${
                       unsubscribeType === option.id
                         ? `${option.borderColor} ${option.bgColor}`
-                        : 'border-border-primary dark:border-secondary-700 hover:border-border-primary dark:hover:border-secondary-600'
+                        : 'border-secondary-700 hover:border-secondary-700 hover:border-secondary-600'
                     }`}
                   >
                     <input
@@ -182,10 +182,10 @@ export default function UnsubscribePage() {
                     <div className="flex items-start">
                       <Icon className={`w-5 h-5 mt-0.5 mr-3 ${option.color}`} />
                       <div>
-                        <h3 className="text-sm font-medium text-text-primary dark:text-secondary-100 mb-1">
+                        <h3 className="text-sm font-medium text-secondary-100 mb-1">
                           {option.title}
                         </h3>
-                        <p className="text-sm text-text-secondary dark:text-secondary-400">
+                        <p className="text-sm text-slate-400">
                           {option.description}
                         </p>
                       </div>
@@ -204,9 +204,9 @@ export default function UnsubscribePage() {
           {/* Status Message */}
           {message && (
             <div className={`p-4 rounded-lg flex items-center ${
-              status === 'success' 
-                ? 'bg-green-50 border border-green-200 text-green-800' 
-                : 'bg-red-50 border border-red-200 text-red-800'
+              status === 'success'
+                ? 'bg-green-900/20 border border-green-800 text-green-300'
+                : 'bg-red-900/20 border border-red-800 text-red-300'
             }`}>
               {status === 'success' ? (
                 <CheckCircle className="w-5 h-5 mr-2" />
@@ -222,7 +222,7 @@ export default function UnsubscribePage() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 bg-primary-700 dark:bg-primary-600 hover:bg-primary-800 dark:hover:bg-primary-700 disabled:bg-neutral-400 dark:disabled:bg-secondary-600 text-white font-medium rounded-lg transition-colors flex items-center"
+              className="px-6 py-3 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-600 text-slate-900 font-medium rounded-lg transition-colors flex items-center"
             >
               {status === 'loading' ? (
                 <>
@@ -242,30 +242,30 @@ export default function UnsubscribePage() {
         </form>
 
         {/* Alternative Options */}
-        <div className="mt-12 bg-background-secondary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-4">Other Options</h3>
+        <div className="mt-12 bg-secondary-800 border border-secondary-700 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-secondary-100 mb-4">Other Options</h3>
           <div className="space-y-4">
             <div>
-              <h4 className="text-sm font-medium text-text-primary dark:text-secondary-100 mb-2">Change Your Preferences Instead</h4>
-              <p className="text-sm text-text-secondary dark:text-secondary-400 mb-3">
+              <h4 className="text-sm font-medium text-secondary-100 mb-2">Change Your Preferences Instead</h4>
+              <p className="text-sm text-slate-400 mb-3">
                 Don&apos;t want to unsubscribe completely? You can adjust your notification preferences to receive only what you want.
               </p>
               <a 
                 href="/preferences" 
-                className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium"
+                className="inline-flex items-center text-amber-400 hover:text-amber-300 text-sm font-medium"
               >
                 Manage Preferences
               </a>
             </div>
             
             <div>
-              <h4 className="text-sm font-medium text-text-primary dark:text-secondary-100 mb-2">Need Help?</h4>
-              <p className="text-sm text-text-secondary dark:text-secondary-400 mb-3">
+              <h4 className="text-sm font-medium text-secondary-100 mb-2">Need Help?</h4>
+              <p className="text-sm text-slate-400 mb-3">
                 If you&apos;re having trouble unsubscribing or have questions, our support team is here to help.
               </p>
               <a 
                 href="/contact" 
-                className="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-medium"
+                className="inline-flex items-center text-amber-400 hover:text-amber-300 text-sm font-medium"
               >
                 Contact Support
               </a>
@@ -274,12 +274,12 @@ export default function UnsubscribePage() {
         </div>
 
         {/* Important Notice */}
-        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+        <div className="mt-8 bg-yellow-900/20 border border-yellow-800 rounded-lg p-6">
           <div className="flex items-start">
-            <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 mr-3 flex-shrink-0" />
+            <AlertCircle className="w-5 h-5 text-yellow-400 mt-0.5 mr-3 flex-shrink-0" />
             <div>
-              <h4 className="text-sm font-medium text-yellow-800 mb-2">Important Security Notice</h4>
-              <p className="text-sm text-yellow-700">
+              <h4 className="text-sm font-medium text-yellow-300 mb-2">Important Security Notice</h4>
+              <p className="text-sm text-yellow-400">
                 If you unsubscribe from security alerts, you may not be notified of potentially dangerous token approvals. 
                 We recommend keeping at least daily digest emails enabled for your wallet security.
               </p>
@@ -289,16 +289,16 @@ export default function UnsubscribePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-background-secondary dark:bg-secondary-800 border-t border-border-primary dark:border-secondary-700 mt-16">
+      <footer className="bg-secondary-800 border-t border-secondary-700 mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
           <div className="text-center">
-            <p className="text-text-secondary dark:text-secondary-400 text-sm">
+            <p className="text-slate-400 text-sm">
               © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
             <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-blue-600 hover:text-blue-800 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-blue-600 hover:text-blue-800 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-blue-600 hover:text-blue-800 text-sm">Cookie Policy</a>
+              <a href="/terms" className="text-amber-400 hover:text-amber-300 text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-amber-400 hover:text-amber-300 text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-amber-400 hover:text-amber-300 text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>

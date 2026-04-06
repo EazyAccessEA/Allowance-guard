@@ -34,7 +34,7 @@ function FooterSection({ title, children, isOpen, onToggle }: FooterSectionProps
         <h3 className="text-sm font-semibold text-white uppercase tracking-wide">
           {title}
         </h3>
-        <div className="md:hidden text-slate-500">
+        <div className="md:hidden text-slate-400">
           {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </div>
       </div>
@@ -61,13 +61,13 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-surface-base text-white">
-      {/* Signature crimson top edge */}
+      {/* Signature amber top edge */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
         aria-hidden="true"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, #E53E3E 20%, #E53E3E 80%, transparent 100%)',
-          boxShadow: '0 -1px 8px rgba(229, 62, 62, 0.2)',
+          background: 'linear-gradient(90deg, transparent 0%, #F59E0B 20%, #F59E0B 80%, transparent 100%)',
+          boxShadow: '0 -1px 8px rgba(245, 158, 11, 0.2)',
         }}
       />
 
@@ -177,10 +177,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-slate-400">
             &copy; {new Date().getFullYear()} AllowanceGuard. AGPL-3.0 + Commercial.
           </span>
-          <span className="text-xs text-slate-600">
+          <span className="text-xs text-slate-400">
             No VC. No token. Open source.
           </span>
         </div>
@@ -213,8 +213,8 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-9 h-9 bg-white/5 hover:bg-crimson-500/20 text-slate-500 hover:text-white rounded-md flex items-center justify-center transition-all duration-150
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crimson-500/40"
+      className="w-9 h-9 bg-slate-800/50 hover:bg-amber-500/20 text-slate-400 hover:text-white rounded-md flex items-center justify-center transition-all duration-150
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
       aria-label={label}
     >
       {children}

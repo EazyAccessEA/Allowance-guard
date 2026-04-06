@@ -65,7 +65,7 @@ export const ProNudge: React.FC<ProNudgeProps> = ({ variant, className }) => {
     >
       <Icon className={cn('h-5 w-5 shrink-0', config.iconColor)} />
 
-      <p className="flex-1 text-sm text-neutral-700 dark:text-secondary-200">{config.message}</p>
+      <p className="flex-1 text-sm text-slate-300 dark:text-secondary-200">{config.message}</p>
 
       <Link
         href="/pricing"
@@ -76,7 +76,7 @@ export const ProNudge: React.FC<ProNudgeProps> = ({ variant, className }) => {
 
       <button
         onClick={() => setDismissed(true)}
-        className="shrink-0 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-neutral-400 dark:text-secondary-500 transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-secondary-700 hover:text-neutral-600 dark:hover:text-secondary-300"
+        className="shrink-0 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-neutral-400 dark:text-secondary-500 transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-secondary-700 hover:text-slate-400 dark:hover:text-secondary-300"
         aria-label="Dismiss nudge"
       >
         <X className="h-3.5 w-3.5" />

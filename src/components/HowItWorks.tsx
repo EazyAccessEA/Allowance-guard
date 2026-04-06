@@ -45,7 +45,7 @@ export default function HowItWorks() {
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse, rgba(229,62,62,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 70%)',
         }}
       />
 
@@ -91,12 +91,12 @@ function StepCard({
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(229,62,62,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 70%)',
         }}
       />
 
       {/* Step number — small, confident */}
-      <div className="text-xs font-mono text-crimson-400/60 tracking-widest uppercase mb-6">
+      <div className="text-xs font-mono text-amber-400/60 tracking-widest uppercase mb-6">
         Step {String(number).padStart(2, '0')}
       </div>
 
@@ -107,7 +107,7 @@ function StepCard({
           className="absolute inset-0 blur-2xl pointer-events-none"
           aria-hidden="true"
           style={{
-            background: 'radial-gradient(circle, rgba(229,62,62,0.15) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)',
             mixBlendMode: 'plus-lighter',
           }}
         />

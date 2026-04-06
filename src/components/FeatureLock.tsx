@@ -55,14 +55,14 @@ export const FeatureLock: React.FC<FeatureLockProps> = ({
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/70 dark:bg-secondary-900/70 backdrop-blur-[2px]">
         <div className="flex flex-col items-center gap-3 rounded-xl bg-white/90 dark:bg-secondary-800/90 px-6 py-5 shadow-lg">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 dark:bg-secondary-700">
-            <Lock className="h-5 w-5 text-neutral-500 dark:text-secondary-400" />
+            <Lock className="h-5 w-5 text-slate-400 dark:text-secondary-400" />
           </div>
 
           <div className="text-center">
             <p className="text-sm font-semibold text-neutral-900 dark:text-secondary-100">
               Unlock with {planLabel}
             </p>
-            <p className="mt-1 text-xs text-neutral-500 dark:text-secondary-400">
+            <p className="mt-1 text-xs text-slate-400 dark:text-secondary-400">
               {feature} requires a {planLabel} plan
             </p>
           </div>
