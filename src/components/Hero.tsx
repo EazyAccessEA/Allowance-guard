@@ -24,10 +24,10 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className="relative min-h-[85svh] flex items-center overflow-hidden bg-[#0B1120]"
+      className="relative min-h-[85svh] flex items-center overflow-hidden bg-surface-base"
       aria-label="Hero"
     >
-      {/* Animated mesh background — dark-first */}
+      {/* Animated mesh background — crimson + volt */}
       <AnimatedBackground variant="hero" />
 
       {/* Gradient overlay for depth */}
@@ -44,16 +44,16 @@ export default function Hero({
       <Container className="relative z-20 max-w-5xl py-20 sm:py-28 lg:py-36">
         {/* Eyebrow */}
         <div className="flex items-center gap-2 mb-6 sm:mb-8">
-          <Shield className="w-4 h-4 text-red-400" aria-hidden="true" />
+          <Shield className="w-4 h-4 text-crimson-400" aria-hidden="true" />
           <span className="text-sm font-medium tracking-wide text-slate-400 uppercase">
             Web3 Wallet Security
           </span>
         </div>
 
-        {/* Headline — 7xl, Space Grotesk, aggressive scale contrast */}
+        {/* Headline — Space Grotesk, aggressive scale contrast */}
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white mb-6 sm:mb-8">
           Know what you&rsquo;ve{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-500">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-crimson-400 to-crimson-500">
             approved.
           </span>
         </h1>
@@ -76,7 +76,7 @@ export default function Hero({
               <Button
                 variant="ghost"
                 size="lg"
-                className="w-full sm:w-auto text-slate-300 border border-slate-600 hover:bg-slate-800 hover:text-white"
+                className="w-full sm:w-auto text-volt-400 border border-volt-500/30 hover:border-volt-500/50 hover:bg-volt-500/10 hover:text-volt-300"
                 onClick={() => {
                   const el = document.getElementById('main')
                   el?.scrollIntoView({ behavior: 'smooth' })
@@ -104,8 +104,8 @@ export default function Hero({
                   {scanMessage}
                 </p>
               )}
-              <div className="p-3 bg-green-900/20 border border-green-800 rounded-lg">
-                <p className="text-sm text-green-300 font-medium">
+              <div className="p-3 bg-volt-900/20 border border-volt-700/40 rounded-lg">
+                <p className="text-sm text-volt-300 font-medium">
                   Wallet Connected! Taking you to your Security Dashboard...
                 </p>
               </div>
@@ -113,16 +113,26 @@ export default function Hero({
           )}
         </div>
 
+        {/* Signature crimson line — separating content from social proof */}
+        <div
+          className="h-px mb-8"
+          aria-hidden="true"
+          style={{
+            background: 'linear-gradient(90deg, #E53E3E 0%, rgba(229,62,62,0.3) 60%, transparent 100%)',
+            boxShadow: '0 0 8px rgba(229, 62, 62, 0.2)',
+          }}
+        />
+
         {/* Stats bar — social proof */}
-        <div className="flex flex-wrap items-center gap-8 sm:gap-12 pt-8 border-t border-slate-700/50">
+        <div className="flex flex-wrap items-center gap-8 sm:gap-12">
           <StatItem value="50K+" label="Wallets scanned" />
-          <div className="w-px h-10 bg-slate-700 hidden sm:block" aria-hidden="true" />
+          <StatDivider />
           <StatItem value="2M+" label="Approvals revoked" />
-          <div className="w-px h-10 bg-slate-700 hidden sm:block" aria-hidden="true" />
+          <StatDivider />
           <StatItem value="10" label="Chains supported" />
         </div>
 
-        {/* Trust indicators */}
+        {/* Trust indicators — volt accent for "safe" signals */}
         <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-6 mt-8 text-sm text-slate-400">
           <TrustDot label="No private keys required" />
           <TrustDot label="Read-only access" />
@@ -144,10 +154,22 @@ function StatItem({ value, label }: { value: string; label: string }) {
   )
 }
 
+function StatDivider() {
+  return (
+    <div
+      className="w-px h-10 hidden sm:block"
+      aria-hidden="true"
+      style={{
+        background: 'linear-gradient(180deg, transparent, rgba(229,62,62,0.4), transparent)',
+      }}
+    />
+  )
+}
+
 function TrustDot({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-2">
-      <Zap className="w-3 h-3 text-green-400 flex-shrink-0" aria-hidden="true" />
+      <Zap className="w-3 h-3 text-volt-400 flex-shrink-0" aria-hidden="true" />
       <span>{label}</span>
     </div>
   )
