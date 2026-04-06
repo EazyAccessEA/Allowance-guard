@@ -1,47 +1,54 @@
+'use client'
+
 import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 
 const TESTIMONIALS = [
   {
     name: 'Sarah Chen',
     role: 'DeFi Trader',
-    icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    initials: 'SC',
+    hue: 0,
     quote:
       'I was shocked to find 15 unlimited approvals I had forgotten about. AllowanceGuard helped me clean up my wallet and sleep better at night. The risk assessment is incredibly detailed.',
   },
   {
     name: 'Marcus Rodriguez',
     role: 'NFT Collector',
-    icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+    initials: 'MR',
+    hue: 160,
     quote:
       'As someone who interacts with dozens of dApps, I need to stay on top of my approvals. AllowanceGuard makes it simple and fast. The batch revocation feature saved me hours.',
   },
   {
     name: 'Alex Thompson',
     role: 'DAO Member',
-    icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
+    initials: 'AT',
+    hue: 220,
     quote:
-      'The transparency of open-source code gives me confidence. I can see exactly what AllowanceGuard is doing with my data. No hidden fees, no data collection - just pure security.',
+      'The transparency of open-source code gives me confidence. I can see exactly what AllowanceGuard is doing with my data. No hidden fees, no data collection — just pure security.',
   },
   {
     name: 'Elena Volkov',
     role: 'Smart Contract Developer',
-    icon: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z',
+    initials: 'EV',
+    hue: 280,
     quote:
       'Multi-chain support is crucial for my work. Being able to check allowances across Ethereum, Arbitrum, and Base in one interface is a game-changer. The API integration is seamless.',
   },
   {
     name: 'David Kim',
     role: 'Crypto Investor',
-    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+    initials: 'DK',
+    hue: 40,
     quote:
-      'The real-time monitoring alerts saved me from a potential exploit. I got notified about a suspicious contract before I could interact with it. This tool is essential for any serious investor.',
+      'The real-time monitoring alerts saved me from a potential exploit. I got notified about a suspicious contract before I could interact with it. Essential for any serious investor.',
   },
   {
     name: 'Lisa Wang',
     role: 'Web3 Educator',
-    icon: 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4',
+    initials: 'LW',
+    hue: 120,
     quote:
       "I recommend AllowanceGuard to all my students. The educational content and clear explanations help them understand Web3 security. It's not just a tool, it's a learning platform.",
   },
@@ -49,47 +56,94 @@ const TESTIMONIALS = [
 
 export default function Testimonials() {
   return (
-    <CascadingScrollAnimation direction="up" distance={60} delay={1000}>
-      <Section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0A0E1A]">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
-                Hear Why Our Users Choose Allowance Guard
-              </h2>
-              <p className="text-xl text-text-secondary leading-relaxed max-w-3xl mx-auto">
-                Real stories from security-conscious users who have protected their digital assets
-              </p>
-            </div>
+    <section className="relative py-24 sm:py-32 lg:py-40 bg-[#0A0E1A] overflow-hidden">
+      {/* Gradient transition */}
+      <div
+        className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(to bottom, #060A14 0%, transparent 100%)',
+        }}
+      />
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-              {TESTIMONIALS.map((t) => (
-                <TestimonialCard key={t.name} {...t} />
-              ))}
-            </div>
+      {/* Atmospheric glow — centre */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(229,62,62,0.03) 0%, transparent 60%)',
+          filter: 'blur(60px)',
+        }}
+      />
+
+      <Container>
+        <CascadingScrollAnimation direction="up" distance={40} delay={0}>
+          <div className="max-w-3xl mx-auto text-center mb-20">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
+                Trusted by Security-Conscious Users
+              </span>
+            </h2>
+            <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
+              Real stories from users who have protected their digital assets.
+            </p>
           </div>
-        </Container>
-      </Section>
-    </CascadingScrollAnimation>
+        </CascadingScrollAnimation>
+
+        {/* Masonry-style grid — mixed density */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          {TESTIMONIALS.map((t, i) => (
+            <CascadingScrollAnimation key={t.name} direction="up" distance={30} delay={i * 80}>
+              <TestimonialCard {...t} />
+            </CascadingScrollAnimation>
+          ))}
+        </div>
+      </Container>
+    </section>
   )
 }
 
-function TestimonialCard({ name, role, icon, quote }: (typeof TESTIMONIALS)[number]) {
+function TestimonialCard({
+  name,
+  role,
+  initials,
+  hue,
+  quote,
+}: (typeof TESTIMONIALS)[number]) {
   return (
-    <div className="bg-background-light dark:bg-secondary-800/50 rounded-2xl p-8 border border-border-primary dark:border-secondary-700">
-      <div className="flex items-center mb-6">
-        <div className="w-12 h-12 bg-primary-accent/10 dark:bg-primary-500/10 rounded-full flex items-center justify-center mr-4">
-          <svg className="w-6 h-6 text-primary-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={icon} />
-          </svg>
+    <div className="group relative rounded-2xl p-7 lg:p-8 bg-white/[0.02] ring-1 ring-white/[0.06] transition-all duration-300 hover:ring-white/[0.12] hover:bg-white/[0.04]">
+      {/* Gradient quote mark — large, decorative */}
+      <div
+        className="absolute top-5 right-6 text-6xl font-serif leading-none pointer-events-none select-none"
+        aria-hidden="true"
+        style={{
+          background: `linear-gradient(135deg, hsla(${hue}, 70%, 60%, 0.15), transparent)`,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        &ldquo;
+      </div>
+
+      {/* Avatar — generated from initials with unique hue */}
+      <div className="flex items-center gap-4 mb-5">
+        <div
+          className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold tracking-tight ring-2 ring-white/10"
+          style={{
+            background: `linear-gradient(135deg, hsla(${hue}, 50%, 30%, 0.8), hsla(${hue}, 60%, 20%, 0.9))`,
+            color: `hsla(${hue}, 70%, 75%, 1)`,
+          }}
+        >
+          {initials}
         </div>
         <div>
-          <h4 className="font-semibold text-text-primary">{name}</h4>
-          <p className="text-sm text-text-secondary">{role}</p>
+          <div className="text-sm font-semibold text-white">{name}</div>
+          <div className="text-xs text-slate-500">{role}</div>
         </div>
       </div>
-      <blockquote className="text-text-secondary leading-relaxed">
-        &quot;{quote}&quot;
+
+      <blockquote className="text-sm text-slate-400 leading-relaxed">
+        {quote}
       </blockquote>
     </div>
   )

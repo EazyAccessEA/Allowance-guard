@@ -72,7 +72,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0A0E1A]">
+    <div className="min-h-screen bg-[#0A0E1A]">
       {/* Hero */}
       <div className="relative z-20">
         <WalletErrorBoundary>
@@ -86,7 +86,7 @@ export default function HomePage() {
         </WalletErrorBoundary>
       </div>
 
-      {/* Marketing sections */}
+      {/* Marketing sections — dark-first, gradient transitions between each */}
       <HowItWorks />
 
       <LazySection>

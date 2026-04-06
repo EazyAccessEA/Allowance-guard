@@ -11,18 +11,34 @@ const CHAINS = [
 
 export default function ChainLogoCarousel() {
   return (
-    <div className="py-12 sm:py-16 bg-secondary-900 dark:bg-[#060A14]">
-      <div className="w-full mb-6">
-        <p className="text-base text-gray-300 font-medium text-center">
-          Trusted by security-conscious users across
+    <section className="relative py-16 sm:py-20 bg-[#060A14] overflow-hidden">
+      {/* Gradient transition */}
+      <div
+        className="absolute inset-x-0 top-0 h-24 pointer-events-none"
+        aria-hidden="true"
+        style={{ background: 'linear-gradient(to bottom, #060A14 0%, transparent 100%)' }}
+      />
+
+      {/* Subtle crimson line top */}
+      <div
+        className="absolute top-0 inset-x-0 h-px"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(90deg, transparent 20%, rgba(229,62,62,0.2) 50%, transparent 80%)',
+        }}
+      />
+
+      <div className="text-center mb-10">
+        <p className="text-sm font-medium text-slate-500 tracking-wide uppercase">
+          Securing wallets across
         </p>
       </div>
 
-      {/* Mobile: Stacked Logos */}
+      {/* Mobile: Stacked */}
       <div className="block sm:hidden">
         <div className="flex flex-col items-center gap-6 px-4">
           {CHAINS.map((chain) => (
-            <div key={chain.alt} className="flex items-center">
+            <div key={chain.alt} className="flex items-center opacity-50 hover:opacity-80 transition-opacity">
               <Image
                 src={chain.src}
                 alt={chain.alt}
@@ -35,16 +51,19 @@ export default function ChainLogoCarousel() {
         </div>
       </div>
 
-      {/* Desktop: Continuous Scrolling — three sets for seamless loop */}
+      {/* Desktop: Continuous scroll — three sets */}
       <div className="hidden sm:block w-screen relative overflow-hidden h-12 -ml-4 sm:-ml-6 lg:-ml-8">
-        <div className="flex items-center gap-16 lg:gap-24 animate-scroll h-12 whitespace-nowrap">
+        <div className="flex items-center gap-20 lg:gap-28 animate-scroll h-12 whitespace-nowrap">
           {[0, 1, 2].map((setIndex) => (
             <div
               key={setIndex}
-              className="flex items-center gap-16 lg:gap-24 flex-shrink-0"
+              className="flex items-center gap-20 lg:gap-28 flex-shrink-0"
             >
               {CHAINS.map((chain) => (
-                <div key={`${setIndex}-${chain.alt}`} className="flex items-center">
+                <div
+                  key={`${setIndex}-${chain.alt}`}
+                  className="flex items-center opacity-40 hover:opacity-70 transition-opacity duration-300"
+                >
                   <Image
                     src={chain.src}
                     alt={chain.alt}
@@ -58,6 +77,6 @@ export default function ChainLogoCarousel() {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   )
 }

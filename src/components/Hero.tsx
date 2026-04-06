@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import TestConnect from '@/components/TestConnect'
-import AnimatedBackground from '@/components/AnimatedBackground'
+import VantaHeroBackground from '@/components/VantaHeroBackground'
 import SplitText from '@/components/ui/SplitText'
 import BlurText from '@/components/ui/BlurText'
 import CountUp from '@/components/ui/CountUp'
@@ -43,8 +43,8 @@ export default function Hero({
       className="relative min-h-[85svh] flex items-center overflow-hidden bg-surface-base"
       aria-label="Hero"
     >
-      {/* Animated mesh background — crimson + volt */}
-      <AnimatedBackground variant="hero" />
+      {/* Vanta.js NET — interactive WebGL mesh, crimson on deep navy */}
+      <VantaHeroBackground />
 
       {/* Gradient overlay for depth */}
       <div
