@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Check, Loader2, Mail } from 'lucide-react'
+import { Check, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   type ApiPlan,
@@ -11,6 +11,7 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { trackClientEvent } from '@/lib/analytics'
+import PaymentMethodModal from './PaymentMethodModal'
 
 type ApiPaidPlan = 'api_developer' | 'api_growth'
 type ApiCardPlan = 'api_free' | ApiPaidPlan | 'api_enterprise'
@@ -61,42 +62,11 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
 
   const periodLabel = isEnterprise ? '' : '/month'
 
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
-  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
 
-  async function handleUpgrade() {
-    setCheckoutLoading(true)
-    setCheckoutError(null)
-
+  function handleUpgrade() {
     trackClientEvent('upgrade_clicked', { plan, billingPeriod: 'monthly' })
-
-    try {
-      const res = await fetch('/api/billing/create-subscription', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ plan, interval: 'monthly' }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        if (res.status === 401) {
-          window.location.href = '/login?redirect=/pricing'
-          return
-        }
-        setCheckoutError(data.error ?? 'Something went wrong')
-        return
-      }
-
-      if (data.checkoutUrl) {
-        trackClientEvent('checkout_started', { plan, billingPeriod: 'monthly' })
-        window.location.href = data.checkoutUrl
-      }
-    } catch {
-      setCheckoutError('Network error. Please try again.')
-    } finally {
-      setCheckoutLoading(false)
-    }
+    setModalOpen(true)
   }
 
   const ctaClassName = cn(
@@ -106,7 +76,6 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
       : isPaid
         ? 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400'
         : 'border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-500',
-    checkoutLoading && 'opacity-70 cursor-wait',
   )
 
   return (
@@ -157,27 +126,22 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
             Contact Sales
           </a>
         ) : isPaid ? (
-          <button
-            onClick={handleUpgrade}
-            disabled={checkoutLoading}
-            className={ctaClassName}
-          >
-            {checkoutLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Redirecting...
-              </>
-            ) : (
-              `Get ${displayName}`
-            )}
-          </button>
+          <>
+            <button onClick={handleUpgrade} className={ctaClassName}>
+              {`Get ${displayName}`}
+            </button>
+            <PaymentMethodModal
+              isOpen={modalOpen}
+              onClose={() => setModalOpen(false)}
+              plan={plan}
+              planDisplayName={displayName}
+              billingPeriod="monthly"
+            />
+          </>
         ) : (
           <a href="/account/api-keys" className={ctaClassName}>
             Get Free API Key
           </a>
-        )}
-        {checkoutError && (
-          <p className="mt-2 text-xs text-red-600">{checkoutError}</p>
         )}
       </div>
 

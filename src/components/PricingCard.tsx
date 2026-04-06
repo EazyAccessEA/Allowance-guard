@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Check, X, Loader2 } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   type ConsumerPlan,
@@ -12,6 +12,7 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { trackClientEvent } from '@/lib/analytics'
+import PaymentMethodModal from './PaymentMethodModal'
 
 interface PricingCardProps {
   plan: 'free' | 'pro' | 'sentinel'
@@ -83,45 +84,11 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   const ctaText = plan === 'free' ? 'Get Started' : `Upgrade to ${displayName}`
 
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
-  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
 
-  async function handleUpgrade() {
-    setCheckoutLoading(true)
-    setCheckoutError(null)
-
-    // Track upgrade_clicked analytics event
+  function handleUpgrade() {
     trackClientEvent('upgrade_clicked', { plan, billingPeriod })
-
-    try {
-      const res = await fetch('/api/billing/create-subscription', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ plan, interval: billingPeriod }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        if (res.status === 401) {
-          // User not logged in — redirect to login
-          window.location.href = '/login?redirect=/pricing'
-          return
-        }
-        setCheckoutError(data.error ?? 'Something went wrong')
-        return
-      }
-
-      if (data.checkoutUrl) {
-        // Track checkout_started before redirect
-        trackClientEvent('checkout_started', { plan, billingPeriod })
-        window.location.href = data.checkoutUrl
-      }
-    } catch {
-      setCheckoutError('Network error. Please try again.')
-    } finally {
-      setCheckoutLoading(false)
-    }
+    setModalOpen(true)
   }
 
   const ctaClassName = cn(
@@ -131,7 +98,6 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       : isPaid
         ? 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400'
         : 'border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-500',
-    checkoutLoading && 'opacity-70 cursor-wait',
   )
 
   return (
@@ -179,27 +145,22 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
       {/* CTA */}
       {isPaid ? (
-        <button
-          onClick={handleUpgrade}
-          disabled={checkoutLoading}
-          className={ctaClassName}
-        >
-          {checkoutLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Redirecting to checkout...
-            </>
-          ) : (
-            ctaText
-          )}
-        </button>
+        <>
+          <button onClick={handleUpgrade} className={ctaClassName}>
+            {ctaText}
+          </button>
+          <PaymentMethodModal
+            isOpen={modalOpen}
+            onClose={() => setModalOpen(false)}
+            plan={plan}
+            planDisplayName={displayName}
+            billingPeriod={billingPeriod}
+          />
+        </>
       ) : (
         <Link href="/" className={ctaClassName}>
           {ctaText}
         </Link>
-      )}
-      {checkoutError && (
-        <p className="mb-4 -mt-4 text-xs text-red-600">{checkoutError}</p>
       )}
 
       {/* Features list */}

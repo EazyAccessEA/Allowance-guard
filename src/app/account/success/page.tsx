@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Section from '@/components/ui/Section'
 import Container from '@/components/ui/Container'
 import { Card, CardContent } from '@/components/ui/Card'
@@ -13,9 +14,11 @@ import { Toast } from '@/components/ui/Alert'
 import type { ConsumerPlan } from '@/lib/plans'
 import { getPlanDisplayName } from '@/lib/plans'
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessInner() {
   const queryClient = useQueryClient()
   const { plan } = useUserPlan()
+  const params = useSearchParams()
+  const provider = params.get('provider') ?? 'stripe'
   const [pollCount, setPollCount] = useState(0)
   const [ready, setReady] = useState(false)
   const [showToast, setShowToast] = useState(false)
@@ -73,7 +76,9 @@ export default function CheckoutSuccessPage() {
                   Setting up your subscription...
                 </h1>
                 <p className="text-sm text-text-secondary">
-                  This usually takes just a moment. Please don&apos;t close this page.
+                  {provider === 'coinbase'
+                    ? 'Waiting for on-chain confirmation. This can take a few minutes for crypto payments.'
+                    : "This usually takes just a moment. Please don't close this page."}
                 </p>
               </>
             ) : (
@@ -112,5 +117,13 @@ export default function CheckoutSuccessPage() {
         </Card>
       </Container>
     </Section>
+  )
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={null}>
+      <CheckoutSuccessInner />
+    </Suspense>
   )
 }
