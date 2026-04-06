@@ -215,9 +215,47 @@ export function getTransport() {
 
 export async function sendMail(to: string, subject: string, html: string, text?: string) {
   // E2E fake email mode
-  if (process.env.E2E_FAKE_EMAIL === '1') {
+  if (process.env.E2E_FAKE_EMAIL === '1' || process.env.E2E_FAKE_EMAIL === 'true') {
     console.log('[E2E_FAKE_EMAIL]', { to, subject })
     return { ok: true, id: 'fake' }
+  }
+
+  // Preferred provider: Resend (HTTP API, no nodemailer dependency needed)
+  const resendKey = process.env.RESEND_API_KEY
+  if (resendKey) {
+    const fullHTML = createEmailHTML(html, to)
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: `${fromName} <${fromEmail}>`,
+          to: [to],
+          subject,
+          html: fullHTML,
+          text: text || fullHTML.replace(/<[^>]*>/g, ''),
+        }),
+      })
+      if (!res.ok) {
+        const errText = await res.text().catch(() => '')
+        emailLogger.error('Resend send failed', { status: res.status, body: errText.slice(0, 500) })
+        throw new Error(`Resend send failed: ${res.status}`)
+      }
+      const data = (await res.json()) as { id?: string }
+      emailLogger.info('Email sent successfully (resend)', { messageId: data.id, to, subject, from: fromEmail })
+      await incrEmail()
+      return { messageId: data.id ?? '', accepted: [to] }
+    } catch (error) {
+      emailLogger.error('Resend email error', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        to,
+        subject,
+      })
+      throw error
+    }
   }
 
   const transporter = getTransport()
