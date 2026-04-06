@@ -75,9 +75,9 @@ export default function ThankYouPage() {
         />
         
         <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Thank You for Your Support</H1>
+          <H1 className="mb-6">Contribution Received</H1>
           <p className="text-lg text-stone max-w-reading">
-            Your contribution helps us keep Allowance Guard secure, sustainable, and free for everyone. Together, we&apos;re building a safer Web3 ecosystem.
+            Your support keeps the core scanner free and the codebase open. It funds development, security audits, and infrastructure.
           </p>
         </Container>
       </Section>
@@ -101,14 +101,14 @@ export default function ThankYouPage() {
 
             {/* Main Message */}
             <h2 className="text-3xl font-semibold text-ink mb-6">
-              {status === 'verifying' ? 'Verifying Your Contribution...' : 
-               status === 'failed' ? 'Contribution Verification Failed' : 
-               'Contribution Successful'}
+              {status === 'verifying' ? 'Verifying payment...' :
+               status === 'failed' ? 'Verification failed' :
+               'Payment confirmed'}
             </h2>
             <p className="text-lg text-stone leading-relaxed mb-8">
-              {status === 'verifying' ? 'Please wait while we verify your payment...' :
-               status === 'failed' ? 'We encountered an issue verifying your contribution. Please contact support if you believe this is an error.' :
-               'Your contribution directly funds development, security audits, and infrastructure costs. We&apos;re grateful for your support in making Web3 security accessible to everyone.'}
+              {status === 'verifying' ? 'Checking your payment status with our processor.' :
+               status === 'failed' ? 'We could not verify this payment. If you believe this is an error, contact support@allowanceguard.com.' :
+               'Funds go directly to development, audits, and infrastructure. The core scanner stays free because of contributions like yours.'}
             </p>
 
             {/* Payment Status */}
@@ -170,7 +170,7 @@ export default function ThankYouPage() {
 
             {/* Impact Section */}
             <div className="bg-gradient-to-r from-mist/30 to-warm-gray/30 border border-line rounded-2xl p-8">
-              <h3 className="text-xl font-semibold text-ink mb-6">How Your Contribution Makes a Difference</h3>
+              <h3 className="text-xl font-semibold text-ink mb-6">Where Your Contribution Goes</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                 <div className="space-y-2">
                   <h4 className="font-semibold text-ink">Development</h4>

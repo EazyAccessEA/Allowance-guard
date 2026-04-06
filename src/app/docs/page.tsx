@@ -12,10 +12,10 @@ import {
 import { cn } from '@/lib/utils'
 
 const quickLinks = [
-  { title: 'API Reference', description: 'REST API v1 endpoints and authentication', href: '/docs/api-reference', icon: Code2 },
-  { title: 'Integration Guide', description: 'Widget, React hooks, and Node.js SDK', href: '/docs/integration', icon: Puzzle },
-  { title: 'Widget Builder', description: 'Interactive configurator with live preview', href: '/docs/widget', icon: Zap },
-  { title: 'Contributing', description: 'Support the project and contribute', href: '/docs/contributing', icon: Heart },
+  { title: 'API Reference', description: 'REST API v1 — endpoints, auth, and rate limits', href: '/docs/api-reference', icon: Code2 },
+  { title: 'Integration Guide', description: 'Widget, React hooks, and Node.js SDK setup', href: '/docs/integration', icon: Puzzle },
+  { title: 'Widget Builder', description: 'Configure and preview the embeddable widget', href: '/docs/widget', icon: Zap },
+  { title: 'Contributing', description: 'Report bugs, submit code, or fund the project', href: '/docs/contributing', icon: Heart },
 ]
 
 export default function DocsPage() {
@@ -54,7 +54,7 @@ export default function DocsPage() {
               <span className="text-amber-400">AllowanceGuard</span>
             </h1>
             <p className="text-lg text-slate-400 max-w-xl mb-8">
-              Everything you need to secure wallets, integrate our API, and understand token approval risk.
+              Guides, API reference, and integration docs. Scan wallets, score risk, and revoke approvals — programmatically or through the dashboard.
             </p>
 
             {/* Search */}
