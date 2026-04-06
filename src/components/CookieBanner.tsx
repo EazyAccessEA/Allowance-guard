@@ -76,71 +76,71 @@ export default function CookieBanner() {
       {/* Cookie Banner — non-blocking bottom sheet */}
       <div className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-secondary-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-2xl">
+          <div className="bg-secondary-900 border border-secondary-700 rounded-2xl shadow-2xl">
             <div className="p-6 sm:p-8">
               {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-primary-100 rounded-lg">
-                    <Shield className="w-6 h-6 text-primary-700" />
+                  <div className="p-2 bg-amber-900/30 rounded-lg">
+                    <Shield className="w-6 h-6 text-amber-400" />
                   </div>
                   <div>
-                    <h3 className="mobbin-heading-3 text-text-primary">
+                    <h3 className="text-lg font-bold text-white">
                       Cookie Preferences
                     </h3>
-                    <p className="mobbin-body-small text-text-secondary">
+                    <p className="text-sm text-slate-400">
                       Web3 Security & Privacy
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setIsVisible(false)}
-                  className="p-2 hover:bg-background-secondary rounded-lg transition-colors"
+                  className="p-2 hover:bg-secondary-800 rounded-lg transition-colors"
                 >
-                  <X className="w-5 h-5 text-text-secondary" />
+                  <X className="w-5 h-5 text-slate-400" />
                 </button>
               </div>
 
               {!showSettings ? (
                 /* Main Banner Content */
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4 p-4 bg-background-secondary rounded-xl border border-secondary-700">
+                  <div className="flex items-start gap-4 p-4 bg-secondary-800 rounded-xl border border-secondary-700">
                     <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="mobbin-body text-text-primary mb-2">
+                      <p className="text-sm text-white mb-2">
                         <strong>Essential for DeFi Security:</strong> We use minimal cookies to protect your wallet and provide secure token approval management.
                       </p>
-                      <p className="mobbin-body-small text-text-secondary">
+                      <p className="text-sm text-slate-400">
                         Essential cookies are required for wallet connection and security features. Analytics and preference cookies help us improve the service.
                       </p>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
+                    <div className="p-4 bg-secondary-800 rounded-xl border border-secondary-700">
                       <div className="flex items-center gap-2 mb-2">
-                        <Shield className="w-4 h-4 text-green-500" />
-                        <span className="mobbin-body-small font-medium text-text-primary">Essential</span>
+                        <Shield className="w-4 h-4 text-emerald-400" />
+                        <span className="text-sm font-medium text-white">Essential</span>
                       </div>
-                      <p className="mobbin-caption text-text-secondary">
+                      <p className="text-xs text-slate-400">
                         Wallet connection, security tokens, session management
                       </p>
                     </div>
-                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
+                    <div className="p-4 bg-secondary-800 rounded-xl border border-secondary-700">
                       <div className="flex items-center gap-2 mb-2">
-                        <Settings className="w-4 h-4 text-blue-500" />
-                        <span className="mobbin-body-small font-medium text-text-primary">Preferences</span>
+                        <Settings className="w-4 h-4 text-sky-400" />
+                        <span className="text-sm font-medium text-white">Preferences</span>
                       </div>
-                      <p className="mobbin-caption text-text-secondary">
+                      <p className="text-xs text-slate-400">
                         UI settings, alert preferences, wallet addresses
                       </p>
                     </div>
-                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
+                    <div className="p-4 bg-secondary-800 rounded-xl border border-secondary-700">
                       <div className="flex items-center gap-2 mb-2">
-                        <Check className="w-4 h-4 text-purple-500" />
-                        <span className="mobbin-body-small font-medium text-text-primary">Analytics</span>
+                        <Check className="w-4 h-4 text-purple-400" />
+                        <span className="text-sm font-medium text-white">Analytics</span>
                       </div>
-                      <p className="mobbin-caption text-text-secondary">
+                      <p className="text-xs text-slate-400">
                         Anonymous usage data, performance monitoring
                       </p>
                     </div>
@@ -150,35 +150,35 @@ export default function CookieBanner() {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
                       onClick={handleAcceptAll}
-                      className="flex-1 px-6 py-3 bg-primary-700 text-white rounded-lg hover:bg-primary-800 transition-colors mobbin-body font-medium"
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 font-semibold rounded-lg hover:from-amber-400 hover:to-amber-500 transition-all"
                     >
                       Accept All Cookies
                     </button>
                     <button
                       onClick={handleRejectAll}
-                      className="flex-1 px-6 py-3 border border-secondary-700 text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
+                      className="flex-1 px-6 py-3 border border-secondary-700 text-white rounded-lg hover:bg-secondary-800 transition-colors font-medium"
                     >
                       Essential Only
                     </button>
                     <button
                       onClick={() => setShowSettings(true)}
-                      className="px-6 py-3 border border-secondary-700 text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
+                      className="px-6 py-3 border border-secondary-700 text-white rounded-lg hover:bg-secondary-800 transition-colors font-medium"
                     >
                       Customize
                     </button>
                   </div>
 
-                  <p className="mobbin-caption text-text-secondary text-center">
+                  <p className="text-xs text-slate-400 text-center">
                     By continuing, you agree to our{' '}
-                    <a href="/terms" className="text-primary-700 hover:text-primary-800 underline">
+                    <a href="/terms" className="text-amber-400 hover:text-amber-300 underline">
                       Terms of Use
                     </a>
                     ,{' '}
-                    <a href="/privacy" className="text-primary-700 hover:text-primary-800 underline">
+                    <a href="/privacy" className="text-amber-400 hover:text-amber-300 underline">
                       Privacy Policy
                     </a>
                     , and{' '}
-                    <a href="/cookies" className="text-primary-700 hover:text-primary-800 underline">
+                    <a href="/cookies" className="text-amber-400 hover:text-amber-300 underline">
                       Cookie Policy
                     </a>
                   </p>
@@ -187,43 +187,43 @@ export default function CookieBanner() {
                 /* Settings Panel */
                 <div className="space-y-6">
                   <div className="flex items-center gap-3">
-                    <Settings className="w-5 h-5 text-primary-700" />
-                    <h4 className="mobbin-heading-4 text-text-primary">Customize Cookie Preferences</h4>
+                    <Settings className="w-5 h-5 text-amber-400" />
+                    <h4 className="text-lg font-semibold text-white">Customize Cookie Preferences</h4>
                   </div>
 
                   <div className="space-y-4">
                     {/* Essential Cookies */}
-                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
+                    <div className="p-4 bg-secondary-800 rounded-xl border border-secondary-700">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Shield className="w-5 h-5 text-green-500" />
+                          <Shield className="w-5 h-5 text-emerald-400" />
                           <div>
-                            <h5 className="mobbin-body font-medium text-text-primary">Essential Cookies</h5>
-                            <p className="mobbin-caption text-text-secondary">
+                            <h5 className="text-sm font-medium text-white">Essential Cookies</h5>
+                            <p className="text-xs text-slate-400">
                               Required for wallet connection and security features
                             </p>
-                            <p className="mobbin-caption text-text-secondary mt-1">
+                            <p className="text-xs text-slate-400 mt-1">
                               <strong>Retention:</strong> Session-based (deleted when browser closes)
                             </p>
                           </div>
                         </div>
-                        <div className="px-3 py-1 bg-green-100 text-green-800 rounded-full mobbin-caption font-medium">
+                        <div className="px-3 py-1 bg-emerald-900/40 text-emerald-300 rounded-full text-xs font-medium">
                           Always Active
                         </div>
                       </div>
                     </div>
 
                     {/* Preference Cookies */}
-                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
+                    <div className="p-4 bg-secondary-800 rounded-xl border border-secondary-700">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Settings className="w-5 h-5 text-blue-500" />
+                          <Settings className="w-5 h-5 text-sky-400" />
                           <div>
-                            <h5 className="mobbin-body font-medium text-text-primary">Preference Cookies</h5>
-                            <p className="mobbin-caption text-text-secondary">
+                            <h5 className="text-sm font-medium text-white">Preference Cookies</h5>
+                            <p className="text-xs text-slate-400">
                               Remember your UI settings and alert preferences
                             </p>
-                            <p className="mobbin-caption text-text-secondary mt-1">
+                            <p className="text-xs text-slate-400 mt-1">
                               <strong>Retention:</strong> Up to 1 year
                             </p>
                           </div>
@@ -231,7 +231,7 @@ export default function CookieBanner() {
                         <button
                           onClick={() => togglePreference('preferences')}
                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                            preferences.preferences ? 'bg-primary-700' : 'bg-gray-300'
+                            preferences.preferences ? 'bg-amber-500' : 'bg-secondary-600'
                           }`}
                         >
                           <span
@@ -244,16 +244,16 @@ export default function CookieBanner() {
                     </div>
 
                     {/* Analytics Cookies */}
-                    <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
+                    <div className="p-4 bg-secondary-800 rounded-xl border border-secondary-700">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Check className="w-5 h-5 text-purple-500" />
+                          <Check className="w-5 h-5 text-purple-400" />
                           <div>
-                            <h5 className="mobbin-body font-medium text-text-primary">Analytics Cookies</h5>
-                            <p className="mobbin-caption text-text-secondary">
+                            <h5 className="text-sm font-medium text-white">Analytics Cookies</h5>
+                            <p className="text-xs text-slate-400">
                               Anonymous usage data to improve our service
                             </p>
-                            <p className="mobbin-caption text-text-secondary mt-1">
+                            <p className="text-xs text-slate-400 mt-1">
                               <strong>Retention:</strong> Up to 2 years
                             </p>
                           </div>
@@ -261,7 +261,7 @@ export default function CookieBanner() {
                         <button
                           onClick={() => togglePreference('analytics')}
                           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                            preferences.analytics ? 'bg-primary-700' : 'bg-gray-300'
+                            preferences.analytics ? 'bg-amber-500' : 'bg-secondary-600'
                           }`}
                         >
                           <span
@@ -278,22 +278,22 @@ export default function CookieBanner() {
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
                       onClick={handleSavePreferences}
-                      className="flex-1 px-6 py-3 bg-primary-700 text-white rounded-lg hover:bg-primary-800 transition-colors mobbin-body font-medium"
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 font-semibold rounded-lg hover:from-amber-400 hover:to-amber-500 transition-all"
                     >
                       Save Preferences
                     </button>
                     <button
                       onClick={() => setShowSettings(false)}
-                      className="px-6 py-3 border border-secondary-700 text-text-primary rounded-lg hover:bg-background-secondary transition-colors mobbin-body font-medium"
+                      className="px-6 py-3 border border-secondary-700 text-white rounded-lg hover:bg-secondary-800 transition-colors font-medium"
                     >
                       Back
                     </button>
                   </div>
 
                   {/* User Rights */}
-                  <div className="p-4 bg-background-secondary rounded-xl border border-secondary-700">
-                    <h5 className="mobbin-body font-medium text-text-primary mb-2">Your Rights</h5>
-                    <ul className="space-y-1 mobbin-caption text-text-secondary">
+                  <div className="p-4 bg-secondary-800 rounded-xl border border-secondary-700">
+                    <h5 className="text-sm font-medium text-white mb-2">Your Rights</h5>
+                    <ul className="space-y-1 text-xs text-slate-400">
                       <li>• Accept or reject non-essential cookies</li>
                       <li>• Delete existing cookies from your browser</li>
                       <li>• Be informed about what cookies we use</li>
@@ -304,32 +304,32 @@ export default function CookieBanner() {
 
                   {/* Policy Links */}
                   <div className="pt-4 border-t border-secondary-700">
-                    <p className="mobbin-caption text-text-secondary text-center mb-3">
+                    <p className="text-xs text-slate-400 text-center mb-3">
                       Learn more about our policies:
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
-                      <a 
-                        href="/terms" 
-                        className="text-primary-700 hover:text-primary-800 underline mobbin-caption"
+                      <a
+                        href="/terms"
+                        className="text-amber-400 hover:text-amber-300 underline text-xs"
                       >
                         Terms of Use
                       </a>
-                      <a 
-                        href="/privacy" 
-                        className="text-primary-700 hover:text-primary-800 underline mobbin-caption"
+                      <a
+                        href="/privacy"
+                        className="text-amber-400 hover:text-amber-300 underline text-xs"
                       >
                         Privacy Policy
                       </a>
-                      <a 
-                        href="/cookies" 
-                        className="text-primary-700 hover:text-primary-800 underline mobbin-caption"
+                      <a
+                        href="/cookies"
+                        className="text-amber-400 hover:text-amber-300 underline text-xs"
                       >
                         Cookie Policy
                       </a>
                     </div>
-                    <p className="mobbin-caption text-text-secondary text-center mt-3">
+                    <p className="text-xs text-slate-400 text-center mt-3">
                       Questions? Contact us at{' '}
-                      <a href="mailto:legal.support@allowanceguard.com" className="text-primary-700 hover:text-primary-800 underline">
+                      <a href="mailto:legal.support@allowanceguard.com" className="text-amber-400 hover:text-amber-300 underline">
                         legal.support@allowanceguard.com
                       </a>
                     </p>
