@@ -16,7 +16,7 @@ interface FeatureRow {
 
 const FEATURE_ROWS: FeatureRow[] = [
   {
-    label: 'Max Wallets',
+    label: 'Wallets',
     values: {
       free: `${CONSUMER_PLAN_LIMITS.free.maxWallets}`,
       pro: 'Unlimited',
@@ -24,15 +24,15 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Multi-chain (15 chains)',
+    label: 'Chains',
     values: {
-      free: false,
-      pro: true,
-      sentinel: true,
+      free: '1',
+      pro: '15',
+      sentinel: '15',
     },
   },
   {
-    label: 'Batch Revoke',
+    label: 'Batch revoke',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.batchRevoke,
       pro: CONSUMER_PLAN_LIMITS.pro.batchRevoke,
@@ -48,7 +48,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Email Alerts',
+    label: 'Email alerts',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.alerts,
       pro: CONSUMER_PLAN_LIMITS.pro.alerts,
@@ -56,7 +56,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Continuous Monitoring',
+    label: 'Continuous monitoring',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.monitoring,
       pro: `${CONSUMER_PLAN_LIMITS.pro.maxMonitoredWallets} wallets`,
@@ -72,7 +72,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Team Dashboard',
+    label: 'Team dashboard',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.teams,
       pro: CONSUMER_PLAN_LIMITS.pro.teams,
@@ -80,7 +80,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Automated Rules',
+    label: 'Automated rules',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.automatedRules,
       pro: CONSUMER_PLAN_LIMITS.pro.automatedRules,
@@ -96,7 +96,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Priority Support',
+    label: 'Priority support',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.prioritySupport,
       pro: CONSUMER_PLAN_LIMITS.pro.prioritySupport,
@@ -107,29 +107,29 @@ const FEATURE_ROWS: FeatureRow[] = [
 
 function CellValue({ value }: { value: string | boolean }) {
   if (typeof value === 'string') {
-    return <span className="text-sm font-medium text-text-primary">{value}</span>
+    return <span className="text-sm font-medium text-slate-200">{value}</span>
   }
   if (value) {
     return <Check className="mx-auto h-5 w-5 text-emerald-400" aria-label="Included" />
   }
-  return <X className="mx-auto h-5 w-5 text-secondary-600" aria-label="Not included" />
+  return <X className="mx-auto h-5 w-5 text-slate-600" aria-label="Not included" />
 }
 
 export default function PricingTable() {
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full overflow-x-auto rounded-xl bg-white/[0.02] ring-1 ring-white/[0.06] p-1">
       <table className="w-full min-w-[600px] border-collapse text-left">
         <thead>
-          <tr className="border-b border-secondary-700">
-            <th className="py-4 pr-4 text-sm font-medium text-slate-400">
+          <tr className="border-b border-slate-700/50">
+            <th className="py-4 px-4 text-sm font-medium text-slate-400">
               Feature
             </th>
             {PLANS.map((plan) => (
               <th
                 key={plan}
                 className={cn(
-                  'px-4 py-4 text-center text-sm font-medium',
-                  plan === 'pro' ? 'text-amber-400' : 'text-white'
+                  'px-4 py-4 text-center text-sm font-semibold',
+                  plan === 'pro' ? 'text-amber-400' : 'text-slate-300'
                 )}
               >
                 {getPlanDisplayName(plan)}
@@ -142,15 +142,15 @@ export default function PricingTable() {
             <tr
               key={row.label}
               className={cn(
-                'border-b border-secondary-700',
-                idx % 2 === 1 && 'bg-secondary-800/50'
+                'border-b border-slate-700/30',
+                idx % 2 === 1 && 'bg-white/[0.02]'
               )}
             >
-              <td className="py-3 pr-4 text-sm text-text-primary">
+              <td className="py-3.5 px-4 text-sm text-slate-300">
                 {row.label}
               </td>
               {PLANS.map((plan) => (
-                <td key={plan} className="px-4 py-3 text-center">
+                <td key={plan} className="px-4 py-3.5 text-center">
                   <CellValue value={row.values[plan]} />
                 </td>
               ))}

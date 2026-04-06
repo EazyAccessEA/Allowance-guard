@@ -36,18 +36,19 @@ export default function UpgradeModal({ isOpen, onClose, feature, requiredPlan = 
       }
     >
       <div className="flex flex-col items-center text-center py-2">
-        <div className="w-14 h-14 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center mb-4">
-          <Lock className="w-7 h-7 text-primary-600 dark:text-primary-400" />
+        <div className="w-14 h-14 rounded-full bg-amber-500/10 ring-1 ring-amber-500/20 flex items-center justify-center mb-4">
+          <Lock className="w-7 h-7 text-amber-400" />
         </div>
 
         <h3 className="text-lg font-semibold text-text-primary mb-2">
-          {feature} is a {requiredPlan} Feature
+          Unlock {feature}
         </h3>
 
         <p className="text-sm text-text-secondary leading-relaxed">
-          Upgrade to the <span className="font-medium text-primary-600 dark:text-primary-400">{requiredPlan} plan</span>{' '}
-          {requiredPlan === 'Pro' ? 'starting at $9.99/month ' : 'starting at $49.99/month '}
-          to unlock {feature.toLowerCase()}, plus continuous monitoring, batch revocation, and more.
+          {feature} is available on the{' '}
+          <span className="font-medium text-amber-400">{requiredPlan} plan</span>
+          {requiredPlan === 'Pro' ? ' starting at $9.99/mo' : ' starting at $49.99/mo'}.
+          Includes continuous monitoring, batch revoke, and more.
         </p>
       </div>
     </Modal>
