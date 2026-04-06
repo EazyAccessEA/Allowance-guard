@@ -21,10 +21,10 @@ interface ApiPricingCardProps {
 }
 
 const PLAN_DESCRIPTIONS: Record<ApiCardPlan, string> = {
-  api_free: 'Get started with the AllowanceGuard API at no cost.',
-  api_developer: 'For developers building DeFi integrations and tools.',
-  api_growth: 'For teams and products that need high-volume access.',
-  api_enterprise: 'Custom limits, SLA, and dedicated support for large-scale use.',
+  api_free: 'Get started at no cost. 100 calls/day.',
+  api_developer: 'For developers building DeFi tools and integrations.',
+  api_growth: 'High-volume access for products and teams.',
+  api_enterprise: 'Custom limits, SLA, and dedicated support.',
 }
 
 function getApiFeatures(plan: ApiCardPlan): { label: string; included: boolean }[] {
@@ -39,7 +39,7 @@ function getApiFeatures(plan: ApiCardPlan): { label: string; included: boolean }
     {
       label: limits.burstPerMinute === -1
         ? 'Unlimited burst rate'
-        : `${limits.burstPerMinute} requests/min burst`,
+        : `${limits.burstPerMinute} req/min burst`,
       included: true,
     },
     { label: 'Webhook integrations', included: limits.webhooksEnabled },
@@ -59,7 +59,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
       ? 'Custom'
       : '$0'
 
-  const periodLabel = isEnterprise ? '' : '/month'
+  const periodLabel = isEnterprise ? '' : '/mo'
 
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
@@ -99,49 +99,50 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
     }
   }
 
-  const ctaClassName = cn(
-    'inline-flex items-center justify-center rounded-base px-4 py-2.5 text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2',
-    highlighted
-      ? 'bg-primary-700 text-white shadow-sm hover:bg-primary-800 active:bg-primary-900'
-      : isPaid
-        ? 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400'
-        : 'border border-neutral-400 bg-white text-neutral-800 hover:bg-neutral-50 hover:border-neutral-500',
-    checkoutLoading && 'opacity-70 cursor-wait',
-  )
-
   return (
     <div
       className={cn(
-        'relative flex flex-col rounded-base border bg-background-primary p-6 shadow-sm transition-all duration-150',
+        'group relative flex flex-col rounded-2xl p-6 lg:p-7 transition-all duration-300',
         highlighted
-          ? 'border-primary-700 shadow-md ring-1 ring-primary-700'
-          : 'border-border-primary'
+          ? 'bg-white/[0.06] ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/5'
+          : 'bg-white/[0.03] ring-1 ring-white/[0.08] hover:ring-white/[0.15] hover:bg-white/[0.05]'
       )}
     >
+      {/* Highlighted glow */}
       {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="inline-flex items-center rounded-full border border-primary-700 bg-primary-700 px-3 py-0.5 text-xs font-medium text-white">
+        <div
+          className="absolute inset-0 rounded-2xl pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%)',
+          }}
+        />
+      )}
+
+      {highlighted && (
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <span className="inline-flex items-center rounded-full bg-amber-500 px-3 py-0.5 text-xs font-semibold text-slate-900 shadow-md shadow-amber-500/20">
             Most Popular
           </span>
         </div>
       )}
 
-      <div className="mb-4">
-        <h3 className="text-xl font-medium tracking-tight text-text-primary">
+      <div className="mb-5">
+        <h3 className="text-base font-bold text-white tracking-tight mb-1">
           {displayName}
         </h3>
-        <p className="mt-1 text-sm text-text-secondary">
+        <p className="text-xs text-slate-400 leading-relaxed">
           {PLAN_DESCRIPTIONS[plan]}
         </p>
       </div>
 
       <div className="mb-6">
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-bold tracking-tight text-text-primary">
+          <span className="text-3xl font-bold tracking-tight text-white">
             {price}
           </span>
           {periodLabel && (
-            <span className="text-sm text-text-secondary">{periodLabel}</span>
+            <span className="text-sm text-slate-500 font-medium">{periodLabel}</span>
           )}
         </div>
       </div>
@@ -151,7 +152,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
         {isEnterprise ? (
           <a
             href="mailto:sales@allowanceguard.com?subject=Enterprise API Inquiry"
-            className={ctaClassName}
+            className="flex items-center justify-center w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-300 bg-white/[0.06] hover:bg-white/10 ring-1 ring-white/[0.08] transition-all duration-200"
           >
             <Mail className="mr-2 h-4 w-4" />
             Contact Sales
@@ -160,41 +161,53 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
           <button
             onClick={handleUpgrade}
             disabled={checkoutLoading}
-            className={ctaClassName}
+            className={cn(
+              'w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+              highlighted
+                ? 'bg-amber-500 text-slate-900 hover:bg-amber-400 shadow-md shadow-amber-500/20'
+                : 'bg-white/10 text-white hover:bg-white/15 ring-1 ring-white/10',
+              checkoutLoading && 'opacity-70 cursor-wait',
+            )}
           >
             {checkoutLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Redirecting...
-              </>
+              <span className="flex items-center justify-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Processing...
+              </span>
             ) : (
               `Get ${displayName}`
             )}
           </button>
         ) : (
-          <a href="/account/api-keys" className={ctaClassName}>
+          <a
+            href="/account/api-keys"
+            className="block w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-center text-slate-300 bg-white/[0.06] hover:bg-white/10 ring-1 ring-white/[0.08] transition-all duration-200"
+          >
             Get Free API Key
           </a>
         )}
         {checkoutError && (
-          <p className="mt-2 text-xs text-red-600">{checkoutError}</p>
+          <p className="mt-2 text-xs text-red-400">{checkoutError}</p>
         )}
       </div>
 
+      {/* Divider */}
+      <div className="h-px bg-white/[0.06] mb-5" aria-hidden="true" />
+
       {/* Features */}
-      <ul className="flex flex-col gap-3" role="list">
+      <ul className="flex flex-col gap-2.5" role="list">
         {features.map((feature) => (
           <li key={feature.label} className="flex items-start gap-2 text-sm">
             <Check
               className={cn(
                 'mt-0.5 h-4 w-4 shrink-0',
-                feature.included ? 'text-green-600' : 'text-neutral-300'
+                feature.included ? 'text-emerald-400' : 'text-slate-600'
               )}
               aria-hidden="true"
             />
             <span
               className={cn(
-                feature.included ? 'text-text-primary' : 'text-text-secondary'
+                feature.included ? 'text-slate-300' : 'text-slate-600'
               )}
             >
               {feature.label}
