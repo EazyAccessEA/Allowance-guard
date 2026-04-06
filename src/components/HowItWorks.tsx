@@ -1,54 +1,118 @@
+'use client'
+
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScrollAnimation'
+import { ScanShieldIcon, AnalyzeIcon, RevokeIcon } from '@/components/icons/HeroIcons'
+import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
+
+const STEPS = [
+  {
+    number: 1,
+    title: 'Connect & Scan',
+    description:
+      'Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control.',
+    Icon: ScanShieldIcon,
+  },
+  {
+    number: 2,
+    title: 'Analyze & Understand',
+    description:
+      'Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence.',
+    Icon: AnalyzeIcon,
+  },
+  {
+    number: 3,
+    title: 'Act & Secure',
+    description:
+      'Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees.',
+    Icon: RevokeIcon,
+  },
+]
 
 export default function HowItWorks() {
   return (
-    <CascadingScrollAnimation direction="up" distance={80} delay={400}>
-      <Section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-[#0A0E1A]">
-        <Container>
-          <FadeInScale delay={200}>
-            <div className="max-w-4xl mx-auto text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary dark:text-secondary-100 leading-tight mb-6">
-                How Allowance Guard Works
-              </h2>
-              <p className="text-xl text-text-secondary dark:text-secondary-400 leading-relaxed">
-                Three simple steps to secure your wallet and protect your assets.
-              </p>
-            </div>
-          </FadeInScale>
+    <section className="relative py-24 sm:py-32 lg:py-40 bg-white dark:bg-[#0A0E1A] overflow-hidden">
+      {/* Gradient transition from hero */}
+      <div
+        className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(11,17,32,0.6) 0%, transparent 100%)',
+        }}
+      />
 
-          <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
-            <Step
-              number={1}
-              title="Connect & Scan"
-              description="Connect your wallet securely. We read public blockchain data only. Your private keys and funds remain completely under your control."
-            />
-            <Step
-              number={2}
-              title="Analyze & Understand"
-              description="Get a clear risk assessment instantly. We analyze every allowance and flag risky, unlimited, or malicious approvals with advanced intelligence."
-            />
-            <Step
-              number={3}
-              title="Act & Secure"
-              description="Revoke with confidence. One-click revocation executes directly from your wallet. Batch multiple revocations to save on gas fees."
-            />
+      {/* Atmospheric radial glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'radial-gradient(ellipse, rgba(229,62,62,0.04) 0%, transparent 70%)',
+        }}
+      />
+
+      <Container>
+        <CascadingScrollAnimation direction="up" distance={40} delay={0}>
+          <div className="max-w-3xl mx-auto text-center mb-20">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
+                How Allowance Guard Works
+              </span>
+            </h2>
+            <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
+              Three simple steps to secure your wallet and protect your assets.
+            </p>
           </div>
-        </Container>
-      </Section>
-    </CascadingScrollAnimation>
+        </CascadingScrollAnimation>
+
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          {STEPS.map((step, i) => (
+            <CascadingScrollAnimation key={step.number} direction="up" distance={50} delay={i * 150}>
+              <StepCard {...step} />
+            </CascadingScrollAnimation>
+          ))}
+        </div>
+      </Container>
+    </section>
   )
 }
 
-function Step({ number, title, description }: { number: number; title: string; description: string }) {
+function StepCard({
+  number,
+  title,
+  description,
+  Icon,
+}: (typeof STEPS)[number]) {
   return (
-    <div className="text-center px-6 py-8">
-      <div className="w-20 h-20 bg-primary-accent/10 dark:bg-primary-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg">
-        <span className="text-3xl font-bold text-primary-accent">{number}</span>
+    <div className="group relative rounded-2xl p-8 lg:p-10 bg-white/[0.03] dark:bg-white/[0.03] ring-1 ring-white/[0.08] backdrop-blur-sm transition-all duration-300 hover:ring-white/[0.15] hover:bg-white/[0.06]">
+      {/* Glow on hover */}
+      <div
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(229,62,62,0.08) 0%, transparent 70%)',
+        }}
+      />
+
+      {/* Step number — small, confident */}
+      <div className="text-xs font-mono text-crimson-400/60 tracking-widest uppercase mb-6">
+        Step {String(number).padStart(2, '0')}
       </div>
-      <h3 className="text-2xl font-bold text-text-primary mb-6">{title}</h3>
-      <p className="text-lg text-text-secondary leading-relaxed">{description}</p>
+
+      {/* Icon with blend-mode glow */}
+      <div className="relative mb-8">
+        <Icon size={80} />
+        <div
+          className="absolute inset-0 blur-2xl pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background: 'radial-gradient(circle, rgba(229,62,62,0.15) 0%, transparent 70%)',
+            mixBlendMode: 'plus-lighter',
+          }}
+        />
+      </div>
+
+      <h3 className="text-xl lg:text-2xl font-bold text-white mb-4 tracking-tight">{title}</h3>
+      <p className="text-base text-slate-400 leading-relaxed">{description}</p>
     </div>
   )
 }
