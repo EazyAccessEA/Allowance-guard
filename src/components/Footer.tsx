@@ -93,7 +93,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed mb-6 max-w-xs">
-              Open-source core, always free. Premium monitoring and API for power users and teams.
+              Open-source security scanner. Premium monitoring and API for teams who need more.
             </p>
 
             {/* Social */}
@@ -181,7 +181,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} AllowanceGuard. AGPL-3.0 + Commercial.
           </span>
           <span className="text-xs text-slate-400">
-            No VC. No token. Open source.
+            No VC. No token. Community-funded.
           </span>
         </div>
       </Container>

@@ -7,30 +7,30 @@ import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 
 const FEATURES = [
   {
-    title: 'Non-Custodial Security',
+    title: 'Non-Custodial by Default',
     description:
-      'Full control remains in your wallet. We never hold your keys, funds, or require any permissions to move them. Every transaction is executed directly from your wallet.',
+      'Your keys stay in your wallet. We read public data, you sign every transaction. No permissions to move funds, ever.',
     Icon: LockShieldIcon,
     accent: 'amber' as const,
   },
   {
-    title: 'Clarity-First Dashboard',
+    title: 'Dashboard Built for Decisions',
     description:
-      'Designed to enterprise standards. See your entire security posture at a glance, with no jargon or confusion. Every piece of information is actionable and immediately understandable.',
+      'Every approval, risk score, and action in one view. No jargon. No hunting. See your security posture and act on it.',
     Icon: DashboardIcon,
     accent: 'sky' as const,
   },
   {
-    title: 'Advanced Risk Intelligence',
+    title: 'Real-Time Risk Scoring',
     description:
-      'Risk scores are powered by real-time threat data, identifying known malicious contracts and anomalous approvals. Our intelligence engine continuously updates to stay ahead of emerging threats.',
+      'Each approval is scored against live threat data — flagging unlimited amounts, unverified code, and known exploit contracts.',
     Icon: BrainShieldIcon,
     accent: 'amber' as const,
   },
   {
-    title: 'Gas-Efficient Revocation',
+    title: 'Batch Revoke, Less Gas',
     description:
-      'Batch revoke multiple allowances in a single transaction to save on gas fees and time. Our smart contract optimization ensures you pay the minimum possible gas costs for maximum security.',
+      'Revoke multiple approvals in one transaction. Optimised contracts keep gas costs low so security stays affordable.',
     Icon: BatchGasIcon,
     accent: 'sky' as const,
   },
@@ -80,7 +80,7 @@ export default function FeaturesPreview() {
               </span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
-              Every feature is designed with one goal: keeping your assets secure.
+              Every feature earns its place. If it doesn&#39;t make your wallet safer, it doesn&#39;t ship.
             </p>
           </div>
         </CascadingScrollAnimation>
