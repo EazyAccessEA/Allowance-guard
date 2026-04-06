@@ -16,22 +16,22 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
   {
     question: 'Is the core scanner really free?',
     answer:
-      'Yes. The open-source core scanner is free and always will be. You can scan up to 3 wallets on a single chain, view risk labels, and revoke approvals at no cost. Premium features like multi-chain monitoring, batch revoke, and team dashboards require a paid plan.',
+      'Yes. The open-source core scanner is free and will stay free. Scan up to 3 wallets on a single chain, view risk scores, and revoke approvals — no account required. Premium features like continuous monitoring, batch revoke, and team dashboards are paid.',
   },
   {
-    question: 'Can I switch between monthly and yearly billing?',
+    question: 'Can I switch between monthly and yearly?',
     answer:
-      'Absolutely. You can switch billing periods at any time from your account settings. When you switch to yearly billing, you will receive a prorated credit for the remaining time on your current monthly plan.',
+      'Yes, from your account settings at any time. Switching to yearly billing applies a prorated credit for your remaining monthly period.',
   },
   {
-    question: 'What happens if I cancel my subscription?',
+    question: 'What happens when I cancel?',
     answer:
-      'Your premium features remain active until the end of your current billing period. After that, your account reverts to the Free plan. All your data is retained, but access to premium features like monitoring and batch revoke will be paused.',
+      'Your premium features stay active until the end of the current billing period. After that, your account reverts to the Free plan. Your data is kept — premium features are paused, not deleted.',
   },
   {
     question: 'Do you offer refunds?',
     answer:
-      'We offer a full refund within 14 days of your first subscription payment. After that, you can cancel at any time but refunds are not issued for partial billing periods.',
+      'Full refund within 14 days of your first payment. After that, cancel any time — your access continues through the billing period, but partial refunds are not issued.',
   },
 ]
 
@@ -124,10 +124,10 @@ export default function PricingPage() {
       {/* Hero */}
       <Section size="lg" background="default" center>
         <Container size="lg">
-          <H1 className="mb-4">Simple, transparent pricing</H1>
+          <H1 className="mb-4">Pricing that respects your wallet</H1>
           <p className="mx-auto max-w-2xl text-lg text-text-secondary">
-            Core tool: free and open source. Always. Premium monitoring and API
-            access for power users and teams.
+            The core scanner is free and open source. Premium plans unlock monitoring,
+            batch operations, team tools, and API access.
           </p>
 
           {/* Billing toggle */}
@@ -168,8 +168,8 @@ export default function PricingPage() {
         <Container size="lg">
           <H2 className="mb-2">API Plans</H2>
           <p className="mx-auto mb-8 max-w-2xl text-text-secondary">
-            Integrate AllowanceGuard into your product with our REST API.
-            Scan wallets, query allowances, and assess risk programmatically.
+            Build on AllowanceGuard. Scan wallets, query allowances, and score risk
+            through a REST API with predictable rate limits.
           </p>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <ApiPricingCard plan="api_free" />

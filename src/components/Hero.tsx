@@ -68,7 +68,7 @@ export default function Hero({
         >
           <Shield className="w-4 h-4 text-amber-400" aria-hidden="true" />
           <span className="text-sm font-medium tracking-wide text-slate-400 uppercase">
-            Web3 Wallet Security
+            Token Approval Security
           </span>
         </motion.div>
 
@@ -95,8 +95,8 @@ export default function Hero({
           className="max-w-2xl text-xl sm:text-2xl font-medium text-slate-300 mb-8 sm:mb-10 leading-relaxed"
           delay={0.8}
         >
-          Scan, assess, and revoke token approvals across 10 chains.
-          Core tool: free and open source. Always.
+          See every token approval. Assess the risk. Revoke what you don&#39;t need.
+          10 chains. Open source core. Always free.
         </BlurText>
 
         {/* CTAs consolidated + Trust indicators directly below */}
@@ -128,16 +128,16 @@ export default function Hero({
                   }}
                 >
                   <Search className="w-4 h-4 mr-2" aria-hidden="true" />
-                  Scan an Address
+                  Look Up an Address
                 </Button>
                 <TestConnect onConnect={onWalletSelect} />
               </div>
 
               {/* Trust indicators — directly under CTAs, green checks */}
               <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-5">
-                <TrustCheck label="No private keys required" />
-                <TrustCheck label="Read-only access" />
-                <TrustCheck label="Free core · Open source" />
+                <TrustCheck label="Your keys never leave your wallet" />
+                <TrustCheck label="Read-only blockchain access" />
+                <TrustCheck label="Open source core · Free to use" />
               </div>
             </div>
           ) : (
@@ -159,7 +159,7 @@ export default function Hero({
               )}
               <div className="p-3 bg-amber-900/20 border border-amber-700/40 rounded-lg">
                 <p className="text-sm text-amber-300 font-medium">
-                  Wallet Connected! Taking you to your Security Dashboard...
+                  Wallet connected. Loading your security dashboard...
                 </p>
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function Hero({
         >
           <StatItem value={50000} suffix="+" label="Wallets scanned" delay={1.4} />
           <StatItem value={2000000} suffix="+" label="Approvals revoked" delay={1.5} />
-          <StatItem value={10} label="Chains supported" delay={1.6} />
+          <StatItem value={10} label="Chains covered" delay={1.6} />
         </motion.div>
       </Container>
     </section>

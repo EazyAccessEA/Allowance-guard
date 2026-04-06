@@ -46,39 +46,39 @@ export const supportedNetworks = [
 ]
 
 export const alertFeatures = [
-  { type: 'Email Alerts', description: 'Daily digests with risk-only filtering and customisable preferences.', features: ['Risk-only filtering', 'HTML templates', 'Customisable preferences'] },
-  { type: 'Slack Integration', description: 'Real-time webhook notifications for your team channels.', features: ['Team collaboration', 'Custom webhooks', 'Rich formatting'] },
-  { type: 'Autonomous Monitoring', description: 'Scheduled wallet rescans with instant drift detection.', features: ['Configurable frequency', 'Instant drift alerts', 'Duplicate prevention'] },
-  { type: 'Job Processing', description: 'Automated background scanning on 5-minute intervals.', features: ['Queue management', 'Status tracking', 'Auto-retry'] },
+  { type: 'Email Alerts', description: 'Daily digests filtered to risky approvals only. Configurable preferences per wallet.', features: ['Risk-only filtering', 'HTML templates', 'Per-wallet preferences'] },
+  { type: 'Slack Integration', description: 'Webhook notifications to your team channels when risk conditions are met.', features: ['Team channels', 'Custom webhooks', 'Rich formatting'] },
+  { type: 'Autonomous Monitoring', description: 'Scheduled rescans that detect approval drift and alert immediately.', features: ['Configurable frequency', 'Drift detection', 'Duplicate prevention'] },
+  { type: 'Job Processing', description: 'Background scan queue with 5-minute intervals and automatic retries.', features: ['Queue management', 'Status tracking', 'Auto-retry'] },
 ]
 
 export const apiEndpoints = [
-  { endpoint: '/api/scan', method: 'POST', description: 'Queue wallet scan job' },
-  { endpoint: '/api/allowances', method: 'GET', description: 'Get paginated allowances' },
-  { endpoint: '/api/jobs/[id]', method: 'GET', description: 'Check job status' },
-  { endpoint: '/api/alerts/subscribe', method: 'POST', description: 'Subscribe to alerts' },
-  { endpoint: '/api/alerts/daily', method: 'GET', description: 'Trigger daily digest' },
-  { endpoint: '/api/jobs/process', method: 'GET', description: 'Process queued jobs' },
-  { endpoint: '/api/monitor', method: 'GET/POST', description: 'Manage monitoring settings' },
-  { endpoint: '/api/monitor/run', method: 'GET', description: 'Trigger due monitor scans' },
-  { endpoint: '/api/auth/magic/request', method: 'POST', description: 'Request magic link' },
-  { endpoint: '/api/auth/magic/verify', method: 'GET', description: 'Verify magic link' },
-  { endpoint: '/api/auth/me', method: 'GET', description: 'Current user info' },
-  { endpoint: '/api/auth/signout', method: 'POST', description: 'Sign out' },
-  { endpoint: '/api/teams', method: 'GET/POST', description: 'List or create teams' },
-  { endpoint: '/api/teams/wallets', method: 'GET/POST', description: 'Manage team wallets' },
-  { endpoint: '/api/teams/invite', method: 'POST', description: 'Send team invitation' },
-  { endpoint: '/api/invites/accept', method: 'POST', description: 'Accept invitation' },
+  { endpoint: '/api/scan', method: 'POST', description: 'Queue a wallet scan. Returns job ID.' },
+  { endpoint: '/api/allowances', method: 'GET', description: 'Paginated allowances for a wallet.' },
+  { endpoint: '/api/jobs/[id]', method: 'GET', description: 'Poll scan job status by ID.' },
+  { endpoint: '/api/alerts/subscribe', method: 'POST', description: 'Subscribe a wallet to alert notifications.' },
+  { endpoint: '/api/alerts/daily', method: 'GET', description: 'Trigger daily digest delivery.' },
+  { endpoint: '/api/jobs/process', method: 'GET', description: 'Process queued scan jobs.' },
+  { endpoint: '/api/monitor', method: 'GET/POST', description: 'Read or update monitoring configuration.' },
+  { endpoint: '/api/monitor/run', method: 'GET', description: 'Execute due monitoring scans.' },
+  { endpoint: '/api/auth/magic/request', method: 'POST', description: 'Request a magic link email.' },
+  { endpoint: '/api/auth/magic/verify', method: 'GET', description: 'Verify magic link token.' },
+  { endpoint: '/api/auth/me', method: 'GET', description: 'Return current authenticated user.' },
+  { endpoint: '/api/auth/signout', method: 'POST', description: 'End current session.' },
+  { endpoint: '/api/teams', method: 'GET/POST', description: 'List teams or create a new one.' },
+  { endpoint: '/api/teams/wallets', method: 'GET/POST', description: 'List or add wallets to a team.' },
+  { endpoint: '/api/teams/invite', method: 'POST', description: 'Send an invitation to a team member.' },
+  { endpoint: '/api/invites/accept', method: 'POST', description: 'Accept a team invitation by token.' },
 ]
 
 export const faqItems = [
-  { question: 'How does AllowanceGuard work?', answer: 'AllowanceGuard scans your wallet across 10 supported networks using direct RPC calls. It identifies ERC-20 and ERC-721 approvals, calculates risk scores, and provides one-click revocation through your connected wallet.' },
-  { question: 'What makes an approval risky?', answer: 'Unlimited approvals (+50 points) and stale approvals (+10 points) are the main risk factors. The system also considers token value and spender reputation for comprehensive risk assessment.' },
-  { question: 'How do I revoke approvals?', answer: "Click the 'Revoke' button next to any approval in your dashboard. This constructs a transaction to set the allowance to zero, which you sign and pay gas for." },
-  { question: 'Are my private keys safe?', answer: 'Yes. AllowanceGuard never accesses your private keys. All transactions are signed locally by your wallet. We only read public blockchain data.' },
-  { question: 'How often should I check my approvals?', answer: 'Set up autonomous monitoring for continuous protection. The system automatically rescans your wallet and notifies you of new risky approvals as they appear.' },
-  { question: 'What if a scan fails?', answer: 'Scans are processed via a background job queue. If a scan fails, you can retry it. The system also automatically retries failed jobs.' },
-  { question: 'How do teams work?', answer: 'Teams enable collaborative wallet security with role-based access control. Create a team, add wallets, and invite members with different permission levels (owner, admin, editor, viewer).' },
+  { question: 'How does AllowanceGuard work?', answer: 'Scans your wallet across 10 chains via direct RPC calls. Identifies ERC-20 and ERC-721 approvals, scores each for risk, and lets you revoke with one click — all from your own wallet.' },
+  { question: 'What makes an approval risky?', answer: 'Unlimited amounts (+50 points), stale approvals (+10 points), unverified contracts, and known malicious addresses. Token value and spender reputation also factor into the score.' },
+  { question: 'How do I revoke?', answer: 'Click Revoke next to any approval. We construct the transaction, you sign it in your wallet and pay the gas fee. The approval is set to zero on-chain.' },
+  { question: 'Are my private keys safe?', answer: 'Yes. We never access your keys. All transactions sign locally in your wallet. We read public blockchain data only.' },
+  { question: 'How often should I scan?', answer: 'After interacting with new protocols, or set up monitoring (Pro) to scan automatically and alert you when new risky approvals appear.' },
+  { question: 'What if a scan fails?', answer: 'Scans run in a background queue with automatic retries. If it still fails, retry manually or contact support.' },
+  { question: 'How do teams work?', answer: 'Create a team, add wallets, invite members with role-based access (owner, admin, editor, viewer). Shared dashboard for DAOs, treasuries, and organisations.' },
 ]
 
 export const headingsMap: Record<string, Heading[]> = {
