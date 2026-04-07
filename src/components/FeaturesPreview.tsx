@@ -107,7 +107,7 @@ function FeatureCard({
   const glowColor = accent === 'amber' ? 'rgba(245,158,11,0.12)' : 'rgba(56,189,248,0.10)'
 
   return (
-    <div className="group relative rounded-2xl p-8 lg:p-10 bg-white/[0.02] ring-1 ring-white/[0.06] transition-all duration-300 hover:ring-white/[0.12] hover:bg-white/[0.04]">
+    <div className="glass-card group p-8 lg:p-10">
       {/* Hover glow */}
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"

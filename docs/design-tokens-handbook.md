@@ -595,3 +595,72 @@ Complete `:root` block mapping all key tokens to CSS variables. Paste into your 
   --z-toast: 1080;
 }
 ```
+
+---
+
+## 10. Glassmorphism Layer
+
+> **"Tactile depth, not transparency theatre."** — Council brief
+> Approved by the full council. Noor: AAA contrast preserved via slate-900/55+ underlay. Thane: blur capped at 4 layers per viewport.
+
+The glassmorphism layer is the active design language for the homepage marketing surface (hero, HowItWorks, FeaturesPreview, Testimonials, CTA). It is implemented as Tailwind component utilities in `src/app/globals.css` so all surfaces share one DNA.
+
+### 10.1 Utilities
+
+| Utility | Purpose | Spec |
+|---|---|---|
+| `.glass-card` | Cards, panels, content containers | 20px blur, 140% sat, gradient white 6%→2.5% over `rgba(15,23,42,0.55)`, 1px white/10 border, inset 1px white/8 highlight, 60px black/60 outer shadow |
+| `.glass-pill` | Eyebrows, chips, labels | 12px blur, white/6, white/12 border, fully rounded |
+| `.glass-button` | Secondary CTAs | 14px blur, white/8, white/18 border, hover white/14 |
+| `.glass-drift` | Slow 6s vertical drift for hero panel | Disabled under `prefers-reduced-motion` |
+
+### 10.2 Headline Treatment
+
+The hero headline uses a diagonal gradient clip:
+
+```css
+bg-gradient-to-br from-white via-white to-amber-300 bg-clip-text text-transparent
+```
+
+The word **"approved."** stays solid `text-crimson-500` (`#EF4444`). This is the brand's only protected colour moment — the single signature departure from the gradient.
+
+### 10.3 Right-Column Live Protection Panel
+
+The hero's right column (5/12) renders a `.glass-card .glass-drift` panel containing:
+
+1. **Header row** — pulsing emerald-400 dot + "LIVE PROTECTION" label + amber Activity icon
+2. **Three stat rows** — `Wallets scanned · 50,000+`, `Approvals revoked · 2,000,000+`, `Chains covered · 10`. Each row is an inset `bg-white/[0.03] border-white/[0.06] rounded-xl`
+3. **Footer** — "Last threat blocked · 3m ago" + 10-chain monogram strip
+
+This panel replaced the bottom-of-hero stats grid. Stats now live inside the glass card; the homepage no longer shows a separate stats row beneath the CTAs.
+
+### 10.4 Background Treatment
+
+- Vanta NET WebGL background renders inside `<div className="absolute inset-0 opacity-50">` so the lines read as a watermark, not a design element competing with the glass.
+- The radial overlay above it is strengthened to `rgba(15,23,42,0.92)` at the centre falling to `rgba(10,14,26,0.5)` at the edges.
+
+### 10.5 Accessibility Constraints (Noor — veto enforced)
+
+- Text on any glass surface MUST achieve ≥7:1 contrast against the *blurred* backdrop. The slate-900/55 underlay is non-negotiable; do not lower it.
+- All drift / shimmer animations check `prefers-reduced-motion`.
+- Glass borders are decorative — focus rings remain `outline: 2px solid #F59E0B; outline-offset: 2px;`.
+- Decorative gradient text always pairs with a non-decorative semantic element (heading tag, label) so screen readers still announce structure.
+
+### 10.6 Performance Constraints (Thane)
+
+- Maximum 4 visible `backdrop-filter` layers per viewport. Profile with DevTools layer panel before adding more.
+- No permanent `will-change`. Use it only on hover transitions.
+- Vanta NET runs at 50% opacity to reduce overdraw cost behind blurred surfaces.
+- `backdrop-filter` is GPU-accelerated on modern Chromium / Safari 16+. Older Safari falls back gracefully (slate-900/55 underlay still legible without blur).
+
+### 10.7 Where Glass Lives
+
+| Component | Glass usage |
+|---|---|
+| `Hero.tsx` | `.glass-pill` eyebrow, `.glass-button` secondary CTA, `.glass-card .glass-drift` Live Protection panel |
+| `HowItWorks.tsx` | `.glass-card` step cards |
+| `FeaturesPreview.tsx` | `.glass-card` feature cards |
+| `Testimonials.tsx` | `.glass-card` testimonial cards |
+
+New homepage sections must use `.glass-card` for all content containers. Do not introduce ad-hoc `bg-white/[0.0X] ring-white/[0.0X]` combinations — they will drift away from the unified DNA.
+

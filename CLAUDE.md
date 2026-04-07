@@ -218,6 +218,25 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 ### Design Council Process
 Colours, typography, spacing, and component specs are produced through the Design Council process (six architects: Maren/Visual, Idris/Motion, Sable/UX, Kael/Systems, Noor/Accessibility with veto power, Thane/Performance). Output is a **Design Tokens Handbook** with CSS custom properties that becomes the implementation spec.
 
+### Glassmorphism Layer (active — homepage canon)
+
+The marketing surface uses a unified glassmorphism layer. Homepage cards, eyebrows, and secondary buttons must use the council-approved utilities defined in `src/app/globals.css`:
+
+- `.glass-card` — primary glass surface (cards, panels). 20px blur + 140% saturation, 6%→2.5% white gradient over a 55% slate-900 underlay, 1px white/10 border, inset highlight.
+- `.glass-pill` — eyebrow chips and labels. 12px blur, rounded-full.
+- `.glass-button` — secondary CTAs. 14px blur, white/8 fill, white/18 border.
+- `.glass-drift` — slow 6s drift shimmer for the hero Live Protection panel. Auto-disabled under `prefers-reduced-motion`.
+
+**Rules:**
+1. Every glass surface sits over the slate-900/55+ underlay so text contrast stays AAA against blurred backdrops (Noor's veto condition).
+2. Cap visible glass blur layers at ~4 per viewport (Thane).
+3. Glass borders are decorative — focus rings remain solid amber 2px.
+4. The hero headline uses `bg-gradient-to-br from-white via-white to-amber-300 bg-clip-text text-transparent`. The word "approved." stays `text-crimson-500` — that is the only protected color moment.
+5. Vanta NET background renders at 50% opacity behind the hero with a reinforced radial overlay.
+6. New homepage sections must use `.glass-card` for content containers — do not introduce ad-hoc `bg-white/[0.0X] ring-white/[0.0X]` patterns.
+
+See `docs/design-tokens-handbook.md` §10 for the full handbook entry.
+
 ### Current Tokens (legacy, to be replaced)
 Until the council process produces the new handbook, `src/design/tokens.ts` remains active. Do not extend it — new work should wait for the redesign output.
 

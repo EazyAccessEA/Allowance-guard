@@ -85,7 +85,7 @@ function StepCard({
   Icon,
 }: (typeof STEPS)[number]) {
   return (
-    <div className="group relative rounded-2xl p-8 lg:p-10 bg-white/[0.03] dark:bg-white/[0.03] ring-1 ring-white/[0.08] backdrop-blur-sm transition-all duration-300 hover:ring-white/[0.15] hover:bg-white/[0.06]">
+    <div className="glass-card group p-8 lg:p-10">
       {/* Glow on hover */}
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
