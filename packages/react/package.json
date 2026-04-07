@@ -1,0 +1,80 @@
+{
+  "name": "@allowance-guard/react",
+  "version": "0.0.1",
+  "description": "React hooks for AllowanceGuard — wallet security, token approval monitoring, and revocation.",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EazyAccessEA/Allowance-guard.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://www.allowanceguard.com",
+  "bugs": {
+    "url": "https://github.com/EazyAccessEA/Allowance-guard/issues"
+  },
+  "keywords": [
+    "allowance-guard",
+    "react",
+    "hooks",
+    "web3",
+    "wagmi",
+    "token-approvals",
+    "wallet-security"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./suspense": {
+      "types": "./dist/suspense/index.d.ts",
+      "import": "./dist/suspense/index.js",
+      "require": "./dist/suspense/index.cjs"
+    },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "import": "./dist/server/index.js",
+      "require": "./dist/server/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "@allowance-guard/client": "workspace:*",
+    "@tanstack/react-query": "^5.0.0",
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@allowance-guard/client": "workspace:*",
+    "@tanstack/react-query": "^5.0.0",
+    "@types/react": "^18.3.0",
+    "react": "^18.3.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
