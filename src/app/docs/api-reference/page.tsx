@@ -17,38 +17,41 @@ const rateLimits = [
 
 export default function ApiReferencePage() {
   return (
-    <Section>
-      <Container>
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="mb-12">
-            <H1>API Reference</H1>
-            <p className="text-text-secondary dark:text-secondary-400 mt-4 text-lg">
-              AllowanceGuard REST API v1 — Monitor, assess, and manage token approvals
-              programmatically across multiple chains.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-6">
-              <span className="px-3 py-1 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 text-sm rounded-full border border-primary-600/20 dark:border-primary-400/20">
-                Base URL: /api/v1
+    <div className="min-h-screen bg-secondary-900 text-white">
+      <Section className="py-16 sm:py-20">
+        <Container>
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="mb-12">
+              <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+                Docs &middot; API Reference
               </span>
-              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-secondary-700">
-                JSON responses
-              </span>
-              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-secondary-700">
-                Bearer token auth
-              </span>
+              <H1 className="text-white">API Reference</H1>
+              <p className="text-slate-300 mt-4 text-lg max-w-reading">
+                AllowanceGuard REST API v1. Scan wallets, query allowances, score risk, and simulate revocations &mdash; programmatically across all 15 supported chains.
+              </p>
+              <div className="flex flex-wrap gap-3 mt-6">
+                <span className="px-3 py-1 bg-amber-400/10 border border-amber-400/30 text-amber-300 text-sm rounded-full font-mono">
+                  Base URL: /api/v1
+                </span>
+                <span className="px-3 py-1 bg-white/[0.05] border border-white/10 text-slate-300 text-sm rounded-full">
+                  JSON responses
+                </span>
+                <span className="px-3 py-1 bg-white/[0.05] border border-white/10 text-slate-300 text-sm rounded-full">
+                  Bearer token auth
+                </span>
+              </div>
             </div>
-          </div>
 
           {/* Authentication */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
               <Key className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Authentication
             </h2>
-            <p className="text-text-secondary dark:text-secondary-400 mb-4">
-              All API endpoints (except <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">/health</code>)
-              require an API key sent via the <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">Authorization</code> header.
+            <p className="text-slate-300 mb-4">
+              All API endpoints (except <code className="text-sm bg-white/[0.05] border border-white/10 px-1 rounded">/health</code>)
+              require an API key sent via the <code className="text-sm bg-white/[0.05] border border-white/10 px-1 rounded">Authorization</code> header.
             </p>
             <CodeExample
               tabs={[
@@ -91,53 +94,53 @@ data = res.json()['data']`,
 
           {/* Rate Limits */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
               <Zap className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Rate Limits
             </h2>
-            <p className="text-text-secondary dark:text-secondary-400 mb-4">
+            <p className="text-slate-300 mb-4">
               Rate limits are applied per API key based on your plan. Every response includes
               rate limit headers.
             </p>
-            <div className="border border-secondary-700 rounded-lg overflow-hidden">
+            <div className="border border-white/10 rounded-lg overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
-                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Plan</th>
-                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Daily Limit</th>
-                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Burst (per min)</th>
-                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Price</th>
+                  <tr className="bg-white/[0.05] border border-white/10 text-left">
+                    <th className="px-4 py-3 font-medium text-slate-300">Plan</th>
+                    <th className="px-4 py-3 font-medium text-slate-300">Daily Limit</th>
+                    <th className="px-4 py-3 font-medium text-slate-300">Burst (per min)</th>
+                    <th className="px-4 py-3 font-medium text-slate-300">Price</th>
                   </tr>
                 </thead>
                 <tbody>
                   {rateLimits.map((r) => (
-                    <tr key={r.plan} className="border-t border-secondary-700">
-                      <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">{r.plan}</td>
-                      <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">{r.daily}</td>
-                      <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">{r.burst}</td>
-                      <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">{r.price}</td>
+                    <tr key={r.plan} className="border-t border-white/10">
+                      <td className="px-4 py-3 text-white font-medium">{r.plan}</td>
+                      <td className="px-4 py-3 font-mono text-slate-300">{r.daily}</td>
+                      <td className="px-4 py-3 font-mono text-slate-300">{r.burst}</td>
+                      <td className="px-4 py-3 text-slate-300">{r.price}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-text-secondary dark:text-secondary-400 mt-3">
-              Headers: <code className="bg-background-secondary dark:bg-secondary-800 px-1 rounded">X-RateLimit-Limit</code>,{' '}
-              <code className="bg-background-secondary dark:bg-secondary-800 px-1 rounded">X-RateLimit-Remaining</code>
+            <p className="text-xs text-slate-300 mt-3">
+              Headers: <code className="bg-white/[0.05] border border-white/10 px-1 rounded">X-RateLimit-Limit</code>,{' '}
+              <code className="bg-white/[0.05] border border-white/10 px-1 rounded">X-RateLimit-Remaining</code>
             </p>
           </div>
 
           {/* Response Format */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
               <Activity className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Response Format
             </h2>
-            <p className="text-text-secondary dark:text-secondary-400 mb-4">
+            <p className="text-slate-300 mb-4">
               All endpoints return a consistent JSON envelope with{' '}
-              <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">data</code>,{' '}
-              <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">error</code>, and{' '}
-              <code className="text-sm bg-background-secondary dark:bg-secondary-800 px-1 rounded">meta</code> fields.
+              <code className="text-sm bg-white/[0.05] border border-white/10 px-1 rounded">data</code>,{' '}
+              <code className="text-sm bg-white/[0.05] border border-white/10 px-1 rounded">error</code>, and{' '}
+              <code className="text-sm bg-white/[0.05] border border-white/10 px-1 rounded">meta</code> fields.
             </p>
             <CodeExample
               tabs={[
@@ -182,12 +185,12 @@ data = res.json()['data']`,
 
           {/* Health */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-6 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
               Endpoints
             </h2>
 
-            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3">Health & Info</h3>
+            <h3 className="text-lg font-bold text-white mb-3">Health & Info</h3>
 
             <ApiEndpoint
               method="GET"
@@ -223,7 +226,7 @@ data = res.json()['data']`,
 
           {/* Scanning */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
               <Shield className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               Wallet Scanning
             </h3>
@@ -276,7 +279,7 @@ data = res.json()['data']`,
 
           {/* Allowances */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3">Allowances</h3>
+            <h3 className="text-lg font-bold text-white mb-3">Allowances</h3>
 
             <ApiEndpoint
               method="GET"
@@ -319,7 +322,7 @@ data = res.json()['data']`,
 
           {/* Risk */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               Risk Assessment
             </h3>
@@ -401,7 +404,7 @@ data = res.json()['data']`,
 
           {/* Simulation */}
           <div className="mb-12">
-            <h3 className="text-lg font-bold text-text-primary dark:text-secondary-100 mb-3">Simulation</h3>
+            <h3 className="text-lg font-bold text-white mb-3">Simulation</h3>
 
             <ApiEndpoint
               method="POST"
@@ -443,8 +446,8 @@ data = res.json()['data']`,
 
           {/* Quick Start */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4">Quick Start</h2>
-            <p className="text-text-secondary dark:text-secondary-400 mb-4">
+            <h2 className="text-2xl font-bold text-white mb-4">Quick Start</h2>
+            <p className="text-slate-300 mb-4">
               Scan a wallet and retrieve its risk profile in three API calls:
             </p>
             <CodeExample
@@ -537,14 +540,14 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
 
           {/* Error Codes */}
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4">Error Codes</h2>
-            <div className="border border-secondary-700 rounded-lg overflow-hidden">
+            <h2 className="text-2xl font-bold text-white mb-4">Error Codes</h2>
+            <div className="border border-white/10 rounded-lg overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
-                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">HTTP</th>
-                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Code</th>
-                    <th className="px-4 py-3 font-medium text-text-secondary dark:text-secondary-400">Description</th>
+                  <tr className="bg-white/[0.05] border border-white/10 text-left">
+                    <th className="px-4 py-3 font-medium text-slate-300">HTTP</th>
+                    <th className="px-4 py-3 font-medium text-slate-300">Code</th>
+                    <th className="px-4 py-3 font-medium text-slate-300">Description</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -558,10 +561,10 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
                     ['429', 'BURST_RATE_LIMIT_EXCEEDED', 'Per-minute burst limit exceeded'],
                     ['500', 'INTERNAL_ERROR', 'Unexpected server error'],
                   ].map(([http, code, desc]) => (
-                    <tr key={code} className="border-t border-secondary-700">
-                      <td className="px-4 py-2 font-mono text-xs text-text-secondary dark:text-secondary-400">{http}</td>
-                      <td className="px-4 py-2 font-mono text-xs text-text-primary dark:text-secondary-100">{code}</td>
-                      <td className="px-4 py-2 text-xs text-text-secondary dark:text-secondary-400">{desc}</td>
+                    <tr key={code} className="border-t border-white/10">
+                      <td className="px-4 py-2 font-mono text-xs text-slate-300">{http}</td>
+                      <td className="px-4 py-2 font-mono text-xs text-white">{code}</td>
+                      <td className="px-4 py-2 text-xs text-slate-300">{desc}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -570,9 +573,9 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
           </div>
 
           {/* CTA */}
-          <div className="text-center p-8 bg-background-secondary dark:bg-secondary-800 border-2 border-secondary-700 rounded-lg">
-            <h3 className="text-xl font-bold text-text-primary dark:text-secondary-100 mb-2">Ready to integrate?</h3>
-            <p className="text-text-secondary dark:text-secondary-400 mb-4">
+          <div className="text-center p-8 bg-white/[0.05] border border-white/10 border-2 border-white/10 rounded-lg">
+            <h3 className="text-xl font-bold text-white mb-2">Ready to integrate?</h3>
+            <p className="text-slate-300 mb-4">
               Get your API key from the Account dashboard and start building.
             </p>
             <div className="flex justify-center gap-4">
@@ -584,14 +587,15 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
               </a>
               <a
                 href="/pricing"
-                className="px-6 py-2 bg-background-primary dark:bg-secondary-900 border border-secondary-700 text-text-primary dark:text-secondary-100 rounded font-medium hover:bg-background-secondary dark:hover:bg-secondary-800 transition-colors"
+                className="px-6 py-2 bg-secondary-900 border border-white/10 text-white rounded font-medium hover:bg-background-secondary dark:hover:bg-white/[0.05] transition-colors"
               >
                 View Plans
               </a>
             </div>
           </div>
         </div>
-      </Container>
-    </Section>
+        </Container>
+      </Section>
+    </div>
   )
 }

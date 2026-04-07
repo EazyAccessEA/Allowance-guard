@@ -170,7 +170,7 @@ export default function DocsPage() {
 
           {/* Main content */}
           <div className="lg:col-span-6">
-            <div className="prose prose-sm prose-invert max-w-none">
+            <div className="max-w-none">
               <DocsContentPrimary section={activeSection} />
               <DocsContentSecondary section={activeSection} />
             </div>
