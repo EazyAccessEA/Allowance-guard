@@ -72,7 +72,7 @@ export const apiEndpoints = [
 ]
 
 export const faqItems = [
-  { question: 'How does AllowanceGuard work?', answer: 'Scans your wallet across 10 chains via direct RPC calls. Identifies ERC-20 and ERC-721 approvals, scores each for risk, and lets you revoke with one click — all from your own wallet.' },
+  { question: 'How does AllowanceGuard work?', answer: 'Scans your wallet across 15 chains via direct RPC calls. Identifies ERC-20 and ERC-721 approvals, scores each for risk, and lets you revoke with one click — all from your own wallet.' },
   { question: 'What makes an approval risky?', answer: 'Unlimited amounts (+50 points), stale approvals (+10 points), unverified contracts, and known malicious addresses. Token value and spender reputation also factor into the score.' },
   { question: 'How do I revoke?', answer: 'Click Revoke next to any approval. We construct the transaction, you sign it in your wallet and pay the gas fee. The approval is set to zero on-chain.' },
   { question: 'Are my private keys safe?', answer: 'Yes. We never access your keys. All transactions sign locally in your wallet. We read public blockchain data only.' },

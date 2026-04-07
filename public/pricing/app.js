@@ -17,7 +17,7 @@ const comparisonBody = document.getElementById('comparison-body');
 const FEATURES = [
   { group: 'Core' },
   { name: 'Wallets', free: '3', pro: 'Unlimited', sentinel: '50' },
-  { name: 'Chain support', free: 'Single', pro: 'All 10 chains', sentinel: 'All 10 chains' },
+  { name: 'Chain support', free: 'Single', pro: 'All 15 chains', sentinel: 'All 15 chains' },
   { name: 'Risk labels', free: true, pro: true, sentinel: true },
   { name: 'Manual revocation', free: true, pro: true, sentinel: true },
   { name: 'Time Machine', free: false, pro: true, sentinel: true },

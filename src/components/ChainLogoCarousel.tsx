@@ -32,7 +32,7 @@ export default function ChainLogoCarousel() {
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-amber-400/80">
           Securing wallets across
         </p>
-        <p className="mt-2 text-sm text-slate-400">10 EVM chains. One dashboard.</p>
+        <p className="mt-2 text-sm text-slate-400">15 EVM chains. One dashboard.</p>
       </div>
 
       {/* Mobile: Stacked */}
