@@ -1,4 +1,4 @@
-import Stripe from 'stripe'
+import type Stripe from 'stripe'
 import { NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import { db } from '@/db'
@@ -8,11 +8,10 @@ import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_gua
 import { reportError } from '@/lib/rollbar'
 import { withReq } from '@/lib/logger'
 import { trackEvent } from '@/lib/analytics'
+import { stripe } from '@/lib/billing'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2025-08-27.basil' })
 
 export async function POST(req: Request) {
   const L = withReq(req)

@@ -157,6 +157,44 @@ export async function revokeApiKey(userId: number, keyId: string): Promise<boole
 }
 
 // ---------------------------------------------------------------------------
+// Plan upgrades (called from webhook on API subscription activation)
+// ---------------------------------------------------------------------------
+
+/**
+ * Upgrade all active (non-revoked) API keys for a user to a new plan tier.
+ * Called by the billing webhook when an API subscription is created/updated.
+ * Returns the number of keys upgraded.
+ */
+export async function upgradeApiKeyPlan(
+  userId: number,
+  newPlan: ApiPlan,
+): Promise<number> {
+  const newRateLimit = API_PLAN_LIMITS[newPlan].callsPerDay
+
+  const { rowCount } = await pool.query(
+    `UPDATE api_keys
+     SET plan = $1, rate_limit = $2
+     WHERE user_id = $3 AND revoked_at IS NULL`,
+    [newPlan, newRateLimit, userId],
+  )
+
+  const upgraded = rowCount ?? 0
+  if (upgraded > 0) {
+    apiLogger.info('api_key.plan_upgraded', { userId, newPlan, keysUpgraded: upgraded })
+  }
+
+  return upgraded
+}
+
+/**
+ * Downgrade all active API keys for a user to api_free.
+ * Called when an API subscription is cancelled.
+ */
+export async function downgradeApiKeysToFree(userId: number): Promise<number> {
+  return upgradeApiKeyPlan(userId, 'api_free')
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 

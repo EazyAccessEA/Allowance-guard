@@ -11,7 +11,6 @@ import {
   Shield,
   ShieldAlert,
   Clock,
-  ExternalLink,
   RefreshCw,
 } from 'lucide-react'
 
@@ -57,7 +56,7 @@ const riskLabels: Record<string, string> = {
   critical: 'Critical',
 }
 
-export default function Permit2Panel({ walletAddress, connectedAddress }: Permit2PanelProps) {
+export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
   const [data, setData] = useState<Permit2ScanResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -156,11 +155,11 @@ export default function Permit2Panel({ walletAddress, connectedAddress }: Permit
             </div>
 
             {/* Table */}
-            <div className="border border-border-primary dark:border-secondary-700 rounded-xl overflow-hidden bg-white dark:bg-secondary-900/60 backdrop-blur-xs">
+            <div className="border border-secondary-700 rounded-xl overflow-hidden bg-secondary-900/60 backdrop-blur-xs">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm" role="table" aria-label="Permit2 allowances">
                   <caption className="sr-only">Permit2 token approval allowances</caption>
-                  <thead className="bg-background-secondary/80 dark:bg-secondary-800/80 border-b border-border-primary dark:border-secondary-700">
+                  <thead className="bg-background-secondary/80 dark:bg-secondary-800/80 border-b border-secondary-700">
                     <tr>
                       <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Chain</th>
                       <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Token</th>

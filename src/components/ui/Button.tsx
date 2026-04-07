@@ -5,39 +5,39 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { getAccessibilityClasses, keyboardNavigation } from '@/lib/accessibility'
 
-// Mobbin-Inspired Button Variants with Dark Mode + Glow
+// Midnight Amber Button Variants
+// Primary = Amber gradient. Destructive = Red. Links = Sky Blue.
 const buttonVariants = cva(
-  // Base styles with dark mode support
-  'inline-flex items-center justify-center rounded-base font-button mobbin-focus-ring mobbin-button-press transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-secondary-900 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-base font-button transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        // Primary with glow effect in dark mode
-        primary: 'bg-primary-700 text-white hover:bg-primary-800 active:bg-primary-900 shadow-sm hover:shadow-md active:shadow-lg mobbin-hover-lift dark:bg-primary-500 dark:hover:bg-primary-600 dark:active:bg-primary-700 dark:hover:shadow-glow-primary',
+        // Primary — Amber gradient button, dark text (7.1:1 contrast)
+        primary: 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 font-semibold hover:from-amber-400 hover:to-amber-500 active:from-amber-600 active:to-amber-700 shadow-sm hover:shadow-glow-primary',
 
-        // Secondary with dark mode adaptation
-        secondary: 'border border-primary-300 bg-primary-50 text-primary-800 hover:bg-primary-100 hover:border-primary-400 active:bg-primary-200 shadow-sm dark:border-primary-700 dark:bg-primary-900/20 dark:text-primary-300 dark:hover:bg-primary-900/40 dark:hover:border-primary-600',
+        // Secondary — transparent with slate border
+        secondary: 'border border-secondary-700 bg-transparent text-slate-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
 
-        // Ghost with dark mode
-        ghost: 'hover:bg-neutral-100 text-neutral-800 active:bg-neutral-200 dark:text-secondary-200 dark:hover:bg-secondary-800 dark:active:bg-secondary-700',
+        // Ghost — no border, subtle hover
+        ghost: 'text-slate-400 hover:bg-secondary-800 hover:text-white active:bg-secondary-700',
 
-        // Destructive with dark mode
-        destructive: 'bg-semantic-error-500 text-white hover:bg-semantic-error-600 active:bg-semantic-error-700 shadow-sm hover:shadow-md active:shadow-lg dark:bg-semantic-error-600 dark:hover:bg-semantic-error-500',
+        // Destructive — Danger Red (threats, revoke)
+        destructive: 'bg-crimson-500 text-white hover:bg-crimson-600 active:bg-crimson-700 shadow-sm hover:shadow-glow-crimson',
 
-        // Outline with dark mode
-        outline: 'border border-neutral-400 bg-white hover:bg-neutral-50 hover:border-neutral-500 text-neutral-800 shadow-sm active:bg-neutral-100 dark:border-secondary-600 dark:bg-transparent dark:text-secondary-200 dark:hover:bg-secondary-800 dark:hover:border-secondary-500',
+        // Outline — slate border
+        outline: 'border border-secondary-700 bg-transparent text-slate-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
 
-        // Link with dark mode
-        link: 'text-primary-700 underline-offset-4 hover:underline hover:text-primary-800 focus:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300',
+        // Link — Sky Blue
+        link: 'text-sky-400 underline-offset-4 hover:underline hover:text-sky-300',
 
-        // Semantic variants with dark mode
-        success: 'bg-semantic-success-500 text-white hover:bg-semantic-success-600 active:bg-semantic-success-700 shadow-sm hover:shadow-md dark:bg-semantic-success-600 dark:hover:bg-semantic-success-500',
-        warning: 'bg-semantic-warning-500 text-white hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm hover:shadow-md dark:bg-semantic-warning-600 dark:hover:bg-semantic-warning-500',
-        info: 'bg-semantic-info-500 text-white hover:bg-semantic-info-600 active:bg-semantic-info-700 shadow-sm hover:shadow-md dark:bg-semantic-info-600 dark:hover:bg-semantic-info-500',
+        // Semantic variants
+        success: 'bg-semantic-success-500 text-white hover:bg-semantic-success-600 active:bg-semantic-success-700 shadow-sm',
+        warning: 'bg-semantic-warning-500 text-slate-900 hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm',
+        info: 'bg-semantic-info-500 text-white hover:bg-semantic-info-600 active:bg-semantic-info-700 shadow-sm',
 
-        // Additional variants with dark mode
-        subtle: 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 dark:bg-secondary-800 dark:text-secondary-200 dark:hover:bg-secondary-700',
-        accent: 'bg-primary-100 text-primary-900 hover:bg-primary-200 active:bg-primary-300 dark:bg-primary-900/30 dark:text-primary-300 dark:hover:bg-primary-900/50',
+        // Subtle — raised navy surface
+        subtle: 'bg-secondary-800 text-slate-300 hover:bg-secondary-700 hover:text-white',
+        accent: 'bg-amber-900/20 text-amber-300 hover:bg-amber-900/40 hover:text-amber-200',
       },
       size: {
         // Mobbin-inspired size variants with systematic scaling

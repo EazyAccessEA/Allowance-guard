@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAccount } from 'wagmi'
-import { Wallet, Search, Save, Shield, Loader2 } from 'lucide-react'
+import { Wallet, Search, Save, Shield } from 'lucide-react'
 
 interface OnboardingState {
   hadScan: boolean
@@ -76,27 +75,27 @@ export default function OnboardingChecklist() {
   const items = [
     {
       done: state.connect,
-      label: 'Connect your wallet',
+      label: 'Connect wallet',
       step: 1,
       icon: Wallet,
       description:
-        'Connect your wallet to start monitoring token approvals across all your addresses.',
+        'Link your wallet to begin. Read-only access — your keys stay with you.',
     },
     {
       done: state.scan,
-      label: 'Run your first scan',
+      label: 'Run first scan',
       step: 2,
       icon: Search,
       description:
-        'Scan your wallet to discover all existing token approvals and identify potential risks.',
+        'Discover every active token approval and see its risk score.',
     },
     {
       done: state.save,
-      label: 'Save wallet addresses',
+      label: 'Save addresses',
       step: 3,
       icon: Save,
       description:
-        'Save frequently used wallet addresses for quick access and monitoring.',
+        'Bookmark wallets you check regularly for faster access.',
     },
     {
       done: state.revoke,
@@ -104,7 +103,7 @@ export default function OnboardingChecklist() {
       step: 4,
       icon: Shield,
       description:
-        'Bulk revoke unlimited or stale approvals to secure your tokens.',
+        'Remove unlimited or stale approvals. Batch revoke to save gas.',
     },
   ]
 

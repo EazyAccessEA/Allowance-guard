@@ -187,7 +187,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             <H2 className="mb-12 text-center">Choose Your Integration Method</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="bg-white border border-line rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center mb-4">
                   <Globe className="mr-3 text-blue-600" size={24} />
                   <H3>Embeddable Widget</H3>
@@ -203,7 +203,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white border border-line rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center mb-4">
                   <Zap className="mr-3 text-yellow-600" size={24} />
                   <H3>React Hooks</H3>
@@ -219,7 +219,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white border border-line rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center mb-4">
                   <Package className="mr-3 text-green-600" size={24} />
                   <H3>Node.js SDK</H3>
@@ -345,57 +345,57 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             <H2 className="mb-8 text-center">Installation & Setup</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <H3 className="mb-4">React Widget</H3>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">Installation:</p>
+                    <p className="text-sm font-medium text-white mb-2">Installation:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">Import:</p>
+                    <p className="text-sm font-medium text-white mb-2">Import:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <H3 className="mb-4">React Hooks</H3>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">Installation:</p>
+                    <p className="text-sm font-medium text-white mb-2">Installation:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-hooks</pre>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">Import:</p>
+                    <p className="text-sm font-medium text-white mb-2">Import:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">import &#123; useAllowances &#125; from &apos;allowance-guard-hooks&apos;</pre>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <H3 className="mb-4">Node.js SDK</H3>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">Installation:</p>
+                    <p className="text-sm font-medium text-white mb-2">Installation:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-sdk</pre>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">Import:</p>
+                    <p className="text-sm font-medium text-white mb-2">Import:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">const AllowanceGuardSDK = require(&apos;allowance-guard-sdk&apos;)</pre>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <H3 className="mb-4">HTML Widget</H3>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">CDN Script:</p>
+                    <p className="text-sm font-medium text-white mb-2">CDN Script:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-ink mb-2">Initialize:</p>
+                    <p className="text-sm font-medium text-white mb-2">Initialize:</p>
                     <pre className="bg-gray-100 p-3 rounded text-sm">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
                   </div>
                 </div>
@@ -412,7 +412,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             <H2 className="mb-8 text-center">Best Practices</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <div className="flex items-center mb-4">
                   <Shield className="mr-3 text-green-600" size={20} />
                   <H3>Security</H3>
@@ -425,7 +425,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <div className="flex items-center mb-4">
                   <Zap className="mr-3 text-blue-600" size={20} />
                   <H3>Performance</H3>
@@ -438,7 +438,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <div className="flex items-center mb-4">
                   <Globe className="mr-3 text-purple-600" size={20} />
                   <H3>User Experience</H3>
@@ -451,7 +451,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white p-6 rounded-lg border border-line">
+              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
                 <div className="flex items-center mb-4">
                   <Package className="mr-3 text-orange-600" size={20} />
                   <H3>Integration</H3>

@@ -55,13 +55,13 @@ export function FireartLoadingOverlay({
   if (!isVisible) return null
 
   return (
-    <div className="fixed inset-0 bg-white/80 backdrop-blur-sm z-50 flex items-center justify-center">
-      <div className="bg-white border border-stone/20 rounded-2xl p-8 shadow-medium text-center max-w-sm mx-4">
+    <div className="fixed inset-0 bg-surface-base/80 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div className="bg-secondary-800 border border-secondary-700/20 rounded-2xl p-8 shadow-medium text-center max-w-sm mx-4">
         <div className="w-16 h-16 bg-gradient-to-r from-cobalt to-emerald rounded-full flex items-center justify-center mx-auto mb-6">
           <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
         </div>
         
-        <h3 className="text-lg font-medium text-ink mb-2">{message}</h3>
+        <h3 className="text-lg font-medium text-white mb-2">{message}</h3>
         
         {progress !== undefined && (
           <div className="w-full bg-stone/20 rounded-full h-2 mb-4">

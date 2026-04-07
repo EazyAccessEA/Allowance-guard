@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Shield, Users, AlertTriangle, FileText, Copy, ExternalLink, Lock } from 'lucide-react'
+import { Shield, Users, AlertTriangle, FileText, Copy, Lock } from 'lucide-react'
 
 interface SafeInfo {
   address: string
@@ -129,7 +129,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
 
   if (!isSentinel) {
     return (
-      <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-8 text-center">
+      <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-8 text-center">
         <Lock className="mx-auto h-10 w-10 text-text-tertiary dark:text-secondary-500 mb-3" />
         <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">
           Multi-Sig Dashboard
@@ -175,7 +175,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
     <div className="space-y-6">
       {/* Safe Info Card */}
       {data.safeInfo && (
-        <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6">
+        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
             <Shield className="h-6 w-6 text-primary-600 dark:text-primary-400" />
             <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">
@@ -216,7 +216,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
           </div>
 
           {/* Owners list */}
-          <div className="mt-4 pt-4 border-t border-border-primary dark:border-secondary-700">
+          <div className="mt-4 pt-4 border-t border-secondary-700">
             <p className="text-xs text-text-tertiary dark:text-secondary-500 mb-2 flex items-center gap-1">
               <Users className="h-3 w-3" /> Owners
             </p>
@@ -242,8 +242,8 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
 
       {/* Allowances Table with selection */}
       {data.allowances.length > 0 && (
-        <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl overflow-hidden">
-          <div className="p-4 border-b border-border-primary dark:border-secondary-700 flex items-center justify-between">
+        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl overflow-hidden">
+          <div className="p-4 border-b border-secondary-700 flex items-center justify-between">
             <h3 className="text-sm font-semibold text-text-primary dark:text-secondary-100">
               Token Approvals ({data.allowances.length})
             </h3>
@@ -269,7 +269,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
 
           <div className="max-h-96 overflow-y-auto">
             <table className="w-full text-sm">
-              <thead className="sticky top-0 bg-neutral-50 dark:bg-secondary-800">
+              <thead className="sticky top-0 bg-secondary-800">
                 <tr>
                   <th className="px-4 py-2 text-left w-8">
                     <input
@@ -302,7 +302,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
                         : 'text-text-secondary dark:text-secondary-400 bg-neutral-50 dark:bg-secondary-700'
 
                   return (
-                    <tr key={key} className="hover:bg-neutral-50 dark:hover:bg-secondary-700/50">
+                    <tr key={key} className="hover:bg-secondary-800 dark:hover:bg-secondary-700/50">
                       <td className="px-4 py-2.5">
                         <input
                           type="checkbox"
@@ -342,7 +342,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
 
       {/* Governance Proposal Output */}
       {proposalMarkdown && (
-        <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6">
+        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-text-primary dark:text-secondary-100 flex items-center gap-2">
               <FileText className="h-4 w-4" />
@@ -350,12 +350,12 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
             </h3>
             <button
               onClick={() => navigator.clipboard.writeText(proposalMarkdown)}
-              className="flex items-center gap-1 px-2 py-1 text-xs text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-200 border border-border-primary dark:border-secondary-600 rounded"
+              className="flex items-center gap-1 px-2 py-1 text-xs text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-200 border border-secondary-700 dark:border-secondary-600 rounded"
             >
               <Copy className="h-3 w-3" /> Copy
             </button>
           </div>
-          <pre className="text-xs font-mono text-text-secondary dark:text-secondary-400 bg-neutral-50 dark:bg-secondary-800 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+          <pre className="text-xs font-mono text-text-secondary dark:text-secondary-400 bg-secondary-800 p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
             {proposalMarkdown}
           </pre>
         </div>

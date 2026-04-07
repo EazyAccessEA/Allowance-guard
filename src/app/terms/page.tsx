@@ -9,52 +9,55 @@ import Link from 'next/link'
 export default function TermsPage() {
 
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
 
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
+      <Section className="relative py-24 sm:py-32 overflow-hidden bg-secondary-900">
         <VideoBackground videoSrc="/V3AG.mp4" />
         <div
           className="absolute inset-0 z-10"
+          aria-hidden="true"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+            background:
+              'linear-gradient(to right, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.75) 60%, rgba(15,23,42,0.6) 100%)'
           }}
         />
 
-        <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Terms of Service</H1>
-          <p className="text-xl text-stone max-w-reading mb-8">
-            Clear, straightforward terms for using Allowance Guard. Covers free and paid tiers, API access, and your responsibilities.
+        <Container className="relative text-left max-w-4xl z-20">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+            Legal &middot; Terms of Service
+          </span>
+          <H1 className="mb-6 text-white">Terms of Service</H1>
+          <p className="text-lg text-slate-300 max-w-reading">
+            The rules of the road for using AllowanceGuard &mdash; written in plain English wherever the law allows, and in precise English wherever it does not. These terms apply to every tier: Free, Pro, Sentinel, and B2B API.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
+      <div className="border-t border-white/10" />
 
       {/* Terms Content */}
       <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="prose prose-lg max-w-none">
+            <div className="max-w-none text-slate-300">
 
               {/* Introduction */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Agreement to Terms</H2>
-                <p className="text-stone leading-relaxed">
-                  By using Allowance Guard, you agree to these terms. We&apos;ve written them in plain English
-                  to be as clear as possible. If you don&apos;t agree with any part of these terms,
-                  please don&apos;t use our service. These terms apply to all tiers: Free, Pro, Sentinel, and B2B API.
+                <H2 className="text-2xl font-semibold mb-4 text-white">1. Agreement to These Terms</H2>
+                <p className="text-slate-300 leading-relaxed">
+                  By accessing or using AllowanceGuard &mdash; the website, scanner, dashboard, browser extension, or B2B API &mdash; you agree to be bound by these Terms of Service and by every document they incorporate by reference (Privacy Policy, Cookie Policy, SLA, Refund Policy, and, where applicable, the Data Processing Agreement). If you do not agree, do not use the service. If you are using AllowanceGuard on behalf of an organisation, you represent that you have authority to bind that organisation to these terms.
                 </p>
               </div>
 
               {/* Service Description */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">What Allowance Guard Does</H2>
-                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg mb-6">
-                  <p className="text-stone">
+                <H2 className="text-2xl font-semibold mb-4 text-white">What Allowance Guard Does</H2>
+                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg mb-6">
+                  <p className="text-slate-300">
                     Allowance Guard is a Web3 wallet security platform. The core scanner is free and open source. Premium services are available via paid subscriptions.
                   </p>
-                  <ul className="mt-4 space-y-2 text-stone">
+                  <ul className="mt-4 space-y-2 text-slate-300">
                     <li>• View and manage token approvals across 15 blockchain networks</li>
                     <li>• Identify risky, unlimited, and Permit2 approvals</li>
                     <li>• Revoke token approvals with one-click transactions</li>
@@ -67,51 +70,51 @@ export default function TermsPage() {
 
               {/* Tier-Specific Terms */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Service Tiers</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-white">Service Tiers</H2>
                 <div className="space-y-6">
 
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">Free Tier</h3>
-                    <p className="text-stone text-sm mb-2">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Free Tier</h3>
+                    <p className="text-slate-300 text-sm mb-2">
                       The free tier provides core scanning and revocation for up to 3 wallets on a single chain.
                       No account required for basic scans. The free tier is provided on a best-effort basis with no uptime guarantee.
                     </p>
-                    <p className="text-stone text-sm">
+                    <p className="text-slate-300 text-sm">
                       Features: manual scanning, single-chain view, basic risk labels, manual revocation.
                     </p>
                   </div>
 
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">Pro Tier ($9.99/month or $79/year)</h3>
-                    <p className="text-stone text-sm mb-2">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Pro Tier ($9.99/month or $79/year)</h3>
+                    <p className="text-slate-300 text-sm mb-2">
                       Pro unlocks unlimited wallets, multi-chain portfolio view, continuous monitoring with alerts,
                       batch revocation, historical risk timeline, and export capabilities (PDF/CSV).
                     </p>
-                    <p className="text-stone text-sm">
+                    <p className="text-slate-300 text-sm">
                       Service availability: best effort. No formal SLA. See our{' '}
-                      <Link href="/sla" className="text-cobalt hover:underline">SLA page</Link> for details.
+                      <Link href="/sla" className="text-amber-400 hover:underline">SLA page</Link> for details.
                     </p>
                   </div>
 
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">Sentinel Tier ($49.99/month or $499/year)</h3>
-                    <p className="text-stone text-sm mb-2">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Sentinel Tier ($49.99/month or $499/year)</h3>
+                    <p className="text-slate-300 text-sm mb-2">
                       Sentinel includes everything in Pro plus: monitoring up to 50 wallets, automated revocation rules,
                       team dashboard with role-based access, compliance-ready audit logs, webhook integrations, and priority support.
                     </p>
-                    <p className="text-stone text-sm">
+                    <p className="text-slate-300 text-sm">
                       Service availability: 99.5% uptime target, 4-hour response time for critical issues. See our{' '}
-                      <Link href="/sla" className="text-cobalt hover:underline">SLA page</Link> for full details.
+                      <Link href="/sla" className="text-amber-400 hover:underline">SLA page</Link> for full details.
                     </p>
                   </div>
 
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">B2B API Tiers</h3>
-                    <p className="text-stone text-sm mb-2">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">B2B API Tiers</h3>
+                    <p className="text-slate-300 text-sm mb-2">
                       API access is available at four tiers: Free (100 calls/day), Developer ($39/month, 10,000 calls/day),
                       Growth ($149/month, 100,000 calls/day), and Enterprise (custom pricing with SLA).
                     </p>
-                    <p className="text-stone text-sm">
+                    <p className="text-slate-300 text-sm">
                       API keys must not be shared. Usage is subject to rate limits per tier. Prohibited uses include:
                       scraping for competitive intelligence, reselling data without permission, and automated abuse of blockchain networks.
                     </p>
@@ -121,8 +124,8 @@ export default function TermsPage() {
 
               {/* Subscription Terms */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Subscription &amp; Billing</H2>
-                <div className="space-y-4 text-stone">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Subscription &amp; Billing</H2>
+                <div className="space-y-4 text-slate-300">
                   <p>
                     <strong>Billing cycle:</strong> Subscriptions are billed monthly or annually, depending on the plan selected.
                     Billing begins at the end of any trial period or immediately if no trial applies.
@@ -133,7 +136,7 @@ export default function TermsPage() {
                   </p>
                   <p>
                     <strong>Cancellation:</strong> You may cancel your subscription at any time through your{' '}
-                    <Link href="/account" className="text-cobalt hover:underline">account dashboard</Link>{' '}
+                    <Link href="/account" className="text-amber-400 hover:underline">account dashboard</Link>{' '}
                     or via the Stripe Customer Portal. Cancellation takes effect at the end of the current billing period.
                     You retain access to paid features until then.
                   </p>
@@ -154,9 +157,9 @@ export default function TermsPage() {
 
               {/* Refund Policy */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Refund Policy</H2>
-                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                  <div className="space-y-3 text-stone text-sm">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Refund Policy</H2>
+                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                  <div className="space-y-3 text-slate-300 text-sm">
                     <p>
                       <strong>14-day money-back guarantee:</strong> If you are unsatisfied with your first subscription
                       (any paid tier), request a full refund within 14 days of your first payment.
@@ -172,14 +175,14 @@ export default function TermsPage() {
                     </p>
                     <p>
                       <strong>Process:</strong> Request a refund via your account dashboard or by emailing{' '}
-                      <span className="text-cobalt">billing@allowanceguard.com</span>.
+                      <span className="text-amber-400">billing@allowanceguard.com</span>.
                     </p>
                     <p>
                       <strong>Donations:</strong> Donations are non-refundable once processed, except for technical errors.
                     </p>
                     <p className="mt-2">
                       For full details, see our{' '}
-                      <Link href="/refund" className="text-cobalt hover:underline">Refund Policy</Link>.
+                      <Link href="/refund" className="text-amber-400 hover:underline">Refund Policy</Link>.
                     </p>
                   </div>
                 </div>
@@ -187,32 +190,26 @@ export default function TermsPage() {
 
               {/* Important Disclaimers */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Important Disclaimers</H2>
-                <div className="space-y-6">
-                  <div className="border-l-4 border-amber-400 pl-6 bg-amber-50 p-4 rounded-r-lg">
-                    <h3 className="text-lg font-medium mb-2 text-amber-800">No Financial Advice</h3>
-                    <p className="text-amber-700">
-                      Allowance Guard is a monitoring and security tool, not a financial advisor.
-                      All decisions about your wallet and tokens are your responsibility. We are not responsible
-                      for losses from missed approvals, delayed alerts, or actions taken based on our risk scores.
+                <H2 className="text-2xl font-semibold mb-4 text-white">6. Important Disclaimers</H2>
+                <div className="space-y-4">
+                  <div className="border-l-4 border-amber-400 pl-6 py-4 rounded-r-lg bg-amber-400/5">
+                    <h3 className="text-lg font-semibold mb-2 text-amber-300">Not Financial or Legal Advice</h3>
+                    <p className="text-slate-300 text-sm leading-relaxed">
+                      AllowanceGuard is a security monitoring tool. It is not a broker, dealer, investment adviser, custodian, lawyer, or accountant. Risk scores, labels, and alerts are informational signals, not recommendations. Every decision to approve, hold, or revoke a token permission is yours, and the consequences of that decision are yours alone.
                     </p>
                   </div>
 
-                  <div className="border-l-4 border-red-400 pl-6 bg-red-50 p-4 rounded-r-lg">
-                    <h3 className="text-lg font-medium mb-2 text-red-800">Use at Your Own Risk</h3>
-                    <p className="text-red-700">
-                      This tool is provided &quot;as is&quot; without warranties of any kind, express or implied.
-                      We cannot guarantee the accuracy of on-chain data, completeness of approval scanning,
-                      or the success of revocation transactions.
+                  <div className="border-l-4 border-crimson-500 pl-6 py-4 rounded-r-lg bg-red-500/5">
+                    <h3 className="text-lg font-semibold mb-2 text-red-300">Service Provided &ldquo;As Is&rdquo;</h3>
+                    <p className="text-slate-300 text-sm leading-relaxed">
+                      To the fullest extent permitted by law, the service is provided on an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis, without warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, completeness, or uninterrupted availability. We do not warrant that the scanner will detect every approval, that risk scores are correct, or that revocation transactions will succeed.
                     </p>
                   </div>
 
-                  <div className="border-l-4 border-blue-400 pl-6 bg-blue-50 p-4 rounded-r-lg">
-                    <h3 className="text-lg font-medium mb-2 text-blue-800">Blockchain Risks</h3>
-                    <p className="text-blue-700">
-                      Blockchain transactions are irreversible. Always verify transaction details
-                      before confirming. Gas fees and network congestion may affect transaction success.
-                      Revocation transactions require gas fees paid by you.
+                  <div className="border-l-4 border-blue-400 pl-6 py-4 rounded-r-lg bg-blue-500/5">
+                    <h3 className="text-lg font-semibold mb-2 text-blue-300">Blockchain &amp; Wallet Risks</h3>
+                    <p className="text-slate-300 text-sm leading-relaxed">
+                      Blockchain transactions are irreversible once confirmed. You are solely responsible for verifying every transaction your wallet signs, including the spender address, token contract, amount, and network. Gas fees, RPC availability, mempool congestion, and reorgs may affect whether a transaction succeeds. We do not control, and are not liable for, the behaviour of any blockchain network, node operator, wallet provider, or third-party contract.
                     </p>
                   </div>
                 </div>
@@ -220,8 +217,8 @@ export default function TermsPage() {
 
               {/* Data Handling */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Data Handling</H2>
-                <div className="space-y-3 text-stone">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Data Handling</H2>
+                <div className="space-y-3 text-slate-300">
                   <p>
                     <strong>What we store:</strong> Account email, wallet addresses you scan or monitor, approval data retrieved
                     from blockchains, monitoring preferences, team membership data, and usage metrics.
@@ -236,42 +233,42 @@ export default function TermsPage() {
                   </p>
                   <p>
                     For complete details, see our{' '}
-                    <Link href="/privacy" className="text-cobalt hover:underline">Privacy Policy</Link>.
+                    <Link href="/privacy" className="text-amber-400 hover:underline">Privacy Policy</Link>.
                   </p>
                 </div>
               </div>
 
               {/* User Responsibilities */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Your Responsibilities</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-white">Your Responsibilities</H2>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">Wallet Security</h3>
-                    <p className="text-stone text-sm">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Wallet Security</h3>
+                    <p className="text-slate-300 text-sm">
                       You are responsible for keeping your wallet secure. Never share your private keys
                       or seed phrases with anyone, including us.
                     </p>
                   </div>
 
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">Transaction Verification</h3>
-                    <p className="text-stone text-sm">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Transaction Verification</h3>
+                    <p className="text-slate-300 text-sm">
                       Always review transaction details before confirming. Verify token addresses,
                       amounts, and gas fees.
                     </p>
                   </div>
 
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">Compliance</h3>
-                    <p className="text-stone text-sm">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Compliance</h3>
+                    <p className="text-slate-300 text-sm">
                       Ensure your use of Allowance Guard complies with applicable laws and regulations
                       in your jurisdiction.
                     </p>
                   </div>
 
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                    <h3 className="text-lg font-medium mb-3">Account &amp; API Key Security</h3>
-                    <p className="text-stone text-sm">
+                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-white">Account &amp; API Key Security</h3>
+                    <p className="text-slate-300 text-sm">
                       Keep your account credentials and API keys secure. You are responsible for all activity
                       under your account. Report unauthorized access immediately.
                     </p>
@@ -281,8 +278,8 @@ export default function TermsPage() {
 
               {/* Acceptable Use */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Acceptable Use</H2>
-                <div className="text-stone space-y-3">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Acceptable Use</H2>
+                <div className="text-slate-300 space-y-3">
                   <p>You agree not to:</p>
                   <ul className="space-y-2 ml-4">
                     <li>• Use the service for illegal activities or to facilitate fraud</li>
@@ -298,11 +295,11 @@ export default function TermsPage() {
 
               {/* Termination */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Termination</H2>
-                <div className="text-stone space-y-3">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Termination</H2>
+                <div className="text-slate-300 space-y-3">
                   <p>
                     <strong>By you:</strong> You may cancel your subscription and close your account at any time.
-                    Contact <span className="text-cobalt">legal.support@allowanceguard.com</span> or use the account dashboard.
+                    Contact <span className="text-amber-400">legal.support@allowanceguard.com</span> or use the account dashboard.
                   </p>
                   <p>
                     <strong>By us:</strong> We may suspend or terminate your account if you violate these terms,
@@ -318,22 +315,22 @@ export default function TermsPage() {
 
               {/* Service Availability */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Service Availability</H2>
-                <p className="text-stone mb-4">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Service Availability</H2>
+                <p className="text-slate-300 mb-4">
                   Service availability varies by tier. Free and Pro tiers are provided on a best-effort basis.
                   Sentinel tier has a 99.5% uptime target. B2B API Growth+ has a 99.9% uptime target.
                 </p>
-                <p className="text-stone">
+                <p className="text-slate-300">
                   We cannot guarantee continuous uptime, accuracy of blockchain data (which depends on RPC providers),
                   success of all transactions, or compatibility with all wallets or browsers.
-                  See our <Link href="/sla" className="text-cobalt hover:underline">SLA page</Link> for tier-specific details.
+                  See our <Link href="/sla" className="text-amber-400 hover:underline">SLA page</Link> for tier-specific details.
                 </p>
               </div>
 
               {/* Changes to Terms */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Changes to These Terms</H2>
-                <p className="text-stone">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Changes to These Terms</H2>
+                <p className="text-slate-300">
                   We may update these terms occasionally. Significant changes will be announced
                   on our website and via email to registered users with at least 30 days&apos; notice.
                   Continued use after changes take effect constitutes acceptance of the new terms.
@@ -343,74 +340,78 @@ export default function TermsPage() {
 
               {/* Limitation of Liability */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Limitation of Liability</H2>
-                <div className="bg-red-50 border border-red-200 p-6 rounded-lg">
-                  <p className="text-red-800 font-medium mb-2">Important Legal Notice:</p>
-                  <p className="text-red-700 text-sm mb-3">
-                    To the maximum extent permitted by law, Allowance Guard and its contributors
-                    shall not be liable for any direct, indirect, incidental, special, consequential,
-                    or punitive damages, including but not limited to loss of funds, data, or profits,
-                    arising from your use of this service.
+                <H2 className="text-2xl font-semibold mb-4 text-white">14. Limitation of Liability</H2>
+                <div className="border border-red-500/20 bg-red-500/5 p-6 rounded-lg">
+                  <p className="text-red-300 font-semibold mb-3 text-sm uppercase tracking-wider">Please read carefully.</p>
+                  <p className="text-slate-300 text-sm leading-relaxed mb-3">
+                    To the maximum extent permitted by applicable law, in no event shall AllowanceGuard, its operators, contributors, affiliates, or licensors be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or for any loss of funds, tokens, profits, revenue, goodwill, data, or business opportunities, whether in contract, tort (including negligence), strict liability, or any other legal theory, and whether or not we have been advised of the possibility of such damages.
                   </p>
-                  <p className="text-red-700 text-sm mb-3">
-                    Our total aggregate liability for any claim arising from or related to the service
-                    shall not exceed the total fees paid by you in the 12 months preceding the claim.
+                  <p className="text-slate-300 text-sm leading-relaxed mb-3">
+                    Our total aggregate liability for any and all claims arising out of or relating to these terms or the service shall not exceed the greater of (a) the fees you paid us in the twelve (12) months immediately preceding the event giving rise to the claim, or (b) one hundred US dollars (US$100). This cap applies in aggregate across all claims and all tiers, including free users.
                   </p>
-                  <p className="text-red-700 text-sm">
-                    This limitation applies to all tiers, including paid subscriptions. Allowance Guard is a
-                    monitoring tool and does not guarantee protection against all smart contract risks.
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    Nothing in these terms excludes or limits liability that cannot lawfully be excluded or limited, including liability for fraud, fraudulent misrepresentation, death or personal injury caused by our negligence, or any statutory rights that cannot be waived under the law of your jurisdiction.
                   </p>
                 </div>
               </div>
 
+              {/* Indemnity */}
+              <div className="mb-12">
+                <H2 className="text-2xl font-semibold mb-4 text-white">15. Indemnity</H2>
+                <p className="text-slate-300 leading-relaxed">
+                  You agree to indemnify and hold harmless AllowanceGuard and its operators and contributors from and against any claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of or in any way connected with (a) your use of the service, (b) your violation of these terms, (c) your violation of any third-party right, or (d) any transaction you sign or authorise from a wallet connected to the service.
+                </p>
+              </div>
+
               {/* Governing Law */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Governing Law</H2>
-                <p className="text-stone">
-                  These terms are governed by and construed in accordance with applicable law.
-                  Any disputes arising from these terms shall be resolved through good-faith negotiation first.
-                  If unresolved, disputes will be submitted to binding arbitration.
+                <H2 className="text-2xl font-semibold mb-4 text-white">16. Governing Law &amp; Dispute Resolution</H2>
+                <p className="text-slate-300 leading-relaxed mb-3">
+                  These terms are governed by the laws of England and Wales, without regard to conflict-of-laws principles. Before bringing any formal claim, you agree to first contact us at <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span> and attempt to resolve the dispute in good faith for at least thirty (30) days.
+                </p>
+                <p className="text-slate-300 leading-relaxed">
+                  If the dispute cannot be resolved through negotiation, it shall be submitted to binding arbitration seated in London, United Kingdom, conducted in English under the rules of the London Court of International Arbitration (LCIA) by a single arbitrator. Judgment on the award may be entered in any court of competent jurisdiction. Nothing in this section prevents either party from seeking injunctive relief in a court of competent jurisdiction to protect intellectual property or confidential information.
                 </p>
               </div>
 
               {/* Contact */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Questions About These Terms?</H2>
-                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
-                  <p className="text-stone mb-4">
+                <H2 className="text-2xl font-semibold mb-4 text-white">Questions About These Terms?</H2>
+                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
+                  <p className="text-slate-300 mb-4">
                     If you have questions about these terms or need clarification, contact us:
                   </p>
-                  <ul className="space-y-2 text-stone text-sm">
-                    <li>General &amp; Legal: <span className="text-cobalt font-medium">legal.support@allowanceguard.com</span></li>
-                    <li>Billing: <span className="text-cobalt font-medium">billing@allowanceguard.com</span></li>
+                  <ul className="space-y-2 text-slate-300 text-sm">
+                    <li>General &amp; Legal: <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span></li>
+                    <li>Billing: <span className="text-amber-400 font-medium">billing@allowanceguard.com</span></li>
                   </ul>
                 </div>
               </div>
 
               {/* Related Documents */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4">Related Documents</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-white">Related Documents</H2>
                 <div className="flex flex-wrap gap-3">
-                  <Link href="/privacy" className="text-cobalt hover:underline text-sm bg-background-secondary dark:bg-secondary-800 px-4 py-2 rounded-lg">
+                  <Link href="/privacy" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
                     Privacy Policy
                   </Link>
-                  <Link href="/sla" className="text-cobalt hover:underline text-sm bg-background-secondary dark:bg-secondary-800 px-4 py-2 rounded-lg">
+                  <Link href="/sla" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
                     Service Level Agreement
                   </Link>
-                  <Link href="/refund" className="text-cobalt hover:underline text-sm bg-background-secondary dark:bg-secondary-800 px-4 py-2 rounded-lg">
+                  <Link href="/refund" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
                     Refund Policy
                   </Link>
-                  <Link href="/cookies" className="text-cobalt hover:underline text-sm bg-background-secondary dark:bg-secondary-800 px-4 py-2 rounded-lg">
+                  <Link href="/cookies" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
                     Cookie Policy
                   </Link>
-                  <Link href="/dpa" className="text-cobalt hover:underline text-sm bg-background-secondary dark:bg-secondary-800 px-4 py-2 rounded-lg">
+                  <Link href="/dpa" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
                     Data Processing Agreement
                   </Link>
                 </div>
               </div>
 
               {/* Last Updated */}
-              <div className="text-center text-sm text-stone border-t pt-8">
+              <div className="text-center text-sm text-slate-400 border-t border-white/10 pt-8">
                 <p>Last updated: April 2, 2026</p>
                 <p className="mt-2">
                   These terms are governed by applicable law and are subject to change with 30 days&apos; notice.

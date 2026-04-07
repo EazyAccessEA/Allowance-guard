@@ -118,42 +118,36 @@ export default function ContributePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
+    <div className="min-h-screen bg-secondary-900 text-secondary-100">
       
       {/* Hero Section */}
       <Section className="relative pt-20 pb-24 sm:pt-24 sm:pb-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
         
         {/* Gradient overlay */}
-        <div
-          className="absolute inset-0 z-10 dark:hidden"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        <div className="absolute inset-0 z-10 hidden dark:block bg-secondary-900/90" />
+        <div className="absolute inset-0 z-10 bg-secondary-900/90" />
         
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Support Allowance Guard</H1>
-          <p className="text-lg text-text-tertiary dark:text-secondary-400 max-w-reading">
+          <p className="text-lg text-slate-400 max-w-reading">
             Help us maintain and improve the security infrastructure that protects the Web3 ecosystem. Your contribution directly funds development, security audits, and infrastructure costs.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary dark:border-secondary-700" />
+      <div className="border-t border-secondary-700" />
 
       {/* Cancelled Message */}
       {cancelled && (
         <Section className="py-8">
           <Container>
             <div className="max-w-2xl mx-auto text-center">
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
-                <p className="text-sm text-amber-800">
+              <div className="bg-amber-900/20 border border-amber-700 rounded-lg p-6">
+                <p className="text-sm text-amber-400">
                   No worries — the core scanner is free forever. If you change your mind, see{' '}
                   <a 
                     href="/docs/contributing" 
-                    className="underline hover:text-amber-900 transition-colors duration-200"
+                    className="underline hover:text-amber-300 transition-colors duration-200"
                   >
                     how to support
                   </a>.
@@ -168,24 +162,24 @@ export default function ContributePage() {
       <Section className="py-32">
         <Container>
           <div className="max-w-md mx-auto">
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-2xl p-8 shadow-large">
+            <div className="bg-secondary-800 border border-secondary-700 rounded-2xl p-8 shadow-large">
               <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-crimson to-pink-500 rounded-full mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full mb-4">
                   <Heart className="w-8 h-8 text-white fill-current" />
                 </div>
-                <h2 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-2">Make a Contribution</h2>
-                <p className="text-base text-text-tertiary dark:text-secondary-400">
+                <h2 className="text-2xl font-semibold text-secondary-100 mb-2">Make a Contribution</h2>
+                <p className="text-base text-slate-400">
                   Enter an amount and choose your payment method
                 </p>
               </div>
 
               <div className="space-y-6">
                 <div>
-                  <label className="block text-base font-medium text-text-primary dark:text-secondary-100 mb-3" htmlFor="amount">
+                  <label className="block text-base font-medium text-secondary-100 mb-3" htmlFor="amount">
                     Contribution Amount
                   </label>
                   <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-tertiary dark:text-secondary-400" />
+                    <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
                       id="amount"
                       type="text"
@@ -193,13 +187,13 @@ export default function ContributePage() {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="25.00"
-                      className="w-full px-3 py-4 pl-10 text-lg border border-border-primary dark:border-secondary-700 rounded-lg bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100 placeholder-text-tertiary dark:placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-700/30 focus:border-primary-700 transition-colors duration-200"
+                      className="w-full px-3 py-4 pl-10 text-lg border border-secondary-700 rounded-lg bg-secondary-900 text-secondary-100 placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-base font-medium text-text-primary dark:text-secondary-100 mb-3" htmlFor="email">
+                  <label className="block text-base font-medium text-secondary-100 mb-3" htmlFor="email">
                     Email (for receipt / reference)
                   </label>
                   <input
@@ -208,7 +202,7 @@ export default function ContributePage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full px-3 py-4 text-lg border border-border-primary dark:border-secondary-700 rounded-lg bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100 placeholder-text-tertiary dark:placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-primary-700/30 focus:border-primary-700 transition-colors duration-200"
+                    className="w-full px-3 py-4 text-lg border border-secondary-700 rounded-lg bg-secondary-900 text-secondary-100 placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
                   />
                 </div>
 
@@ -216,11 +210,11 @@ export default function ContributePage() {
                   <button
                     onClick={handleStripeContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-white bg-primary-700 dark:bg-primary-600 hover:bg-primary-800 dark:hover:bg-primary-700 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-700/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-slate-900 bg-amber-500 hover:bg-amber-400 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingCard ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
                         <span>Redirecting...</span>
                       </>
                     ) : (
@@ -234,12 +228,12 @@ export default function ContributePage() {
                   <button
                     onClick={handleCryptoContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-text-primary dark:text-secondary-100 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 hover:bg-background-tertiary dark:hover:bg-secondary-800 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-700/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-secondary-100 bg-secondary-900 border border-secondary-700 hover:bg-secondary-800 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Pay with ETH, USDC, BTC and more - Secured by Coinbase Commerce"
                   >
                     {loadingCrypto ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-text-primary dark:border-secondary-100 border-t-transparent rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-secondary-100 border-t-transparent rounded-full animate-spin" />
                         <span>Opening...</span>
                       </>
                     ) : (
@@ -252,26 +246,26 @@ export default function ContributePage() {
                 </div>
 
                 {error && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
                     <p className="text-base text-crimson">{error}</p>
                   </div>
                 )}
 
                 {message && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-4">
                     <p className="text-base text-cobalt">{message}</p>
                   </div>
                 )}
 
                 <div className="text-center">
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                  <p className="text-sm text-slate-400">
                     Minimum contribution is $1.00. Maximum is $10,000.
                   </p>
-                  <p className="text-xs text-text-tertiary dark:text-secondary-400 mt-2">
+                  <p className="text-xs text-slate-400 mt-2">
                     Your payment is processed securely by Stripe or Coinbase Commerce. We never store your payment information.
                   </p>
-                  <div className="mt-3 flex items-center justify-center gap-2 text-xs text-text-tertiary dark:text-secondary-400">
-                    <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="mt-3 flex items-center justify-center gap-2 text-xs text-slate-400">
+                    <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>SSL Encrypted & PCI Compliant</span>
@@ -282,29 +276,29 @@ export default function ContributePage() {
 
             {/* Additional Info */}
             <div className="mt-12 text-center">
-              <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">How Your Contribution Helps</h3>
+              <h3 className="text-xl font-semibold text-secondary-100 mb-4">How Your Contribution Helps</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-                <div className="bg-background-tertiary dark:bg-secondary-800 rounded-lg p-6">
-                  <h4 className="font-semibold text-text-primary dark:text-secondary-100 mb-2">Development</h4>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                <div className="bg-secondary-800 rounded-lg p-6">
+                  <h4 className="font-semibold text-secondary-100 mb-2">Development</h4>
+                  <p className="text-sm text-slate-400">
                     Funding new features, security improvements, and user experience enhancements.
                   </p>
                 </div>
-                <div className="bg-background-tertiary dark:bg-secondary-800 rounded-lg p-6">
-                  <h4 className="font-semibold text-text-primary dark:text-secondary-100 mb-2">Infrastructure</h4>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                <div className="bg-secondary-800 rounded-lg p-6">
+                  <h4 className="font-semibold text-secondary-100 mb-2">Infrastructure</h4>
+                  <p className="text-sm text-slate-400">
                     Maintaining servers, databases, and ensuring reliable service uptime.
                   </p>
                 </div>
-                <div className="bg-background-tertiary dark:bg-secondary-800 rounded-lg p-6">
-                  <h4 className="font-semibold text-text-primary dark:text-secondary-100 mb-2">Security Audits</h4>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                <div className="bg-secondary-800 rounded-lg p-6">
+                  <h4 className="font-semibold text-secondary-100 mb-2">Security Audits</h4>
+                  <p className="text-sm text-slate-400">
                     Regular security assessments and penetration testing to keep the platform secure.
                   </p>
                 </div>
-                <div className="bg-background-tertiary dark:bg-secondary-800 rounded-lg p-6">
-                  <h4 className="font-semibold text-text-primary dark:text-secondary-100 mb-2">Community</h4>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                <div className="bg-secondary-800 rounded-lg p-6">
+                  <h4 className="font-semibold text-secondary-100 mb-2">Community</h4>
+                  <p className="text-sm text-slate-400">
                     Supporting open source development and building educational resources.
                   </p>
                 </div>

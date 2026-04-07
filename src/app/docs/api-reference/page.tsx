@@ -8,6 +8,13 @@ import { CodeExample } from '@/components/docs/CodeExample'
 import { ApiPlayground } from '@/components/docs/ApiPlayground'
 import { Key, Shield, Zap, Globe, AlertTriangle, Activity } from 'lucide-react'
 
+const rateLimits = [
+  { plan: 'Free', daily: '100', burst: '10', price: '$0' },
+  { plan: 'Developer', daily: '10,000', burst: '60', price: '$39/mo' },
+  { plan: 'Growth', daily: '100,000', burst: '300', price: '$149/mo' },
+  { plan: 'Enterprise', daily: 'Unlimited', burst: 'Unlimited', price: 'Custom' },
+]
+
 export default function ApiReferencePage() {
   return (
     <Section>
@@ -24,10 +31,10 @@ export default function ApiReferencePage() {
               <span className="px-3 py-1 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 text-sm rounded-full border border-primary-600/20 dark:border-primary-400/20">
                 Base URL: /api/v1
               </span>
-              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-border-primary dark:border-secondary-700">
+              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-secondary-700">
                 JSON responses
               </span>
-              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-border-primary dark:border-secondary-700">
+              <span className="px-3 py-1 bg-background-secondary dark:bg-secondary-800 text-text-secondary dark:text-secondary-400 text-sm rounded-full border border-secondary-700">
                 Bearer token auth
               </span>
             </div>
@@ -92,7 +99,7 @@ data = res.json()['data']`,
               Rate limits are applied per API key based on your plan. Every response includes
               rate limit headers.
             </p>
-            <div className="border border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden">
+            <div className="border border-secondary-700 rounded-lg overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
@@ -103,30 +110,14 @@ data = res.json()['data']`,
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Free</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">100</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">10</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$0</td>
-                  </tr>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Developer</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">10,000</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">60</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$39/mo</td>
-                  </tr>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Growth</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">100,000</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">300</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">$149/mo</td>
-                  </tr>
-                  <tr className="border-t border-border-primary dark:border-secondary-700">
-                    <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">Enterprise</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">Unlimited</td>
-                    <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">Unlimited</td>
-                    <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">Custom</td>
-                  </tr>
+                  {rateLimits.map((r) => (
+                    <tr key={r.plan} className="border-t border-secondary-700">
+                      <td className="px-4 py-3 text-text-primary dark:text-secondary-100 font-medium">{r.plan}</td>
+                      <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">{r.daily}</td>
+                      <td className="px-4 py-3 font-mono text-text-secondary dark:text-secondary-400">{r.burst}</td>
+                      <td className="px-4 py-3 text-text-secondary dark:text-secondary-400">{r.price}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -547,7 +538,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
           {/* Error Codes */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4">Error Codes</h2>
-            <div className="border border-border-primary dark:border-secondary-700 rounded-lg overflow-hidden">
+            <div className="border border-secondary-700 rounded-lg overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-background-secondary dark:bg-secondary-800 text-left">
@@ -567,7 +558,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
                     ['429', 'BURST_RATE_LIMIT_EXCEEDED', 'Per-minute burst limit exceeded'],
                     ['500', 'INTERNAL_ERROR', 'Unexpected server error'],
                   ].map(([http, code, desc]) => (
-                    <tr key={code} className="border-t border-border-primary dark:border-secondary-700">
+                    <tr key={code} className="border-t border-secondary-700">
                       <td className="px-4 py-2 font-mono text-xs text-text-secondary dark:text-secondary-400">{http}</td>
                       <td className="px-4 py-2 font-mono text-xs text-text-primary dark:text-secondary-100">{code}</td>
                       <td className="px-4 py-2 text-xs text-text-secondary dark:text-secondary-400">{desc}</td>
@@ -579,7 +570,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
           </div>
 
           {/* CTA */}
-          <div className="text-center p-8 bg-background-secondary dark:bg-secondary-800 border-2 border-border-primary dark:border-secondary-700 rounded-lg">
+          <div className="text-center p-8 bg-background-secondary dark:bg-secondary-800 border-2 border-secondary-700 rounded-lg">
             <h3 className="text-xl font-bold text-text-primary dark:text-secondary-100 mb-2">Ready to integrate?</h3>
             <p className="text-text-secondary dark:text-secondary-400 mb-4">
               Get your API key from the Account dashboard and start building.
@@ -593,7 +584,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
               </a>
               <a
                 href="/pricing"
-                className="px-6 py-2 bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 text-text-primary dark:text-secondary-100 rounded font-medium hover:bg-background-secondary dark:hover:bg-secondary-800 transition-colors"
+                className="px-6 py-2 bg-background-primary dark:bg-secondary-900 border border-secondary-700 text-text-primary dark:text-secondary-100 rounded font-medium hover:bg-background-secondary dark:hover:bg-secondary-800 transition-colors"
               >
                 View Plans
               </a>

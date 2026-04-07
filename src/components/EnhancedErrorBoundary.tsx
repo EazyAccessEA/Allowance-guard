@@ -57,7 +57,7 @@ export class EnhancedErrorBoundary extends Component<Props, State> {
 
       // Default error UI
       return (
-        <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="min-h-screen bg-surface-base flex items-center justify-center">
           <div className="max-w-md mx-auto text-center p-6">
             <div className="mb-6">
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">

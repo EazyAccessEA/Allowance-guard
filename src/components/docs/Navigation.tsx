@@ -29,7 +29,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
             onClick={() => onSectionChange(section.id)}
             className={`w-full text-left px-3 py-2 text-sm transition-colors ${
               activeSection === section.id
-                ? 'bg-primary-600 dark:bg-primary-700 text-white'
+                ? 'bg-amber-500 text-slate-900'
                 : 'text-text-secondary dark:text-secondary-400 hover:text-text-primary dark:hover:text-secondary-100 hover:bg-background-secondary dark:hover:bg-secondary-800'
             }`}
           >
@@ -39,7 +39,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
         ))}
       </div>
       
-      <div className="mt-8 pt-6 border-t-2 border-border-primary dark:border-secondary-700">
+      <div className="mt-8 pt-6 border-t-2 border-secondary-700">
         <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 uppercase tracking-wide mb-4">
           Resources
         </h3>

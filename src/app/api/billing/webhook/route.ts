@@ -1,24 +1,62 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { stripe, syncSubscription } from '@/lib/billing'
+import { stripe, syncSubscription, upsertInvoice, getUserEmailById } from '@/lib/billing'
+import { sendPaymentReceiptEmail, sendPaymentFailedEmail, sendTrialEndingEmail, sendExpiringCardEmail } from '@/lib/invoice-emails'
+import { upgradeApiKeyPlan, downgradeApiKeysToFree } from '@/lib/api-keys'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
 import { withReq } from '@/lib/logger'
 import { reportError } from '@/lib/rollbar'
 import { pool } from '@/lib/db'
-import { sendFailedPaymentEmail } from '@/lib/mailer'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+/** Resolve user_id and email from a Stripe customer ID. */
+async function resolveUserFromCustomer(
+  custId: string | undefined,
+  L: ReturnType<typeof withReq>,
+): Promise<{ userId: number; email: string } | null> {
+  if (!custId) return null
+
+  const { rows } = await pool.query(
+    `SELECT user_id, plan FROM subscriptions WHERE stripe_customer_id = $1 LIMIT 1`,
+    [custId],
+  )
+  const userId = rows[0]?.user_id as number | undefined
+  if (!userId) return null
+
+  const email = await getUserEmailById(userId)
+  if (!email) {
+    L.warn('billing.webhook.user_email_missing', { userId, customerId: custId })
+    return null
+  }
+
+  return { userId, email }
+}
+
+/** Extract customer ID string from Stripe's polymorphic customer field. */
+function extractCustomerId(customer: string | Stripe.Customer | Stripe.DeletedCustomer | null): string | undefined {
+  if (!customer) return undefined
+  return typeof customer === 'string' ? customer : customer.id
+}
+
 /**
  * POST /api/billing/webhook
  *
- * Handles Stripe subscription lifecycle events:
- * - customer.subscription.created
- * - customer.subscription.updated
- * - customer.subscription.deleted
+ * Handles Stripe subscription lifecycle and invoice events:
+ * - customer.subscription.created / updated / deleted
+ * - customer.subscription.trial_will_end
+ * - invoice.finalized
  * - invoice.payment_succeeded
  * - invoice.payment_failed
+ * - invoice.voided
+ * - invoice.marked_uncollectible
+ * - charge.refunded
+ * - customer.source.expiring
  */
 export async function POST(req: Request) {
   const L = withReq(req)
@@ -66,6 +104,19 @@ export async function POST(req: Request) {
         // Map Stripe statuses to our internal statuses
         await syncSubscription(subscription)
 
+        // Sync API key tier when an API plan subscription changes
+        const subPlan = subscription.metadata?.ag_plan ?? ''
+        const subUserId = subscription.metadata?.ag_user_id ? parseInt(subscription.metadata.ag_user_id, 10) : null
+        if (subUserId && (subPlan === 'api_developer' || subPlan === 'api_growth')) {
+          if (subscription.status === 'active') {
+            await upgradeApiKeyPlan(subUserId, subPlan)
+            L.info('billing.webhook.api_keys_upgraded', { userId: subUserId, plan: subPlan })
+          } else if (subscription.status === 'canceled') {
+            await downgradeApiKeysToFree(subUserId)
+            L.info('billing.webhook.api_keys_downgraded', { userId: subUserId })
+          }
+        }
+
         // Track cancellation timestamp for re-engagement emails
         if (event.type === 'customer.subscription.deleted' && subscription.status === 'canceled') {
           await pool.query(
@@ -96,8 +147,32 @@ export async function POST(req: Request) {
       }
 
       // ----- Invoice events -----
+      case 'invoice.finalized': {
+        const invoice = event.data.object as Stripe.Invoice
+
+        // Persist finalized invoice to local DB
+        await upsertInvoice(invoice)
+
+        L.info('billing.webhook.invoice.finalized', {
+          invoiceId: invoice.id,
+          number: invoice.number,
+          amount: invoice.amount_due,
+          customerId: invoice.customer,
+        })
+
+        await auditWebhook('stripe', 'invoice.finalized', invoice.id ?? null, {
+          amount: invoice.amount_due,
+          currency: invoice.currency,
+          number: invoice.number,
+        })
+        break
+      }
+
       case 'invoice.payment_succeeded': {
         const invoice = event.data.object as Stripe.Invoice
+
+        // Persist paid invoice to local DB
+        await upsertInvoice(invoice)
 
         L.info('billing.webhook.invoice.paid', {
           invoiceId: invoice.id,
@@ -108,6 +183,54 @@ export async function POST(req: Request) {
 
         await auditWebhook('stripe', 'invoice.payment_succeeded', invoice.id ?? null, {
           amount: invoice.amount_paid,
+          currency: invoice.currency,
+        })
+
+        // Send payment receipt email — skip zero-amount invoices (trials, prorations)
+        if ((invoice.amount_paid ?? 0) > 0) {
+          try {
+            const custId = extractCustomerId(invoice.customer)
+            const user = await resolveUserFromCustomer(custId, L)
+            if (user) {
+              await sendPaymentReceiptEmail(user.email, {
+                invoiceNumber: invoice.number ?? invoice.id ?? 'unknown',
+                amountPaid: invoice.amount_paid ?? 0,
+                currency: invoice.currency ?? 'usd',
+                plan: invoice.lines?.data?.[0]?.metadata?.ag_plan ?? null,
+                periodEnd: invoice.period_end
+                  ? new Date(invoice.period_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                  : null,
+                hostedInvoiceUrl: invoice.hosted_invoice_url ?? null,
+                invoicePdfUrl: invoice.invoice_pdf ?? null,
+              })
+            }
+          } catch (emailErr) {
+            L.error('billing.webhook.receipt_email_failed', {
+              invoiceId: invoice.id,
+              error: emailErr instanceof Error ? emailErr.message : 'Unknown',
+            })
+          }
+        }
+        break
+      }
+
+      case 'invoice.voided':
+      case 'invoice.marked_uncollectible': {
+        const invoice = event.data.object as Stripe.Invoice
+
+        // Update invoice status in local DB
+        await upsertInvoice(invoice)
+
+        L.info('billing.webhook.invoice.status_change', {
+          type: event.type,
+          invoiceId: invoice.id,
+          status: invoice.status,
+          customerId: invoice.customer,
+        })
+
+        await auditWebhook('stripe', event.type, invoice.id ?? null, {
+          status: invoice.status,
+          amount: invoice.amount_due,
           currency: invoice.currency,
         })
         break
@@ -129,12 +252,36 @@ export async function POST(req: Request) {
           plan: subscription.metadata?.ag_plan,
         })
 
-        // TODO: Send trial-ending email notification to user
+        // Send trial-ending email notification
+        try {
+          const uid = subscription.metadata?.ag_user_id ? parseInt(subscription.metadata.ag_user_id, 10) : null
+          if (uid) {
+            const email = await getUserEmailById(uid)
+            if (email) {
+              await sendTrialEndingEmail(email, {
+                plan: subscription.metadata?.ag_plan ?? 'pro',
+                trialEnd: subscription.trial_end
+                  ? new Date(subscription.trial_end * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                  : 'soon',
+              })
+            } else {
+              L.warn('billing.webhook.user_email_missing', { userId: uid, subscriptionId: subscription.id })
+            }
+          }
+        } catch (emailErr) {
+          L.error('billing.webhook.trial_email_failed', {
+            subscriptionId: subscription.id,
+            error: emailErr instanceof Error ? emailErr.message : 'Unknown',
+          })
+        }
         break
       }
 
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice
+
+        // Persist failed invoice to local DB
+        await upsertInvoice(invoice)
 
         L.warn('billing.webhook.invoice.failed', {
           invoiceId: invoice.id,
@@ -149,20 +296,115 @@ export async function POST(req: Request) {
           attemptCount: invoice.attempt_count,
         })
 
-        // Send failed payment email notification
-        try {
-          const customer = await stripe.customers.retrieve(invoice.customer as string)
-          if (customer && !customer.deleted && customer.email) {
-            const plan = invoice.subscription_details?.metadata?.ag_plan ?? 'pro'
-            await sendFailedPaymentEmail(customer.email, plan, invoice.attempt_count ?? 1)
-            L.info('billing.webhook.failed_payment_email_sent', {
-              email: customer.email,
-              attemptCount: invoice.attempt_count,
+        // Send failed payment email — skip zero-amount invoices
+        if ((invoice.amount_due ?? 0) > 0) {
+          try {
+            const custId = extractCustomerId(invoice.customer)
+            const user = await resolveUserFromCustomer(custId, L)
+            if (user) {
+              await sendPaymentFailedEmail(user.email, {
+                invoiceNumber: invoice.number ?? invoice.id ?? 'unknown',
+                amountDue: invoice.amount_due ?? 0,
+                currency: invoice.currency ?? 'usd',
+                attemptCount: invoice.attempt_count ?? 1,
+                nextAttempt: invoice.next_payment_attempt
+                  ? new Date(invoice.next_payment_attempt * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                  : null,
+              })
+            }
+          } catch (emailErr) {
+            L.error('billing.webhook.failed_email_failed', {
+              invoiceId: invoice.id,
+              error: emailErr instanceof Error ? emailErr.message : 'Unknown',
             })
           }
+        }
+        break
+      }
+
+      // ----- Refunds -----
+      case 'charge.refunded': {
+        const charge = event.data.object as Stripe.Charge
+        const custId = extractCustomerId(charge.customer)
+
+        L.info('billing.webhook.charge.refunded', {
+          chargeId: charge.id,
+          amountRefunded: charge.amount_refunded,
+          currency: charge.currency,
+          customerId: custId,
+        })
+
+        await auditWebhook('stripe', 'charge.refunded', charge.id, {
+          amountRefunded: charge.amount_refunded,
+          currency: charge.currency,
+          customerId: custId,
+        })
+
+        // If there's an associated invoice, update it in our DB
+        const chargeInvoice = (charge as unknown as Record<string, unknown>).invoice as string | { id: string } | null | undefined
+        if (chargeInvoice) {
+          try {
+            const invoiceId = typeof chargeInvoice === 'string' ? chargeInvoice : chargeInvoice.id
+            const stripeInvoice = await stripe.invoices.retrieve(invoiceId)
+            await upsertInvoice(stripeInvoice)
+          } catch (refundErr) {
+            L.error('billing.webhook.refund_invoice_sync_failed', {
+              chargeId: charge.id,
+              error: refundErr instanceof Error ? refundErr.message : 'Unknown',
+            })
+          }
+        }
+        break
+      }
+
+      // ----- Expiring card -----
+      case 'customer.source.expiring': {
+        const source = event.data.object as Stripe.Card
+
+        const custId = typeof source.customer === 'string' ? source.customer : (source.customer as Stripe.Customer)?.id
+        L.info('billing.webhook.card_expiring', {
+          cardLast4: source.last4,
+          brand: source.brand,
+          expMonth: source.exp_month,
+          expYear: source.exp_year,
+          customerId: custId,
+        })
+
+        await auditWebhook('stripe', 'customer.source.expiring', custId ?? null, {
+          cardLast4: source.last4,
+          brand: source.brand,
+          expMonth: source.exp_month,
+          expYear: source.exp_year,
+        })
+
+        // Send expiring card email
+        try {
+          if (custId) {
+            const { rows: subRows } = await pool.query(
+              `SELECT user_id, plan FROM subscriptions WHERE stripe_customer_id = $1 AND status IN ('active','trialing','past_due') LIMIT 1`,
+              [custId],
+            )
+            const uid = subRows[0]?.user_id as number | undefined
+            const plan = (subRows[0]?.plan as string) ?? null
+            if (uid) {
+              const email = await getUserEmailById(uid)
+              if (email) {
+                await sendExpiringCardEmail(email, {
+                  cardBrand: source.brand ?? 'Card',
+                  cardLast4: source.last4 ?? '****',
+                  expMonth: source.exp_month,
+                  expYear: source.exp_year,
+                  plan,
+                })
+              } else {
+                L.warn('billing.webhook.user_email_missing', { userId: uid, customerId: custId })
+              }
+            }
+          }
         } catch (emailErr) {
-          L.error('billing.webhook.failed_payment_email_error', {
-            error: emailErr instanceof Error ? emailErr.message : 'Unknown error',
+          L.error('billing.webhook.expiring_card_email_failed', {
+            customerId: custId,
+            error: emailErr instanceof Error ? emailErr.message : 'Unknown',
           })
         }
         break

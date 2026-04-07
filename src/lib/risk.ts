@@ -1,7 +1,6 @@
 // lib/risk.ts
 import { pool } from './db'
 import { clientFor } from './chains'
-import { blocksForDuration, SUPPORTED_CHAIN_IDS } from '@/config/chains'
 import {
   evaluateSyncFactors,
   evaluateAllFactors,

@@ -1,0 +1,92 @@
+import Image from 'next/image'
+
+const CHAINS = [
+  { src: '/chains/ethereum.svg', alt: 'Ethereum', width: 110 },
+  { src: '/chains/arbitrum.svg', alt: 'Arbitrum', width: 110 },
+  { src: '/chains/base.svg', alt: 'Base', width: 110 },
+  { src: '/chains/polygon.svg', alt: 'Polygon', width: 110 },
+  { src: '/chains/optimism.svg', alt: 'Optimism', width: 110 },
+  { src: '/chains/avalanche.svg', alt: 'Avalanche', width: 110 },
+  { src: '/chains/bsc.svg', alt: 'BNB Smart Chain', width: 110 },
+  { src: '/chains/fantom.svg', alt: 'Fantom', width: 110 },
+  { src: '/chains/zksync.svg', alt: 'zkSync Era', width: 110 },
+  { src: '/chains/polygon-zkevm.svg', alt: 'Polygon zkEVM', width: 110 },
+  { src: '/chains/mantle.svg', alt: 'Mantle', width: 110 },
+  { src: '/chains/gnosis.svg', alt: 'Gnosis', width: 110 },
+  { src: '/chains/linea.svg', alt: 'Linea', width: 110 },
+  { src: '/chains/scroll.svg', alt: 'Scroll', width: 110 },
+  { src: '/chains/celo.svg', alt: 'Celo', width: 110 },
+]
+
+export default function ChainLogoCarousel() {
+  return (
+    <section className="relative py-16 sm:py-20 bg-[#060A14] overflow-hidden">
+      {/* Gradient transition */}
+      <div
+        className="absolute inset-x-0 top-0 h-24 pointer-events-none"
+        aria-hidden="true"
+        style={{ background: 'linear-gradient(to bottom, #060A14 0%, transparent 100%)' }}
+      />
+
+      {/* Subtle crimson line top */}
+      <div
+        className="absolute top-0 inset-x-0 h-px"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(90deg, transparent 20%, rgba(229,62,62,0.2) 50%, transparent 80%)',
+        }}
+      />
+
+      <div className="text-center mb-10">
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-amber-400/80">
+          Securing wallets across
+        </p>
+        <p className="mt-2 text-sm text-slate-400">15 EVM chains. One dashboard.</p>
+      </div>
+
+      {/* Mobile: Stacked */}
+      <div className="block sm:hidden">
+        <div className="flex flex-col items-center gap-6 px-4">
+          {CHAINS.map((chain) => (
+            <div key={chain.alt} className="flex items-center opacity-50 hover:opacity-80 transition-opacity">
+              <Image
+                src={chain.src}
+                alt={chain.alt}
+                width={chain.width}
+                height={32}
+                className="h-8 w-auto"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: Continuous scroll — three sets */}
+      <div className="hidden sm:block w-screen relative overflow-hidden h-12 -ml-4 sm:-ml-6 lg:-ml-8">
+        <div className="flex items-center gap-20 lg:gap-28 animate-scroll h-12 whitespace-nowrap">
+          {[0, 1, 2].map((setIndex) => (
+            <div
+              key={setIndex}
+              className="flex items-center gap-20 lg:gap-28 flex-shrink-0"
+            >
+              {CHAINS.map((chain) => (
+                <div
+                  key={`${setIndex}-${chain.alt}`}
+                  className="flex items-center opacity-90 hover:opacity-100 transition-opacity duration-300"
+                >
+                  <Image
+                    src={chain.src}
+                    alt={chain.alt}
+                    width={chain.width}
+                    height={32}
+                    className="h-8 w-auto"
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

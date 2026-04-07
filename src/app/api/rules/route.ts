@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { checkFeature } from '@/lib/feature-gate'
-import { getUserRules, createRule, updateRule, deleteRule, getRuleExecutions } from '@/lib/rule-engine'
+import { getUserRules, createRule, updateRule, deleteRule } from '@/lib/rule-engine'
 import type { RuleCondition } from '@/lib/rule-engine'
 import { secureLogger } from '@/lib/secure-logger'
 
@@ -9,7 +9,7 @@ import { secureLogger } from '@/lib/secure-logger'
  * GET /api/rules
  * List all rules for the current user.
  */
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const session = await getSession()
   if (!session) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 })

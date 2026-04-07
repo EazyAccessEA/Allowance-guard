@@ -33,7 +33,6 @@ export const FeatureLock: React.FC<FeatureLockProps> = ({
   const { plan: userPlan } = useUserPlan()
   const planLabel = planLabels[requiredPlan]
 
-  // If user's plan meets or exceeds the required plan, show content unlocked
   const userRank = PLAN_RANK[userPlan] ?? 0
   const requiredRank = PLAN_RANK[requiredPlan] ?? 1
 
@@ -42,7 +41,7 @@ export const FeatureLock: React.FC<FeatureLockProps> = ({
   }
 
   return (
-    <div className={cn('relative overflow-hidden rounded-lg', className)}>
+    <div className={cn('relative overflow-hidden rounded-xl', className)}>
       {/* Blurred content */}
       <div
         className="pointer-events-none select-none blur-sm"
@@ -52,24 +51,24 @@ export const FeatureLock: React.FC<FeatureLockProps> = ({
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/70 dark:bg-secondary-900/70 backdrop-blur-[2px]">
-        <div className="flex flex-col items-center gap-3 rounded-xl bg-white/90 dark:bg-secondary-800/90 px-6 py-5 shadow-lg">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 dark:bg-secondary-700">
-            <Lock className="h-5 w-5 text-neutral-500 dark:text-secondary-400" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0A0E1A]/70 backdrop-blur-[2px]">
+        <div className="flex flex-col items-center gap-3 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.1] px-6 py-5 shadow-lg">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/10 ring-1 ring-amber-500/20">
+            <Lock className="h-5 w-5 text-amber-400" />
           </div>
 
           <div className="text-center">
-            <p className="text-sm font-semibold text-neutral-900 dark:text-secondary-100">
+            <p className="text-sm font-semibold text-white">
               Unlock with {planLabel}
             </p>
-            <p className="mt-1 text-xs text-neutral-500 dark:text-secondary-400">
+            <p className="mt-1 text-xs text-slate-400">
               {feature} requires a {planLabel} plan
             </p>
           </div>
 
           <Link
             href="/pricing"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-150 hover:bg-primary-800 hover:shadow-md"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-150 hover:bg-amber-400"
           >
             Upgrade
             <ArrowRight className="h-3.5 w-3.5" />
