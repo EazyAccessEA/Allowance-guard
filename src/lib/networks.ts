@@ -32,8 +32,7 @@ const disabledSet = new Set<string>(
 )
 
 /** ---------- CHAINS (runtime source of truth) ----------
- * NOTE: For Task 1.1 we keep your current 3 chains only.
- * Task 1.2 will append Optimism/Polygon/Avalanche/BSC.
+ * All 15 supported chains with RPC endpoint configuration.
  */
 export const CHAINS: Record<number, ChainCfg> = {
   1: {
