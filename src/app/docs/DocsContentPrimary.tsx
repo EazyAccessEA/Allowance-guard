@@ -7,60 +7,106 @@ interface Props { section: string }
 export default function DocsContentPrimary({ section }: Props) {
   switch (section) {
       case 'overview':
-  return (
-          <div className="space-y-8">
+        return (
+          <div className="space-y-10">
             <div>
-              <h2 id="overview" className="text-2xl font-semibold text-slate-100 mb-4">Allowance Guard Documentation</h2>
-              <p className="text-lg text-slate-400 leading-relaxed mb-8">
-                Welcome to the Allowance Guard documentation. This comprehensive guide empowers you to take complete control of your Web3 security by understanding, managing, and securing your token approvals. Whether you&apos;re new to DeFi or a seasoned developer, these docs will help you maximize your security and trust in the platform.
+              <h2 id="overview" className="text-3xl font-bold text-white mb-4 tracking-tight">
+                AllowanceGuard Documentation
+              </h2>
+              <p className="text-lg text-slate-300 leading-relaxed">
+                Find and revoke risky token approvals across 15 EVM chains &mdash; through the dashboard, the browser extension, or the public API. These docs cover all three.
               </p>
-              
-              <h3 id="quick-links" className="text-xl font-semibold text-slate-100 mb-4">Quick Links</h3>
-              <div className="space-y-2 text-base text-slate-400 mb-8">
-                <p><strong>Getting Started:</strong> What Are Token Allowances? • What This Tool Does (And Does Not Do) • Connecting Your Wallet: A Step-by-Step Guide</p>
-                <p><strong>Core Concepts:</strong> How We Calculate Risk Scores • The Revocation Process Explained • Data Privacy and Security</p>
-                <p><strong>Usage Guides:</strong> How to Interpret Your Allowance Dashboard • How to Revoke a Single Allowance • How to Batch Revoke Allowances • Token Discovery & Search</p>
-                <p><strong>Advanced Topics:</strong> Allowance Guard&apos;s Architecture • Smart Contract Integration • API Reference (Public)</p>
-                <p><strong>Support & Troubleshooting:</strong> Common Issues and Solutions • Glossary of Terms • Getting Help</p>
-              </div>
-              
-              <h3 id="what-is-allowanceguard" className="text-xl font-semibold text-slate-100 mb-3">What is Allowance Guard?</h3>
-              <p className="text-base text-slate-400 mb-6">
-                Allowance Guard is a non-custodial security platform that provides comprehensive oversight of your wallet&apos;s token approvals across multiple blockchain networks. Built to PuredgeOS clarity-first standards, it empowers users to identify, assess, and neutralize security risks posed by forgotten or malicious token allowances. The platform serves as a critical security infrastructure for the Web3 ecosystem, helping users maintain control over their digital assets while navigating the complex landscape of decentralized applications.
+            </div>
+
+            <div>
+              <h3 id="what-is-allowanceguard" className="text-xl font-semibold text-white mb-3">
+                What it is
+              </h3>
+              <p className="text-base text-slate-300 leading-relaxed mb-4">
+                AllowanceGuard is an open-source wallet security scanner. It finds every <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs text-amber-300 font-mono">approve()</code>, <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs text-amber-300 font-mono">setApprovalForAll()</code>, and Permit2 grant your wallet has ever signed, scores each one against a set of risk heuristics, and lets you revoke them &mdash; one at a time or in a batch.
               </p>
-              
-              <h3 id="key-features" className="text-xl font-semibold text-slate-100 mb-3">Key Features</h3>
-              <div className="space-y-4 mb-6">
-                <div>
-                  <h4 className="font-medium text-slate-100 mb-2">Comprehensive Network Coverage</h4>
-                  <p className="text-base text-slate-400">Full support for Ethereum, Arbitrum, and Base networks with continuous expansion to additional EVM-compatible chains based on user demand and security considerations.</p>
+              <p className="text-base text-slate-300 leading-relaxed">
+                It is fully non-custodial. We never receive your private keys, signatures, or seed phrases, so we cannot move your funds &mdash; that capability does not exist in the system.
+              </p>
+            </div>
+
+            <div>
+              <h3 id="key-features" className="text-xl font-semibold text-white mb-4">
+                What it does
+              </h3>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                  <h4 className="font-semibold text-white mb-2 text-sm">15 EVM chains</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, BNB Chain, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, and Celo.
+                  </p>
                 </div>
-                <div>
-                  <h4 className="font-medium text-slate-100 mb-2">Advanced Risk Intelligence</h4>
-                  <p className="text-base text-slate-400">Real-time threat intelligence powered by rule-based algorithms that identify unlimited approvals, malicious contracts, anomalous patterns, and high-risk spender addresses.</p>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Every approval primitive</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    ERC-20 <code className="text-xs text-amber-300">approve()</code>, ERC-721 / ERC-1155 <code className="text-xs text-amber-300">setApprovalForAll()</code>, and Permit2 off-chain signed allowances.
+                  </p>
                 </div>
-                <div>
-                  <h4 className="font-medium text-slate-100 mb-2">Token Discovery & Curation</h4>
-                  <p className="text-base text-slate-400">Comprehensive token database with fuzzy search, categorization, and community-driven curation. Discover tokens across multiple chains with advanced filtering and relevance scoring.</p>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Risk heuristics, not scoring theatre</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Each approval is graded on unlimited amounts, contract age, verification status, spender concentration, and known exploit signatures.
+                  </p>
                 </div>
-                <div>
-                  <h4 className="font-medium text-slate-100 mb-2">Non-Custodial Security</h4>
-                  <p className="text-base text-slate-400">Complete user control with no custody risk. All transactions are executed directly from your wallet with your explicit approval. We never hold your private keys or funds.</p>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Batch revocation</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Revoke many approvals in a single transaction. Lower gas than sequential revokes, especially on L1.
+                  </p>
                 </div>
-                <div>
-                  <h4 className="font-medium text-slate-100 mb-2">Gas-Optimized Operations</h4>
-                  <p className="text-base text-slate-400">Batch revocation capabilities and smart contract optimization to minimize gas costs while maximizing security effectiveness through efficient transaction batching.</p>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Continuous monitoring</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Pro and Sentinel wallets are rescanned on a schedule. New high-risk approvals trigger email, Telegram, or webhook alerts.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                  <h4 className="font-semibold text-white mb-2 text-sm">Public REST API</h4>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    Programmatic access to scanning, allowances, risk scores, and simulation. See <a href="/docs/api-reference" className="text-amber-400 hover:underline">API Reference</a>.
+                  </p>
                 </div>
               </div>
-              
-              <h3 id="how-it-works" className="text-xl font-semibold text-slate-100 mb-3">How It Works</h3>
-              <div className="space-y-4 text-base text-slate-400">
-                <p><strong>1. Connect & Scan:</strong> Securely connect your wallet using industry-standard protocols. We read public blockchain data to identify all token approvals associated with your address across supported networks.</p>
-                <p><strong>2. Analyze & Assess:</strong> Our risk engine evaluates each approval using multiple heuristics including allowance amounts, contract reputation, time since last interaction, and threat intelligence data.</p>
-                <p><strong>3. Review & Understand:</strong> View your complete security posture in a clarity-first dashboard that presents actionable information without jargon or confusion.</p>
-                <p><strong>4. Act & Secure:</strong> Revoke risky approvals with one-click operations that execute directly from your wallet, maintaining complete control over your assets.</p>
-                <p><strong>5. Monitor & Protect:</strong> Set up autonomous monitoring and alerts to maintain continuous security oversight and receive notifications about new approvals or changes.</p>
-               </div>
+            </div>
+
+            <div>
+              <h3 id="how-it-works" className="text-xl font-semibold text-white mb-4">
+                How it works
+              </h3>
+              <ol className="space-y-3 text-base text-slate-300">
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">1</span>
+                  <span><strong className="text-white">Connect or paste.</strong> Connect a wallet, or paste any address. Read-only by default.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">2</span>
+                  <span><strong className="text-white">Scan.</strong> We index every approval the address has ever granted, across all 15 supported chains, in one pass.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">3</span>
+                  <span><strong className="text-white">Score.</strong> Each approval is graded against the risk heuristics and ranked by what can hurt you most.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">4</span>
+                  <span><strong className="text-white">Revoke.</strong> Click revoke. We construct the transaction; you sign it in your wallet. Your keys never leave your device.</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">5</span>
+                  <span><strong className="text-white">Monitor.</strong> Optional. Set the wallet to rescan on a schedule and alert you when something new and risky appears.</span>
+                </li>
+              </ol>
+            </div>
+
+            <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
+              <h4 className="font-semibold text-white text-sm mb-2">New here? Start with two pages</h4>
+              <p className="text-sm text-slate-300 leading-relaxed">
+                Read <button onClick={() => { /* handled by parent */ }} className="text-amber-400 hover:underline font-medium">What Are Token Allowances?</button> in <em>Getting Started</em> for the security primer, then jump to <a href="/docs/api-reference" className="text-amber-400 hover:underline font-medium">API Reference</a> if you&rsquo;re building an integration.
+              </p>
             </div>
           </div>
         )
