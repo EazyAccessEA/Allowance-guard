@@ -1,0 +1,65 @@
+{
+  "name": "@allowance-guard/client",
+  "version": "0.0.1",
+  "description": "Framework-agnostic TypeScript client for the AllowanceGuard REST API.",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EazyAccessEA/Allowance-guard.git",
+    "directory": "packages/client"
+  },
+  "homepage": "https://www.allowanceguard.com",
+  "bugs": {
+    "url": "https://github.com/EazyAccessEA/Allowance-guard/issues"
+  },
+  "keywords": [
+    "allowance-guard",
+    "web3",
+    "wallet-security",
+    "token-approvals",
+    "erc20",
+    "sdk"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
