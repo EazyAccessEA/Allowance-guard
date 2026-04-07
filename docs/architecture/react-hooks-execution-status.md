@@ -31,13 +31,37 @@
 - `.changeset/initial-scaffold.md` — first changeset, marked minor on both packages.
 - `scripts/generate-openapi.ts` — **documented stub** describing the intended pipeline (Zod → OpenAPI 3.1 → `openapi-typescript`). Deliberately exits 1 until the backend team wires it up.
 
-## 🛑 Blocking dependencies (unchanged from plan §11)
+## ✅ Completed — follow-up session
+
+### Backend: public API key tier (`ag_pub_*`)
+- **Migration `027_api_public_keys.sql`** — adds `key_type` (`secret` | `public`) and `allowed_origins text[]` to `api_keys`, with a CHECK constraint and new index. Additive; all existing keys default to `secret`, preserving behaviour.
+- **Drizzle schema** (`src/db/schema/api-keys.ts`) — mirrors the migration.
+- **New plan tier** (`src/lib/plans.ts`) — `api_public` at 500 calls/day, 30/minute. Priced/unpriced (public keys are free). Excluded from `API_PRICES`.
+- **`src/lib/api-keys.ts`**:
+  - `generatePublicApiKey(userId, name, allowedOrigins?)` — mints `ag_pub_*` keys pinned to `api_public` and `key_type='public'`.
+  - `validateApiKey` now accepts both prefixes and returns `keyType` + `allowedOrigins` on `ValidatedKey`.
+  - `listApiKeys` returns `keyType` and `allowedOrigins`.
+  - `upgradeApiKeyPlan` bulk upgrades now scoped to `key_type='secret'` so public keys stay pinned.
+- **`src/middleware/api-auth.ts`** — hardened enforcement for public keys:
+  - OPTIONS preflight short-circuits before auth.
+  - Public keys are **GET-only** (405 with `Allow: GET, OPTIONS` on anything else).
+  - Optional per-key origin allow-list enforced against the `Origin` header (403 `ORIGIN_NOT_ALLOWED`).
+  - `withUsageTracking` attaches `Access-Control-Allow-Origin` + `Vary` on every public-key response.
+- **Global `middleware.ts`** — carves `/api/v1/*` out of the app-wide CORS handler so the route-level logic owns per-key CORS. Permissive preflight (GET + OPTIONS) returned for `/api/v1/*`.
+- **`POST /api/keys/public`** — new authenticated route (`src/app/api/keys/public/route.ts`) that issues public keys with an optional `allowedOrigins: ["https://app.example.com"]` array. Same 5-key-per-user limit as secret keys. Audit-logged.
+
+### Known follow-ups for the public-key tier
+- Account dashboard UI for creating/revoking public keys (currently only accessible via direct API call).
+- Per-IP rate limit for public keys (currently only per-key daily + burst; a scraper with the key can still consume the full 500/day from one IP). Tracked as a hardening task, not a blocker for v0.1.0.
+- Tests: middleware behaviour for the GET-only enforcement and origin allow-list.
+
+## 🛑 Blocking dependencies remaining
 
 | Dependency | Why it blocks v0.1.0 | Risk of acting without approval |
 |---|---|---|
-| **Public API keys** (`ag_pub_*`) — read-only, IP-rate-limited tier | The provider hard-fails on `ag_live_*` in the browser. Without a public-key tier, every React integrator must proxy through their own backend, defeating the distribution story. | Touches `api_keys` table, middleware, billing decisions, account UI. Needs human sign-off. |
 | **OpenAPI 3.1 spec for `/api/v1`** | Hand-authored `packages/client/src/types.ts` WILL drift. Types must be generated. | Adds a devDep (`@asteasolutions/zod-to-openapi`) and response-shape annotations to every route. Should go through normal PR review. |
-| **CORS on `/api/v1` for browser origins** | Without it, browsers can't call the API directly even with a public key. | Likely already enabled; needs verification + documentation. |
+| **Run migration 027 against staging + prod** | Schema change must be applied before the new code can function. | Standard deployment step; operator runs `pnpm run migrate`. |
+| **Verify CORS end-to-end from a staging dApp** | Need a real browser test to confirm the chain of global middleware → route-level CORS works across Vercel's edge. | Needs a staging key issued and a tiny test page. |
 
 ## 🚧 Deferred (not started this session)
 
