@@ -2,7 +2,11 @@
 //
 // Public contact endpoint. Accepts a structured message from the
 // /contact form, validates it, rate-limits per IP, and routes the
-// email to the right inbox based on the chosen topic.
+// email to the right inbox via Resend.
+//
+// Required env:
+//   RESEND_API_KEY        — Resend API key (re_…)
+//   CONTACT_FROM_EMAIL    — verified sender (e.g. "AllowanceGuard <noreply@allowanceguard.com>")
 //
 // Topics:
 //   - support       -> support@allowanceguard.com
@@ -16,7 +20,6 @@ import { NextResponse } from 'next/server'
 import { headers as nextHeaders } from 'next/headers'
 import { z } from 'zod'
 import { limitOrThrow } from '@/lib/ratelimit'
-import { sendMail, createEmailHTML } from '@/lib/mailer'
 
 export const runtime = 'nodejs'
 
@@ -49,6 +52,41 @@ function escape(s: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
+}
+
+async function sendViaResend(opts: {
+  to: string
+  replyTo: string
+  subject: string
+  html: string
+  text: string
+}): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY
+  const from = process.env.CONTACT_FROM_EMAIL || 'AllowanceGuard <noreply@allowanceguard.com>'
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is not configured')
+  }
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      from,
+      to: [opts.to],
+      reply_to: opts.replyTo,
+      subject: opts.subject,
+      html: opts.html,
+      text: opts.text,
+    }),
+  })
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => '')
+    throw new Error(`Resend API error ${res.status}: ${body}`)
+  }
 }
 
 export async function POST(req: Request) {
@@ -95,23 +133,31 @@ export async function POST(req: Request) {
     const safeMessage = escape(message).replace(/\n/g, '<br/>')
     const safeIp      = escape(ip)
 
-    const inner = `
-      <h2 style="margin:0 0 16px;font-size:18px;color:#0f172a">New ${route.label} message</h2>
-      <table style="width:100%;border-collapse:collapse;font-size:14px;color:#1e293b;margin-bottom:20px">
-        <tr><td style="padding:6px 0;width:120px;color:#64748b">From</td><td style="padding:6px 0"><strong>${safeName}</strong></td></tr>
-        <tr><td style="padding:6px 0;color:#64748b">Email</td><td style="padding:6px 0"><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
-        <tr><td style="padding:6px 0;color:#64748b">Topic</td><td style="padding:6px 0">${escape(route.label)}</td></tr>
-        ${safeWallet ? `<tr><td style="padding:6px 0;color:#64748b">Wallet</td><td style="padding:6px 0;font-family:monospace;font-size:12px">${safeWallet}</td></tr>` : ''}
-        <tr><td style="padding:6px 0;color:#64748b">IP</td><td style="padding:6px 0;font-family:monospace;font-size:12px">${safeIp}</td></tr>
-      </table>
-      <div style="padding:16px;background:#f8fafc;border-left:3px solid #f59e0b;border-radius:4px;font-size:14px;line-height:1.6;color:#0f172a;white-space:pre-wrap">${safeMessage}</div>
-      <p style="margin-top:20px;font-size:12px;color:#94a3b8">Reply directly to this email to respond to ${safeName}.</p>
-    `
+    const html = `<!doctype html>
+<html><body style="margin:0;padding:24px;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px">
+    <h2 style="margin:0 0 16px;font-size:18px;color:#0f172a">New ${escape(route.label)} message</h2>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;color:#1e293b;margin-bottom:20px">
+      <tr><td style="padding:6px 0;width:120px;color:#64748b">From</td><td style="padding:6px 0"><strong>${safeName}</strong></td></tr>
+      <tr><td style="padding:6px 0;color:#64748b">Email</td><td style="padding:6px 0"><a href="mailto:${safeEmail}" style="color:#f59e0b;text-decoration:none">${safeEmail}</a></td></tr>
+      <tr><td style="padding:6px 0;color:#64748b">Topic</td><td style="padding:6px 0">${escape(route.label)}</td></tr>
+      ${safeWallet ? `<tr><td style="padding:6px 0;color:#64748b">Wallet</td><td style="padding:6px 0;font-family:monospace;font-size:12px">${safeWallet}</td></tr>` : ''}
+      <tr><td style="padding:6px 0;color:#64748b">IP</td><td style="padding:6px 0;font-family:monospace;font-size:12px">${safeIp}</td></tr>
+    </table>
+    <div style="padding:16px;background:#f8fafc;border-left:3px solid #f59e0b;border-radius:4px;font-size:14px;line-height:1.6;color:#0f172a;white-space:pre-wrap">${safeMessage}</div>
+    <p style="margin-top:20px;font-size:12px;color:#94a3b8">Reply directly to this email to respond to ${safeName}.</p>
+  </div>
+</body></html>`
 
-    const html = createEmailHTML(inner, route.to)
     const text = `New ${route.label} message from ${name} <${email}>${wallet ? `\nWallet: ${wallet}` : ''}\n\n${message}\n\n---\nIP: ${ip}`
 
-    await sendMail(route.to, subject, html, text)
+    await sendViaResend({
+      to: route.to,
+      replyTo: email,
+      subject,
+      html,
+      text,
+    })
 
     return NextResponse.json({ ok: true })
   } catch (err) {
