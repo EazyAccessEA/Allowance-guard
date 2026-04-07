@@ -54,7 +54,7 @@ export default function ChainLogoCarousel() {
                 alt={chain.alt}
                 width={chain.width}
                 height={32}
-                className="h-8 w-auto brightness-0 invert"
+                className="h-8 w-auto"
               />
             </div>
           ))}
@@ -72,14 +72,14 @@ export default function ChainLogoCarousel() {
               {CHAINS.map((chain) => (
                 <div
                   key={`${setIndex}-${chain.alt}`}
-                  className="flex items-center opacity-70 hover:opacity-100 transition-opacity duration-300"
+                  className="flex items-center opacity-90 hover:opacity-100 transition-opacity duration-300"
                 >
                   <Image
                     src={chain.src}
                     alt={chain.alt}
                     width={chain.width}
                     height={32}
-                    className="h-8 w-auto brightness-0 invert"
+                    className="h-8 w-auto"
                   />
                 </div>
               ))}
