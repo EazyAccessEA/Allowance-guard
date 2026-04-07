@@ -3,419 +3,470 @@
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { 
-  Search, 
-  Mail, 
-  Shield, 
-  Users, 
-  MessageCircle, 
-  Github, 
-  Clock, 
-  Lock,
-  Download,
-  ExternalLink,
-  CheckCircle,
-  HelpCircle
-} from 'lucide-react'
+import { H1 } from '@/components/ui/Heading'
 import VideoBackground from '@/components/VideoBackground'
+import {
+  Mail,
+  Shield,
+  MessageCircle,
+  Github,
+  Lock,
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+} from 'lucide-react'
 
-const faqData = [
-  {
-    question: "Why did my transaction fail?",
-    answer: "Transaction failures can occur due to insufficient gas, network congestion, or smart contract issues. Check your gas settings and try again.",
-    keywords: ["transaction", "fail", "gas", "error"]
-  },
-  {
-    question: "How do I interpret a risk score?",
-    answer: "Risk scores range from 0-100. 0-30 is low risk, 31-70 is medium risk, and 71-100 is high risk. Higher scores indicate more dangerous allowances.",
-    keywords: ["risk", "score", "interpret", "dangerous"]
-  },
-  {
-    question: "How to revoke token approvals?",
-    answer: "Use our 'Revoke' button next to any allowance, or use the bulk revoke feature to revoke multiple approvals at once.",
-    keywords: ["revoke", "approval", "token", "bulk"]
-  },
-  {
-    question: "What is an unlimited allowance?",
-    answer: "An unlimited allowance allows a contract to spend all of your tokens without asking for permission each time. This is often unnecessary and risky.",
-    keywords: ["unlimited", "allowance", "spend", "permission"]
-  },
-  {
-    question: "How do I connect my wallet?",
-    answer: "Click the 'Connect Wallet' button in the header and select your wallet provider. We support MetaMask, WalletConnect, and more.",
-    keywords: ["connect", "wallet", "metamask", "walletconnect"]
-  },
-  {
-    question: "Is my wallet information secure?",
-    answer: "Yes, we never store your private keys or seed phrases. We only read public blockchain data to analyze your allowances.",
-    keywords: ["secure", "private", "keys", "blockchain"]
-  }
+type Topic = 'support' | 'security' | 'partnerships' | 'press' | 'funding' | 'other'
+type Status = 'idle' | 'submitting' | 'success' | 'error'
+
+const TOPICS: { value: Topic; label: string; hint: string }[] = [
+  { value: 'support',      label: 'Product support',     hint: 'Bug, billing, or how-to' },
+  { value: 'security',     label: 'Security disclosure', hint: 'Encrypted via PGP' },
+  { value: 'partnerships', label: 'Partnerships',        hint: 'Integrations &amp; co-marketing' },
+  { value: 'press',        label: 'Press',               hint: 'Interviews &amp; quotes' },
+  { value: 'funding',      label: 'Funding &amp; grants',    hint: 'VC, foundations, ecosystem grants' },
+  { value: 'other',        label: 'Something else',      hint: 'When in doubt' },
 ]
 
 export default function ContactPage() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [filteredFAQs, setFilteredFAQs] = useState(faqData)
+  const [status, setStatus] = useState<Status>('idle')
+  const [error, setError] = useState<string | null>(null)
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    topic: 'support' as Topic,
+    wallet: '',
+    message: '',
+    company: '', // honeypot
+  })
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase()
-    setSearchQuery(query)
-    
-    if (query === '') {
-      setFilteredFAQs(faqData)
-    } else {
-      const filtered = faqData.filter(faq => 
-        faq.question.toLowerCase().includes(query) ||
-        faq.answer.toLowerCase().includes(query) ||
-        faq.keywords.some(keyword => keyword.toLowerCase().includes(query))
-      )
-      setFilteredFAQs(filtered)
+  const update = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) => {
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('submitting')
+    setError(null)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setStatus('error')
+        setError(data?.error ?? 'Something went wrong. Please try again.')
+        return
+      }
+      setStatus('success')
+      setForm({ name: '', email: '', topic: 'support', wallet: '', message: '', company: '' })
+    } catch {
+      setStatus('error')
+      setError('Network error. Please try again or email support@allowanceguard.com directly.')
     }
   }
 
   return (
-    <div className="min-h-screen">
-      
-      {/* Hero Section - Mobbin Style */}
-      <Section className="relative pt-20 pb-32 sm:pt-24 sm:pb-40 overflow-hidden">
-        {/* Video Background */}
-        <VideoBackground 
-          videoSrc="/V3AG.mp4"
+    <div className="min-h-screen bg-secondary-900 text-white">
+      {/* ============ HERO ============ */}
+      <Section className="relative py-24 sm:py-32 overflow-hidden">
+        <VideoBackground videoSrc="/V3AG.mp4" />
+        <div
+          className="absolute inset-0 z-10"
+          aria-hidden="true"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.75) 60%, rgba(15,23,42,0.6) 100%)',
+          }}
         />
-        {/* Gradient overlay for better text readability */}
-        <div className="absolute inset-0 bg-secondary-900/90" />
-        
-        <Container className="relative text-left max-w-4xl z-10">
-          <h1 className="mobbin-display-1 text-text-primary mb-6 mobbin-fade-in">Get in Touch</h1>
-          <p className="mobbin-body-large text-text-secondary leading-relaxed mb-8 mobbin-fade-in mobbin-stagger-1">
-            Find answers, report issues, or reach the team directly.
+
+        <Container className="relative text-left max-w-4xl z-20">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+            Contact
+          </span>
+          <H1 className="mb-6 text-white">Talk to a human.</H1>
+          <p className="text-lg text-slate-300 max-w-reading">
+            Bug reports, security disclosures, partnerships, press, funding &mdash; all of it lands in front of someone who can actually help. Choose a topic, write what you need, and we&rsquo;ll be back inside one business day. Critical security reports inside two hours.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-secondary-700" />
+      <div className="border-t border-white/10" />
 
-      {/* Section 1: Quick Help Search */}
-      <Section className="py-32 bg-secondary-900">
+      {/* ============ FORM + CHANNELS ============ */}
+      <Section className="py-20 sm:py-24">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Search for Answers</h2>
-            <p className="mobbin-body-large text-text-secondary leading-relaxed mb-12 mobbin-fade-in mobbin-stagger-1">
-              Type a few keywords to find what you need.
-            </p>
-            
-            {/* Search Input */}
-            <div className="max-w-2xl mx-auto relative">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-tertiary" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  placeholder="e.g., 'transaction failed', 'risk score', 'revoke approval'"
-                  className="w-full pl-12 pr-4 py-4 mobbin-body border border-secondary-700 rounded-lg bg-background-primary text-text-primary placeholder-text-tertiary mobbin-focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 transition-colors duration-200"
-                />
-              </div>
-              
-              {/* Search Results */}
-              {searchQuery && (
-                <div className="mt-6 mobbin-card shadow-sm max-h-96 overflow-y-auto">
-                  {filteredFAQs.length > 0 ? (
-                    <div className="p-6 space-y-6">
-                      {filteredFAQs.map((faq, index) => (
-                        <div key={index} className="border-b border-secondary-700/50 pb-6 last:border-b-0 last:pb-0 mobbin-fade-in mobbin-stagger-1">
-                          <h4 className="mobbin-heading-4 text-text-primary mb-3">{faq.question}</h4>
-                          <p className="mobbin-body text-text-secondary leading-relaxed">{faq.answer}</p>
-                        </div>
-                      ))}
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
+            {/* ---------- Form ---------- */}
+            <div className="lg:col-span-7">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                Send a message
+              </h2>
+              <p className="text-sm text-slate-400 mb-8">
+                Routed automatically to the right inbox. We never share your details with third parties.
+              </p>
+
+              {status === 'success' ? (
+                <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-8">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-2">Message received.</h3>
+                      <p className="text-sm text-slate-300 leading-relaxed">
+                        Thanks &mdash; we&rsquo;ll be in touch shortly. If your inquiry is urgent and security-related, we&rsquo;ll acknowledge within two hours. Everything else within one business day.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setStatus('idle')}
+                        className="mt-4 text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors"
+                      >
+                        Send another message →
+                      </button>
                     </div>
-                  ) : (
-                    <div className="p-8 text-center">
-                      <HelpCircle className="w-12 h-12 text-text-tertiary mx-auto mb-4" />
-                      <p className="mobbin-body text-text-secondary">No results found. Try different keywords or contact us directly.</p>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={onSubmit} className="space-y-6" noValidate>
+                  {/* Honeypot — hidden from humans, visible to bots */}
+                  <div className="absolute left-[-9999px]" aria-hidden="true">
+                    <label>
+                      Company
+                      <input
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={form.company}
+                        onChange={(e) => update('company', e.target.value)}
+                      />
+                    </label>
+                  </div>
+
+                  {/* Name + Email */}
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <Field
+                      label="Name"
+                      id="name"
+                      required
+                      value={form.name}
+                      onChange={(v) => update('name', v)}
+                      placeholder="Jane Doe"
+                      autoComplete="name"
+                    />
+                    <Field
+                      label="Email"
+                      id="email"
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={(v) => update('email', v)}
+                      placeholder="jane@example.com"
+                      autoComplete="email"
+                    />
+                  </div>
+
+                  {/* Topic */}
+                  <fieldset>
+                    <legend className="block text-sm font-medium text-slate-200 mb-3">
+                      What is this about? <span className="text-amber-400">*</span>
+                    </legend>
+                    <div className="grid sm:grid-cols-2 gap-2">
+                      {TOPICS.map((t) => {
+                        const selected = form.topic === t.value
+                        return (
+                          <label
+                            key={t.value}
+                            className={`relative flex flex-col cursor-pointer rounded-xl border px-4 py-3 transition-all ${
+                              selected
+                                ? 'border-amber-400/60 bg-amber-400/10'
+                                : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="topic"
+                              value={t.value}
+                              checked={selected}
+                              onChange={() => update('topic', t.value)}
+                              className="sr-only"
+                            />
+                            <span
+                              className={`text-sm font-semibold ${
+                                selected ? 'text-amber-300' : 'text-white'
+                              }`}
+                              dangerouslySetInnerHTML={{ __html: t.label }}
+                            />
+                            <span
+                              className="text-xs text-slate-400 mt-0.5"
+                              dangerouslySetInnerHTML={{ __html: t.hint }}
+                            />
+                          </label>
+                        )
+                      })}
+                    </div>
+                  </fieldset>
+
+                  {/* Optional wallet */}
+                  <Field
+                    label="Wallet address"
+                    id="wallet"
+                    value={form.wallet}
+                    onChange={(v) => update('wallet', v)}
+                    placeholder="0x… (optional, helps us debug faster)"
+                    optional
+                  />
+
+                  {/* Message */}
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-slate-200 mb-2">
+                      Message <span className="text-amber-400">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      required
+                      rows={6}
+                      minLength={10}
+                      maxLength={5000}
+                      value={form.message}
+                      onChange={(e) => update('message', e.target.value)}
+                      placeholder="Tell us what's going on. The more context, the faster we can help."
+                      className="w-full rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 text-sm text-white placeholder-slate-500 resize-y focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
+                    />
+                    <p className="mt-1.5 text-xs text-slate-500">
+                      {form.message.length} / 5000
+                    </p>
+                  </div>
+
+                  {/* Error */}
+                  {status === 'error' && error && (
+                    <div className="flex items-start gap-2 rounded-xl border border-red-500/30 bg-red-500/10 p-4">
+                      <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-red-200">{error}</p>
                     </div>
                   )}
-                </div>
+
+                  {/* Submit */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+                    <button
+                      type="submit"
+                      disabled={status === 'submitting'}
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-amber-500 text-slate-900 text-sm font-semibold hover:bg-amber-400 disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-900"
+                    >
+                      {status === 'submitting' ? 'Sending…' : (
+                        <>
+                          Send message
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </>
+                      )}
+                    </button>
+                    <p className="text-xs text-slate-500">
+                      By submitting, you agree to our{' '}
+                      <a href="/privacy" className="text-amber-400 hover:underline">Privacy Policy</a>.
+                    </p>
+                  </div>
+                </form>
               )}
             </div>
+
+            {/* ---------- Sidebar ---------- */}
+            <aside className="lg:col-span-5 space-y-5">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                Or reach us directly
+              </h2>
+              <p className="text-sm text-slate-400 mb-6">
+                Prefer email or chat? Pick the channel that fits.
+              </p>
+
+              <ChannelCard
+                icon={<Mail className="w-5 h-5" />}
+                title="Support"
+                description="Product, billing, and how-to questions."
+                href="mailto:support@allowanceguard.com"
+                cta="support@allowanceguard.com"
+                meta="Replies within one business day"
+              />
+              <ChannelCard
+                icon={<Shield className="w-5 h-5" />}
+                title="Security disclosures"
+                description="Vulnerabilities, exploits, responsible disclosure. Encrypt with our PGP key for sensitive findings."
+                href="mailto:security@allowanceguard.com"
+                cta="security@allowanceguard.com"
+                meta="Acknowledged within 2 hours"
+                accent
+              />
+              <ChannelCard
+                icon={<MessageCircle className="w-5 h-5" />}
+                title="Discord"
+                description="Real-time community help and product discussion."
+                href="https://discord.gg/DsJ4Pa94"
+                cta="Join the server"
+                meta="Active community + core team"
+                external
+              />
+              <ChannelCard
+                icon={<Github className="w-5 h-5" />}
+                title="GitHub"
+                description="Bug reports, feature requests, and source code."
+                href="https://github.com/EazyAccessEA/Allowance-guard/issues"
+                cta="Open an issue"
+                meta="Public, tracked, AGPL-3.0"
+                external
+              />
+            </aside>
           </div>
         </Container>
       </Section>
 
-      {/* Section 2: Direct Contact Channels */}
-      <Section className="py-32 bg-secondary-900">
+      {/* ============ TRUST STRIP ============ */}
+      <div className="border-t border-white/10">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            <h2 className="mobbin-heading-1 text-text-primary mb-8 mobbin-fade-in">Contact the Team</h2>
-            <p className="mobbin-body-large text-text-secondary leading-relaxed mb-12 mobbin-fade-in mobbin-stagger-1">
-              Each channel reaches the right team. Pick the one that fits your query.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Channel 1: Standard Support */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-amber-900/20 rounded-2xl flex items-center justify-center mb-6">
-                  <Mail className="w-8 h-8 text-amber-400" />
-                </div>
-                <h3 className="mobbin-heading-3 text-text-primary mb-4">General Support & Questions</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  Help with the product, billing questions, or general feedback. We respond within 24 hours.
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center mobbin-caption text-text-tertiary">
-                    <Clock className="w-4 h-4 mr-2" />
-                    <span>Response time: 24 hours</span>
-                  </div>
-                  <div className="flex items-center mobbin-caption text-text-tertiary">
-                    <CheckCircle className="w-4 h-4 mr-2" />
-                    <a 
-                      href="mailto:support@allowanceguard.com?subject=General Support Request"
-                      className="cursor-pointer hover:text-amber-500 transition-colors duration-200" 
-                      title="Click to send email"
-                    >
-                      support@allowanceguard.com
-                    </a>
-                  </div>
-                </div>
-                <a 
-                  href="mailto:support@allowanceguard.com?subject=General Support Request"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
-                >
-                  <Mail className="w-4 h-4 mr-2" />
-                  Compose an email to Support
-                </a>
-              </div>
-            </div>
-
-            {/* Channel 2: Security Emergency */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mb-6">
-                  <Shield className="w-8 h-8 text-semantic-error-400" />
-                </div>
-                <h3 className="mobbin-heading-3 text-text-primary mb-4">Report a Security Vulnerability</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  Found a security flaw or vulnerability? Report it here. We acknowledge within 2 hours and treat all reports with full confidentiality.
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center mobbin-caption text-text-tertiary">
-                    <Clock className="w-4 h-4 mr-2" />
-                    <span>Response time: 2 hours</span>
-                  </div>
-                  <div className="flex items-center mobbin-caption text-text-tertiary">
-                    <Lock className="w-4 h-4 mr-2" />
-                    <a 
-                      href="mailto:security@allowanceguard.com?subject=Security Vulnerability Report"
-                      className="cursor-pointer hover:text-semantic-error-500 transition-colors duration-200" 
-                      title="Click to send email"
-                    >
-                      security@allowanceguard.com
-                    </a>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <a 
-                    href="mailto:security@allowanceguard.com?subject=Security Vulnerability Report"
-                    className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-semantic-error-500 text-semantic-error-500 rounded-lg hover:bg-semantic-error-500 hover:text-white transition-colors duration-200"
-                  >
-                    <Shield className="w-4 h-4 mr-2" />
-                    Compose an email to Security
-                  </a>
-                  <a 
-                    href="/.well-known/security.txt"
-                    className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-secondary-700 text-text-primary rounded-lg hover:bg-secondary-800 transition-colors duration-200"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    View Security.txt
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Channel 3: Business & Partnerships */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mb-6">
-                  <Users className="w-8 h-8 text-semantic-success-400" />
-                </div>
-                <h3 className="mobbin-heading-3 text-text-primary mb-4">Partnerships & Press</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  Integrations, press, or partnership inquiries. We respond within 48 hours.
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center mobbin-caption text-text-tertiary">
-                    <Clock className="w-4 h-4 mr-2" />
-                    <span>Response time: 48 hours</span>
-                  </div>
-                  <div className="flex items-center mobbin-caption text-text-tertiary">
-                    <CheckCircle className="w-4 h-4 mr-2" />
-                    <span>support@allowanceguard.com</span>
-                  </div>
-                </div>
-                <a 
-                  href="mailto:support@allowanceguard.com?subject=Partnership Inquiry"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-semantic-success-500 text-semantic-success-500 rounded-lg hover:bg-semantic-success-500 hover:text-white transition-colors duration-200"
-                >
-                  <Users className="w-4 h-4 mr-2" />
-                  Compose an email to Business
-                </a>
-              </div>
-            </div>
+          <div className="py-10 grid sm:grid-cols-3 gap-6 text-sm">
+            <TrustItem
+              icon={<Lock className="w-4 h-4 text-amber-400" />}
+              title="Encrypted in transit"
+            >
+              Every message travels over HTTPS. We never sell or share your details.
+            </TrustItem>
+            <TrustItem
+              icon={<Shield className="w-4 h-4 text-amber-400" />}
+              title="PGP for security reports"
+            >
+              <a href="/pgp-key.asc" className="text-amber-400 hover:underline">
+                Download our public key
+              </a>{' '}
+              before sending sensitive findings.
+            </TrustItem>
+            <TrustItem
+              icon={<CheckCircle2 className="w-4 h-4 text-amber-400" />}
+              title="security.txt"
+            >
+              <a href="/.well-known/security.txt" className="text-amber-400 hover:underline">
+                /.well-known/security.txt
+              </a>{' '}
+              follows RFC 9116.
+            </TrustItem>
           </div>
         </Container>
-      </Section>
+      </div>
+    </div>
+  )
+}
 
-      {/* Section 3: Community & Async Support - Mobbin Layout */}
-      <Section className="py-32 bg-secondary-900">
-        <Container className="max-w-5xl">
-          <div className="text-center mb-20">
-            <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
-              Community
-            </h2>
-            <p className="mobbin-body-large text-text-secondary max-w-2xl mx-auto mobbin-fade-in mobbin-stagger-1">
-              Ask questions, share findings, and help shape the product.
-            </p>
+/* ---------- Subcomponents ---------- */
+
+function Field({
+  id,
+  label,
+  type = 'text',
+  required,
+  optional,
+  value,
+  onChange,
+  placeholder,
+  autoComplete,
+}: {
+  id: string
+  label: string
+  type?: string
+  required?: boolean
+  optional?: boolean
+  value: string
+  onChange: (v: string) => void
+  placeholder?: string
+  autoComplete?: string
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-sm font-medium text-slate-200 mb-2">
+        {label}
+        {required && <span className="text-amber-400 ml-1">*</span>}
+        {optional && <span className="text-slate-500 ml-2 text-xs font-normal">optional</span>}
+      </label>
+      <input
+        id={id}
+        type={type}
+        required={required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        className="w-full rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
+      />
+    </div>
+  )
+}
+
+function ChannelCard({
+  icon,
+  title,
+  description,
+  href,
+  cta,
+  meta,
+  external,
+  accent,
+}: {
+  icon: React.ReactNode
+  title: string
+  description: string
+  href: string
+  cta: string
+  meta: string
+  external?: boolean
+  accent?: boolean
+}) {
+  return (
+    <a
+      href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener noreferrer' : undefined}
+      className={`block group rounded-2xl border p-5 transition-all ${
+        accent
+          ? 'border-amber-400/30 bg-amber-400/5 hover:border-amber-400/60'
+          : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
+      }`}
+    >
+      <div className="flex items-start gap-4">
+        <div
+          className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
+            accent ? 'bg-amber-400/15 text-amber-300' : 'bg-white/5 text-slate-300'
+          }`}
+        >
+          {icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <h3 className="text-base font-semibold text-white">{title}</h3>
+            <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Discord */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-amber-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <MessageCircle className="w-8 h-8 text-amber-400" />
-                </div>
-                <h3 className="mobbin-heading-4 text-text-primary mb-4">Discord</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
-                  Real-time help from the community and core team. Best for quick questions.
-                </p>
-                <a 
-                  href="https://discord.gg/DsJ4Pa94"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Join our Discord Server
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </a>
-              </div>
-            </div>
-
-            {/* X (formerly Twitter) */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 text-center">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <svg className="w-8 h-8 text-slate-400" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                </div>
-                <h3 className="mobbin-heading-4 text-text-primary mb-4">X</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
-                  Announcements, security tips, and release notes.
-                </p>
-                <a 
-                  href="https://x.com/allowanceguard"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
-                >
-                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
-                  Follow @allowanceguard
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </a>
-              </div>
-            </div>
-
-            {/* GitHub */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3 text-center">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-secondary-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Github className="w-8 h-8 text-slate-400" />
-                </div>
-                <h3 className="mobbin-heading-4 text-text-primary mb-4">GitHub</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-8">
-                  Report bugs, view source code, and contribute to the project.
-                </p>
-                <a 
-                  href="https://github.com/EazyAccessEA/Allowance-guard"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-6 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-amber-500 text-amber-400 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
-                >
-                  <Github className="w-4 h-4 mr-2" />
-                  View our GitHub
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </a>
-              </div>
-            </div>
+          <p className="mt-1 text-sm text-slate-400 leading-relaxed">{description}</p>
+          <div className="mt-3 flex items-center justify-between gap-3 text-xs">
+            <span className="font-mono text-amber-400 truncate">{cta}</span>
+            <span className="text-slate-500 flex-shrink-0">{meta}</span>
           </div>
-        </Container>
-      </Section>
+        </div>
+      </div>
+    </a>
+  )
+}
 
-      {/* Section 4: Trust & Transparency - Mobbin Style */}
-      <Section className="py-32 bg-secondary-900">
-        <Container className="max-w-5xl">
-          <div className="text-center mb-20">
-            <h2 className="mobbin-display-2 text-text-primary leading-tight mb-6 mobbin-fade-in">
-              What to Expect
-            </h2>
-            <p className="mobbin-body-large text-text-secondary max-w-2xl mx-auto mobbin-fade-in mobbin-stagger-1">
-              How we handle your inquiries and protect your information.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Expected Response Time */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1 text-center">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-warning-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Clock className="w-8 h-8 text-semantic-warning-400" />
-                </div>
-                <h3 className="mobbin-heading-3 text-text-primary mb-4">Expected Response Time</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed">
-                  All inquiries answered within one business day. Security reports acknowledged within 2 hours.
-                </p>
-              </div>
-            </div>
-
-            {/* Privacy Assurance */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-2 text-center">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Lock className="w-8 h-8 text-semantic-success-400" />
-                </div>
-                <h3 className="mobbin-heading-3 text-text-primary mb-4">Privacy Assurance</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed">
-                  Information you share is used only to resolve your inquiry. See our Privacy Policy for full details.
-                </p>
-              </div>
-            </div>
-
-            {/* PGP Key */}
-            <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-3 text-center">
-              <div className="p-8">
-                <div className="w-16 h-16 bg-semantic-error-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Shield className="w-8 h-8 text-semantic-error-400" />
-                </div>
-                <h3 className="mobbin-heading-3 text-text-primary mb-4">Encrypt Sensitive Information</h3>
-                <p className="mobbin-body text-text-secondary leading-relaxed mb-6">
-                  For sensitive security reports, encrypt your message to security@allowanceguard.com with our public PGP key.
-                </p>
-                <a 
-                  href="/pgp-key.asc"
-                  className="inline-flex items-center px-6 py-3 mobbin-caption font-medium mobbin-hover-lift mobbin-focus-ring text-amber-400 border border-amber-500 rounded-lg hover:bg-amber-500 hover:text-slate-900 transition-colors duration-200"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download our PGP Key
-                </a>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
+function TrustItem({
+  icon,
+  title,
+  children,
+}: {
+  icon: React.ReactNode
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="flex-shrink-0 mt-0.5">{icon}</div>
+      <div>
+        <h4 className="font-semibold text-white text-sm mb-1">{title}</h4>
+        <p className="text-xs text-slate-400 leading-relaxed">{children}</p>
+      </div>
     </div>
   )
 }
