@@ -91,6 +91,7 @@ export default function Hero({
               }
             >
               {"Know what you\u2019ve approved."}
+
             </SplitText>
 
             {/* Subheadline */}
@@ -98,8 +99,7 @@ export default function Hero({
               className="max-w-2xl text-xl sm:text-2xl font-medium text-slate-300 mb-8 sm:mb-10 leading-relaxed"
               delay={0.8}
             >
-              See every token approval. Assess the risk. Revoke what you don&#39;t need.
-              10 chains. Open source core. Premium monitoring for power users.
+              Every dApp you use asks for permission. Most users sign once and forget. Attackers don&rsquo;t. AllowanceGuard finds every approval, scores its risk, and lets you revoke it &mdash; across 10 chains, without surrendering custody.
             </BlurText>
 
             {/* CTAs */}
@@ -201,32 +201,33 @@ export default function Hero({
                 <Activity className="w-4 h-4 text-amber-400" aria-hidden="true" />
               </div>
 
-              {/* Stat rows */}
+              {/* Stat rows — defensible facts only */}
               <div className="space-y-3">
                 <StatRow
-                  value={50000}
-                  suffix="+"
-                  label="Wallets scanned"
+                  value={10}
+                  label="EVM chains covered"
                   delay={1.4}
                 />
                 <StatRow
-                  value={2000000}
-                  suffix="+"
-                  label="Approvals revoked"
+                  value={2}
+                  prefix="$"
+                  suffix="B+"
+                  label="Stolen via approvals since 2022"
                   delay={1.5}
                 />
                 <StatRow
-                  value={10}
-                  label="Chains covered"
+                  value={100}
+                  suffix="%"
+                  label="Open source &amp; non-custodial"
                   delay={1.6}
                 />
               </div>
 
-              {/* Footer — last threat */}
+              {/* Footer */}
               <div className="mt-6 pt-5 border-t border-white/10">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-400">Last threat blocked</span>
-                  <span className="text-xs font-mono text-amber-300">3m ago</span>
+                  <span className="text-xs text-slate-400">Status</span>
+                  <span className="text-xs font-mono text-amber-300">All chains live</span>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {['ETH', 'ARB', 'BASE', 'POLY', 'OP', 'AVAX', 'BNB', 'FTM', 'zkSync', 'zkEVM'].map((c) => (
@@ -249,11 +250,13 @@ export default function Hero({
 
 function StatRow({
   value,
+  prefix = '',
   suffix = '',
   label,
   delay,
 }: {
   value: number
+  prefix?: string
   suffix?: string
   label: string
   delay: number
@@ -262,6 +265,7 @@ function StatRow({
     <div className="flex items-baseline justify-between rounded-xl px-4 py-3 bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] transition-colors">
       <span className="text-sm text-slate-300">{label}</span>
       <span className="font-display text-2xl font-bold text-white tracking-tight">
+        {prefix}
         <CountUp value={value} suffix={suffix} delay={delay} />
       </span>
     </div>

@@ -29,9 +29,10 @@ export default function ChainLogoCarousel() {
       />
 
       <div className="text-center mb-10">
-        <p className="text-sm font-medium text-slate-400 tracking-wide uppercase">
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-amber-400/80">
           Securing wallets across
         </p>
+        <p className="mt-2 text-sm text-slate-400">10 EVM chains. One dashboard.</p>
       </div>
 
       {/* Mobile: Stacked */}
@@ -62,7 +63,7 @@ export default function ChainLogoCarousel() {
               {CHAINS.map((chain) => (
                 <div
                   key={`${setIndex}-${chain.alt}`}
-                  className="flex items-center opacity-40 hover:opacity-70 transition-opacity duration-300"
+                  className="flex items-center opacity-70 hover:opacity-100 transition-opacity duration-300"
                 >
                   <Image
                     src={chain.src}
