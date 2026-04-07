@@ -164,9 +164,9 @@ export default function Footer() {
                 <FooterLink href="/terms">Terms</FooterLink>
                 <FooterLink href="/privacy">Privacy</FooterLink>
                 <FooterLink href="/cookies">Cookies</FooterLink>
+                <FooterLink href="/dpa">DPA</FooterLink>
                 <FooterLink href="/sla">SLA</FooterLink>
                 <FooterLink href="/refund">Refunds</FooterLink>
-                <FooterLink href="/dpa">DPA</FooterLink>
                 <FooterLink href="https://allowanceguard.instatus.com" external>
                   Status
                 </FooterLink>
