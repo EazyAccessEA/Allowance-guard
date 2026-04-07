@@ -114,7 +114,7 @@ function TestimonialCard({
   quote,
 }: (typeof TESTIMONIALS)[number]) {
   return (
-    <div className="group relative rounded-2xl p-7 lg:p-8 bg-white/[0.02] ring-1 ring-white/[0.06] transition-all duration-300 hover:ring-white/[0.12] hover:bg-white/[0.04]">
+    <div className="glass-card group p-7 lg:p-8">
       {/* Gradient quote mark — large, decorative */}
       <div
         className="absolute top-5 right-6 text-6xl font-serif leading-none pointer-events-none select-none"
