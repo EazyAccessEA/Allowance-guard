@@ -43,6 +43,11 @@ export const supportedNetworks = [
   { name: 'Fantom', chainId: 250, status: 'Full Support' },
   { name: 'zkSync Era', chainId: 324, status: 'Full Support' },
   { name: 'Polygon zkEVM', chainId: 1101, status: 'Full Support' },
+  { name: 'Mantle', chainId: 5000, status: 'Full Support' },
+  { name: 'Gnosis', chainId: 100, status: 'Full Support' },
+  { name: 'Linea', chainId: 59144, status: 'Full Support' },
+  { name: 'Scroll', chainId: 534352, status: 'Full Support' },
+  { name: 'Celo', chainId: 42220, status: 'Full Support' },
 ]
 
 export const alertFeatures = [

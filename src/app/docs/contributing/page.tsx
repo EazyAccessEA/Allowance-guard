@@ -75,7 +75,10 @@ export default function ContributingPage() {
                   <div>
                     <h3 className="text-xl font-semibold text-white mb-4">Collective Security</h3>
                     <p className="text-lg text-slate-300 leading-relaxed">
-                      Every contribution, regardless of size, directly translates into a safer Web3 for everyone. When you support Allowance Guard, you are investing in collective security. Your contribution enables us to maintain and improve the tools that prevent catastrophic losses from approval-based attacks, which accounted for 73% of all DeFi exploits in 2024, resulting in over $3.2 billion in losses.
+                      Every contribution, regardless of size, directly translates into a safer Web3 for everyone. When you support AllowanceGuard, you are investing in collective security. Approval-based phishing and scams drained <strong>over $200 million from user wallets in 2024 alone</strong> &mdash; a small slice of the wider $8.3B total crypto-theft figure, but a slice that almost any user can prevent with a few clicks.<sup className="text-amber-400">*</sup> Your contribution funds the tools that make those clicks possible.
+                    </p>
+                    <p className="mt-3 text-xs text-slate-500 leading-relaxed">
+                      <sup className="text-amber-400">*</sup> Sources: Chainalysis 2024 Crypto Crime Report; CertiK Q3 2024 Web3 Security Report; De.Fi REKT Database 2024.
                     </p>
                   </div>
                 </div>

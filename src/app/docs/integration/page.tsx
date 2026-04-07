@@ -193,29 +193,60 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
       <Section className="py-16">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <H2 className="mb-12 text-center">Choose Your Integration Method</H2>
-            
+            <H2 className="mb-6 text-center text-white">Choose Your Integration Method</H2>
+
+            {/* Release status banner */}
+            <div className="mb-12 rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
+              <h3 className="text-sm font-semibold text-amber-300 uppercase tracking-[0.12em] mb-3">
+                Release status
+              </h3>
+              <ul className="space-y-2 text-sm text-slate-300">
+                <li>
+                  <strong className="text-white">REST API v1</strong> &mdash; <span className="text-emerald-400">Live.</span> Public, documented, rate-limited per tier. See <a href="/docs/api-reference" className="text-amber-400 hover:underline">API Reference</a>.
+                </li>
+                <li>
+                  <strong className="text-white">Browser extension</strong> &mdash; <span className="text-amber-400">Submitted.</span> Awaiting Chrome Web Store and Firefox Add-ons review.
+                </li>
+                <li>
+                  <strong className="text-white">Node.js SDK</strong> &mdash; <span className="text-amber-400">Source available.</span> Code lives in <code className="text-xs text-amber-300 bg-white/10 px-1.5 py-0.5 rounded">/sdk</code> on GitHub. npm publish pending.
+                </li>
+                <li>
+                  <strong className="text-white">React hooks</strong> &mdash; <span className="text-slate-400">On the roadmap.</span> Not yet started.
+                </li>
+              </ul>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-center mb-4">
-                  <Globe className="mr-3 text-blue-600" size={24} />
-                  <H3>Embeddable Widget</H3>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <Globe className="mr-3 text-amber-400" size={24} />
+                    <H3>Embeddable Widget</H3>
+                  </div>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                    Pending
+                  </span>
                 </div>
                 <p className="text-slate-300 mb-4">
-                  Drop-in widget for any website. Works with React, Vue, Angular, or vanilla HTML.
+                  Drop-in browser extension. Submitted to Chrome Web Store and Firefox Add-ons; awaiting reviewer approval.
                 </p>
                 <ul className="text-sm text-slate-300 space-y-2">
-                  <li>• Zero configuration</li>
-                  <li>• Customizable themes</li>
-                  <li>• Real-time updates</li>
-                  <li>• Mobile responsive</li>
+                  <li>&middot; Zero configuration</li>
+                  <li>&middot; Real-time approval screening</li>
+                  <li>&middot; Works on every dApp</li>
+                  <li>&middot; No account required</li>
                 </ul>
               </div>
 
-              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-center mb-4">
-                  <Zap className="mr-3 text-yellow-600" size={24} />
-                  <H3>React Hooks</H3>
+              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow opacity-75">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <Zap className="mr-3 text-slate-500" size={24} />
+                    <H3>React Hooks</H3>
+                  </div>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white/[0.05] border border-white/10 px-2 py-0.5 rounded-full">
+                    Roadmap
+                  </span>
                 </div>
                 <p className="text-slate-300 mb-4">
                   Custom React hooks for seamless integration into React applications.
@@ -229,18 +260,23 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
               </div>
 
               <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-center mb-4">
-                  <Package className="mr-3 text-green-600" size={24} />
-                  <H3>Node.js SDK</H3>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <Package className="mr-3 text-amber-400" size={24} />
+                    <H3>Node.js SDK</H3>
+                  </div>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                    GitHub
+                  </span>
                 </div>
                 <p className="text-slate-300 mb-4">
-                  Full-featured SDK for backend services and server-side applications.
+                  Backend SDK for server-side scanning, monitoring, and automated revocation. Source available now in <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a>; npm publish pending.
                 </p>
                 <ul className="text-sm text-slate-300 space-y-2">
-                  <li>• Complete API coverage</li>
-                  <li>• Built-in retry logic</li>
-                  <li>• Data export features</li>
-                  <li>• Batch operations</li>
+                  <li>&middot; Complete v1 API coverage</li>
+                  <li>&middot; Built-in retry &amp; rate-limit handling</li>
+                  <li>&middot; Batch operations</li>
+                  <li>&middot; GPL-3.0 licensed</li>
                 </ul>
               </div>
             </div>
@@ -351,64 +387,60 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
       <Section className="py-16 bg-white/[0.02]">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8 text-center">Installation & Setup</H2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <H2 className="mb-3 text-center text-white">Installation</H2>
+            <p className="text-center text-sm text-slate-400 mb-10">
+              The REST API is live today. The browser extension and SDK are in pre-release &mdash; install instructions reflect their current status.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
-                <H3 className="mb-4">React Widget</H3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">Installation:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">Import:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
-                  </div>
+                <div className="flex items-center justify-between mb-4">
+                  <H3>REST API v1</H3>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                    Live
+                  </span>
+                </div>
+                <p className="text-sm text-slate-300 mb-3">
+                  Authenticate with a bearer token, hit the v1 endpoints from any language. No install step.
+                </p>
+                <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs overflow-x-auto">curl -H &quot;Authorization: Bearer ag_...&quot; \{'\n'}  https://www.allowanceguard.com/api/v1/chains</pre>
+                <a href="/docs/api-reference" className="inline-block mt-3 text-xs font-medium text-amber-400 hover:underline">
+                  Read the API reference &rarr;
+                </a>
+              </div>
+
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+                <div className="flex items-center justify-between mb-4">
+                  <H3>Browser Extension</H3>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                    Pending
+                  </span>
+                </div>
+                <p className="text-sm text-slate-300 mb-3">
+                  Submitted to the Chrome Web Store and Firefox Add-ons. Once approved, install with a single click &mdash; no developer setup required.
+                </p>
+                <div className="rounded-md bg-slate-900/60 border border-white/10 text-slate-400 text-xs p-3">
+                  Awaiting reviewer approval. We&rsquo;ll announce on GitHub and X when it&rsquo;s live.
                 </div>
               </div>
 
               <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
-                <H3 className="mb-4">React Hooks</H3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">Installation:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-hooks</pre>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">Import:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">import &#123; useAllowances &#125; from &apos;allowance-guard-hooks&apos;</pre>
-                  </div>
+                <div className="flex items-center justify-between mb-4">
+                  <H3>Node.js SDK</H3>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                    GitHub
+                  </span>
                 </div>
+                <p className="text-sm text-slate-300 mb-3">
+                  Source available now in <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a> on GitHub. npm publish pending.
+                </p>
+                <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs overflow-x-auto">git clone https://github.com/{'\n'}  EazyAccessEA/Allowance-guard.git{'\n'}cd Allowance-guard/sdk &amp;&amp; npm i</pre>
               </div>
+            </div>
 
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
-                <H3 className="mb-4">Node.js SDK</H3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">Installation:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-sdk</pre>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">Import:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">const AllowanceGuardSDK = require(&apos;allowance-guard-sdk&apos;)</pre>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
-                <H3 className="mb-4">HTML Widget</H3>
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">CDN Script:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white mb-2">Initialize:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
-                  </div>
-                </div>
-              </div>
+            {/* Footer note */}
+            <div className="mt-10 text-center text-xs text-slate-500">
+              Looking for React hooks? They&rsquo;re on the roadmap &mdash; track progress in <a href="https://github.com/EazyAccessEA/Allowance-guard/issues" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.
             </div>
           </div>
         </Container>

@@ -101,12 +101,33 @@ export default function WidgetPage() {
 
       <div className="border-t border-white/10" />
 
+      {/* Status banner */}
+      <Section className="pt-10 pb-0">
+        <Container>
+          <div className="max-w-6xl mx-auto">
+            <div className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
+              <div className="flex items-start gap-3">
+                <span className="mt-1 inline-flex w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
+                <div>
+                  <h3 className="text-sm font-semibold text-amber-300 uppercase tracking-[0.12em] mb-1">
+                    Pending store approval
+                  </h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    The browser extension is built and submitted to the <strong className="text-white">Chrome Web Store</strong> and <strong className="text-white">Firefox Add-ons</strong>. Reviewer approval is pending. The configuration playground below works today; install snippets will go live the moment the extension lands in each store.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
       {/* Live Preview */}
       <Section className="py-16">
         <Container>
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              
+
               {/* Widget Preview */}
               <div>
                 <div className="flex items-center justify-between mb-6">
@@ -272,64 +293,71 @@ export default function WidgetPage() {
         </Container>
       </Section>
 
-      {/* Installation Instructions */}
+      {/* Installation — placeholder while pending store approval */}
       <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8 text-center">Installation & Setup</H2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              
-              {/* React Installation */}
-              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6">
-                <div className="flex items-center mb-4">
-                  <Code className="mr-3 text-blue-600" size={24} />
-                  <H3>React Installation</H3>
+            <H2 className="mb-3 text-center text-white">Installation</H2>
+            <p className="text-center text-sm text-slate-400 mb-8">
+              The configuration above is real and runs against the live API. The install snippets below are <strong className="text-amber-400">previews</strong> of what the published install flow will look like once the extension lands in each store.
+            </p>
+
+            <div className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-6 mb-8">
+              <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="inline-flex w-2 h-2 rounded-full bg-amber-400" />
+                What you can do today
+              </h3>
+              <ul className="text-sm text-slate-300 space-y-2">
+                <li>&middot; Use the <strong className="text-white">REST API v1</strong> to scan wallets &mdash; see <a href="/docs/api-reference" className="text-amber-400 hover:underline">API Reference</a>.</li>
+                <li>&middot; Clone the <strong className="text-white">Node.js SDK</strong> from <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a>.</li>
+                <li>&middot; Subscribe to the <a href="https://github.com/EazyAccessEA/Allowance-guard" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer">GitHub repo</a> to be notified when the extension publishes.</li>
+              </ul>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 opacity-70">
+              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <Code className="mr-3 text-amber-400" size={20} />
+                    <H3>React (preview)</H3>
+                  </div>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                    Pending
+                  </span>
                 </div>
-                
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <p className="text-sm font-medium text-slate-300 mb-2">1. Install the package:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
+                    <p className="text-xs font-medium text-slate-400 mb-1">1. Install (when published):</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs">npm install allowance-guard-widget</pre>
                   </div>
-                  
                   <div>
-                    <p className="text-sm font-medium text-slate-300 mb-2">2. Import and use:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
-                  </div>
-                  
-                  <div>
-                    <p className="text-sm font-medium text-slate-300 mb-2">3. Add to your component:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm overflow-x-auto">{generateWidgetCode()}</pre>
+                    <p className="text-xs font-medium text-slate-400 mb-1">2. Use:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs overflow-x-auto">{generateWidgetCode()}</pre>
                   </div>
                 </div>
               </div>
 
-              {/* HTML Installation */}
-              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6">
-                <div className="flex items-center mb-4">
-                  <Download className="mr-3 text-green-600" size={24} />
-                  <H3>HTML Installation</H3>
+              <div className="bg-white/[0.03] border border-white/10 rounded-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center">
+                    <Download className="mr-3 text-amber-400" size={20} />
+                    <H3>HTML (preview)</H3>
+                  </div>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                    Pending
+                  </span>
                 </div>
-                
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <p className="text-sm font-medium text-slate-300 mb-2">1. Include the script:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
+                    <p className="text-xs font-medium text-slate-400 mb-1">1. Include the script:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs overflow-x-auto">&lt;script src=&quot;https://cdn.allowanceguard.com/widget.js&quot;&gt;&lt;/script&gt;</pre>
                   </div>
-                  
                   <div>
-                    <p className="text-sm font-medium text-slate-300 mb-2">2. Add container div:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">&lt;div id=&quot;allowance-guard-widget&quot;&gt;&lt;/div&gt;</pre>
-                  </div>
-                  
-                  <div>
-                    <p className="text-sm font-medium text-slate-300 mb-2">3. Initialize the widget:</p>
-                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm overflow-x-auto">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
+                    <p className="text-xs font-medium text-slate-400 mb-1">2. Mount and initialise:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs">&lt;div id=&quot;allowance-guard&quot;&gt;&lt;/div&gt;{'\n'}AllowanceGuard.init(&#123;...&#125;)</pre>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </Container>
