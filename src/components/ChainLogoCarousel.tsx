@@ -54,7 +54,7 @@ export default function ChainLogoCarousel() {
                 alt={chain.alt}
                 width={chain.width}
                 height={32}
-                className="h-8 w-auto"
+                className="h-8 w-auto brightness-0 invert"
               />
             </div>
           ))}
@@ -79,7 +79,7 @@ export default function ChainLogoCarousel() {
                     alt={chain.alt}
                     width={chain.width}
                     height={32}
-                    className="h-8 w-auto"
+                    className="h-8 w-auto brightness-0 invert"
                   />
                 </div>
               ))}
