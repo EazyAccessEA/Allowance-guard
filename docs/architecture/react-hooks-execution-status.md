@@ -55,13 +55,21 @@
 - Per-IP rate limit for public keys (currently only per-key daily + burst; a scraper with the key can still consume the full 500/day from one IP). Tracked as a hardening task, not a blocker for v0.1.0.
 - Tests: middleware behaviour for the GET-only enforcement and origin allow-list.
 
+## ✅ Completed — OpenAPI stage
+
+### Stage: single source of truth for types
+- **`src/app/api/v1/openapi.json`** — hand-authored OpenAPI 3.1 document covering all 8 v1 endpoints (`/health`, `/chains`, `/allowances`, `/risk-score`, `/portfolio-risk`, `/risk-check`, `/scan`, `/simulate`). Includes request/response schemas, rate-limit error shape, bearer-auth security scheme, and the two-tier key model documented in the `description`.
+- **`scripts/generate-openapi.ts`** — generation wiring that invokes `openapi-typescript` to emit `packages/client/src/types.generated.ts` from the spec. Clean exit with a helpful message if `openapi-typescript` hasn't been installed yet (deliberately not auto-installed in this session).
+- **Follow-up path** (still to do): install `openapi-typescript` as a root devDep, run the script, replace hand-authored `packages/client/src/types.ts` with the generated file, and wire the script into CI so drift fails the build. A further task is Zod → OpenAPI auto-generation via `@asteasolutions/zod-to-openapi` so the JSON doc itself stops being hand-edited — see plan §5.
+
 ## 🛑 Blocking dependencies remaining
 
 | Dependency | Why it blocks v0.1.0 | Risk of acting without approval |
 |---|---|---|
-| **OpenAPI 3.1 spec for `/api/v1`** | Hand-authored `packages/client/src/types.ts` WILL drift. Types must be generated. | Adds a devDep (`@asteasolutions/zod-to-openapi`) and response-shape annotations to every route. Should go through normal PR review. |
-| **Run migration 027 against staging + prod** | Schema change must be applied before the new code can function. | Standard deployment step; operator runs `pnpm run migrate`. |
+| **Install `openapi-typescript` + run generation** | Until the generated types file replaces the hand-authored one, drift is still possible on every route change. | Trivial: one devDep add, one script run, one file replace. |
+| **Run migration 027 against staging + prod** | Schema change must be applied before the new backend code can function. | Standard deployment step; operator runs `pnpm run migrate`. |
 | **Verify CORS end-to-end from a staging dApp** | Need a real browser test to confirm the chain of global middleware → route-level CORS works across Vercel's edge. | Needs a staging key issued and a tiny test page. |
+| **Vitest + CI for `packages/*`** | No tests yet; nothing blocks a regression from landing. | Low. Standard setup work. |
 
 ## 🚧 Deferred (not started this session)
 

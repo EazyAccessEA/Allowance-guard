@@ -35,6 +35,25 @@ AllowanceGuard is a **Web3 wallet security platform** that helps users monitor, 
 
 ## Directory Structure
 
+The repo is a pnpm workspace. Top-level packages:
+
+```
+/                             # Next.js app (allowance-guard)
+├── src/                      # App source (see below)
+├── extension/                # Browser extension (workspace)
+├── sdk/                      # Legacy Node.js SDK (workspace, pending migration → packages/sdk)
+├── packages/                 # NEW — client libraries distributed via npm
+│   ├── client/               # @allowance-guard/client — framework-agnostic TS transport
+│   └── react/                # @allowance-guard/react  — React hooks (peer-deps on TanStack Query)
+├── migrations/               # SQL migrations (pnpm run migrate)
+├── scripts/                  # Tooling (e.g. generate-openapi.ts)
+├── docs/
+│   └── architecture/         # Long-form architecture plans (e.g. react-hooks)
+└── .changeset/               # Changesets for packages/* versioning
+```
+
+App source (`src/`):
+
 ```
 src/
 ├── app/                    # Next.js App Router pages & API routes
@@ -157,6 +176,8 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 - Use `src/lib/api-response.ts` for consistent JSON responses.
 - Log significant actions via `src/lib/audit.ts`.
 - B2B API routes live under `/api/v1/` and use API key auth.
+- **Two API key tiers:** `ag_live_*` (secret, server-side, full access) and `ag_pub_*` (public, browser-safe, GET-only, `api_public` plan at 500/day). Public keys are enforced in `src/middleware/api-auth.ts` and issued via `POST /api/keys/public`. See migration `027_api_public_keys.sql`.
+- **`/api/v1` OpenAPI spec** lives at `src/app/api/v1/openapi.json` and is the single source of truth for the `@allowance-guard/client` generated types. Any new v1 endpoint MUST update the spec in the same PR. Run `tsx scripts/generate-openapi.ts` to regenerate client types.
 - Consumer routes use session auth.
 - Cron routes (cleanup, monitoring, rules, webhooks, email) are called by [cron-job.org](https://cron-job.org) — no `CRON_SECRET` auth. Do not add Vercel Cron schedules to `vercel.json`.
 
