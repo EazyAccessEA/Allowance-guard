@@ -100,6 +100,8 @@ export interface CreateSubscriptionOptions {
 export async function createCheckoutSession(opts: CreateSubscriptionOptions): Promise<string> {
   const customerId = await getOrCreateCustomer(opts.userId, opts.email)
 
+  const isApiPlan = opts.plan.startsWith('api_')
+
   const sessionParams: Stripe.Checkout.SessionCreateParams = {
     customer: customerId,
     mode: 'subscription',
@@ -116,6 +118,11 @@ export async function createCheckoutSession(opts: CreateSubscriptionOptions): Pr
       ag_user_id: String(opts.userId),
       ag_plan: opts.plan,
     },
+    // B2B API plans: enable automatic tax for invoices
+    ...(isApiPlan && {
+      automatic_tax: { enabled: true },
+      allow_promotion_codes: true,
+    }),
     // Custom invoice branding — applied to every invoice generated from this subscription
     invoice_creation: {
       enabled: true,
