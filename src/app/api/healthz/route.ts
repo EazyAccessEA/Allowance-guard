@@ -1,10 +1,4 @@
 import { NextResponse } from 'next/server'
-import { pool } from '@/lib/db'
-import { cacheHealthCheck } from '@/lib/cache'
-import { redisHealthCheck } from '@/lib/redis'
-import { getBlockNumber } from 'viem/actions'
-import { clientFor } from '@/lib/chains'
-import { enabledChainIds } from '@/lib/networks'
 import pkg from '../../../../package.json'
 
 export const runtime = 'nodejs'
@@ -24,17 +18,23 @@ export async function GET() {
   const services: Record<string, { status: string; latency_ms?: number; details?: string }> = {}
   let overallOk = true
 
-  // Database check
-  try {
-    const { latencyMs } = await timedCheck(() => pool.query('SELECT 1'))
-    services.database = { status: 'ok', latency_ms: latencyMs }
-  } catch (e: unknown) {
-    overallOk = false
-    services.database = { status: 'error', details: e instanceof Error ? e.message : 'Unknown error' }
+  // Database check — lazy import to avoid crash when DATABASE_URL is missing
+  if (process.env.DATABASE_URL) {
+    try {
+      const { pool } = await import('@/lib/db')
+      const { latencyMs } = await timedCheck(() => pool.query('SELECT 1'))
+      services.database = { status: 'ok', latency_ms: latencyMs }
+    } catch (e: unknown) {
+      overallOk = false
+      services.database = { status: 'error', details: e instanceof Error ? e.message : 'Unknown error' }
+    }
+  } else {
+    services.database = { status: 'unavailable', details: 'DATABASE_URL not configured' }
   }
 
-  // Redis check
+  // Redis check — lazy import
   try {
+    const { redisHealthCheck } = await import('@/lib/redis')
     const redis = await redisHealthCheck()
     services.redis = {
       status: redis.ok ? 'ok' : 'degraded',
@@ -45,8 +45,9 @@ export async function GET() {
     services.redis = { status: 'unavailable', details: 'Redis not configured' }
   }
 
-  // Cache check
+  // Cache check — lazy import
   try {
+    const { cacheHealthCheck } = await import('@/lib/cache')
     const cache = await cacheHealthCheck()
     services.cache = {
       status: cache.ok ? 'ok' : 'degraded',
@@ -56,20 +57,26 @@ export async function GET() {
     services.cache = { status: 'error', details: e instanceof Error ? e.message : 'Unknown error' }
   }
 
-  // RPC checks per chain
-  const chainIds = enabledChainIds()
-  for (const id of chainIds) {
-    const chainKey = `rpc_${id}`
-    try {
-      const { result: blockNum, latencyMs } = await timedCheck(() => getBlockNumber(clientFor(id)))
-      services[chainKey] = { status: 'ok', latency_ms: latencyMs, details: `block:${blockNum}` }
-    } catch (e: unknown) {
-      // Individual chain failures don't fail the overall health check
-      services[chainKey] = {
-        status: 'degraded',
-        details: e instanceof Error ? e.message.slice(0, 120) : 'Unknown error',
+  // RPC checks per chain — lazy import
+  try {
+    const { getBlockNumber } = await import('viem/actions')
+    const { clientFor } = await import('@/lib/chains')
+    const { enabledChainIds } = await import('@/lib/networks')
+    const chainIds = enabledChainIds()
+    for (const id of chainIds) {
+      const chainKey = `rpc_${id}`
+      try {
+        const { result: blockNum, latencyMs } = await timedCheck(() => getBlockNumber(clientFor(id)))
+        services[chainKey] = { status: 'ok', latency_ms: latencyMs, details: `block:${blockNum}` }
+      } catch (e: unknown) {
+        services[chainKey] = {
+          status: 'degraded',
+          details: e instanceof Error ? e.message.slice(0, 120) : 'Unknown error',
+        }
       }
     }
+  } catch {
+    services.rpc = { status: 'unavailable', details: 'RPC modules not available' }
   }
 
   const uptimeSeconds = startedAt ? Math.floor((Date.now() - startedAt) / 1000) : 0

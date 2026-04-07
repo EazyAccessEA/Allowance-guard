@@ -2,17 +2,23 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 import { requireUser } from '@/lib/auth'
 import { createCheckoutSession } from '@/lib/billing'
-import { CONSUMER_PRICES, type ConsumerPlan } from '@/lib/plans'
+import { CONSUMER_PRICES, API_PRICES, type ConsumerPlan, type ApiPlan } from '@/lib/plans'
 import { validateRequest } from '@/middleware/validation'
 import { withReq } from '@/lib/logger'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
+const ALL_PAID_PLANS = ['pro', 'sentinel', 'api_developer', 'api_growth'] as const
+
 const subscribeSchema = z.object({
-  plan: z.enum(['pro', 'sentinel']),
+  plan: z.enum(ALL_PAID_PLANS),
   interval: z.enum(['monthly', 'yearly']).default('monthly'),
 })
+
+function isApiPlan(plan: string): plan is 'api_developer' | 'api_growth' {
+  return plan === 'api_developer' || plan === 'api_growth'
+}
 
 export async function POST(req: Request) {
   const L = withReq(req)
@@ -29,15 +35,32 @@ export async function POST(req: Request) {
     }
 
     const { plan, interval } = validation.data!
-    const prices = CONSUMER_PRICES[plan as Exclude<ConsumerPlan, 'free'>]
 
-    if (!prices) {
-      return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
+    let priceId: string
+
+    if (isApiPlan(plan)) {
+      // API plans only support monthly billing currently
+      const apiPrices = API_PRICES[plan as Exclude<ApiPlan, 'api_free' | 'api_enterprise'>]
+      if (!apiPrices) {
+        return NextResponse.json({ error: 'Invalid API plan' }, { status: 400 })
+      }
+      if (interval === 'yearly') {
+        return NextResponse.json(
+          { error: 'API plans currently support monthly billing only' },
+          { status: 400 },
+        )
+      }
+      priceId = apiPrices.stripePriceIdMonthly
+    } else {
+      // Consumer plans support monthly and yearly
+      const consumerPrices = CONSUMER_PRICES[plan as Exclude<ConsumerPlan, 'free'>]
+      if (!consumerPrices) {
+        return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
+      }
+      priceId = interval === 'yearly'
+        ? consumerPrices.stripePriceIdYearly
+        : consumerPrices.stripePriceIdMonthly
     }
-
-    const priceId = interval === 'yearly'
-      ? prices.stripePriceIdYearly
-      : prices.stripePriceIdMonthly
 
     if (!priceId) {
       L.error('billing.subscribe.missing_price_id', { plan, interval })

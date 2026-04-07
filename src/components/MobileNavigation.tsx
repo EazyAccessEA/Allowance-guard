@@ -1,19 +1,19 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
-import { 
-  X, 
-  Menu, 
-  Shield, 
-  Settings, 
-  FileText, 
+import {
+  X,
+  Menu,
+  Shield,
+  Settings,
+  FileText,
   Home,
-  BookOpen,
-  Search
+  Search,
+  CreditCard,
 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -21,225 +21,189 @@ interface MobileNavigationProps {
   isConnected: boolean
 }
 
+const NAV_ITEMS = [
+  { href: '/', label: 'Scan', icon: Home, description: 'Scan your wallet' },
+  { href: '/features', label: 'Features', icon: Shield, description: 'Security features' },
+  { href: '/pricing', label: 'Pricing', icon: CreditCard, description: 'Plans & pricing' },
+  { href: '/docs', label: 'Docs', icon: FileText, description: 'Documentation' },
+  { href: '/tokens', label: 'Discover', icon: Search, description: 'Discover tokens' },
+  { href: '/settings', label: 'Settings', icon: Settings, description: 'Preferences' },
+] as const
+
 function MobileNavigation({ isConnected }: MobileNavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const menuRef = useRef<HTMLDivElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
 
-  // Close menu on route change
-  useEffect(() => {
-    setIsOpen(false)
-  }, [pathname])
+  const close = useCallback(() => setIsOpen(false), [])
 
-  // Prevent body scroll and manage focus when menu is open
+  // Close on route change
+  useEffect(() => { close() }, [pathname, close])
+
+  // Body scroll lock + focus management
   useEffect(() => {
     if (isOpen) {
-      // Store the currently focused element
       previousFocusRef.current = document.activeElement as HTMLElement
-      
-      // Prevent body scroll
       document.body.style.overflow = 'hidden'
-      
-      // Focus the first interactive element in the menu
       setTimeout(() => {
-        const firstButton = menuRef.current?.querySelector('button, a, [tabindex]')
-        if (firstButton) {
-          (firstButton as HTMLElement).focus()
-        }
+        const first = menuRef.current?.querySelector<HTMLElement>('button, a, [tabindex]')
+        first?.focus()
       }, 100)
     } else {
-      // Restore body scroll
       document.body.style.overflow = 'unset'
-      
-      // Restore focus to the previously focused element
-      if (previousFocusRef.current) {
-        previousFocusRef.current.focus()
-        previousFocusRef.current = null
-      }
+      previousFocusRef.current?.focus()
+      previousFocusRef.current = null
     }
-    
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
+    return () => { document.body.style.overflow = 'unset' }
   }, [isOpen])
 
-  // Handle escape key
+  // Escape key
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape)
-      return () => document.removeEventListener('keydown', handleEscape)
-    }
-  }, [isOpen])
-
-  const navigationItems = [
-    {
-      href: '/',
-      label: 'Home',
-      icon: <Home className="w-5 h-5" />,
-      description: 'Return to homepage',
-      badge: null
-    },
-    {
-      href: '/blog',
-      label: 'Blog',
-      icon: <BookOpen className="w-5 h-5" />,
-      description: 'Security insights and guides',
-      badge: null
-    },
-    {
-      href: '/docs',
-      label: 'Documentation',
-      icon: <FileText className="w-5 h-5" />,
-      description: 'Learn how to use Allowance Guard',
-      badge: null
-    },
-    {
-      href: '/tokens',
-      label: 'Discover Tokens',
-      icon: <Search className="w-5 h-5" />,
-      description: 'Search and discover tokens across blockchains',
-      badge: null
-    },
-    {
-      href: '/features',
-      label: 'Features',
-      icon: <Shield className="w-5 h-5" />,
-      description: 'Explore our security features',
-      badge: null
-    },
-    {
-      href: '/settings',
-      label: 'Settings',
-      icon: <Settings className="w-5 h-5" />,
-      description: 'Configure your preferences',
-      badge: null
-    }
-  ]
-
+    if (!isOpen) return
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [isOpen, close])
 
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Hamburger — minimal, white on dark nav */}
       <Button
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden h-10 w-10 mobbin-focus-ring relative"
+        className="lg:hidden h-10 w-10 text-slate-400 hover:text-white hover:bg-white/10 rounded-md
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
         aria-label="Open navigation menu"
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
       >
         <Menu className="h-5 w-5" />
         {!isConnected && (
-          <span className="absolute -top-1 -right-1 w-3 h-3 bg-semantic-warning-500 rounded-full animate-pulse" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-500 rounded-full" aria-hidden="true" />
         )}
       </Button>
 
-      {/* Mobile Menu Overlay */}
+      {/* Full-screen dark overlay */}
       {isOpen && (
         <div className="fixed inset-0 z-[100] lg:hidden" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title">
-          {/* Backdrop - Fully Obscured */}
-          <div 
-            className="fixed inset-0 bg-black/90 backdrop-blur-sm transition-all duration-300 z-[101]"
-            onClick={() => setIsOpen(false)}
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[101]"
+            onClick={close}
             aria-hidden="true"
           />
-          
-          {/* Menu Panel - 100% vh and vw */}
-          <div 
+
+          {/* Panel — dark surface, full screen */}
+          <div
             ref={menuRef}
             id="mobile-menu"
-            className="fixed inset-0 h-screen w-screen bg-background-primary dark:bg-secondary-900 shadow-2xl transition-all duration-300 ease-out z-[102]"
-            style={{ 
-              transform: isOpen 
-                ? 'translateX(0)' 
-                : 'translateX(100%)',
-              opacity: isOpen ? 1 : 0
+            className="fixed inset-0 h-screen w-screen bg-surface-base z-[102] flex flex-col"
+            style={{
+              transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
+              opacity: isOpen ? 1 : 0,
+              transition: 'transform 300ms cubic-bezier(0.25, 0, 0, 1), opacity 200ms ease',
             }}
           >
-            <div className="flex flex-col h-full">
-              {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-border-primary dark:border-secondary-700 bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-secondary-800 dark:to-secondary-800">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 flex items-center justify-center">
-                    <Image 
-                      src="/AG_Logo2.png" 
-                      alt="Allowance Guard Logo" 
-                      width={40} 
-                      height={40}
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <h2 id="mobile-menu-title" className="mobbin-heading-1 text-text-primary dark:text-secondary-100">Allowance Guard</h2>
-                    <p className="mobbin-body text-text-secondary dark:text-secondary-400">Secure Token Approvals</p>
-                  </div>
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 flex items-center justify-center">
+                  <Image
+                    src="/AG_Logo2.png"
+                    alt="Allowance Guard Logo"
+                    width={36}
+                    height={36}
+                    className="rounded-lg"
+                  />
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsOpen(false)}
-                  className="h-10 w-10 mobbin-focus-ring hover:bg-background-secondary"
-                  aria-label="Close navigation menu"
-                >
-                  <X className="h-5 w-5" />
-                </Button>
+                <div>
+                  <h2
+                    id="mobile-menu-title"
+                    className="text-lg font-bold text-white tracking-tight"
+                    style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
+                  >
+                    AllowanceGuard
+                  </h2>
+                  <p className="text-xs text-slate-400 uppercase tracking-wide">
+                    Secure Token Approvals
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={close}
+                className="h-10 w-10 text-slate-400 hover:text-white hover:bg-white/10 rounded-md
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
+                aria-label="Close navigation menu"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 flex flex-col px-6 py-6 overflow-y-auto">
+              {/* Connect CTA */}
+              <div className="mb-6">
+                <div onClick={close}>
+                  <ClientConnectButton
+                    variant={isConnected ? 'secondary' : 'primary'}
+                    size="lg"
+                    className="w-full text-base py-4"
+                  />
+                </div>
+                {isConnected && (
+                  <p className="text-sky-400 mt-3 text-sm text-center font-medium">
+                    Wallet Connected
+                  </p>
+                )}
               </div>
 
-              {/* Navigation Content - Full Height Layout */}
-              <div className="flex-1 flex flex-col px-8 py-8 overflow-y-auto">
-                {/* Connect Wallet - Prominent */}
-                <div className="mb-8 text-center">
-                  <div onClick={() => setIsOpen(false)}>
-                    <ClientConnectButton 
-                      variant={isConnected ? "secondary" : "primary"}
-                      size="lg"
-                      className="w-full text-xl py-6"
-                    />
-                  </div>
-                  {isConnected && (
-                    <p className="text-semantic-success-600 dark:text-semantic-success-400 mt-4 mobbin-body">Wallet Connected</p>
-                  )}
-                </div>
-
-                {/* Simple Navigation - Large Touch Targets */}
-                <div className="space-y-4">
-                  {navigationItems && navigationItems.length > 0 ? navigationItems.map((item) => (
+              {/* Nav items — large touch targets, dark surface */}
+              <div className="space-y-1">
+                {NAV_ITEMS.map((item) => {
+                  const Icon = item.icon
+                  const active = item.href === '/' ? pathname === '/' : (pathname?.startsWith(item.href) ?? false)
+                  return (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`block p-6 rounded-2xl transition-all duration-200 ${
-                        pathname === item.href
-                          ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 border-2 border-primary-200 dark:border-primary-700'
-                          : 'text-text-primary dark:text-secondary-200 hover:bg-background-secondary dark:hover:bg-secondary-800 border-2 border-transparent'
-                      }`}
-                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center gap-4 px-4 py-4 rounded-lg transition-colors duration-150
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40
+                        ${active
+                          ? 'bg-white/10 text-white'
+                          : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                      onClick={close}
                     >
-                      <div className="flex items-center gap-4">
-                        <div className="text-2xl flex items-center justify-center">
-                          {React.cloneElement(item.icon, { className: "w-6 h-6" })}
-                        </div>
-                        <span className="mobbin-heading-3 font-semibold">{item.label}</span>
-                      </div>
+                      <Icon className="w-5 h-5 flex-shrink-0" />
+                      <span className="text-base font-medium">{item.label}</span>
+                      {/* Active indicator — amber dot */}
+                      {active && (
+                        <span
+                          className="ml-auto w-1.5 h-1.5 bg-amber-500 rounded-full"
+                          aria-hidden="true"
+                          style={{ boxShadow: '0 0 6px rgba(245, 158, 11, 0.5)' }}
+                        />
+                      )}
                     </Link>
-                  )) : (
-                    <div className="text-center text-text-secondary dark:text-secondary-400 py-8">
-                      <p className="mobbin-body">No navigation items available</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Spacer to push footer down */}
-                <div className="flex-1" />
+                  )
+                })}
               </div>
 
+              <div className="flex-1" />
+
+              {/* Signature amber line at bottom */}
+              <div
+                className="h-px mt-6"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, #F59E0B 30%, #F59E0B 70%, transparent 100%)',
+                  boxShadow: '0 0 8px rgba(245, 158, 11, 0.3)',
+                }}
+                aria-hidden="true"
+              />
             </div>
           </div>
         </div>

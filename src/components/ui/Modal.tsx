@@ -27,7 +27,7 @@ const modalVariants = cva(
 )
 
 const modalContentVariants = cva(
-  'relative w-full rounded-base bg-white p-6 shadow-large animate-modal-in',
+  'relative w-full rounded-base bg-secondary-800 p-6 shadow-large animate-modal-in',
   {
     variants: {
       size: {

@@ -5,13 +5,13 @@ import { H1 } from '@/components/ui/Heading'
 
 export default function ComingSoonPage() {
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
       
       <Section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
         <Container className="text-center">
           <H1 className="mb-8">Coming Soon</H1>
           <p className="text-xl text-stone leading-relaxed mb-8 max-w-2xl mx-auto">
-            This feature is currently under development. We&apos;re working hard to bring you the best possible experience.
+            This feature is in development. Check back soon or follow us for updates.
           </p>
           <Link 
             href="/"

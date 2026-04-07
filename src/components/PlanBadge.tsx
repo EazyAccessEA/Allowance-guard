@@ -14,17 +14,17 @@ const planConfig = {
   free: {
     label: 'Free',
     icon: null,
-    classes: 'border-neutral-200 bg-neutral-100 text-neutral-600 dark:border-secondary-600 dark:bg-secondary-800 dark:text-secondary-300',
+    classes: 'border-slate-600 bg-slate-800/60 text-slate-400',
   },
   pro: {
     label: 'Pro',
     icon: Sparkles,
-    classes: 'border-primary-200 bg-primary-50 text-primary-700 dark:border-primary-700 dark:bg-primary-900/30 dark:text-primary-300',
+    classes: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
   },
   sentinel: {
     label: 'Sentinel',
     icon: Crown,
-    classes: 'border-purple-200 bg-purple-50 text-purple-700 dark:border-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+    classes: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
   },
 } as const
 

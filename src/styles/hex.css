@@ -7,8 +7,8 @@
   --panel: #111317;
   --line: #1B1E24;
   --text: #E7E9ED;
-  --muted: #A7AEBB;
-  --brand: #27E3A1;
+  --muted: #BCC1CC; /* Boosted from #A7AEBB for WCAG AA 4.5:1 contrast on --bg */
+  --brand: #2EEAB0; /* Boosted from #27E3A1 for WCAG AA 4.5:1 contrast on --bg */
   --danger: #FF4D4F;
   --warn: #FFC53D;
   --info: #3DA9FF;
@@ -18,7 +18,7 @@
   --panel-hover: #15171B;
   --line-hover: #202329;
   --text-hover: #F0F2F5;
-  --muted-hover: #B8BFC9;
+  --muted-hover: #CDD1DA;
   --brand-hover: #1FCB8A;
   --brand-active: #17A673;
   --danger-hover: #FF3333;

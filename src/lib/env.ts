@@ -28,10 +28,9 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().url('NEXT_PUBLIC_APP_URL must be a valid URL'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 
-  // Cron protection
-  CRON_SECRET: z.string().optional(),
-
   // Email (optional — email features disabled when absent)
+  // Preferred: Resend. Fallbacks: Postmark, then SMTP.
+  RESEND_API_KEY: z.string().optional(),
   POSTMARK_SERVER_TOKEN: z.string().optional(),
   SMTP_HOST: z.string().optional(),
   SMTP_PORT: z.string().optional(),

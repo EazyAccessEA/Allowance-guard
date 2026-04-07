@@ -19,6 +19,30 @@ import { AppKit } from '../../appkit'
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 
+// Display font: Space Grotesk for headlines and hero text
+const spaceGrotesk = localFont({
+  src: [
+    { path: '../../public/fonts/SpaceGrotesk-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/SpaceGrotesk-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/SpaceGrotesk-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/SpaceGrotesk-Bold.ttf', weight: '700', style: 'normal' },
+  ],
+  display: 'swap',
+  variable: '--font-display',
+  preload: true,
+})
+
+// Editorial serif: Instrument Serif for premium section headlines
+const instrumentSerif = localFont({
+  src: [
+    { path: '../../public/fonts/InstrumentSerif-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/InstrumentSerif-Italic.ttf', weight: '400', style: 'italic' },
+  ],
+  display: 'swap',
+  variable: '--font-serif',
+  preload: false,
+})
+
 const inter = localFont({
   src: [
     { path: '../../public/fonts/Inter_18pt-Regular.ttf', weight: '400', style: 'normal' },
@@ -183,7 +207,7 @@ export default function RootLayout({
             .focus\\:absolute:focus { position: absolute; }
             .focus\\:top-2:focus { top: 0.5rem; }
             .focus\\:left-2:focus { left: 0.5rem; }
-            .bg-white { background-color: white; }
+            .bg-white { background-color: #0F172A; }
             .border { border-width: 1px; }
             .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
             .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
@@ -231,29 +255,30 @@ export default function RootLayout({
             }
             
             /* Critical hero section styles */
-            .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
-            .sm\\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
-            .lg\\:text-5xl { font-size: 3rem; line-height: 1; }
-            .font-bold { font-weight: 700; }
-            .text-text-primary { color: #0A0A0A; }
+            .font-display { font-family: var(--font-display), Inter, ui-sans-serif, system-ui; }
+            .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+            .sm\\:text-5xl { font-size: 3rem; line-height: 1.1; }
+            .md\\:text-6xl { font-size: 3.75rem; line-height: 1.1; }
+            .lg\\:text-7xl { font-size: 4.5rem; line-height: 1.05; }
+            .font-extrabold { font-weight: 800; }
+            .text-white { color: white; }
             .leading-tight { line-height: 1.25; }
+            .tracking-tight { letter-spacing: -0.025em; }
             .mb-6 { margin-bottom: 1.5rem; }
-            
+
             /* Critical button styles */
             .bg-primary-700 { background-color: #008B7A; }
-            .text-white { color: white; }
             .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
             .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
             .rounded-lg { border-radius: 0.5rem; }
             .font-medium { font-weight: 500; }
             .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; }
             .duration-200 { transition-duration: 200ms; }
-            .hover\\:bg-primary-800:hover { background-color: #006B5C; }
           `
         }} />
       </head>
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white border px-2 py-1 text-sm z-50">Skip to content</a>
+      <body className={`${inter.className} ${spaceGrotesk.variable} ${instrumentSerif.variable} min-h-screen flex flex-col`}>
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-secondary-800 border border-secondary-700 px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <ThemeProvider>
         <RollbarProvider>
@@ -273,8 +298,9 @@ export default function RootLayout({
         </ThemeProvider>
         <style dangerouslySetInnerHTML={{
           __html: `
-            :root { 
-              --font-mono: ${jetbrainsMono.style.fontFamily}; 
+            :root {
+              --font-mono: ${jetbrainsMono.style.fontFamily};
+              --font-display: ${spaceGrotesk.style.fontFamily};
             } 
             code, pre, .font-mono { 
               font-family: var(--font-mono); 

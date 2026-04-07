@@ -29,7 +29,7 @@ export default function APIPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-border-primary dark:border-secondary-700" />
+      <div className="border-t border-secondary-700" />
 
       {/* Quick Start */}
       <Section className="py-32">
@@ -38,7 +38,7 @@ export default function APIPage() {
             <H2 className="mb-8">Quick Start</H2>
             
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Base URL</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-8">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`https://www.allowanceguard.com/api`}
               </pre>
@@ -55,7 +55,7 @@ export default function APIPage() {
             </p>
 
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Headers</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-8">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`Accept: application/json
 Content-Type: application/json`}
@@ -63,7 +63,7 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Code Example</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-8">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`curl -X GET "https://www.allowanceguard.com/api/allowances?wallet=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&page=1&pageSize=25" \\
   -H "Accept: application/json"`}
@@ -85,30 +85,30 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Parameters</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border-primary dark:border-secondary-700">
+                  <tr className="border-b border-secondary-700">
                     <th className="text-left py-2 font-semibold text-text-primary dark:text-secondary-100">Parameter</th>
-                    <th className="text-left py-2 font-semibold text-ink">Type</th>
-                    <th className="text-left py-2 font-semibold text-ink">Required</th>
-                    <th className="text-left py-2 font-semibold text-ink">Description</th>
+                    <th className="text-left py-2 font-semibold text-white">Type</th>
+                    <th className="text-left py-2 font-semibold text-white">Required</th>
+                    <th className="text-left py-2 font-semibold text-white">Description</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
+                  <tr className="border-b border-secondary-700/50">
                     <td className="py-2 font-mono text-text-primary dark:text-secondary-100">wallet</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">string</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Yes</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Ethereum address (0x format)</td>
                   </tr>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
+                  <tr className="border-b border-secondary-700/50">
                     <td className="py-2 font-mono text-text-primary dark:text-secondary-100">page</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">number</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">No</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Page number (default: 1)</td>
                   </tr>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
+                  <tr className="border-b border-secondary-700/50">
                     <td className="py-2 font-mono text-text-primary dark:text-secondary-100">pageSize</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">number</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">No</td>
@@ -125,7 +125,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`{
   "allowances": [
@@ -155,7 +155,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Example Request</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`curl -X GET "https://www.allowanceguard.com/api/allowances?wallet=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&page=1&pageSize=25&riskOnly=true" \\
   -H "Accept: application/json"`}
@@ -168,18 +168,18 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Parameters</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border-primary dark:border-secondary-700">
+                  <tr className="border-b border-secondary-700">
                     <th className="text-left py-2 font-semibold text-text-primary dark:text-secondary-100">Parameter</th>
-                    <th className="text-left py-2 font-semibold text-ink">Type</th>
-                    <th className="text-left py-2 font-semibold text-ink">Required</th>
-                    <th className="text-left py-2 font-semibold text-ink">Description</th>
+                    <th className="text-left py-2 font-semibold text-white">Type</th>
+                    <th className="text-left py-2 font-semibold text-white">Required</th>
+                    <th className="text-left py-2 font-semibold text-white">Description</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
+                  <tr className="border-b border-secondary-700/50">
                     <td className="py-2 font-mono text-text-primary dark:text-secondary-100">wallet</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">string</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Yes</td>
@@ -196,7 +196,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`{
   "receipts": [
@@ -226,7 +226,7 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Request Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`{
   "walletAddress": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -236,7 +236,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`{
   "ok": true,
@@ -252,7 +252,7 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`{
   "id": 456,
@@ -282,21 +282,21 @@ Content-Type: application/json`}
             </p>
             
             <div className="space-y-4">
-              <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
                 <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">High Risk (score ≥ 50)</h4>
                 <p className="text-stone">
                   Unlimited allowances that pose immediate security risk. These allow complete drainage of token balances.
                 </p>
               </div>
               
-              <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
                 <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Medium Risk (score ≥ 10)</h4>
                 <p className="text-stone">
                   Stale allowances that have not been used for extended periods (90+ days). May indicate forgotten permissions.
                 </p>
               </div>
               
-              <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
                 <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Low Risk (score &lt; 10)</h4>
                 <p className="text-stone">
                   Recent, limited allowances that are likely safe and actively used.
@@ -305,53 +305,45 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6 mt-8">Chain ID Enum</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-6">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border-primary dark:border-secondary-700">
-                    <th className="text-left py-2 font-semibold text-ink">Chain ID</th>
-                    <th className="text-left py-2 font-semibold text-ink">Network</th>
-                    <th className="text-left py-2 font-semibold text-ink">Status</th>
+                  <tr className="border-b border-secondary-700">
+                    <th className="text-left py-2 font-semibold text-white">Chain ID</th>
+                    <th className="text-left py-2 font-semibold text-white">Network</th>
+                    <th className="text-left py-2 font-semibold text-white">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {[
-                    { id: '1', name: 'Ethereum Mainnet' },
-                    { id: '42161', name: 'Arbitrum One' },
-                    { id: '8453', name: 'Base' },
-                    { id: '10', name: 'Optimism' },
-                    { id: '137', name: 'Polygon' },
-                    { id: '43114', name: 'Avalanche' },
-                    { id: '56', name: 'BNB Smart Chain' },
-                    { id: '250', name: 'Fantom' },
-                    { id: '324', name: 'zkSync Era' },
-                    { id: '1101', name: 'Polygon zkEVM' },
-                    { id: '5000', name: 'Mantle' },
-                    { id: '100', name: 'Gnosis' },
-                    { id: '59144', name: 'Linea' },
-                    { id: '534352', name: 'Scroll' },
-                    { id: '42220', name: 'Celo' },
-                  ].map((chain, i, arr) => (
-                    <tr key={chain.id} className={i < arr.length - 1 ? 'border-b border-border-primary dark:border-secondary-700/50' : ''}>
-                      <td className="py-2 font-mono text-text-primary dark:text-secondary-100">{chain.id}</td>
-                      <td className="py-2 text-text-tertiary dark:text-secondary-400">{chain.name}</td>
-                      <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
-                    </tr>
-                  ))}
+                  <tr className="border-b border-secondary-700/50">
+                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">1</td>
+                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Ethereum Mainnet</td>
+                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
+                  </tr>
+                  <tr className="border-b border-secondary-700/50">
+                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">42161</td>
+                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Arbitrum One</td>
+                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">8453</td>
+                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Base</td>
+                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
 
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Risk Flags</h3>
             <div className="space-y-4">
-              <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
                 <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">UNLIMITED</h4>
                 <p className="text-stone">
                   The allowance amount equals the maximum uint256 value, giving unlimited access to the token.
                 </p>
               </div>
               
-              <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
                 <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">STALE</h4>
                 <p className="text-stone">
                   The allowance was last seen more than 90 days ago (650,000 blocks on Ethereum, 900,000 blocks on Arbitrum/Base).
@@ -374,27 +366,27 @@ Content-Type: application/json`}
             </p>
             
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Error Codes</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-8">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border-primary dark:border-secondary-700">
-                    <th className="text-left py-2 font-semibold text-ink">Code</th>
-                    <th className="text-left py-2 font-semibold text-ink">Description</th>
-                    <th className="text-left py-2 font-semibold text-ink">Cause</th>
+                  <tr className="border-b border-secondary-700">
+                    <th className="text-left py-2 font-semibold text-white">Code</th>
+                    <th className="text-left py-2 font-semibold text-white">Description</th>
+                    <th className="text-left py-2 font-semibold text-white">Cause</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
+                  <tr className="border-b border-secondary-700/50">
                     <td className="py-2 font-mono text-text-primary dark:text-secondary-100">400</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Bad Request</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Invalid address format</td>
                   </tr>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
+                  <tr className="border-b border-secondary-700/50">
                     <td className="py-2 font-mono text-text-primary dark:text-secondary-100">404</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Not Found</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Address has no allowances</td>
                   </tr>
-                  <tr className="border-b border-border-primary dark:border-secondary-700/50">
+                  <tr className="border-b border-secondary-700/50">
                     <td className="py-2 font-mono text-text-primary dark:text-secondary-100">429</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Too Many Requests</td>
                     <td className="py-2 text-text-tertiary dark:text-secondary-400">Rate limit exceeded</td>
@@ -426,7 +418,7 @@ Content-Type: application/json`}
             </p>
             
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Step 1: Fetch Allowances</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-8">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`async function fetchAllowances(walletAddress) {
   const response = await fetch(
@@ -439,7 +431,7 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Step 2: Display Data</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-8">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`function renderAllowances(allowances) {
   return allowances.map(allowance => {
@@ -461,7 +453,7 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Step 3: Facilitate Action</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6 mb-8">
+            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
               <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
 {`async function revokeAllowance(tokenAddress, spenderAddress, signer) {
   const tokenContract = new ethers.Contract(tokenAddress, [

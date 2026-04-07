@@ -4,28 +4,26 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
-import { Badge } from '@/components/ui/Badge'
 import DonationButton from '@/components/DonationButton'
-import { Heart, Shield, Code, Users, BookOpen, Github, MessageCircle, Mail, ChevronDown, ChevronUp } from 'lucide-react'
+import { Github, MessageCircle, Mail, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface FooterSectionProps {
   title: string
   children: React.ReactNode
   isOpen: boolean
   onToggle: () => void
-  icon?: React.ReactNode
 }
 
-function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectionProps) {
+function FooterSection({ title, children, isOpen, onToggle }: FooterSectionProps) {
   return (
-    <div className="border-b border-secondary-800 dark:border-secondary-700 md:border-b-0">
+    <div className="border-b border-white/5 md:border-b-0">
       <div
         onClick={onToggle}
         role="button"
         tabIndex={0}
         aria-expanded={isOpen}
         aria-controls={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
-        className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none cursor-pointer rounded-md hover:bg-secondary-800/50 dark:hover:bg-secondary-700/50 transition-colors duration-200"
+        className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none cursor-pointer rounded-md transition-colors duration-150"
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
@@ -33,16 +31,11 @@ function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectio
           }
         }}
       >
-        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-          {icon}
+        <h3 className="text-sm font-semibold text-white uppercase tracking-wide">
           {title}
         </h3>
-        <div className="md:hidden">
-          {isOpen ? (
-            <ChevronUp className="w-5 h-5 text-secondary-400" />
-          ) : (
-            <ChevronDown className="w-5 h-5 text-secondary-400" />
-          )}
+        <div className="md:hidden text-slate-400">
+          {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </div>
       </div>
       <div
@@ -57,199 +50,174 @@ function FooterSection({ title, children, isOpen, onToggle, icon }: FooterSectio
 
 export default function Footer() {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-    quickLinks: false,
+    product: false,
     community: false,
+    legal: false,
   })
 
   const toggleSection = (section: string) => {
-    setOpenSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }))
+    setOpenSections(prev => ({ ...prev, [section]: !prev[section] }))
   }
 
   return (
-    <footer className="bg-secondary-900 dark:bg-[#060A14] text-white border-t border-secondary-800 dark:border-secondary-800">
-      <Container className="py-16 sm:py-20 lg:py-24">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+    <footer className="relative bg-surface-base text-white">
+      {/* Signature amber top edge */}
+      <div
+        className="absolute top-0 left-0 right-0 h-px"
+        aria-hidden="true"
+        style={{
+          background: 'linear-gradient(90deg, transparent 0%, #F59E0B 20%, #F59E0B 80%, transparent 100%)',
+          boxShadow: '0 -1px 8px rgba(245, 158, 11, 0.2)',
+        }}
+      />
 
-          {/* Company Info */}
-          <div className="lg:col-span-2 text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
+      <Container className="py-12 sm:py-16">
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
+
+          {/* Brand column */}
+          <div className="lg:col-span-4">
+            <div className="flex items-center gap-3 mb-5">
               <Image
                 src="/AG_Logo2.png"
                 alt="Allowance Guard Logo"
-                width={40}
-                height={40}
+                width={36}
+                height={36}
                 className="rounded-lg"
               />
-              <div>
-                <h3 className="text-xl font-bold text-white">Allowance Guard</h3>
-                <p className="text-secondary-400 text-sm">Secure Token Approvals</p>
-              </div>
+              <span
+                className="text-lg font-bold text-white tracking-tight"
+                style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
+              >
+                AllowanceGuard
+              </span>
             </div>
-            <p className="text-secondary-300 leading-relaxed mb-6 max-w-md mx-auto md:mx-0">
-              The most comprehensive token allowance security platform for Web3.
-              Protect your digital assets with enterprise-grade security.
+            <p className="text-sm text-slate-400 leading-relaxed mb-6 max-w-xs">
+              Open-source security scanner. Premium monitoring and API for teams who need more.
             </p>
 
-            {/* Social Links */}
-            <div className="flex items-center justify-center md:justify-start gap-4">
-              <a
-                href="https://github.com/EazyAccessEA/Allowance-guard"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-secondary-800 dark:bg-secondary-800/60 hover:bg-primary-500 dark:hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 group"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5 text-secondary-400 group-hover:text-white" />
-              </a>
-              <a
-                href="https://discord.gg/DsJ4Pa94"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-secondary-800 dark:bg-secondary-800/60 hover:bg-primary-500 dark:hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 group"
-                aria-label="Discord"
-              >
-                <MessageCircle className="w-5 h-5 text-secondary-400 group-hover:text-white" />
-              </a>
-              <a
-                href="https://twitter.com/allowanceguard"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-secondary-800 dark:bg-secondary-800/60 hover:bg-primary-500 dark:hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 group"
-                aria-label="Twitter"
-              >
-                <svg className="w-5 h-5 text-secondary-400 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+            {/* Social */}
+            <div className="flex items-center gap-3">
+              <SocialLink href="https://github.com/EazyAccessEA/Allowance-guard" label="GitHub">
+                <Github className="w-4 h-4" />
+              </SocialLink>
+              <SocialLink href="https://discord.gg/DsJ4Pa94" label="Discord">
+                <MessageCircle className="w-4 h-4" />
+              </SocialLink>
+              <SocialLink href="https://twitter.com/allowanceguard" label="Twitter">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
-              </a>
+              </SocialLink>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <FooterSection
-            title="Quick Links"
-            icon={<BookOpen className="w-5 h-5 text-primary-400" />}
-            isOpen={openSections.quickLinks}
-            onToggle={() => toggleSection('quickLinks')}
-          >
-            <ul className="space-y-4 mt-6 md:mt-6">
-              <li>
-                <Link href="/pricing" className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 block">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 block">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/docs" className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 block">
-                  Documentation
-                </Link>
-              </li>
-              <li>
-                <Link href="/features" className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 block">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link href="/account" className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 block">
-                  Account
-                </Link>
-              </li>
-            </ul>
-          </FooterSection>
+          {/* Product links */}
+          <div className="lg:col-span-2">
+            <FooterSection
+              title="Product"
+              isOpen={openSections.product}
+              onToggle={() => toggleSection('product')}
+            >
+              <ul className="space-y-3 mt-4 md:mt-4">
+                <FooterLink href="/pricing">Pricing</FooterLink>
+                <FooterLink href="/features">Features</FooterLink>
+                <FooterLink href="/docs">Docs</FooterLink>
+                <FooterLink href="/docs/api-reference">API</FooterLink>
+                <FooterLink href="/account">Account</FooterLink>
+              </ul>
+            </FooterSection>
+          </div>
 
-          {/* Community */}
-          <FooterSection
-            title="Community"
-            icon={<Users className="w-5 h-5 text-primary-400" />}
-            isOpen={openSections.community}
-            onToggle={() => toggleSection('community')}
-          >
-            <ul className="space-y-4 mt-6 md:mt-6">
-              <li>
-                <a
-                  href="https://github.com/EazyAccessEA/Allowance-guard"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 flex items-center gap-2"
-                >
-                  <Github className="w-4 h-4" />
+          {/* Community links */}
+          <div className="lg:col-span-3">
+            <FooterSection
+              title="Community"
+              isOpen={openSections.community}
+              onToggle={() => toggleSection('community')}
+            >
+              <ul className="space-y-3 mt-4 md:mt-4">
+                <FooterLink href="https://github.com/EazyAccessEA/Allowance-guard" external>
                   GitHub
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://discord.gg/DsJ4Pa94"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 flex items-center gap-2"
-                >
-                  <MessageCircle className="w-4 h-4" />
+                </FooterLink>
+                <FooterLink href="https://discord.gg/DsJ4Pa94" external>
                   Discord
-                </a>
-              </li>
-              <li>
-                <Link href="/contact" className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  Contact Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/docs/contributing" className="text-secondary-300 hover:text-primary-400 transition-colors duration-200 flex items-center gap-2">
-                  <Code className="w-4 h-4" />
-                  Contributing
-                </Link>
-              </li>
-            </ul>
+                </FooterLink>
+                <FooterLink href="/blog">Blog</FooterLink>
+                <FooterLink href="/contact">Contact</FooterLink>
+                <FooterLink href="/docs/contributing">Contributing</FooterLink>
+              </ul>
+              <div className="mt-5">
+                <DonationButton />
+              </div>
+            </FooterSection>
+          </div>
 
-            {/* Donation Button */}
-            <div className="mt-6">
-              <DonationButton />
-            </div>
-          </FooterSection>
+          {/* Legal links */}
+          <div className="lg:col-span-3">
+            <FooterSection
+              title="Legal"
+              isOpen={openSections.legal}
+              onToggle={() => toggleSection('legal')}
+            >
+              <ul className="space-y-3 mt-4 md:mt-4">
+                <FooterLink href="/terms">Terms</FooterLink>
+                <FooterLink href="/privacy">Privacy</FooterLink>
+                <FooterLink href="/cookies">Cookies</FooterLink>
+                <FooterLink href="/dpa">DPA</FooterLink>
+                <FooterLink href="/sla">SLA</FooterLink>
+                <FooterLink href="/refund">Refunds</FooterLink>
+                <FooterLink href="https://allowanceguard.instatus.com" external>
+                  Status
+                </FooterLink>
+              </ul>
+            </FooterSection>
+          </div>
         </div>
 
-        {/* Bottom section */}
-        <div className="mt-16 pt-8 border-t border-secondary-800 dark:border-secondary-700">
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
-            <div className="flex-1 text-center md:text-left">
-              <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
-                <Badge variant="secondary" className="flex items-center gap-1 !bg-secondary-800 !text-secondary-200 !border-secondary-700">
-                  <Heart className="w-3 h-3 text-red-400" />
-                  Open Source
-                </Badge>
-                <Badge variant="success" className="flex items-center gap-1">
-                  <Shield className="w-3 h-3" />
-                  Free Core
-                </Badge>
-              </div>
-              <p className="text-secondary-300 text-sm max-w-2xl mx-auto md:mx-0">
-                Open-source core, always free. Premium monitoring and API access for power users and teams.
-                No VC, no token.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center md:items-end gap-3">
-              <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 text-sm text-secondary-400">
-                <Link href="/terms" className="hover:text-primary-400 transition-colors">Terms</Link>
-                <Link href="/privacy" className="hover:text-primary-400 transition-colors">Privacy</Link>
-                <Link href="/cookies" className="hover:text-primary-400 transition-colors">Cookies</Link>
-                <Link href="/sla" className="hover:text-primary-400 transition-colors">SLA</Link>
-                <Link href="/refund" className="hover:text-primary-400 transition-colors">Refunds</Link>
-                <Link href="/dpa" className="hover:text-primary-400 transition-colors">DPA</Link>
-                <a href="https://allowanceguard.instatus.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">Status</a>
-              </div>
-              <span className="text-sm text-secondary-400">&copy; 2025 Allowance Guard</span>
-            </div>
-          </div>
+        {/* Bottom bar */}
+        <div className="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-xs text-slate-400">
+            &copy; {new Date().getFullYear()} AllowanceGuard. AGPL-3.0 + Commercial.
+          </span>
+          <span className="text-xs text-slate-400">
+            No VC. No token. Community-funded.
+          </span>
         </div>
       </Container>
     </footer>
+  )
+}
+
+function FooterLink({ href, children, external }: { href: string; children: React.ReactNode; external?: boolean }) {
+  const className = "text-sm text-slate-400 hover:text-white transition-colors duration-150 block"
+  if (external) {
+    return (
+      <li>
+        <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+          {children}
+        </a>
+      </li>
+    )
+  }
+  return (
+    <li>
+      <Link href={href} className={className}>{children}</Link>
+    </li>
+  )
+}
+
+function SocialLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-9 h-9 bg-slate-800/50 hover:bg-amber-500/20 text-slate-400 hover:text-white rounded-md flex items-center justify-center transition-all duration-150
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
+      aria-label={label}
+    >
+      {children}
+    </a>
   )
 }

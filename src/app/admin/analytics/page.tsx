@@ -89,7 +89,7 @@ export default function AdminAnalyticsPage() {
         </div>
 
         {revenue.length > 0 && (
-          <div className="mt-4 overflow-x-auto rounded-lg border border-border-primary">
+          <div className="mt-4 overflow-x-auto rounded-lg border border-secondary-700">
             <table className="w-full text-sm">
               <thead className="bg-background-light">
                 <tr>
@@ -102,7 +102,7 @@ export default function AdminAnalyticsPage() {
               </thead>
               <tbody>
                 {revenue.map((r, i) => (
-                  <tr key={i} className="border-t border-border-primary">
+                  <tr key={i} className="border-t border-secondary-700">
                     <td className="px-4 py-2 font-medium capitalize text-text-primary">{r.plan}</td>
                     <td className="px-4 py-2 text-text-secondary">{r.status}</td>
                     <td className="px-4 py-2 text-right text-text-primary">{r.subscriber_count}</td>
@@ -126,7 +126,7 @@ export default function AdminAnalyticsPage() {
             {Object.entries(funnelTotals).map(([name, data]) => (
               <div
                 key={name}
-                className="rounded-lg border border-border-primary bg-background-primary p-4"
+                className="rounded-lg border border-secondary-700 bg-background-primary p-4"
               >
                 <p className="text-xs font-medium uppercase tracking-wide text-text-secondary">
                   {name.replace(/_/g, ' ')}
@@ -152,7 +152,7 @@ function StatCard({
   color?: 'default' | 'red'
 }) {
   return (
-    <div className="rounded-lg border border-border-primary bg-background-primary p-4">
+    <div className="rounded-lg border border-secondary-700 bg-background-primary p-4">
       <p className="text-xs font-medium uppercase tracking-wide text-text-secondary">{label}</p>
       <p
         className={cn(

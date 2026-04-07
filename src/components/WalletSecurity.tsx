@@ -146,7 +146,7 @@ export default function WalletSecurity() {
     )
   }
 
-  const riskInfo = data ? getRiskLevel(data.riskScore) : { level: 'Unknown', color: 'text-text-secondary', bg: 'bg-neutral-50 dark:bg-secondary-800', border: 'border-neutral-200 dark:border-secondary-700' }
+  const riskInfo = data ? getRiskLevel(data.riskScore) : { level: 'Unknown', color: 'text-text-secondary', bg: 'bg-secondary-800', border: 'border-neutral-200 dark:border-secondary-700' }
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -166,7 +166,7 @@ export default function WalletSecurity() {
         </div>
 
         {/* Wallet Address */}
-        <div className="bg-background-secondary dark:bg-secondary-800/60 rounded-xl p-4 mb-6 border border-border-primary dark:border-secondary-700">
+        <div className="bg-background-secondary dark:bg-secondary-800/60 rounded-xl p-4 mb-6 border border-secondary-700">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-text-secondary dark:text-secondary-400 mb-1">Connected Wallet</p>
@@ -176,7 +176,7 @@ export default function WalletSecurity() {
             </div>
             <button
               onClick={copyAddress}
-              className="flex items-center space-x-1 px-3 py-1.5 text-sm bg-white dark:bg-secondary-700 border border-border-primary dark:border-secondary-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-secondary-600 text-text-primary dark:text-secondary-200 transition-colors"
+              className="flex items-center space-x-1 px-3 py-1.5 text-sm bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg hover:bg-secondary-800 dark:hover:bg-secondary-600 text-text-primary dark:text-secondary-200 transition-colors"
             >
               <Copy className="h-4 w-4" />
               <span>Copy</span>
@@ -188,7 +188,7 @@ export default function WalletSecurity() {
       {/* Security Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Risk Score with Radial Gauge */}
-        <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
             <Shield className="h-6 w-6 text-primary-600 dark:text-primary-400" />
             <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${riskInfo.bg} ${riskInfo.color} ${riskInfo.border} border`}>
@@ -201,7 +201,7 @@ export default function WalletSecurity() {
         </div>
 
         {/* Total Allowances */}
-        <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
             <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
             <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800">
@@ -214,7 +214,7 @@ export default function WalletSecurity() {
         </div>
 
         {/* High Risk Allowances */}
-        <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
             <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
             <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800">
@@ -228,7 +228,7 @@ export default function WalletSecurity() {
       </div>
 
       {/* Security Actions */}
-      <div className="bg-white dark:bg-secondary-800/60 border border-border-primary dark:border-secondary-700 rounded-xl p-6">
+      <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6">
         <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-4">Security Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button

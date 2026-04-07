@@ -8,33 +8,38 @@ import Link from 'next/link'
 
 export default function DPAPage() {
   return (
-    <div className="min-h-screen bg-white text-ink">
+    <div className="min-h-screen bg-surface-base text-white">
 
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
+      <Section className="relative py-24 sm:py-32 overflow-hidden bg-secondary-900">
         <VideoBackground videoSrc="/V3AG.mp4" />
         <div
           className="absolute inset-0 z-10"
+          aria-hidden="true"
           style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
+            background:
+              'linear-gradient(to right, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.75) 60%, rgba(15,23,42,0.6) 100%)'
           }}
         />
 
-        <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Data Processing Agreement</H1>
-          <p className="text-xl text-stone max-w-reading mb-8">
-            Standard DPA template for Sentinel and Enterprise customers processing personal data through Allowance Guard.
+        <Container className="relative text-left max-w-4xl z-20">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+            Legal &middot; GDPR Article 28
+          </span>
+          <H1 className="mb-6 text-white">Data Processing Agreement</H1>
+          <p className="text-lg text-slate-300 max-w-reading">
+            The standard DPA for Sentinel and Enterprise customers who process personal data through AllowanceGuard. Plain language where the law allows it; precise language where it doesn&rsquo;t.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
+      <div className="border-t border-white/10" />
 
       {/* DPA Content */}
       <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="prose prose-lg max-w-none">
+            <div className="max-w-none text-slate-300">
 
               {/* Availability Notice */}
               <div className="mb-12">

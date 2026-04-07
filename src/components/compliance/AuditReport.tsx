@@ -9,7 +9,6 @@ import {
   FileText,
   Download,
   Calendar,
-  Filter,
   Loader2,
   CheckCircle,
   Clock,
@@ -165,7 +164,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                     className={`text-left p-3 rounded-lg border transition-colors ${
                       selectedType === r.type
                         ? 'border-primary-accent bg-primary-50'
-                        : 'border-border-primary hover:border-primary-200'
+                        : 'border-secondary-700 hover:border-primary-200'
                     }`}
                   >
                     <div className="text-sm font-medium text-text-primary">{r.label}</div>
@@ -185,7 +184,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                   className={`px-3 py-1.5 text-sm rounded border transition-colors ${
                     format === 'csv'
                       ? 'border-primary-accent bg-primary-50 text-primary-accent'
-                      : 'border-border-primary text-text-secondary hover:border-primary-200'
+                      : 'border-secondary-700 text-text-secondary hover:border-primary-200'
                   }`}
                 >
                   CSV
@@ -195,7 +194,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                   className={`px-3 py-1.5 text-sm rounded border transition-colors ${
                     format === 'json'
                       ? 'border-primary-accent bg-primary-50 text-primary-accent'
-                      : 'border-border-primary text-text-secondary hover:border-primary-200'
+                      : 'border-secondary-700 text-text-secondary hover:border-primary-200'
                   }`}
                 >
                   JSON
@@ -214,7 +213,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="px-2 py-1.5 text-sm border border-border-primary rounded bg-background-primary text-text-primary"
+                  className="px-2 py-1.5 text-sm border border-secondary-700 rounded bg-background-primary text-text-primary"
                 />
               </div>
               <div>
@@ -223,7 +222,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="px-2 py-1.5 text-sm border border-border-primary rounded bg-background-primary text-text-primary"
+                  className="px-2 py-1.5 text-sm border border-secondary-700 rounded bg-background-primary text-text-primary"
                 />
               </div>
             </div>
@@ -276,7 +275,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
               {history.map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex items-center justify-between p-3 rounded-lg border border-border-primary"
+                  className="flex items-center justify-between p-3 rounded-lg border border-secondary-700"
                 >
                   <div className="flex items-center gap-3">
                     <FileText className="w-4 h-4 text-text-tertiary" />

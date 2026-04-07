@@ -70,7 +70,7 @@ export default function PreferencesPage() {
   return (
     <div className="min-h-screen bg-background-primary dark:bg-secondary-900">
       {/* Header */}
-      <header className="bg-background-primary dark:bg-secondary-900 border-b border-border-primary dark:border-secondary-700">
+      <header className="bg-background-primary dark:bg-secondary-900 border-b border-secondary-700">
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
@@ -97,7 +97,7 @@ export default function PreferencesPage() {
 
         <form onSubmit={handleSave} className="space-y-8">
           {/* Email Settings */}
-          <div className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+          <div className="bg-background-primary dark:bg-secondary-900 border border-secondary-700 rounded-lg p-6">
             <div className="flex items-center mb-4">
               <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
               <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Email Settings</h2>
@@ -113,7 +113,7 @@ export default function PreferencesPage() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 min-h-[44px] border border-border-primary dark:border-secondary-600 rounded-lg bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-4 py-3 min-h-[44px] border border-secondary-700 dark:border-secondary-600 rounded-lg bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="Enter your email address"
                   required
                 />
@@ -125,7 +125,7 @@ export default function PreferencesPage() {
           </div>
 
           {/* Alert Preferences */}
-          <div className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+          <div className="bg-background-primary dark:bg-secondary-900 border border-secondary-700 rounded-lg p-6">
             <div className="flex items-center mb-4">
               <Bell className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
               <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Alert Preferences</h2>
@@ -144,7 +144,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('emailAlerts', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-secondary-700 dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
@@ -160,7 +160,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('riskOnly', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-secondary-700 dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
@@ -176,7 +176,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('dailyDigest', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-secondary-700 dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
@@ -192,14 +192,14 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('weeklySummary', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-secondary-700 dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
             </div>
           </div>
 
           {/* Slack Integration */}
-          <div className="bg-background-primary dark:bg-secondary-900 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+          <div className="bg-background-primary dark:bg-secondary-900 border border-secondary-700 rounded-lg p-6">
             <div className="flex items-center mb-4">
               <Settings className="w-5 h-5 text-purple-600 dark:text-purple-400 mr-2" />
               <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">Slack Integration</h2>
@@ -218,7 +218,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('slackAlerts', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-neutral-200 dark:bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-border-primary dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-secondary-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-secondary-700 dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
                 </label>
               </div>
 
@@ -232,7 +232,7 @@ export default function PreferencesPage() {
                     id="webhook"
                     value={preferences.webhookUrl}
                     onChange={(e) => handlePreferenceChange('webhookUrl', e.target.value)}
-                    className="w-full px-4 py-3 min-h-[44px] border border-border-primary dark:border-secondary-600 rounded-lg bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 min-h-[44px] border border-secondary-700 dark:border-secondary-600 rounded-lg bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="https://hooks.slack.com/services/..."
                   />
                   <p className="text-sm text-text-tertiary dark:text-secondary-500 mt-1">
@@ -283,7 +283,7 @@ export default function PreferencesPage() {
         </form>
 
         {/* Help Section */}
-        <div className="mt-12 bg-background-secondary dark:bg-secondary-800 border border-border-primary dark:border-secondary-700 rounded-lg p-6">
+        <div className="mt-12 bg-background-secondary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
           <div className="flex items-center mb-4">
             <Shield className="w-5 h-5 text-text-secondary dark:text-secondary-400 mr-2" />
             <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100">Need Help?</h3>
@@ -308,7 +308,7 @@ export default function PreferencesPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-background-secondary dark:bg-secondary-800 border-t border-border-primary dark:border-secondary-700 mt-16">
+      <footer className="bg-background-secondary dark:bg-secondary-800 border-t border-secondary-700 mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
           <div className="text-center">
             <p className="text-text-secondary dark:text-secondary-400 text-sm">

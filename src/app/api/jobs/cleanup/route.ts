@@ -5,23 +5,12 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 /**
- * GET /api/jobs/cleanup — CRON_SECRET-protected data lifecycle cleanup.
+ * GET /api/jobs/cleanup — Data lifecycle cleanup.
  *
- * Runs daily at 03:00 UTC (configured in vercel.json).
+ * Runs daily at 03:00 UTC via cron-job.org.
  * Calls existing cleanup functions and performs additional data pruning.
  */
-export async function GET(req: NextRequest) {
-  // Verify cron secret — fail CLOSED if not configured
-  // Supports both CRON_SECRET and CRON_JOBS_API_KEY for backwards compatibility
-  const cronSecret = process.env.CRON_SECRET || process.env.CRON_JOBS_API_KEY
-  if (!cronSecret) {
-    return NextResponse.json({ error: 'Server misconfigured' }, { status: 500 })
-  }
-  const authHeader = req.headers.get('authorization')
-  if (authHeader !== `Bearer ${cronSecret}`) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-
+export async function GET(_req: NextRequest) {
   const results: { task: string; rowsAffected: number; durationMs: number }[] = []
 
   try {

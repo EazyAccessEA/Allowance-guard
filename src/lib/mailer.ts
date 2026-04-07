@@ -215,9 +215,47 @@ export function getTransport() {
 
 export async function sendMail(to: string, subject: string, html: string, text?: string) {
   // E2E fake email mode
-  if (process.env.E2E_FAKE_EMAIL === '1') {
+  if (process.env.E2E_FAKE_EMAIL === '1' || process.env.E2E_FAKE_EMAIL === 'true') {
     console.log('[E2E_FAKE_EMAIL]', { to, subject })
     return { ok: true, id: 'fake' }
+  }
+
+  // Preferred provider: Resend (HTTP API, no nodemailer dependency needed)
+  const resendKey = process.env.RESEND_API_KEY
+  if (resendKey) {
+    const fullHTML = createEmailHTML(html, to)
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${resendKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: `${fromName} <${fromEmail}>`,
+          to: [to],
+          subject,
+          html: fullHTML,
+          text: text || fullHTML.replace(/<[^>]*>/g, ''),
+        }),
+      })
+      if (!res.ok) {
+        const errText = await res.text().catch(() => '')
+        emailLogger.error('Resend send failed', { status: res.status, body: errText.slice(0, 500) })
+        throw new Error(`Resend send failed: ${res.status}`)
+      }
+      const data = (await res.json()) as { id?: string }
+      emailLogger.info('Email sent successfully (resend)', { messageId: data.id, to, subject, from: fromEmail })
+      await incrEmail()
+      return { messageId: data.id ?? '', accepted: [to] }
+    } catch (error) {
+      emailLogger.error('Resend email error', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        to,
+        subject,
+      })
+      throw error
+    }
   }
 
   const transporter = getTransport()
@@ -412,6 +450,51 @@ export async function sendReEngagementEmail(to: string, plan: string) {
   `
 
   return sendMail(to, `We miss you! Come back to Allowance Guard ${planLabel}`, content)
+}
+
+// Failed payment notification (called from billing webhook)
+export async function sendFailedPaymentEmail(to: string, plan: string, attemptCount: number) {
+  const planLabel = plan.includes('sentinel')
+    ? 'Sentinel'
+    : plan.includes('growth')
+      ? 'API Growth'
+      : plan.includes('developer')
+        ? 'API Developer'
+        : 'Pro'
+
+  const isLastAttempt = attemptCount >= 3
+
+  const content = `
+    <div class="alert-box">
+      <h2 style="margin-top: 0;">Payment Failed</h2>
+      <p style="margin-bottom: 0;">We were unable to process your payment for your <strong>${planLabel}</strong> subscription.</p>
+    </div>
+
+    ${isLastAttempt ? `
+    <p><strong>This was our final attempt.</strong> Your subscription will be cancelled unless you update your payment method now.</p>
+    ` : `
+    <p>We'll try again in a few days, but we recommend updating your payment method now to avoid any interruption to your service.</p>
+    `}
+
+    <p style="text-align: center;">
+      <a href="https://allowanceguard.com/account/billing" class="button">
+        Update Payment Method
+      </a>
+    </p>
+
+    <p style="color: #6b7280; font-size: 14px;">
+      If you believe this is an error, please contact us at
+      <a href="mailto:support@allowanceguard.com" style="color: #3b82f6;">support@allowanceguard.com</a>.
+    </p>
+  `
+
+  return sendMail(
+    to,
+    isLastAttempt
+      ? 'Action Required: Your payment failed — subscription at risk'
+      : 'Payment failed — please update your payment method',
+    content,
+  )
 }
 
 // Test function for SMTP configuration

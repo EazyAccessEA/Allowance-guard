@@ -12,13 +12,13 @@ import {
   CheckCircle,
   AlertTriangle,
   ArrowUpRight,
-  ArrowDownRight,
   Plus,
   Minus,
   RefreshCw,
   Clock,
 } from 'lucide-react'
 import { InlineError } from '@/components/ErrorBoundary'
+import EmptyState from '@/components/EmptyState'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -214,7 +214,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
           ) : loading && events.length === 0 ? (
             <div className="animate-pulse space-y-3">
               {[1, 2, 3].map(i => (
-                <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-border-primary">
+                <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-secondary-700">
                   <div className="w-4 h-4 bg-gray-200 rounded-full mt-0.5"></div>
                   <div className="flex-1 space-y-2">
                     <div className="h-4 bg-gray-200 rounded w-1/3"></div>
@@ -225,13 +225,12 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
               ))}
             </div>
           ) : events.length === 0 ? (
-            <div className="text-center py-8">
-              <BellOff className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
-              <p className="text-sm text-text-secondary">No monitoring events yet</p>
-              <p className="text-xs text-text-tertiary mt-1">
-                Events will appear here when changes are detected in your wallet&apos;s approvals.
-              </p>
-            </div>
+            <EmptyState
+              icon={<BellOff className="w-7 h-7" />}
+              title="No monitoring events yet"
+              description="Events will appear here when changes are detected in your wallet's approvals."
+              upgradePlan="pro"
+            />
           ) : (
             <>
               <div className="space-y-3">
@@ -240,7 +239,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
                     key={evt.id}
                     className={`flex items-start gap-3 p-3 rounded-lg border ${
                       evt.acknowledged
-                        ? 'border-border-primary bg-background-secondary'
+                        ? 'border-secondary-700 bg-background-secondary'
                         : 'border-primary-200 bg-primary-50'
                     }`}
                   >
@@ -290,7 +289,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-border-primary">
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-700">
                   <div className="text-sm text-text-secondary">
                     Page {page} of {totalPages}
                   </div>
