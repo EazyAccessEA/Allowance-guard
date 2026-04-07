@@ -6,6 +6,7 @@ import { db } from '@/db'
 // import { coinbaseDonations } from '@/db/schema' // TODO: Implement when needed
 import { sql } from 'drizzle-orm'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
+import { activateCryptoSubscription } from '@/lib/coinbase-subscription'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -120,6 +121,24 @@ export async function POST(req: Request) {
         email         = COALESCE(EXCLUDED.email, coinbase_donations.email),
         updated_at    = NOW()
     `)
+
+    // If this charge is a subscription payment (metadata.kind === 'subscription'),
+    // activate / extend the user's subscription on confirmed/resolved events.
+    const meta = (data?.metadata ?? {}) as Record<string, unknown>
+    const isSubscription = meta.kind === 'subscription' && meta.ag_user_id && meta.ag_plan
+    const confirmed = status === 'COMPLETED' || status === 'CONFIRMED' || status === 'RESOLVED'
+    if (isSubscription && confirmed) {
+      try {
+        await activateCryptoSubscription({
+          userId: Number(meta.ag_user_id),
+          plan: String(meta.ag_plan),
+          interval: (String(meta.ag_interval ?? 'monthly') as 'monthly' | 'yearly'),
+          chargeCode,
+        })
+      } catch (err) {
+        console.error('❌ Coinbase subscription activation failed', err)
+      }
+    }
 
     await auditWebhook('coinbase', ev?.type || 'unknown', chargeCode, { timeline: data.timeline })
     await markProcessed('coinbase', eventId)
