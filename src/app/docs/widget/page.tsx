@@ -24,7 +24,7 @@ export default function WidgetPage() {
     <div className="relative">
       <button
         onClick={() => copyToClipboard(code, id)}
-        className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+        className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-md transition-colors"
       >
         {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
       </button>
@@ -77,20 +77,29 @@ export default function WidgetPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-base text-white">
+    <div className="min-h-screen bg-secondary-900 text-white">
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-blue-100" />
+      <Section className="relative py-20 sm:py-28 overflow-hidden bg-secondary-900">
+        <div
+          className="absolute inset-0 z-0"
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(245,158,11,0.06) 0%, transparent 70%)',
+          }}
+        />
         <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">AllowanceGuard Widget</H1>
-          <p className="text-lg text-stone leading-relaxed mb-8">
-            Drop-in widget for any website. Protect your users from risky token approvals 
-            with our embeddable security component.
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+            Docs &middot; Widget
+          </span>
+          <H1 className="mb-6 text-white">AllowanceGuard Widget</H1>
+          <p className="text-lg text-slate-300 max-w-reading">
+            A drop-in security component you can paste into any website. Configure it below, copy the snippet, and your users get an approval scanner without leaving your page.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
+      <div className="border-t border-white/10" />
 
       {/* Live Preview */}
       <Section className="py-16">
@@ -103,12 +112,12 @@ export default function WidgetPage() {
                 <div className="flex items-center justify-between mb-6">
                   <H2>Live Preview</H2>
                   <div className="flex items-center space-x-2">
-                    <Eye size={20} className="text-gray-500" />
-                    <span className="text-sm text-gray-500">Real-time preview</span>
+                    <Eye size={20} className="text-slate-400" />
+                    <span className="text-sm text-slate-400">Real-time preview</span>
                   </div>
                 </div>
                 
-                <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                <div className="border border-white/10 rounded-lg p-4 bg-white/[0.03]">
                   <AllowanceGuardWidget
                     walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
                     chainId={1}
@@ -128,15 +137,15 @@ export default function WidgetPage() {
                 <div className="flex items-center justify-between mb-6">
                   <H2>Configuration</H2>
                   <div className="flex items-center space-x-2">
-                    <Settings size={20} className="text-gray-500" />
-                    <span className="text-sm text-gray-500">Customize widget</span>
+                    <Settings size={20} className="text-slate-400" />
+                    <span className="text-sm text-slate-400">Customize widget</span>
                   </div>
                 </div>
 
                 <div className="space-y-6">
                   {/* Theme Selection */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
                       Theme
                     </label>
                     <div className="flex space-x-2">
@@ -147,7 +156,7 @@ export default function WidgetPage() {
                           className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                             selectedTheme === theme
                               ? 'bg-blue-500 text-white'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                              : 'bg-slate-900/60 border border-white/10 text-slate-200 text-slate-300 hover:bg-white/10'
                           }`}
                         >
                           {theme.charAt(0).toUpperCase() + theme.slice(1)}
@@ -158,7 +167,7 @@ export default function WidgetPage() {
 
                   {/* Display Options */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
                       Display Options
                     </label>
                     <div className="space-y-3">
@@ -185,7 +194,7 @@ export default function WidgetPage() {
 
                   {/* Max Items */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
                       Max Items: {maxItems}
                     </label>
                     <input
@@ -200,16 +209,16 @@ export default function WidgetPage() {
 
                   {/* Wallet Address */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
                       Wallet Address
                     </label>
                     <input
                       type="text"
                       value="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
                       readOnly
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm font-mono"
+                      className="w-full px-3 py-2 border border-white/10 rounded-md bg-white/[0.03] text-sm font-mono"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-slate-400 mt-1">
                       Demo wallet (Vitalik&apos;s address)
                     </p>
                   </div>
@@ -221,7 +230,7 @@ export default function WidgetPage() {
       </Section>
 
       {/* Code Generation */}
-      <Section className="py-16 bg-mist/30">
+      <Section className="py-16 bg-white/[0.02]">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8 text-center">Generated Code</H2>
@@ -272,7 +281,7 @@ export default function WidgetPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
               {/* React Installation */}
-              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
+              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6">
                 <div className="flex items-center mb-4">
                   <Code className="mr-3 text-blue-600" size={24} />
                   <H3>React Installation</H3>
@@ -280,24 +289,24 @@ export default function WidgetPage() {
                 
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-700 mb-2">1. Install the package:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
+                    <p className="text-sm font-medium text-slate-300 mb-2">1. Install the package:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
                   </div>
                   
                   <div>
-                    <p className="text-sm font-medium text-gray-700 mb-2">2. Import and use:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
+                    <p className="text-sm font-medium text-slate-300 mb-2">2. Import and use:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
                   </div>
                   
                   <div>
-                    <p className="text-sm font-medium text-gray-700 mb-2">3. Add to your component:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto">{generateWidgetCode()}</pre>
+                    <p className="text-sm font-medium text-slate-300 mb-2">3. Add to your component:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm overflow-x-auto">{generateWidgetCode()}</pre>
                   </div>
                 </div>
               </div>
 
               {/* HTML Installation */}
-              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
+              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6">
                 <div className="flex items-center mb-4">
                   <Download className="mr-3 text-green-600" size={24} />
                   <H3>HTML Installation</H3>
@@ -305,18 +314,18 @@ export default function WidgetPage() {
                 
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-gray-700 mb-2">1. Include the script:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
+                    <p className="text-sm font-medium text-slate-300 mb-2">1. Include the script:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
                   </div>
                   
                   <div>
-                    <p className="text-sm font-medium text-gray-700 mb-2">2. Add container div:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;div id=&quot;allowance-guard-widget&quot;&gt;&lt;/div&gt;</pre>
+                    <p className="text-sm font-medium text-slate-300 mb-2">2. Add container div:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">&lt;div id=&quot;allowance-guard-widget&quot;&gt;&lt;/div&gt;</pre>
                   </div>
                   
                   <div>
-                    <p className="text-sm font-medium text-gray-700 mb-2">3. Initialize the widget:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
+                    <p className="text-sm font-medium text-slate-300 mb-2">3. Initialize the widget:</p>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm overflow-x-auto">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
                   </div>
                 </div>
               </div>
@@ -327,125 +336,125 @@ export default function WidgetPage() {
       </Section>
 
       {/* Widget Properties */}
-      <Section className="py-16 bg-mist/30">
+      <Section className="py-16 bg-white/[0.02]">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8 text-center">Widget Properties</H2>
             
-            <div className="bg-secondary-800 border border-secondary-700 rounded-lg overflow-hidden">
+            <div className="bg-white/[0.05] border border-white/10 rounded-lg overflow-hidden">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-white/[0.03]">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
                       Property
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
                       Type
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
                       Default
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">
                       Description
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">
                       walletAddress
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       string
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       -
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-slate-400">
                       The wallet address to display allowances for
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">
                       chainId
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       number
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       1
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-slate-400">
                       The blockchain chain ID to filter by
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">
                       showRiskOnly
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       boolean
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       false
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-slate-400">
                       Show only high-risk allowances
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">
                       maxItems
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       number
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       10
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-slate-400">
                       Maximum number of allowances to display
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">
                       theme
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       string
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       &apos;light&apos;
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-slate-400">
                       Widget theme: &apos;light&apos;, &apos;dark&apos;, or &apos;auto&apos;
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">
                       compact
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       boolean
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       false
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-slate-400">
                       Use compact display mode
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-white">
                       onAllowanceClick
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       function
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
                       -
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-slate-400">
                       Callback when an allowance is clicked
                     </td>
                   </tr>

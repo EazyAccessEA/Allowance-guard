@@ -20,7 +20,7 @@ export default function IntegrationPage() {
     <div className="relative">
       <button
         onClick={() => copyToClipboard(code, id)}
-        className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+        className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-md transition-colors"
       >
         {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
       </button>
@@ -165,20 +165,29 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
   })`
 
   return (
-    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
+    <div className="min-h-screen bg-secondary-900 text-white">
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-blue-100" />
+      <Section className="relative py-20 sm:py-28 overflow-hidden bg-secondary-900">
+        <div
+          className="absolute inset-0 z-0"
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(245,158,11,0.06) 0%, transparent 70%)',
+          }}
+        />
         <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Integration Guide</H1>
-          <p className="text-lg text-stone leading-relaxed mb-8">
-            Integrate AllowanceGuard into your dApp, wallet, or service with our comprehensive toolkit. 
-            Choose from React hooks, embeddable widgets, or Node.js SDK.
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+            Docs &middot; Integration
+          </span>
+          <H1 className="mb-6 text-white">Integration Guide</H1>
+          <p className="text-lg text-slate-300 max-w-reading">
+            Drop AllowanceGuard into your dApp, wallet, or service. Embed the widget, call the REST API, or build against React hooks &mdash; pick the integration that fits your stack and ship in an afternoon.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-line" />
+      <div className="border-t border-white/10" />
 
       {/* Integration Options */}
       <Section className="py-16">
@@ -187,15 +196,15 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             <H2 className="mb-12 text-center">Choose Your Integration Method</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center mb-4">
                   <Globe className="mr-3 text-blue-600" size={24} />
                   <H3>Embeddable Widget</H3>
                 </div>
-                <p className="text-stone mb-4">
+                <p className="text-slate-300 mb-4">
                   Drop-in widget for any website. Works with React, Vue, Angular, or vanilla HTML.
                 </p>
-                <ul className="text-sm text-stone space-y-2">
+                <ul className="text-sm text-slate-300 space-y-2">
                   <li>• Zero configuration</li>
                   <li>• Customizable themes</li>
                   <li>• Real-time updates</li>
@@ -203,15 +212,15 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center mb-4">
                   <Zap className="mr-3 text-yellow-600" size={24} />
                   <H3>React Hooks</H3>
                 </div>
-                <p className="text-stone mb-4">
+                <p className="text-slate-300 mb-4">
                   Custom React hooks for seamless integration into React applications.
                 </p>
-                <ul className="text-sm text-stone space-y-2">
+                <ul className="text-sm text-slate-300 space-y-2">
                   <li>• TypeScript support</li>
                   <li>• Automatic caching</li>
                   <li>• Error handling</li>
@@ -219,15 +228,15 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center mb-4">
                   <Package className="mr-3 text-green-600" size={24} />
                   <H3>Node.js SDK</H3>
                 </div>
-                <p className="text-stone mb-4">
+                <p className="text-slate-300 mb-4">
                   Full-featured SDK for backend services and server-side applications.
                 </p>
-                <ul className="text-sm text-stone space-y-2">
+                <ul className="text-sm text-slate-300 space-y-2">
                   <li>• Complete API coverage</li>
                   <li>• Built-in retry logic</li>
                   <li>• Data export features</li>
@@ -240,11 +249,11 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
       </Section>
 
       {/* Live Widget Demo */}
-      <Section className="py-16 bg-mist/30">
+      <Section className="py-16 bg-white/[0.02]">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8 text-center">Live Widget Demo</H2>
-            <p className="text-center text-stone mb-8">
+            <p className="text-center text-slate-300 mb-8">
               See the AllowanceGuard widget in action with real data.
             </p>
             
@@ -291,7 +300,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Globe className="mr-3 text-blue-600" size={24} />
                   <H3>React Widget Integration</H3>
                 </div>
-                <p className="text-stone mb-6">
+                <p className="text-slate-300 mb-6">
                   Install the widget package and embed it in your React application.
                 </p>
                 <CodeBlock code={reactWidgetCode} language="jsx" id="react-widget" />
@@ -303,7 +312,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Code className="mr-3 text-green-600" size={24} />
                   <H3>HTML/JavaScript Integration</H3>
                 </div>
-                <p className="text-stone mb-6">
+                <p className="text-slate-300 mb-6">
                   Include the widget script and initialize it in any HTML page.
                 </p>
                 <CodeBlock code={htmlWidgetCode} language="html" id="html-widget" />
@@ -315,7 +324,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Zap className="mr-3 text-yellow-600" size={24} />
                   <H3>React Hooks Integration</H3>
                 </div>
-                <p className="text-stone mb-6">
+                <p className="text-slate-300 mb-6">
                   Use our custom hooks for more control over data fetching and state management.
                 </p>
                 <CodeBlock code={reactHooksCode} language="jsx" id="react-hooks" />
@@ -327,7 +336,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Package className="mr-3 text-purple-600" size={24} />
                   <H3>Node.js SDK Integration</H3>
                 </div>
-                <p className="text-stone mb-6">
+                <p className="text-slate-300 mb-6">
                   Use the SDK in your backend services for comprehensive wallet security analysis.
                 </p>
                 <CodeBlock code={nodeSDKCode} language="javascript" id="node-sdk" />
@@ -339,64 +348,64 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
       </Section>
 
       {/* Installation Instructions */}
-      <Section className="py-16 bg-mist/30">
+      <Section className="py-16 bg-white/[0.02]">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8 text-center">Installation & Setup</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <H3 className="mb-4">React Widget</H3>
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Installation:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-widget</pre>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Import:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">import AllowanceGuardWidget from &apos;allowance-guard-widget&apos;</pre>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <H3 className="mb-4">React Hooks</H3>
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Installation:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-hooks</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-hooks</pre>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Import:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">import &#123; useAllowances &#125; from &apos;allowance-guard-hooks&apos;</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">import &#123; useAllowances &#125; from &apos;allowance-guard-hooks&apos;</pre>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <H3 className="mb-4">Node.js SDK</H3>
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Installation:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">npm install allowance-guard-sdk</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">npm install allowance-guard-sdk</pre>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Import:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">const AllowanceGuardSDK = require(&apos;allowance-guard-sdk&apos;)</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">const AllowanceGuardSDK = require(&apos;allowance-guard-sdk&apos;)</pre>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <H3 className="mb-4">HTML Widget</H3>
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">CDN Script:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">&lt;script src=&quot;https://unpkg.com/allowance-guard-widget@latest/dist/widget.js&quot;&gt;&lt;/script&gt;</pre>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Initialize:</p>
-                    <pre className="bg-gray-100 p-3 rounded text-sm">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
+                    <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-sm">AllowanceGuardWidget.init(&#123;...&#125;)</pre>
                   </div>
                 </div>
               </div>
@@ -412,12 +421,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             <H2 className="mb-8 text-center">Best Practices</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <div className="flex items-center mb-4">
                   <Shield className="mr-3 text-green-600" size={20} />
                   <H3>Security</H3>
                 </div>
-                <ul className="text-sm text-stone space-y-2">
+                <ul className="text-sm text-slate-300 space-y-2">
                   <li>• Always validate wallet addresses client-side</li>
                   <li>• Use HTTPS for all API requests</li>
                   <li>• Implement proper error handling</li>
@@ -425,12 +434,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <div className="flex items-center mb-4">
                   <Zap className="mr-3 text-blue-600" size={20} />
                   <H3>Performance</H3>
                 </div>
-                <ul className="text-sm text-stone space-y-2">
+                <ul className="text-sm text-slate-300 space-y-2">
                   <li>• Use pagination for large datasets</li>
                   <li>• Implement client-side caching</li>
                   <li>• Debounce user input for search</li>
@@ -438,12 +447,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <div className="flex items-center mb-4">
                   <Globe className="mr-3 text-purple-600" size={20} />
                   <H3>User Experience</H3>
                 </div>
-                <ul className="text-sm text-stone space-y-2">
+                <ul className="text-sm text-slate-300 space-y-2">
                   <li>• Show loading states during API calls</li>
                   <li>• Provide clear error messages</li>
                   <li>• Use consistent theming</li>
@@ -451,12 +460,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
                 <div className="flex items-center mb-4">
                   <Package className="mr-3 text-orange-600" size={20} />
                   <H3>Integration</H3>
                 </div>
-                <ul className="text-sm text-stone space-y-2">
+                <ul className="text-sm text-slate-300 space-y-2">
                   <li>• Test with multiple wallet addresses</li>
                   <li>• Handle network switching gracefully</li>
                   <li>• Implement proper TypeScript types</li>
