@@ -99,7 +99,7 @@ export default function Hero({
               className="max-w-2xl text-xl sm:text-2xl font-medium text-slate-300 mb-8 sm:mb-10 leading-relaxed"
               delay={0.8}
             >
-              Every dApp you use asks for permission. Most users sign once and forget. Attackers don&rsquo;t. AllowanceGuard finds every approval, scores its risk, and lets you revoke it &mdash; across 10 chains, without surrendering custody.
+              Every dApp you use asks for permission. Most users sign once and forget. Attackers don&rsquo;t. AllowanceGuard finds every approval, scores its risk, and lets you revoke it &mdash; across 15 chains, without surrendering custody.
             </BlurText>
 
             {/* CTAs */}
@@ -204,7 +204,7 @@ export default function Hero({
               {/* Stat rows — defensible facts only */}
               <div className="space-y-3">
                 <StatRow
-                  value={10}
+                  value={15}
                   label="EVM chains covered"
                   delay={1.4}
                 />
