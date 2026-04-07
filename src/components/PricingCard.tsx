@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Check, X, Loader2 } from 'lucide-react'
+import { Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   type ConsumerPlan,
@@ -12,6 +12,7 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { trackClientEvent } from '@/lib/analytics'
+import PaymentMethodModal from './PaymentMethodModal'
 
 interface PricingCardProps {
   plan: 'free' | 'pro' | 'sentinel'
@@ -83,42 +84,11 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   const ctaText = plan === 'free' ? 'Start Scanning' : `Upgrade to ${displayName}`
 
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
-  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const [modalOpen, setModalOpen] = useState(false)
 
-  async function handleUpgrade() {
-    setCheckoutLoading(true)
-    setCheckoutError(null)
-
+  function handleUpgrade() {
     trackClientEvent('upgrade_clicked', { plan, billingPeriod })
-
-    try {
-      const res = await fetch('/api/billing/create-subscription', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ plan, interval: billingPeriod }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        if (res.status === 401) {
-          window.location.href = '/login?redirect=/pricing'
-          return
-        }
-        setCheckoutError(data.error ?? 'Something went wrong')
-        return
-      }
-
-      if (data.checkoutUrl) {
-        trackClientEvent('checkout_started', { plan, billingPeriod })
-        window.location.href = data.checkoutUrl
-      }
-    } catch {
-      setCheckoutError('Network error. Please try again.')
-    } finally {
-      setCheckoutLoading(false)
-    }
+    setModalOpen(true)
   }
 
   return (
@@ -183,26 +153,26 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* CTA */}
       <div className="mb-8">
         {isPaid ? (
-          <button
-            onClick={handleUpgrade}
-            disabled={checkoutLoading}
-            className={cn(
-              'w-full rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]',
-              highlighted
-                ? 'bg-amber-500 text-slate-900 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
-                : 'bg-white/10 text-white hover:bg-white/15 ring-1 ring-white/10 active:bg-white/20',
-              checkoutLoading && 'opacity-70 cursor-wait',
-            )}
-          >
-            {checkoutLoading ? (
-              <span className="flex items-center justify-center gap-2">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Processing...
-              </span>
-            ) : (
-              ctaText
-            )}
-          </button>
+          <>
+            <button
+              onClick={handleUpgrade}
+              className={cn(
+                'w-full rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]',
+                highlighted
+                  ? 'bg-amber-500 text-slate-900 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
+                  : 'bg-white/10 text-white hover:bg-white/15 ring-1 ring-white/10 active:bg-white/20',
+              )}
+            >
+              {ctaText}
+            </button>
+            <PaymentMethodModal
+              isOpen={modalOpen}
+              onClose={() => setModalOpen(false)}
+              plan={plan}
+              planDisplayName={displayName}
+              billingPeriod={billingPeriod}
+            />
+          </>
         ) : (
           <Link
             href="/"
@@ -210,9 +180,6 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           >
             {ctaText}
           </Link>
-        )}
-        {checkoutError && (
-          <p className="mt-2 text-xs text-red-400">{checkoutError}</p>
         )}
       </div>
 
