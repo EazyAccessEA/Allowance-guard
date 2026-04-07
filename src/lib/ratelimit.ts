@@ -37,6 +37,7 @@ const RATE_LIMITS: Record<string, { windowSec: number; max: number }> = {
   'monitor':         { windowSec: 60, max: 20 },
   'audit-logs':      { windowSec: 60, max: 30 },
   'billing-invoices': { windowSec: 60, max: 20 },
+  'contact':         { windowSec: 600, max: 5 },
 }
 
 export async function limitOrThrow(ip: string, endpoint: string) {
