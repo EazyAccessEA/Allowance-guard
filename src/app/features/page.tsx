@@ -30,7 +30,7 @@ export default function FeaturesPage() {
             Every time you use a dApp, you sign away permission. Most users sign once and forget. Attackers don&rsquo;t.
           </p>
           <p className="text-lg text-text-tertiary dark:text-secondary-400 max-w-reading">
-            AllowanceGuard finds every approval your wallet has ever granted, scores its risk against live threat intelligence, and lets you revoke it — across ten chains, from one dashboard, without ever giving up custody.
+            AllowanceGuard finds every approval your wallet has ever granted, scores its risk against live threat intelligence, and lets you revoke it — across fifteen chains, from one dashboard, without ever giving up custody.
           </p>
         </Container>
       </Section>
@@ -69,7 +69,7 @@ export default function FeaturesPage() {
                 <div className="p-8">
                   <h3 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Unified Allowance Dashboard</h3>
                   <p className="text-base text-text-tertiary dark:text-secondary-400 leading-relaxed">
-                    Every approval your wallet has ever granted, indexed in real time across ten chains. Spender, token, amount, age, and risk — surfaced in one view, ranked by what can hurt you most. No more crawling block explorers to remember what you signed six months ago at 2am.
+                    Every approval your wallet has ever granted, indexed in real time across fifteen chains. Spender, token, amount, age, and risk — surfaced in one view, ranked by what can hurt you most. No more crawling block explorers to remember what you signed six months ago at 2am.
                   </p>
                 </div>
               </div>
