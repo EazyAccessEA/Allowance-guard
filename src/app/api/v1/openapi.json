@@ -1,0 +1,642 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AllowanceGuard API",
+    "version": "1.0.0",
+    "description": "Public REST API for AllowanceGuard — wallet security, token approval monitoring, and risk scoring across 10+ EVM chains.\n\nAll endpoints require API key authentication via the `Authorization: Bearer <key>` header. Two key tiers are supported:\n\n- **Secret keys** (`ag_live_*`) — full access, server-side only\n- **Public keys** (`ag_pub_*`) — read-only (GET only), browser-safe, rate-limited\n\nSee https://www.allowanceguard.com/docs/integration for the full integration guide.",
+    "contact": {
+      "name": "AllowanceGuard Support",
+      "url": "https://www.allowanceguard.com",
+      "email": "legal.support@allowanceguard.com"
+    },
+    "license": {
+      "name": "Commercial / GPL-3.0-or-later",
+      "url": "https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://www.allowanceguard.com/api/v1",
+      "description": "Production"
+    }
+  ],
+  "security": [{ "bearerAuth": [] }],
+  "tags": [
+    { "name": "health", "description": "Service health" },
+    { "name": "chains", "description": "Supported blockchains" },
+    { "name": "allowances", "description": "Token approvals" },
+    { "name": "risk", "description": "Risk scoring and assessment" },
+    { "name": "scan", "description": "Wallet scanning" },
+    { "name": "simulate", "description": "Time-machine simulations" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["health"],
+        "summary": "Service health check",
+        "description": "Public endpoint. Returns API + dependency status.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "All services healthy",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthResponse" }
+              }
+            }
+          },
+          "503": {
+            "description": "One or more services degraded",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HealthResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/chains": {
+      "get": {
+        "tags": ["chains"],
+        "summary": "List supported chains",
+        "responses": {
+          "200": {
+            "description": "Chain list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["chains", "count"],
+                  "properties": {
+                    "chains": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Chain" }
+                    },
+                    "count": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/allowances": {
+      "get": {
+        "tags": ["allowances"],
+        "summary": "List token approvals for a wallet",
+        "parameters": [
+          { "$ref": "#/components/parameters/WalletQuery" },
+          {
+            "name": "chainId",
+            "in": "query",
+            "schema": { "type": "integer", "minimum": 1 }
+          },
+          {
+            "name": "riskOnly",
+            "in": "query",
+            "schema": { "type": "boolean" }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": { "type": "integer", "minimum": 1, "maximum": 1000, "default": 1 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 25 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated allowances",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AllowancesResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/risk-score": {
+      "get": {
+        "tags": ["risk"],
+        "summary": "Aggregated wallet risk score",
+        "parameters": [
+          { "$ref": "#/components/parameters/WalletQuery" },
+          {
+            "name": "chainId",
+            "in": "query",
+            "schema": { "type": "integer", "minimum": 1 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Risk score and breakdown",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RiskScoreResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/portfolio-risk": {
+      "get": {
+        "tags": ["risk"],
+        "summary": "Cross-chain portfolio risk",
+        "parameters": [{ "$ref": "#/components/parameters/WalletQuery" }],
+        "responses": {
+          "200": {
+            "description": "Portfolio risk with per-chain breakdown and benchmark",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PortfolioRiskResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/risk-check": {
+      "post": {
+        "tags": ["risk"],
+        "summary": "Pre-signing risk assessment for a proposed approval",
+        "description": "Call this BEFORE a user signs an `approve()` transaction to surface known spender / unlimited-amount risks.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RiskCheckRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Risk assessment",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RiskCheckResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/scan": {
+      "post": {
+        "tags": ["scan"],
+        "summary": "Trigger an on-chain scan for a wallet",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ScanRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Scan queued",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ScanResponse" }
+              }
+            }
+          },
+          "200": {
+            "description": "Scan already running for this wallet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "wallet": { "$ref": "#/components/schemas/Address" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/simulate": {
+      "post": {
+        "tags": ["simulate"],
+        "summary": "Simulate revoking approvals (time machine)",
+        "description": "Returns a before/after risk comparison without actually changing state.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SimulateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Simulation result",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SimulateResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "`ag_live_*` (server-side) or `ag_pub_*` (browser-safe, read-only)"
+      }
+    },
+    "parameters": {
+      "WalletQuery": {
+        "name": "wallet",
+        "in": "query",
+        "required": true,
+        "schema": { "$ref": "#/components/schemas/Address" }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Validation failed",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Missing, invalid, or revoked API key",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Rate limit exceeded (daily or burst)",
+        "headers": {
+          "Retry-After": {
+            "schema": { "type": "string" },
+            "description": "Seconds until the limit resets"
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Address": {
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]{40}$",
+        "description": "Lowercased EVM address",
+        "example": "0x742d35cc6634c0532925a3b844bc9e7595f0beb6"
+      },
+      "ChainId": {
+        "type": "integer",
+        "minimum": 1,
+        "description": "EIP-155 chain ID"
+      },
+      "RiskLevel": {
+        "type": "string",
+        "enum": ["safe", "low", "medium", "high", "critical"]
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": { "type": "string" },
+          "code": { "type": "string" },
+          "details": {}
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "required": ["status", "version", "services", "timestamp"],
+        "properties": {
+          "status": { "type": "string", "enum": ["healthy", "degraded"] },
+          "version": { "type": "string", "const": "v1" },
+          "services": {
+            "type": "object",
+            "additionalProperties": { "type": "string", "enum": ["ok", "degraded", "down"] }
+          },
+          "timestamp": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Chain": {
+        "type": "object",
+        "required": ["chainId", "name", "symbol", "explorer"],
+        "properties": {
+          "chainId": { "$ref": "#/components/schemas/ChainId" },
+          "name": { "type": "string" },
+          "symbol": { "type": "string" },
+          "explorer": { "type": "string", "format": "uri" }
+        }
+      },
+      "Allowance": {
+        "type": "object",
+        "required": [
+          "chain_id", "token_address", "spender_address", "standard",
+          "allowance_type", "amount", "is_unlimited", "last_seen_block",
+          "risk_score"
+        ],
+        "properties": {
+          "chain_id": { "$ref": "#/components/schemas/ChainId" },
+          "token_address": { "$ref": "#/components/schemas/Address" },
+          "spender_address": { "$ref": "#/components/schemas/Address" },
+          "standard": { "type": "string", "example": "ERC20" },
+          "allowance_type": { "type": "string" },
+          "amount": { "type": "string", "description": "Raw integer amount as a decimal string" },
+          "is_unlimited": { "type": "boolean" },
+          "last_seen_block": { "type": "integer" },
+          "risk_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "risk_flags": { "type": ["array", "null"], "items": { "type": "string" } },
+          "token_name": { "type": ["string", "null"] },
+          "token_symbol": { "type": ["string", "null"] },
+          "token_decimals": { "type": ["integer", "null"] },
+          "spender_label": { "type": ["string", "null"] },
+          "spender_trust": { "type": ["string", "null"] }
+        }
+      },
+      "Pagination": {
+        "type": "object",
+        "required": ["page", "pageSize", "total", "totalPages"],
+        "properties": {
+          "page": { "type": "integer" },
+          "pageSize": { "type": "integer" },
+          "total": { "type": "integer" },
+          "totalPages": { "type": "integer" }
+        }
+      },
+      "AllowancesResponse": {
+        "type": "object",
+        "required": ["allowances", "pagination"],
+        "properties": {
+          "allowances": { "type": "array", "items": { "$ref": "#/components/schemas/Allowance" } },
+          "pagination": { "$ref": "#/components/schemas/Pagination" }
+        }
+      },
+      "RiskScoreResponse": {
+        "type": "object",
+        "required": ["wallet", "chainId", "riskScore", "riskLevel", "breakdown", "topRisks"],
+        "properties": {
+          "wallet": { "$ref": "#/components/schemas/Address" },
+          "chainId": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/ChainId" },
+              { "type": "string", "const": "all" }
+            ]
+          },
+          "riskScore": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "riskLevel": { "$ref": "#/components/schemas/RiskLevel" },
+          "breakdown": {
+            "type": "object",
+            "properties": {
+              "totalAllowances": { "type": "integer" },
+              "unlimitedAllowances": { "type": "integer" },
+              "highRisk": { "type": "integer" },
+              "mediumRisk": { "type": "integer" },
+              "lowRisk": { "type": "integer" },
+              "maxIndividualScore": { "type": "integer" },
+              "avgRiskScore": { "type": "integer" },
+              "chainsWithAllowances": { "type": "integer" }
+            }
+          },
+          "topRisks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "chain_id": { "$ref": "#/components/schemas/ChainId" },
+                "token_address": { "$ref": "#/components/schemas/Address" },
+                "spender_address": { "$ref": "#/components/schemas/Address" },
+                "risk_score": { "type": "integer" },
+                "risk_flags": { "type": ["array", "null"], "items": { "type": "string" } },
+                "is_unlimited": { "type": "boolean" },
+                "token_symbol": { "type": ["string", "null"] },
+                "spender_label": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      },
+      "PortfolioRiskResponse": {
+        "type": "object",
+        "required": ["wallet", "portfolioRiskScore", "riskLevel", "summary", "trend", "benchmark", "chainBreakdown"],
+        "properties": {
+          "wallet": { "$ref": "#/components/schemas/Address" },
+          "portfolioRiskScore": { "type": "integer" },
+          "riskLevel": { "$ref": "#/components/schemas/RiskLevel" },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "chainsWithAllowances": { "type": "integer" },
+              "totalAllowances": { "type": "integer" },
+              "unlimitedAllowances": { "type": "integer" },
+              "highRiskAllowances": { "type": "integer" },
+              "permit2Allowances": { "type": "integer" },
+              "estimatedTotalValueUsd": { "type": "number" }
+            }
+          },
+          "trend": {
+            "type": "object",
+            "properties": {
+              "direction": { "type": "string", "enum": ["improving", "worsening", "stable"] },
+              "deltaScore": { "type": "integer" },
+              "period": { "type": "string" },
+              "message": { "type": "string" }
+            }
+          },
+          "benchmark": {
+            "type": "object",
+            "properties": {
+              "saferThanPercent": { "type": "integer" },
+              "message": { "type": "string" },
+              "totalWalletsCompared": { "type": "integer" }
+            }
+          },
+          "chainBreakdown": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "chainId": { "$ref": "#/components/schemas/ChainId" },
+                "chainName": { "type": "string" },
+                "totalAllowances": { "type": "integer" },
+                "unlimitedAllowances": { "type": "integer" },
+                "highRiskCount": { "type": "integer" },
+                "estimatedValueUsd": { "type": "number" },
+                "riskScore": { "type": "integer" },
+                "permit2Allowances": { "type": "integer" }
+              }
+            }
+          }
+        }
+      },
+      "RiskCheckRequest": {
+        "type": "object",
+        "required": ["token", "spender", "chainId"],
+        "properties": {
+          "token": { "$ref": "#/components/schemas/Address" },
+          "spender": { "$ref": "#/components/schemas/Address" },
+          "chainId": { "$ref": "#/components/schemas/ChainId" },
+          "amount": { "type": "string", "description": "Raw amount or the literal \"unlimited\"" }
+        }
+      },
+      "RiskCheckResponse": {
+        "type": "object",
+        "properties": {
+          "chainId": { "$ref": "#/components/schemas/ChainId" },
+          "token": {
+            "type": "object",
+            "properties": {
+              "address": { "$ref": "#/components/schemas/Address" },
+              "name": { "type": ["string", "null"] },
+              "symbol": { "type": ["string", "null"] },
+              "decimals": { "type": ["integer", "null"] }
+            }
+          },
+          "spender": {
+            "type": "object",
+            "properties": {
+              "address": { "$ref": "#/components/schemas/Address" },
+              "label": { "type": ["string", "null"] },
+              "trusted": { "type": "boolean" },
+              "affectedWallets": { "type": "integer" }
+            }
+          },
+          "approval": {
+            "type": "object",
+            "properties": {
+              "amount": { "type": ["string", "null"] },
+              "isUnlimited": { "type": "boolean" }
+            }
+          },
+          "risk": {
+            "type": "object",
+            "properties": {
+              "score": { "type": "integer" },
+              "level": { "$ref": "#/components/schemas/RiskLevel" },
+              "flags": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "string" },
+                    "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "recommendation": { "type": "string" }
+        }
+      },
+      "ScanRequest": {
+        "type": "object",
+        "required": ["wallet"],
+        "properties": {
+          "wallet": { "$ref": "#/components/schemas/Address" },
+          "chains": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/ChainId" }
+          }
+        }
+      },
+      "ScanResponse": {
+        "type": "object",
+        "required": ["scanId", "wallet", "chains", "status", "statusUrl"],
+        "properties": {
+          "scanId": { "type": "integer" },
+          "wallet": { "$ref": "#/components/schemas/Address" },
+          "chains": { "type": "array", "items": { "$ref": "#/components/schemas/ChainId" } },
+          "status": { "type": "string", "enum": ["pending", "running", "complete", "failed"] },
+          "statusUrl": { "type": "string" }
+        }
+      },
+      "SimulateRequest": {
+        "type": "object",
+        "required": ["wallet"],
+        "properties": {
+          "wallet": { "$ref": "#/components/schemas/Address" },
+          "chainId": { "$ref": "#/components/schemas/ChainId" },
+          "revokeAll": { "type": "boolean", "default": false },
+          "revokeSpenders": { "type": "array", "items": { "$ref": "#/components/schemas/Address" } }
+        }
+      },
+      "SimulateResponse": {
+        "type": "object",
+        "required": ["wallet", "chainId", "simulation"],
+        "properties": {
+          "wallet": { "$ref": "#/components/schemas/Address" },
+          "chainId": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/ChainId" },
+              { "type": "string", "const": "all" }
+            ]
+          },
+          "simulation": {
+            "type": "object",
+            "properties": {
+              "before": { "$ref": "#/components/schemas/SimulateStats" },
+              "after": { "$ref": "#/components/schemas/SimulateStats" },
+              "improvement": {
+                "type": "object",
+                "properties": {
+                  "scoreReduction": { "type": "integer" },
+                  "allowancesRevoked": { "type": "integer" },
+                  "percentImprovement": { "type": "integer" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SimulateStats": {
+        "type": "object",
+        "properties": {
+          "riskScore": { "type": "integer" },
+          "totalAllowances": { "type": "integer" },
+          "unlimitedAllowances": { "type": "integer" },
+          "highRisk": { "type": "integer" },
+          "mediumRisk": { "type": "integer" }
+        }
+      }
+    }
+  }
+}

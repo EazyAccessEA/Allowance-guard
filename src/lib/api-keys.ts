@@ -8,8 +8,11 @@ import { API_PLAN_LIMITS } from '@/lib/plans'
 // Constants
 // ---------------------------------------------------------------------------
 
-const KEY_PREFIX = 'ag_live_'
+const SECRET_KEY_PREFIX = 'ag_live_'
+const PUBLIC_KEY_PREFIX = 'ag_pub_'
 const KEY_RANDOM_BYTES = 32 // 256-bit entropy
+
+export type KeyType = 'secret' | 'public'
 
 // ---------------------------------------------------------------------------
 // Key generation
@@ -26,20 +29,66 @@ export async function generateApiKey(
   plan: ApiPlan = 'api_free',
 ): Promise<{ key: string; id: string; prefix: string }> {
   const random = randomBytes(KEY_RANDOM_BYTES).toString('hex')
-  const fullKey = `${KEY_PREFIX}${random}`
+  const fullKey = `${SECRET_KEY_PREFIX}${random}`
   const keyHash = hashKey(fullKey)
-  const prefix = fullKey.slice(0, KEY_PREFIX.length + 8) // ag_live_xxxxxxxx
+  const prefix = fullKey.slice(0, SECRET_KEY_PREFIX.length + 8) // ag_live_xxxxxxxx
 
   const rateLimit = API_PLAN_LIMITS[plan].callsPerDay
 
   const { rows } = await pool.query(
-    `INSERT INTO api_keys (user_id, key_hash, prefix, name, plan, rate_limit)
-     VALUES ($1, $2, $3, $4, $5, $6)
+    `INSERT INTO api_keys (user_id, key_hash, prefix, name, plan, rate_limit, key_type)
+     VALUES ($1, $2, $3, $4, $5, $6, 'secret')
      RETURNING id`,
     [userId, keyHash, prefix, name, plan, rateLimit],
   )
 
-  apiLogger.info('api_key.created', { userId, keyId: rows[0].id, prefix, plan })
+  apiLogger.info('api_key.created', { userId, keyId: rows[0].id, prefix, plan, keyType: 'secret' })
+
+  return {
+    key: fullKey,
+    id: rows[0].id as string,
+    prefix,
+  }
+}
+
+/**
+ * Generate a new PUBLIC API key (`ag_pub_*`). These keys are safe to embed
+ * in browser code because the middleware:
+ *   - restricts them to GET requests only
+ *   - enforces the `api_public` rate limit tier (500 calls/day)
+ *   - optionally checks `allowed_origins` against the Origin header
+ *
+ * The caller should only persist the returned `key` in an env var scoped
+ * to the browser bundle (e.g. `NEXT_PUBLIC_ALLOWANCE_GUARD_KEY`). The
+ * plaintext is shown once and then lost — only the hash is stored.
+ */
+export async function generatePublicApiKey(
+  userId: number,
+  name: string,
+  allowedOrigins?: string[],
+): Promise<{ key: string; id: string; prefix: string }> {
+  const random = randomBytes(KEY_RANDOM_BYTES).toString('hex')
+  const fullKey = `${PUBLIC_KEY_PREFIX}${random}`
+  const keyHash = hashKey(fullKey)
+  const prefix = fullKey.slice(0, PUBLIC_KEY_PREFIX.length + 8) // ag_pub_xxxxxxxx
+
+  const rateLimit = API_PLAN_LIMITS.api_public.callsPerDay
+
+  const { rows } = await pool.query(
+    `INSERT INTO api_keys (user_id, key_hash, prefix, name, plan, rate_limit, key_type, allowed_origins)
+     VALUES ($1, $2, $3, $4, 'api_public', $5, 'public', $6)
+     RETURNING id`,
+    [userId, keyHash, prefix, name, rateLimit, allowedOrigins ?? null],
+  )
+
+  apiLogger.info('api_key.created', {
+    userId,
+    keyId: rows[0].id,
+    prefix,
+    plan: 'api_public',
+    keyType: 'public',
+    allowedOrigins,
+  })
 
   return {
     key: fullKey,
@@ -59,21 +108,24 @@ export interface ValidatedKey {
   rateLimit: number
   prefix: string
   name: string
+  keyType: KeyType
+  allowedOrigins: string[] | null
 }
 
 /**
  * Validate an API key from a request.
  * Returns the key record if valid, or null if invalid/revoked/expired.
+ * Accepts both secret (`ag_live_*`) and public (`ag_pub_*`) prefixes.
  */
 export async function validateApiKey(key: string): Promise<ValidatedKey | null> {
-  if (!key.startsWith(KEY_PREFIX)) {
+  if (!key.startsWith(SECRET_KEY_PREFIX) && !key.startsWith(PUBLIC_KEY_PREFIX)) {
     return null
   }
 
   const keyHash = hashKey(key)
 
   const { rows } = await pool.query(
-    `SELECT id, user_id, plan, rate_limit, prefix, name
+    `SELECT id, user_id, plan, rate_limit, prefix, name, key_type, allowed_origins
      FROM api_keys
      WHERE key_hash = $1
        AND revoked_at IS NULL
@@ -98,6 +150,8 @@ export async function validateApiKey(key: string): Promise<ValidatedKey | null> 
     rateLimit: rows[0].rate_limit as number,
     prefix: rows[0].prefix as string,
     name: rows[0].name as string,
+    keyType: (rows[0].key_type as KeyType) ?? 'secret',
+    allowedOrigins: (rows[0].allowed_origins as string[] | null) ?? null,
   }
 }
 
@@ -111,6 +165,8 @@ export interface ApiKeyInfo {
   name: string
   plan: string
   rateLimit: number
+  keyType: KeyType
+  allowedOrigins: string[] | null
   lastUsedAt: string | null
   createdAt: string
 }
@@ -121,7 +177,7 @@ export interface ApiKeyInfo {
  */
 export async function listApiKeys(userId: number): Promise<ApiKeyInfo[]> {
   const { rows } = await pool.query(
-    `SELECT id, prefix, name, plan, rate_limit, last_used_at, created_at
+    `SELECT id, prefix, name, plan, rate_limit, key_type, allowed_origins, last_used_at, created_at
      FROM api_keys
      WHERE user_id = $1 AND revoked_at IS NULL
      ORDER BY created_at DESC`,
@@ -134,6 +190,8 @@ export async function listApiKeys(userId: number): Promise<ApiKeyInfo[]> {
     name: r.name as string,
     plan: r.plan as string,
     rateLimit: r.rate_limit as number,
+    keyType: ((r.key_type as KeyType) ?? 'secret'),
+    allowedOrigins: (r.allowed_origins as string[] | null) ?? null,
     lastUsedAt: r.last_used_at ? (r.last_used_at as Date).toISOString() : null,
     createdAt: (r.created_at as Date).toISOString(),
   }))
@@ -171,10 +229,11 @@ export async function upgradeApiKeyPlan(
 ): Promise<number> {
   const newRateLimit = API_PLAN_LIMITS[newPlan].callsPerDay
 
+  // Only upgrade secret keys. Public keys are pinned to api_public.
   const { rowCount } = await pool.query(
     `UPDATE api_keys
      SET plan = $1, rate_limit = $2
-     WHERE user_id = $3 AND revoked_at IS NULL`,
+     WHERE user_id = $3 AND revoked_at IS NULL AND key_type = 'secret'`,
     [newPlan, newRateLimit, userId],
   )
 

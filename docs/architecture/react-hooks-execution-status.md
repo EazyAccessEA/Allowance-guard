@@ -31,13 +31,52 @@
 - `.changeset/initial-scaffold.md` — first changeset, marked minor on both packages.
 - `scripts/generate-openapi.ts` — **documented stub** describing the intended pipeline (Zod → OpenAPI 3.1 → `openapi-typescript`). Deliberately exits 1 until the backend team wires it up.
 
-## 🛑 Blocking dependencies (unchanged from plan §11)
+## ✅ Completed — follow-up session
+
+### Backend: public API key tier (`ag_pub_*`)
+- **Migration `027_api_public_keys.sql`** — adds `key_type` (`secret` | `public`) and `allowed_origins text[]` to `api_keys`, with a CHECK constraint and new index. Additive; all existing keys default to `secret`, preserving behaviour.
+- **Drizzle schema** (`src/db/schema/api-keys.ts`) — mirrors the migration.
+- **New plan tier** (`src/lib/plans.ts`) — `api_public` at 500 calls/day, 30/minute. Priced/unpriced (public keys are free). Excluded from `API_PRICES`.
+- **`src/lib/api-keys.ts`**:
+  - `generatePublicApiKey(userId, name, allowedOrigins?)` — mints `ag_pub_*` keys pinned to `api_public` and `key_type='public'`.
+  - `validateApiKey` now accepts both prefixes and returns `keyType` + `allowedOrigins` on `ValidatedKey`.
+  - `listApiKeys` returns `keyType` and `allowedOrigins`.
+  - `upgradeApiKeyPlan` bulk upgrades now scoped to `key_type='secret'` so public keys stay pinned.
+- **`src/middleware/api-auth.ts`** — hardened enforcement for public keys:
+  - OPTIONS preflight short-circuits before auth.
+  - Public keys are **GET-only** (405 with `Allow: GET, OPTIONS` on anything else).
+  - Optional per-key origin allow-list enforced against the `Origin` header (403 `ORIGIN_NOT_ALLOWED`).
+  - `withUsageTracking` attaches `Access-Control-Allow-Origin` + `Vary` on every public-key response.
+- **Global `middleware.ts`** — carves `/api/v1/*` out of the app-wide CORS handler so the route-level logic owns per-key CORS. Permissive preflight (GET + OPTIONS) returned for `/api/v1/*`.
+- **`POST /api/keys/public`** — new authenticated route (`src/app/api/keys/public/route.ts`) that issues public keys with an optional `allowedOrigins: ["https://app.example.com"]` array. Same 5-key-per-user limit as secret keys. Audit-logged.
+
+### Known follow-ups for the public-key tier
+- Account dashboard UI for creating/revoking public keys (currently only accessible via direct API call).
+- Per-IP rate limit for public keys (currently only per-key daily + burst; a scraper with the key can still consume the full 500/day from one IP). Tracked as a hardening task, not a blocker for v0.1.0.
+- Tests: middleware behaviour for the GET-only enforcement and origin allow-list.
+
+## ✅ Completed — Tests + CI stage
+
+- **`packages/client/src/__tests__/errors.test.ts`** — error hierarchy, status codes, secret-key leakage guard.
+- **`packages/client/src/__tests__/client.test.ts`** — constructor validation, browser secret-key hard-fail, base URL normalisation, query param serialisation, response envelope unwrapping, full error translation matrix (401/400/429/500/network), key-leak check on thrown errors.
+- **`packages/client/vitest.config.ts`** — node env, v8 coverage.
+- **`.github/workflows/packages-ci.yml`** — typecheck + test + build for `@allowance-guard/client` and `@allowance-guard/react` on every push to `main` and PR touching `packages/**`. Uses `pnpm/action-setup@v4` + Node 20.
+
+## ✅ Completed — OpenAPI stage
+
+### Stage: single source of truth for types
+- **`src/app/api/v1/openapi.json`** — hand-authored OpenAPI 3.1 document covering all 8 v1 endpoints (`/health`, `/chains`, `/allowances`, `/risk-score`, `/portfolio-risk`, `/risk-check`, `/scan`, `/simulate`). Includes request/response schemas, rate-limit error shape, bearer-auth security scheme, and the two-tier key model documented in the `description`.
+- **`scripts/generate-openapi.ts`** — generation wiring that invokes `openapi-typescript` to emit `packages/client/src/types.generated.ts` from the spec. Clean exit with a helpful message if `openapi-typescript` hasn't been installed yet (deliberately not auto-installed in this session).
+- **Follow-up path** (still to do): install `openapi-typescript` as a root devDep, run the script, replace hand-authored `packages/client/src/types.ts` with the generated file, and wire the script into CI so drift fails the build. A further task is Zod → OpenAPI auto-generation via `@asteasolutions/zod-to-openapi` so the JSON doc itself stops being hand-edited — see plan §5.
+
+## 🛑 Blocking dependencies remaining
 
 | Dependency | Why it blocks v0.1.0 | Risk of acting without approval |
 |---|---|---|
-| **Public API keys** (`ag_pub_*`) — read-only, IP-rate-limited tier | The provider hard-fails on `ag_live_*` in the browser. Without a public-key tier, every React integrator must proxy through their own backend, defeating the distribution story. | Touches `api_keys` table, middleware, billing decisions, account UI. Needs human sign-off. |
-| **OpenAPI 3.1 spec for `/api/v1`** | Hand-authored `packages/client/src/types.ts` WILL drift. Types must be generated. | Adds a devDep (`@asteasolutions/zod-to-openapi`) and response-shape annotations to every route. Should go through normal PR review. |
-| **CORS on `/api/v1` for browser origins** | Without it, browsers can't call the API directly even with a public key. | Likely already enabled; needs verification + documentation. |
+| **Install `openapi-typescript` + run generation** | Until the generated types file replaces the hand-authored one, drift is still possible on every route change. | Trivial: one devDep add, one script run, one file replace. |
+| **Run migration 027 against staging + prod** | Schema change must be applied before the new backend code can function. | Standard deployment step; operator runs `pnpm run migrate`. |
+| **Verify CORS end-to-end from a staging dApp** | Need a real browser test to confirm the chain of global middleware → route-level CORS works across Vercel's edge. | Needs a staging key issued and a tiny test page. |
+| **Vitest + CI for `packages/*`** | No tests yet; nothing blocks a regression from landing. | Low. Standard setup work. |
 
 ## 🚧 Deferred (not started this session)
 

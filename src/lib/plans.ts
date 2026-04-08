@@ -23,6 +23,12 @@ export type ConsumerPlan = (typeof ConsumerPlan)[keyof typeof ConsumerPlan]
 
 export const ApiPlan = {
   FREE: 'api_free',
+  /**
+   * Browser-safe read-only tier. Used by public API keys (`ag_pub_*`) issued
+   * to dApp integrators via `@allowance-guard/react`. See migration 027 and
+   * `docs/architecture/allowance-guard-react-hooks.md` §4.
+   */
+  PUBLIC: 'api_public',
   DEVELOPER: 'api_developer',
   GROWTH: 'api_growth',
   ENTERPRISE: 'api_enterprise',
@@ -129,6 +135,16 @@ export const API_PLAN_LIMITS: Record<ApiPlan, ApiPlanLimits> = {
     webhooksEnabled: false,
     priorityProcessing: false,
   },
+  api_public: {
+    // Browser-embeddable keys get a tighter daily budget than api_free
+    // because they are shared across every visitor of a dApp. The intent
+    // is "enough for a small integration"; teams with real traffic must
+    // upgrade to api_developer+ or proxy through their own backend.
+    callsPerDay: 500,
+    burstPerMinute: 30,
+    webhooksEnabled: false,
+    priorityProcessing: false,
+  },
   api_developer: {
     callsPerDay: 10_000,
     burstPerMinute: 60,
@@ -178,7 +194,7 @@ export const CONSUMER_PRICES: Record<Exclude<ConsumerPlan, 'free'>, PlanPrice> =
   },
 }
 
-export const API_PRICES: Record<Exclude<ApiPlan, 'api_free' | 'api_enterprise'>, PlanPrice> = {
+export const API_PRICES: Record<Exclude<ApiPlan, 'api_free' | 'api_public' | 'api_enterprise'>, PlanPrice> = {
   api_developer: {
     monthlyPence: 3900,
     yearlyPence: 37400, // $374/yr — 20% off vs monthly ($468)
@@ -221,6 +237,7 @@ export function getPlanDisplayName(plan: ConsumerPlan | ApiPlan): string {
     pro: 'Pro',
     sentinel: 'Sentinel',
     api_free: 'API Free',
+    api_public: 'API Public (browser)',
     api_developer: 'API Developer',
     api_growth: 'API Growth',
     api_enterprise: 'API Enterprise',
