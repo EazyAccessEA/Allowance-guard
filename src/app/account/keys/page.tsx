@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Section from '@/components/ui/Section'
 import Container from '@/components/ui/Container'
 import ApiKeyManager from '@/components/account/ApiKeyManager'
+import PublicApiKeyCreator from '@/components/account/PublicApiKeyCreator'
 import { cn } from '@/lib/utils'
 import { ArrowLeft } from 'lucide-react'
 
@@ -11,6 +12,7 @@ interface ApiKey {
   id: string
   name: string
   prefix: string
+  keyType?: 'secret' | 'public'
   createdAt: string
   lastUsedAt?: string
 }
@@ -24,7 +26,10 @@ export default function KeysPage() {
       const res = await fetch('/api/keys')
       if (res.ok) {
         const json = await res.json()
-        setKeys(json.keys ?? json ?? [])
+        const all: ApiKey[] = json.keys ?? json ?? []
+        // ApiKeyManager only manages secret keys; public keys are handled
+        // by PublicApiKeyCreator below.
+        setKeys(all.filter((k) => (k.keyType ?? 'secret') === 'secret'))
       }
     } catch {
       // Keep existing state on error
@@ -123,6 +128,9 @@ export default function KeysPage() {
               onRevokeKey={handleRevokeKey}
             />
           )}
+
+          {/* Public (browser-safe) keys — for @allowance-guard/react */}
+          <PublicApiKeyCreator />
         </div>
       </Container>
     </Section>

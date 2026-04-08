@@ -45,11 +45,11 @@ Produced by the AllowanceGuard Copy Council: six specialist copywriters and two 
 **Owns**: `/contribute`, `/docs/contributing`, blog copy, footer mission text, docs-data FAQ, thank-you page, community sections
 
 **Patterns**:
-- "The core scanner is free and open source. Premium features fund the mission."
-- "Your contribution keeps the lights on and the code open."
-- "No VC. No token. Community-funded security."
+- "The core scanner is free and open source. Premium services sustain the project."
+- "Open source core. Independently operated. Built to last."
+- "Open core security infrastructure for Web3."
 
-**Avoids**: Guilt language ("please donate", "we need your help"). Corporate speak. "Free Forever" (banned per messaging rules).
+**Avoids**: Guilt language ("please donate", "we need your help"). Corporate speak. "Free Forever" (banned per messaging rules). Defensive financial self-disclaimers — **do not** ship "No VC", "No token", "Community-funded", "donation-funded", or any phrasing that frames the project as a charity. These block grant/SEIS/EIS/VC funding applications and misrepresent the actual subscription + B2B API revenue model.
 
 ---
 
@@ -174,7 +174,7 @@ Produced by the AllowanceGuard Copy Council: six specialist copywriters and two 
 | **Errors** | What happened + What to do. | "Scan failed. Check your connection and try again." |
 | **Security** | Calm authority. Facts. | "This contract can spend all your USDC." |
 | **Pricing** | Value-first. Transparent. | "Unlock continuous monitoring. $9.99/month." |
-| **Community** | Warm. Direct. Mission-driven. | "No VC. No token. Community-funded." |
+| **Community** | Warm. Direct. Mission-driven. | "Open source core. Independently operated. Built to last." |
 | **API docs** | Terse. Imperative. Scannable. | "Returns paginated allowances. Max 100 per page." |
 
 ---
