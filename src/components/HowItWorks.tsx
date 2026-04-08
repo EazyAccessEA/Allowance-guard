@@ -1,36 +1,46 @@
 'use client'
 
-import Container from '@/components/ui/Container'
-import SectionHeader from '@/components/ui/SectionHeader'
-import { ScanShieldIcon, AnalyzeIcon, RevokeIcon } from '@/components/icons/HeroIcons'
-import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
-
 /**
- * Asymmetric 2-col: featured Step 01 (big) on left, Steps 02+03 stacked right.
- * Breaks the old uniform 3-up grid — density contrast per Kael / Sable.
+ * HowItWorks — Ledger aesthetic
+ *
+ * Paper section with a featured step on the left and two compact steps
+ * stacked on the right. Ink line-art icons drawn inline — no more
+ * dark-mode amber-glow treatments. Each step gets its own roman numeral.
  */
 
-const STEPS = [
+import Container from '@/components/ui/Container'
+import SectionHeader from '@/components/ui/SectionHeader'
+import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
+import type { ReactNode } from 'react'
+
+interface Step {
+  number: string
+  title: string
+  description: string
+  icon: ReactNode
+}
+
+const STEPS: Step[] = [
   {
     number: '01',
     title: 'Connect & Scan',
     description:
       'Link your wallet or paste any address. We read public blockchain data — your keys never leave your device.',
-    Icon: ScanShieldIcon,
+    icon: <ScanIcon />,
   },
   {
     number: '02',
     title: 'See the Risk',
     description:
       'Every approval gets a risk score. Unlimited amounts, unverified contracts, and known threats — flagged instantly.',
-    Icon: AnalyzeIcon,
+    icon: <RiskIcon />,
   },
   {
     number: '03',
     title: 'Revoke & Secure',
     description:
       'One click to revoke. Batch multiple approvals to save gas. Every transaction signs in your own wallet.',
-    Icon: RevokeIcon,
+    icon: <RevokeIcon />,
   },
 ]
 
@@ -38,40 +48,30 @@ export default function HowItWorks() {
   const [featured, ...rest] = STEPS
 
   return (
-    <section className="relative py-24 sm:py-32 lg:py-40 bg-surface-base overflow-hidden">
-      {/* Atmospheric amber glow */}
-      <div
-        className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: 'radial-gradient(ellipse, rgba(245,158,11,0.05) 0%, transparent 70%)',
-        }}
-      />
-
+    <section className="paper grain relative py-24 sm:py-32 lg:py-40 overflow-hidden">
       <Container>
         <div className="mb-20 lg:mb-24">
           <SectionHeader
-            index="01"
+            roman="I"
             eyebrow="How it works"
             title={
               <>
                 Three steps.
                 <br />
-                <span className="text-slate-500">Under a minute.</span>
+                <span className="text-ink-muted">Under a minute.</span>
               </>
             }
             lede="From connection to revocation without leaving your wallet. No account, no custody."
           />
         </div>
 
-        {/* Asymmetric 12-col grid */}
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-8">
-          {/* Featured — Step 01 */}
+          {/* Featured step */}
           <CascadingScrollAnimation direction="up" distance={40} delay={0} className="lg:col-span-7">
             <FeaturedStep {...featured} />
           </CascadingScrollAnimation>
 
-          {/* Stacked — Steps 02, 03 */}
+          {/* Compact steps */}
           <div className="lg:col-span-5 flex flex-col gap-6 lg:gap-8">
             {rest.map((step, i) => (
               <CascadingScrollAnimation key={step.number} direction="up" distance={40} delay={120 + i * 120}>
@@ -85,61 +85,108 @@ export default function HowItWorks() {
   )
 }
 
-function FeaturedStep({ number, title, description, Icon }: (typeof STEPS)[number]) {
+function FeaturedStep({ number, title, description, icon }: Step) {
   return (
-    <div className="glass-card relative h-full p-10 lg:p-14 overflow-hidden">
+    <div className="paper-card-raised h-full p-10 lg:p-14 relative overflow-hidden">
+      <div className="flex items-baseline gap-4 mb-10">
+        <span className="font-fraunces italic text-7xl lg:text-8xl font-bold text-ink leading-none tracking-tight">
+          {number}
+        </span>
+        <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
+          Step
+        </span>
+      </div>
+
+      <div className="mb-10 text-ink">{icon}</div>
+
+      <h3 className="font-fraunces-display italic text-4xl lg:text-5xl font-normal text-ink mb-5 leading-[1.05]">
+        {title}
+      </h3>
+      <p className="font-plex text-base lg:text-lg text-ink-muted leading-[1.6] max-w-md">
+        {description}
+      </p>
+
+      {/* Decorative amber corner */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-60"
         aria-hidden="true"
+        className="absolute top-0 right-0 w-24 h-24"
         style={{
-          background: 'radial-gradient(ellipse at 20% 0%, rgba(245,158,11,0.12) 0%, transparent 55%)',
+          background:
+            'linear-gradient(225deg, rgba(245,158,11,0.12) 0%, transparent 55%)',
         }}
       />
-      <div className="relative">
-        <div className="flex items-baseline gap-3 mb-10">
-          <span className="font-display text-6xl lg:text-7xl font-bold text-amber-400/90 leading-none tracking-tight">
+    </div>
+  )
+}
+
+function CompactStep({ number, title, description, icon }: Step) {
+  return (
+    <div className="paper-card p-7 lg:p-8 flex gap-5 h-full">
+      <div className="shrink-0 text-ink">{icon}</div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline gap-2 mb-2">
+          <span className="font-fraunces italic text-3xl font-bold text-ink leading-none">
             {number}
           </span>
-          <span className="text-[11px] font-mono font-bold tracking-[0.22em] uppercase text-slate-500">
+          <span className="font-mono text-[9px] font-bold tracking-[0.2em] uppercase text-ink-whisper">
             Step
           </span>
         </div>
-
-        <div className="mb-10">
-          <Icon size={96} />
-        </div>
-
-        <h3 className="font-display text-3xl lg:text-4xl font-bold text-white mb-5 tracking-tight leading-tight">
+        <h3 className="font-fraunces-display italic text-2xl lg:text-3xl font-normal text-ink mb-2 leading-[1.1]">
           {title}
         </h3>
-        <p className="text-base lg:text-lg text-slate-300 leading-relaxed max-w-md">
-          {description}
-        </p>
+        <p className="font-plex text-sm text-ink-muted leading-[1.55]">{description}</p>
       </div>
     </div>
   )
 }
 
-function CompactStep({ number, title, description, Icon }: (typeof STEPS)[number]) {
+/* ============================================================================
+ * Ink line-art icons — 1.5px stroke, currentColor, editorial weight
+ * ============================================================================ */
+
+function ScanIcon() {
   return (
-    <div className="glass-card relative p-7 lg:p-8 flex gap-5 h-full">
-      <div className="shrink-0">
-        <Icon size={56} />
-      </div>
-      <div className="min-w-0">
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="font-display text-2xl font-bold text-amber-400/80 leading-none tracking-tight">
-            {number}
-          </span>
-          <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-slate-500">
-            Step
-          </span>
-        </div>
-        <h3 className="font-display text-xl lg:text-2xl font-bold text-white mb-2 tracking-tight">
-          {title}
-        </h3>
-        <p className="text-sm text-slate-400 leading-relaxed">{description}</p>
-      </div>
-    </div>
+    <svg width="72" height="72" viewBox="0 0 72 72" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Shield */}
+      <path d="M36 6 L60 14 V36 C60 50 48 60 36 66 C24 60 12 50 12 36 V14 Z" />
+      {/* Scan line */}
+      <line x1="18" y1="36" x2="54" y2="36" stroke="#F59E0B" strokeWidth="2" />
+      {/* Inner checkmark */}
+      <path d="M26 40 L34 48 L48 30" />
+      {/* Tick marks */}
+      <line x1="20" y1="20" x2="24" y2="20" />
+      <line x1="48" y1="20" x2="52" y2="20" />
+      <line x1="20" y1="52" x2="24" y2="52" />
+      <line x1="48" y1="52" x2="52" y2="52" />
+    </svg>
+  )
+}
+
+function RiskIcon() {
+  return (
+    <svg width="56" height="56" viewBox="0 0 72 72" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Magnifying glass */}
+      <circle cx="30" cy="30" r="18" />
+      <line x1="44" y1="44" x2="58" y2="58" strokeWidth="2" />
+      {/* Inside: warning triangle */}
+      <path d="M30 22 L40 38 H20 Z" stroke="#DC2626" />
+      <line x1="30" y1="28" x2="30" y2="32" stroke="#DC2626" strokeWidth="2" />
+      <circle cx="30" cy="35" r="0.8" fill="#DC2626" stroke="#DC2626" />
+    </svg>
+  )
+}
+
+function RevokeIcon() {
+  return (
+    <svg width="56" height="56" viewBox="0 0 72 72" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      {/* Lock body */}
+      <rect x="16" y="32" width="40" height="30" rx="3" />
+      {/* Shackle */}
+      <path d="M24 32 V22 C24 15 29 10 36 10 C43 10 48 15 48 22 V32" />
+      {/* Keyhole */}
+      <circle cx="36" cy="44" r="3" fill="#F59E0B" stroke="#F59E0B" />
+      <line x1="36" y1="47" x2="36" y2="54" stroke="#F59E0B" strokeWidth="2" />
+    </svg>
   )
 }

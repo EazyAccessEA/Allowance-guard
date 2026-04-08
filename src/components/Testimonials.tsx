@@ -1,13 +1,16 @@
 'use client'
 
+/**
+ * Testimonials — Ledger aesthetic
+ *
+ * Paper section with a magazine-style featured pull-quote in Fraunces
+ * italic at display scale, a giant decorative open-quote mark, and a
+ * grid of supporting quotes in paper-cards. Warm, not cold.
+ */
+
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
-
-/**
- * Featured pull-quote layout: one oversized quote + a supporting grid.
- * Breaks the old 3-up uniform grid. Editorial hierarchy per Sable + Maren.
- */
 
 const TESTIMONIALS = [
   {
@@ -64,39 +67,28 @@ export default function Testimonials() {
   const [featured, ...rest] = TESTIMONIALS
 
   return (
-    <section className="relative py-24 sm:py-32 lg:py-40 bg-[#0A0E1A] overflow-hidden">
-      {/* Atmospheric glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: 'radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 60%)',
-          filter: 'blur(80px)',
-        }}
-      />
-
+    <section className="paper grain relative py-24 sm:py-32 lg:py-40 overflow-hidden">
       <Container>
         <div className="mb-20 lg:mb-24">
           <SectionHeader
-            index="05"
+            roman="V"
             eyebrow="Signal, not noise"
             title={
               <>
                 Used by people
                 <br />
-                <span className="text-slate-500">who verify everything.</span>
+                <span className="text-ink-muted">who verify everything.</span>
               </>
             }
             lede="Traders, developers, and DAOs running AllowanceGuard on their own wallets."
           />
         </div>
 
-        {/* Featured pull-quote */}
         <CascadingScrollAnimation direction="up" distance={40} delay={0}>
           <FeaturedQuote {...featured} />
         </CascadingScrollAnimation>
 
-        {/* Supporting — 2-up then 3-up density shift */}
+        {/* Supporting grid */}
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {rest.map((t, i) => (
             <CascadingScrollAnimation key={t.name} direction="up" distance={30} delay={i * 80}>
@@ -111,33 +103,36 @@ export default function Testimonials() {
 
 function FeaturedQuote({ name, role, initials, hue, quote }: (typeof TESTIMONIALS)[number]) {
   return (
-    <div className="glass-card relative overflow-hidden p-10 lg:p-16">
+    <div className="paper-card-raised relative overflow-hidden p-10 lg:p-16">
+      {/* Giant decorative open-quote — Fraunces italic, soft ink */}
       <div
-        className="absolute -top-12 -left-4 font-serif text-[20rem] leading-none pointer-events-none select-none opacity-[0.08]"
         aria-hidden="true"
-        style={{ color: `hsl(${hue}, 70%, 65%)` }}
+        className="absolute -top-10 -left-2 font-fraunces italic text-[20rem] leading-none pointer-events-none select-none font-bold"
+        style={{ color: 'rgba(20,18,16,0.07)' }}
       >
         &ldquo;
       </div>
 
       <div className="relative grid lg:grid-cols-12 gap-10 items-center">
-        <blockquote className="lg:col-span-9 font-display text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold text-white tracking-tight leading-[1.15]">
+        <blockquote className="lg:col-span-9 font-fraunces-display italic text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-normal text-ink leading-[1.2]">
           {quote}
         </blockquote>
 
-        <div className="lg:col-span-3 flex items-center gap-4 lg:flex-col lg:items-start lg:gap-3">
+        <div className="lg:col-span-3 flex items-center gap-4 lg:flex-col lg:items-start lg:gap-3 pt-6 lg:pt-0 border-t lg:border-t-0 lg:border-l border-ink-rule lg:pl-6">
           <div
-            className="w-14 h-14 rounded-full flex items-center justify-center text-base font-bold tracking-tight ring-2 ring-white/15 shrink-0"
+            className="w-14 h-14 rounded-full flex items-center justify-center font-mono text-sm font-bold tracking-tight border border-ink-rule shrink-0"
             style={{
-              background: `linear-gradient(135deg, hsla(${hue},55%,32%,0.9), hsla(${hue},65%,20%,0.95))`,
-              color: `hsla(${hue},75%,78%,1)`,
+              background: `linear-gradient(135deg, hsla(${hue},50%,85%,0.9), hsla(${hue},45%,75%,0.8))`,
+              color: '#141210',
             }}
           >
             {initials}
           </div>
           <div>
-            <div className="text-base font-semibold text-white">{name}</div>
-            <div className="text-xs font-mono uppercase tracking-wider text-amber-400/80">{role}</div>
+            <div className="font-plex text-base font-semibold text-ink">{name}</div>
+            <div className="font-mono text-[10px] font-bold uppercase tracking-wider text-amber-deep">
+              {role}
+            </div>
           </div>
         </div>
       </div>
@@ -147,23 +142,25 @@ function FeaturedQuote({ name, role, initials, hue, quote }: (typeof TESTIMONIAL
 
 function CompactQuote({ name, role, initials, hue, quote }: (typeof TESTIMONIALS)[number]) {
   return (
-    <div className="glass-card h-full p-7 lg:p-8">
-      <blockquote className="text-sm lg:text-base text-slate-300 leading-relaxed mb-6">
+    <div className="paper-card h-full p-7 lg:p-8 flex flex-col">
+      <blockquote className="font-plex text-sm lg:text-base text-ink-soft leading-[1.6] mb-6 flex-1">
         {quote}
       </blockquote>
-      <div className="flex items-center gap-3 pt-5 border-t border-white/10">
+      <div className="flex items-center gap-3 pt-5 border-t border-ink-rule">
         <div
-          className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold ring-1 ring-white/10"
+          className="w-9 h-9 rounded-full flex items-center justify-center font-mono text-xs font-bold border border-ink-rule"
           style={{
-            background: `linear-gradient(135deg, hsla(${hue},55%,32%,0.9), hsla(${hue},65%,20%,0.95))`,
-            color: `hsla(${hue},75%,78%,1)`,
+            background: `linear-gradient(135deg, hsla(${hue},50%,85%,0.9), hsla(${hue},45%,75%,0.8))`,
+            color: '#141210',
           }}
         >
           {initials}
         </div>
         <div>
-          <div className="text-sm font-semibold text-white leading-tight">{name}</div>
-          <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{role}</div>
+          <div className="font-plex text-sm font-semibold text-ink leading-tight">{name}</div>
+          <div className="font-mono text-[9px] font-bold uppercase tracking-wider text-ink-whisper">
+            {role}
+          </div>
         </div>
       </div>
     </div>

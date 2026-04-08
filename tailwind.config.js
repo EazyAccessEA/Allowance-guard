@@ -203,12 +203,33 @@ module.exports = {
         success: '#22C55E',
         info: '#0EA5E9',
         warning: '#F59E0B',
+
+        // =============================================
+        // LEDGER — light-first editorial palette
+        // (Used by the redesigned homepage surfaces.)
+        // =============================================
+        paper: '#FAF6EE',           // warm bone, primary light surface
+        'paper-sub': '#F2ECDF',     // tinted cards / panels
+        'paper-deep': '#EBE3D1',    // stronger surface contrast
+        ink: '#141210',             // warm near-black body
+        'ink-soft': '#3D3935',      // secondary text
+        'ink-muted': '#55504A',     // tertiary text
+        'ink-whisper': '#8A847C',   // metadata, captions
+        'ink-rule': 'rgba(20,18,16,0.12)', // hairlines
+        'amber-deep': '#B4730A',    // amber that passes AA on paper as text
+        'crimson-paper': '#DC2626', // crimson darkened for paper AAA
+        'ink-blue': '#0B2545',      // cool data counterpoint
+        oxblood: '#3A0C0C',         // the single dark-inverse CTABand
+        cream: '#FAF4E6',           // type color on oxblood
       },
       fontFamily: {
         'heading': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
         'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
         'display': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
         'serif': ['var(--font-serif)', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        // Ledger aesthetic — light-first homepage
+        'fraunces': ['var(--font-fraunces)', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        'plex': ['var(--font-plex)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         'caption': ['Inter', 'ui-sans-serif', 'system-ui'],
         'button': ['Inter', 'ui-sans-serif', 'system-ui'],
       },
