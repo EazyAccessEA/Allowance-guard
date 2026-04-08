@@ -105,7 +105,7 @@ export default function Header({ isConnected }: HeaderProps) {
                   Allowance<span className="text-amber-deep">Guard</span>
                 </span>
                 <span className="font-mono text-[9px] font-bold text-ink-whisper leading-none hidden md:block tracking-[0.22em] uppercase">
-                  Est. MMXXIV
+                  Wallet Approval Scanner
                 </span>
               </div>
             </Link>

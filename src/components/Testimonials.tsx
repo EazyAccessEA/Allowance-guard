@@ -71,8 +71,8 @@ export default function Testimonials() {
       <Container>
         <div className="mb-20 lg:mb-24">
           <SectionHeader
-            roman="V"
-            eyebrow="Signal, not noise"
+            number="06"
+            eyebrow="Customers"
             title={
               <>
                 Used by people

@@ -52,7 +52,7 @@ export default function HowItWorks() {
       <Container>
         <div className="mb-20 lg:mb-24">
           <SectionHeader
-            roman="I"
+            number="03"
             eyebrow="How it works"
             title={
               <>
@@ -61,7 +61,7 @@ export default function HowItWorks() {
                 <span className="text-ink-muted">Under a minute.</span>
               </>
             }
-            lede="From connection to revocation without leaving your wallet. No account, no custody."
+            lede="Paste an address or connect your wallet. We do the rest. Every transaction signs in your own wallet — we never touch your tokens."
           />
         </div>
 

@@ -58,16 +58,16 @@ export default function StatisticsSection() {
       <Container>
         <div className="mb-20 lg:mb-28">
           <SectionHeader
-            roman="II"
-            eyebrow="The numbers"
+            number="01"
+            eyebrow="The threat"
             title={
               <>
-                The hidden risk
+                Forgotten approvals are
                 <br />
-                <span className="text-ink-muted">in every wallet.</span>
+                <span className="text-ink-muted">how wallets get drained.</span>
               </>
             }
-            lede="Token approvals are the silent vulnerability of every DeFi user. Here is what the data says."
+            lede="A token approval is permission to move your tokens without asking again. It doesn't expire. It doesn't ask twice. And the average wallet has dozens of them."
           />
         </div>
 

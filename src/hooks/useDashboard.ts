@@ -99,11 +99,16 @@ export function useDashboard() {
     }
   }, [isConnected, selectedWallet, isHydrated])
 
-  async function startScan() {
-    const target = selectedWallet || connectedAddress
+  async function startScan(overrideAddr?: string) {
+    const target = overrideAddr || selectedWallet || connectedAddress
     if (!target) {
       setMessage('Select or connect a wallet first')
       return
+    }
+    // If we got an override address (paste-an-address flow), make it the
+    // active wallet so the dashboard renders below.
+    if (overrideAddr && overrideAddr !== selectedWallet) {
+      setSelectedWallet(overrideAddr)
     }
     if (pending) return
 
