@@ -44,13 +44,12 @@ export default function ChainLogoCarousel() {
 
       {/* Eyebrow + headline */}
       <div className="text-center mb-12">
-        <div className="inline-flex items-baseline gap-3 mb-4">
-          <span className="font-fraunces italic text-4xl font-bold text-ink leading-none">
-            XV.
-          </span>
+        <div className="inline-flex items-center gap-3 mb-4">
+          <span className="h-px w-8 bg-amber-deep" aria-hidden="true" />
           <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
             Coverage
           </span>
+          <span className="h-px w-8 bg-amber-deep" aria-hidden="true" />
         </div>
         <p className="font-fraunces-display italic text-2xl sm:text-3xl lg:text-4xl font-normal text-ink">
           Fifteen chains. One dashboard.

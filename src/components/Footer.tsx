@@ -18,14 +18,13 @@ import DonationButton from '@/components/DonationButton'
 import { Github, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface FooterSectionProps {
-  roman: string
   title: string
   children: React.ReactNode
   isOpen: boolean
   onToggle: () => void
 }
 
-function FooterSection({ roman, title, children, isOpen, onToggle }: FooterSectionProps) {
+function FooterSection({ title, children, isOpen, onToggle }: FooterSectionProps) {
   return (
     <div className="border-b border-ink-rule md:border-b-0">
       <div
@@ -43,9 +42,6 @@ function FooterSection({ roman, title, children, isOpen, onToggle }: FooterSecti
         }}
       >
         <div className="flex items-baseline gap-2">
-          <span className="font-mono text-[9px] font-bold text-amber-deep tracking-[0.22em] uppercase">
-            § {roman}
-          </span>
           <h3 className="font-mono text-[11px] font-bold text-ink uppercase tracking-[0.2em]">
             {title}
           </h3>
@@ -105,7 +101,7 @@ export default function Footer() {
             </p>
 
             <p className="font-mono text-[10px] font-bold text-amber-deep tracking-[0.22em] uppercase mb-7">
-              Est. 2024 · Fifteen chains · One dashboard
+              Fifteen chains · One dashboard · Open source core
             </p>
 
             {/* Social — ink icons, no bg pills */}
@@ -127,7 +123,6 @@ export default function Footer() {
           {/* Product */}
           <div className="lg:col-span-2">
             <FooterSection
-              roman="I"
               title="Product"
               isOpen={openSections.product}
               onToggle={() => toggleSection('product')}
@@ -145,7 +140,6 @@ export default function Footer() {
           {/* Community */}
           <div className="lg:col-span-3">
             <FooterSection
-              roman="II"
               title="Community"
               isOpen={openSections.community}
               onToggle={() => toggleSection('community')}
@@ -170,7 +164,6 @@ export default function Footer() {
           {/* Legal */}
           <div className="lg:col-span-3">
             <FooterSection
-              roman="III"
               title="Legal"
               isOpen={openSections.legal}
               onToggle={() => toggleSection('legal')}

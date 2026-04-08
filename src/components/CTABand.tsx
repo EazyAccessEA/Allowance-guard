@@ -57,13 +57,12 @@ export default function CTABand({ isConnected, onScan, isScanning }: CTABandProp
       <Container>
         <CascadingScrollAnimation direction="up" distance={50} delay={0}>
           <div className="max-w-5xl mx-auto text-center">
-            <div className="inline-flex items-baseline gap-3 mb-10">
-              <span className="font-fraunces italic text-6xl font-bold text-cream leading-none">
-                IV.
-              </span>
+            <div className="inline-flex items-center gap-3 mb-12">
+              <span className="h-px w-8 bg-amber-500" aria-hidden="true" />
               <span className="font-mono text-[10px] font-bold tracking-[0.28em] uppercase text-amber-500">
-                Start now
+                Now your turn
               </span>
+              <span className="h-px w-8 bg-amber-500" aria-hidden="true" />
             </div>
 
             <h2 className="font-fraunces-display italic font-normal tracking-tight leading-[0.9] mb-10 text-6xl sm:text-7xl lg:text-8xl xl:text-[10rem]">

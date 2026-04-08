@@ -117,7 +117,7 @@ export default function DashboardPage() {
               )}
             </div>
             <Button
-              onClick={startScan}
+              onClick={() => startScan()}
               disabled={pending}
               loading={pending}
               variant="primary"

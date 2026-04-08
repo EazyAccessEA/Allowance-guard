@@ -57,8 +57,8 @@ export default function FeaturesPreview() {
       <Container>
         <div className="mb-24 lg:mb-32">
           <SectionHeader
-            roman="III"
-            eyebrow="What you get"
+            number="04"
+            eyebrow="Why this tool"
             title={
               <>
                 Built for security.
