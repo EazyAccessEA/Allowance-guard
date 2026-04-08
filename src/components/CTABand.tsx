@@ -5,7 +5,7 @@
  *
  * Oxblood (#3A0C0C) full-bleed panel inset into the paper flow.
  * Paper sections above and below create a light → dark → light rhythm.
- * "Take back / control." in Fraunces italic at display-[10rem], with the
+ * "Take back / control." in IBM Plex Sans Black at display-[10rem], with the
  * existing crimson "control." accent preserved.
  */
 
@@ -65,10 +65,10 @@ export default function CTABand({ isConnected, onScan, isScanning }: CTABandProp
               <span className="h-px w-8 bg-amber-500" aria-hidden="true" />
             </div>
 
-            <h2 className="font-fraunces-display italic font-normal tracking-tight leading-[0.9] mb-10 text-6xl sm:text-7xl lg:text-8xl xl:text-[10rem]">
+            <h2 className="font-display-black leading-[0.9] mb-10 text-6xl sm:text-7xl lg:text-8xl xl:text-[10rem]">
               <span className="text-cream">Take back</span>
               <br />
-              <span className="text-crimson-paper not-italic font-semibold">
+              <span className="text-amber-500">
                 control.
               </span>
             </h2>

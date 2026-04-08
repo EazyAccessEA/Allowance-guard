@@ -89,7 +89,7 @@ function FeaturedStep({ number, title, description, icon }: Step) {
   return (
     <div className="paper-card-raised h-full p-10 lg:p-14 relative overflow-hidden">
       <div className="flex items-baseline gap-4 mb-10">
-        <span className="font-fraunces italic text-7xl lg:text-8xl font-bold text-ink leading-none tracking-tight">
+        <span className="font-plex font-bold text-7xl lg:text-8xl text-ink leading-none tracking-[-0.05em] tabular-nums">
           {number}
         </span>
         <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
@@ -99,7 +99,7 @@ function FeaturedStep({ number, title, description, icon }: Step) {
 
       <div className="mb-10 text-ink">{icon}</div>
 
-      <h3 className="font-fraunces-display italic text-4xl lg:text-5xl font-normal text-ink mb-5 leading-[1.05]">
+      <h3 className="font-display-tight text-4xl lg:text-5xl text-ink mb-5 leading-[1.05]">
         {title}
       </h3>
       <p className="font-plex text-base lg:text-lg text-ink-muted leading-[1.6] max-w-md">
@@ -125,14 +125,14 @@ function CompactStep({ number, title, description, icon }: Step) {
       <div className="shrink-0 text-ink">{icon}</div>
       <div className="min-w-0 flex-1">
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="font-fraunces italic text-3xl font-bold text-ink leading-none">
+          <span className="font-plex font-bold text-3xl text-ink leading-none tracking-[-0.04em] tabular-nums">
             {number}
           </span>
           <span className="font-mono text-[9px] font-bold tracking-[0.2em] uppercase text-ink-whisper">
             Step
           </span>
         </div>
-        <h3 className="font-fraunces-display italic text-2xl lg:text-3xl font-normal text-ink mb-2 leading-[1.1]">
+        <h3 className="font-display-tight text-2xl lg:text-3xl text-ink mb-2 leading-[1.1]">
           {title}
         </h3>
         <p className="font-plex text-sm text-ink-muted leading-[1.55]">{description}</p>

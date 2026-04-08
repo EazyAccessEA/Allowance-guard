@@ -3,7 +3,7 @@
 /**
  * Header — Ledger aesthetic
  *
- * Masthead-style navigation on warm paper. Fraunces italic wordmark,
+ * Masthead-style navigation on paper. IBM Plex Sans bold wordmark,
  * mono tagline, ink nav links with thin amber active underline, ink
  * rule at the bottom (replacing the old amber glow). Scroll state
  * tightens the bar with a subtle shadow and the signature ledger rule.
@@ -101,7 +101,7 @@ export default function Header({ isConnected }: HeaderProps) {
                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-md"
             >
               <div className="flex items-baseline gap-3">
-                <span className="font-fraunces italic text-2xl font-bold text-ink leading-none tracking-tight">
+                <span className="font-plex font-bold text-xl text-ink leading-none tracking-[-0.03em]">
                   Allowance<span className="text-amber-deep">Guard</span>
                 </span>
                 <span className="font-mono text-[9px] font-bold text-ink-whisper leading-none hidden md:block tracking-[0.22em] uppercase">

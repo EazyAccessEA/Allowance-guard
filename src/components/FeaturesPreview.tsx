@@ -5,7 +5,7 @@
  *
  * Paper section with alternating editorial rows. Ink line-art diagrams
  * replace the old amber-glow icons — on paper we want engraved quality,
- * not bloom. Each feature gets a Fraunces italic display headline.
+ * not bloom. Each feature gets an IBM Plex Sans Bold display headline.
  */
 
 import Container from '@/components/ui/Container'
@@ -97,7 +97,7 @@ function FeatureRow({ title, description, eyebrow, diagram, flip }: Feature & { 
         <div className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep mb-4">
           {eyebrow}
         </div>
-        <h3 className="font-fraunces-display italic text-4xl sm:text-5xl lg:text-6xl font-normal text-ink tracking-tight leading-[1.02] mb-6 max-w-xl">
+        <h3 className="font-display-tight text-4xl sm:text-5xl lg:text-6xl text-ink leading-[1.02] mb-6 max-w-xl">
           {title}
         </h3>
         <p className="font-plex text-base lg:text-lg text-ink-muted leading-[1.6] max-w-xl">

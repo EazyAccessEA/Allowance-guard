@@ -51,7 +51,7 @@ export default function ChainLogoCarousel() {
           </span>
           <span className="h-px w-8 bg-amber-deep" aria-hidden="true" />
         </div>
-        <p className="font-fraunces-display italic text-2xl sm:text-3xl lg:text-4xl font-normal text-ink">
+        <p className="font-display-tight text-2xl sm:text-3xl lg:text-4xl text-ink">
           Fifteen chains. One dashboard.
         </p>
       </div>

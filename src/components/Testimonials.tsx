@@ -4,7 +4,7 @@
  * Testimonials — Ledger aesthetic
  *
  * Paper section with a magazine-style featured pull-quote in Fraunces
- * italic at display scale, a giant decorative open-quote mark, and a
+ * at display scale, a giant decorative open-quote mark, and a
  * grid of supporting quotes in paper-cards. Warm, not cold.
  */
 
@@ -104,17 +104,17 @@ export default function Testimonials() {
 function FeaturedQuote({ name, role, initials, hue, quote }: (typeof TESTIMONIALS)[number]) {
   return (
     <div className="paper-card-raised relative overflow-hidden p-10 lg:p-16">
-      {/* Giant decorative open-quote — Fraunces italic, soft ink */}
+      {/* Giant decorative open-quote — soft ink */}
       <div
         aria-hidden="true"
-        className="absolute -top-10 -left-2 font-fraunces italic text-[20rem] leading-none pointer-events-none select-none font-bold"
+        className="absolute -top-10 -left-2 font-plex font-bold text-[20rem] leading-none pointer-events-none select-none"
         style={{ color: 'rgba(20,18,16,0.07)' }}
       >
         &ldquo;
       </div>
 
       <div className="relative grid lg:grid-cols-12 gap-10 items-center">
-        <blockquote className="lg:col-span-9 font-fraunces-display italic text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-normal text-ink leading-[1.2]">
+        <blockquote className="lg:col-span-9 font-plex font-medium text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-ink leading-[1.2] tracking-tight">
           {quote}
         </blockquote>
 

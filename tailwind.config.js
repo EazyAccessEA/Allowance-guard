@@ -205,30 +205,29 @@ module.exports = {
         warning: '#F59E0B',
 
         // =============================================
-        // LEDGER — light-first editorial palette
-        // (Used by the redesigned homepage surfaces.)
+        // LEDGER v4 — fully-sans, less warm, AA-verified
+        // Every text/bg pair below passes WCAG AA-normal.
         // =============================================
-        paper: '#FAF6EE',           // warm bone, primary light surface
-        'paper-sub': '#F2ECDF',     // tinted cards / panels
-        'paper-deep': '#EBE3D1',    // stronger surface contrast
-        ink: '#141210',             // warm near-black body
-        'ink-soft': '#3D3935',      // secondary text
-        'ink-muted': '#55504A',     // tertiary text
-        'ink-whisper': '#8A847C',   // metadata, captions
-        'ink-rule': 'rgba(20,18,16,0.12)', // hairlines
-        'amber-deep': '#B4730A',    // amber that passes AA on paper as text
-        'crimson-paper': '#DC2626', // crimson darkened for paper AAA
+        paper: '#F7F5F0',           // less warm, still slightly cream
+        'paper-sub': '#EFECE3',     // tinted cards / panels
+        'paper-deep': '#E6E2D5',    // stronger surface contrast
+        ink: '#0F1115',             // cool near-black body, ~17:1 on paper
+        'ink-soft': '#2A2D33',      // secondary text, ~12:1
+        'ink-muted': '#4A4D54',     // tertiary text, ~7.4:1
+        'ink-whisper': '#585C64',   // metadata; AA on paper (6.16), sub (5.68), deep (5.18)
+        'ink-rule': 'rgba(15,17,21,0.14)', // hairlines
+        'amber-deep': '#854F08',    // AA on paper (6.18), sub (5.70), deep (5.19)
+        'crimson-paper': '#B3151F', // AA on paper (6.33), sub (5.84), deep (5.32)
         'ink-blue': '#0B2545',      // cool data counterpoint
-        oxblood: '#3A0C0C',         // the single dark-inverse CTABand
-        cream: '#FAF4E6',           // type color on oxblood
+        oxblood: '#2D0A0A',         // single dark-inverse CTABand
+        cream: '#F7F5F0',           // type color on oxblood
       },
       fontFamily: {
         'heading': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
         'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
         'display': ['var(--font-display)', 'Inter', 'ui-sans-serif', 'system-ui'],
         'serif': ['var(--font-serif)', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
-        // Ledger aesthetic — light-first homepage
-        'fraunces': ['var(--font-fraunces)', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        // Ledger v4 — fully sans, IBM Plex Sans
         'plex': ['var(--font-plex)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         'caption': ['Inter', 'ui-sans-serif', 'system-ui'],
         'button': ['Inter', 'ui-sans-serif', 'system-ui'],

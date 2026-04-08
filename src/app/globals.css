@@ -3959,20 +3959,20 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
  * ============================================================================= */
 
 :root {
-  --ledger-paper: #FAF6EE;
-  --ledger-paper-sub: #F2ECDF;
-  --ledger-paper-deep: #EBE3D1;
-  --ledger-ink: #141210;
-  --ledger-ink-soft: #3D3935;
-  --ledger-ink-muted: #55504A;
-  --ledger-ink-whisper: #8A847C;
-  --ledger-ink-rule: rgba(20, 18, 16, 0.12);
-  --ledger-ink-rule-strong: rgba(20, 18, 16, 0.28);
+  --ledger-paper: #F7F5F0;
+  --ledger-paper-sub: #EFECE3;
+  --ledger-paper-deep: #E6E2D5;
+  --ledger-ink: #0F1115;
+  --ledger-ink-soft: #2A2D33;
+  --ledger-ink-muted: #4A4D54;
+  --ledger-ink-whisper: #585C64;
+  --ledger-ink-rule: rgba(15, 17, 21, 0.14);
+  --ledger-ink-rule-strong: rgba(15, 17, 21, 0.30);
   --ledger-amber: #F59E0B;
-  --ledger-amber-deep: #B4730A;
-  --ledger-crimson: #DC2626;
-  --ledger-oxblood: #3A0C0C;
-  --ledger-cream: #FAF4E6;
+  --ledger-amber-deep: #854F08;
+  --ledger-crimson: #B3151F;
+  --ledger-oxblood: #2D0A0A;
+  --ledger-cream: #F7F5F0;
 }
 
 /* Paper surfaces — warm bone backgrounds. Apply to homepage <section> elements. */
@@ -4077,12 +4077,18 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   background-position: 0 50%;
 }
 
-/* Fraunces display tuning — letterspacing + OpenType features for huge type. */
-.font-fraunces-display {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-optical-sizing: auto;
-  font-feature-settings: "ss01", "ss02", "liga", "dlig";
-  letter-spacing: -0.02em;
+/* Display sans tuning — tight tracking + cap-height optimisation for huge type. */
+.font-display-tight {
+  font-family: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  font-feature-settings: "ss01", "ss03", "cv05", "cv11";
+}
+.font-display-black {
+  font-family: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-feature-settings: "ss01", "ss03", "cv05", "cv11";
 }
 
 /* Deckle edge — torn-paper transition between dark hero and paper sections. */
