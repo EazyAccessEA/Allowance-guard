@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     if (isApiPlan(plan)) {
       // API plans only support monthly billing currently
-      const apiPrices = API_PRICES[plan as Exclude<ApiPlan, 'api_free' | 'api_enterprise'>]
+      const apiPrices = API_PRICES[plan as Exclude<ApiPlan, 'api_free' | 'api_enterprise' | 'api_public'>]
       if (!apiPrices) {
         return NextResponse.json({ error: 'Invalid API plan' }, { status: 400 })
       }
