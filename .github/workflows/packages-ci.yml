@@ -7,11 +7,15 @@ on:
       - 'packages/**'
       - '.github/workflows/packages-ci.yml'
       - 'pnpm-workspace.yaml'
+      - 'scripts/generate-openapi.ts'
+      - 'src/app/api/v1/openapi.json'
   pull_request:
     paths:
       - 'packages/**'
       - '.github/workflows/packages-ci.yml'
       - 'pnpm-workspace.yaml'
+      - 'scripts/generate-openapi.ts'
+      - 'src/app/api/v1/openapi.json'
 
 jobs:
   test:
@@ -32,6 +36,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Generate OpenAPI client types
+        run: pnpm run generate:openapi
+
       - name: Typecheck @allowance-guard/client
         run: pnpm --filter @allowance-guard/client typecheck
 
@@ -43,6 +50,9 @@ jobs:
 
       - name: Typecheck @allowance-guard/react
         run: pnpm --filter @allowance-guard/react typecheck
+
+      - name: Test @allowance-guard/react
+        run: pnpm --filter @allowance-guard/react test
 
       - name: Build @allowance-guard/react
         run: pnpm --filter @allowance-guard/react build

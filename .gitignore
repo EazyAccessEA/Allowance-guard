@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# OpenAPI → client types (regenerate with pnpm run generate:openapi)
+packages/client/src/types.generated.ts
