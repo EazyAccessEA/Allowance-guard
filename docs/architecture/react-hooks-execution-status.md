@@ -55,6 +55,16 @@
 - Per-IP rate limit for public keys (currently only per-key daily + burst; a scraper with the key can still consume the full 500/day from one IP). Tracked as a hardening task, not a blocker for v0.1.0.
 - Tests: middleware behaviour for the GET-only enforcement and origin allow-list.
 
+## ✅ Completed — Account UI for public keys
+
+- **`src/components/account/PublicApiKeyCreator.tsx`** — dedicated component that issues `ag_pub_*` keys via `POST /api/keys/public`. Features:
+  - Inline create form with name + optional `allowedOrigins` textarea (newline or comma separated)
+  - One-time plaintext disclosure with copy-to-clipboard, amber warning banner, and an "I've saved it" dismiss
+  - Lists existing public keys (filtered from `GET /api/keys` by `keyType`), shows allowed origins inline
+  - Revoke flow via existing `DELETE /api/keys/[id]`
+  - Helpful inline copy: rate limit (500/day), GET-only, and the env-var name `NEXT_PUBLIC_ALLOWANCE_GUARD_KEY` for one-click integration with `@allowance-guard/react`
+- **`src/app/account/keys/page.tsx`** — mounts the new creator below the existing `ApiKeyManager`. Filters secret-only keys to the existing manager so the two surfaces don't double-render.
+
 ## ✅ Completed — Tests + CI stage
 
 - **`packages/client/src/__tests__/errors.test.ts`** — error hierarchy, status codes, secret-key leakage guard.
