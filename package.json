@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "pnpm --filter @allowance-guard/client build && next build",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
