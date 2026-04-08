@@ -1,16 +1,18 @@
 'use client'
 
+/**
+ * CTABand — the single dark inverse moment on the page.
+ *
+ * Oxblood (#3A0C0C) full-bleed panel inset into the paper flow.
+ * Paper sections above and below create a light → dark → light rhythm.
+ * "Take back / control." in Fraunces italic at display-[10rem], with the
+ * existing crimson "control." accent preserved.
+ */
+
 import Container from '@/components/ui/Container'
 import { Button } from '@/components/ui/Button'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
-import { motion, useReducedMotion } from 'framer-motion'
-
-/**
- * The LOUD moment outside the hero. Display-scale headline,
- * crimson "control." accent (the protected colour moment repeats once),
- * full-bleed dark panel with amber and crimson hairlines.
- */
 
 interface CTABandProps {
   isConnected: boolean
@@ -19,62 +21,60 @@ interface CTABandProps {
 }
 
 export default function CTABand({ isConnected, onScan, isScanning }: CTABandProps) {
-  const prefersReduced = useReducedMotion()
-
   return (
-    <section className="relative py-32 sm:py-40 lg:py-56 bg-[#060A14] overflow-hidden">
-      {/* Crimson atmospheric glow — centre */}
+    <section className="relative py-32 sm:py-40 lg:py-56 bg-oxblood overflow-hidden">
+      {/* Atmospheric crimson glow centre */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[600px] pointer-events-none"
         aria-hidden="true"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[600px] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 50%, rgba(229,62,62,0.14) 0%, transparent 65%)',
-          filter: 'blur(60px)',
+          background:
+            'radial-gradient(ellipse 60% 50%, rgba(220,38,38,0.18) 0%, transparent 65%)',
+          filter: 'blur(40px)',
         }}
       />
       {/* Amber undertone */}
       <div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[300px] pointer-events-none"
         aria-hidden="true"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[300px] pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse, rgba(245,158,11,0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.10) 0%, transparent 70%)',
           filter: 'blur(40px)',
         }}
       />
 
-      {/* Signature amber hairline — top */}
-      <motion.div
-        className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-48"
+      {/* Top amber hairline */}
+      <div
         aria-hidden="true"
+        className="absolute top-0 left-0 right-0 h-px"
         style={{
           background:
-            'linear-gradient(90deg, transparent 0%, #F59E0B 50%, transparent 100%)',
-          boxShadow: '0 0 12px rgba(245,158,11,0.3)',
+            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.5) 50%, transparent 90%)',
+          boxShadow: '0 0 12px rgba(245,158,11,0.25)',
         }}
-        initial={prefersReduced ? { scaleX: 1 } : { scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
       />
 
       <Container>
         <CascadingScrollAnimation direction="up" distance={50} delay={0}>
           <div className="max-w-5xl mx-auto text-center">
-            <div className="text-[11px] font-mono font-bold tracking-[0.28em] uppercase text-amber-400 mb-8">
-              04 &nbsp; · &nbsp; Start now
+            <div className="inline-flex items-baseline gap-3 mb-10">
+              <span className="font-fraunces italic text-6xl font-bold text-cream leading-none">
+                IV.
+              </span>
+              <span className="font-mono text-[10px] font-bold tracking-[0.28em] uppercase text-amber-500">
+                Start now
+              </span>
             </div>
 
-            <h2 className="font-display font-bold tracking-tight leading-[0.9] mb-10 text-6xl sm:text-7xl lg:text-8xl xl:text-[10rem]">
-              <span className="bg-gradient-to-br from-white via-white to-slate-500 bg-clip-text text-transparent">
-                Take back
-              </span>
+            <h2 className="font-fraunces-display italic font-normal tracking-tight leading-[0.9] mb-10 text-6xl sm:text-7xl lg:text-8xl xl:text-[10rem]">
+              <span className="text-cream">Take back</span>
               <br />
-              <span className="text-crimson-500 [-webkit-text-fill-color:#EF4444]">
+              <span className="text-crimson-paper not-italic font-semibold">
                 control.
               </span>
             </h2>
 
-            <p className="text-lg sm:text-xl lg:text-2xl text-slate-300 leading-relaxed mb-12 max-w-2xl mx-auto">
+            <p className="font-plex text-lg sm:text-xl lg:text-2xl text-cream/75 leading-[1.55] mb-12 max-w-2xl mx-auto">
               Scan your wallet in under a minute. No account. No custody. No compromise.
             </p>
 
@@ -99,21 +99,21 @@ export default function CTABand({ isConnected, onScan, isScanning }: CTABandProp
               )}
             </div>
 
-            <p className="mt-8 text-sm text-slate-400 font-mono tracking-wide">
+            <p className="mt-8 font-mono text-xs text-cream/50 tracking-wider uppercase">
               No email &nbsp;·&nbsp; Read-only access &nbsp;·&nbsp; Open source core
             </p>
           </div>
         </CascadingScrollAnimation>
       </Container>
 
-      {/* Signature crimson hairline — bottom */}
+      {/* Bottom amber hairline */}
       <div
-        className="absolute bottom-0 inset-x-0 h-px"
         aria-hidden="true"
+        className="absolute bottom-0 inset-x-0 h-px"
         style={{
           background:
-            'linear-gradient(90deg, transparent 15%, rgba(239,68,68,0.5) 50%, transparent 85%)',
-          boxShadow: '0 0 10px rgba(239,68,68,0.2)',
+            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.5) 50%, transparent 90%)',
+          boxShadow: '0 0 12px rgba(245,158,11,0.25)',
         }}
       />
     </section>

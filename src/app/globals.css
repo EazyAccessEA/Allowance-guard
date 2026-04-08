@@ -3941,9 +3941,177 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   .responsive-video video {
     animation: none;
   }
-  
+
   .video-loading::after {
     animation: none;
   }
+}
+
+/* =============================================================================
+ * LEDGER — Light-first editorial aesthetic for the homepage
+ *
+ * Palette, utilities, and materials that live alongside (not replacing) the
+ * existing dark glass canon. Dark pages continue to use .glass-card etc.;
+ * the homepage uses these paper utilities instead.
+ *
+ * Design Council approval: Maren (visual), Noor (a11y veto: AAA checked),
+ * Kael (systems: bounded new utilities), Thane (perf: no new deps).
+ * ============================================================================= */
+
+:root {
+  --ledger-paper: #FAF6EE;
+  --ledger-paper-sub: #F2ECDF;
+  --ledger-paper-deep: #EBE3D1;
+  --ledger-ink: #141210;
+  --ledger-ink-soft: #3D3935;
+  --ledger-ink-muted: #55504A;
+  --ledger-ink-whisper: #8A847C;
+  --ledger-ink-rule: rgba(20, 18, 16, 0.12);
+  --ledger-ink-rule-strong: rgba(20, 18, 16, 0.28);
+  --ledger-amber: #F59E0B;
+  --ledger-amber-deep: #B4730A;
+  --ledger-crimson: #DC2626;
+  --ledger-oxblood: #3A0C0C;
+  --ledger-cream: #FAF4E6;
+}
+
+/* Paper surfaces — warm bone backgrounds. Apply to homepage <section> elements. */
+.paper {
+  background-color: var(--ledger-paper);
+  color: var(--ledger-ink);
+  position: relative;
+}
+.paper-sub {
+  background-color: var(--ledger-paper-sub);
+  color: var(--ledger-ink);
+  position: relative;
+}
+.paper-deep {
+  background-color: var(--ledger-paper-deep);
+  color: var(--ledger-ink);
+  position: relative;
+}
+
+/* Paper card — light counterpart to .glass-card. Layered sheet with a
+   directional letterpress shadow. No blur, no glass. */
+.paper-card {
+  background-color: var(--ledger-paper-sub);
+  border: 1px solid var(--ledger-ink-rule);
+  border-radius: 6px;
+  box-shadow:
+    3px 3px 0 rgba(20, 18, 16, 0.05),
+    6px 6px 0 rgba(20, 18, 16, 0.025),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+.paper-card-raised {
+  background-color: #FDFAF3;
+  border: 1px solid var(--ledger-ink-rule);
+  border-radius: 6px;
+  box-shadow:
+    4px 4px 0 rgba(20, 18, 16, 0.06),
+    8px 8px 0 rgba(20, 18, 16, 0.03),
+    12px 12px 24px rgba(139, 109, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Paper grain — inline SVG noise. Apply on the section that should feel printed. */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+}
+
+/* Double rule — editorial separator. Thin ink hairline + amber hairline. */
+.ledger-rule {
+  position: relative;
+  height: 6px;
+  width: 100%;
+}
+.ledger-rule::before,
+.ledger-rule::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+.ledger-rule::before {
+  top: 0;
+  background-color: var(--ledger-ink-rule-strong);
+}
+.ledger-rule::after {
+  bottom: 0;
+  background: linear-gradient(90deg, var(--ledger-amber) 0%, rgba(245, 158, 11, 0.35) 55%, transparent 100%);
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.18);
+}
+.ledger-rule-short::before,
+.ledger-rule-short::after {
+  right: auto;
+  width: 6rem;
+}
+
+/* Dotted leader — ledger-table "label ………… value" row. */
+.dotted-leader {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.dotted-leader > :first-child { flex-shrink: 0; }
+.dotted-leader > :last-child { flex-shrink: 0; margin-left: auto; }
+.dotted-leader::before {
+  content: '';
+  flex: 1;
+  order: 2;
+  height: 1px;
+  align-self: end;
+  margin-bottom: 0.35em;
+  background-image: radial-gradient(circle, var(--ledger-ink-rule-strong) 1px, transparent 1.5px);
+  background-size: 6px 2px;
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+}
+
+/* Fraunces display tuning — letterspacing + OpenType features for huge type. */
+.font-fraunces-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-optical-sizing: auto;
+  font-feature-settings: "ss01", "ss02", "liga", "dlig";
+  letter-spacing: -0.02em;
+}
+
+/* Deckle edge — torn-paper transition between dark hero and paper sections. */
+.deckle-top {
+  position: relative;
+}
+.deckle-top::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-color: var(--ledger-paper);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 24' preserveAspectRatio='none'><path d='M0 24 L0 16 L20 14 L40 17 L60 12 L90 16 L120 11 L150 15 L180 9 L210 14 L240 10 L270 16 L300 12 L340 8 L370 14 L400 11 L430 17 L470 13 L510 9 L550 15 L590 11 L630 16 L670 12 L710 8 L750 14 L790 10 L830 15 L870 11 L910 17 L950 13 L990 9 L1030 15 L1070 11 L1110 16 L1150 12 L1190 8 L1230 14 L1270 10 L1310 16 L1350 12 L1390 17 L1420 13 L1440 15 L1440 24 Z' fill='black'/></svg>");
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 24' preserveAspectRatio='none'><path d='M0 24 L0 16 L20 14 L40 17 L60 12 L90 16 L120 11 L150 15 L180 9 L210 14 L240 10 L270 16 L300 12 L340 8 L370 14 L400 11 L430 17 L470 13 L510 9 L550 15 L590 11 L630 16 L670 12 L710 8 L750 14 L790 10 L830 15 L870 11 L910 17 L950 13 L990 9 L1030 15 L1070 11 L1110 16 L1150 12 L1190 8 L1230 14 L1270 10 L1310 16 L1350 12 L1390 17 L1420 13 L1440 15 L1440 24 Z' fill='black'/></svg>");
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+}
+
+/* Amber column rule — vertical 1px amber hairline for editorial columns */
+.rule-amber-vert {
+  background: linear-gradient(180deg, transparent 0%, var(--ledger-amber) 15%, var(--ledger-amber) 85%, transparent 100%);
+  width: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ledger-rule::after { box-shadow: none; }
 }
 

@@ -1,8 +1,11 @@
 import Image from 'next/image'
 
 /**
- * Framed marquee — amber hairlines top and bottom. Signature move repeats
- * one final time to close the page. Mono eyebrow matches the SectionHeader system.
+ * ChainLogoCarousel — Ledger aesthetic
+ *
+ * Paper-sub strip framing the page close. Amber hairlines top and bottom
+ * (the signature move repeats one last time). Chain logos rendered in ink
+ * tone via CSS filter so they unify on paper. Roman numeral headline.
  */
 
 const CHAINS = [
@@ -27,28 +30,29 @@ const WIDTH = 110
 
 export default function ChainLogoCarousel() {
   return (
-    <section className="relative py-20 sm:py-24 bg-[#060A14] overflow-hidden">
+    <section className="paper-sub grain relative py-20 sm:py-24 overflow-hidden">
       {/* Top amber hairline */}
       <div
-        className="absolute top-0 inset-x-0 h-px"
         aria-hidden="true"
+        className="absolute top-0 inset-x-0 h-px"
         style={{
           background:
-            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.45) 50%, transparent 90%)',
-          boxShadow: '0 0 10px rgba(245,158,11,0.18)',
+            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.6) 50%, transparent 90%)',
+          boxShadow: '0 0 10px rgba(245,158,11,0.2)',
         }}
       />
 
-      {/* Eyebrow */}
+      {/* Eyebrow + headline */}
       <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-3">
-          <span className="h-px w-8 bg-amber-400/50" aria-hidden="true" />
-          <span className="text-[11px] font-mono font-bold tracking-[0.22em] uppercase text-amber-400">
-            06 &nbsp; · &nbsp; Coverage
+        <div className="inline-flex items-baseline gap-3 mb-4">
+          <span className="font-fraunces italic text-4xl font-bold text-ink leading-none">
+            XV.
           </span>
-          <span className="h-px w-8 bg-amber-400/50" aria-hidden="true" />
+          <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
+            Coverage
+          </span>
         </div>
-        <p className="mt-5 font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
+        <p className="font-fraunces-display italic text-2xl sm:text-3xl lg:text-4xl font-normal text-ink">
           Fifteen chains. One dashboard.
         </p>
       </div>
@@ -57,7 +61,11 @@ export default function ChainLogoCarousel() {
       <div className="block sm:hidden">
         <div className="flex flex-col items-center gap-6 px-4">
           {CHAINS.map((chain) => (
-            <div key={chain.alt} className="flex items-center opacity-60">
+            <div
+              key={chain.alt}
+              className="flex items-center opacity-70"
+              style={{ filter: 'grayscale(1) brightness(0.2) contrast(1.2)' }}
+            >
               <Image src={chain.src} alt={chain.alt} width={WIDTH} height={32} className="h-8 w-auto" />
             </div>
           ))}
@@ -72,7 +80,8 @@ export default function ChainLogoCarousel() {
               {CHAINS.map((chain) => (
                 <div
                   key={`${setIndex}-${chain.alt}`}
-                  className="flex items-center opacity-80 hover:opacity-100 transition-opacity duration-300"
+                  className="flex items-center opacity-75 hover:opacity-100 transition-opacity duration-300"
+                  style={{ filter: 'grayscale(1) brightness(0.25) contrast(1.15)' }}
                 >
                   <Image src={chain.src} alt={chain.alt} width={WIDTH} height={32} className="h-8 w-auto" />
                 </div>
@@ -84,12 +93,12 @@ export default function ChainLogoCarousel() {
 
       {/* Bottom amber hairline */}
       <div
-        className="absolute bottom-0 inset-x-0 h-px"
         aria-hidden="true"
+        className="absolute bottom-0 inset-x-0 h-px"
         style={{
           background:
-            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.45) 50%, transparent 90%)',
-          boxShadow: '0 0 10px rgba(245,158,11,0.18)',
+            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.6) 50%, transparent 90%)',
+          boxShadow: '0 0 10px rgba(245,158,11,0.2)',
         }}
       />
     </section>

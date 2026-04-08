@@ -43,6 +43,38 @@ const instrumentSerif = localFont({
   preload: false,
 })
 
+// Ledger aesthetic — Fraunces (display serif, with italic) + IBM Plex Sans (body)
+// Used by the new light-first homepage surfaces. Loaded once, exposed as
+// CSS variables so any surface can opt in without affecting existing pages.
+const fraunces = localFont({
+  src: [
+    { path: '../../public/fonts/Fraunces_72pt-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/Fraunces_72pt-Italic.ttf', weight: '400', style: 'italic' },
+    { path: '../../public/fonts/Fraunces_72pt-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/Fraunces_72pt-SemiBoldItalic.ttf', weight: '600', style: 'italic' },
+    { path: '../../public/fonts/Fraunces_72pt-Bold.ttf', weight: '700', style: 'normal' },
+    { path: '../../public/fonts/Fraunces_72pt-BoldItalic.ttf', weight: '700', style: 'italic' },
+    { path: '../../public/fonts/Fraunces_72pt-Black.ttf', weight: '900', style: 'normal' },
+    { path: '../../public/fonts/Fraunces_72pt-BlackItalic.ttf', weight: '900', style: 'italic' },
+  ],
+  display: 'swap',
+  variable: '--font-fraunces',
+  preload: true,
+})
+
+const ibmPlex = localFont({
+  src: [
+    { path: '../../public/fonts/IBMPlexSans-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/IBMPlexSans-Italic.ttf', weight: '400', style: 'italic' },
+    { path: '../../public/fonts/IBMPlexSans-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../../public/fonts/IBMPlexSans-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: '../../public/fonts/IBMPlexSans-Bold.ttf', weight: '700', style: 'normal' },
+  ],
+  display: 'swap',
+  variable: '--font-plex',
+  preload: false,
+})
+
 const inter = localFont({
   src: [
     { path: '../../public/fonts/Inter_18pt-Regular.ttf', weight: '400', style: 'normal' },
@@ -277,7 +309,7 @@ export default function RootLayout({
           `
         }} />
       </head>
-      <body className={`${inter.className} ${spaceGrotesk.variable} ${instrumentSerif.variable} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} ${spaceGrotesk.variable} ${instrumentSerif.variable} ${fraunces.variable} ${ibmPlex.variable} min-h-screen flex flex-col`}>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-secondary-800 border border-secondary-700 px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <ThemeProvider>
