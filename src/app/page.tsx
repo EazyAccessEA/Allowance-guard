@@ -103,25 +103,25 @@ export default function HomePage() {
         </WalletErrorBoundary>
       </div>
 
-      {/* 2 — The threat (loss aversion early) */}
+      {/* 2 — Chain coverage (immediate trust evidence) */}
+      <ChainLogoCarousel />
+
+      {/* 3 — The threat (loss aversion early) */}
       <LazySection>
         <StatisticsSection />
       </LazySection>
 
-      {/* 3 — Sample scan (recognition + reciprocity) */}
+      {/* 4 — Sample scan (recognition + reciprocity) */}
       <SampleScanDemo />
 
-      {/* 4 — How it works */}
+      {/* 5 — How it works */}
       <HowItWorks />
 
-      {/* 5 — Features */}
+      {/* 6 — Features */}
       <FeaturesPreview />
 
-      {/* 6 — CTA (the single dark moment) */}
+      {/* 7 — CTA (the single dark moment) */}
       <CTABand isConnected={isConnected} onScan={startScan} isScanning={pending} />
-
-      {/* 7 — Chain coverage trust bookend */}
-      <ChainLogoCarousel />
 
       {/* Inline dashboard when a wallet is selected (paste OR connect) */}
       {isHydrated && selectedWallet && (
