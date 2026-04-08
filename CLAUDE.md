@@ -13,6 +13,7 @@ AllowanceGuard is a **Web3 wallet security platform** that helps users monitor, 
 
 1. **Plan first.** Before making any code changes, outline a plan: identify affected files, describe the approach, and list the steps. Only start implementation after the plan is clear.
 2. **600-line limit.** Do not exceed 600 lines in any single code or HTML file. If a file would exceed this limit, split it into multiple files or modular parts.
+3. **Conserve tokens.** Be terse. Don't re-read files you've already read in the session. Don't restate what the user said. Don't pad responses with explanations the user didn't ask for. Batch independent tool calls in a single message. Prefer surgical `Edit`s over full-file `Write`s. Skip exploratory searches when the path is already known.
 
 ## Tech Stack
 

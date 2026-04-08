@@ -55,6 +55,13 @@
 - Per-IP rate limit for public keys (currently only per-key daily + burst; a scraper with the key can still consume the full 500/day from one IP). Tracked as a hardening task, not a blocker for v0.1.0.
 - Tests: middleware behaviour for the GET-only enforcement and origin allow-list.
 
+## ✅ Completed — Tests + CI stage
+
+- **`packages/client/src/__tests__/errors.test.ts`** — error hierarchy, status codes, secret-key leakage guard.
+- **`packages/client/src/__tests__/client.test.ts`** — constructor validation, browser secret-key hard-fail, base URL normalisation, query param serialisation, response envelope unwrapping, full error translation matrix (401/400/429/500/network), key-leak check on thrown errors.
+- **`packages/client/vitest.config.ts`** — node env, v8 coverage.
+- **`.github/workflows/packages-ci.yml`** — typecheck + test + build for `@allowance-guard/client` and `@allowance-guard/react` on every push to `main` and PR touching `packages/**`. Uses `pnpm/action-setup@v4` + Node 20.
+
 ## ✅ Completed — OpenAPI stage
 
 ### Stage: single source of truth for types
