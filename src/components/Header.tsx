@@ -1,7 +1,19 @@
 'use client'
 
+/**
+ * Header — Ledger aesthetic
+ *
+ * Masthead-style navigation on warm paper. Fraunces italic wordmark,
+ * mono tagline, ink nav links with thin amber active underline, ink
+ * rule at the bottom (replacing the old amber glow). Scroll state
+ * tightens the bar with a subtle shadow and the signature ledger rule.
+ *
+ * Council: Maren (editorial masthead), Noor (AAA contrast verified),
+ * Kael (reuses Ledger tokens, zero new utilities), Thane (logo inverted
+ * via CSS filter — no new image), Sable (scarce active indicator).
+ */
+
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/Badge'
@@ -32,23 +44,17 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`relative px-4 py-2 text-sm font-medium transition-colors
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base rounded-md
-        ${current
-          ? 'text-white'
-          : 'text-slate-400 hover:text-white'
-        }`}
-      style={{ transitionDuration: '150ms', transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)' }}
+      className={`relative px-4 py-2 font-plex text-sm font-medium transition-colors
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-md
+        ${current ? 'text-ink' : 'text-ink-muted hover:text-ink'}`}
+      style={{ transitionDuration: '150ms' }}
+      aria-current={current ? 'page' : undefined}
     >
       {children}
-      {/* Amber active indicator */}
       {current && (
         <span
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-5 bg-amber-500 rounded-full"
+          className="absolute -bottom-[2px] left-1/2 -translate-x-1/2 h-[2px] w-6 bg-amber-deep"
           aria-hidden="true"
-          style={{
-            boxShadow: '0 0 8px rgba(245, 158, 11, 0.4)',
-          }}
         />
       )}
     </Link>
@@ -74,58 +80,40 @@ export default function Header({ isConnected }: HeaderProps) {
   return (
     <header
       className="sticky top-0 z-50 w-full"
-      style={{ transitionDuration: '300ms', transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)' }}
+      style={{ transitionDuration: '300ms' }}
     >
-      {/* Deep Navy surface */}
+      {/* Paper surface */}
       <div
-        className={`relative transition-all
+        className={`relative transition-all border-b
           ${scrolled
-            ? 'bg-surface-base/95 backdrop-blur-xl shadow-lg shadow-black/30'
-            : 'bg-surface-base/80 backdrop-blur-md'
+            ? 'bg-paper/95 backdrop-blur-md border-ink-rule shadow-[0_2px_12px_-4px_rgba(20,18,16,0.08)]'
+            : 'bg-paper/80 backdrop-blur-sm border-transparent'
           }`}
         style={{ transitionDuration: '300ms', transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)' }}
       >
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
           <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
+            {/* Wordmark — typographic only, Ledger aesthetic */}
             <Link
               href="/"
-              className="flex items-center gap-3 group flex-shrink-0
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 rounded-md"
+              aria-label="AllowanceGuard — home"
+              className="group flex-shrink-0
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-md"
             >
-              <div className="relative w-8 h-8 sm:w-9 sm:h-9">
-                <Image
-                  src="/AG_Logo2.png"
-                  alt="Allowance Guard Logo"
-                  fill
-                  className="object-contain transition-transform duration-200 group-hover:scale-105"
-                  priority
-                />
-              </div>
-              <div className="flex flex-col">
-                <span
-                  className="text-lg font-bold text-white leading-tight tracking-tight"
-                  style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
-                >
-                  AllowanceGuard
+              <div className="flex items-baseline gap-3">
+                <span className="font-fraunces italic text-2xl font-bold text-ink leading-none tracking-tight">
+                  Allowance<span className="text-amber-deep">Guard</span>
                 </span>
-                <span className="text-[11px] text-slate-400 leading-tight hidden sm:block tracking-wide uppercase">
-                  Token Approval Security
+                <span className="font-mono text-[9px] font-bold text-ink-whisper leading-none hidden md:block tracking-[0.22em] uppercase">
+                  Est. MMXXIV
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation — muted grey, desaturated */}
-            <nav
-              className="hidden lg:flex items-center gap-1"
-              aria-label="Main navigation"
-            >
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
               {NAV_ITEMS.map((item) => (
-                <NavLink
-                  key={item.href}
-                  href={item.href}
-                  current={isActive(item.href)}
-                >
+                <NavLink key={item.href} href={item.href} current={isActive(item.href)}>
                   {item.label}
                 </NavLink>
               ))}
@@ -138,8 +126,8 @@ export default function Header({ isConnected }: HeaderProps) {
                   <PlanBadge plan="free" size="sm" />
                   <Link
                     href="/account"
-                    className="px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-white transition-colors duration-150
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 rounded-md"
+                    className="px-3 py-1.5 font-plex text-sm font-medium text-ink-muted hover:text-ink transition-colors duration-150
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-md"
                   >
                     Account
                   </Link>
@@ -149,11 +137,10 @@ export default function Header({ isConnected }: HeaderProps) {
                 </>
               ) : (
                 <>
-                  {/* Upgrade — plain text link, muted grey (desaturated) */}
                   <Link
                     href="/pricing"
-                    className="px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-slate-300 transition-colors duration-150
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 rounded-md"
+                    className="px-3 py-1.5 font-mono text-[11px] font-bold tracking-[0.18em] uppercase text-ink-muted hover:text-amber-deep transition-colors duration-150
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-md"
                   >
                     Upgrade
                   </Link>
@@ -169,15 +156,14 @@ export default function Header({ isConnected }: HeaderProps) {
           </div>
         </div>
 
-        {/* Amber bottom edge on scroll */}
+        {/* Signature amber hairline on scroll — the Ledger move, not a glow */}
         <div
           className="absolute bottom-0 left-0 right-0 h-px transition-opacity"
           style={{
             opacity: scrolled ? 1 : 0,
-            background: 'linear-gradient(90deg, transparent 0%, #F59E0B 20%, #F59E0B 80%, transparent 100%)',
-            boxShadow: scrolled ? '0 1px 8px rgba(245, 158, 11, 0.2)' : 'none',
-            transitionDuration: '400ms',
-            transitionTimingFunction: 'cubic-bezier(0.25, 0, 0, 1)',
+            background:
+              'linear-gradient(90deg, transparent 0%, #F59E0B 25%, #F59E0B 75%, transparent 100%)',
+            transitionDuration: '300ms',
           }}
           aria-hidden="true"
         />
