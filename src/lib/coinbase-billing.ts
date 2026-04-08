@@ -43,6 +43,9 @@ export function getPlanPriceMinor(plan: PaidPlan, interval: BillingInterval): {
       currency: p.currency,
     }
   }
+  if (plan === 'api_public') {
+    throw new Error('api_public is not billable via Coinbase')
+  }
   const p = API_PRICES[plan]
   return { amountMinor: p.monthlyPence, currency: p.currency }
 }

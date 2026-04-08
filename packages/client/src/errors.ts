@@ -22,14 +22,14 @@ export class AllowanceGuardError extends Error {
 }
 
 export class NetworkError extends AllowanceGuardError {
-  public override readonly name = 'NetworkError'
+  public override readonly name: string = 'NetworkError'
   constructor(message: string, cause?: unknown) {
     super(message, cause)
   }
 }
 
 export class ApiError extends AllowanceGuardError {
-  public override readonly name = 'ApiError'
+  public override readonly name: string = 'ApiError'
   constructor(
     message: string,
     public readonly status: number,
@@ -41,14 +41,14 @@ export class ApiError extends AllowanceGuardError {
 }
 
 export class AuthError extends ApiError {
-  public override readonly name = 'AuthError'
+  public override readonly name: string = 'AuthError'
   constructor(message: string, status = 401, details?: unknown) {
     super(message, status, 'AUTH_ERROR', details)
   }
 }
 
 export class RateLimitError extends ApiError {
-  public override readonly name = 'RateLimitError'
+  public override readonly name: string = 'RateLimitError'
   constructor(
     message: string,
     public readonly retryAfterSeconds: number | null,
@@ -59,7 +59,7 @@ export class RateLimitError extends ApiError {
 }
 
 export class ValidationError extends ApiError {
-  public override readonly name = 'ValidationError'
+  public override readonly name: string = 'ValidationError'
   constructor(message: string, details?: unknown) {
     super(message, 400, 'VALIDATION_ERROR', details)
   }

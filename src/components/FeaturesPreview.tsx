@@ -1,95 +1,92 @@
 'use client'
 
 import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
+import SectionHeader from '@/components/ui/SectionHeader'
 import { LockShieldIcon, DashboardIcon, BrainShieldIcon, BatchGasIcon } from '@/components/icons/HeroIcons'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 
+/**
+ * Editorial alternating rows — icon left / copy right, then flipped.
+ * Breaks the old 2x2 uniform grid. Per law #2 (strip then amplify).
+ */
+
 const FEATURES = [
   {
-    title: 'Non-Custodial by Default',
+    title: 'Non-custodial by default.',
     description:
-      'Your keys stay in your wallet. We read public data, you sign every transaction. No permissions to move funds, ever.',
+      'Your keys stay in your wallet. We read public data, you sign every transaction. No permissions to move funds — ever.',
     Icon: LockShieldIcon,
     accent: 'amber' as const,
+    eyebrow: 'Custody',
   },
   {
-    title: 'Dashboard Built for Decisions',
+    title: 'A dashboard built for decisions.',
     description:
       'Every approval, risk score, and action in one view. No jargon. No hunting. See your security posture and act on it.',
     Icon: DashboardIcon,
     accent: 'sky' as const,
+    eyebrow: 'Clarity',
   },
   {
-    title: 'Real-Time Risk Scoring',
+    title: 'Real-time risk scoring.',
     description:
-      'Each approval is scored against live threat data — flagging unlimited amounts, unverified code, and known exploit contracts.',
+      'Every approval is scored against live threat data — flagging unlimited amounts, unverified code, and known exploit contracts the moment they appear.',
     Icon: BrainShieldIcon,
     accent: 'amber' as const,
+    eyebrow: 'Intelligence',
   },
   {
-    title: 'Batch Revoke, Less Gas',
+    title: 'Batch revoke. Less gas.',
     description:
-      'Revoke multiple approvals in one transaction. Optimised contracts keep gas costs low so security stays affordable.',
+      'Revoke dozens of approvals in a single transaction. Optimised contracts keep gas costs low so security stays affordable.',
     Icon: BatchGasIcon,
     accent: 'sky' as const,
+    eyebrow: 'Efficiency',
   },
 ]
 
 export default function FeaturesPreview() {
   return (
     <section className="relative py-24 sm:py-32 lg:py-40 bg-[#060A14] overflow-hidden">
-      {/* Gradient transition from previous section */}
+      {/* Atmospheric glows */}
       <div
-        className="absolute inset-x-0 top-0 h-40 pointer-events-none"
+        className="absolute top-1/4 -left-40 w-[600px] h-[600px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'linear-gradient(to bottom, #0A0E1A 0%, transparent 100%)',
+          background: 'radial-gradient(circle, rgba(245,158,11,0.05) 0%, transparent 60%)',
+          filter: 'blur(60px)',
         }}
       />
-
-      {/* Atmospheric glow — left */}
       <div
-        className="absolute top-1/4 -left-32 w-[500px] h-[500px] pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: 'radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 60%)',
-          filter: 'blur(40px)',
-        }}
-      />
-
-      {/* Atmospheric glow — right */}
-      <div
-        className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] pointer-events-none"
+        className="absolute bottom-1/4 -right-40 w-[500px] h-[500px] pointer-events-none"
         aria-hidden="true"
         style={{
           background: 'radial-gradient(circle, rgba(56,189,248,0.04) 0%, transparent 60%)',
-          filter: 'blur(40px)',
+          filter: 'blur(60px)',
         }}
       />
 
       <Container>
-        <CascadingScrollAnimation direction="up" distance={40} delay={0}>
-          <div className="max-w-3xl mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
-              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500">
-                Built for
-              </span>
-              <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                {' '}Security & Clarity
-              </span>
-            </h2>
-            <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
-              Every feature earns its place. If it doesn&#39;t make your wallet safer, it doesn&#39;t ship.
-            </p>
-          </div>
-        </CascadingScrollAnimation>
+        <div className="mb-24 lg:mb-32">
+          <SectionHeader
+            index="03"
+            eyebrow="What you get"
+            title={
+              <>
+                Built for security.
+                <br />
+                <span className="text-slate-500">Built for clarity.</span>
+              </>
+            }
+            lede="Every feature earns its place. If it doesn't make your wallet safer, it doesn't ship."
+          />
+        </div>
 
-        {/* 2x2 grid with density contrast — tighter than HowItWorks */}
-        <div className="grid sm:grid-cols-2 gap-4 lg:gap-5">
+        {/* Editorial alternating rows */}
+        <div className="space-y-24 lg:space-y-32">
           {FEATURES.map((feature, i) => (
-            <CascadingScrollAnimation key={feature.title} direction="up" distance={40} delay={i * 100}>
-              <FeatureCard {...feature} />
+            <CascadingScrollAnimation key={feature.title} direction="up" distance={40} delay={0}>
+              <FeatureRow {...feature} flip={i % 2 === 1} />
             </CascadingScrollAnimation>
           ))}
         </div>
@@ -98,40 +95,57 @@ export default function FeaturesPreview() {
   )
 }
 
-function FeatureCard({
+function FeatureRow({
   title,
   description,
   Icon,
   accent,
-}: (typeof FEATURES)[number]) {
-  const glowColor = accent === 'amber' ? 'rgba(245,158,11,0.12)' : 'rgba(56,189,248,0.10)'
+  eyebrow,
+  flip,
+}: (typeof FEATURES)[number] & { flip: boolean }) {
+  const glowColor = accent === 'amber' ? 'rgba(245,158,11,0.18)' : 'rgba(56,189,248,0.14)'
+  const accentText = accent === 'amber' ? 'text-amber-400' : 'text-sky-400'
 
   return (
-    <div className="glass-card group p-8 lg:p-10">
-      {/* Hover glow */}
-      <div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: `radial-gradient(ellipse at 30% 0%, ${glowColor} 0%, transparent 60%)`,
-        }}
-      />
-
-      {/* Icon with blend-mode emit glow */}
-      <div className="relative mb-6 w-12 h-12">
-        <Icon size={48} />
-        <div
-          className="absolute inset-0 blur-xl pointer-events-none"
-          aria-hidden="true"
-          style={{
-            background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
-            mixBlendMode: 'plus-lighter',
-          }}
-        />
+    <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+      {/* Icon column */}
+      <div className={['lg:col-span-5', flip ? 'lg:order-2' : ''].join(' ')}>
+        <div className="relative w-full aspect-square max-w-sm mx-auto">
+          <div className="glass-card absolute inset-0 flex items-center justify-center">
+            <div
+              className="absolute inset-0 pointer-events-none"
+              aria-hidden="true"
+              style={{
+                background: `radial-gradient(ellipse at 50% 50%, ${glowColor} 0%, transparent 65%)`,
+              }}
+            />
+            <div className="relative">
+              <Icon size={160} />
+              <div
+                className="absolute inset-0 blur-3xl pointer-events-none"
+                aria-hidden="true"
+                style={{
+                  background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
+                  mixBlendMode: 'plus-lighter',
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h3 className="text-lg lg:text-xl font-bold text-white mb-3 tracking-tight">{title}</h3>
-      <p className="text-sm lg:text-base text-slate-400 leading-relaxed">{description}</p>
+      {/* Copy column */}
+      <div className={['lg:col-span-7', flip ? 'lg:order-1' : ''].join(' ')}>
+        <div className={['text-[11px] font-mono font-bold tracking-[0.22em] uppercase mb-4', accentText].join(' ')}>
+          {eyebrow}
+        </div>
+        <h3 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.02] mb-6 max-w-xl">
+          {title}
+        </h3>
+        <p className="text-base lg:text-lg text-slate-400 leading-relaxed max-w-xl">
+          {description}
+        </p>
+      </div>
     </div>
   )
 }

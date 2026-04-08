@@ -1,14 +1,20 @@
 'use client'
 
 import Container from '@/components/ui/Container'
+import SectionHeader from '@/components/ui/SectionHeader'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
+
+/**
+ * Featured pull-quote layout: one oversized quote + a supporting grid.
+ * Breaks the old 3-up uniform grid. Editorial hierarchy per Sable + Maren.
+ */
 
 const TESTIMONIALS = [
   {
     name: 'Sarah Chen',
     role: 'DeFi Trader',
     initials: 'SC',
-    hue: 0,
+    hue: 18,
     quote:
       'Found 15 unlimited approvals I had completely forgotten about. Revoked them all in one session. The risk breakdown per approval is what sold me — I can see exactly why something is flagged.',
   },
@@ -55,49 +61,46 @@ const TESTIMONIALS = [
 ]
 
 export default function Testimonials() {
+  const [featured, ...rest] = TESTIMONIALS
+
   return (
     <section className="relative py-24 sm:py-32 lg:py-40 bg-[#0A0E1A] overflow-hidden">
-      {/* Gradient transition */}
+      {/* Atmospheric glow */}
       <div
-        className="absolute inset-x-0 top-0 h-32 pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: 'linear-gradient(to bottom, #060A14 0%, transparent 100%)',
-        }}
-      />
-
-      {/* Atmospheric glow — centre */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background: 'radial-gradient(ellipse, rgba(245,158,11,0.03) 0%, transparent 60%)',
-          filter: 'blur(60px)',
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 60%)',
+          filter: 'blur(80px)',
         }}
       />
 
       <Container>
+        <div className="mb-20 lg:mb-24">
+          <SectionHeader
+            index="05"
+            eyebrow="Signal, not noise"
+            title={
+              <>
+                Used by people
+                <br />
+                <span className="text-slate-500">who verify everything.</span>
+              </>
+            }
+            lede="Traders, developers, and DAOs running AllowanceGuard on their own wallets."
+          />
+        </div>
+
+        {/* Featured pull-quote */}
         <CascadingScrollAnimation direction="up" distance={40} delay={0}>
-          <div className="max-w-3xl mx-auto text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight leading-[1.1] mb-6">
-              <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">
-                Used by People
-              </span>
-              <span className="font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">
-                {' '}Who Verify Everything
-              </span>
-            </h2>
-            <p className="text-lg sm:text-xl text-slate-400 leading-relaxed">
-              Traders, developers, and DAOs running AllowanceGuard on their own wallets.
-            </p>
-          </div>
+          <FeaturedQuote {...featured} />
         </CascadingScrollAnimation>
 
-        {/* Masonry-style grid — mixed density */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-          {TESTIMONIALS.map((t, i) => (
+        {/* Supporting — 2-up then 3-up density shift */}
+        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {rest.map((t, i) => (
             <CascadingScrollAnimation key={t.name} direction="up" distance={30} delay={i * 80}>
-              <TestimonialCard {...t} />
+              <CompactQuote {...t} />
             </CascadingScrollAnimation>
           ))}
         </div>
@@ -106,48 +109,63 @@ export default function Testimonials() {
   )
 }
 
-function TestimonialCard({
-  name,
-  role,
-  initials,
-  hue,
-  quote,
-}: (typeof TESTIMONIALS)[number]) {
+function FeaturedQuote({ name, role, initials, hue, quote }: (typeof TESTIMONIALS)[number]) {
   return (
-    <div className="glass-card group p-7 lg:p-8">
-      {/* Gradient quote mark — large, decorative */}
+    <div className="glass-card relative overflow-hidden p-10 lg:p-16">
       <div
-        className="absolute top-5 right-6 text-6xl font-serif leading-none pointer-events-none select-none"
+        className="absolute -top-12 -left-4 font-serif text-[20rem] leading-none pointer-events-none select-none opacity-[0.08]"
         aria-hidden="true"
-        style={{
-          background: `linear-gradient(135deg, hsla(${hue}, 70%, 60%, 0.15), transparent)`,
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-        }}
+        style={{ color: `hsl(${hue}, 70%, 65%)` }}
       >
         &ldquo;
       </div>
 
-      {/* Avatar — generated from initials with unique hue */}
-      <div className="flex items-center gap-4 mb-5">
+      <div className="relative grid lg:grid-cols-12 gap-10 items-center">
+        <blockquote className="lg:col-span-9 font-display text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold text-white tracking-tight leading-[1.15]">
+          {quote}
+        </blockquote>
+
+        <div className="lg:col-span-3 flex items-center gap-4 lg:flex-col lg:items-start lg:gap-3">
+          <div
+            className="w-14 h-14 rounded-full flex items-center justify-center text-base font-bold tracking-tight ring-2 ring-white/15 shrink-0"
+            style={{
+              background: `linear-gradient(135deg, hsla(${hue},55%,32%,0.9), hsla(${hue},65%,20%,0.95))`,
+              color: `hsla(${hue},75%,78%,1)`,
+            }}
+          >
+            {initials}
+          </div>
+          <div>
+            <div className="text-base font-semibold text-white">{name}</div>
+            <div className="text-xs font-mono uppercase tracking-wider text-amber-400/80">{role}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CompactQuote({ name, role, initials, hue, quote }: (typeof TESTIMONIALS)[number]) {
+  return (
+    <div className="glass-card h-full p-7 lg:p-8">
+      <blockquote className="text-sm lg:text-base text-slate-300 leading-relaxed mb-6">
+        {quote}
+      </blockquote>
+      <div className="flex items-center gap-3 pt-5 border-t border-white/10">
         <div
-          className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold tracking-tight ring-2 ring-white/10"
+          className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold ring-1 ring-white/10"
           style={{
-            background: `linear-gradient(135deg, hsla(${hue}, 50%, 30%, 0.8), hsla(${hue}, 60%, 20%, 0.9))`,
-            color: `hsla(${hue}, 70%, 75%, 1)`,
+            background: `linear-gradient(135deg, hsla(${hue},55%,32%,0.9), hsla(${hue},65%,20%,0.95))`,
+            color: `hsla(${hue},75%,78%,1)`,
           }}
         >
           {initials}
         </div>
         <div>
-          <div className="text-sm font-semibold text-white">{name}</div>
-          <div className="text-xs text-slate-400">{role}</div>
+          <div className="text-sm font-semibold text-white leading-tight">{name}</div>
+          <div className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{role}</div>
         </div>
       </div>
-
-      <blockquote className="text-sm text-slate-400 leading-relaxed">
-        {quote}
-      </blockquote>
     </div>
   )
 }
