@@ -73,7 +73,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden h-10 w-10 text-slate-400 hover:text-white hover:bg-white/10 rounded-md
+        className="lg:hidden h-10 w-10 text-ink-muted hover:text-ink hover:bg-paper-sub rounded-md
           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
         aria-label="Open navigation menu"
         aria-expanded={isOpen}
@@ -99,7 +99,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
           <div
             ref={menuRef}
             id="mobile-menu"
-            className="fixed inset-0 h-screen w-screen bg-surface-base z-[102] flex flex-col"
+            className="fixed inset-0 h-screen w-screen bg-paper z-[102] flex flex-col"
             style={{
               transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
               opacity: isOpen ? 1 : 0,
@@ -107,7 +107,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-ink-rule">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 flex items-center justify-center">
                   <Image
@@ -121,12 +121,12 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 <div>
                   <h2
                     id="mobile-menu-title"
-                    className="text-lg font-bold text-white tracking-tight"
+                    className="text-lg font-bold text-ink tracking-tight"
                     style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
                   >
                     AllowanceGuard
                   </h2>
-                  <p className="text-xs text-slate-400 uppercase tracking-wide">
+                  <p className="text-xs text-ink-muted uppercase tracking-wide">
                     Secure Token Approvals
                   </p>
                 </div>
@@ -135,7 +135,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                 variant="ghost"
                 size="icon"
                 onClick={close}
-                className="h-10 w-10 text-slate-400 hover:text-white hover:bg-white/10 rounded-md
+                className="h-10 w-10 text-ink-muted hover:text-ink hover:bg-paper-sub rounded-md
                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40"
                 aria-label="Close navigation menu"
               >
@@ -173,8 +173,8 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                       className={`flex items-center gap-4 px-4 py-4 rounded-lg transition-colors duration-150
                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40
                         ${active
-                          ? 'bg-white/10 text-white'
-                          : 'text-slate-400 hover:text-white hover:bg-white/5'
+                          ? 'bg-paper-sub text-ink'
+                          : 'text-ink-muted hover:text-ink hover:bg-paper-sub'
                         }`}
                       onClick={close}
                     >

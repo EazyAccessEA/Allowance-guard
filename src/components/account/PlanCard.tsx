@@ -56,7 +56,7 @@ export default function PlanCard({
       <CardContent className="space-y-6">
         {/* Plan name + badge */}
         <div className="flex items-center gap-3">
-          <span className="text-2xl font-bold text-text-primary">
+          <span className="text-2xl font-bold text-ink">
             {getPlanDisplayName(plan as ConsumerPlan)}
           </span>
           <PlanBadge plan={plan as ConsumerPlan} />
@@ -64,7 +64,7 @@ export default function PlanCard({
 
         {/* Billing period */}
         {currentPeriodEnd && paid && (
-          <div className="flex items-center gap-2 text-sm text-text-secondary">
+          <div className="flex items-center gap-2 text-sm text-ink-muted">
             <CalendarDays className="h-4 w-4" />
             <span>
               Current period ends{' '}
@@ -79,27 +79,27 @@ export default function PlanCard({
 
         {/* Usage summary */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="flex items-center gap-2 rounded-lg border border-secondary-700 p-3">
+          <div className="flex items-center gap-2 rounded-lg border border-ink-rule p-3">
             <Wallet className="h-5 w-5 text-primary-700" />
             <div>
-              <p className="text-xs text-text-secondary">Wallets</p>
-              <p className="text-sm font-semibold text-text-primary">
+              <p className="text-xs text-ink-muted">Wallets</p>
+              <p className="text-sm font-semibold text-ink">
                 {isUnlimited(limits.maxWallets) ? 'Unlimited' : `Up to ${limits.maxWallets}`}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-lg border border-secondary-700 p-3">
+          <div className="flex items-center gap-2 rounded-lg border border-ink-rule p-3">
             <Zap className="h-5 w-5 text-primary-700" />
             <div>
-              <p className="text-xs text-text-secondary">API Calls / Day</p>
-              <p className="text-sm font-semibold text-text-primary">
+              <p className="text-xs text-ink-muted">API Calls / Day</p>
+              <p className="text-sm font-semibold text-ink">
                 {isUnlimited(limits.maxApiCallsPerDay)
                   ? 'Unlimited'
                   : limits.maxApiCallsPerDay.toLocaleString()}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-lg border border-secondary-700 p-3">
+          <div className="flex items-center gap-2 rounded-lg border border-ink-rule p-3">
             <svg
               className="h-5 w-5 text-primary-700"
               viewBox="0 0 24 24"
@@ -114,8 +114,8 @@ export default function PlanCard({
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
             </svg>
             <div>
-              <p className="text-xs text-text-secondary">Chains</p>
-              <p className="text-sm font-semibold text-text-primary">
+              <p className="text-xs text-ink-muted">Chains</p>
+              <p className="text-sm font-semibold text-ink">
                 {limits.maxChains === 1 ? '1 chain' : `${limits.maxChains} chains`}
               </p>
             </div>

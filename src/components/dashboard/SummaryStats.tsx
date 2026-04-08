@@ -45,10 +45,10 @@ export default function SummaryStats({
       label: 'Value Exposed',
       value: formatUsd(valueExposed),
       icon: DollarSign,
-      color: valueExposed > 10000 ? 'text-semantic-warning-500' : 'text-secondary-500',
+      color: valueExposed > 10000 ? 'text-semantic-warning-500' : 'text-ink-whisper',
       bg: valueExposed > 10000
         ? 'bg-semantic-warning-50 dark:bg-semantic-warning-900/20'
-        : 'bg-secondary-50 dark:bg-secondary-800',
+        : 'bg-secondary-50 dark:bg-paper-sub',
     },
   ]
 
@@ -59,8 +59,8 @@ export default function SummaryStats({
           key={stat.label}
           className={cn(
             'flex items-center gap-4 p-4 rounded-lg border transition-all duration-250',
-            'border-secondary-700',
-            'bg-background-primary dark:bg-dark-bg-secondary',
+            'border-ink-rule',
+            'bg-paper dark:bg-dark-bg-secondary',
             isTimeMachine && 'border-primary-200 dark:border-primary-800 bg-primary-50/30 dark:bg-primary-900/10'
           )}
         >
@@ -70,10 +70,10 @@ export default function SummaryStats({
             <stat.icon className={cn('h-5 w-5', stat.color)} aria-hidden="true" />
           </div>
           <div>
-            <p className="text-xs font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide">
+            <p className="text-xs font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide">
               {stat.label}
             </p>
-            <p className="text-xl font-semibold text-text-primary dark:text-secondary-100 tracking-tight font-mono">
+            <p className="text-xl font-semibold text-ink tracking-tight font-mono">
               {stat.value}
             </p>
           </div>

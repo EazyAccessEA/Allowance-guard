@@ -3992,6 +3992,33 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   position: relative;
 }
 
+/* Paper pill — replaces .glass-pill in the migration */
+.paper-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background-color: var(--ledger-paper-sub);
+  border: 1px solid var(--ledger-ink-rule);
+  border-radius: 9999px;
+  color: var(--ledger-ink-soft);
+}
+
+/* Paper button — replaces .glass-button in the migration */
+.paper-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ledger-paper-sub);
+  border: 1px solid var(--ledger-ink-rule);
+  color: var(--ledger-ink);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.paper-button:hover {
+  background-color: var(--ledger-ink);
+  color: var(--ledger-paper);
+}
+
 /* Paper card — light counterpart to .glass-card. Layered sheet with a
    directional letterpress shadow. No blur, no glass. */
 .paper-card {

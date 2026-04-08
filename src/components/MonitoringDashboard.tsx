@@ -150,13 +150,13 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
           {config ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <div className="text-sm text-text-secondary">Status</div>
+                <div className="text-sm text-ink-muted">Status</div>
                 <Badge variant={config.enabled ? 'success' : 'secondary'}>
                   {config.enabled ? 'Active' : 'Paused'}
                 </Badge>
               </div>
               <div>
-                <div className="text-sm text-text-secondary">Frequency</div>
+                <div className="text-sm text-ink-muted">Frequency</div>
                 <div className="text-sm font-medium flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   Every {config.freq_minutes >= 60
@@ -165,7 +165,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
                 </div>
               </div>
               <div>
-                <div className="text-sm text-text-secondary">Last Scan</div>
+                <div className="text-sm text-ink-muted">Last Scan</div>
                 <div className="text-sm font-medium">
                   {config.last_scan_at
                     ? new Date(config.last_scan_at).toLocaleDateString()
@@ -173,7 +173,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
                 </div>
               </div>
               <div>
-                <div className="text-sm text-text-secondary">Notifications</div>
+                <div className="text-sm text-ink-muted">Notifications</div>
                 <div className="flex gap-1">
                   {config.notify_channels.email && (
                     <Badge variant="secondary">Email</Badge>
@@ -214,7 +214,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
           ) : loading && events.length === 0 ? (
             <div className="animate-pulse space-y-3">
               {[1, 2, 3].map(i => (
-                <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-secondary-700">
+                <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-ink-rule">
                   <div className="w-4 h-4 bg-gray-200 rounded-full mt-0.5"></div>
                   <div className="flex-1 space-y-2">
                     <div className="h-4 bg-gray-200 rounded w-1/3"></div>
@@ -239,7 +239,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
                     key={evt.id}
                     className={`flex items-start gap-3 p-3 rounded-lg border ${
                       evt.acknowledged
-                        ? 'border-secondary-700 bg-background-secondary'
+                        ? 'border-ink-rule bg-paper-sub'
                         : 'border-primary-200 bg-primary-50'
                     }`}
                   >
@@ -249,16 +249,16 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
                         <Badge variant={eventVariant(evt.event_type)}>
                           {eventLabel(evt.event_type)}
                         </Badge>
-                        <span className="text-xs text-text-tertiary">
+                        <span className="text-xs text-ink-whisper">
                           Chain {evt.chain_id}
                         </span>
                         {evt.notified && (
-                          <span className="text-xs text-text-tertiary flex items-center gap-0.5">
+                          <span className="text-xs text-ink-whisper flex items-center gap-0.5">
                             <Bell className="w-3 h-3" /> Notified
                           </span>
                         )}
                       </div>
-                      <div className="text-xs text-text-secondary font-mono truncate">
+                      <div className="text-xs text-ink-muted font-mono truncate">
                         {evt.payload.token_address && (
                           <span>Token: {evt.payload.token_address.slice(0, 10)}... </span>
                         )}
@@ -269,7 +269,7 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
                       {evt.payload.is_unlimited && (
                         <Badge variant="danger" className="mt-1">Unlimited</Badge>
                       )}
-                      <div className="text-xs text-text-tertiary mt-1">
+                      <div className="text-xs text-ink-whisper mt-1">
                         {new Date(evt.created_at).toLocaleString()}
                       </div>
                     </div>
@@ -289,8 +289,8 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-700">
-                  <div className="text-sm text-text-secondary">
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-ink-rule">
+                  <div className="text-sm text-ink-muted">
                     Page {page} of {totalPages}
                   </div>
                   <div className="flex gap-2">

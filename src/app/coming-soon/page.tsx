@@ -5,7 +5,7 @@ import { H1 } from '@/components/ui/Heading'
 
 export default function ComingSoonPage() {
   return (
-    <div className="min-h-screen bg-surface-base text-white">
+    <div className="min-h-screen bg-paper text-ink">
       
       <Section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
         <Container className="text-center">
@@ -15,7 +15,7 @@ export default function ComingSoonPage() {
           </p>
           <Link 
             href="/"
-            className="inline-flex items-center px-6 py-3 bg-cobalt text-white rounded-lg font-medium hover:bg-cobalt/90 transition-colors duration-200"
+            className="inline-flex items-center px-6 py-3 bg-cobalt text-ink rounded-lg font-medium hover:bg-cobalt/90 transition-colors duration-200"
           >
             Return to Homepage
           </Link>

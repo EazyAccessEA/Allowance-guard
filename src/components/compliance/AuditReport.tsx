@@ -153,7 +153,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
         <CardContent className="space-y-4">
           {/* Report Type Selection */}
           <div>
-            <label className="text-sm font-medium text-text-primary mb-2 block">Report Type</label>
+            <label className="text-sm font-medium text-ink mb-2 block">Report Type</label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {REPORT_TYPES
                 .filter((r) => r.type !== 'team_report' || teamId)
@@ -164,11 +164,11 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                     className={`text-left p-3 rounded-lg border transition-colors ${
                       selectedType === r.type
                         ? 'border-primary-accent bg-primary-50'
-                        : 'border-secondary-700 hover:border-primary-200'
+                        : 'border-ink-rule hover:border-primary-200'
                     }`}
                   >
-                    <div className="text-sm font-medium text-text-primary">{r.label}</div>
-                    <div className="text-xs text-text-secondary mt-0.5">{r.description}</div>
+                    <div className="text-sm font-medium text-ink">{r.label}</div>
+                    <div className="text-xs text-ink-muted mt-0.5">{r.description}</div>
                   </button>
                 ))}
             </div>
@@ -177,14 +177,14 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
           {/* Format Selection */}
           <div className="flex items-center gap-4">
             <div>
-              <label className="text-sm font-medium text-text-primary mb-1 block">Format</label>
+              <label className="text-sm font-medium text-ink mb-1 block">Format</label>
               <div className="flex gap-2">
                 <button
                   onClick={() => setFormat('csv')}
                   className={`px-3 py-1.5 text-sm rounded border transition-colors ${
                     format === 'csv'
                       ? 'border-primary-accent bg-primary-50 text-primary-accent'
-                      : 'border-secondary-700 text-text-secondary hover:border-primary-200'
+                      : 'border-ink-rule text-ink-muted hover:border-primary-200'
                   }`}
                 >
                   CSV
@@ -194,7 +194,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                   className={`px-3 py-1.5 text-sm rounded border transition-colors ${
                     format === 'json'
                       ? 'border-primary-accent bg-primary-50 text-primary-accent'
-                      : 'border-secondary-700 text-text-secondary hover:border-primary-200'
+                      : 'border-ink-rule text-ink-muted hover:border-primary-200'
                   }`}
                 >
                   JSON
@@ -205,7 +205,7 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
             {/* Date Range */}
             <div className="flex items-center gap-2">
               <div>
-                <label className="text-sm font-medium text-text-primary mb-1 block">
+                <label className="text-sm font-medium text-ink mb-1 block">
                   <Calendar className="w-3 h-3 inline mr-1" />
                   From
                 </label>
@@ -213,16 +213,16 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
                   type="date"
                   value={dateFrom}
                   onChange={(e) => setDateFrom(e.target.value)}
-                  className="px-2 py-1.5 text-sm border border-secondary-700 rounded bg-background-primary text-text-primary"
+                  className="px-2 py-1.5 text-sm border border-ink-rule rounded bg-paper text-ink"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium text-text-primary mb-1 block">To</label>
+                <label className="text-sm font-medium text-ink mb-1 block">To</label>
                 <input
                   type="date"
                   value={dateTo}
                   onChange={(e) => setDateTo(e.target.value)}
-                  className="px-2 py-1.5 text-sm border border-secondary-700 rounded bg-background-primary text-text-primary"
+                  className="px-2 py-1.5 text-sm border border-ink-rule rounded bg-paper text-ink"
                 />
               </div>
             </div>
@@ -267,31 +267,31 @@ export default function AuditReport({ teamId, wallets }: AuditReportProps) {
         </CardHeader>
         <CardContent>
           {!historyLoaded ? (
-            <p className="text-sm text-text-secondary">Click &quot;Load History&quot; to view previous exports.</p>
+            <p className="text-sm text-ink-muted">Click &quot;Load History&quot; to view previous exports.</p>
           ) : history.length === 0 ? (
-            <p className="text-sm text-text-secondary">No exports generated yet.</p>
+            <p className="text-sm text-ink-muted">No exports generated yet.</p>
           ) : (
             <div className="space-y-2">
               {history.map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex items-center justify-between p-3 rounded-lg border border-secondary-700"
+                  className="flex items-center justify-between p-3 rounded-lg border border-ink-rule"
                 >
                   <div className="flex items-center gap-3">
-                    <FileText className="w-4 h-4 text-text-tertiary" />
+                    <FileText className="w-4 h-4 text-ink-whisper" />
                     <div>
-                      <div className="text-sm font-medium text-text-primary">
+                      <div className="text-sm font-medium text-ink">
                         {entry.export_type.replace(/_/g, ' ')}
                       </div>
-                      <div className="text-xs text-text-tertiary">
+                      <div className="text-xs text-ink-whisper">
                         {new Date(entry.created_at).toLocaleString()}
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Badge variant="secondary">{entry.format.toUpperCase()}</Badge>
-                    <span className="text-xs text-text-secondary">{entry.row_count} rows</span>
-                    <span className="text-xs text-text-tertiary">{formatFileSize(entry.file_size)}</span>
+                    <span className="text-xs text-ink-muted">{entry.row_count} rows</span>
+                    <span className="text-xs text-ink-whisper">{formatFileSize(entry.file_size)}</span>
                   </div>
                 </div>
               ))}

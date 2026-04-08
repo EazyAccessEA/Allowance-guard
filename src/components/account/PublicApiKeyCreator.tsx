@@ -137,7 +137,7 @@ export default function PublicApiKeyCreator() {
             </Button>
           )}
         </div>
-        <p className="text-xs text-text-secondary mt-2">
+        <p className="text-xs text-ink-muted mt-2">
           Browser-safe, read-only keys (<code className="text-[10px]">ag_pub_*</code>). Use these
           with <code className="text-[10px]">@allowance-guard/react</code> or any client-side
           integration. 500 calls/day, 30/min burst, GET requests only.
@@ -150,14 +150,14 @@ export default function PublicApiKeyCreator() {
           <div className="rounded-lg border border-amber-500/40 bg-amber-50/5 p-4 space-y-3">
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-text-primary">
+              <div className="text-sm text-ink">
                 <strong>Save this key now.</strong> It will not be shown again. Store it in your
                 <code className="text-[10px] mx-1">.env.local</code> as
                 <code className="text-[10px] mx-1">NEXT_PUBLIC_ALLOWANCE_GUARD_KEY</code>.
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <code className="flex-1 text-xs font-mono break-all bg-background-primary px-3 py-2 rounded border border-secondary-700">
+              <code className="flex-1 text-xs font-mono break-all bg-paper px-3 py-2 rounded border border-ink-rule">
                 {justCreated.key}
               </code>
               <Button
@@ -177,10 +177,10 @@ export default function PublicApiKeyCreator() {
 
         {/* Create form */}
         {showCreate && !justCreated && (
-          <div className="rounded-lg border border-secondary-700 p-4 space-y-3">
+          <div className="rounded-lg border border-ink-rule p-4 space-y-3">
             <label
               htmlFor="public-key-name"
-              className="block text-sm font-medium text-text-primary"
+              className="block text-sm font-medium text-ink"
             >
               Key name
             </label>
@@ -192,18 +192,18 @@ export default function PublicApiKeyCreator() {
               placeholder="e.g. example.com (production)"
               maxLength={100}
               className={cn(
-                'w-full rounded-md border border-secondary-700 bg-background-primary px-3 py-2 text-sm',
-                'text-text-primary placeholder:text-text-secondary',
+                'w-full rounded-md border border-ink-rule bg-paper px-3 py-2 text-sm',
+                'text-ink placeholder:text-ink-muted',
                 'focus:outline-none focus:ring-2 focus:ring-primary-700 focus:ring-offset-2',
               )}
             />
 
             <label
               htmlFor="public-key-origins"
-              className="block text-sm font-medium text-text-primary"
+              className="block text-sm font-medium text-ink"
             >
               Allowed origins{' '}
-              <span className="text-xs text-text-secondary font-normal">
+              <span className="text-xs text-ink-muted font-normal">
                 (optional, one per line)
               </span>
             </label>
@@ -214,12 +214,12 @@ export default function PublicApiKeyCreator() {
               placeholder={'https://app.example.com\nhttps://staging.example.com'}
               rows={3}
               className={cn(
-                'w-full rounded-md border border-secondary-700 bg-background-primary px-3 py-2 text-sm font-mono',
-                'text-text-primary placeholder:text-text-secondary',
+                'w-full rounded-md border border-ink-rule bg-paper px-3 py-2 text-sm font-mono',
+                'text-ink placeholder:text-ink-muted',
                 'focus:outline-none focus:ring-2 focus:ring-primary-700 focus:ring-offset-2',
               )}
             />
-            <p className="text-xs text-text-secondary">
+            <p className="text-xs text-ink-muted">
               Leave blank to allow any origin. Adding origins locks the key to those domains —
               browsers from other origins will get a 403.
             </p>
@@ -252,9 +252,9 @@ export default function PublicApiKeyCreator() {
         {/* List */}
         {!loading && keys.length === 0 && !showCreate && !justCreated && (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <Globe className="h-8 w-8 text-text-secondary mb-2" />
-            <p className="text-sm font-medium text-text-primary">No public keys yet</p>
-            <p className="text-xs text-text-secondary mt-1">
+            <Globe className="h-8 w-8 text-ink-muted mb-2" />
+            <p className="text-sm font-medium text-ink">No public keys yet</p>
+            <p className="text-xs text-ink-muted mt-1">
               Create one to embed AllowanceGuard in your dApp.
             </p>
           </div>
@@ -268,12 +268,12 @@ export default function PublicApiKeyCreator() {
                 className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
               >
                 <div className="space-y-1 min-w-0">
-                  <div className="text-sm font-medium text-text-primary truncate">{k.name}</div>
-                  <code className="text-xs font-mono text-text-secondary bg-neutral-100 px-1.5 py-0.5 rounded">
+                  <div className="text-sm font-medium text-ink truncate">{k.name}</div>
+                  <code className="text-xs font-mono text-ink-muted bg-neutral-100 px-1.5 py-0.5 rounded">
                     {k.prefix}****
                   </code>
                   {k.allowedOrigins && k.allowedOrigins.length > 0 && (
-                    <div className="text-xs text-text-secondary">
+                    <div className="text-xs text-ink-muted">
                       Origins: {k.allowedOrigins.join(', ')}
                     </div>
                   )}
@@ -284,7 +284,7 @@ export default function PublicApiKeyCreator() {
                   leftIcon={<Trash2 className="h-4 w-4" />}
                   loading={revokingId === k.id}
                   onClick={() => handleRevoke(k.id)}
-                  className="text-text-secondary hover:text-semantic-error-500"
+                  className="text-ink-muted hover:text-semantic-error-500"
                   ariaLabel={`Revoke key ${k.name}`}
                 >
                   Revoke

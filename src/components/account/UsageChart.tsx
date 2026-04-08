@@ -39,8 +39,8 @@ function UsageBar({ label, used, limit }: UsageBarProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-sm">
-        <span className="font-medium text-text-primary">{label}</span>
-        <span className="text-text-secondary">
+        <span className="font-medium text-ink">{label}</span>
+        <span className="text-ink-muted">
           {used.toLocaleString()}
           {' / '}
           {isUnlimited ? (

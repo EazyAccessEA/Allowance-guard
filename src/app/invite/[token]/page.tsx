@@ -18,7 +18,7 @@ export default function InvitePage({ params }: { params: Promise<{ token: string
     })()
   }, [params])
   return (
-    <main className="mx-auto max-w-xl px-6 py-10 text-text-primary dark:text-secondary-100">
+    <main className="mx-auto max-w-xl px-6 py-10 text-ink">
       <h1 className="text-xl font-semibold">Team Invite</h1>
       <p className="mt-3 text-sm flex items-center gap-2">
         {accepting && <Loader2 className="h-5 w-5 animate-spin" />}

@@ -131,11 +131,11 @@ export function DataVisualizationDashboard({
     return (
       <div className="space-y-6">
         <div className="text-center py-12">
-          <div className="w-16 h-16 bg-background-secondary rounded-full flex items-center justify-center mx-auto mb-4">
-            <Shield className="w-8 h-8 text-text-tertiary" />
+          <div className="w-16 h-16 bg-paper-sub rounded-full flex items-center justify-center mx-auto mb-4">
+            <Shield className="w-8 h-8 text-ink-whisper" />
           </div>
-          <h3 className="mobbin-heading-3 text-text-primary mb-2">No Data Available</h3>
-          <p className="mobbin-body text-text-secondary mb-6 max-w-md mx-auto">
+          <h3 className="mobbin-heading-3 text-ink mb-2">No Data Available</h3>
+          <p className="mobbin-body text-ink-muted mb-6 max-w-md mx-auto">
             Connect your wallet and run a scan to see detailed analytics and visualizations.
           </p>
           {onRefresh && (
@@ -153,8 +153,8 @@ export function DataVisualizationDashboard({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="mobbin-heading-1 text-text-primary mb-2">Analytics Dashboard</h2>
-          <p className="mobbin-body text-text-secondary">
+          <h2 className="mobbin-heading-1 text-ink mb-2">Analytics Dashboard</h2>
+          <p className="mobbin-body text-ink-muted">
             Comprehensive insights into your wallet&apos;s token approvals and security posture.
           </p>
         </div>
@@ -344,14 +344,14 @@ export function DataVisualizationDashboard({
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="mobbin-heading-2 text-text-primary">75</div>
-                    <div className="mobbin-caption text-text-secondary">Score</div>
+                    <div className="mobbin-heading-2 text-ink">75</div>
+                    <div className="mobbin-caption text-ink-muted">Score</div>
                   </div>
                 </div>
               </div>
               <div className="text-center">
-                <div className="mobbin-body text-text-primary mb-1">Good Security</div>
-                <div className="mobbin-caption text-text-secondary">
+                <div className="mobbin-body text-ink mb-1">Good Security</div>
+                <div className="mobbin-caption text-ink-muted">
                   {processedData.riskDistribution['Unlimited'] || 0} high-risk approvals need attention
                 </div>
               </div>

@@ -8,33 +8,33 @@ import Link from 'next/link'
 
 export default function SLAPage() {
   return (
-    <div className="min-h-screen bg-secondary-900 text-slate-200">
+    <div className="min-h-screen bg-paper-deep text-ink">
 
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
-        <div className="absolute inset-0 z-10 bg-secondary-900/85" />
+        <div className="absolute inset-0 z-10 bg-paper-deep/85" />
 
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Service Level Agreement</H1>
-          <p className="text-xl text-slate-400 max-w-reading mb-8">
+          <p className="text-xl text-ink-muted max-w-reading mb-8">
             Our commitment to uptime, response times, and service quality — broken down by tier.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-white/10" />
+      <div className="border-t border-ink-rule" />
 
       {/* SLA Content */}
       <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="max-w-none text-slate-300">
+            <div className="max-w-none text-ink-soft">
 
               {/* Overview */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Overview</H2>
-                <p className="text-slate-400 leading-relaxed">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Overview</H2>
+                <p className="text-ink-muted leading-relaxed">
                   This Service Level Agreement (SLA) defines the availability targets, response times,
                   and compensation policies for Allowance Guard&apos;s paid services. The SLA applies only
                   to paid tiers — the free tier is provided on a best-effort basis with no uptime commitment.
@@ -43,10 +43,10 @@ export default function SLAPage() {
 
               {/* Uptime Targets by Tier */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Uptime Targets</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Uptime Targets</H2>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-slate-400 border border-white/10 rounded-lg">
-                    <thead className="bg-white/[0.03] border border-white/10">
+                  <table className="w-full text-sm text-ink-muted border border-ink-rule rounded-lg">
+                    <thead className="bg-paper-sub border border-ink-rule">
                       <tr>
                         <th className="text-left p-4 font-medium">Tier</th>
                         <th className="text-left p-4 font-medium">Uptime Target</th>
@@ -55,43 +55,43 @@ export default function SLAPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-4 font-medium">Free</td>
                         <td className="p-4">Best effort</td>
                         <td className="p-4">No commitment</td>
                         <td className="p-4">Community support only</td>
                       </tr>
-                      <tr className="border-t border-white/10 bg-white/[0.03] border border-white/10/50">
+                      <tr className="border-t border-ink-rule bg-paper-sub border border-ink-rule/50">
                         <td className="p-4 font-medium">Pro</td>
                         <td className="p-4">Best effort</td>
                         <td className="p-4">No commitment</td>
                         <td className="p-4">48-hour email response</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-4 font-medium">Sentinel</td>
                         <td className="p-4 font-semibold text-amber-400">99.5%</td>
                         <td className="p-4">~3.65 hours</td>
                         <td className="p-4">4-hour critical, 24-hour general</td>
                       </tr>
-                      <tr className="border-t border-white/10 bg-white/[0.03] border border-white/10/50">
+                      <tr className="border-t border-ink-rule bg-paper-sub border border-ink-rule/50">
                         <td className="p-4 font-medium">API Free</td>
                         <td className="p-4">Best effort</td>
                         <td className="p-4">No commitment</td>
                         <td className="p-4">Community support only</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-4 font-medium">API Developer</td>
                         <td className="p-4">99.0%</td>
                         <td className="p-4">~7.3 hours</td>
                         <td className="p-4">48-hour email response</td>
                       </tr>
-                      <tr className="border-t border-white/10 bg-white/[0.03] border border-white/10/50">
+                      <tr className="border-t border-ink-rule bg-paper-sub border border-ink-rule/50">
                         <td className="p-4 font-medium">API Growth</td>
                         <td className="p-4 font-semibold text-amber-400">99.9%</td>
                         <td className="p-4">~43 minutes</td>
                         <td className="p-4">4-hour critical, 12-hour general</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-4 font-medium">API Enterprise</td>
                         <td className="p-4 font-semibold text-amber-400">99.99%</td>
                         <td className="p-4">~4.3 minutes</td>
@@ -104,19 +104,19 @@ export default function SLAPage() {
 
               {/* Definition of Downtime */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Definition of Downtime</H2>
-                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                  <p className="text-slate-400 mb-4">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Definition of Downtime</H2>
+                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <p className="text-ink-muted mb-4">
                     <strong>&quot;Downtime&quot;</strong> is defined as the complete inability to perform core operations:
                   </p>
-                  <ul className="space-y-2 text-slate-400 text-sm">
+                  <ul className="space-y-2 text-ink-muted text-sm">
                     <li>• <strong>Consumer app:</strong> Inability to scan wallets OR initiate revocation transactions</li>
                     <li>• <strong>B2B API:</strong> API returning 5xx errors for more than 5 consecutive minutes, measured by our monitoring system</li>
                   </ul>
-                  <p className="text-slate-400 text-sm mt-4">
+                  <p className="text-ink-muted text-sm mt-4">
                     The following are <strong>not</strong> counted as downtime:
                   </p>
-                  <ul className="space-y-2 text-slate-400 text-sm mt-2">
+                  <ul className="space-y-2 text-ink-muted text-sm mt-2">
                     <li>• Scheduled maintenance windows (announced 48 hours in advance via email and status page)</li>
                     <li>• Third-party RPC provider outages beyond our control</li>
                     <li>• Blockchain network congestion or outages</li>
@@ -129,7 +129,7 @@ export default function SLAPage() {
 
               {/* Severity Levels */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Incident Severity Levels</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Incident Severity Levels</H2>
                 <div className="space-y-4">
                   <div className="border-l-4 border-red-400 pl-6 bg-red-900/20 p-4 rounded-r-lg">
                     <h3 className="text-lg font-medium mb-1 text-red-300">Critical (P0)</h3>
@@ -159,36 +159,36 @@ export default function SLAPage() {
 
               {/* Compensation / Service Credits */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Service Credits</H2>
-                <p className="text-slate-400 mb-4">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Service Credits</H2>
+                <p className="text-ink-muted mb-4">
                   If we fail to meet the uptime target for your tier in a calendar month, you are eligible
                   for service credits applied to your next billing cycle.
                 </p>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-slate-400 border border-white/10 rounded-lg">
-                    <thead className="bg-white/[0.03] border border-white/10">
+                  <table className="w-full text-sm text-ink-muted border border-ink-rule rounded-lg">
+                    <thead className="bg-paper-sub border border-ink-rule">
                       <tr>
                         <th className="text-left p-4 font-medium">Monthly Uptime</th>
                         <th className="text-left p-4 font-medium">Credit (% of monthly fee)</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-4">99.0% – below target</td>
                         <td className="p-4">10%</td>
                       </tr>
-                      <tr className="border-t border-white/10 bg-white/[0.03] border border-white/10/50">
+                      <tr className="border-t border-ink-rule bg-paper-sub border border-ink-rule/50">
                         <td className="p-4">95.0% – 99.0%</td>
                         <td className="p-4">25%</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-4">Below 95.0%</td>
                         <td className="p-4">50%</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <div className="mt-4 text-slate-400 text-sm space-y-2">
+                <div className="mt-4 text-ink-muted text-sm space-y-2">
                   <p>
                     <strong>How to claim:</strong> Email <span className="text-amber-400">support@allowanceguard.com</span> within
                     30 days of the affected month with your account details. Credits are verified against our monitoring data.
@@ -202,8 +202,8 @@ export default function SLAPage() {
 
               {/* Monitoring */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Monitoring &amp; Status</H2>
-                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg text-slate-400">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Monitoring &amp; Status</H2>
+                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-ink-muted">
                   <p className="mb-3">
                     We monitor service health using automated systems. Real-time status is available on our{' '}
                     <a
@@ -239,11 +239,11 @@ export default function SLAPage() {
 
               {/* Exclusions */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">SLA Exclusions</H2>
-                <p className="text-slate-400 mb-4">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">SLA Exclusions</H2>
+                <p className="text-ink-muted mb-4">
                   This SLA does not apply to:
                 </p>
-                <ul className="space-y-2 text-slate-400 text-sm">
+                <ul className="space-y-2 text-ink-muted text-sm">
                   <li>• Free tier or API Free tier (best-effort only)</li>
                   <li>• Pro tier (best-effort; no uptime guarantee or service credits)</li>
                   <li>• Features in beta or preview</li>
@@ -254,9 +254,9 @@ export default function SLAPage() {
 
               {/* Contact */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Support Contacts</H2>
-                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                  <ul className="space-y-2 text-slate-400 text-sm">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Support Contacts</H2>
+                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <ul className="space-y-2 text-ink-muted text-sm">
                     <li>General support: <span className="text-amber-400 font-medium">support@allowanceguard.com</span></li>
                     <li>Urgent / P0 issues (Sentinel/Enterprise): <span className="text-amber-400 font-medium">urgent@allowanceguard.com</span></li>
                     <li>SLA credit claims: <span className="text-amber-400 font-medium">support@allowanceguard.com</span></li>
@@ -265,7 +265,7 @@ export default function SLAPage() {
               </div>
 
               {/* Last Updated */}
-              <div className="text-center text-sm text-slate-400 border-t pt-8">
+              <div className="text-center text-sm text-ink-muted border-t pt-8">
                 <p>Last updated: April 2, 2026</p>
                 <p className="mt-2">
                   This SLA is subject to change with 30 days&apos; notice to affected customers.

@@ -96,13 +96,13 @@ export default function AdminFlagsPage() {
   }
 
   if (loading) {
-    return <div className="p-8 text-center text-text-secondary">Loading flags...</div>
+    return <div className="p-8 text-center text-ink-muted">Loading flags...</div>
   }
 
   return (
     <div className="space-y-8 p-6">
-      <h1 className="text-2xl font-bold text-text-primary">Feature Flags</h1>
-      <p className="text-sm text-text-secondary">
+      <h1 className="text-2xl font-bold text-ink">Feature Flags</h1>
+      <p className="text-sm text-ink-muted">
         Manage feature flags for A/B testing and gradual rollouts. Uses consistent hashing for deterministic user assignment.
       </p>
 
@@ -117,7 +117,7 @@ export default function AdminFlagsPage() {
 
       {/* Create new flag */}
       <section>
-        <h2 className="mb-3 text-lg font-semibold text-text-primary">Create Flag</h2>
+        <h2 className="mb-3 text-lg font-semibold text-ink">Create Flag</h2>
         <form onSubmit={handleCreate} className="flex flex-wrap gap-3">
           <input
             type="text"
@@ -125,16 +125,16 @@ export default function AdminFlagsPage() {
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             required
-            className="rounded-lg border border-secondary-700 bg-background-primary px-3 py-2 text-sm text-text-primary"
+            className="rounded-lg border border-ink-rule bg-paper px-3 py-2 text-sm text-ink"
           />
           <input
             type="text"
             placeholder="Description (optional)"
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
-            className="rounded-lg border border-secondary-700 bg-background-primary px-3 py-2 text-sm text-text-primary"
+            className="rounded-lg border border-ink-rule bg-paper px-3 py-2 text-sm text-ink"
           />
-          <label className="flex items-center gap-1 text-sm text-text-secondary">
+          <label className="flex items-center gap-1 text-sm text-ink-muted">
             Rollout %
             <input
               type="number"
@@ -142,13 +142,13 @@ export default function AdminFlagsPage() {
               max={100}
               value={newRollout}
               onChange={(e) => setNewRollout(parseInt(e.target.value) || 0)}
-              className="w-20 rounded-lg border border-secondary-700 bg-background-primary px-2 py-2 text-sm text-text-primary"
+              className="w-20 rounded-lg border border-ink-rule bg-paper px-2 py-2 text-sm text-ink"
             />
           </label>
           <button
             type="submit"
             disabled={creating || !newName}
-            className="rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800 disabled:opacity-50"
+            className="rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-ink hover:bg-primary-800 disabled:opacity-50"
           >
             {creating ? 'Creating...' : 'Create'}
           </button>
@@ -157,24 +157,24 @@ export default function AdminFlagsPage() {
 
       {/* Existing flags */}
       <section>
-        <h2 className="mb-3 text-lg font-semibold text-text-primary">
+        <h2 className="mb-3 text-lg font-semibold text-ink">
           Active Flags ({flags.length})
         </h2>
         {flags.length === 0 ? (
-          <p className="text-sm text-text-secondary">No feature flags yet.</p>
+          <p className="text-sm text-ink-muted">No feature flags yet.</p>
         ) : (
           <div className="space-y-3">
             {flags.map((flag) => (
               <div
                 key={flag.id}
-                className="flex items-center justify-between rounded-lg border border-secondary-700 bg-background-primary p-4"
+                className="flex items-center justify-between rounded-lg border border-ink-rule bg-paper p-4"
               >
                 <div>
-                  <p className="font-medium text-text-primary">{flag.name}</p>
+                  <p className="font-medium text-ink">{flag.name}</p>
                   {flag.description && (
-                    <p className="text-xs text-text-secondary">{flag.description}</p>
+                    <p className="text-xs text-ink-muted">{flag.description}</p>
                   )}
-                  <p className="mt-1 text-xs text-text-secondary">
+                  <p className="mt-1 text-xs text-ink-muted">
                     Rollout: {flag.rollout_percentage}% &middot;{' '}
                     {flag.enabled ? (
                       <span className="text-green-600">Enabled</span>
@@ -186,7 +186,7 @@ export default function AdminFlagsPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => toggleFlag(flag.id, !flag.enabled)}
-                    className="rounded-lg border border-secondary-700 px-3 py-1 text-xs font-medium text-text-primary hover:bg-background-light"
+                    className="rounded-lg border border-ink-rule px-3 py-1 text-xs font-medium text-ink hover:bg-paper-sub"
                   >
                     {flag.enabled ? 'Disable' : 'Enable'}
                   </button>

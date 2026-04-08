@@ -51,7 +51,7 @@ function RadialGauge({ score, max = 10 }: { score: number; max?: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className={`text-3xl font-bold ${color.text}`}>{score}</span>
-        <span className="text-xs text-text-tertiary dark:text-secondary-500">/ {max}</span>
+        <span className="text-xs text-ink-whisper">/ {max}</span>
       </div>
     </div>
   )
@@ -123,9 +123,9 @@ export default function WalletSecurity() {
     return (
       <div className="max-w-4xl mx-auto p-6">
         <div className="text-center py-12">
-          <Shield className="mx-auto h-12 w-12 text-text-tertiary dark:text-secondary-500 mb-4" />
-          <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-2">Wallet Security</h2>
-          <p className="text-text-secondary dark:text-secondary-400">Connect your wallet to view security settings and monitor your token allowances.</p>
+          <Shield className="mx-auto h-12 w-12 text-ink-whisper mb-4" />
+          <h2 className="text-xl font-semibold text-ink mb-2">Wallet Security</h2>
+          <p className="text-ink-muted">Connect your wallet to view security settings and monitor your token allowances.</p>
         </div>
       </div>
     )
@@ -135,10 +135,10 @@ export default function WalletSecurity() {
     return (
       <div className="max-w-4xl mx-auto p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-neutral-200 dark:bg-secondary-800 rounded w-1/3 mb-6"></div>
+          <div className="h-8 bg-neutral-200 dark:bg-paper-sub rounded w-1/3 mb-6"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-32 bg-neutral-200 dark:bg-secondary-800 rounded-xl"></div>
+              <div key={i} className="h-32 bg-neutral-200 dark:bg-paper-sub rounded-xl"></div>
             ))}
           </div>
         </div>
@@ -146,18 +146,18 @@ export default function WalletSecurity() {
     )
   }
 
-  const riskInfo = data ? getRiskLevel(data.riskScore) : { level: 'Unknown', color: 'text-text-secondary', bg: 'bg-secondary-800', border: 'border-neutral-200 dark:border-secondary-700' }
+  const riskInfo = data ? getRiskLevel(data.riskScore) : { level: 'Unknown', color: 'text-ink-muted', bg: 'bg-paper-sub', border: 'border-neutral-200 dark:border-ink-rule' }
 
   return (
     <div className="max-w-4xl mx-auto p-6">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold text-text-primary dark:text-secondary-100">Wallet Security</h1>
+          <h1 className="text-2xl font-bold text-ink">Wallet Security</h1>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setShowPrivateInfo(!showPrivateInfo)}
-              className="p-2 text-text-tertiary dark:text-secondary-500 hover:text-text-primary dark:hover:text-secondary-200 rounded-lg transition-colors"
+              className="p-2 text-ink-whisper hover:text-ink dark:hover:text-ink rounded-lg transition-colors"
               title={showPrivateInfo ? 'Hide full address' : 'Show full address'}
             >
               {showPrivateInfo ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -166,17 +166,17 @@ export default function WalletSecurity() {
         </div>
 
         {/* Wallet Address */}
-        <div className="bg-background-secondary dark:bg-secondary-800/60 rounded-xl p-4 mb-6 border border-secondary-700">
+        <div className="bg-paper-sub/60 rounded-xl p-4 mb-6 border border-ink-rule">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-text-secondary dark:text-secondary-400 mb-1">Connected Wallet</p>
-              <p className="font-mono text-sm text-text-primary dark:text-secondary-200">
+              <p className="text-sm font-medium text-ink-muted mb-1">Connected Wallet</p>
+              <p className="font-mono text-sm text-ink">
                 {showPrivateInfo ? address : `${address.slice(0, 6)}...${address.slice(-4)}`}
               </p>
             </div>
             <button
               onClick={copyAddress}
-              className="flex items-center space-x-1 px-3 py-1.5 text-sm bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg hover:bg-secondary-800 dark:hover:bg-secondary-600 text-text-primary dark:text-secondary-200 transition-colors"
+              className="flex items-center space-x-1 px-3 py-1.5 text-sm bg-paper-sub border border-ink-rule dark:border-secondary-600 rounded-lg hover:bg-paper-sub dark:hover:bg-paper-deep text-ink transition-colors"
             >
               <Copy className="h-4 w-4" />
               <span>Copy</span>
@@ -188,53 +188,53 @@ export default function WalletSecurity() {
       {/* Security Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Risk Score with Radial Gauge */}
-        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
             <Shield className="h-6 w-6 text-primary-600 dark:text-primary-400" />
             <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${riskInfo.bg} ${riskInfo.color} ${riskInfo.border} border`}>
               {riskInfo.level} Risk
             </span>
           </div>
-          <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 mb-3">Security Score</h3>
+          <h3 className="text-sm font-semibold text-ink-muted mb-3">Security Score</h3>
           <RadialGauge score={data?.riskScore || 0} />
-          <p className="text-xs text-text-tertiary dark:text-secondary-500 text-center mt-2">Based on your token allowances</p>
+          <p className="text-xs text-ink-whisper text-center mt-2">Based on your token allowances</p>
         </div>
 
         {/* Total Allowances */}
-        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
             <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
             <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800">
               Active
             </span>
           </div>
-          <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 mb-1">Total Allowances</h3>
-          <p className="text-4xl font-bold text-text-primary dark:text-secondary-100 mb-2">{data?.totalAllowances || 0}</p>
-          <p className="text-xs text-text-tertiary dark:text-secondary-500">Token approvals granted</p>
+          <h3 className="text-sm font-semibold text-ink-muted mb-1">Total Allowances</h3>
+          <p className="text-4xl font-bold text-ink mb-2">{data?.totalAllowances || 0}</p>
+          <p className="text-xs text-ink-whisper">Token approvals granted</p>
         </div>
 
         {/* High Risk Allowances */}
-        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
             <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
             <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800">
               Attention
             </span>
           </div>
-          <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 mb-1">High Risk</h3>
-          <p className="text-4xl font-bold text-text-primary dark:text-secondary-100 mb-2">{data?.highRiskAllowances || 0}</p>
-          <p className="text-xs text-text-tertiary dark:text-secondary-500">Require immediate review</p>
+          <h3 className="text-sm font-semibold text-ink-muted mb-1">High Risk</h3>
+          <p className="text-4xl font-bold text-ink mb-2">{data?.highRiskAllowances || 0}</p>
+          <p className="text-xs text-ink-whisper">Require immediate review</p>
         </div>
       </div>
 
       {/* Security Actions */}
-      <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6">
-        <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-4">Security Actions</h3>
+      <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6">
+        <h3 className="text-lg font-semibold text-ink mb-4">Security Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             onClick={fetchWalletSecurityData}
             disabled={loading}
-            className="flex items-center justify-center space-x-2 px-4 py-3 bg-primary-600 dark:bg-primary-500 text-white rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors disabled:opacity-50"
+            className="flex items-center justify-center space-x-2 px-4 py-3 bg-primary-600 dark:bg-primary-500 text-ink rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors disabled:opacity-50"
           >
             <RefreshCw className={`h-5 w-5 ${loading ? 'animate-spin' : ''}`} />
             <span>{loading ? 'Refreshing...' : 'Refresh Security Scan'}</span>
@@ -244,7 +244,7 @@ export default function WalletSecurity() {
             href={`/report/${address}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center space-x-2 px-4 py-3 bg-neutral-100 dark:bg-secondary-700 text-text-primary dark:text-secondary-200 rounded-xl hover:bg-neutral-200 dark:hover:bg-secondary-600 transition-colors"
+            className="flex items-center justify-center space-x-2 px-4 py-3 bg-neutral-100 dark:bg-paper-sub text-ink rounded-xl hover:bg-neutral-200 dark:hover:bg-paper-deep transition-colors"
           >
             <ExternalLink className="h-5 w-5" />
             <span>View Detailed Report</span>

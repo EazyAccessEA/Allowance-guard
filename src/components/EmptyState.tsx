@@ -44,7 +44,7 @@ export default function EmptyState({
           'flex h-16 w-16 items-center justify-center rounded-2xl mb-5',
           positive
             ? 'bg-semantic-success-50 dark:bg-semantic-success-900/20 text-semantic-success-500'
-            : 'bg-secondary-800 text-neutral-400 dark:text-secondary-500',
+            : 'bg-paper-sub text-neutral-400 dark:text-ink-whisper',
         )}
       >
         {icon}
@@ -55,13 +55,13 @@ export default function EmptyState({
           'text-lg font-semibold mb-2',
           positive
             ? 'text-semantic-success-700 dark:text-semantic-success-300'
-            : 'text-text-primary dark:text-secondary-100',
+            : 'text-ink',
         )}
       >
         {title}
       </h3>
 
-      <p className="text-sm text-text-secondary dark:text-secondary-400 max-w-sm mb-6">
+      <p className="text-sm text-ink-muted max-w-sm mb-6">
         {description}
       </p>
 
@@ -69,7 +69,7 @@ export default function EmptyState({
         action.href ? (
           <Link
             href={action.href}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-800 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-ink shadow-sm hover:bg-primary-800 transition-colors"
           >
             {action.label}
             <ArrowRight className="h-3.5 w-3.5" />

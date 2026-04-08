@@ -101,9 +101,9 @@ export default function UnsubscribePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-secondary-900">
+    <div className="min-h-screen bg-paper-deep">
       {/* Header */}
-      <header className="bg-secondary-900 border-b border-secondary-700">
+      <header className="bg-paper-deep border-b border-ink-rule">
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
@@ -114,7 +114,7 @@ export default function UnsubscribePage() {
                 className="object-contain"
               />
             </div>
-            <h1 className="text-2xl font-bold text-secondary-100">Allowance Guard</h1>
+            <h1 className="text-2xl font-bold text-ink">Allowance Guard</h1>
           </div>
         </div>
       </header>
@@ -122,22 +122,22 @@ export default function UnsubscribePage() {
       {/* Content */}
       <main className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-secondary-100 mb-4">Unsubscribe</h1>
-          <p className="text-slate-400">
+          <h1 className="text-3xl font-bold text-ink mb-4">Unsubscribe</h1>
+          <p className="text-ink-muted">
             We&apos;re sorry to see you go. Choose what you&apos;d like to unsubscribe from below.
           </p>
         </div>
 
         <form onSubmit={handleUnsubscribe} className="space-y-8">
           {/* Email Input */}
-          <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
+          <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
             <div className="flex items-center mb-4">
               <Mail className="w-5 h-5 text-blue-400 mr-2" />
-              <h2 className="text-xl font-semibold text-secondary-100">Email Address</h2>
+              <h2 className="text-xl font-semibold text-ink">Email Address</h2>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-400 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-ink-muted mb-2">
                 Enter the email address you want to unsubscribe
               </label>
               <input
@@ -145,19 +145,19 @@ export default function UnsubscribePage() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border border-secondary-600 rounded-lg bg-secondary-900 text-secondary-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-secondary-600 rounded-lg bg-paper-deep text-ink focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="your.email@example.com"
                 required
               />
-              <p className="text-sm text-slate-400 mt-1">
+              <p className="text-sm text-ink-muted mt-1">
                 This must be the exact email address you used to subscribe.
               </p>
             </div>
           </div>
 
           {/* Unsubscribe Options */}
-          <div className="bg-secondary-800 border border-secondary-700 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-secondary-100 mb-6">What would you like to unsubscribe from?</h2>
+          <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-ink mb-6">What would you like to unsubscribe from?</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {unsubscribeOptions.map((option) => {
@@ -168,7 +168,7 @@ export default function UnsubscribePage() {
                     className={`relative cursor-pointer border-2 rounded-lg p-4 transition-all ${
                       unsubscribeType === option.id
                         ? `${option.borderColor} ${option.bgColor}`
-                        : 'border-secondary-700 hover:border-secondary-700 hover:border-secondary-600'
+                        : 'border-ink-rule hover:border-ink-rule hover:border-secondary-600'
                     }`}
                   >
                     <input
@@ -182,10 +182,10 @@ export default function UnsubscribePage() {
                     <div className="flex items-start">
                       <Icon className={`w-5 h-5 mt-0.5 mr-3 ${option.color}`} />
                       <div>
-                        <h3 className="text-sm font-medium text-secondary-100 mb-1">
+                        <h3 className="text-sm font-medium text-ink mb-1">
                           {option.title}
                         </h3>
-                        <p className="text-sm text-slate-400">
+                        <p className="text-sm text-ink-muted">
                           {option.description}
                         </p>
                       </div>
@@ -222,7 +222,7 @@ export default function UnsubscribePage() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-600 text-slate-900 font-medium rounded-lg transition-colors flex items-center"
+              className="px-6 py-3 bg-amber-500 hover:bg-amber-400 disabled:bg-ink-muted text-ink font-medium rounded-lg transition-colors flex items-center"
             >
               {status === 'loading' ? (
                 <>
@@ -242,12 +242,12 @@ export default function UnsubscribePage() {
         </form>
 
         {/* Alternative Options */}
-        <div className="mt-12 bg-secondary-800 border border-secondary-700 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-secondary-100 mb-4">Other Options</h3>
+        <div className="mt-12 bg-paper-sub border border-ink-rule rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-ink mb-4">Other Options</h3>
           <div className="space-y-4">
             <div>
-              <h4 className="text-sm font-medium text-secondary-100 mb-2">Change Your Preferences Instead</h4>
-              <p className="text-sm text-slate-400 mb-3">
+              <h4 className="text-sm font-medium text-ink mb-2">Change Your Preferences Instead</h4>
+              <p className="text-sm text-ink-muted mb-3">
                 Don&apos;t want to unsubscribe completely? You can adjust your notification preferences to receive only what you want.
               </p>
               <a 
@@ -259,8 +259,8 @@ export default function UnsubscribePage() {
             </div>
             
             <div>
-              <h4 className="text-sm font-medium text-secondary-100 mb-2">Need Help?</h4>
-              <p className="text-sm text-slate-400 mb-3">
+              <h4 className="text-sm font-medium text-ink mb-2">Need Help?</h4>
+              <p className="text-sm text-ink-muted mb-3">
                 If you&apos;re having trouble unsubscribing or have questions, our support team is here to help.
               </p>
               <a 
@@ -289,10 +289,10 @@ export default function UnsubscribePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-secondary-800 border-t border-secondary-700 mt-16">
+      <footer className="bg-paper-sub border-t border-ink-rule mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6">
           <div className="text-center">
-            <p className="text-slate-400 text-sm">
+            <p className="text-ink-muted text-sm">
               © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
             <div className="mt-4 space-x-6">

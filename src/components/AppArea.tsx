@@ -13,27 +13,27 @@ import {
 
 // Dynamic imports for heavy components
 const WalletManager = dynamic(() => import('@/components/WalletManager'), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-32 w-full" />
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
 })
 
 const AllowanceTable = dynamic(() => import('@/components/AllowanceTable'), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-64 w-full" />
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-64 w-full" />
 })
 
 const WalletSecurity = dynamic(() => import('@/components/WalletSecurity'), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-48 w-full" />
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-48 w-full" />
 })
 
 const BulkRevokePanel = dynamic(() => import('@/components/BulkRevokePanel'), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-32 w-full" />
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
 })
 
 const Permit2Panel = dynamic(() => import('@/components/Permit2Panel'), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-32 w-full" />
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
 })
 
 const DataVisualizationDashboard = dynamic(() => import('@/components/DataVisualizationDashboard').then(mod => ({ default: mod.DataVisualizationDashboard })), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-96 w-full" />
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-96 w-full" />
 })
 import { useState, useEffect, useCallback } from 'react'
 import {
@@ -132,7 +132,7 @@ export default function AppArea({
   // Show loading state
   if (loading) {
     return (
-      <Section className="bg-background-light">
+      <Section className="bg-paper-sub">
         <Container>
           <DashboardSkeleton />
         </Container>
@@ -141,17 +141,17 @@ export default function AppArea({
   }
 
   return (
-    <Section className="bg-background-light">
+    <Section className="bg-paper-sub">
       <Container>
         {/* Dashboard Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
             <div>
               <div className="flex items-center gap-3">
-                <h2 className="mobbin-heading-1 text-text-primary mb-2">Security Dashboard</h2>
+                <h2 className="mobbin-heading-1 text-ink mb-2">Security Dashboard</h2>
                 <PlanBadge plan={userPlan} size="sm" />
               </div>
-              <p className="mobbin-body text-text-secondary">Monitor and manage your wallet&apos;s token approvals</p>
+              <p className="mobbin-body text-ink-muted">Monitor and manage your wallet&apos;s token approvals</p>
             </div>
             <div className="flex gap-2">
               <Button
@@ -217,7 +217,7 @@ export default function AppArea({
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="mobbin-body-small text-text-secondary mb-4">
+                <p className="mobbin-body-small text-ink-muted mb-4">
                   Manage addresses you want to scan and monitor.
                 </p>
                 <WalletManager
@@ -244,13 +244,13 @@ export default function AppArea({
                     onChange={e=>setMonitorOn(e.target.checked)} 
                     className="rounded border-border-default text-primary-accent focus:ring-primary-accent"
                   />
-                  <label className="mobbin-body-small font-medium text-text-primary">
+                  <label className="mobbin-body-small font-medium text-ink">
                     Enable auto-rescan & drift alerts
                   </label>
                 </div>
                 
                 <div className="flex items-center gap-2">
-                  <span className="mobbin-body-small text-text-secondary">Every</span>
+                  <span className="mobbin-body-small text-ink-muted">Every</span>
                   <Input
                     type="number"
                     value={monitorFreq}
@@ -258,7 +258,7 @@ export default function AppArea({
                     className="w-20 h-8"
                     inputSize="sm"
                   />
-                  <span className="mobbin-body-small text-text-secondary">minutes</span>
+                  <span className="mobbin-body-small text-ink-muted">minutes</span>
                 </div>
                 
                 <Button 
@@ -289,19 +289,19 @@ export default function AppArea({
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-semantic-error-500 rounded-full mt-2 flex-shrink-0" />
-                    <p className="mobbin-body-small text-text-secondary">
+                    <p className="mobbin-body-small text-ink-muted">
                       <strong>Unlimited approvals</strong> are the #1 drain vector. Revoke them first.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-semantic-warning-500 rounded-full mt-2 flex-shrink-0" />
-                    <p className="mobbin-body-small text-text-secondary">
+                    <p className="mobbin-body-small text-ink-muted">
                       <strong>Stale approvals</strong> to inactive contracts should be cleaned up.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 bg-semantic-info-500 rounded-full mt-2 flex-shrink-0" />
-                    <p className="mobbin-body-small text-text-secondary">
+                    <p className="mobbin-body-small text-ink-muted">
                       <strong>Regular monitoring</strong> helps catch new approvals quickly.
                     </p>
                   </div>
@@ -314,13 +314,13 @@ export default function AppArea({
           <main className="lg:col-span-8">
             {/* Tab Navigation */}
             <div className="mb-8">
-              <nav className="flex space-x-1 bg-background-secondary p-1 rounded-lg border border-secondary-700 overflow-x-auto">
+              <nav className="flex space-x-1 bg-paper-sub p-1 rounded-lg border border-ink-rule overflow-x-auto">
                 <button
                   onClick={() => setActiveTab('allowances')}
                   className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'allowances'
-                      ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                      ? 'bg-paper text-primary-600 shadow-sm border border-primary-200'
+                      : 'text-ink-muted hover:text-ink hover:bg-paper/50'
                   }`}
                 >
                   <span className="hidden sm:inline">Token </span>Allowances
@@ -329,8 +329,8 @@ export default function AppArea({
                   onClick={() => setActiveTab('security')}
                   className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'security'
-                      ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                      ? 'bg-paper text-primary-600 shadow-sm border border-primary-200'
+                      : 'text-ink-muted hover:text-ink hover:bg-paper/50'
                   }`}
                 >
                   Security
@@ -339,8 +339,8 @@ export default function AppArea({
                   onClick={() => setActiveTab('analytics')}
                   className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'analytics'
-                      ? 'bg-background-primary text-primary-600 shadow-sm border border-primary-200'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-background-primary/50'
+                      ? 'bg-paper text-primary-600 shadow-sm border border-primary-200'
+                      : 'text-ink-muted hover:text-ink hover:bg-paper/50'
                   }`}
                 >
                   Analytics
@@ -373,7 +373,7 @@ export default function AppArea({
                     <div className="flex items-center justify-between">
                       <div>
                         <CardTitle className="mobbin-heading-3">Token Approvals</CardTitle>
-                        <p className="mobbin-body-small text-text-secondary mt-2">
+                        <p className="mobbin-body-small text-ink-muted mt-2">
                           Review and manage your token allowances across all chains.
                         </p>
                       </div>
@@ -444,8 +444,8 @@ export default function AppArea({
                   
                   {/* Pagination */}
                   {total > 0 && (
-                    <div className="mt-8 pt-6 border-t border-secondary-700 flex items-center justify-between">
-                      <div className="mobbin-body-small text-text-secondary">
+                    <div className="mt-8 pt-6 border-t border-ink-rule flex items-center justify-between">
+                      <div className="mobbin-body-small text-ink-muted">
                         Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
                       </div>
                       <div className="flex items-center gap-3">
@@ -468,7 +468,7 @@ export default function AppArea({
                         <select
                           value={pageSize}
                           onChange={(e) => onPageSize(Number(e.target.value))}
-                          className="border border-secondary-700 rounded-md px-3 py-1 mobbin-body-small focus:outline-none focus:ring-2 focus:ring-primary-500/20"
+                          className="border border-ink-rule rounded-md px-3 py-1 mobbin-body-small focus:outline-none focus:ring-2 focus:ring-primary-500/20"
                         >
                           {[10,25,50,100].map(n => <option key={n} value={n}>{n}/page</option>)}
                         </select>
@@ -484,7 +484,7 @@ export default function AppArea({
               <Card>
                 <CardHeader>
                   <CardTitle className="mobbin-heading-3">Security Dashboard</CardTitle>
-                  <p className="mobbin-body-small text-text-secondary mt-2">
+                  <p className="mobbin-body-small text-ink-muted mt-2">
                     Comprehensive security analysis and monitoring for your wallet.
                   </p>
                 </CardHeader>

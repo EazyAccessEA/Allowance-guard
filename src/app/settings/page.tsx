@@ -171,58 +171,58 @@ export default function SettingsPage() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
+      <div className="min-h-screen bg-paper-deep text-ink">
         <Section>
           <Container className="text-center">
             <H1 className="mb-6">Settings</H1>
-            <p className="text-base text-text-tertiary dark:text-secondary-400 max-w-reading mx-auto mb-8">
+            <p className="text-base text-ink-muted max-w-reading mx-auto mb-8">
               Connect your wallet to access comprehensive settings and configure your security monitoring preferences.
             </p>
 
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
-                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Email Alerts</h3>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Email Alerts</h3>
+                  <p className="text-sm text-ink-muted mb-3">
                     Get notified when new approvals are detected on your wallets via Microsoft SMTP.
                   </p>
-                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
+                  <ul className="text-sm text-ink-muted space-y-1">
                     <li>• Daily digest emails with risky approval summaries</li>
                     <li>• Risk-only filtering to reduce notification noise</li>
                     <li>• Customizable preferences per wallet address</li>
                   </ul>
                 </div>
 
-                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
-                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Risk Policy Configuration</h3>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Risk Policy Configuration</h3>
+                  <p className="text-sm text-ink-muted mb-3">
                     Configure what counts as alert-worthy for your specific needs.
                   </p>
-                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
+                  <ul className="text-sm text-ink-muted space-y-1">
                     <li>• Set minimum risk score thresholds</li>
                     <li>• Focus on unlimited approvals only</li>
                     <li>• Include/exclude specific addresses</li>
                   </ul>
                 </div>
 
-                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
-                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Slack Integration</h3>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Slack Integration</h3>
+                  <p className="text-sm text-ink-muted mb-3">
                     Get daily digests directly in your Slack workspace.
                   </p>
-                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
+                  <ul className="text-sm text-ink-muted space-y-1">
                     <li>• Webhook-based notifications</li>
                     <li>• Rich formatting with approval details</li>
                     <li>• Team collaboration features</li>
                   </ul>
                 </div>
 
-                <div className="border border-secondary-700 rounded-md p-6 bg-background-tertiary dark:bg-secondary-800">
-                  <h3 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-3">Public Share Links</h3>
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400 mb-3">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                  <h3 className="text-lg font-semibold text-ink mb-3">Public Share Links</h3>
+                  <p className="text-sm text-ink-muted mb-3">
                     Generate read-only links to share your wallet&apos;s approval status.
                   </p>
-                  <ul className="text-sm text-text-tertiary dark:text-secondary-400 space-y-1">
+                  <ul className="text-sm text-ink-muted space-y-1">
                     <li>• Privacy controls (censor addresses/amounts)</li>
                     <li>• Risk-only filtering for public sharing</li>
                     <li>• Expiration dates for temporary access</li>
@@ -230,7 +230,7 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="bg-text-primary dark:bg-secondary-800 text-white rounded-md p-6">
+              <div className="bg-text-primary dark:bg-paper-sub text-ink rounded-md p-6">
                 <h3 className="text-lg font-semibold mb-2">Ready to get started?</h3>
                 <p className="text-sm opacity-90 mb-4">
                   Connect your wallet to access these settings and start monitoring your token approvals with custom alerts and policies.
@@ -253,7 +253,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
+    <div className="min-h-screen bg-paper-deep text-ink">
 
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
@@ -271,15 +271,15 @@ export default function SettingsPage() {
 
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Settings</H1>
-          <p className="text-base text-text-tertiary dark:text-secondary-400 max-w-reading mb-12">
+          <p className="text-base text-ink-muted max-w-reading mb-12">
             Configure alerts, policies, and sharing options for your wallet.
           </p>
 
           <div className="space-y-12">
             {/* Email Alerts Card */}
-            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-ink-rule rounded-md p-8 bg-paper-deep">
               <H2 className="mb-3">Email Alerts</H2>
-              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
+              <p className="text-base text-ink-muted mb-6">
                 Get notified when new approvals are detected on your wallets.
               </p>
 
@@ -290,7 +290,7 @@ export default function SettingsPage() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-3 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
 
@@ -302,46 +302,46 @@ export default function SettingsPage() {
                     onChange={(e) => setRiskOnly(e.target.checked)}
                     className="mr-3 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   />
-                  <label htmlFor="riskOnly" className="text-base text-text-tertiary dark:text-secondary-400">
+                  <label htmlFor="riskOnly" className="text-base text-ink-muted">
                     Only alert for high-risk approvals
                   </label>
                 </div>
 
                 <button
                   onClick={subscribe}
-                  className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   Subscribe to Alerts
                 </button>
 
                 {subMsg && (
-                  <p className="text-base text-text-tertiary dark:text-secondary-400">{subMsg}</p>
+                  <p className="text-base text-ink-muted">{subMsg}</p>
                 )}
               </div>
             </div>
 
             {/* Risk Policy Card */}
-            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-ink-rule rounded-md p-8 bg-paper-deep">
               <H2 className="mb-3">Risk Policy</H2>
-              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
+              <p className="text-base text-ink-muted mb-6">
                 Configure what counts as alert-worthy for your wallet.
               </p>
 
               {policyLoading && !policy && (
                 <div className="animate-pulse space-y-4 max-w-2xl">
-                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-1/3"></div>
-                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-1/4"></div>
-                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-full"></div>
-                  <div className="h-10 bg-gray-200 dark:bg-secondary-700 rounded w-full"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-1/3"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-1/4"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-full"></div>
+                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-full"></div>
                 </div>
               )}
               {policyError && <InlineError message={policyError} onRetry={loadPolicy} />}
               {policy && (
                 <div className="space-y-6 max-w-2xl">
                   <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-                    <label className="text-base text-text-tertiary dark:text-secondary-400 font-medium w-32">Min risk score</label>
+                    <label className="text-base text-ink-muted font-medium w-32">Min risk score</label>
                     <input
-                      className="w-24 px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-24 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                       type="number"
                       value={policy?.min_risk_score || 0}
                       onChange={e=>policy && setPolicy({...policy, min_risk_score: Number(e.target.value)})}
@@ -355,38 +355,38 @@ export default function SettingsPage() {
                       onChange={e=>policy && setPolicy({...policy, unlimited_only: e.target.checked})}
                       className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-text-tertiary dark:text-secondary-400">Only alert on UNLIMITED approvals</span>
+                    <span className="text-base text-ink-muted">Only alert on UNLIMITED approvals</span>
                   </label>
 
                   <div className="grid grid-cols-1 gap-4">
                     <div>
-                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Include spenders (comma-separated)</div>
+                      <div className="text-base text-ink-muted font-medium mb-2">Include spenders (comma-separated)</div>
                       <input
-                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.include_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
                     </div>
                     <div>
-                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Ignore spenders</div>
+                      <div className="text-base text-ink-muted font-medium mb-2">Ignore spenders</div>
                       <input
-                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.ignore_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
                     </div>
                     <div>
-                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Include tokens</div>
+                      <div className="text-base text-ink-muted font-medium mb-2">Include tokens</div>
                       <input
-                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.include_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
                     </div>
                     <div>
-                      <div className="text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">Ignore tokens</div>
+                      <div className="text-base text-ink-muted font-medium mb-2">Ignore tokens</div>
                       <input
-                        className="w-full px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                         value={(policy?.ignore_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -395,29 +395,29 @@ export default function SettingsPage() {
 
                   <button
                     onClick={savePolicy}
-                    className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Save Policy
                   </button>
-                  {policyMsg && <span className="text-base text-text-tertiary dark:text-secondary-400 ml-4">{policyMsg}</span>}
+                  {policyMsg && <span className="text-base text-ink-muted ml-4">{policyMsg}</span>}
                 </div>
               )}
             </div>
 
             {/* Slack Alerts Card */}
-            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-ink-rule rounded-md p-8 bg-paper-deep">
               <H2 className="mb-3">Slack Alerts</H2>
-              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
+              <p className="text-base text-ink-muted mb-6">
                 Get daily digests in your Slack workspace.
               </p>
 
               <div className="space-y-4 max-w-md">
                 <div>
-                  <label className="block text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">
+                  <label className="block text-base text-ink-muted font-medium mb-2">
                     Slack webhook URL:
                   </label>
                   <input
-                    className="w-full px-4 py-3 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-3 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder="https://hooks.slack.com/services/..."
                     value={webhook}
                     onChange={e=>setWebhook(e.target.value)}
@@ -426,28 +426,28 @@ export default function SettingsPage() {
 
                 <button
                   onClick={addSlack}
-                  className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   Add Webhook
                 </button>
                 {slackMsg && (
-                  <span className="text-base text-text-tertiary dark:text-secondary-400 ml-4">
+                  <span className="text-base text-ink-muted ml-4">
                     {slackMsg}
                   </span>
                 )}
 
-                <div className="bg-background-tertiary dark:bg-secondary-800 border border-secondary-700 rounded-md p-4">
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
-                    <strong>Tip:</strong> Create a webhook at <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="underline hover:text-text-primary dark:hover:text-secondary-100">api.slack.com/apps</a> &rarr; Create New App &rarr; Enable Incoming Webhooks &rarr; Add to channel
+                <div className="bg-paper-deep dark:bg-paper-sub border border-ink-rule rounded-md p-4">
+                  <p className="text-sm text-ink-muted">
+                    <strong>Tip:</strong> Create a webhook at <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink dark:hover:text-ink">api.slack.com/apps</a> &rarr; Create New App &rarr; Enable Incoming Webhooks &rarr; Add to channel
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Public Share Link Card */}
-            <div className="border border-secondary-700 rounded-md p-8 bg-background-primary dark:bg-secondary-900">
+            <div className="border border-ink-rule rounded-md p-8 bg-paper-deep">
               <H2 className="mb-3">Public Share Link</H2>
-              <p className="text-base text-text-tertiary dark:text-secondary-400 mb-6">
+              <p className="text-base text-ink-muted mb-6">
                 Generate a read-only link to share your wallet&apos;s approval status with others.
               </p>
 
@@ -460,7 +460,7 @@ export default function SettingsPage() {
                       onChange={e => setCensorAddr(e.target.checked)}
                       className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-text-tertiary dark:text-secondary-400">Censor addresses (0x1234…abcd)</span>
+                    <span className="text-base text-ink-muted">Censor addresses (0x1234…abcd)</span>
                   </label>
                   <label className="flex items-center gap-3">
                     <input
@@ -469,7 +469,7 @@ export default function SettingsPage() {
                       onChange={e => setCensorAmt(e.target.checked)}
                       className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-text-tertiary dark:text-secondary-400">Hide amounts</span>
+                    <span className="text-base text-ink-muted">Hide amounts</span>
                   </label>
                   <label className="flex items-center gap-3">
                     <input
@@ -478,12 +478,12 @@ export default function SettingsPage() {
                       onChange={e => setRiskOnlyShare(e.target.checked)}
                       className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
-                    <span className="text-base text-text-tertiary dark:text-secondary-400">Risky only (UNLIMITED / STALE / risk&gt;0)</span>
+                    <span className="text-base text-ink-muted">Risky only (UNLIMITED / STALE / risk&gt;0)</span>
                   </label>
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <span className="text-base text-text-tertiary dark:text-secondary-400 w-32">Expire after (days)</span>
+                    <span className="text-base text-ink-muted w-32">Expire after (days)</span>
                     <input
-                      className="w-20 px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-20 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
                       type="number"
                       value={expireDays}
                       onChange={e => setExpireDays(e.target.value ? Number(e.target.value) : '')}
@@ -495,18 +495,18 @@ export default function SettingsPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={generateShare}
-                    className="bg-primary-700 dark:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Generate / Rotate
                   </button>
                   <button
                     onClick={expireShareLink}
-                    className="bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 border border-secondary-700 px-6 py-3 rounded-lg font-medium hover:bg-background-tertiary dark:hover:bg-secondary-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-paper-sub text-ink border border-ink-rule px-6 py-3 rounded-lg font-medium hover:bg-paper-deep dark:hover:bg-paper-sub transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Expire Link
                   </button>
                   {shareMsg && (
-                    <span className="text-base text-text-tertiary dark:text-secondary-400 flex items-center">
+                    <span className="text-base text-ink-muted flex items-center">
                       {shareMsg}
                     </span>
                   )}
@@ -514,12 +514,12 @@ export default function SettingsPage() {
 
                 {shareToken && (
                   <div className="mt-4">
-                    <label className="block text-base text-text-tertiary dark:text-secondary-400 font-medium mb-2">
+                    <label className="block text-base text-ink-muted font-medium mb-2">
                       Share URL:
                     </label>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <input
-                        className="flex-1 px-3 py-2 border border-secondary-700 rounded-md bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="flex-1 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                         readOnly
                         value={shareUrl ?? ''}
                       />
@@ -528,7 +528,7 @@ export default function SettingsPage() {
                           await navigator.clipboard.writeText(shareUrl || '')
                           setShareMsg('URL copied to clipboard!')
                         }}
-                        className="bg-text-primary dark:bg-secondary-700 text-white px-4 py-2 rounded-md font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="bg-text-primary dark:bg-paper-sub text-ink px-4 py-2 rounded-md font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-primary-500"
                       >
                         Copy
                       </button>
@@ -536,8 +536,8 @@ export default function SettingsPage() {
                   </div>
                 )}
 
-                <div className="bg-background-tertiary dark:bg-secondary-800 border border-secondary-700 rounded-md p-4">
-                  <p className="text-sm text-text-tertiary dark:text-secondary-400">
+                <div className="bg-paper-deep dark:bg-paper-sub border border-ink-rule rounded-md p-4">
+                  <p className="text-sm text-ink-muted">
                     <strong>Privacy:</strong> Share links are read-only and can be expired at any time.
                     Addresses and amounts can be censored for privacy.
                   </p>

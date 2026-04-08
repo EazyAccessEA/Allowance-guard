@@ -10,12 +10,12 @@ import { useDashboard } from '@/hooks/useDashboard'
 import dynamicImport from 'next/dynamic'
 
 const AppArea = dynamicImport(() => import('@/components/AppArea'), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-96 w-full" />,
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-96 w-full" />,
   ssr: false,
 })
 
 const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
-  loading: () => <div className="animate-pulse bg-secondary-700 rounded h-48 w-full" />,
+  loading: () => <div className="animate-pulse bg-paper-sub rounded h-48 w-full" />,
   ssr: false,
 })
 
@@ -43,17 +43,17 @@ export default function DashboardPage() {
   // Error state
   if (error) {
     return (
-      <div className="min-h-screen bg-background-primary dark:bg-secondary-900 flex items-center justify-center">
+      <div className="min-h-screen bg-paper-deep flex items-center justify-center">
         <div className="max-w-md mx-auto text-center p-6">
-          <h2 className="text-2xl font-bold text-text-primary dark:text-secondary-100 mb-4">
+          <h2 className="text-2xl font-bold text-ink mb-4">
             Something went wrong
           </h2>
-          <p className="text-text-secondary dark:text-secondary-400 mb-6">
+          <p className="text-ink-muted mb-6">
             {error.message}
           </p>
           <button
             onClick={resetError}
-            className="bg-primary-700 text-white px-6 py-2 rounded-lg hover:bg-primary-800 transition-colors"
+            className="bg-primary-700 text-ink px-6 py-2 rounded-lg hover:bg-primary-800 transition-colors"
           >
             Try Again
           </button>
@@ -65,14 +65,14 @@ export default function DashboardPage() {
   // Not connected — prompt to connect
   if (isHydrated && !isConnected) {
     return (
-      <div className="min-h-screen bg-surface-base dark:bg-[#0A0E1A]">
+      <div className="min-h-screen bg-paper dark:bg-paper">
         <Section className="py-24">
           <Container>
             <div className="max-w-lg mx-auto text-center">
-              <h1 className="text-3xl sm:text-4xl font-bold text-text-primary dark:text-secondary-100 mb-6">
+              <h1 className="text-3xl sm:text-4xl font-bold text-ink mb-6">
                 Security Dashboard
               </h1>
-              <p className="text-lg text-text-secondary dark:text-secondary-400 mb-8">
+              <p className="text-lg text-ink-muted mb-8">
                 Connect your wallet to view your token approvals, risk scores, and security posture.
               </p>
               <WalletErrorBoundary>
@@ -92,8 +92,8 @@ export default function DashboardPage() {
   // Connected but no wallet selected yet (brief loading state)
   if (!isHydrated || !selectedWallet) {
     return (
-      <div className="min-h-screen bg-surface-base dark:bg-[#0A0E1A] flex items-center justify-center">
-        <div className="animate-pulse text-text-secondary dark:text-secondary-400">
+      <div className="min-h-screen bg-paper dark:bg-paper flex items-center justify-center">
+        <div className="animate-pulse text-ink-muted">
           Loading dashboard…
         </div>
       </div>
@@ -101,17 +101,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-base dark:bg-[#0A0E1A]">
+    <div className="min-h-screen bg-paper dark:bg-paper">
       {/* Scan bar */}
-      <Section className="py-6 bg-background-light dark:bg-secondary-900/50 border-b border-secondary-700">
+      <Section className="py-6 bg-paper-sub dark:bg-paper-deep/50 border-b border-ink-rule">
         <Container>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-text-primary dark:text-secondary-100">
+              <h1 className="text-2xl font-bold text-ink">
                 Security Dashboard
               </h1>
               {message && (
-                <p className="text-sm text-text-secondary dark:text-secondary-400 mt-1">
+                <p className="text-sm text-ink-muted mt-1">
                   {message}
                 </p>
               )}

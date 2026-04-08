@@ -45,8 +45,8 @@ function LoginForm() {
     <Card>
       <CardContent className="py-10 px-8 space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-semibold text-text-primary">Sign in to AllowanceGuard</h1>
-          <p className="text-sm text-text-secondary">
+          <h1 className="text-2xl font-semibold text-ink">Sign in to AllowanceGuard</h1>
+          <p className="text-sm text-ink-muted">
             Enter your email and we&apos;ll send you a magic link.
           </p>
         </div>
@@ -54,8 +54,8 @@ function LoginForm() {
         {sent ? (
           <div className="text-center space-y-3 py-4">
             <CheckCircle className="h-12 w-12 text-green-600 mx-auto" />
-            <p className="text-sm font-medium text-text-primary">Check your email</p>
-            <p className="text-xs text-text-secondary">
+            <p className="text-sm font-medium text-ink">Check your email</p>
+            <p className="text-xs text-ink-muted">
               We sent a sign-in link to <strong>{email}</strong>. It expires in 15 minutes.
             </p>
           </div>
@@ -71,7 +71,7 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full rounded-base border border-border-primary bg-background-primary px-4 py-2.5 text-sm text-text-primary placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700"
+                className="w-full rounded-base border border-ink-rule bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700"
               />
             </label>
 

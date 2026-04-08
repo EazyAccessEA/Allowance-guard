@@ -188,7 +188,7 @@ export default function TeamDashboard() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Users className="h-6 w-6 text-primary-600" />
-          <h2 className="text-xl font-bold text-text-primary dark:text-secondary-100">Team Dashboard</h2>
+          <h2 className="text-xl font-bold text-ink">Team Dashboard</h2>
           <Badge variant="info" size="sm">{plan}</Badge>
         </div>
         <Button onClick={() => setShowCreate(true)} variant="primary" size="sm" className="flex items-center gap-2">
@@ -201,7 +201,7 @@ export default function TeamDashboard() {
       {showCreate && (
         <Card>
           <CardContent className="py-4 space-y-4">
-            <h3 className="font-semibold text-text-primary dark:text-secondary-100">Create New Team</h3>
+            <h3 className="font-semibold text-ink">Create New Team</h3>
             <Input
               label="Team Name"
               value={newTeamName}
@@ -231,8 +231,8 @@ export default function TeamDashboard() {
         <Card>
           <CardContent className="py-12 text-center">
             <Users className="h-12 w-12 text-neutral-300 dark:text-secondary-600 mx-auto mb-4" />
-            <h3 className="font-semibold text-text-primary dark:text-secondary-100 mb-2">No teams yet</h3>
-            <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4">
+            <h3 className="font-semibold text-ink mb-2">No teams yet</h3>
+            <p className="text-sm text-ink-muted mb-4">
               Create a team to collaborate on wallet monitoring and security management.
             </p>
             <Button onClick={() => setShowCreate(true)} variant="primary" size="sm">
@@ -255,13 +255,13 @@ export default function TeamDashboard() {
             >
               <CardContent className="py-4">
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-semibold text-text-primary dark:text-secondary-100">{team.name}</h3>
+                  <h3 className="font-semibold text-ink">{team.name}</h3>
                   <Badge variant="default" size="sm">{team.role}</Badge>
                 </div>
                 {team.description && (
-                  <p className="text-xs text-text-secondary dark:text-secondary-400 mb-3">{team.description}</p>
+                  <p className="text-xs text-ink-muted mb-3">{team.description}</p>
                 )}
-                <div className="flex gap-4 text-xs text-text-secondary dark:text-secondary-400">
+                <div className="flex gap-4 text-xs text-ink-muted">
                   <span>{team.member_count} member{team.member_count !== 1 ? 's' : ''}</span>
                   <span>{team.wallet_count} wallet{team.wallet_count !== 1 ? 's' : ''}</span>
                 </div>
@@ -291,8 +291,8 @@ export default function TeamDashboard() {
           <CardContent>
             {/* Invite Form */}
             {showInvite && (
-              <div className="mb-6 p-4 border border-secondary-700 rounded-lg space-y-3">
-                <h4 className="text-sm font-semibold text-text-primary dark:text-secondary-100">Invite Member</h4>
+              <div className="mb-6 p-4 border border-ink-rule rounded-lg space-y-3">
+                <h4 className="text-sm font-semibold text-ink">Invite Member</h4>
                 <Input
                   label="Email"
                   type="email"
@@ -301,11 +301,11 @@ export default function TeamDashboard() {
                   placeholder="colleague@example.com"
                 />
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary dark:text-secondary-400 mb-1">Role</label>
+                  <label className="block text-sm font-medium text-ink-muted mb-1">Role</label>
                   <select
                     value={inviteRole}
                     onChange={(e) => setInviteRole(e.target.value)}
-                    className="w-full border border-secondary-700 rounded-md px-3 py-2 text-sm bg-background-primary dark:bg-secondary-800 text-text-primary dark:text-secondary-100"
+                    className="w-full border border-ink-rule rounded-md px-3 py-2 text-sm bg-paper-sub text-ink"
                   >
                     <option value="viewer">Viewer</option>
                     <option value="editor">Editor</option>
@@ -337,17 +337,17 @@ export default function TeamDashboard() {
                         {(member.name || member.email)?.[0]?.toUpperCase() ?? '?'}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-text-primary dark:text-secondary-100">
+                        <p className="text-sm font-medium text-ink">
                           {member.name || member.email}
                         </p>
                         {member.name && (
-                          <p className="text-xs text-text-secondary dark:text-secondary-400">{member.email}</p>
+                          <p className="text-xs text-ink-muted">{member.email}</p>
                         )}
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5">
                       {ROLE_ICONS[member.role]}
-                      <span className="text-xs font-medium text-text-secondary dark:text-secondary-400 capitalize">
+                      <span className="text-xs font-medium text-ink-muted capitalize">
                         {member.role}
                       </span>
                     </div>

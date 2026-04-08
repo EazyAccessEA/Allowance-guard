@@ -199,101 +199,12 @@ export default function RootLayout({
         
         {/* Preload critical fonts - removed incorrect paths that cause 404s */}
         
-        {/* Critical CSS inlining to reduce render blocking */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            /* Critical above-the-fold styles for mobile performance */
-            * { box-sizing: border-box; }
-            html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-            body { 
-              margin: 0; 
-              padding: 0; 
-              font-family: 'JetBrains Mono', Inter, ui-monospace, SFMono-Regular, Monaco, Consolas, monospace;
-              line-height: 1.5;
-              -webkit-font-smoothing: antialiased;
-              -moz-osx-font-smoothing: grayscale;
-            }
-            .min-h-screen { min-height: 100vh; }
-            .flex { display: flex; }
-            .flex-col { flex-direction: column; }
-            .flex-1 { flex: 1; }
-            .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-            .focus\\:not-sr-only:focus { position: static; width: auto; height: auto; padding: 0.5rem; margin: 0; overflow: visible; clip: auto; white-space: normal; }
-            .focus\\:absolute:focus { position: absolute; }
-            .focus\\:top-2:focus { top: 0.5rem; }
-            .focus\\:left-2:focus { left: 0.5rem; }
-            .bg-white { background-color: #0F172A; }
-            .border { border-width: 1px; }
-            .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
-            .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-            .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
-            .z-50 { z-index: 50; }
-            
-            /* Mobile-specific optimizations */
-            @media (max-width: 768px) {
-              .text-3xl { font-size: 1.5rem; line-height: 2rem; }
-              .sm\\:text-4xl { font-size: 1.75rem; line-height: 2.25rem; }
-              .lg\\:text-5xl { font-size: 2rem; line-height: 2.5rem; }
-              .px-4 { padding-left: 1rem; padding-right: 1rem; }
-              .py-8 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-              .mb-6 { margin-bottom: 1rem; }
-            }
-            
-            /* TBT Optimization - Prevent layout shifts */
-            .contain-layout { contain: layout style; }
-            .will-change-transform { will-change: transform; }
-            .transform-gpu { transform: translateZ(0); }
-            
-            /* Critical performance optimizations */
-            .lazy-load { content-visibility: auto; contain-intrinsic-size: 0 500px; }
-            .optimize-rendering { will-change: auto; }
-            .reduce-paint { contain: paint; }
-            
-            /* Font display optimization - using Next.js font optimization */
-            
-            /* Critical button styles to prevent layout shifts */
-            .btn-primary {
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              padding: 0.75rem 1.5rem;
-              font-size: 1rem;
-              font-weight: 600;
-              border-radius: 0.5rem;
-              background-color: #3B82F6;
-              color: white;
-              border: none;
-              cursor: pointer;
-              transition: background-color 0.2s;
-              min-height: 44px;
-              min-width: 120px;
-            }
-            
-            /* Critical hero section styles */
-            .font-display { font-family: var(--font-display), Inter, ui-sans-serif, system-ui; }
-            .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
-            .sm\\:text-5xl { font-size: 3rem; line-height: 1.1; }
-            .md\\:text-6xl { font-size: 3.75rem; line-height: 1.1; }
-            .lg\\:text-7xl { font-size: 4.5rem; line-height: 1.05; }
-            .font-extrabold { font-weight: 800; }
-            .text-white { color: white; }
-            .leading-tight { line-height: 1.25; }
-            .tracking-tight { letter-spacing: -0.025em; }
-            .mb-6 { margin-bottom: 1.5rem; }
-
-            /* Critical button styles */
-            .bg-primary-700 { background-color: #008B7A; }
-            .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
-            .rounded-lg { border-radius: 0.5rem; }
-            .font-medium { font-weight: 500; }
-            .transition-colors { transition-property: color, background-color, border-color, text-decoration-color, fill, stroke; }
-            .duration-200 { transition-duration: 200ms; }
-          `
-        }} />
+        {/* Critical CSS is handled by Next.js automatic inlining — the
+            hand-rolled block that used to live here was stale dark-theme
+            debt and was duplicating Tailwind's compiled output. Removed. */}
       </head>
       <body className={`${inter.className} ${spaceGrotesk.variable} ${instrumentSerif.variable} ${ibmPlex.variable} min-h-screen flex flex-col`}>
-        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-secondary-800 border border-secondary-700 px-2 py-1 text-sm z-50">Skip to content</a>
+        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-paper-sub border border-ink-rule px-2 py-1 text-sm z-50">Skip to content</a>
         <RpcStatusBanner />
         <ThemeProvider>
         <RollbarProvider>

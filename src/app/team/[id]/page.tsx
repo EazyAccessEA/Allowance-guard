@@ -95,9 +95,9 @@ export default function TeamDashboardPage({
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="animate-pulse space-y-6">
-          <div className="h-8 bg-background-secondary rounded w-48" />
-          <div className="h-32 bg-background-secondary rounded" />
-          <div className="h-64 bg-background-secondary rounded" />
+          <div className="h-8 bg-paper-sub rounded w-48" />
+          <div className="h-32 bg-paper-sub rounded" />
+          <div className="h-64 bg-paper-sub rounded" />
         </div>
       </div>
     )
@@ -128,13 +128,13 @@ export default function TeamDashboardPage({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-text-primary">{team.name}</h1>
+            <h1 className="text-2xl font-bold text-ink">{team.name}</h1>
             <Badge variant={roleColor(team.role)}>
               {team.role.charAt(0).toUpperCase() + team.role.slice(1)}
             </Badge>
           </div>
           {team.description && (
-            <p className="text-sm text-text-secondary mt-1">{team.description}</p>
+            <p className="text-sm text-ink-muted mt-1">{team.description}</p>
           )}
         </div>
         <div className="flex gap-2">
@@ -163,7 +163,7 @@ export default function TeamDashboardPage({
               <Users className="w-5 h-5 text-primary-accent" />
               <div>
                 <div className="text-2xl font-bold">{team.member_count}</div>
-                <div className="text-xs text-text-secondary">Members</div>
+                <div className="text-xs text-ink-muted">Members</div>
               </div>
             </div>
           </CardContent>
@@ -174,7 +174,7 @@ export default function TeamDashboardPage({
               <Wallet className="w-5 h-5 text-primary-accent" />
               <div>
                 <div className="text-2xl font-bold">{team.wallet_count}</div>
-                <div className="text-xs text-text-secondary">Wallets</div>
+                <div className="text-xs text-ink-muted">Wallets</div>
               </div>
             </div>
           </CardContent>
@@ -185,7 +185,7 @@ export default function TeamDashboardPage({
               <Shield className="w-5 h-5 text-green-500" />
               <div>
                 <div className="text-2xl font-bold">Sentinel</div>
-                <div className="text-xs text-text-secondary">Plan</div>
+                <div className="text-xs text-ink-muted">Plan</div>
               </div>
             </div>
           </CardContent>
@@ -196,7 +196,7 @@ export default function TeamDashboardPage({
               <Activity className="w-5 h-5 text-amber-500" />
               <div>
                 <div className="text-2xl font-bold">Active</div>
-                <div className="text-xs text-text-secondary">Status</div>
+                <div className="text-xs text-ink-muted">Status</div>
               </div>
             </div>
           </CardContent>
@@ -204,13 +204,13 @@ export default function TeamDashboardPage({
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 border-b border-secondary-700">
+      <div className="flex gap-1 border-b border-ink-rule">
         <button
           onClick={() => setActiveTab('portfolio')}
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'portfolio'
               ? 'border-primary-accent text-primary-accent'
-              : 'border-transparent text-text-secondary hover:text-text-primary'
+              : 'border-transparent text-ink-muted hover:text-ink'
           }`}
         >
           <Wallet className="w-4 h-4 inline mr-1.5" />
@@ -221,7 +221,7 @@ export default function TeamDashboardPage({
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'activity'
               ? 'border-primary-accent text-primary-accent'
-              : 'border-transparent text-text-secondary hover:text-text-primary'
+              : 'border-transparent text-ink-muted hover:text-ink'
           }`}
         >
           <Activity className="w-4 h-4 inline mr-1.5" />
@@ -232,7 +232,7 @@ export default function TeamDashboardPage({
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'members'
               ? 'border-primary-accent text-primary-accent'
-              : 'border-transparent text-text-secondary hover:text-text-primary'
+              : 'border-transparent text-ink-muted hover:text-ink'
           }`}
         >
           <Users className="w-4 h-4 inline mr-1.5" />
@@ -243,7 +243,7 @@ export default function TeamDashboardPage({
           className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
             activeTab === 'safe'
               ? 'border-primary-accent text-primary-accent'
-              : 'border-transparent text-text-secondary hover:text-text-primary'
+              : 'border-transparent text-ink-muted hover:text-ink'
           }`}
         >
           <Lock className="w-4 h-4 inline mr-1.5" />
@@ -278,13 +278,13 @@ export default function TeamDashboardPage({
           </CardHeader>
           <CardContent>
             {members.length === 0 ? (
-              <p className="text-sm text-text-secondary">No members found</p>
+              <p className="text-sm text-ink-muted">No members found</p>
             ) : (
               <div className="space-y-3">
                 {members.map((m) => (
                   <div
                     key={m.user_id}
-                    className="flex items-center justify-between p-3 rounded-lg border border-secondary-700"
+                    className="flex items-center justify-between p-3 rounded-lg border border-ink-rule"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
@@ -293,10 +293,10 @@ export default function TeamDashboardPage({
                         </span>
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-text-primary">
+                        <div className="text-sm font-medium text-ink">
                           {m.name ?? m.email}
                         </div>
-                        <div className="text-xs text-text-tertiary">{m.email}</div>
+                        <div className="text-xs text-ink-whisper">{m.email}</div>
                       </div>
                     </div>
                     <Badge variant={roleColor(m.role)}>
@@ -320,7 +320,7 @@ export default function TeamDashboardPage({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-text-secondary mb-4">
+              <p className="text-sm text-ink-muted mb-4">
                 Enter a Safe (Gnosis Safe) address to view and manage its token approvals.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
@@ -329,12 +329,12 @@ export default function TeamDashboardPage({
                   placeholder="0x... Safe address"
                   value={safeAddress}
                   onChange={(e) => setSafeAddress(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-secondary-700 rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="flex-1 px-4 py-2 border border-ink-rule rounded-lg bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                 />
                 <select
                   value={safeChainId}
                   onChange={(e) => setSafeChainId(Number(e.target.value))}
-                  className="px-4 py-2 border border-secondary-700 rounded-lg bg-background-primary text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="px-4 py-2 border border-ink-rule rounded-lg bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   <option value={1}>Ethereum</option>
                   <option value={42161}>Arbitrum</option>

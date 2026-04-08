@@ -60,7 +60,7 @@ export function BarChart({
       case 'down':
         return <span className="text-semantic-error-500">↘</span>
       default:
-        return <span className="text-text-tertiary">→</span>
+        return <span className="text-ink-whisper">→</span>
     }
   }
 
@@ -103,7 +103,7 @@ export function BarChart({
               
               {/* Label */}
               <div className="mt-2 text-center">
-                <div className="mobbin-caption text-text-secondary truncate max-w-full">
+                <div className="mobbin-caption text-ink-muted truncate max-w-full">
                   {item.label}
                 </div>
                 {showTrends && item.trend && (

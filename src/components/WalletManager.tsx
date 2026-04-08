@@ -62,9 +62,9 @@ export default function WalletManager({
 
       {saved.length === 0 && (
         <div className="text-center py-6">
-          <Wallet className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
-          <p className="text-sm text-text-secondary">No saved wallets yet</p>
-          <p className="text-xs text-text-tertiary mt-1">Add a wallet address above to get started.</p>
+          <Wallet className="w-8 h-8 text-ink-whisper mx-auto mb-2" />
+          <p className="text-sm text-ink-muted">No saved wallets yet</p>
+          <p className="text-xs text-ink-whisper mt-1">Add a wallet address above to get started.</p>
         </div>
       )}
 

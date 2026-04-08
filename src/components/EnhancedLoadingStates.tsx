@@ -138,8 +138,8 @@ export function EnhancedLoadingOverlay({
   return (
     <div className={`relative ${className}`}>
       {children}
-      <div className="absolute inset-0 bg-surface-base/90 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-secondary-800 border border-secondary-borders rounded-lg p-6 shadow-large text-center max-w-sm mx-4">
+      <div className="absolute inset-0 bg-paper/90 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="bg-paper-sub border border-secondary-borders rounded-lg p-6 shadow-large text-center max-w-sm mx-4">
           <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <LoadingSpinner size="lg" color="cobalt" variant="hex" />
           </div>
@@ -191,9 +191,9 @@ export function LoadingButton({
         inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium
         transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
         disabled:pointer-events-none disabled:opacity-50
-        ${variant === 'primary' ? 'bg-primary-accent text-white hover:bg-primary-accent/90' : ''}
-        ${variant === 'secondary' ? 'bg-background-light text-neutral-text border border-border-default hover:bg-background-light/80' : ''}
-        ${variant === 'ghost' ? 'hover:bg-background-light hover:text-neutral-text' : ''}
+        ${variant === 'primary' ? 'bg-primary-accent text-ink hover:bg-primary-accent/90' : ''}
+        ${variant === 'secondary' ? 'bg-paper-sub text-neutral-text border border-border-default hover:bg-paper-sub/80' : ''}
+        ${variant === 'ghost' ? 'hover:bg-paper-sub hover:text-neutral-text' : ''}
         ${size === 'sm' ? 'h-9 px-3' : size === 'lg' ? 'h-11 px-8' : 'h-10 px-4 py-2'}
         ${className}
       `}
@@ -255,9 +255,9 @@ export function StatsCard({
             {icon}
           </div>
           <div className="flex-1">
-            <p className="mobbin-caption text-text-tertiary mb-1">{title}</p>
+            <p className="mobbin-caption text-ink-whisper mb-1">{title}</p>
             <div className="flex items-center gap-3">
-              <p className="mobbin-heading-2 text-text-primary">{value}</p>
+              <p className="mobbin-heading-2 text-ink">{value}</p>
               {trend && trendValue && (
                 <Badge 
                   variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'secondary'}

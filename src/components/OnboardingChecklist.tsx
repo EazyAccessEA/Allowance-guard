@@ -45,15 +45,15 @@ export default function OnboardingChecklist() {
       className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
         done
           ? 'bg-emerald/10 text-emerald border-emerald dark:bg-emerald-900/20 dark:border-emerald-500'
-          : 'border-border bg-background text-foreground dark:border-secondary-700 dark:bg-secondary-800'
+          : 'border-border bg-background text-foreground dark:border-ink-rule dark:bg-paper-sub'
       }`}
     >
       <div className="flex items-start space-x-4">
         <div
           className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
             done
-              ? 'bg-emerald text-white dark:bg-emerald-600'
-              : 'bg-muted text-muted-foreground dark:bg-secondary-700 dark:text-secondary-400'
+              ? 'bg-emerald text-ink dark:bg-emerald-600'
+              : 'bg-muted text-muted-foreground dark:bg-paper-sub dark:text-ink-muted'
           }`}
         >
           {done ? (
@@ -64,7 +64,7 @@ export default function OnboardingChecklist() {
         </div>
         <div className="flex-1">
           <h3 className="font-semibold text-lg mb-2">{label}</h3>
-          <p className="text-muted-foreground text-sm dark:text-secondary-400">
+          <p className="text-muted-foreground text-sm dark:text-ink-muted">
             {description}
           </p>
         </div>

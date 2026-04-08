@@ -8,7 +8,7 @@ import VideoBackground from '@/components/VideoBackground'
 export default function APIPage() {
 
   return (
-    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
+    <div className="min-h-screen bg-paper-deep text-ink">
       
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
@@ -19,17 +19,17 @@ export default function APIPage() {
             background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
           }}
         />
-        <div className="absolute inset-0 hidden dark:block bg-secondary-900/90" />
+        <div className="absolute inset-0 hidden dark:block bg-paper-deep/90" />
         
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Allowance Guard API v1 Reference</H1>
-          <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-8">
+          <p className="text-lg text-ink-muted leading-relaxed mb-8">
             A RESTful API for retrieving token allowance and risk data for any Ethereum address. All endpoints are public and read-only. Data is indexed from the blockchain and updated continuously.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-secondary-700" />
+      <div className="border-t border-ink-rule" />
 
       {/* Quick Start */}
       <Section className="py-32">
@@ -37,34 +37,34 @@ export default function APIPage() {
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8">Quick Start</H2>
             
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Base URL</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Base URL</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`https://www.allowanceguard.com/api`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Authentication</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-8">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Authentication</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-8">
               Currently, the API is public and does not require an API key. For high-volume or production use cases, please contact us to request a key for rate limiting purposes.
             </p>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Rate Limits</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-8">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Rate Limits</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-8">
               Public requests are limited to 5 requests per minute per IP address. For higher limits, use an API key.
             </p>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Headers</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Headers</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`Accept: application/json
 Content-Type: application/json`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Code Example</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Code Example</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`curl -X GET "https://www.allowanceguard.com/api/allowances?wallet=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&page=1&pageSize=25" \\
   -H "Accept: application/json"`}
               </pre>
@@ -74,59 +74,59 @@ Content-Type: application/json`}
       </Section>
 
       {/* Endpoints */}
-      <Section className="py-32 bg-background-tertiary dark:bg-secondary-800">
+      <Section className="py-32 bg-paper-deep dark:bg-paper-sub">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8">Endpoints</H2>
             
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">GET /allowances</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-6">
+            <h3 className="text-2xl font-semibold text-ink mb-6">GET /allowances</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-6">
               Retrieves a paginated list of token allowances for a given address.
             </p>
             
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Parameters</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
+            <h4 className="text-xl font-semibold text-ink mb-4">Parameters</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-secondary-700">
-                    <th className="text-left py-2 font-semibold text-text-primary dark:text-secondary-100">Parameter</th>
-                    <th className="text-left py-2 font-semibold text-white">Type</th>
-                    <th className="text-left py-2 font-semibold text-white">Required</th>
-                    <th className="text-left py-2 font-semibold text-white">Description</th>
+                  <tr className="border-b border-ink-rule">
+                    <th className="text-left py-2 font-semibold text-ink">Parameter</th>
+                    <th className="text-left py-2 font-semibold text-ink">Type</th>
+                    <th className="text-left py-2 font-semibold text-ink">Required</th>
+                    <th className="text-left py-2 font-semibold text-ink">Description</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">wallet</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">string</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Yes</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Ethereum address (0x format)</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">wallet</td>
+                    <td className="py-2 text-ink-muted">string</td>
+                    <td className="py-2 text-ink-muted">Yes</td>
+                    <td className="py-2 text-ink-muted">Ethereum address (0x format)</td>
                   </tr>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">page</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">number</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">No</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Page number (default: 1)</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">page</td>
+                    <td className="py-2 text-ink-muted">number</td>
+                    <td className="py-2 text-ink-muted">No</td>
+                    <td className="py-2 text-ink-muted">Page number (default: 1)</td>
                   </tr>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">pageSize</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">number</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">No</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Results per page (default: 25, max: 100)</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">pageSize</td>
+                    <td className="py-2 text-ink-muted">number</td>
+                    <td className="py-2 text-ink-muted">No</td>
+                    <td className="py-2 text-ink-muted">Results per page (default: 25, max: 100)</td>
                   </tr>
                   <tr>
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">riskOnly</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">boolean</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">No</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Filter to risky allowances only (default: false)</td>
+                    <td className="py-2 font-mono text-ink">riskOnly</td>
+                    <td className="py-2 text-ink-muted">boolean</td>
+                    <td className="py-2 text-ink-muted">No</td>
+                    <td className="py-2 text-ink-muted">Filter to risky allowances only (default: false)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "allowances": [
     {
@@ -154,50 +154,50 @@ Content-Type: application/json`}
               </pre>
             </div>
 
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Example Request</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h4 className="text-xl font-semibold text-ink mb-4">Example Request</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`curl -X GET "https://www.allowanceguard.com/api/allowances?wallet=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&page=1&pageSize=25&riskOnly=true" \\
   -H "Accept: application/json"`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6 mt-12">GET /receipts</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-6">
+            <h3 className="text-2xl font-semibold text-ink mb-6 mt-12">GET /receipts</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-6">
               Retrieves revocation receipts for a given wallet address.
             </p>
             
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Parameters</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
+            <h4 className="text-xl font-semibold text-ink mb-4">Parameters</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-secondary-700">
-                    <th className="text-left py-2 font-semibold text-text-primary dark:text-secondary-100">Parameter</th>
-                    <th className="text-left py-2 font-semibold text-white">Type</th>
-                    <th className="text-left py-2 font-semibold text-white">Required</th>
-                    <th className="text-left py-2 font-semibold text-white">Description</th>
+                  <tr className="border-b border-ink-rule">
+                    <th className="text-left py-2 font-semibold text-ink">Parameter</th>
+                    <th className="text-left py-2 font-semibold text-ink">Type</th>
+                    <th className="text-left py-2 font-semibold text-ink">Required</th>
+                    <th className="text-left py-2 font-semibold text-ink">Description</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">wallet</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">string</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Yes</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Ethereum address (0x format)</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">wallet</td>
+                    <td className="py-2 text-ink-muted">string</td>
+                    <td className="py-2 text-ink-muted">Yes</td>
+                    <td className="py-2 text-ink-muted">Ethereum address (0x format)</td>
                   </tr>
                   <tr>
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">limit</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">number</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">No</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Number of receipts to return (default: 50, max: 100)</td>
+                    <td className="py-2 font-mono text-ink">limit</td>
+                    <td className="py-2 text-ink-muted">number</td>
+                    <td className="py-2 text-ink-muted">No</td>
+                    <td className="py-2 text-ink-muted">Number of receipts to return (default: 50, max: 100)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "receipts": [
     {
@@ -220,14 +220,14 @@ Content-Type: application/json`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6 mt-12">POST /scan</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-6">
+            <h3 className="text-2xl font-semibold text-ink mb-6 mt-12">POST /scan</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-6">
               Triggers a blockchain scan for a wallet address across specified chains.
             </p>
             
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Request Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h4 className="text-xl font-semibold text-ink mb-4">Request Body</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "walletAddress": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
   "chains": ["eth", "arb", "base"]
@@ -235,9 +235,9 @@ Content-Type: application/json`}
               </pre>
             </div>
 
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "ok": true,
   "jobId": 456,
@@ -246,14 +246,14 @@ Content-Type: application/json`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6 mt-12">GET /jobs/&#123;id&#125;</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-6">
+            <h3 className="text-2xl font-semibold text-ink mb-6 mt-12">GET /jobs/&#123;id&#125;</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-6">
               Retrieves the status of a scan job.
             </p>
             
-            <h4 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-4">Response Body</h4>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "id": 456,
   "type": "scan",
@@ -276,75 +276,75 @@ Content-Type: application/json`}
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8">Data Types</H2>
             
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Risk Level Enum</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-6">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Risk Level Enum</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-6">
               Risk assessment is based on the risk_score field and risk_flags array.
             </p>
             
             <div className="space-y-4">
-              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">High Risk (score ≥ 50)</h4>
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+                <h4 className="text-lg font-semibold text-ink mb-2">High Risk (score ≥ 50)</h4>
                 <p className="text-stone">
                   Unlimited allowances that pose immediate security risk. These allow complete drainage of token balances.
                 </p>
               </div>
               
-              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Medium Risk (score ≥ 10)</h4>
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+                <h4 className="text-lg font-semibold text-ink mb-2">Medium Risk (score ≥ 10)</h4>
                 <p className="text-stone">
                   Stale allowances that have not been used for extended periods (90+ days). May indicate forgotten permissions.
                 </p>
               </div>
               
-              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">Low Risk (score &lt; 10)</h4>
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+                <h4 className="text-lg font-semibold text-ink mb-2">Low Risk (score &lt; 10)</h4>
                 <p className="text-stone">
                   Recent, limited allowances that are likely safe and actively used.
                 </p>
               </div>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6 mt-8">Chain ID Enum</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-6">
+            <h3 className="text-2xl font-semibold text-ink mb-6 mt-8">Chain ID Enum</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-secondary-700">
-                    <th className="text-left py-2 font-semibold text-white">Chain ID</th>
-                    <th className="text-left py-2 font-semibold text-white">Network</th>
-                    <th className="text-left py-2 font-semibold text-white">Status</th>
+                  <tr className="border-b border-ink-rule">
+                    <th className="text-left py-2 font-semibold text-ink">Chain ID</th>
+                    <th className="text-left py-2 font-semibold text-ink">Network</th>
+                    <th className="text-left py-2 font-semibold text-ink">Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">1</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Ethereum Mainnet</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">1</td>
+                    <td className="py-2 text-ink-muted">Ethereum Mainnet</td>
+                    <td className="py-2 text-ink-muted">Supported</td>
                   </tr>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">42161</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Arbitrum One</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">42161</td>
+                    <td className="py-2 text-ink-muted">Arbitrum One</td>
+                    <td className="py-2 text-ink-muted">Supported</td>
                   </tr>
                   <tr>
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">8453</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Base</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Supported</td>
+                    <td className="py-2 font-mono text-ink">8453</td>
+                    <td className="py-2 text-ink-muted">Base</td>
+                    <td className="py-2 text-ink-muted">Supported</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Risk Flags</h3>
+            <h3 className="text-2xl font-semibold text-ink mb-6">Risk Flags</h3>
             <div className="space-y-4">
-              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">UNLIMITED</h4>
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+                <h4 className="text-lg font-semibold text-ink mb-2">UNLIMITED</h4>
                 <p className="text-stone">
                   The allowance amount equals the maximum uint256 value, giving unlimited access to the token.
                 </p>
               </div>
               
-              <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6">
-                <h4 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-2">STALE</h4>
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+                <h4 className="text-lg font-semibold text-ink mb-2">STALE</h4>
                 <p className="text-stone">
                   The allowance was last seen more than 90 days ago (650,000 blocks on Ethereum, 900,000 blocks on Arbitrum/Base).
                 </p>
@@ -355,53 +355,53 @@ Content-Type: application/json`}
       </Section>
 
       {/* Advanced Topics */}
-      <Section className="py-32 bg-background-tertiary dark:bg-secondary-800">
+      <Section className="py-32 bg-paper-deep dark:bg-paper-sub">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8">Advanced</H2>
             
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Data Freshness</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-8">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Data Freshness</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-8">
               Our indexer runs continuously. The last_seen_block field provides the block number when the allowance was last observed. For most addresses, data is no older than 5 minutes.
             </p>
             
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Error Codes</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Error Codes</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-secondary-700">
-                    <th className="text-left py-2 font-semibold text-white">Code</th>
-                    <th className="text-left py-2 font-semibold text-white">Description</th>
-                    <th className="text-left py-2 font-semibold text-white">Cause</th>
+                  <tr className="border-b border-ink-rule">
+                    <th className="text-left py-2 font-semibold text-ink">Code</th>
+                    <th className="text-left py-2 font-semibold text-ink">Description</th>
+                    <th className="text-left py-2 font-semibold text-ink">Cause</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">400</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Bad Request</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Invalid address format</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">400</td>
+                    <td className="py-2 text-ink-muted">Bad Request</td>
+                    <td className="py-2 text-ink-muted">Invalid address format</td>
                   </tr>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">404</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Not Found</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Address has no allowances</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">404</td>
+                    <td className="py-2 text-ink-muted">Not Found</td>
+                    <td className="py-2 text-ink-muted">Address has no allowances</td>
                   </tr>
-                  <tr className="border-b border-secondary-700/50">
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">429</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Too Many Requests</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Rate limit exceeded</td>
+                  <tr className="border-b border-ink-rule/50">
+                    <td className="py-2 font-mono text-ink">429</td>
+                    <td className="py-2 text-ink-muted">Too Many Requests</td>
+                    <td className="py-2 text-ink-muted">Rate limit exceeded</td>
                   </tr>
                   <tr>
-                    <td className="py-2 font-mono text-text-primary dark:text-secondary-100">500</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Internal Server Error</td>
-                    <td className="py-2 text-text-tertiary dark:text-secondary-400">Server-side error</td>
+                    <td className="py-2 font-mono text-ink">500</td>
+                    <td className="py-2 text-ink-muted">Internal Server Error</td>
+                    <td className="py-2 text-ink-muted">Server-side error</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Using the Risk Data</h3>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-8">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Using the Risk Data</h3>
+            <p className="text-lg text-ink-muted leading-relaxed mb-8">
               The risk_flags array provides specific reasons for the risk score. Use these flags to build informative UI for your users. For example, display &quot;Unlimited allowance&quot; for UNLIMITED flag or &quot;Stale allowance (90+ days)&quot; for STALE flag.
             </p>
           </div>
@@ -413,13 +413,13 @@ Content-Type: application/json`}
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8">Example Implementation</H2>
-            <p className="text-lg text-text-tertiary dark:text-secondary-400 leading-relaxed mb-8">
+            <p className="text-lg text-ink-muted leading-relaxed mb-8">
               A step-by-step guide to building a simple integration.
             </p>
             
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Step 1: Fetch Allowances</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Step 1: Fetch Allowances</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`async function fetchAllowances(walletAddress) {
   const response = await fetch(
     \`https://www.allowanceguard.com/api/allowances?wallet=\${walletAddress}&page=1&pageSize=100\`
@@ -430,9 +430,9 @@ Content-Type: application/json`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Step 2: Display Data</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Step 2: Display Data</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`function renderAllowances(allowances) {
   return allowances.map(allowance => {
     const riskLevel = allowance.risk_score >= 50 ? 'high' : 
@@ -452,9 +452,9 @@ Content-Type: application/json`}
               </pre>
             </div>
 
-            <h3 className="text-2xl font-semibold text-text-primary dark:text-secondary-100 mb-6">Step 3: Facilitate Action</h3>
-            <div className="bg-background-primary dark:bg-secondary-800 border border-secondary-700 rounded-lg p-6 mb-8">
-              <pre className="text-sm text-text-primary dark:text-secondary-100 overflow-x-auto">
+            <h3 className="text-2xl font-semibold text-ink mb-6">Step 3: Facilitate Action</h3>
+            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+              <pre className="text-sm text-ink overflow-x-auto">
 {`async function revokeAllowance(tokenAddress, spenderAddress, signer) {
   const tokenContract = new ethers.Contract(tokenAddress, [
     'function approve(address spender, uint256 amount) returns (bool)'

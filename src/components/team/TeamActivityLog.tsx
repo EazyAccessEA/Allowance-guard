@@ -133,7 +133,7 @@ export default function TeamActivityLog({ teamId }: TeamActivityLogProps) {
       </CardHeader>
       <CardContent>
         {loading && activities.length === 0 ? (
-          <div className="text-sm text-text-secondary">Loading activity...</div>
+          <div className="text-sm text-ink-muted">Loading activity...</div>
         ) : activities.length === 0 ? (
           <EmptyState
             icon={<Activity className="w-7 h-7" />}
@@ -154,24 +154,24 @@ export default function TeamActivityLog({ teamId }: TeamActivityLogProps) {
                 return (
                   <div
                     key={entry.id}
-                    className="flex items-start gap-3 p-3 rounded-lg border border-secondary-700"
+                    className="flex items-start gap-3 p-3 rounded-lg border border-ink-rule"
                   >
                     <div className="mt-0.5">
-                      <Icon className="w-4 h-4 text-text-secondary" />
+                      <Icon className="w-4 h-4 text-ink-muted" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
                         <Badge variant={config.variant}>{config.label}</Badge>
-                        <span className="text-xs text-text-secondary">
+                        <span className="text-xs text-ink-muted">
                           by {entry.user_name ?? entry.user_email ?? `User #${entry.user_id}`}
                         </span>
                       </div>
                       {entry.subject && (
-                        <div className="text-xs text-text-secondary font-mono truncate">
+                        <div className="text-xs text-ink-muted font-mono truncate">
                           {entry.subject}
                         </div>
                       )}
-                      <div className="text-xs text-text-tertiary mt-1">
+                      <div className="text-xs text-ink-whisper mt-1">
                         {new Date(entry.created_at).toLocaleString()}
                         {entry.ip_address && (
                           <span className="ml-2">IP: {entry.ip_address}</span>
@@ -185,8 +185,8 @@ export default function TeamActivityLog({ teamId }: TeamActivityLogProps) {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-700">
-                <div className="text-sm text-text-secondary">
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-ink-rule">
+                <div className="text-sm text-ink-muted">
                   Page {page} of {totalPages}
                 </div>
                 <div className="flex gap-2">

@@ -41,15 +41,15 @@ function BillingToggle({
   onChange: (period: BillingPeriod) => void
 }) {
   return (
-    <div className="inline-flex items-center gap-3 rounded-full bg-slate-800/60 border border-slate-700/50 px-4 py-2">
+    <div className="inline-flex items-center gap-3 rounded-full bg-paper-sub/60 border border-ink-rule/50 px-4 py-2">
       <button
         type="button"
         onClick={() => onChange('monthly')}
         className={cn(
           'rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200',
           billingPeriod === 'monthly'
-            ? 'bg-white/10 text-white shadow-sm'
-            : 'text-slate-400 hover:text-slate-300'
+            ? 'bg-paper-sub text-ink shadow-sm'
+            : 'text-ink-muted hover:text-ink-soft'
         )}
       >
         Monthly
@@ -60,8 +60,8 @@ function BillingToggle({
         className={cn(
           'rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 flex items-center gap-2',
           billingPeriod === 'yearly'
-            ? 'bg-white/10 text-white shadow-sm'
-            : 'text-slate-400 hover:text-slate-300'
+            ? 'bg-paper-sub text-ink shadow-sm'
+            : 'text-ink-muted hover:text-ink-soft'
         )}
       >
         Yearly
@@ -77,22 +77,22 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="border-b border-slate-700/50">
+    <div className="border-b border-ink-rule/50">
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between py-5 text-left text-sm font-medium text-slate-200 transition-colors duration-150 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+        className="flex w-full items-center justify-between py-5 text-left text-sm font-medium text-ink transition-colors duration-150 hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
         aria-expanded={open}
       >
         {question}
         {open ? (
-          <ChevronUp className="h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+          <ChevronUp className="h-4 w-4 shrink-0 text-ink-whisper" aria-hidden="true" />
         ) : (
-          <ChevronDown className="h-4 w-4 shrink-0 text-slate-500" aria-hidden="true" />
+          <ChevronDown className="h-4 w-4 shrink-0 text-ink-whisper" aria-hidden="true" />
         )}
       </button>
       {open && (
-        <div className="pb-5 text-sm leading-relaxed text-slate-400">
+        <div className="pb-5 text-sm leading-relaxed text-ink-muted">
           {answer}
         </div>
       )}
@@ -104,12 +104,12 @@ export default function PricingPage() {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly')
 
   return (
-    <main className="min-h-screen bg-[#0A0E1A]">
+    <main className="min-h-screen bg-paper">
 
       {/* Hero — Midnight Amber treatment */}
-      <section className="relative overflow-hidden border-b border-slate-700/30">
+      <section className="relative overflow-hidden border-b border-ink-rule/30">
         {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E1A] via-[#0F172A] to-[#0A0E1A]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-paper via-paper-sub to-paper" />
         {/* Amber glow */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] pointer-events-none"
@@ -138,7 +138,7 @@ export default function PricingPage() {
           </div>
 
           <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-5 leading-[1.1]"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-ink mb-5 leading-[1.1]"
             style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
           >
             Pricing that respects
@@ -147,7 +147,7 @@ export default function PricingPage() {
               your wallet
             </span>
           </h1>
-          <p className="mx-auto max-w-xl text-lg text-slate-400 mb-10 leading-relaxed">
+          <p className="mx-auto max-w-xl text-lg text-ink-muted mb-10 leading-relaxed">
             The core scanner is free and open source. Premium plans unlock
             monitoring, batch operations, team tools, and API access.
           </p>
@@ -185,10 +185,10 @@ export default function PricingPage() {
       </section>
 
       {/* Comparison table */}
-      <section className="py-16 sm:py-20 border-t border-slate-700/30">
+      <section className="py-16 sm:py-20 border-t border-ink-rule/30">
         <Container className="max-w-5xl">
           <h2
-            className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-10 text-center"
+            className="text-2xl sm:text-3xl font-bold tracking-tight text-ink mb-10 text-center"
             style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
           >
             Compare plans
@@ -198,15 +198,15 @@ export default function PricingPage() {
       </section>
 
       {/* API Plans */}
-      <section className="py-16 sm:py-20 border-t border-slate-700/30">
+      <section className="py-16 sm:py-20 border-t border-ink-rule/30">
         <Container className="max-w-5xl text-center">
           <h2
-            className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-3"
+            className="text-2xl sm:text-3xl font-bold tracking-tight text-ink mb-3"
             style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
           >
             API Plans
           </h2>
-          <p className="mx-auto mb-10 max-w-xl text-slate-400">
+          <p className="mx-auto mb-10 max-w-xl text-ink-muted">
             Build on AllowanceGuard. Scan wallets, query allowances, and score risk
             through a REST API with predictable rate limits.
           </p>
@@ -220,23 +220,23 @@ export default function PricingPage() {
       </section>
 
       {/* API comparison table */}
-      <section className="py-16 sm:py-20 border-t border-slate-700/30">
+      <section className="py-16 sm:py-20 border-t border-ink-rule/30">
         <Container className="max-w-5xl text-center">
           <h2
-            className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-10"
+            className="text-2xl sm:text-3xl font-bold tracking-tight text-ink mb-10"
             style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
           >
             API feature comparison
           </h2>
-          <div className="w-full overflow-x-auto rounded-xl bg-white/[0.02] ring-1 ring-white/[0.06] p-1">
+          <div className="w-full overflow-x-auto rounded-xl bg-paper-sub ring-1 ring-ink-rule p-1">
             <table className="w-full min-w-[600px] border-collapse text-left">
               <thead>
-                <tr className="border-b border-slate-700/50">
-                  <th className="py-4 px-4 text-sm font-medium text-slate-400">Feature</th>
-                  <th className="px-4 py-4 text-center text-sm font-medium text-slate-300">Free</th>
+                <tr className="border-b border-ink-rule/50">
+                  <th className="py-4 px-4 text-sm font-medium text-ink-muted">Feature</th>
+                  <th className="px-4 py-4 text-center text-sm font-medium text-ink-soft">Free</th>
                   <th className="px-4 py-4 text-center text-sm font-medium text-amber-400">Developer</th>
-                  <th className="px-4 py-4 text-center text-sm font-medium text-slate-300">Growth</th>
-                  <th className="px-4 py-4 text-center text-sm font-medium text-slate-300">Enterprise</th>
+                  <th className="px-4 py-4 text-center text-sm font-medium text-ink-soft">Growth</th>
+                  <th className="px-4 py-4 text-center text-sm font-medium text-ink-soft">Enterprise</th>
                 </tr>
               </thead>
               <tbody>
@@ -250,21 +250,21 @@ export default function PricingPage() {
                   <tr
                     key={row.label}
                     className={cn(
-                      'border-b border-slate-700/30',
-                      idx % 2 === 1 && 'bg-white/[0.02]'
+                      'border-b border-ink-rule/30',
+                      idx % 2 === 1 && 'bg-paper-sub'
                     )}
                   >
-                    <td className="py-3.5 px-4 text-sm text-slate-300">{row.label}</td>
+                    <td className="py-3.5 px-4 text-sm text-ink-soft">{row.label}</td>
                     {row.values.map((val, i) => (
                       <td key={i} className="px-4 py-3.5 text-center text-sm">
                         {typeof val === 'boolean' ? (
                           val ? (
                             <Check className="mx-auto h-5 w-5 text-emerald-400" aria-label="Included" />
                           ) : (
-                            <X className="mx-auto h-5 w-5 text-slate-600" aria-label="Not included" />
+                            <X className="mx-auto h-5 w-5 text-ink-whisper" aria-label="Not included" />
                           )
                         ) : (
-                          <span className="font-medium text-slate-200">{val}</span>
+                          <span className="font-medium text-ink">{val}</span>
                         )}
                       </td>
                     ))}
@@ -277,10 +277,10 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-16 sm:py-20 border-t border-slate-700/30">
+      <section className="py-16 sm:py-20 border-t border-ink-rule/30">
         <Container className="max-w-2xl">
           <h2
-            className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-10 text-center"
+            className="text-2xl sm:text-3xl font-bold tracking-tight text-ink mb-10 text-center"
             style={{ fontFamily: 'var(--font-display), system-ui, sans-serif' }}
           >
             Questions
@@ -300,7 +300,7 @@ export default function PricingPage() {
       {/* Trust line */}
       <section className="pb-16 sm:pb-20">
         <Container className="max-w-2xl text-center">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-ink-whisper">
             Open source core &middot; AGPL-3.0 license &middot; Independently operated &middot; 14-day refund policy
           </p>
         </Container>

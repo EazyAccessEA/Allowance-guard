@@ -128,7 +128,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
         {loading && !data && (
           <div className="space-y-3">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-12 bg-background-light dark:bg-secondary-800 rounded-lg animate-pulse" />
+              <div key={i} className="h-12 bg-paper-sub rounded-lg animate-pulse" />
             ))}
           </div>
         )}
@@ -136,7 +136,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
         {data && data.permit2Allowances.length === 0 && (
           <div className="text-center py-8">
             <Shield className="w-10 h-10 text-semantic-success mx-auto mb-3" />
-            <p className="text-text-secondary dark:text-secondary-400">
+            <p className="text-ink-muted">
               No Permit2 approvals found. Your wallet is clean.
             </p>
           </div>
@@ -146,34 +146,34 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
           <>
             {/* Summary */}
             <div className="flex gap-4 mb-4 text-sm">
-              <span className="text-text-secondary dark:text-secondary-400">
-                Total: <strong className="text-text-primary dark:text-secondary-100">{data.totalCount}</strong>
+              <span className="text-ink-muted">
+                Total: <strong className="text-ink">{data.totalCount}</strong>
               </span>
-              <span className="text-text-secondary dark:text-secondary-400">
-                Active: <strong className="text-text-primary dark:text-secondary-100">{data.activeCount}</strong>
+              <span className="text-ink-muted">
+                Active: <strong className="text-ink">{data.activeCount}</strong>
               </span>
             </div>
 
             {/* Table */}
-            <div className="border border-secondary-700 rounded-xl overflow-hidden bg-secondary-900/60 backdrop-blur-xs">
+            <div className="border border-ink-rule rounded-xl overflow-hidden bg-paper-deep/60 backdrop-blur-xs">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm" role="table" aria-label="Permit2 allowances">
                   <caption className="sr-only">Permit2 token approval allowances</caption>
-                  <thead className="bg-background-secondary/80 dark:bg-secondary-800/80 border-b border-secondary-700">
+                  <thead className="bg-paper-sub/80 dark:bg-paper-sub/80 border-b border-ink-rule">
                     <tr>
-                      <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Chain</th>
-                      <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Token</th>
-                      <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Spender</th>
-                      <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Amount</th>
-                      <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Expires</th>
-                      <th scope="col" className="px-4 py-3 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Risk</th>
+                      <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Chain</th>
+                      <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Token</th>
+                      <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Spender</th>
+                      <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Amount</th>
+                      <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Expires</th>
+                      <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Risk</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border-primary dark:divide-secondary-800">
                     {data.permit2Allowances.map((a, i) => (
                       <tr
                         key={`${a.chainId}-${a.token}-${a.spender}-${i}`}
-                        className={`transition-colors duration-100 hover:bg-background-secondary/50 dark:hover:bg-secondary-800/40 ${
+                        className={`transition-colors duration-100 hover:bg-paper-sub/50 dark:hover:bg-paper-sub/40 ${
                           a.isExpired ? 'opacity-50' : ''
                         }`}
                       >
@@ -184,17 +184,17 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
                         </td>
 
                         <td className="px-4 py-3">
-                          <span className="font-mono text-xs text-text-primary dark:text-secondary-200">
+                          <span className="font-mono text-xs text-ink">
                             {a.token.slice(0, 6)}...{a.token.slice(-4)}
                           </span>
                         </td>
 
                         <td className="px-4 py-3">
                           <div className="flex flex-col">
-                            <span className="font-medium text-text-primary dark:text-secondary-100">
+                            <span className="font-medium text-ink">
                               {a.spenderLabel || 'Unknown'}
                             </span>
-                            <span className="font-mono text-xs text-text-tertiary dark:text-secondary-500">
+                            <span className="font-mono text-xs text-ink-whisper">
                               {a.spender.slice(0, 6)}...{a.spender.slice(-4)}
                             </span>
                           </div>
@@ -206,7 +206,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
                               &infin; Unlimited
                             </Badge>
                           ) : (
-                            <span className="font-mono text-xs text-text-primary dark:text-secondary-200">
+                            <span className="font-mono text-xs text-ink">
                               {a.amount}
                             </span>
                           )}
@@ -219,7 +219,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
                               Expired
                             </Badge>
                           ) : a.expirationDate ? (
-                            <span className="text-xs text-text-secondary dark:text-secondary-400">
+                            <span className="text-xs text-ink-muted">
                               {new Date(a.expirationDate).toLocaleDateString()}
                             </span>
                           ) : (
@@ -246,7 +246,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
             </div>
 
             {/* Info note about Permit2 revocation */}
-            <p className="text-xs text-text-tertiary dark:text-secondary-500 mt-3">
+            <p className="text-xs text-ink-whisper mt-3">
               To revoke a Permit2 approval, set the allowance to 0 on the Permit2 contract.
               This is separate from revoking standard ERC-20 approvals.
             </p>

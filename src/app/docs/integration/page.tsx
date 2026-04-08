@@ -20,7 +20,7 @@ export default function IntegrationPage() {
     <div className="relative">
       <button
         onClick={() => copyToClipboard(code, id)}
-        className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-slate-200 rounded-md transition-colors"
+        className="absolute top-4 right-4 p-2 bg-paper-sub hover:bg-paper-sub text-ink rounded-md transition-colors"
       >
         {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
       </button>
@@ -165,9 +165,9 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
   })`
 
   return (
-    <div className="min-h-screen bg-secondary-900 text-white">
+    <div className="min-h-screen bg-paper-deep text-ink">
       {/* Hero Section */}
-      <Section className="relative py-20 sm:py-28 overflow-hidden bg-secondary-900">
+      <Section className="relative py-20 sm:py-28 overflow-hidden bg-paper-deep">
         <div
           className="absolute inset-0 z-0"
           aria-hidden="true"
@@ -180,44 +180,44 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
             Docs &middot; Integration
           </span>
-          <H1 className="mb-6 text-white">Integration Guide</H1>
-          <p className="text-lg text-slate-300 max-w-reading">
+          <H1 className="mb-6 text-ink">Integration Guide</H1>
+          <p className="text-lg text-ink-soft max-w-reading">
             Drop AllowanceGuard into your dApp, wallet, or service. Embed the widget, call the REST API, or build against React hooks &mdash; pick the integration that fits your stack and ship in an afternoon.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-white/10" />
+      <div className="border-t border-ink-rule" />
 
       {/* Integration Options */}
       <Section className="py-16">
         <Container>
           <div className="max-w-6xl mx-auto">
-            <H2 className="mb-6 text-center text-white">Choose Your Integration Method</H2>
+            <H2 className="mb-6 text-center text-ink">Choose Your Integration Method</H2>
 
             {/* Release status banner */}
             <div className="mb-12 rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
               <h3 className="text-sm font-semibold text-amber-300 uppercase tracking-[0.12em] mb-3">
                 Release status
               </h3>
-              <ul className="space-y-2 text-sm text-slate-300">
+              <ul className="space-y-2 text-sm text-ink-soft">
                 <li>
-                  <strong className="text-white">REST API v1</strong> &mdash; <span className="text-emerald-400">Live.</span> Public, documented, rate-limited per tier. See <a href="/docs/api-reference" className="text-amber-400 hover:underline">API Reference</a>.
+                  <strong className="text-ink">REST API v1</strong> &mdash; <span className="text-emerald-400">Live.</span> Public, documented, rate-limited per tier. See <a href="/docs/api-reference" className="text-amber-400 hover:underline">API Reference</a>.
                 </li>
                 <li>
-                  <strong className="text-white">Browser extension</strong> &mdash; <span className="text-amber-400">Submitted.</span> Awaiting Chrome Web Store and Firefox Add-ons review.
+                  <strong className="text-ink">Browser extension</strong> &mdash; <span className="text-amber-400">Submitted.</span> Awaiting Chrome Web Store and Firefox Add-ons review.
                 </li>
                 <li>
-                  <strong className="text-white">Node.js SDK</strong> &mdash; <span className="text-amber-400">Source available.</span> Code lives in <code className="text-xs text-amber-300 bg-white/10 px-1.5 py-0.5 rounded">/sdk</code> on GitHub. npm publish pending.
+                  <strong className="text-ink">Node.js SDK</strong> &mdash; <span className="text-amber-400">Source available.</span> Code lives in <code className="text-xs text-amber-300 bg-paper-sub px-1.5 py-0.5 rounded">/sdk</code> on GitHub. npm publish pending.
                 </li>
                 <li>
-                  <strong className="text-white">React hooks</strong> &mdash; <span className="text-slate-400">On the roadmap.</span> Not yet started.
+                  <strong className="text-ink">React hooks</strong> &mdash; <span className="text-ink-muted">On the roadmap.</span> Not yet started.
                 </li>
               </ul>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Globe className="mr-3 text-amber-400" size={24} />
@@ -227,10 +227,10 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                     Pending
                   </span>
                 </div>
-                <p className="text-slate-300 mb-4">
+                <p className="text-ink-soft mb-4">
                   Drop-in browser extension. Submitted to Chrome Web Store and Firefox Add-ons; awaiting reviewer approval.
                 </p>
-                <ul className="text-sm text-slate-300 space-y-2">
+                <ul className="text-sm text-ink-soft space-y-2">
                   <li>&middot; Zero configuration</li>
                   <li>&middot; Real-time approval screening</li>
                   <li>&middot; Works on every dApp</li>
@@ -238,20 +238,20 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow opacity-75">
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 hover:shadow-lg transition-shadow opacity-75">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
-                    <Zap className="mr-3 text-slate-500" size={24} />
+                    <Zap className="mr-3 text-ink-whisper" size={24} />
                     <H3>React Hooks</H3>
                   </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 bg-white/[0.05] border border-white/10 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-muted bg-paper-sub border border-ink-rule px-2 py-0.5 rounded-full">
                     Roadmap
                   </span>
                 </div>
-                <p className="text-slate-300 mb-4">
+                <p className="text-ink-soft mb-4">
                   Custom React hooks for seamless integration into React applications.
                 </p>
-                <ul className="text-sm text-slate-300 space-y-2">
+                <ul className="text-sm text-ink-soft space-y-2">
                   <li>• TypeScript support</li>
                   <li>• Automatic caching</li>
                   <li>• Error handling</li>
@@ -259,7 +259,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white/[0.05] border border-white/10 rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Package className="mr-3 text-amber-400" size={24} />
@@ -269,10 +269,10 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                     GitHub
                   </span>
                 </div>
-                <p className="text-slate-300 mb-4">
+                <p className="text-ink-soft mb-4">
                   Backend SDK for server-side scanning, monitoring, and automated revocation. Source available now in <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a>; npm publish pending.
                 </p>
-                <ul className="text-sm text-slate-300 space-y-2">
+                <ul className="text-sm text-ink-soft space-y-2">
                   <li>&middot; Complete v1 API coverage</li>
                   <li>&middot; Built-in retry &amp; rate-limit handling</li>
                   <li>&middot; Batch operations</li>
@@ -285,11 +285,11 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
       </Section>
 
       {/* Live Widget Demo */}
-      <Section className="py-16 bg-white/[0.02]">
+      <Section className="py-16 bg-paper-sub">
         <Container>
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8 text-center">Live Widget Demo</H2>
-            <p className="text-center text-slate-300 mb-8">
+            <p className="text-center text-ink-soft mb-8">
               See the AllowanceGuard widget in action with real data.
             </p>
             
@@ -336,7 +336,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Globe className="mr-3 text-blue-600" size={24} />
                   <H3>React Widget Integration</H3>
                 </div>
-                <p className="text-slate-300 mb-6">
+                <p className="text-ink-soft mb-6">
                   Install the widget package and embed it in your React application.
                 </p>
                 <CodeBlock code={reactWidgetCode} language="jsx" id="react-widget" />
@@ -348,7 +348,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Code className="mr-3 text-green-600" size={24} />
                   <H3>HTML/JavaScript Integration</H3>
                 </div>
-                <p className="text-slate-300 mb-6">
+                <p className="text-ink-soft mb-6">
                   Include the widget script and initialize it in any HTML page.
                 </p>
                 <CodeBlock code={htmlWidgetCode} language="html" id="html-widget" />
@@ -360,7 +360,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Zap className="mr-3 text-yellow-600" size={24} />
                   <H3>React Hooks Integration</H3>
                 </div>
-                <p className="text-slate-300 mb-6">
+                <p className="text-ink-soft mb-6">
                   Use our custom hooks for more control over data fetching and state management.
                 </p>
                 <CodeBlock code={reactHooksCode} language="jsx" id="react-hooks" />
@@ -372,7 +372,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                   <Package className="mr-3 text-purple-600" size={24} />
                   <H3>Node.js SDK Integration</H3>
                 </div>
-                <p className="text-slate-300 mb-6">
+                <p className="text-ink-soft mb-6">
                   Use the SDK in your backend services for comprehensive wallet security analysis.
                 </p>
                 <CodeBlock code={nodeSDKCode} language="javascript" id="node-sdk" />
@@ -384,62 +384,62 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
       </Section>
 
       {/* Installation Instructions */}
-      <Section className="py-16 bg-white/[0.02]">
+      <Section className="py-16 bg-paper-sub">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <H2 className="mb-3 text-center text-white">Installation</H2>
-            <p className="text-center text-sm text-slate-400 mb-10">
+            <H2 className="mb-3 text-center text-ink">Installation</H2>
+            <p className="text-center text-sm text-ink-muted mb-10">
               The REST API is live today. The browser extension and SDK are in pre-release &mdash; install instructions reflect their current status.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <div className="flex items-center justify-between mb-4">
                   <H3>REST API v1</H3>
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full">
                     Live
                   </span>
                 </div>
-                <p className="text-sm text-slate-300 mb-3">
+                <p className="text-sm text-ink-soft mb-3">
                   Authenticate with a bearer token, hit the v1 endpoints from any language. No install step.
                 </p>
-                <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs overflow-x-auto">curl -H &quot;Authorization: Bearer ag_...&quot; \{'\n'}  https://www.allowanceguard.com/api/v1/chains</pre>
+                <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs overflow-x-auto">curl -H &quot;Authorization: Bearer ag_...&quot; \{'\n'}  https://www.allowanceguard.com/api/v1/chains</pre>
                 <a href="/docs/api-reference" className="inline-block mt-3 text-xs font-medium text-amber-400 hover:underline">
                   Read the API reference &rarr;
                 </a>
               </div>
 
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <div className="flex items-center justify-between mb-4">
                   <H3>Browser Extension</H3>
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
                     Pending
                   </span>
                 </div>
-                <p className="text-sm text-slate-300 mb-3">
+                <p className="text-sm text-ink-soft mb-3">
                   Submitted to the Chrome Web Store and Firefox Add-ons. Once approved, install with a single click &mdash; no developer setup required.
                 </p>
-                <div className="rounded-md bg-slate-900/60 border border-white/10 text-slate-400 text-xs p-3">
+                <div className="rounded-md bg-paper-deep/60 border border-ink-rule text-ink-muted text-xs p-3">
                   Awaiting reviewer approval. We&rsquo;ll announce on GitHub and X when it&rsquo;s live.
                 </div>
               </div>
 
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <div className="flex items-center justify-between mb-4">
                   <H3>Node.js SDK</H3>
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
                     GitHub
                   </span>
                 </div>
-                <p className="text-sm text-slate-300 mb-3">
+                <p className="text-sm text-ink-soft mb-3">
                   Source available now in <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a> on GitHub. npm publish pending.
                 </p>
-                <pre className="bg-slate-900/60 border border-white/10 text-slate-200 p-3 rounded text-xs overflow-x-auto">git clone https://github.com/{'\n'}  EazyAccessEA/Allowance-guard.git{'\n'}cd Allowance-guard/sdk &amp;&amp; npm i</pre>
+                <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs overflow-x-auto">git clone https://github.com/{'\n'}  EazyAccessEA/Allowance-guard.git{'\n'}cd Allowance-guard/sdk &amp;&amp; npm i</pre>
               </div>
             </div>
 
             {/* Footer note */}
-            <div className="mt-10 text-center text-xs text-slate-500">
+            <div className="mt-10 text-center text-xs text-ink-whisper">
               Looking for React hooks? They&rsquo;re on the roadmap &mdash; track progress in <a href="https://github.com/EazyAccessEA/Allowance-guard/issues" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.
             </div>
           </div>
@@ -453,12 +453,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             <H2 className="mb-8 text-center">Best Practices</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Shield className="mr-3 text-green-600" size={20} />
                   <H3>Security</H3>
                 </div>
-                <ul className="text-sm text-slate-300 space-y-2">
+                <ul className="text-sm text-ink-soft space-y-2">
                   <li>• Always validate wallet addresses client-side</li>
                   <li>• Use HTTPS for all API requests</li>
                   <li>• Implement proper error handling</li>
@@ -466,12 +466,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Zap className="mr-3 text-blue-600" size={20} />
                   <H3>Performance</H3>
                 </div>
-                <ul className="text-sm text-slate-300 space-y-2">
+                <ul className="text-sm text-ink-soft space-y-2">
                   <li>• Use pagination for large datasets</li>
                   <li>• Implement client-side caching</li>
                   <li>• Debounce user input for search</li>
@@ -479,12 +479,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Globe className="mr-3 text-purple-600" size={20} />
                   <H3>User Experience</H3>
                 </div>
-                <ul className="text-sm text-slate-300 space-y-2">
+                <ul className="text-sm text-ink-soft space-y-2">
                   <li>• Show loading states during API calls</li>
                   <li>• Provide clear error messages</li>
                   <li>• Use consistent theming</li>
@@ -492,12 +492,12 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-white/[0.05] p-6 rounded-lg border border-white/10">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Package className="mr-3 text-orange-600" size={20} />
                   <H3>Integration</H3>
                 </div>
-                <ul className="text-sm text-slate-300 space-y-2">
+                <ul className="text-sm text-ink-soft space-y-2">
                   <li>• Test with multiple wallet addresses</li>
                   <li>• Handle network switching gracefully</li>
                   <li>• Implement proper TypeScript types</li>

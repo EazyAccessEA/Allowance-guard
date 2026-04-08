@@ -60,7 +60,7 @@ function RiskGauge({ score }: { score: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="text-4xl font-bold" style={{ color }}>{score}</span>
-        <span className="text-xs text-text-tertiary dark:text-secondary-500">/ 100</span>
+        <span className="text-xs text-ink-whisper">/ 100</span>
       </div>
     </div>
   )
@@ -75,20 +75,20 @@ function ChainBar({ chain }: { chain: ChainRisk }) {
 
   return (
     <div className="flex items-center gap-3 py-2">
-      <span className="text-sm font-medium text-text-primary dark:text-secondary-200 w-24 truncate">
+      <span className="text-sm font-medium text-ink w-24 truncate">
         {chain.chainName}
       </span>
-      <div className="flex-1 h-2.5 bg-neutral-100 dark:bg-secondary-700 rounded-full overflow-hidden">
+      <div className="flex-1 h-2.5 bg-neutral-100 dark:bg-paper-sub rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full transition-all duration-700 ${barColor}`}
           style={{ width: `${chain.riskScore}%` }}
         />
       </div>
-      <span className="text-xs font-mono text-text-secondary dark:text-secondary-400 w-8 text-right">
+      <span className="text-xs font-mono text-ink-muted w-8 text-right">
         {chain.riskScore}
       </span>
       {chain.estimatedValueUsd > 0 && (
-        <span className="text-xs text-text-tertiary dark:text-secondary-500 w-20 text-right">
+        <span className="text-xs text-ink-whisper w-20 text-right">
           ${chain.estimatedValueUsd.toLocaleString()}
         </span>
       )}
@@ -124,11 +124,11 @@ export default function PortfolioRiskScore() {
   if (!isConnected) {
     return (
       <div className="text-center py-12">
-        <Globe className="mx-auto h-12 w-12 text-text-tertiary dark:text-secondary-500 mb-4" />
-        <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100 mb-2">
+        <Globe className="mx-auto h-12 w-12 text-ink-whisper mb-4" />
+        <h2 className="text-xl font-semibold text-ink mb-2">
           Cross-Chain Portfolio Risk
         </h2>
-        <p className="text-text-secondary dark:text-secondary-400">
+        <p className="text-ink-muted">
           Connect your wallet to see your aggregated risk score across all chains.
         </p>
       </div>
@@ -138,11 +138,11 @@ export default function PortfolioRiskScore() {
   if (loading) {
     return (
       <div className="animate-pulse space-y-4">
-        <div className="h-40 w-40 mx-auto bg-neutral-200 dark:bg-secondary-800 rounded-full" />
-        <div className="h-6 bg-neutral-200 dark:bg-secondary-800 rounded w-1/3 mx-auto" />
+        <div className="h-40 w-40 mx-auto bg-neutral-200 dark:bg-paper-sub rounded-full" />
+        <div className="h-6 bg-neutral-200 dark:bg-paper-sub rounded w-1/3 mx-auto" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-20 bg-neutral-200 dark:bg-secondary-800 rounded-xl" />
+            <div key={i} className="h-20 bg-neutral-200 dark:bg-paper-sub rounded-xl" />
           ))}
         </div>
       </div>
@@ -153,7 +153,7 @@ export default function PortfolioRiskScore() {
     return (
       <div className="text-center py-8">
         <AlertTriangle className="mx-auto h-10 w-10 text-amber-500 mb-3" />
-        <p className="text-text-secondary dark:text-secondary-400">{error}</p>
+        <p className="text-ink-muted">{error}</p>
       </div>
     )
   }
@@ -168,13 +168,13 @@ export default function PortfolioRiskScore() {
     ? 'text-green-600 dark:text-green-400'
     : data.trend.direction === 'worsening'
       ? 'text-red-600 dark:text-red-400'
-      : 'text-text-tertiary dark:text-secondary-500'
+      : 'text-ink-whisper'
 
   return (
     <div className="space-y-6">
       {/* Main score */}
-      <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6 text-center">
-        <h2 className="text-lg font-semibold text-text-primary dark:text-secondary-100 mb-4">
+      <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 text-center">
+        <h2 className="text-lg font-semibold text-ink mb-4">
           Cross-Chain Portfolio Risk
         </h2>
         <RiskGauge score={data.portfolioRiskScore} />
@@ -186,7 +186,7 @@ export default function PortfolioRiskScore() {
             <span className="text-sm font-medium">
               {data.trend.direction === 'stable' ? 'Stable' : `${Math.abs(data.trend.delta)} pts`}
             </span>
-            <span className="text-xs text-text-tertiary dark:text-secondary-500">30d</span>
+            <span className="text-xs text-ink-whisper">30d</span>
           </div>
 
           {/* Benchmark */}
@@ -209,19 +209,19 @@ export default function PortfolioRiskScore() {
         ].map(({ label, value, icon: Icon }) => (
           <div
             key={label}
-            className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-4 text-center"
+            className="bg-paper-sub/60 border border-ink-rule rounded-xl p-4 text-center"
           >
-            <Icon className="h-5 w-5 mx-auto text-text-tertiary dark:text-secondary-500 mb-1" />
-            <p className="text-2xl font-bold text-text-primary dark:text-secondary-100">{value}</p>
-            <p className="text-xs text-text-tertiary dark:text-secondary-500">{label}</p>
+            <Icon className="h-5 w-5 mx-auto text-ink-whisper mb-1" />
+            <p className="text-2xl font-bold text-ink">{value}</p>
+            <p className="text-xs text-ink-whisper">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Per-chain breakdown */}
       {data.chains.length > 0 && (
-        <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl p-6">
-          <h3 className="text-sm font-semibold text-text-secondary dark:text-secondary-400 mb-3">
+        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6">
+          <h3 className="text-sm font-semibold text-ink-muted mb-3">
             Risk by Chain
           </h3>
           <div className="divide-y divide-border-primary dark:divide-secondary-700">

@@ -98,7 +98,7 @@ export default function PaymentMethodModal({
           </p>
         )}
 
-        <p className="pt-2 text-center text-xs text-text-secondary">
+        <p className="pt-2 text-center text-xs text-ink-muted">
           You&apos;ll be redirected to complete payment securely.
         </p>
       </div>
@@ -127,7 +127,7 @@ function MethodButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'flex w-full items-center gap-4 rounded-base border border-border-primary bg-background-primary p-4 text-left transition-all',
+        'flex w-full items-center gap-4 rounded-base border border-ink-rule bg-paper p-4 text-left transition-all',
         'hover:border-primary-400 hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700',
         disabled && 'opacity-60 cursor-not-allowed'
       )}
@@ -136,8 +136,8 @@ function MethodButton({
         {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : icon}
       </div>
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-text-primary">{title}</div>
-        <div className="text-xs text-text-secondary">{subtitle}</div>
+        <div className="text-sm font-medium text-ink">{title}</div>
+        <div className="text-xs text-ink-muted">{subtitle}</div>
       </div>
     </button>
   )

@@ -114,8 +114,8 @@ export function PieChart({
             {showValues && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="mobbin-heading-3 text-text-primary">{total.toLocaleString()}</div>
-                  <div className="mobbin-caption text-text-secondary">Total</div>
+                  <div className="mobbin-heading-3 text-ink">{total.toLocaleString()}</div>
+                  <div className="mobbin-caption text-ink-muted">Total</div>
                 </div>
               </div>
             )}
@@ -135,10 +135,10 @@ export function PieChart({
                       style={{ backgroundColor: color }}
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="mobbin-body-small text-text-primary truncate">
+                      <div className="mobbin-body-small text-ink truncate">
                         {item.label}
                       </div>
-                      <div className="mobbin-caption text-text-tertiary">
+                      <div className="mobbin-caption text-ink-whisper">
                         {item.value.toLocaleString()} ({percentage}%)
                       </div>
                     </div>

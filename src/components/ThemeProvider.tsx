@@ -104,8 +104,8 @@ export function ThemeToggle({ className, variant }: { className?: string; varian
       className={`relative inline-flex items-center justify-center w-9 h-9 rounded-md transition-colors duration-150
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
         ${isNavbar
-          ? 'text-slate-400 hover:text-white hover:bg-white/10 focus-visible:ring-amber-500/40 focus-visible:ring-offset-surface-base'
-          : 'border border-secondary-700 bg-background-secondary dark:bg-secondary-800 hover:bg-background-tertiary dark:hover:bg-secondary-700 focus-visible:ring-primary-500/40'
+          ? 'text-ink-muted hover:text-ink hover:bg-paper-sub focus-visible:ring-amber-500/40 focus-visible:ring-offset-surface-base'
+          : 'border border-ink-rule bg-paper-sub hover:bg-paper-deep dark:hover:bg-paper-sub focus-visible:ring-primary-500/40'
         } ${className ?? ''}`}
       aria-label={`Current theme: ${theme}. Click to change.`}
       title={`Theme: ${theme}`}

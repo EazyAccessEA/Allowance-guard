@@ -12,13 +12,13 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-background-light border-border-default text-text-primary hover:border-neutral-300',
+        default: 'bg-paper-sub border-border-default text-ink hover:border-neutral-300',
         success: 'bg-semantic-success-light border-semantic-success/20 text-semantic-success hover:border-semantic-success/40 hover:bg-semantic-success-light/80',
         danger: 'bg-semantic-danger-light border-semantic-danger/20 text-semantic-danger hover:border-semantic-danger/40 hover:bg-semantic-danger-light/80',
         warning: 'bg-semantic-warning-light border-semantic-warning/20 text-semantic-warning hover:border-semantic-warning/40 hover:bg-semantic-warning-light/80',
         info: 'bg-semantic-info-light border-semantic-info/20 text-semantic-info hover:border-semantic-info/40 hover:bg-semantic-info-light/80',
         // Sketch-inspired additional variants
-        subtle: 'bg-neutral-50 border-neutral-200 text-slate-300 hover:border-neutral-300 hover:bg-neutral-100',
+        subtle: 'bg-neutral-50 border-neutral-200 text-ink-soft hover:border-neutral-300 hover:bg-neutral-100',
         accent: 'bg-primary/5 border-primary/20 text-primary hover:border-primary/40 hover:bg-primary/10',
       },
     },

@@ -19,10 +19,10 @@ export default function SuccessPage() {
   }, [searchParams, router])
 
   return (
-    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 flex items-center justify-center">
+    <div className="min-h-screen bg-paper-deep flex items-center justify-center">
       <div className="text-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-700 dark:border-primary-400 mx-auto mb-4"></div>
-        <p className="text-text-tertiary dark:text-secondary-400">Redirecting to confirmation page...</p>
+        <p className="text-ink-muted">Redirecting to confirmation page...</p>
       </div>
     </div>
   )

@@ -105,19 +105,19 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
         <Card>
           <CardContent className="pt-4">
             <div className="text-2xl font-bold">{wallets.length}</div>
-            <div className="text-xs text-text-secondary">Tracked Wallets</div>
+            <div className="text-xs text-ink-muted">Tracked Wallets</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4">
             <div className="text-2xl font-bold">{totalAllowances}</div>
-            <div className="text-xs text-text-secondary">Total Approvals</div>
+            <div className="text-xs text-ink-muted">Total Approvals</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4">
             <div className="text-2xl font-bold text-amber-500">{totalUnlimited}</div>
-            <div className="text-xs text-text-secondary">Unlimited Approvals</div>
+            <div className="text-xs text-ink-muted">Unlimited Approvals</div>
           </CardContent>
         </Card>
         <Card>
@@ -125,7 +125,7 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
             <Badge variant={riskColor(totalRisk)} className="text-lg px-3 py-1">
               {totalRisk}/100
             </Badge>
-            <div className="text-xs text-text-secondary mt-1">Avg Risk Score</div>
+            <div className="text-xs text-ink-muted mt-1">Avg Risk Score</div>
           </CardContent>
         </Card>
       </div>
@@ -145,20 +145,20 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
         </CardHeader>
         <CardContent>
           {loading && wallets.length === 0 ? (
-            <div className="text-sm text-text-secondary">Loading portfolio...</div>
+            <div className="text-sm text-ink-muted">Loading portfolio...</div>
           ) : wallets.length === 0 ? (
             <div className="text-center py-8">
-              <Wallet className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
-              <p className="text-sm text-text-secondary">No wallets in this team yet</p>
-              <p className="text-xs text-text-tertiary mt-1">Add wallets to start monitoring the team portfolio.</p>
+              <Wallet className="w-8 h-8 text-ink-whisper mx-auto mb-2" />
+              <p className="text-sm text-ink-muted">No wallets in this team yet</p>
+              <p className="text-xs text-ink-whisper mt-1">Add wallets to start monitoring the team portfolio.</p>
             </div>
           ) : (
             <div className="space-y-3">
               {wallets.map((w) => (
-                <div key={w.wallet_address} className="border border-secondary-700 rounded-lg overflow-hidden">
+                <div key={w.wallet_address} className="border border-ink-rule rounded-lg overflow-hidden">
                   <button
                     onClick={() => toggleWallet(w.wallet_address)}
-                    className="w-full flex items-center justify-between p-4 hover:bg-background-secondary transition-colors text-left"
+                    className="w-full flex items-center justify-between p-4 hover:bg-paper-sub transition-colors text-left"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <Shield className={`w-5 h-5 flex-shrink-0 ${
@@ -166,12 +166,12 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
                         w.risk_score >= 40 ? 'text-amber-500' : 'text-green-500'
                       }`} />
                       <div className="min-w-0">
-                        <div className="text-sm font-mono text-text-primary truncate">
+                        <div className="text-sm font-mono text-ink truncate">
                           {w.wallet_address.slice(0, 6)}...{w.wallet_address.slice(-4)}
                         </div>
                         <div className="flex gap-2 mt-1 flex-wrap">
                           {w.chains.map((c) => (
-                            <span key={c} className="text-xs text-text-tertiary">
+                            <span key={c} className="text-xs text-ink-whisper">
                               {CHAIN_NAMES[c] ?? `Chain ${c}`}
                             </span>
                           ))}
@@ -190,21 +190,21 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
                       </div>
                       <Badge variant={riskColor(w.risk_score)}>{w.risk_score}</Badge>
                       {expandedWallet === w.wallet_address
-                        ? <ChevronUp className="w-4 h-4 text-text-tertiary" />
-                        : <ChevronDown className="w-4 h-4 text-text-tertiary" />}
+                        ? <ChevronUp className="w-4 h-4 text-ink-whisper" />
+                        : <ChevronDown className="w-4 h-4 text-ink-whisper" />}
                     </div>
                   </button>
 
                   {/* Expanded allowances */}
                   {expandedWallet === w.wallet_address && (
-                    <div className="border-t border-secondary-700 bg-background-secondary p-4">
+                    <div className="border-t border-ink-rule bg-paper-sub p-4">
                       {!walletAllowances[w.wallet_address] ? (
-                        <div className="text-sm text-text-secondary">Loading allowances...</div>
+                        <div className="text-sm text-ink-muted">Loading allowances...</div>
                       ) : walletAllowances[w.wallet_address].length === 0 ? (
-                        <div className="text-sm text-text-secondary">No active allowances</div>
+                        <div className="text-sm text-ink-muted">No active allowances</div>
                       ) : (
                         <div className="space-y-2">
-                          <div className="grid grid-cols-5 gap-2 text-xs font-medium text-text-tertiary px-2">
+                          <div className="grid grid-cols-5 gap-2 text-xs font-medium text-ink-whisper px-2">
                             <div>Token</div>
                             <div>Spender</div>
                             <div>Chain</div>
@@ -212,7 +212,7 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
                             <div>Risk</div>
                           </div>
                           {(walletAllowances[w.wallet_address]).slice(0, 20).map((a, idx) => (
-                            <div key={idx} className="grid grid-cols-5 gap-2 text-xs p-2 rounded bg-background-primary">
+                            <div key={idx} className="grid grid-cols-5 gap-2 text-xs p-2 rounded bg-paper">
                               <div className="font-mono truncate" title={a.token_address as string}>
                                 {(a.token_symbol as string) ?? (a.token_address as string)?.slice(0, 10)}
                               </div>
@@ -233,7 +233,7 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
                             </div>
                           ))}
                           {walletAllowances[w.wallet_address].length > 20 && (
-                            <div className="text-xs text-text-tertiary text-center pt-2">
+                            <div className="text-xs text-ink-whisper text-center pt-2">
                               +{walletAllowances[w.wallet_address].length - 20} more allowances
                             </div>
                           )}

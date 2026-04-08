@@ -29,10 +29,10 @@ export default function ApprovalTable({
         <div className="w-16 h-16 rounded-full bg-primary-50 dark:bg-primary-900/20 flex items-center justify-center mb-4">
           <span className="text-2xl" aria-hidden="true">🛡️</span>
         </div>
-        <p className="text-lg font-semibold text-text-primary dark:text-secondary-100">
+        <p className="text-lg font-semibold text-ink">
           No approvals found
         </p>
-        <p className="text-sm text-secondary-500 dark:text-secondary-400 mt-1">
+        <p className="text-sm text-ink-whisper dark:text-ink-muted mt-1">
           {isTimeMachine
             ? 'All risky approvals resolved in this simulation.'
             : 'Try adjusting your filters or scan a wallet.'}
@@ -47,35 +47,35 @@ export default function ApprovalTable({
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm" role="grid">
           <thead>
-            <tr className="border-b border-secondary-700">
+            <tr className="border-b border-ink-rule">
               <th className="w-10 py-3 px-2 text-left">
                 <input
                   type="checkbox"
                   checked={allSelected}
                   onChange={onToggleAll}
                   aria-label="Select all approvals"
-                  className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500 dark:bg-secondary-800"
+                  className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500 dark:bg-paper-sub"
                 />
               </th>
-              <th className="py-3 px-3 text-left font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide text-xs">
+              <th className="py-3 px-3 text-left font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
                 Token
               </th>
-              <th className="py-3 px-3 text-left font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide text-xs">
+              <th className="py-3 px-3 text-left font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
                 Spender
               </th>
-              <th className="py-3 px-3 text-left font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide text-xs">
+              <th className="py-3 px-3 text-left font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
                 Amount
               </th>
-              <th className="py-3 px-3 text-left font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide text-xs">
+              <th className="py-3 px-3 text-left font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
                 Risk
               </th>
-              <th className="py-3 px-3 text-left font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide text-xs">
+              <th className="py-3 px-3 text-left font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
                 Chain
               </th>
-              <th className="py-3 px-3 text-left font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide text-xs">
+              <th className="py-3 px-3 text-left font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
                 Last Active
               </th>
-              <th className="py-3 px-3 text-right font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wide text-xs">
+              <th className="py-3 px-3 text-right font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
                 Action
               </th>
             </tr>
@@ -92,8 +92,8 @@ export default function ApprovalTable({
                 <tr
                   key={approval.id}
                   className={cn(
-                    'border-b border-secondary-700/50 dark:border-secondary-800 transition-all duration-150',
-                    'hover:bg-secondary-50 dark:hover:bg-secondary-800/50',
+                    'border-b border-ink-rule/50 dark:border-ink-rule transition-all duration-150',
+                    'hover:bg-secondary-50 dark:hover:bg-paper-sub/50',
                     isSelected && 'bg-primary-50/50 dark:bg-primary-900/10',
                     isDimmed && 'opacity-30 pointer-events-none'
                   )}
@@ -104,26 +104,26 @@ export default function ApprovalTable({
                       checked={isSelected}
                       onChange={() => onToggle(approval.id)}
                       aria-label={`Select ${approval.tokenSymbol} approval`}
-                      className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500 dark:bg-secondary-800"
+                      className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500 dark:bg-paper-sub"
                     />
                   </td>
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-text-primary dark:text-secondary-100">
+                      <span className="font-semibold text-ink">
                         {approval.tokenSymbol}
                       </span>
-                      <span className="text-xs text-secondary-400 dark:text-secondary-500 hidden lg:inline">
+                      <span className="text-xs text-ink-muted dark:text-ink-whisper hidden lg:inline">
                         {approval.token}
                       </span>
                     </div>
                   </td>
                   <td className="py-3 px-3">
                     <div>
-                      <span className="font-mono text-xs text-text-primary dark:text-secondary-200">
+                      <span className="font-mono text-xs text-ink">
                         {approval.spender}
                       </span>
                       {approval.spenderLabel && (
-                        <span className="block text-xs text-secondary-400 dark:text-secondary-500 mt-0.5">
+                        <span className="block text-xs text-ink-muted dark:text-ink-whisper mt-0.5">
                           {approval.spenderLabel}
                         </span>
                       )}
@@ -135,7 +135,7 @@ export default function ApprovalTable({
                         'font-mono text-sm',
                         approval.isUnlimited
                           ? 'text-semantic-error-600 dark:text-semantic-error-400 font-semibold'
-                          : 'text-text-primary dark:text-secondary-200'
+                          : 'text-ink'
                       )}
                     >
                       {approval.amount}
@@ -153,7 +153,7 @@ export default function ApprovalTable({
                     </span>
                   </td>
                   <td className="py-3 px-3">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-secondary-600 dark:text-secondary-300">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-secondary-600 dark:text-ink-soft">
                       <span
                         className="w-2 h-2 rounded-full flex-shrink-0"
                         style={{
@@ -164,7 +164,7 @@ export default function ApprovalTable({
                       {approval.chain}
                     </span>
                   </td>
-                  <td className="py-3 px-3 text-xs text-secondary-500 dark:text-secondary-400">
+                  <td className="py-3 px-3 text-xs text-ink-whisper dark:text-ink-muted">
                     {approval.lastActive}
                   </td>
                   <td className="py-3 px-3 text-right">
@@ -197,8 +197,8 @@ export default function ApprovalTable({
               key={approval.id}
               className={cn(
                 'p-4 rounded-lg border transition-all duration-150',
-                'border-secondary-700',
-                'bg-background-primary dark:bg-dark-bg-secondary',
+                'border-ink-rule',
+                'bg-paper dark:bg-dark-bg-secondary',
                 isSelected && 'border-primary-300 dark:border-primary-700 bg-primary-50/30 dark:bg-primary-900/10',
                 isDimmed && 'opacity-30 pointer-events-none'
               )}
@@ -212,7 +212,7 @@ export default function ApprovalTable({
                     aria-label={`Select ${approval.tokenSymbol}`}
                     className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500"
                   />
-                  <span className="font-semibold text-text-primary dark:text-secondary-100">
+                  <span className="font-semibold text-ink">
                     {approval.tokenSymbol}
                   </span>
                   <span
@@ -225,7 +225,7 @@ export default function ApprovalTable({
                     {risk.label}
                   </span>
                 </div>
-                <span className="inline-flex items-center gap-1 text-xs text-secondary-500 dark:text-secondary-400">
+                <span className="inline-flex items-center gap-1 text-xs text-ink-whisper dark:text-ink-muted">
                   <span
                     className="w-2 h-2 rounded-full"
                     style={{ backgroundColor: CHAIN_COLORS[approval.chain] || '#94A3B8' }}
@@ -236,19 +236,19 @@ export default function ApprovalTable({
               </div>
               <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                 <div>
-                  <span className="text-secondary-400 dark:text-secondary-500">Spender</span>
-                  <p className="font-mono text-text-primary dark:text-secondary-200 mt-0.5">
+                  <span className="text-ink-muted dark:text-ink-whisper">Spender</span>
+                  <p className="font-mono text-ink mt-0.5">
                     {approval.spender}
                   </p>
                 </div>
                 <div>
-                  <span className="text-secondary-400 dark:text-secondary-500">Amount</span>
+                  <span className="text-ink-muted dark:text-ink-whisper">Amount</span>
                   <p
                     className={cn(
                       'font-mono mt-0.5',
                       approval.isUnlimited
                         ? 'text-semantic-error-600 dark:text-semantic-error-400 font-semibold'
-                        : 'text-text-primary dark:text-secondary-200'
+                        : 'text-ink'
                     )}
                   >
                     {approval.amount}
@@ -256,7 +256,7 @@ export default function ApprovalTable({
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-secondary-400 dark:text-secondary-500">
+                <span className="text-xs text-ink-muted dark:text-ink-whisper">
                   {approval.lastActive}
                 </span>
                 <button

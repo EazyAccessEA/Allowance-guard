@@ -38,7 +38,7 @@ export default function CategoriesAdminPage() {
       <div className="flex gap-2 mb-6">
         <input value={name} onChange={e => setName(e.target.value)}
           placeholder="New category name" className="border px-3 py-2 rounded w-full" />
-        <button onClick={add} className="px-4 py-2 rounded bg-black text-white">Add</button>
+        <button onClick={add} className="px-4 py-2 rounded bg-black text-ink">Add</button>
       </div>
 
       <ul className="space-y-2">
