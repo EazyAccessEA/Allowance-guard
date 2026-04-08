@@ -1,20 +1,23 @@
 'use client'
 
 /**
- * Footer — Ledger aesthetic
+ * Footer — Apple-discipline colophon
  *
- * Publication colophon on paper-deep. Ink section headings with § roman
- * numerals, IBM Plex Sans bold wordmark, masthead-style copyright colophon.
- * Closes the page with the signature .ledger-rule (ink + amber hairlines).
+ * Calm, information-first, zero ornament. Close-to-body background
+ * (paper-sub), single ink hairline at top, no grain, no amber, no motto.
+ * A tiny disclaimer paragraph at top replaces the wordmark block — it
+ * delivers information, not branding. Mobile accordion preserved.
  *
- * Council: Editor-in-chief (colophon voice), Maren (back-matter density),
- * Noor (AAA preserved on paper-deep), Sable (accordion mobile UX kept).
+ * Council:
+ *  - #13 UX writer: every word earns its place or it's gone
+ *  - #5 Marketing: the end of a page is peak-memorable — so let the
+ *    memory be of the content, not the chrome
+ *  - Psychology: processing fluency, authority through restraint
  */
 
 import Link from 'next/link'
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
-import DonationButton from '@/components/DonationButton'
 import { Github, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface FooterSectionProps {
@@ -26,14 +29,14 @@ interface FooterSectionProps {
 
 function FooterSection({ title, children, isOpen, onToggle }: FooterSectionProps) {
   return (
-    <div className="border-b border-ink-rule md:border-b-0">
+    <div className="border-b border-[rgba(15,17,21,0.08)] md:border-b-0">
       <div
         onClick={onToggle}
         role="button"
         tabIndex={0}
         aria-expanded={isOpen}
         aria-controls={`footer-section-${title.toLowerCase().replace(/\s+/g, '-')}`}
-        className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none cursor-pointer rounded-md"
+        className="flex items-center justify-between w-full py-4 md:py-0 md:pointer-events-none cursor-pointer rounded"
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
@@ -41,11 +44,9 @@ function FooterSection({ title, children, isOpen, onToggle }: FooterSectionProps
           }
         }}
       >
-        <div className="flex items-baseline gap-2">
-          <h3 className="font-mono text-[11px] font-bold text-ink uppercase tracking-[0.2em]">
-            {title}
-          </h3>
-        </div>
+        <h3 className="font-plex font-semibold text-[11px] text-ink uppercase tracking-[0.08em]">
+          {title}
+        </h3>
         <div className="md:hidden text-ink-muted">
           {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
         </div>
@@ -72,62 +73,24 @@ export default function Footer() {
   }
 
   return (
-    <footer className="paper-deep grain relative text-ink">
-      {/* Signature ledger-rule at the top — the move one last time */}
-      <div className="absolute top-0 left-0 right-0 h-[6px]" aria-hidden="true">
-        <div className="absolute top-0 left-0 right-0 h-px bg-ink-rule" style={{ backgroundColor: 'rgba(20,18,16,0.28)' }} />
-        <div
-          className="absolute bottom-0 left-0 right-0 h-px"
-          style={{
-            background:
-              'linear-gradient(90deg, transparent 0%, #F59E0B 50%, transparent 100%)',
-          }}
-        />
-      </div>
+    <footer className="bg-paper-sub text-ink border-t border-[rgba(15,17,21,0.08)]">
+      <Container className="py-12 sm:py-14">
+        {/* Top disclaimer — replaces the wordmark block. Information > branding. */}
+        <div className="mb-10 pb-10 border-b border-[rgba(15,17,21,0.08)] max-w-3xl">
+          <p className="font-plex text-[12px] text-ink-whisper leading-[1.6]">
+            <span className="font-semibold text-ink-muted">AllowanceGuard</span> reads public blockchain data to find token approvals on your wallet. We never access your keys or move tokens. Not financial or security advice; use the tool and verify on a block explorer.
+          </p>
+        </div>
 
-      <Container className="py-16 sm:py-20">
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
-          {/* Brand column */}
-          <div className="lg:col-span-4">
-            <div className="mb-5">
-              <span className="font-plex font-bold text-3xl text-ink tracking-[-0.03em] leading-[0.9]">
-                Allowance<span className="text-amber-deep">Guard</span>
-              </span>
-            </div>
-
-            <p className="font-plex text-sm text-ink-muted leading-[1.65] mb-4 max-w-xs">
-              Open-source security scanner. Premium monitoring and API for teams who need more.
-            </p>
-
-            <p className="font-mono text-[10px] font-bold text-amber-deep tracking-[0.22em] uppercase mb-7">
-              Fifteen chains · One dashboard · Open source core
-            </p>
-
-            {/* Social — ink icons, no bg pills */}
-            <div className="flex items-center gap-5">
-              <SocialLink href="https://github.com/EazyAccessEA/Allowance-guard" label="GitHub">
-                <Github className="w-4 h-4" />
-              </SocialLink>
-              <SocialLink href="https://discord.gg/DsJ4Pa94" label="Discord">
-                <MessageCircle className="w-4 h-4" />
-              </SocialLink>
-              <SocialLink href="https://twitter.com/allowanceguard" label="Twitter">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </SocialLink>
-            </div>
-          </div>
-
-          {/* Product */}
-          <div className="lg:col-span-2">
+        {/* Link columns */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div>
             <FooterSection
               title="Product"
               isOpen={openSections.product}
               onToggle={() => toggleSection('product')}
             >
-              <ul className="space-y-3 mt-5">
+              <ul className="space-y-2 mt-4">
                 <FooterLink href="/pricing">Pricing</FooterLink>
                 <FooterLink href="/features">Features</FooterLink>
                 <FooterLink href="/docs">Docs</FooterLink>
@@ -137,14 +100,13 @@ export default function Footer() {
             </FooterSection>
           </div>
 
-          {/* Community */}
-          <div className="lg:col-span-3">
+          <div>
             <FooterSection
               title="Community"
               isOpen={openSections.community}
               onToggle={() => toggleSection('community')}
             >
-              <ul className="space-y-3 mt-5">
+              <ul className="space-y-2 mt-4">
                 <FooterLink href="https://github.com/EazyAccessEA/Allowance-guard" external>
                   GitHub
                 </FooterLink>
@@ -155,20 +117,16 @@ export default function Footer() {
                 <FooterLink href="/contact">Contact</FooterLink>
                 <FooterLink href="/docs/contributing">Contributing</FooterLink>
               </ul>
-              <div className="mt-5">
-                <DonationButton />
-              </div>
             </FooterSection>
           </div>
 
-          {/* Legal */}
-          <div className="lg:col-span-3">
+          <div>
             <FooterSection
               title="Legal"
               isOpen={openSections.legal}
               onToggle={() => toggleSection('legal')}
             >
-              <ul className="space-y-3 mt-5">
+              <ul className="space-y-2 mt-4">
                 <FooterLink href="/terms">Terms</FooterLink>
                 <FooterLink href="/privacy">Privacy</FooterLink>
                 <FooterLink href="/cookies">Cookies</FooterLink>
@@ -183,15 +141,35 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Masthead colophon */}
-        <div className="mt-16 pt-6 border-t border-ink-rule">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span className="font-mono text-[10px] text-ink-muted tracking-wider uppercase">
-              &copy; {new Date().getFullYear()} AllowanceGuard · AGPL-3.0 + Commercial
-            </span>
-            <span className="font-plex font-medium text-sm text-ink-muted">
-              Open source core. Independently operated. Built to last.
-            </span>
+        {/* Bottom bar — inline, calm, no motto */}
+        <div className="mt-14 pt-6 border-t border-[rgba(15,17,21,0.08)]">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <p className="font-plex text-[12px] text-ink-whisper">
+              Copyright © {new Date().getFullYear()} AllowanceGuard.
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              AGPL-3.0 + Commercial.
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              <Link href="/terms" className="hover:text-ink transition-colors">Terms of Use</Link>
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              <Link href="/privacy" className="hover:text-ink transition-colors">Privacy</Link>
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              <Link href="/cookies" className="hover:text-ink transition-colors">Cookies</Link>
+            </p>
+
+            {/* Social — tiny, inline with copyright bar */}
+            <div className="flex items-center gap-5">
+              <SocialLink href="https://github.com/EazyAccessEA/Allowance-guard" label="GitHub">
+                <Github className="w-[14px] h-[14px]" />
+              </SocialLink>
+              <SocialLink href="https://discord.gg/DsJ4Pa94" label="Discord">
+                <MessageCircle className="w-[14px] h-[14px]" />
+              </SocialLink>
+              <SocialLink href="https://twitter.com/allowanceguard" label="Twitter">
+                <svg className="w-[14px] h-[14px]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </SocialLink>
+            </div>
           </div>
         </div>
       </Container>
@@ -209,7 +187,7 @@ function FooterLink({
   external?: boolean
 }) {
   const className =
-    'font-plex text-sm text-ink-muted hover:text-ink hover:underline decoration-amber-deep underline-offset-4 transition-colors duration-150 block'
+    'font-plex text-[13px] text-ink-muted hover:text-ink transition-colors duration-150 block'
   if (external) {
     return (
       <li>
@@ -242,8 +220,7 @@ function SocialLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-ink-muted hover:text-amber-deep transition-colors duration-150
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper-deep rounded"
+      className="text-ink-whisper hover:text-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-paper-sub rounded"
       aria-label={label}
     >
       {children}
