@@ -1,38 +1,46 @@
-import Image from 'next/image'
-
 /**
- * ChainCoverageStrip — calm static trust bar (formerly the marquee)
+ * ChainCoverageStrip — typographic coverage bar
  *
- * Replaces the old animated carousel. Now positioned right after the hero
- * as immediate proof: "we cover 15 chains, this is real infrastructure."
- * Marquee animation removed — coverage is information, not decoration.
+ * Replaces the earlier image-based logo row. The previous implementation
+ * mixed wordmark SVGs (Ethereum, Arbitrum, Base, Polygon, Optimism,
+ * Avalanche, zkSync, Linea) with icon-only glyphs (BSC, Fantom, Mantle,
+ * Gnosis, Celo, Scroll, Polygon zkEVM) and then crushed everything with a
+ * grayscale + brightness filter. The filter destroyed the icon-only shapes
+ * and left the row looking like a line of broken black blobs.
+ *
+ * New treatment: each chain rendered as a typographic wordmark in the
+ * display face. Uniform. Monochrome. Matches the Ledger paper+ink
+ * aesthetic without depending on third-party brand assets.
  *
  * Council:
- *  #5 Marketing: trust signal lives early in funnel where it converts
- *  #13 UX writer: static = scannable in 2 seconds; marquee was decoration
- *  #17 Performance: -1 animation, -2 logo set duplications
- *  Maren: amber hairlines top + bottom preserved as the signature beat
+ *  #5 Marketing: trust signal preserved — the count "15 EVM networks" and
+ *    the full list of names remain the proof
+ *  #7 Visual / Maren: uniform type beats broken mixed-media
+ *  #8 Accessibility / Noor: text has native AA contrast and native
+ *    screen-reader semantics (veto satisfied)
+ *  #13 UX writer: chain names are the content; logos were decoration
+ *  #17 Performance / Thane: removes 15 image loads from marketing surface
  *
  * Note: file is still named ChainLogoCarousel.tsx to avoid an import
- * cascade across page.tsx and friends. Component is no longer a carousel.
+ * cascade across page.tsx. Component is no longer a carousel.
  */
 
 const CHAINS = [
-  { src: '/chains/ethereum.svg', alt: 'Ethereum' },
-  { src: '/chains/arbitrum.svg', alt: 'Arbitrum' },
-  { src: '/chains/base.svg', alt: 'Base' },
-  { src: '/chains/polygon.svg', alt: 'Polygon' },
-  { src: '/chains/optimism.svg', alt: 'Optimism' },
-  { src: '/chains/avalanche.svg', alt: 'Avalanche' },
-  { src: '/chains/bsc.svg', alt: 'BNB Smart Chain' },
-  { src: '/chains/fantom.svg', alt: 'Fantom' },
-  { src: '/chains/zksync.svg', alt: 'zkSync Era' },
-  { src: '/chains/polygon-zkevm.svg', alt: 'Polygon zkEVM' },
-  { src: '/chains/mantle.svg', alt: 'Mantle' },
-  { src: '/chains/gnosis.svg', alt: 'Gnosis' },
-  { src: '/chains/linea.svg', alt: 'Linea' },
-  { src: '/chains/scroll.svg', alt: 'Scroll' },
-  { src: '/chains/celo.svg', alt: 'Celo' },
+  'Ethereum',
+  'Arbitrum',
+  'Base',
+  'Polygon',
+  'Optimism',
+  'Avalanche',
+  'BNB Chain',
+  'Fantom',
+  'zkSync Era',
+  'Polygon zkEVM',
+  'Mantle',
+  'Gnosis',
+  'Linea',
+  'Scroll',
+  'Celo',
 ]
 
 export default function ChainLogoCarousel() {
@@ -50,7 +58,7 @@ export default function ChainLogoCarousel() {
 
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
         {/* Single-line label + counts */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
           <div className="flex items-baseline gap-3">
             <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
               Coverage
@@ -64,21 +72,17 @@ export default function ChainLogoCarousel() {
           </span>
         </div>
 
-        {/* Static logo grid — calm, scannable, monochrome ink */}
+        {/* Typographic chain wordmarks — uniform, scannable, ink-tone */}
         <ul
-          className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-8 xl:grid-cols-[repeat(15,minmax(0,1fr))] gap-x-6 gap-y-5 items-center"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-8 gap-y-4"
           aria-label="Supported networks"
         >
           {CHAINS.map((chain) => (
-            <li key={chain.alt} className="flex items-center justify-center">
-              <Image
-                src={chain.src}
-                alt={chain.alt}
-                width={96}
-                height={28}
-                className="h-7 w-auto opacity-85 transition-opacity hover:opacity-100"
-                style={{ filter: 'grayscale(1) brightness(0.25) contrast(1.25)' }}
-              />
+            <li
+              key={chain}
+              className="font-display-tight text-ink text-lg sm:text-xl leading-none tracking-tight"
+            >
+              {chain}
             </li>
           ))}
         </ul>
