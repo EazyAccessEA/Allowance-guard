@@ -60,15 +60,15 @@ function UsageStat({
             {icon}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm text-text-secondary">{label}</p>
-            <p className="text-2xl font-bold text-text-primary mt-1">
+            <p className="text-sm text-ink-muted">{label}</p>
+            <p className="text-2xl font-bold text-ink mt-1">
               {used.toLocaleString()}
-              <span className="text-sm font-normal text-text-secondary ml-1">
+              <span className="text-sm font-normal text-ink-muted ml-1">
                 / {isUnlimited ? 'Unlimited' : limit.toLocaleString()}
               </span>
             </p>
             {!isUnlimited && limit > 0 && (
-              <div className="mt-2 h-2 w-full rounded-full bg-gray-100 dark:bg-secondary-700 overflow-hidden">
+              <div className="mt-2 h-2 w-full rounded-full bg-gray-100 dark:bg-paper-sub overflow-hidden">
                 <div
                   className={cn(
                     'h-full rounded-full transition-all',
@@ -93,8 +93,8 @@ function DailyChart({ data, limit }: { data: DailyCall[]; limit: number }) {
   if (data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <BarChart3 className="h-8 w-8 text-text-secondary mb-2" />
-        <p className="text-sm text-text-secondary">No API usage data yet.</p>
+        <BarChart3 className="h-8 w-8 text-ink-muted mb-2" />
+        <p className="text-sm text-ink-muted">No API usage data yet.</p>
       </div>
     )
   }
@@ -104,7 +104,7 @@ function DailyChart({ data, limit }: { data: DailyCall[]; limit: number }) {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between text-xs text-text-secondary">
+      <div className="flex items-center justify-between text-xs text-ink-muted">
         <span>Last 30 days</span>
         {limit > 0 && (
           <span>Daily limit: {limit.toLocaleString()}</span>
@@ -176,7 +176,7 @@ export default function UsagePage() {
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-primary-700 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -185,8 +185,8 @@ export default function UsagePage() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-text-primary">Usage</h1>
-              <p className="text-sm text-text-secondary mt-1">
+              <h1 className="text-2xl font-bold text-ink">Usage</h1>
+              <p className="text-sm text-ink-muted mt-1">
                 Monitor your resource usage across wallets, API calls, and more.
               </p>
             </div>
@@ -199,8 +199,8 @@ export default function UsagePage() {
                 <Card key={i}>
                   <CardContent className="py-5">
                     <div className="animate-pulse space-y-3">
-                      <div className="h-4 bg-secondary-700 rounded w-1/2" />
-                      <div className="h-8 bg-secondary-700 rounded w-3/4" />
+                      <div className="h-4 bg-paper-sub rounded w-1/2" />
+                      <div className="h-8 bg-paper-sub rounded w-3/4" />
                     </div>
                   </CardContent>
                 </Card>

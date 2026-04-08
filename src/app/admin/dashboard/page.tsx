@@ -67,7 +67,7 @@ export default function AdminDashboard() {
   // Activity color function removed as it's not used
 
   return (
-    <div className="min-h-screen bg-background-light">
+    <div className="min-h-screen bg-paper-sub">
       <Section className="py-8">
         <Container>
           {/* Header */}
@@ -78,13 +78,13 @@ export default function AdminDashboard() {
 
           {/* Tab Navigation */}
           <div className="mb-8">
-            <nav className="flex space-x-1 bg-background-light p-1 rounded-lg border border-neutral-borders">
+            <nav className="flex space-x-1 bg-paper-sub p-1 rounded-lg border border-neutral-borders">
               <button
                 onClick={() => setActiveTab('overview')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'overview'
-                    ? 'bg-background-primary dark:bg-secondary-800 text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-background-primary/50 dark:hover:bg-secondary-800/50'
+                    ? 'bg-paper-sub text-primary-accent shadow-sm'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper/50 dark:hover:bg-paper-sub/50'
                 }`}
               >
                 Overview
@@ -93,8 +93,8 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab('audit')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'audit'
-                    ? 'bg-background-primary dark:bg-secondary-800 text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-background-primary/50 dark:hover:bg-secondary-800/50'
+                    ? 'bg-paper-sub text-primary-accent shadow-sm'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper/50 dark:hover:bg-paper-sub/50'
                 }`}
               >
                 Audit Logs
@@ -103,8 +103,8 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab('performance')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'performance'
-                    ? 'bg-background-primary dark:bg-secondary-800 text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-background-primary/50 dark:hover:bg-secondary-800/50'
+                    ? 'bg-paper-sub text-primary-accent shadow-sm'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper/50 dark:hover:bg-paper-sub/50'
                 }`}
               >
                 Performance
@@ -219,7 +219,7 @@ export default function AdminDashboard() {
                   <CardContent>
                     <div className="space-y-3">
                       {recentActivity.map((activity) => (
-                        <div key={activity.id} className="flex items-center gap-3 p-3 rounded-lg bg-background-light">
+                        <div key={activity.id} className="flex items-center gap-3 p-3 rounded-lg bg-paper-sub">
                           {getActivityIcon(activity.type)}
                           <div className="flex-1">
                             <p className="text-sm font-medium text-neutral-text">{activity.details}</p>
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
                   <p className="text-neutral-text mb-4">
                     Real-time performance monitoring and Core Web Vitals tracking.
                   </p>
-                  <div className="bg-background-light p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4 rounded-lg">
                     <p className="text-sm text-neutral-text">
                       Performance dashboard is available as a floating widget in the bottom-right corner.
                       Click the performance icon to view detailed metrics.

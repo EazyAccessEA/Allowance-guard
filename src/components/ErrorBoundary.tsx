@@ -50,15 +50,15 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         <Card className="border-semantic-error-200 dark:border-semantic-error-800">
           <CardContent className="py-8 text-center">
             <AlertTriangle className="h-10 w-10 text-semantic-error-500 mx-auto mb-4" />
-            <h3 className="font-semibold text-text-primary dark:text-secondary-100 mb-2">
+            <h3 className="font-semibold text-ink mb-2">
               {this.props.fallbackTitle || 'Something went wrong'}
             </h3>
-            <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4 max-w-md mx-auto">
+            <p className="text-sm text-ink-muted mb-4 max-w-md mx-auto">
               {this.props.fallbackDescription ||
                 'An unexpected error occurred. Please try again or refresh the page.'}
             </p>
             {this.state.error && (
-              <p className="text-xs font-mono text-text-secondary dark:text-secondary-500 mb-4 max-w-md mx-auto break-all">
+              <p className="text-xs font-mono text-ink-muted dark:text-ink-whisper mb-4 max-w-md mx-auto break-all">
                 {this.state.error.message}
               </p>
             )}
@@ -135,7 +135,7 @@ export function InlineError({
   return (
     <div className="flex flex-col items-center justify-center py-8 text-center">
       <AlertTriangle className="h-8 w-8 text-semantic-error-400 mb-3" />
-      <p className="text-sm text-text-secondary dark:text-secondary-400 mb-3">{message}</p>
+      <p className="text-sm text-ink-muted mb-3">{message}</p>
       {onRetry && (
         <Button onClick={onRetry} variant="secondary" size="sm" className="inline-flex items-center gap-2">
           <RefreshCw className="h-3.5 w-3.5" />

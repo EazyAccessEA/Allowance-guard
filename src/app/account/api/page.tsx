@@ -47,7 +47,7 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={copy}
-      className="inline-flex items-center gap-1 text-xs text-text-secondary hover:text-primary-700 transition-colors"
+      className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-primary-700 transition-colors"
       title="Copy to clipboard"
     >
       {copied ? <Check className="h-3.5 w-3.5 text-semantic-success-500" /> : <Copy className="h-3.5 w-3.5" />}
@@ -161,7 +161,7 @@ export default function ApiDashboardPage() {
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-primary-700 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -170,8 +170,8 @@ export default function ApiDashboardPage() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-text-primary dark:text-secondary-100">API Dashboard</h1>
-              <p className="text-sm text-text-secondary dark:text-secondary-400 mt-1">
+              <h1 className="text-2xl font-bold text-ink">API Dashboard</h1>
+              <p className="text-sm text-ink-muted mt-1">
                 Manage your API keys and monitor usage.
               </p>
             </div>
@@ -192,15 +192,15 @@ export default function ApiDashboardPage() {
                 <p className="text-sm font-semibold text-semantic-success-700 dark:text-semantic-success-300 mb-2">
                   API Key Created! Copy it now — it won&apos;t be shown again.
                 </p>
-                <div className="flex items-center gap-3 bg-secondary-800 rounded-md px-3 py-2 border">
-                  <code className="flex-1 text-sm font-mono text-text-primary dark:text-secondary-100 break-all">
+                <div className="flex items-center gap-3 bg-paper-sub rounded-md px-3 py-2 border">
+                  <code className="flex-1 text-sm font-mono text-ink break-all">
                     {newKeySecret}
                   </code>
                   <CopyButton text={newKeySecret} />
                 </div>
                 <button
                   onClick={() => setNewKeySecret(null)}
-                  className="mt-2 text-xs text-text-secondary underline"
+                  className="mt-2 text-xs text-ink-muted underline"
                 >
                   Dismiss
                 </button>
@@ -219,10 +219,10 @@ export default function ApiDashboardPage() {
                   </div>
                 ) : (
                   <>
-                    <p className="text-xs text-text-secondary dark:text-secondary-400">Calls Today</p>
-                    <p className="text-2xl font-bold text-text-primary dark:text-secondary-100 mt-1">
+                    <p className="text-xs text-ink-muted">Calls Today</p>
+                    <p className="text-2xl font-bold text-ink mt-1">
                       {usage?.apiCallsToday.toLocaleString() ?? 0}
-                      <span className="text-sm font-normal text-text-secondary ml-1">
+                      <span className="text-sm font-normal text-ink-muted ml-1">
                         / {usage?.apiCallsLimit === -1 ? '∞' : usage?.apiCallsLimit.toLocaleString()}
                       </span>
                     </p>
@@ -250,8 +250,8 @@ export default function ApiDashboardPage() {
                   </div>
                 ) : (
                   <>
-                    <p className="text-xs text-text-secondary dark:text-secondary-400">Calls This Month</p>
-                    <p className="text-2xl font-bold text-text-primary dark:text-secondary-100 mt-1">
+                    <p className="text-xs text-ink-muted">Calls This Month</p>
+                    <p className="text-2xl font-bold text-ink mt-1">
                       {usage?.apiCallsThisMonth.toLocaleString() ?? 0}
                     </p>
                   </>
@@ -267,8 +267,8 @@ export default function ApiDashboardPage() {
                   </div>
                 ) : (
                   <>
-                    <p className="text-xs text-text-secondary dark:text-secondary-400">Rate Limit</p>
-                    <p className="text-2xl font-bold text-text-primary dark:text-secondary-100 mt-1">
+                    <p className="text-xs text-ink-muted">Rate Limit</p>
+                    <p className="text-2xl font-bold text-ink mt-1">
                       {usage?.rateLimitPerMinute ?? 10}/min
                     </p>
                   </>
@@ -293,7 +293,7 @@ export default function ApiDashboardPage() {
             </CardHeader>
             <CardContent>
               {showCreate && (
-                <div className="mb-6 p-4 border border-secondary-700 rounded-lg space-y-3">
+                <div className="mb-6 p-4 border border-ink-rule rounded-lg space-y-3">
                   <Input
                     label="Key Name"
                     value={newKeyName}
@@ -318,8 +318,8 @@ export default function ApiDashboardPage() {
               ) : keys.length === 0 ? (
                 <div className="text-center py-8">
                   <Key className="h-10 w-10 text-neutral-300 dark:text-secondary-600 mx-auto mb-3" />
-                  <p className="text-sm text-text-secondary dark:text-secondary-400 mb-2">No API keys yet.</p>
-                  <p className="text-xs text-text-secondary dark:text-secondary-400">
+                  <p className="text-sm text-ink-muted mb-2">No API keys yet.</p>
+                  <p className="text-xs text-ink-muted">
                     Create a key to start using the AllowanceGuard API.
                   </p>
                 </div>
@@ -328,17 +328,17 @@ export default function ApiDashboardPage() {
                   {keys.map((key) => (
                     <div key={key.id} className="flex items-center justify-between py-4">
                       <div>
-                        <p className="text-sm font-medium text-text-primary dark:text-secondary-100">{key.name}</p>
+                        <p className="text-sm font-medium text-ink">{key.name}</p>
                         <div className="flex items-center gap-3 mt-1">
-                          <code className="text-xs font-mono text-text-secondary dark:text-secondary-400">
+                          <code className="text-xs font-mono text-ink-muted">
                             {key.prefix}...
                           </code>
                           <CopyButton text={key.prefix} />
-                          <span className="text-xs text-text-secondary dark:text-secondary-400">
+                          <span className="text-xs text-ink-muted">
                             Created {new Date(key.createdAt).toLocaleDateString()}
                           </span>
                           {key.lastUsedAt && (
-                            <span className="text-xs text-text-secondary dark:text-secondary-400">
+                            <span className="text-xs text-ink-muted">
                               Last used {new Date(key.lastUsedAt).toLocaleDateString()}
                             </span>
                           )}
@@ -365,14 +365,14 @@ export default function ApiDashboardPage() {
               <CardContent className="py-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div>
-                    <h3 className="font-semibold text-text-primary dark:text-secondary-100">Need more API calls?</h3>
-                    <p className="text-sm text-text-secondary dark:text-secondary-400 mt-1">
+                    <h3 className="font-semibold text-ink">Need more API calls?</h3>
+                    <p className="text-sm text-ink-muted mt-1">
                       Upgrade your plan for higher rate limits and more features.
                     </p>
                   </div>
                   <a
                     href="/pricing"
-                    className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-800 transition-colors"
+                    className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-ink shadow-sm hover:bg-primary-800 transition-colors"
                   >
                     View Plans
                     <ArrowRight className="h-4 w-4" />

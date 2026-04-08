@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 // Professional input variants following design system
 const inputVariants = cva(
   // Base styles - clean, minimal, accessible
-  'flex w-full border border-border-default bg-secondary-800 px-3 py-2 text-sm text-text-primary placeholder:text-text-tertiary transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50',
+  'flex w-full border border-border-default bg-paper-sub px-3 py-2 text-sm text-ink placeholder:text-ink-whisper transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -67,7 +67,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label 
             htmlFor={inputId}
-            className="mb-2 block text-sm font-medium text-text-primary"
+            className="mb-2 block text-sm font-medium text-ink"
           >
             {label}
           </label>
@@ -75,7 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-whisper">
               {leftIcon}
             </div>
           )}
@@ -93,14 +93,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
           
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-whisper">
               {rightIcon}
             </div>
           )}
         </div>
         
         {description && !error && (
-          <p className="mt-1 text-xs text-text-tertiary">
+          <p className="mt-1 text-xs text-ink-whisper">
             {description}
           </p>
         )}

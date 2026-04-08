@@ -33,14 +33,14 @@ export default function PricingPrototype() {
   }
 
   return (
-    <div className="min-h-screen bg-background-secondary dark:bg-dark-bg-primary py-16 px-4">
+    <div className="min-h-screen bg-paper-sub dark:bg-dark-bg-primary py-16 px-4">
       <div className="max-w-[1200px] mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-text-primary dark:text-secondary-100">
+          <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-ink">
             Security that scales with you
           </h1>
-          <p className="mt-4 text-lg text-secondary-500 dark:text-secondary-400 max-w-xl mx-auto">
+          <p className="mt-4 text-lg text-ink-whisper dark:text-ink-muted max-w-xl mx-auto">
             Core tool: free and open source. Always. Premium monitoring and API
             access for power users and teams.
           </p>
@@ -51,8 +51,8 @@ export default function PricingPrototype() {
               className={cn(
                 'text-sm font-medium transition-colors duration-150',
                 !yearly
-                  ? 'text-text-primary dark:text-secondary-100'
-                  : 'text-secondary-400 dark:text-secondary-500'
+                  ? 'text-ink'
+                  : 'text-ink-muted dark:text-ink-whisper'
               )}
             >
               Monthly
@@ -67,7 +67,7 @@ export default function PricingPrototype() {
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-secondary-900',
                 yearly
                   ? 'bg-primary-500'
-                  : 'bg-secondary-300 dark:bg-secondary-600'
+                  : 'bg-secondary-300 dark:bg-paper-deep'
               )}
             >
               <span
@@ -81,8 +81,8 @@ export default function PricingPrototype() {
               className={cn(
                 'text-sm font-medium transition-colors duration-150',
                 yearly
-                  ? 'text-text-primary dark:text-secondary-100'
-                  : 'text-secondary-400 dark:text-secondary-500'
+                  ? 'text-ink'
+                  : 'text-ink-muted dark:text-ink-whisper'
               )}
             >
               Yearly
@@ -106,23 +106,23 @@ export default function PricingPrototype() {
                 className={cn(
                   'relative flex flex-col rounded-xl border p-6 lg:p-8 transition-all duration-250',
                   tier.highlighted
-                    ? 'border-primary-300 dark:border-primary-600 bg-background-primary dark:bg-dark-bg-secondary shadow-lg ring-1 ring-primary-200 dark:ring-primary-700 scale-[1.02]'
-                    : 'border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary shadow-sm'
+                    ? 'border-primary-300 dark:border-primary-600 bg-paper dark:bg-dark-bg-secondary shadow-lg ring-1 ring-primary-200 dark:ring-primary-700 scale-[1.02]'
+                    : 'border-ink-rule bg-paper dark:bg-dark-bg-secondary shadow-sm'
                 )}
               >
                 {/* Badge */}
                 {tier.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-white bg-primary-500 dark:bg-primary-600 px-3 py-1 rounded-full shadow-sm">
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-ink bg-primary-500 dark:bg-primary-600 px-3 py-1 rounded-full shadow-sm">
                     {tier.badge}
                   </span>
                 )}
 
                 {/* Tier info */}
                 <div className="mb-6">
-                  <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">
+                  <h2 className="text-xl font-semibold text-ink">
                     {tier.name}
                   </h2>
-                  <p className="text-sm text-secondary-500 dark:text-secondary-400 mt-1">
+                  <p className="text-sm text-ink-whisper dark:text-ink-muted mt-1">
                     {tier.description}
                   </p>
                 </div>
@@ -130,10 +130,10 @@ export default function PricingPrototype() {
                 {/* Price */}
                 <div className="mb-6">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold tracking-tight text-text-primary dark:text-secondary-100 font-mono">
+                    <span className="text-4xl font-bold tracking-tight text-ink font-mono">
                       {formatPrice(tier)}
                     </span>
-                    <span className="text-sm text-secondary-400 dark:text-secondary-500">
+                    <span className="text-sm text-ink-muted dark:text-ink-whisper">
                       {period(tier)}
                     </span>
                   </div>
@@ -150,11 +150,11 @@ export default function PricingPrototype() {
                     'w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-150',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-secondary-900',
                     tier.buttonVariant === 'primary' &&
-                      'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md',
+                      'bg-primary-500 text-ink hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md',
                     tier.buttonVariant === 'secondary' &&
-                      'bg-secondary-100 dark:bg-secondary-800 text-text-primary dark:text-secondary-200 hover:bg-secondary-200 dark:hover:bg-secondary-700 border border-secondary-700 dark:border-secondary-600',
+                      'bg-secondary-100 dark:bg-paper-sub text-ink hover:bg-secondary-200 dark:hover:bg-paper-sub border border-ink-rule dark:border-secondary-600',
                     tier.buttonVariant === 'ghost' &&
-                      'text-secondary-600 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-800 border border-secondary-700'
+                      'text-secondary-600 dark:text-ink-soft hover:bg-secondary-100 dark:hover:bg-paper-sub border border-ink-rule'
                   )}
                 >
                   {tier.buttonLabel}
@@ -165,7 +165,7 @@ export default function PricingPrototype() {
                   {tier.features.map((feature) => (
                     <li
                       key={feature}
-                      className="flex items-start gap-2 text-sm text-secondary-600 dark:text-secondary-300"
+                      className="flex items-start gap-2 text-sm text-secondary-600 dark:text-ink-soft"
                     >
                       <Check
                         className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5"
@@ -181,9 +181,9 @@ export default function PricingPrototype() {
         </div>
 
         {/* Feature comparison table */}
-        <div className="rounded-xl border border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary overflow-hidden">
-          <div className="px-6 py-5 border-b border-secondary-700">
-            <h2 className="text-xl font-semibold text-text-primary dark:text-secondary-100">
+        <div className="rounded-xl border border-ink-rule bg-paper dark:bg-dark-bg-secondary overflow-hidden">
+          <div className="px-6 py-5 border-b border-ink-rule">
+            <h2 className="text-xl font-semibold text-ink">
               Compare plans
             </h2>
           </div>
@@ -191,17 +191,17 @@ export default function PricingPrototype() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-secondary-700">
-                  <th className="text-left py-3 px-6 font-medium text-secondary-500 dark:text-secondary-400 min-w-[200px]">
+                <tr className="border-b border-ink-rule">
+                  <th className="text-left py-3 px-6 font-medium text-ink-whisper dark:text-ink-muted min-w-[200px]">
                     Feature
                   </th>
-                  <th className="text-center py-3 px-4 font-medium text-secondary-500 dark:text-secondary-400 w-28">
+                  <th className="text-center py-3 px-4 font-medium text-ink-whisper dark:text-ink-muted w-28">
                     Free
                   </th>
                   <th className="text-center py-3 px-4 font-semibold text-primary-600 dark:text-primary-400 w-28">
                     Pro
                   </th>
-                  <th className="text-center py-3 px-4 font-medium text-secondary-500 dark:text-secondary-400 w-28">
+                  <th className="text-center py-3 px-4 font-medium text-ink-whisper dark:text-ink-muted w-28">
                     Sentinel
                   </th>
                 </tr>
@@ -211,13 +211,13 @@ export default function PricingPrototype() {
                   <tr
                     key={feature.name}
                     className={cn(
-                      'border-b border-secondary-700/50 dark:border-secondary-800',
+                      'border-b border-ink-rule/50 dark:border-ink-rule',
                       i % 2 === 0
-                        ? 'bg-background-primary dark:bg-dark-bg-secondary'
-                        : 'bg-secondary-50/50 dark:bg-secondary-800/30'
+                        ? 'bg-paper dark:bg-dark-bg-secondary'
+                        : 'bg-secondary-50/50 dark:bg-paper-sub/30'
                     )}
                   >
-                    <td className="py-3 px-6 text-text-primary dark:text-secondary-200">
+                    <td className="py-3 px-6 text-ink">
                       <span className="flex items-center gap-1.5">
                         {feature.name}
                         {feature.tooltip && (
@@ -225,10 +225,10 @@ export default function PricingPrototype() {
                             className="group relative"
                             aria-label={feature.tooltip}
                           >
-                            <HelpCircle className="h-3.5 w-3.5 text-secondary-400 cursor-help" />
+                            <HelpCircle className="h-3.5 w-3.5 text-ink-muted cursor-help" />
                             <span
                               role="tooltip"
-                              className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 text-xs text-white bg-secondary-900 dark:bg-secondary-100 dark:text-secondary-900 rounded-lg shadow-lg whitespace-nowrap z-10"
+                              className="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 text-xs text-ink bg-paper-deep dark:bg-secondary-100 dark:text-secondary-900 rounded-lg shadow-lg whitespace-nowrap z-10"
                             >
                               {feature.tooltip}
                             </span>
@@ -247,11 +247,11 @@ export default function PricingPrototype() {
                             />
                           ) : val === false ? (
                             <X
-                              className="h-4 w-4 text-secondary-300 dark:text-secondary-600 mx-auto"
+                              className="h-4 w-4 text-ink-soft dark:text-secondary-600 mx-auto"
                               aria-label="Not included"
                             />
                           ) : (
-                            <span className="text-xs font-medium text-secondary-600 dark:text-secondary-300">
+                            <span className="text-xs font-medium text-secondary-600 dark:text-ink-soft">
                               {val}
                             </span>
                           )}

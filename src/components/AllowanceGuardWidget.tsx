@@ -91,8 +91,8 @@ export default function AllowanceGuardWidget({
   }
 
   const themeClasses = currentTheme === 'dark' 
-    ? 'bg-gray-900 text-white border-gray-700' 
-    : 'bg-secondary-800 text-slate-200 border-secondary-700'
+    ? 'bg-gray-900 text-ink border-gray-700' 
+    : 'bg-paper-sub text-ink border-ink-rule'
 
   if (error) {
     return (
@@ -108,7 +108,7 @@ export default function AllowanceGuardWidget({
         </div>
         <button
           onClick={refetch}
-          className="mt-3 px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600 transition-colors"
+          className="mt-3 px-3 py-1 bg-blue-500 text-ink rounded text-sm hover:bg-blue-600 transition-colors"
         >
           Retry
         </button>

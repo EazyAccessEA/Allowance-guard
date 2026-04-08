@@ -72,10 +72,10 @@ function CheckoutSuccessInner() {
             {!ready ? (
               <>
                 <Loader2 className="h-12 w-12 text-primary-500 animate-spin mx-auto" />
-                <h1 className="text-2xl font-bold text-text-primary">
+                <h1 className="text-2xl font-bold text-ink">
                   Setting up your subscription...
                 </h1>
-                <p className="text-sm text-text-secondary">
+                <p className="text-sm text-ink-muted">
                   {provider === 'coinbase'
                     ? 'Waiting for on-chain confirmation. This can take a few minutes for crypto payments.'
                     : "This usually takes just a moment. Please don't close this page."}
@@ -85,11 +85,11 @@ function CheckoutSuccessInner() {
               <>
                 <CheckCircle className="h-16 w-16 text-semantic-success-500 mx-auto" />
                 <div className="space-y-2">
-                  <h1 className="text-2xl font-bold text-text-primary">
+                  <h1 className="text-2xl font-bold text-ink">
                     Welcome to AllowanceGuard{' '}
                     {plan !== 'free' && <PlanBadge plan={plan as ConsumerPlan} />}
                   </h1>
-                  <p className="text-sm text-text-secondary">
+                  <p className="text-sm text-ink-muted">
                     {plan !== 'free'
                       ? 'Your subscription is active. All premium features are now unlocked.'
                       : 'Your payment is being processed. Features will unlock shortly.'}
@@ -108,7 +108,7 @@ function CheckoutSuccessInner() {
                     Go to Dashboard
                   </Button>
                 </div>
-                <p className="text-xs text-text-secondary">
+                <p className="text-xs text-ink-muted">
                   Redirecting in 5 seconds...
                 </p>
               </>

@@ -19,7 +19,7 @@ export default function TimeMachineToggle({
         'flex items-center gap-3 px-4 py-3 rounded-lg border transition-all duration-250',
         enabled
           ? 'bg-primary-50 dark:bg-primary-900/20 border-primary-300 dark:border-primary-700'
-          : 'bg-background-primary dark:bg-dark-bg-secondary border-secondary-700'
+          : 'bg-paper dark:bg-dark-bg-secondary border-ink-rule'
       )}
     >
       <button
@@ -32,7 +32,7 @@ export default function TimeMachineToggle({
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-secondary-900',
           enabled
             ? 'bg-primary-500'
-            : 'bg-secondary-300 dark:bg-secondary-600'
+            : 'bg-secondary-300 dark:bg-paper-deep'
         )}
       >
         <span
@@ -47,9 +47,9 @@ export default function TimeMachineToggle({
         {enabled ? (
           <Zap className="h-4 w-4 text-primary-500" aria-hidden="true" />
         ) : (
-          <Clock className="h-4 w-4 text-secondary-400" aria-hidden="true" />
+          <Clock className="h-4 w-4 text-ink-muted" aria-hidden="true" />
         )}
-        <span className="text-sm font-medium text-text-primary dark:text-secondary-200">
+        <span className="text-sm font-medium text-ink">
           Time Machine
         </span>
       </div>

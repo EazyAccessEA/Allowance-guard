@@ -11,14 +11,14 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-border-default dark:border-secondary-600 bg-background-light dark:bg-secondary-800 text-text-primary dark:text-secondary-200',
+        default: 'border-border-default dark:border-secondary-600 bg-paper-sub text-ink',
         primary: 'border-primary/20 dark:border-primary-700 bg-primary/10 dark:bg-primary-900/30 text-primary dark:text-primary-300',
         success: 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-300',
         danger: 'border-semantic-danger/20 dark:border-red-800 bg-semanticBg-danger dark:bg-red-900/30 text-semantic-danger dark:text-red-300',
         warning: 'border-semantic-warning/20 dark:border-amber-800 bg-semanticBg-warning dark:bg-amber-900/30 text-semantic-warning dark:text-amber-300',
         info: 'border-semantic-info/20 dark:border-sky-800 bg-semanticBg-info dark:bg-sky-900/30 text-semantic-info dark:text-sky-300',
-        outline: 'border-border-default dark:border-secondary-600 text-text-primary dark:text-secondary-200 bg-transparent',
-        secondary: 'border-slate-200 dark:border-secondary-600 bg-slate-100 dark:bg-secondary-800 text-slate-300 dark:text-secondary-300',
+        outline: 'border-border-default dark:border-secondary-600 text-ink bg-transparent',
+        secondary: 'border-slate-200 dark:border-secondary-600 bg-slate-100 dark:bg-paper-sub text-ink-soft dark:text-ink-soft',
       },
       size: {
         sm: 'px-2 py-0.5 text-xs',

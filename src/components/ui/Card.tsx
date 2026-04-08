@@ -7,24 +7,24 @@ import { cn } from '@/lib/utils'
 // Mobbin-Inspired Card Variants with Glassmorphism
 const cardVariants = cva(
   // Base styles with dark mode support
-  'rounded-base border bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100 shadow-sm dark:shadow-dark-subtle transition-all duration-150',
+  'rounded-base border bg-paper-deep text-ink shadow-sm dark:shadow-dark-subtle transition-all duration-150',
   {
     variants: {
       variant: {
         // Default: Clean card with dark mode
-        default: 'border-secondary-700 hover:border-border-secondary dark:hover:border-secondary-600',
+        default: 'border-ink-rule hover:border-ink-rule dark:hover:border-secondary-600',
         elevated: 'shadow-md dark:shadow-dark-medium hover:shadow-lg dark:hover:shadow-dark-large active:shadow-md',
-        outlined: 'border-2 border-secondary-700 dark:border-secondary-600 shadow-none hover:border-border-secondary dark:hover:border-secondary-500',
-        ghost: 'border-none shadow-none bg-transparent hover:bg-background-secondary dark:hover:bg-secondary-800',
+        outlined: 'border-2 border-ink-rule dark:border-secondary-600 shadow-none hover:border-ink-rule dark:hover:border-secondary-500',
+        ghost: 'border-none shadow-none bg-transparent hover:bg-paper-sub dark:hover:bg-paper-sub',
         // Semantic variants with dark mode
         success: 'border-semantic-success-200 dark:border-semantic-success-800 bg-semantic-success-50 dark:bg-semantic-success-900/30 hover:border-semantic-success-300 dark:hover:border-semantic-success-700',
         warning: 'border-semantic-warning-200 dark:border-semantic-warning-800 bg-semantic-warning-50 dark:bg-semantic-warning-900/30 hover:border-semantic-warning-300 dark:hover:border-semantic-warning-700',
         danger: 'border-semantic-error-200 dark:border-semantic-error-800 bg-semantic-error-50 dark:bg-semantic-error-900/30 hover:border-semantic-error-300 dark:hover:border-semantic-error-700',
         info: 'border-semantic-info-200 dark:border-semantic-info-800 bg-semantic-info-50 dark:bg-semantic-info-900/30 hover:border-semantic-info-300 dark:hover:border-semantic-info-700',
-        subtle: 'border-neutral-200 dark:border-secondary-700 bg-secondary-800/50 hover:border-neutral-300 dark:hover:border-secondary-600',
+        subtle: 'border-neutral-200 dark:border-ink-rule bg-paper-sub/50 hover:border-neutral-300 dark:hover:border-secondary-600',
         accent: 'border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-primary-900/20 hover:border-primary-300 dark:hover:border-primary-700',
         // Glassmorphism variants
-        glass: 'bg-secondary-900/60 backdrop-blur-glass border-secondary-600/30 shadow-glass dark:shadow-dark-medium hover:bg-secondary-800/70',
+        glass: 'bg-paper-deep/60 backdrop-blur-glass border-secondary-600/30 shadow-glass dark:shadow-dark-medium hover:bg-paper-sub/70',
         'glass-accent': 'bg-primary-50/50 dark:bg-primary-900/20 backdrop-blur-glass border-primary-200/40 dark:border-primary-700/30 shadow-glass hover:bg-primary-50/70 dark:hover:bg-primary-900/30',
       },
       size: {
@@ -82,12 +82,12 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           <div className="mb-4 last:mb-0">
             {header}
             {title && (
-              <h3 className="mobbin-heading-4 text-text-primary dark:text-secondary-100">
+              <h3 className="mobbin-heading-4 text-ink">
                 {title}
               </h3>
             )}
             {description && (
-              <p className="mt-1 mobbin-body-small text-text-secondary dark:text-secondary-400">
+              <p className="mt-1 mobbin-body-small text-ink-muted">
                 {description}
               </p>
             )}
@@ -99,7 +99,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         
         {/* Footer Section */}
         {footer && (
-          <div className="mt-4 pt-4 border-t border-border-default dark:border-secondary-700">
+          <div className="mt-4 pt-4 border-t border-border-default dark:border-ink-rule">
             {footer}
           </div>
         )}
@@ -129,7 +129,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn("mobbin-heading-4 text-text-primary dark:text-secondary-100", className)}
+    className={cn("mobbin-heading-4 text-ink", className)}
     {...props}
   />
 ))
@@ -141,7 +141,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("mobbin-body-small text-text-secondary dark:text-secondary-400", className)}
+    className={cn("mobbin-body-small text-ink-muted", className)}
     {...props}
   />
 ))
@@ -161,7 +161,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center pt-4 mt-4 border-t border-border-default dark:border-secondary-700", className)}
+    className={cn("flex items-center pt-4 mt-4 border-t border-border-default dark:border-ink-rule", className)}
     {...props}
   />
 ))

@@ -39,7 +39,7 @@ export default function TokensPage() {
   }), [state])
 
   return (
-    <div className="min-h-screen bg-background-primary dark:bg-secondary-900 text-text-primary dark:text-secondary-100">
+    <div className="min-h-screen bg-paper-deep text-ink">
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
@@ -57,13 +57,13 @@ export default function TokensPage() {
             </div>
             <div>
               <H1 className="mb-2">Token Discovery</H1>
-              <p className="text-text-tertiary dark:text-secondary-400 text-lg">
+              <p className="text-ink-muted text-lg">
                 Explore and discover tokens across multiple blockchains
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-text-tertiary dark:text-secondary-400">
+          <div className="flex items-center gap-4 text-sm text-ink-muted">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary-accent" />
               <span>Advanced fuzzy search</span>
@@ -76,7 +76,7 @@ export default function TokensPage() {
         </Container>
       </Section>
 
-      <div className="border-t border-secondary-700" />
+      <div className="border-t border-ink-rule" />
 
       {/* Search Section */}
       <Section className="py-16">

@@ -69,7 +69,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-secondary-900 text-white">
+    <div className="min-h-screen bg-paper-deep text-ink">
       {/* ============ HERO ============ */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <VideoBackground videoSrc="/V3AG.mp4" />
@@ -78,7 +78,7 @@ export default function ContactPage() {
           aria-hidden="true"
           style={{
             background:
-              'linear-gradient(to right, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.75) 60%, rgba(15,23,42,0.6) 100%)',
+              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)',
           }}
         />
 
@@ -86,14 +86,14 @@ export default function ContactPage() {
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
             Contact
           </span>
-          <H1 className="mb-6 text-white">Talk to a human.</H1>
-          <p className="text-lg text-slate-300 max-w-reading">
+          <H1 className="mb-6 text-ink">Talk to a human.</H1>
+          <p className="text-lg text-ink-soft max-w-reading">
             Bug reports, security disclosures, partnerships, press, funding &mdash; all of it lands in front of someone who can actually help. Choose a topic, write what you need, and we&rsquo;ll be back inside one business day. Critical security reports inside two hours.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-white/10" />
+      <div className="border-t border-ink-rule" />
 
       {/* ============ FORM + CHANNELS ============ */}
       <Section className="py-20 sm:py-24">
@@ -101,10 +101,10 @@ export default function ContactPage() {
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
             {/* ---------- Form ---------- */}
             <div className="lg:col-span-7">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-ink mb-2">
                 Send a message
               </h2>
-              <p className="text-sm text-slate-400 mb-8">
+              <p className="text-sm text-ink-muted mb-8">
                 Routed automatically to the right inbox. We never share your details with third parties.
               </p>
 
@@ -113,8 +113,8 @@ export default function ContactPage() {
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
                     <div>
-                      <h3 className="text-lg font-semibold text-white mb-2">Message received.</h3>
-                      <p className="text-sm text-slate-300 leading-relaxed">
+                      <h3 className="text-lg font-semibold text-ink mb-2">Message received.</h3>
+                      <p className="text-sm text-ink-soft leading-relaxed">
                         Thanks &mdash; we&rsquo;ll be in touch shortly. If your inquiry is urgent and security-related, we&rsquo;ll acknowledge within two hours. Everything else within one business day.
                       </p>
                       <button
@@ -168,7 +168,7 @@ export default function ContactPage() {
 
                   {/* Topic */}
                   <fieldset>
-                    <legend className="block text-sm font-medium text-slate-200 mb-3">
+                    <legend className="block text-sm font-medium text-ink mb-3">
                       What is this about? <span className="text-amber-400">*</span>
                     </legend>
                     <div className="grid sm:grid-cols-2 gap-2">
@@ -180,7 +180,7 @@ export default function ContactPage() {
                             className={`relative flex flex-col cursor-pointer rounded-xl border px-4 py-3 transition-all ${
                               selected
                                 ? 'border-amber-400/60 bg-amber-400/10'
-                                : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
+                                : 'border-ink-rule bg-paper-sub hover:border-ink-rule hover:bg-paper-sub'
                             }`}
                           >
                             <input
@@ -193,12 +193,12 @@ export default function ContactPage() {
                             />
                             <span
                               className={`text-sm font-semibold ${
-                                selected ? 'text-amber-300' : 'text-white'
+                                selected ? 'text-amber-300' : 'text-ink'
                               }`}
                               dangerouslySetInnerHTML={{ __html: t.label }}
                             />
                             <span
-                              className="text-xs text-slate-400 mt-0.5"
+                              className="text-xs text-ink-muted mt-0.5"
                               dangerouslySetInnerHTML={{ __html: t.hint }}
                             />
                           </label>
@@ -219,7 +219,7 @@ export default function ContactPage() {
 
                   {/* Message */}
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-slate-200 mb-2">
+                    <label htmlFor="message" className="block text-sm font-medium text-ink mb-2">
                       Message <span className="text-amber-400">*</span>
                     </label>
                     <textarea
@@ -231,9 +231,9 @@ export default function ContactPage() {
                       value={form.message}
                       onChange={(e) => update('message', e.target.value)}
                       placeholder="Tell us what's going on. The more context, the faster we can help."
-                      className="w-full rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 text-sm text-white placeholder-slate-500 resize-y focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
+                      className="w-full rounded-xl bg-paper-sub border border-ink-rule px-4 py-3 text-sm text-ink placeholder-ink-whisper resize-y focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
                     />
-                    <p className="mt-1.5 text-xs text-slate-500">
+                    <p className="mt-1.5 text-xs text-ink-whisper">
                       {form.message.length} / 5000
                     </p>
                   </div>
@@ -251,7 +251,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={status === 'submitting'}
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-amber-500 text-slate-900 text-sm font-semibold hover:bg-amber-400 disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-secondary-900"
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-amber-500 text-ink text-sm font-semibold hover:bg-amber-400 disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-paper-deep"
                     >
                       {status === 'submitting' ? 'Sending…' : (
                         <>
@@ -260,7 +260,7 @@ export default function ContactPage() {
                         </>
                       )}
                     </button>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-ink-whisper">
                       By submitting, you agree to our{' '}
                       <a href="/privacy" className="text-amber-400 hover:underline">Privacy Policy</a>.
                     </p>
@@ -271,10 +271,10 @@ export default function ContactPage() {
 
             {/* ---------- Sidebar ---------- */}
             <aside className="lg:col-span-5 space-y-5">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-ink mb-2">
                 Or reach us directly
               </h2>
-              <p className="text-sm text-slate-400 mb-6">
+              <p className="text-sm text-ink-muted mb-6">
                 Prefer email or chat? Pick the channel that fits.
               </p>
 
@@ -319,7 +319,7 @@ export default function ContactPage() {
       </Section>
 
       {/* ============ TRUST STRIP ============ */}
-      <div className="border-t border-white/10">
+      <div className="border-t border-ink-rule">
         <Container>
           <div className="py-10 grid sm:grid-cols-3 gap-6 text-sm">
             <TrustItem
@@ -378,10 +378,10 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-slate-200 mb-2">
+      <label htmlFor={id} className="block text-sm font-medium text-ink mb-2">
         {label}
         {required && <span className="text-amber-400 ml-1">*</span>}
-        {optional && <span className="text-slate-500 ml-2 text-xs font-normal">optional</span>}
+        {optional && <span className="text-ink-whisper ml-2 text-xs font-normal">optional</span>}
       </label>
       <input
         id={id}
@@ -391,7 +391,7 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className="w-full rounded-xl bg-white/[0.03] border border-white/10 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
+        className="w-full rounded-xl bg-paper-sub border border-ink-rule px-4 py-3 text-sm text-ink placeholder-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
       />
     </div>
   )
@@ -424,26 +424,26 @@ function ChannelCard({
       className={`block group rounded-2xl border p-5 transition-all ${
         accent
           ? 'border-amber-400/30 bg-amber-400/5 hover:border-amber-400/60'
-          : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.04]'
+          : 'border-ink-rule bg-paper-sub hover:border-ink-rule hover:bg-paper-sub'
       }`}
     >
       <div className="flex items-start gap-4">
         <div
           className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
-            accent ? 'bg-amber-400/15 text-amber-300' : 'bg-white/5 text-slate-300'
+            accent ? 'bg-amber-400/15 text-amber-300' : 'bg-paper-sub text-ink-soft'
           }`}
         >
           {icon}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-base font-semibold text-white">{title}</h3>
-            <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+            <h3 className="text-base font-semibold text-ink">{title}</h3>
+            <ArrowRight className="w-4 h-4 text-ink-whisper group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
           </div>
-          <p className="mt-1 text-sm text-slate-400 leading-relaxed">{description}</p>
+          <p className="mt-1 text-sm text-ink-muted leading-relaxed">{description}</p>
           <div className="mt-3 flex items-center justify-between gap-3 text-xs">
             <span className="font-mono text-amber-400 truncate">{cta}</span>
-            <span className="text-slate-500 flex-shrink-0">{meta}</span>
+            <span className="text-ink-whisper flex-shrink-0">{meta}</span>
           </div>
         </div>
       </div>
@@ -464,8 +464,8 @@ function TrustItem({
     <div className="flex items-start gap-3">
       <div className="flex-shrink-0 mt-0.5">{icon}</div>
       <div>
-        <h4 className="font-semibold text-white text-sm mb-1">{title}</h4>
-        <p className="text-xs text-slate-400 leading-relaxed">{children}</p>
+        <h4 className="font-semibold text-ink text-sm mb-1">{title}</h4>
+        <p className="text-xs text-ink-muted leading-relaxed">{children}</p>
       </div>
     </div>
   )

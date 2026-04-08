@@ -58,8 +58,8 @@ export function ChartContainer({
         {(title || subtitle || actions) && (
           <div className="flex items-start justify-between mb-6">
             <div>
-              {title && <h3 className="mobbin-heading-4 text-text-primary mb-1">{title}</h3>}
-              {subtitle && <p className="mobbin-body-small text-text-secondary">{subtitle}</p>}
+              {title && <h3 className="mobbin-heading-4 text-ink mb-1">{title}</h3>}
+              {subtitle && <p className="mobbin-body-small text-ink-muted">{subtitle}</p>}
             </div>
             {actions && <div className="flex items-center gap-2">{actions}</div>}
           </div>

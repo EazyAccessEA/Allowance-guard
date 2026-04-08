@@ -98,10 +98,10 @@ export default function AccountPage() {
               <User className="h-5 w-5 text-primary-700" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-text-primary">
+              <h1 className="text-2xl font-bold text-ink">
                 Account
               </h1>
-              <p className="text-sm text-text-secondary">
+              <p className="text-sm text-ink-muted">
                 Manage your plan, usage, and settings.
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function AccountPage() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'group flex items-center gap-4 rounded-lg border border-secondary-700 bg-background-primary p-5',
+                  'group flex items-center gap-4 rounded-lg border border-ink-rule bg-paper p-5',
                   'transition-all duration-150 hover:border-primary-300 hover:shadow-md'
                 )}
               >
@@ -145,14 +145,14 @@ export default function AccountPage() {
                   <link.icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-text-primary">
+                  <p className="text-sm font-semibold text-ink">
                     {link.label}
                   </p>
-                  <p className="text-xs text-text-secondary">
+                  <p className="text-xs text-ink-muted">
                     {link.description}
                   </p>
                 </div>
-                <ArrowRight className="h-4 w-4 text-text-secondary group-hover:text-primary-700 transition-colors" />
+                <ArrowRight className="h-4 w-4 text-ink-muted group-hover:text-primary-700 transition-colors" />
               </a>
             ))}
           </div>

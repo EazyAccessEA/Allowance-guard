@@ -8,17 +8,17 @@ import Link from 'next/link'
 
 export default function DPAPage() {
   return (
-    <div className="min-h-screen bg-surface-base text-white">
+    <div className="min-h-screen bg-paper text-ink">
 
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden bg-secondary-900">
+      <Section className="relative py-24 sm:py-32 overflow-hidden bg-paper-deep">
         <VideoBackground videoSrc="/V3AG.mp4" />
         <div
           className="absolute inset-0 z-10"
           aria-hidden="true"
           style={{
             background:
-              'linear-gradient(to right, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.75) 60%, rgba(15,23,42,0.6) 100%)'
+              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)'
           }}
         />
 
@@ -26,20 +26,20 @@ export default function DPAPage() {
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
             Legal &middot; GDPR Article 28
           </span>
-          <H1 className="mb-6 text-white">Data Processing Agreement</H1>
-          <p className="text-lg text-slate-300 max-w-reading">
+          <H1 className="mb-6 text-ink">Data Processing Agreement</H1>
+          <p className="text-lg text-ink-soft max-w-reading">
             The standard DPA for Sentinel and Enterprise customers who process personal data through AllowanceGuard. Plain language where the law allows it; precise language where it doesn&rsquo;t.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-white/10" />
+      <div className="border-t border-ink-rule" />
 
       {/* DPA Content */}
       <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="max-w-none text-slate-300">
+            <div className="max-w-none text-ink-soft">
 
               {/* Availability Notice */}
               <div className="mb-12">
@@ -93,23 +93,23 @@ export default function DPAPage() {
                   <table className="w-full text-sm text-stone border border-line rounded-lg">
                     <tbody>
                       <tr className="border-b border-line">
-                        <td className="p-3 font-medium bg-background-secondary dark:bg-secondary-800 w-1/3">Subject matter</td>
+                        <td className="p-3 font-medium bg-paper-sub w-1/3">Subject matter</td>
                         <td className="p-3">Provision of wallet security monitoring and token approval management services</td>
                       </tr>
                       <tr className="border-b border-line">
-                        <td className="p-3 font-medium bg-background-secondary dark:bg-secondary-800">Duration</td>
+                        <td className="p-3 font-medium bg-paper-sub">Duration</td>
                         <td className="p-3">For the term of the Customer&apos;s subscription, plus data retention periods specified in the Privacy Policy</td>
                       </tr>
                       <tr className="border-b border-line">
-                        <td className="p-3 font-medium bg-background-secondary dark:bg-secondary-800">Nature &amp; purpose</td>
+                        <td className="p-3 font-medium bg-paper-sub">Nature &amp; purpose</td>
                         <td className="p-3">Scanning blockchain networks for token approvals, calculating risk scores, sending alerts, generating compliance reports</td>
                       </tr>
                       <tr className="border-b border-line">
-                        <td className="p-3 font-medium bg-background-secondary dark:bg-secondary-800">Categories of data</td>
+                        <td className="p-3 font-medium bg-paper-sub">Categories of data</td>
                         <td className="p-3">Wallet addresses (public blockchain data), email addresses, team member names, monitoring preferences, approval/risk data</td>
                       </tr>
                       <tr>
-                        <td className="p-3 font-medium bg-background-secondary dark:bg-secondary-800">Categories of data subjects</td>
+                        <td className="p-3 font-medium bg-paper-sub">Categories of data subjects</td>
                         <td className="p-3">Customer&apos;s team members, wallet owners monitored by the Customer</td>
                       </tr>
                     </tbody>
@@ -140,27 +140,27 @@ export default function DPAPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">5. Technical &amp; Organizational Measures</H2>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4 rounded-lg">
                     <h3 className="font-medium mb-2 text-sm">Encryption</h3>
                     <p className="text-stone text-xs">Data encrypted at rest (AES-256) and in transit (TLS 1.2+). API keys hashed before storage.</p>
                   </div>
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4 rounded-lg">
                     <h3 className="font-medium mb-2 text-sm">Access Control</h3>
                     <p className="text-stone text-xs">Role-based access, session-based authentication, CSRF protection, rate limiting on all endpoints.</p>
                   </div>
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4 rounded-lg">
                     <h3 className="font-medium mb-2 text-sm">Audit Logging</h3>
                     <p className="text-stone text-xs">All data access and modifications logged with actor, timestamp, and action. Logs retained for 90 days.</p>
                   </div>
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4 rounded-lg">
                     <h3 className="font-medium mb-2 text-sm">Infrastructure</h3>
                     <p className="text-stone text-xs">Hosted on Vercel (SOC 2). Database on Neon (encrypted, isolated). Redis on Upstash (encrypted).</p>
                   </div>
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4 rounded-lg">
                     <h3 className="font-medium mb-2 text-sm">Incident Response</h3>
                     <p className="text-stone text-xs">Automated error monitoring (Rollbar). Breach notification within 72 hours per GDPR Article 33.</p>
                   </div>
-                  <div className="bg-background-secondary dark:bg-secondary-800 p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4 rounded-lg">
                     <h3 className="font-medium mb-2 text-sm">Data Minimization</h3>
                     <p className="text-stone text-xs">Only data necessary for service delivery is collected. Automated cleanup of expired data.</p>
                   </div>
@@ -176,7 +176,7 @@ export default function DPAPage() {
                 </p>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm text-stone border border-line rounded-lg">
-                    <thead className="bg-background-secondary dark:bg-secondary-800">
+                    <thead className="bg-paper-sub">
                       <tr>
                         <th className="text-left p-3 font-medium">Sub-processor</th>
                         <th className="text-left p-3 font-medium">Purpose</th>
@@ -237,8 +237,8 @@ export default function DPAPage() {
                   Allowance Guard provides the following tools to help Customers fulfill data subject requests:
                 </p>
                 <ul className="space-y-2 text-stone text-sm ml-4">
-                  <li>• <strong>Access &amp; Portability:</strong> <code className="text-xs bg-background-secondary px-1 py-0.5 rounded">GET /api/user/export</code> — full data export in JSON format</li>
-                  <li>• <strong>Erasure:</strong> <code className="text-xs bg-background-secondary px-1 py-0.5 rounded">DELETE /api/user/delete</code> — complete account and data deletion</li>
+                  <li>• <strong>Access &amp; Portability:</strong> <code className="text-xs bg-paper-sub px-1 py-0.5 rounded">GET /api/user/export</code> — full data export in JSON format</li>
+                  <li>• <strong>Erasure:</strong> <code className="text-xs bg-paper-sub px-1 py-0.5 rounded">DELETE /api/user/delete</code> — complete account and data deletion</li>
                   <li>• <strong>Rectification:</strong> Account settings page for profile updates</li>
                   <li>• <strong>Restriction:</strong> Wallet monitoring can be paused per-wallet</li>
                 </ul>
@@ -263,7 +263,7 @@ export default function DPAPage() {
               {/* How to Execute */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">Request a Signed DPA</H2>
-                <div className="bg-background-secondary dark:bg-secondary-800 p-6 rounded-lg">
+                <div className="bg-paper-sub p-6 rounded-lg">
                   <p className="text-stone mb-4">
                     To execute this DPA for your organization, contact us with your company details:
                   </p>

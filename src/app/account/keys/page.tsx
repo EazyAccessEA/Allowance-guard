@@ -75,7 +75,7 @@ export default function KeysPage() {
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-primary-700 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -83,8 +83,8 @@ export default function KeysPage() {
 
           {/* Header */}
           <div>
-            <h1 className="text-2xl font-bold text-text-primary">API Keys</h1>
-            <p className="text-sm text-text-secondary mt-1">
+            <h1 className="text-2xl font-bold text-ink">API Keys</h1>
+            <p className="text-sm text-ink-muted mt-1">
               Create and manage API keys for the AllowanceGuard API.
             </p>
           </div>
@@ -93,11 +93,11 @@ export default function KeysPage() {
           {loading ? (
             <div
               className={cn(
-                'rounded-lg border border-secondary-700 bg-background-primary p-12',
+                'rounded-lg border border-ink-rule bg-paper p-12',
                 'flex items-center justify-center'
               )}
             >
-              <div className="flex items-center gap-3 text-sm text-text-secondary">
+              <div className="flex items-center gap-3 text-sm text-ink-muted">
                 <svg
                   className="h-5 w-5 animate-spin"
                   xmlns="http://www.w3.org/2000/svg"

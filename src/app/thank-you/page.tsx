@@ -91,11 +91,11 @@ export default function ThankYouPage() {
             {/* Success Icon */}
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-emerald to-teal rounded-full mb-8">
               {status === 'verifying' ? (
-                <Loader2 className="w-10 h-10 text-white animate-spin" />
+                <Loader2 className="w-10 h-10 text-ink animate-spin" />
               ) : status === 'failed' ? (
-                <AlertCircle className="w-10 h-10 text-white fill-current" />
+                <AlertCircle className="w-10 h-10 text-ink fill-current" />
               ) : (
-                <CheckCircle className="w-10 h-10 text-white fill-current" />
+                <CheckCircle className="w-10 h-10 text-ink fill-current" />
               )}
             </div>
 
@@ -151,7 +151,7 @@ export default function ThankYouPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-white bg-cobalt hover:bg-cobalt/90 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
+                className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-ink bg-cobalt hover:bg-cobalt/90 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cobalt/30"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Home</span>

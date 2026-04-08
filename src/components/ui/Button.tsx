@@ -13,30 +13,30 @@ const buttonVariants = cva(
     variants: {
       variant: {
         // Primary — Amber gradient button, dark text (7.1:1 contrast)
-        primary: 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 font-semibold hover:from-amber-400 hover:to-amber-500 active:from-amber-600 active:to-amber-700 shadow-sm hover:shadow-glow-primary',
+        primary: 'bg-gradient-to-r from-amber-500 to-amber-600 text-ink font-semibold hover:from-amber-400 hover:to-amber-500 active:from-amber-600 active:to-amber-700 shadow-sm hover:shadow-glow-primary',
 
         // Secondary — transparent with slate border
-        secondary: 'border border-secondary-700 bg-transparent text-slate-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
+        secondary: 'border border-ink-rule bg-transparent text-ink-soft hover:bg-paper-sub hover:border-secondary-500 hover:text-ink',
 
         // Ghost — no border, subtle hover
-        ghost: 'text-slate-400 hover:bg-secondary-800 hover:text-white active:bg-secondary-700',
+        ghost: 'text-ink-muted hover:bg-paper-sub hover:text-ink active:bg-paper-sub',
 
         // Destructive — Danger Red (threats, revoke)
-        destructive: 'bg-crimson-500 text-white hover:bg-crimson-600 active:bg-crimson-700 shadow-sm hover:shadow-glow-crimson',
+        destructive: 'bg-crimson-500 text-ink hover:bg-crimson-600 active:bg-crimson-700 shadow-sm hover:shadow-glow-crimson',
 
         // Outline — slate border
-        outline: 'border border-secondary-700 bg-transparent text-slate-300 hover:bg-secondary-800 hover:border-secondary-500 hover:text-white',
+        outline: 'border border-ink-rule bg-transparent text-ink-soft hover:bg-paper-sub hover:border-secondary-500 hover:text-ink',
 
         // Link — Sky Blue
         link: 'text-sky-400 underline-offset-4 hover:underline hover:text-sky-300',
 
         // Semantic variants
-        success: 'bg-semantic-success-500 text-white hover:bg-semantic-success-600 active:bg-semantic-success-700 shadow-sm',
-        warning: 'bg-semantic-warning-500 text-slate-900 hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm',
-        info: 'bg-semantic-info-500 text-white hover:bg-semantic-info-600 active:bg-semantic-info-700 shadow-sm',
+        success: 'bg-semantic-success-500 text-ink hover:bg-semantic-success-600 active:bg-semantic-success-700 shadow-sm',
+        warning: 'bg-semantic-warning-500 text-ink hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm',
+        info: 'bg-semantic-info-500 text-ink hover:bg-semantic-info-600 active:bg-semantic-info-700 shadow-sm',
 
         // Subtle — raised navy surface
-        subtle: 'bg-secondary-800 text-slate-300 hover:bg-secondary-700 hover:text-white',
+        subtle: 'bg-paper-sub text-ink-soft hover:bg-paper-sub hover:text-ink',
         accent: 'bg-amber-900/20 text-amber-300 hover:bg-amber-900/40 hover:text-amber-200',
       },
       size: {

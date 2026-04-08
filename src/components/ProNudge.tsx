@@ -57,7 +57,7 @@ export const ProNudge: React.FC<ProNudgeProps> = ({ variant, className }) => {
         'relative flex items-center gap-3 rounded-md border border-l-4 px-4 py-3',
         config.borderColor,
         config.bgColor,
-        'border-neutral-200 dark:border-secondary-700',
+        'border-neutral-200 dark:border-ink-rule',
         className
       )}
       role="complementary"
@@ -65,7 +65,7 @@ export const ProNudge: React.FC<ProNudgeProps> = ({ variant, className }) => {
     >
       <Icon className={cn('h-5 w-5 shrink-0', config.iconColor)} />
 
-      <p className="flex-1 text-sm text-slate-300 dark:text-secondary-200">{config.message}</p>
+      <p className="flex-1 text-sm text-ink-soft dark:text-ink">{config.message}</p>
 
       <Link
         href="/pricing"
@@ -76,7 +76,7 @@ export const ProNudge: React.FC<ProNudgeProps> = ({ variant, className }) => {
 
       <button
         onClick={() => setDismissed(true)}
-        className="shrink-0 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-neutral-400 dark:text-secondary-500 transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-secondary-700 hover:text-slate-400 dark:hover:text-secondary-300"
+        className="shrink-0 rounded-full p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-neutral-400 dark:text-ink-whisper transition-colors duration-150 hover:bg-neutral-200 dark:hover:bg-paper-sub hover:text-ink-muted dark:hover:text-ink-soft"
         aria-label="Dismiss nudge"
       >
         <X className="h-3.5 w-3.5" />

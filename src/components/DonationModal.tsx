@@ -101,17 +101,17 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-secondary-800 border border-secondary-700 rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-large">
+    <div className="fixed inset-0 bg-paper-deep/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-paper-sub border border-ink-rule rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-large">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <Heart className="w-8 h-8 text-amber-500 fill-current" />
-            <h2 className="text-2xl font-semibold text-white">Support Allowance Guard</h2>
+            <h2 className="text-2xl font-semibold text-ink">Support Allowance Guard</h2>
           </div>
           <button
             onClick={onClose}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-ink-muted hover:text-ink hover:bg-paper-sub transition-colors duration-200"
           >
             <X className="w-5 h-5" />
           </button>
@@ -119,11 +119,11 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
         {/* Content */}
         <div className="space-y-6">
-          <p className="text-base text-slate-400 leading-relaxed">
+          <p className="text-base text-ink-muted leading-relaxed">
             Allowance Guard&apos;s <strong>core scanner is free and open source</strong>. Your contributions help us:
           </p>
 
-          <ul className="text-base text-slate-400 space-y-3 leading-relaxed">
+          <ul className="text-base text-ink-muted space-y-3 leading-relaxed">
             <li>• Keep the core scanner free for everyone</li>
             <li>• Add support for more blockchain networks</li>
             <li>• Improve security features and monitoring</li>
@@ -139,7 +139,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
           {/* Amount Selection */}
           <div>
-            <label className="block text-base font-medium text-white mb-4">
+            <label className="block text-base font-medium text-ink mb-4">
               Select Amount
             </label>
             <div className="grid grid-cols-3 gap-3 mb-4">
@@ -153,7 +153,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   className={`p-3 text-base font-medium rounded-lg border transition-colors ${
                     amount === preset && !customAmount
                       ? 'border-amber-500 bg-amber-500/10 text-amber-500'
-                      : 'border-secondary-700 hover:border-amber-500 text-slate-400 hover:text-white'
+                      : 'border-ink-rule hover:border-amber-500 text-ink-muted hover:text-ink'
                   }`}
                 >
                   ${preset}
@@ -162,7 +162,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
             </div>
             
             <div className="relative">
-              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-ink-muted" />
               <input
                 type="number"
                 placeholder="Custom amount"
@@ -171,7 +171,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   setCustomAmount(e.target.value)
                   if (e.target.value) setAmount(0)
                 }}
-                className="w-full px-3 py-3 pl-10 text-base border border-secondary-700 rounded-lg bg-secondary-800 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
+                className="w-full px-3 py-3 pl-10 text-base border border-ink-rule rounded-lg bg-paper-sub text-ink placeholder-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
                 min="1"
                 max="10000"
                 step="0.01"
@@ -181,7 +181,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
           {/* Payment Method Selection */}
           <div>
-            <label className="block text-base font-medium text-white mb-4">
+            <label className="block text-base font-medium text-ink mb-4">
               Payment Method
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -190,14 +190,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 className={`p-4 text-base font-medium rounded-lg border transition-colors ${
                   paymentMethod === 'stripe'
                     ? 'border-sky-500 bg-sky-500/10 text-sky-400'
-                    : 'border-secondary-700 hover:border-sky-500 text-slate-400 hover:text-white'
+                    : 'border-ink-rule hover:border-sky-500 text-ink-muted hover:text-ink'
                 }`}
               >
                 <div className="flex items-center justify-center gap-2">
                   <CreditCard className="w-4 h-4" />
                   <span>Credit/Debit Card</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">Via Stripe</p>
+                <p className="text-xs text-ink-muted mt-1">Via Stripe</p>
               </button>
               
               <button
@@ -205,14 +205,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 className={`p-4 text-base font-medium rounded-lg border transition-colors ${
                   paymentMethod === 'coinbase'
                     ? 'border-sky-500 bg-sky-500/10 text-sky-400'
-                    : 'border-secondary-700 hover:border-sky-500 text-slate-400 hover:text-white'
+                    : 'border-ink-rule hover:border-sky-500 text-ink-muted hover:text-ink'
                 }`}
               >
                 <div className="flex items-center justify-center gap-2">
                   <Coins className="w-4 h-4" />
                   <span>Cryptocurrency</span>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">Via Coinbase</p>
+                <p className="text-xs text-ink-muted mt-1">Via Coinbase</p>
               </button>
             </div>
           </div>
@@ -220,7 +220,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           {/* Optional Information */}
           <div className="space-y-4">
             <div>
-              <label className="block text-base font-medium text-white mb-2">
+              <label className="block text-base font-medium text-ink mb-2">
                 Name (Optional)
               </label>
               <input
@@ -228,12 +228,12 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
-                className="w-full px-3 py-3 text-base border border-secondary-700 rounded-lg bg-secondary-800 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
+                className="w-full px-3 py-3 text-base border border-ink-rule rounded-lg bg-paper-sub text-ink placeholder-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
               />
             </div>
 
             <div>
-              <label className="block text-base font-medium text-white mb-2">
+              <label className="block text-base font-medium text-ink mb-2">
                 Email (Optional)
               </label>
               <input
@@ -241,15 +241,15 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full px-3 py-3 text-base border border-secondary-700 rounded-lg bg-secondary-800 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
+                className="w-full px-3 py-3 text-base border border-ink-rule rounded-lg bg-paper-sub text-ink placeholder-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
               />
-              <p className="text-sm text-slate-400 mt-2">
+              <p className="text-sm text-ink-muted mt-2">
                 We&apos;ll send you a thank you email and receipt
               </p>
             </div>
 
             <div>
-              <label className="block text-base font-medium text-white mb-2">
+              <label className="block text-base font-medium text-ink mb-2">
                 Message (Optional)
               </label>
               <textarea
@@ -258,7 +258,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 placeholder="Leave us a message..."
                 rows={3}
                 maxLength={500}
-                className="w-full px-3 py-3 text-base border border-secondary-700 rounded-lg bg-secondary-800 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200 resize-none"
+                className="w-full px-3 py-3 text-base border border-ink-rule rounded-lg bg-paper-sub text-ink placeholder-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200 resize-none"
               />
             </div>
           </div>
@@ -273,14 +273,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           <div className="flex gap-4">
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-3 text-base font-medium text-slate-400 border border-secondary-700 rounded-lg hover:bg-secondary-700 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+              className="flex-1 px-4 py-3 text-base font-medium text-ink-muted border border-ink-rule rounded-lg hover:bg-paper-sub hover:text-ink transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
             >
               Cancel
             </button>
             <button
               onClick={handleContribute}
               disabled={isLoading}
-              className="flex-1 px-4 py-3 text-base font-medium text-slate-900 bg-amber-500 hover:bg-amber-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50"
+              className="flex-1 px-4 py-3 text-base font-medium text-ink bg-amber-500 hover:bg-amber-600 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50"
             >
                     {isLoading ? 'Processing...' : `Contribute $${customAmount || amount}`}
             </button>

@@ -165,7 +165,7 @@ export function LineChart({
         
         {/* Value Labels */}
         {showValues && (
-          <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-text-tertiary">
+          <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xs text-ink-whisper">
             {data.map((item, index) => (
               <div key={index} className="text-center">
                 <div className="mobbin-caption">{item.value.toLocaleString()}</div>

@@ -92,7 +92,7 @@ export function SkeletonLoader({
 // Fireart-specific skeleton components
 export function FireartCardSkeleton({ className = '' }: { className?: string }) {
   return (
-    <div className={`bg-secondary-800 border border-secondary-700/20 rounded-2xl p-8 shadow-subtle ${className}`}>
+    <div className={`bg-paper-sub border border-ink-rule/20 rounded-2xl p-8 shadow-subtle ${className}`}>
       <div className="animate-pulse">
         <div className="flex items-center mb-6">
           <div className="w-12 h-12 bg-stone/20 rounded-2xl mr-4" />
@@ -167,12 +167,12 @@ export function LoadingOverlay({
   return (
     <div className={`relative ${className}`}>
       {children}
-      <div className="absolute inset-0 bg-surface-base/80 backdrop-blur-sm flex items-center justify-center z-10">
-        <div className="bg-secondary-800 border border-secondary-700/20 rounded-2xl p-8 shadow-medium text-center">
+      <div className="absolute inset-0 bg-paper/80 backdrop-blur-sm flex items-center justify-center z-10">
+        <div className="bg-paper-sub border border-ink-rule/20 rounded-2xl p-8 shadow-medium text-center">
           <div className="w-12 h-12 bg-gradient-to-r from-cobalt to-emerald rounded-full flex items-center justify-center mx-auto mb-4">
             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
           </div>
-          <p className="text-text-tertiary font-medium">{message}</p>
+          <p className="text-ink-whisper font-medium">{message}</p>
         </div>
       </div>
     </div>

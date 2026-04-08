@@ -56,19 +56,19 @@ export function MiniChart({
       case 'down':
         return <span className="text-semantic-error-500">↘</span>
       default:
-        return <span className="text-text-tertiary">→</span>
+        return <span className="text-ink-whisper">→</span>
     }
   }
 
   const getTrendColor = () => {
-    if (!trend) return 'text-text-tertiary'
+    if (!trend) return 'text-ink-whisper'
     switch (trend) {
       case 'up':
         return 'text-semantic-success-500'
       case 'down':
         return 'text-semantic-error-500'
       default:
-        return 'text-text-tertiary'
+        return 'text-ink-whisper'
     }
   }
 
@@ -101,7 +101,7 @@ export function MiniChart({
   return (
     <div className={cn('mobbin-card hover:shadow-md transition-all duration-200', classes.container, className)}>
       <div className="flex items-center justify-between mb-2">
-        <h4 className={cn(classes.title, 'text-text-secondary')}>{title}</h4>
+        <h4 className={cn(classes.title, 'text-ink-muted')}>{title}</h4>
         {trend && trendValue && (
           <div className={cn('flex items-center gap-1', classes.trend, getTrendColor())}>
             {getTrendIcon()}
@@ -111,7 +111,7 @@ export function MiniChart({
       </div>
       
       <div className="flex items-end justify-between">
-        <div className={cn(classes.value, 'text-text-primary font-medium')}>
+        <div className={cn(classes.value, 'text-ink font-medium')}>
           {value}
         </div>
         

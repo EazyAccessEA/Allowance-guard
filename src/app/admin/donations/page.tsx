@@ -82,7 +82,7 @@ export default async function AdminDonationsPage({
           </a>
           <Link
             href="/contribute"
-            className="rounded-md bg-cobalt px-3 py-2 text-white hover:bg-cobalt/90"
+            className="rounded-md bg-cobalt px-3 py-2 text-ink hover:bg-cobalt/90"
           >
                   Test Contribution
           </Link>

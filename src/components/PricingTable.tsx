@@ -107,21 +107,21 @@ const FEATURE_ROWS: FeatureRow[] = [
 
 function CellValue({ value }: { value: string | boolean }) {
   if (typeof value === 'string') {
-    return <span className="text-sm font-medium text-slate-200">{value}</span>
+    return <span className="text-sm font-medium text-ink">{value}</span>
   }
   if (value) {
     return <Check className="mx-auto h-5 w-5 text-emerald-400" aria-label="Included" />
   }
-  return <X className="mx-auto h-5 w-5 text-slate-600" aria-label="Not included" />
+  return <X className="mx-auto h-5 w-5 text-ink-whisper" aria-label="Not included" />
 }
 
 export default function PricingTable() {
   return (
-    <div className="w-full overflow-x-auto rounded-xl bg-white/[0.02] ring-1 ring-white/[0.06] p-1">
+    <div className="w-full overflow-x-auto rounded-xl bg-paper-sub ring-1 ring-ink-rule p-1">
       <table className="w-full min-w-[600px] border-collapse text-left">
         <thead>
-          <tr className="border-b border-slate-700/50">
-            <th className="py-4 px-4 text-sm font-medium text-slate-400">
+          <tr className="border-b border-ink-rule/50">
+            <th className="py-4 px-4 text-sm font-medium text-ink-muted">
               Feature
             </th>
             {PLANS.map((plan) => (
@@ -129,7 +129,7 @@ export default function PricingTable() {
                 key={plan}
                 className={cn(
                   'px-4 py-4 text-center text-sm font-semibold',
-                  plan === 'pro' ? 'text-amber-400' : 'text-slate-300'
+                  plan === 'pro' ? 'text-amber-400' : 'text-ink-soft'
                 )}
               >
                 {getPlanDisplayName(plan)}
@@ -142,11 +142,11 @@ export default function PricingTable() {
             <tr
               key={row.label}
               className={cn(
-                'border-b border-slate-700/30',
-                idx % 2 === 1 && 'bg-white/[0.02]'
+                'border-b border-ink-rule/30',
+                idx % 2 === 1 && 'bg-paper-sub'
               )}
             >
-              <td className="py-3.5 px-4 text-sm text-slate-300">
+              <td className="py-3.5 px-4 text-sm text-ink-soft">
                 {row.label}
               </td>
               {PLANS.map((plan) => (

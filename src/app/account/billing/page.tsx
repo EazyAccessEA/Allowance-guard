@@ -161,7 +161,7 @@ export default function BillingPage() {
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-text-secondary hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-primary-700 transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -169,8 +169,8 @@ export default function BillingPage() {
 
           {/* Header */}
           <div>
-            <h1 className="text-2xl font-bold text-text-primary">Billing</h1>
-            <p className="text-sm text-text-secondary mt-1">
+            <h1 className="text-2xl font-bold text-ink">Billing</h1>
+            <p className="text-sm text-ink-muted mt-1">
               Manage your subscription and payment method.
             </p>
           </div>
@@ -184,9 +184,9 @@ export default function BillingPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-text-secondary">
+              <p className="text-sm text-ink-muted">
                 You are currently on the{' '}
-                <span className="font-semibold text-text-primary">
+                <span className="font-semibold text-ink">
                   {getPlanDisplayName(currentPlan)}
                 </span>{' '}
                 plan.
@@ -198,7 +198,7 @@ export default function BillingPage() {
                 )}
               </p>
               {currentPeriodEnd && isPaidPlan(currentPlan) && (
-                <p className="text-xs text-text-secondary mt-1">
+                <p className="text-xs text-ink-muted mt-1">
                   {planStatus === 'trialing' ? 'Trial ends' : 'Renews'}{' '}
                   {new Date(currentPeriodEnd).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -245,11 +245,11 @@ export default function BillingPage() {
                         'rounded-lg border p-5 space-y-4 transition-all duration-150',
                         isCurrent
                           ? 'border-primary-300 bg-primary-50 ring-2 ring-primary-200'
-                          : 'border-secondary-700 bg-background-primary hover:border-primary-200'
+                          : 'border-ink-rule bg-paper hover:border-primary-200'
                       )}
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-bold text-text-primary">
+                        <h3 className="text-lg font-bold text-ink">
                           {getPlanDisplayName(key)}
                         </h3>
                         {isCurrent && (
@@ -259,16 +259,16 @@ export default function BillingPage() {
                         )}
                       </div>
 
-                      <div className="text-text-primary">
+                      <div className="text-ink">
                         {price ? (
                           <>
                             <span className="text-2xl font-bold">
                               {formatPrice(price.monthlyPence, price.currency)}
                             </span>
-                            <span className="text-sm text-text-secondary">
+                            <span className="text-sm text-ink-muted">
                               /month
                             </span>
-                            <p className="text-xs text-text-secondary mt-0.5">
+                            <p className="text-xs text-ink-muted mt-0.5">
                               or{' '}
                               {formatPrice(price.yearlyPence, price.currency)}
                               /year
@@ -283,7 +283,7 @@ export default function BillingPage() {
                         {features.map((feat) => (
                           <li
                             key={feat}
-                            className="flex items-start gap-2 text-sm text-text-secondary"
+                            className="flex items-start gap-2 text-sm text-ink-muted"
                           >
                             <Check className="h-4 w-4 text-semantic-success-500 flex-shrink-0 mt-0.5" />
                             {feat}
@@ -316,7 +316,7 @@ export default function BillingPage() {
               <div className="flex items-center justify-between">
                 <CardTitle>Payment History</CardTitle>
                 {invoices.length > 0 && (
-                  <span className="text-xs text-text-secondary">
+                  <span className="text-xs text-ink-muted">
                     {invoices.length} invoice{invoices.length !== 1 ? 's' : ''}
                   </span>
                 )}
@@ -325,8 +325,8 @@ export default function BillingPage() {
             <CardContent>
               {invoicesLoading ? (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-text-secondary" />
-                  <span className="ml-2 text-sm text-text-secondary">Loading invoices…</span>
+                  <Loader2 className="h-6 w-6 animate-spin text-ink-muted" />
+                  <span className="ml-2 text-sm text-ink-muted">Loading invoices…</span>
                 </div>
               ) : invoicesError ? (
                 <InlineError message={invoicesError} onRetry={fetchInvoices} />
@@ -340,7 +340,7 @@ export default function BillingPage() {
                 <div className="overflow-x-auto -mx-2">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-secondary-700 text-left text-text-secondary">
+                      <tr className="border-b border-ink-rule text-left text-ink-muted">
                         <th className="px-2 py-2 font-medium">Invoice</th>
                         <th className="px-2 py-2 font-medium">Date</th>
                         <th className="px-2 py-2 font-medium">Amount</th>
@@ -351,11 +351,11 @@ export default function BillingPage() {
                     </thead>
                     <tbody>
                       {invoices.map((inv) => (
-                        <tr key={inv.stripeInvoiceId} className="border-b border-secondary-700 last:border-0 hover:bg-background-secondary transition-colors">
+                        <tr key={inv.stripeInvoiceId} className="border-b border-ink-rule last:border-0 hover:bg-paper-sub transition-colors">
                           <td className="px-2 py-3 font-mono text-xs">
                             {inv.invoiceNumber ?? inv.stripeInvoiceId.slice(0, 12)}
                           </td>
-                          <td className="px-2 py-3 text-text-secondary">
+                          <td className="px-2 py-3 text-ink-muted">
                             {new Date(inv.createdAt).toLocaleDateString('en-US', {
                               year: 'numeric',
                               month: 'short',
@@ -371,7 +371,7 @@ export default function BillingPage() {
                           <td className="px-2 py-3">
                             {invoiceStatusBadge(inv.status)}
                           </td>
-                          <td className="px-2 py-3 text-text-secondary">
+                          <td className="px-2 py-3 text-ink-muted">
                             {inv.plan ? getPlanDisplayName(inv.plan as ConsumerPlan) : '—'}
                           </td>
                           <td className="px-2 py-3 text-right">

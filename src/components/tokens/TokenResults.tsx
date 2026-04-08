@@ -90,7 +90,7 @@ export default function TokenResults({ state }: { state: SearchState }) {
     return (
       <div className="space-y-4">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div key={i} className="bg-background-light rounded-xl border border-border-default p-6 animate-pulse">
+          <div key={i} className="bg-paper-sub rounded-xl border border-border-default p-6 animate-pulse">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-text-secondary/20 rounded-lg"></div>
               <div className="flex-1 space-y-2">
@@ -118,10 +118,10 @@ export default function TokenResults({ state }: { state: SearchState }) {
           </div>
           <h3 className="text-lg font-semibold text-semantic-danger">Search Failed</h3>
         </div>
-        <p className="text-text-secondary">{error}</p>
+        <p className="text-ink-muted">{error}</p>
         <button 
           onClick={() => window.location.reload()} 
-          className="mt-4 px-4 py-2 bg-semantic-danger text-white rounded-lg text-sm font-medium hover:bg-semantic-danger/90"
+          className="mt-4 px-4 py-2 bg-semantic-danger text-ink rounded-lg text-sm font-medium hover:bg-semantic-danger/90"
         >
           Try Again
         </button>
@@ -135,11 +135,11 @@ export default function TokenResults({ state }: { state: SearchState }) {
         <div className="w-16 h-16 bg-text-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <span className="text-2xl">🔍</span>
         </div>
-        <h3 className="text-xl font-semibold text-text-primary mb-2">No tokens found</h3>
-        <p className="text-text-secondary mb-6">Try adjusting your search criteria or filters</p>
+        <h3 className="text-xl font-semibold text-ink mb-2">No tokens found</h3>
+        <p className="text-ink-muted mb-6">Try adjusting your search criteria or filters</p>
         <button 
           onClick={() => window.location.reload()} 
-          className="px-6 py-3 bg-primary-accent text-white rounded-lg font-medium hover:bg-primary-accent/90"
+          className="px-6 py-3 bg-primary-accent text-ink rounded-lg font-medium hover:bg-primary-accent/90"
         >
           Clear Filters
         </button>
@@ -160,10 +160,10 @@ export default function TokenResults({ state }: { state: SearchState }) {
       {/* Results Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-text-primary">
+          <h3 className="text-lg font-semibold text-ink">
             Search Results
           </h3>
-          <p className="text-sm text-text-secondary">
+          <p className="text-sm text-ink-muted">
             {total} token{total !== 1 ? 's' : ''} found
           </p>
         </div>
@@ -191,24 +191,24 @@ export default function TokenResults({ state }: { state: SearchState }) {
       {/* Pagination */}
       {pages > 1 && (
         <div className="flex items-center justify-between pt-6 border-t border-border-default">
-          <div className="text-sm text-text-secondary">
+          <div className="text-sm text-ink-muted">
             Showing {Math.min(total, offset + 1)}–{Math.min(total, offset + limit)} of {total} results
           </div>
           <div className="flex items-center gap-2">
             <button 
               disabled={page <= 1}
               onClick={() => setOffset((page - 2) * limit)}
-              className="px-4 py-2 rounded-lg border border-border-default bg-background-light text-text-primary hover:bg-text-secondary/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="px-4 py-2 rounded-lg border border-border-default bg-paper-sub text-ink hover:bg-text-secondary/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               Previous
             </button>
-            <span className="px-4 py-2 text-sm text-text-secondary">
+            <span className="px-4 py-2 text-sm text-ink-muted">
               Page {page} of {pages}
             </span>
             <button 
               disabled={page >= pages}
               onClick={() => setOffset(page * limit)}
-              className="px-4 py-2 rounded-lg border border-border-default bg-background-light text-text-primary hover:bg-text-secondary/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="px-4 py-2 rounded-lg border border-border-default bg-paper-sub text-ink hover:bg-text-secondary/5 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             >
               Next
             </button>

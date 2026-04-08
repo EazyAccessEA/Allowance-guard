@@ -9,17 +9,17 @@ import Link from 'next/link'
 export default function PrivacyPage() {
 
   return (
-    <div className="min-h-screen bg-surface-base text-white">
+    <div className="min-h-screen bg-paper text-ink">
 
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden bg-secondary-900">
+      <Section className="relative py-24 sm:py-32 overflow-hidden bg-paper-deep">
         <VideoBackground videoSrc="/V3AG.mp4" />
         <div
           className="absolute inset-0 z-10"
           aria-hidden="true"
           style={{
             background:
-              'linear-gradient(to right, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.75) 60%, rgba(15,23,42,0.6) 100%)'
+              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)'
           }}
         />
 
@@ -27,25 +27,25 @@ export default function PrivacyPage() {
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
             Legal &middot; Privacy Policy
           </span>
-          <H1 className="mb-6 text-white">Privacy Policy</H1>
-          <p className="text-lg text-slate-300 max-w-reading">
+          <H1 className="mb-6 text-ink">Privacy Policy</H1>
+          <p className="text-lg text-ink-soft max-w-reading">
             Privacy isn’t a feature. It’s the architecture. We collect the minimum we need to run the service, we don’t sell anything to anyone, and we tell you exactly what is stored, where, and for how long.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-white/10" />
+      <div className="border-t border-ink-rule" />
 
       {/* Privacy Content */}
       <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="max-w-none text-slate-300">
+            <div className="max-w-none text-ink-soft">
 
               {/* Introduction */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Our Privacy Commitment</H2>
-                <p className="text-slate-300 leading-relaxed">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Our Privacy Commitment</H2>
+                <p className="text-ink-soft leading-relaxed">
                   Allowance Guard is built with privacy-first principles. We don&apos;t sell your data,
                   don&apos;t track your on-chain activity beyond scans you explicitly trigger, and
                   maintain minimal server logs for security purposes only. This policy covers both
@@ -55,23 +55,23 @@ export default function PrivacyPage() {
 
               {/* Data Collection */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Data We Collect</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Data We Collect</H2>
                 <div className="space-y-6">
                   <div className="border-l-4 border-amber-400 pl-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">Account Information</h3>
-                    <p className="text-slate-300">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Account Information</h3>
+                    <p className="text-ink-soft">
                       When you create an account: email address and optional display name.
                       Used for authentication, billing communications, and alert delivery.
                     </p>
                   </div>
 
                   <div className="border-l-4 border-amber-400 pl-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">Wallet Addresses</h3>
-                    <p className="text-slate-300">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Wallet Addresses</h3>
+                    <p className="text-ink-soft">
                       <strong>Free tier:</strong> Wallet addresses are used to fetch approvals from blockchain
                       networks during scans. Not stored permanently unless you create an account.
                     </p>
-                    <p className="text-slate-300 mt-2">
+                    <p className="text-ink-soft mt-2">
                       <strong>Pro/Sentinel:</strong> Wallet addresses you add for monitoring are stored in our
                       database to enable continuous scanning, alerts, and historical tracking. You can remove
                       wallets at any time from your dashboard.
@@ -79,8 +79,8 @@ export default function PrivacyPage() {
                   </div>
 
                   <div className="border-l-4 border-amber-400 pl-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">Payment Data</h3>
-                    <p className="text-slate-300">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Payment Data</h3>
+                    <p className="text-ink-soft">
                       All payment processing is handled by <strong>Stripe</strong>. We never see or store your
                       credit card number, CVV, or full card details. We store only: your Stripe customer ID,
                       subscription plan, subscription status, and billing period dates.
@@ -89,8 +89,8 @@ export default function PrivacyPage() {
                   </div>
 
                   <div className="border-l-4 border-amber-400 pl-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">Email Addresses</h3>
-                    <p className="text-slate-300">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Email Addresses</h3>
+                    <p className="text-ink-soft">
                       Used for: account authentication (magic links), subscription billing notifications,
                       monitoring alerts (Pro/Sentinel), trial expiration notices, and security notifications.
                       Never shared with third parties for marketing.
@@ -98,8 +98,8 @@ export default function PrivacyPage() {
                   </div>
 
                   <div className="border-l-4 border-amber-400 pl-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">Monitoring &amp; Usage Data</h3>
-                    <p className="text-slate-300">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Monitoring &amp; Usage Data</h3>
+                    <p className="text-ink-soft">
                       <strong>Pro/Sentinel:</strong> Approval snapshots, monitoring events, risk score history,
                       revocation rule configurations, webhook settings, and team membership data.
                       This data enables the monitoring, alerting, and compliance features you subscribe to.
@@ -107,16 +107,16 @@ export default function PrivacyPage() {
                   </div>
 
                   <div className="border-l-4 border-amber-400 pl-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">API Usage (B2B)</h3>
-                    <p className="text-slate-300">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">API Usage (B2B)</h3>
+                    <p className="text-ink-soft">
                       API key prefix (not the full key), endpoint called, response status, request duration,
                       and daily call counts. Used for rate limiting, usage metering, and billing.
                     </p>
                   </div>
 
                   <div className="border-l-4 border-amber-400 pl-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">Technical Logs</h3>
-                    <p className="text-slate-300">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Technical Logs</h3>
+                    <p className="text-ink-soft">
                       Minimal server logs (IP addresses, user agent, request IDs) for security and abuse prevention.
                       Automatically purged after 30 days.
                     </p>
@@ -126,8 +126,8 @@ export default function PrivacyPage() {
 
               {/* Data Usage */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">How We Use Your Data</H2>
-                <ul className="space-y-3 text-slate-300">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">How We Use Your Data</H2>
+                <ul className="space-y-3 text-ink-soft">
                   <li className="flex items-start">
                     <span className="text-amber-400 mr-3">•</span>
                     <span>Process wallet scans to display token allowances and risk assessments</span>
@@ -161,45 +161,45 @@ export default function PrivacyPage() {
 
               {/* Data Retention */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Data Retention Periods</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Data Retention Periods</H2>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-slate-300 border border-white/10 rounded-lg">
-                    <thead className="bg-white/[0.03] border border-white/10">
+                  <table className="w-full text-sm text-ink-soft border border-ink-rule rounded-lg">
+                    <thead className="bg-paper-sub border border-ink-rule">
                       <tr>
                         <th className="text-left p-3 font-medium">Data Type</th>
                         <th className="text-left p-3 font-medium">Retention</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">Account profile</td>
                         <td className="p-3">Until account deletion</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">Wallet monitoring data</td>
                         <td className="p-3">Until wallet removed or account deletion</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">Subscription &amp; billing records</td>
                         <td className="p-3">7 years (legal/tax requirement)</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">Audit logs</td>
                         <td className="p-3">90 days, then deleted</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">API usage records</td>
                         <td className="p-3">90 days (aggregated thereafter)</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">Technical/server logs</td>
                         <td className="p-3">30 days</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">Webhook delivery logs</td>
                         <td className="p-3">30 days</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-ink-rule">
                         <td className="p-3">Session tokens</td>
                         <td className="p-3">30 days (auto-expire)</td>
                       </tr>
@@ -210,56 +210,56 @@ export default function PrivacyPage() {
 
               {/* GDPR Rights */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Your Privacy Rights (GDPR &amp; Global)</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Your Privacy Rights (GDPR &amp; Global)</H2>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Right to Access (Article 15)</h3>
-                    <p className="text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Right to Access (Article 15)</h3>
+                    <p className="text-ink-soft text-sm">
                       You may request a copy of all personal data we hold about you.
                       Use the data export feature in your{' '}
                       <Link href="/account" className="text-amber-400 hover:underline">account dashboard</Link>{' '}
-                      or call the <code className="text-xs bg-white/10 border border-white/10 px-1 py-0.5 rounded">GET /api/user/export</code> endpoint.
+                      or call the <code className="text-xs bg-paper-sub border border-ink-rule px-1 py-0.5 rounded">GET /api/user/export</code> endpoint.
                     </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Right to Portability (Article 20)</h3>
-                    <p className="text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Right to Portability (Article 20)</h3>
+                    <p className="text-ink-soft text-sm">
                       Export your data in a structured, machine-readable JSON format via the data export endpoint.
                       This includes your profile, wallets, monitoring settings, rules, and usage data.
                     </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Right to Deletion (Article 17)</h3>
-                    <p className="text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Right to Deletion (Article 17)</h3>
+                    <p className="text-ink-soft text-sm">
                       Request complete deletion of your account and all associated data. Active subscriptions
                       will be cancelled. Use the account dashboard or call the{' '}
-                      <code className="text-xs bg-white/10 border border-white/10 px-1 py-0.5 rounded">DELETE /api/user/delete</code> endpoint.
+                      <code className="text-xs bg-paper-sub border border-ink-rule px-1 py-0.5 rounded">DELETE /api/user/delete</code> endpoint.
                       Some data may be retained for legal obligations (billing records).
                     </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Right to Rectification (Article 16)</h3>
-                    <p className="text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Right to Rectification (Article 16)</h3>
+                    <p className="text-ink-soft text-sm">
                       Update your email or profile information via the account settings page.
                       Contact us to correct any other inaccurate data.
                     </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Right to Restrict Processing</h3>
-                    <p className="text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Right to Restrict Processing</h3>
+                    <p className="text-ink-soft text-sm">
                       You may disable monitoring for specific wallets or pause your account.
                       Contact us at <span className="text-amber-400">legal.support@allowanceguard.com</span> for
                       broader processing restrictions.
                     </p>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Email Management</h3>
-                    <p className="text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Email Management</h3>
+                    <p className="text-ink-soft text-sm">
                       Unsubscribe from marketing or alert emails anytime using the link in any email.
                       Transactional emails (billing, security) cannot be unsubscribed while your account is active.
                     </p>
@@ -269,10 +269,10 @@ export default function PrivacyPage() {
 
               {/* Cookies */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Cookies &amp; Session Management</H2>
-                <div className="text-slate-300 space-y-3">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Cookies &amp; Session Management</H2>
+                <div className="text-ink-soft space-y-3">
                   <p>
-                    We use cookies for session management (<code className="text-xs bg-white/10 border border-white/10 px-1 py-0.5 rounded">ag_sess</code>),
+                    We use cookies for session management (<code className="text-xs bg-paper-sub border border-ink-rule px-1 py-0.5 rounded">ag_sess</code>),
                     CSRF protection, and user preferences. Analytics cookies are optional and require your consent.
                   </p>
                   <p>
@@ -284,11 +284,11 @@ export default function PrivacyPage() {
 
               {/* Third Parties */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Third-Party Services</H2>
-                <p className="text-slate-300 mb-4">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Third-Party Services</H2>
+                <p className="text-ink-soft mb-4">
                   We use the following third-party services, each with their own privacy protections:
                 </p>
-                <ul className="space-y-2 text-slate-300">
+                <ul className="space-y-2 text-ink-soft">
                   <li>• <strong>Vercel:</strong> Hosting and CDN (privacy-focused, SOC 2 compliant)</li>
                   <li>• <strong>Neon Database:</strong> Data storage (encrypted at rest and in transit)</li>
                   <li>• <strong>Stripe:</strong> Payment processing (PCI DSS Level 1 compliant) — handles all card data</li>
@@ -299,7 +299,7 @@ export default function PrivacyPage() {
                   <li>• <strong>Rollbar:</strong> Error monitoring (receives anonymized error data)</li>
                   <li>• <strong>Reown (WalletConnect):</strong> Wallet connection protocol</li>
                 </ul>
-                <p className="text-slate-300 mt-4 text-sm">
+                <p className="text-ink-soft mt-4 text-sm">
                   We do not share personal data with these services beyond what is necessary for their function.
                   No data is sold to third parties.
                 </p>
@@ -307,8 +307,8 @@ export default function PrivacyPage() {
 
               {/* International Transfers */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">International Data Transfers</H2>
-                <p className="text-slate-300">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">International Data Transfers</H2>
+                <p className="text-ink-soft">
                   Your data may be processed in the United States and European Union, where our infrastructure
                   providers operate. We ensure appropriate safeguards are in place for international transfers,
                   including standard contractual clauses where applicable. Sentinel and Enterprise customers
@@ -319,13 +319,13 @@ export default function PrivacyPage() {
 
               {/* Contact */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Questions About Privacy?</H2>
-                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                  <p className="text-slate-300 mb-4">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Questions About Privacy?</H2>
+                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <p className="text-ink-soft mb-4">
                     We&apos;re committed to transparency. If you have questions about our privacy practices
                     or want to exercise your rights, contact us:
                   </p>
-                  <ul className="space-y-2 text-slate-300 text-sm">
+                  <ul className="space-y-2 text-ink-soft text-sm">
                     <li>Privacy inquiries: <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span></li>
                     <li>Data export/deletion: Use your <Link href="/account" className="text-amber-400 hover:underline">account dashboard</Link> or the API endpoints</li>
                     <li>DPA requests: <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span></li>
@@ -335,22 +335,22 @@ export default function PrivacyPage() {
 
               {/* Related Documents */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Related Documents</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Related Documents</H2>
                 <div className="flex flex-wrap gap-3">
-                  <Link href="/terms" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
+                  <Link href="/terms" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Terms of Service
                   </Link>
-                  <Link href="/cookies" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
+                  <Link href="/cookies" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Cookie Policy
                   </Link>
-                  <Link href="/dpa" className="text-amber-400 hover:underline text-sm bg-white/[0.03] border border-white/10 px-4 py-2 rounded-lg">
+                  <Link href="/dpa" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Data Processing Agreement
                   </Link>
                 </div>
               </div>
 
               {/* Last Updated */}
-              <div className="text-center text-sm text-slate-300 border-t border-white/10 pt-8">
+              <div className="text-center text-sm text-ink-soft border-t border-ink-rule pt-8">
                 <p>Last updated: April 2, 2026</p>
                 <p className="mt-2">
                   This privacy policy may be updated to reflect changes in our practices.

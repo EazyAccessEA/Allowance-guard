@@ -55,40 +55,40 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
   const canScore = useMemo(() => fuzzy && (dq?.length ?? 0) >= 3, [fuzzy, dq])
 
   return (
-    <div className="bg-background-light rounded-2xl border border-border-default p-6 mb-8">
+    <div className="bg-paper-sub rounded-2xl border border-border-default p-6 mb-8">
       <div className="flex items-center gap-2 mb-6">
         <div className="w-8 h-8 bg-primary-accent/10 rounded-lg flex items-center justify-center">
           <Search className="w-4 h-4 text-primary-accent" />
         </div>
-        <h2 className="text-xl font-semibold text-text-primary">Search Tokens</h2>
+        <h2 className="text-xl font-semibold text-ink">Search Tokens</h2>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
         {/* Search Input */}
         <div className="lg:col-span-2">
-          <label className="block text-sm font-medium text-text-primary mb-2">
+          <label className="block text-sm font-medium text-ink mb-2">
             Search Query
           </label>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-secondary" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-ink-muted" />
             <input
               value={q}
               onChange={e => setQ(e.target.value)}
               placeholder="Search by name, symbol, or address"
-              className="w-full pl-10 pr-4 py-3 rounded-lg border border-border-default bg-background-light text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-primary-accent/20 focus:border-primary-accent"
+              className="w-full pl-10 pr-4 py-3 rounded-lg border border-border-default bg-paper-sub text-ink placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-primary-accent/20 focus:border-primary-accent"
             />
           </div>
         </div>
 
         {/* Chain Filter */}
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-2">
+          <label className="block text-sm font-medium text-ink mb-2">
             Blockchain
           </label>
           <select
             value={chainId ?? ''}
             onChange={e => setChainId(e.target.value ? Number(e.target.value) : undefined)}
-            className="w-full px-3 py-3 rounded-lg border border-border-default bg-background-light text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-accent/20 focus:border-primary-accent"
+            className="w-full px-3 py-3 rounded-lg border border-border-default bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-accent/20 focus:border-primary-accent"
           >
             <option value="">All Networks</option>
             {chains.map(c => (
@@ -99,13 +99,13 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
 
         {/* Category Filter */}
         <div>
-          <label className="block text-sm font-medium text-text-primary mb-2">
+          <label className="block text-sm font-medium text-ink mb-2">
             Category
           </label>
           <select
             value={category ?? ''}
             onChange={e => setCategory(e.target.value || undefined)}
-            className="w-full px-3 py-3 rounded-lg border border-border-default bg-background-light text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-accent/20 focus:border-primary-accent"
+            className="w-full px-3 py-3 rounded-lg border border-border-default bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-accent/20 focus:border-primary-accent"
           >
             <option value="">All Categories</option>
             {cats.map(c => (
@@ -124,9 +124,9 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
               id="verified"
               checked={verified}
               onChange={e => setVerified(e.target.checked)}
-              className="w-4 h-4 text-primary-accent bg-background-light border-border-default rounded focus:ring-primary-accent/20"
+              className="w-4 h-4 text-primary-accent bg-paper-sub border-border-default rounded focus:ring-primary-accent/20"
             />
-            <label htmlFor="verified" className="text-sm font-medium text-text-primary">
+            <label htmlFor="verified" className="text-sm font-medium text-ink">
               Verified tokens only
             </label>
           </div>
@@ -137,16 +137,16 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
               id="fuzzy"
               checked={fuzzy}
               onChange={e => setFuzzy(e.target.checked)}
-              className="w-4 h-4 text-primary-accent bg-background-light border-border-default rounded focus:ring-primary-accent/20"
+              className="w-4 h-4 text-primary-accent bg-paper-sub border-border-default rounded focus:ring-primary-accent/20"
             />
-            <label htmlFor="fuzzy" className="text-sm font-medium text-text-primary">
+            <label htmlFor="fuzzy" className="text-sm font-medium text-ink">
               Fuzzy search
             </label>
           </div>
 
           {canScore && (
             <div className="flex items-center gap-3">
-              <label className="text-sm font-medium text-text-primary">
+              <label className="text-sm font-medium text-ink">
                 Min Score:
               </label>
               <input
@@ -158,18 +158,18 @@ export default function TokenSearchControls({ initial, onChange }: Props) {
                 onChange={e => setMinScore(Number(e.target.value))}
                 className="w-24"
               />
-              <span className="text-sm text-text-secondary">{minScore.toFixed(1)}</span>
+              <span className="text-sm text-ink-muted">{minScore.toFixed(1)}</span>
             </div>
           )}
 
           <div className="flex items-center gap-3">
-            <label className="text-sm font-medium text-text-primary">
+            <label className="text-sm font-medium text-ink">
               Sort by:
             </label>
             <select
               value={sort}
               onChange={e => setSort(e.target.value as 'relevance' | 'name' | 'symbol' | 'recent')}
-              className="px-3 py-1.5 rounded border border-border-default bg-background-light text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-accent/20"
+              className="px-3 py-1.5 rounded border border-border-default bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-accent/20"
             >
               <option value="relevance">Relevance</option>
               <option value="name">Name</option>

@@ -59,7 +59,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
   const showDiscount = provider.discountEligible && discountPct > 0
 
   return (
-    <div className="bg-secondary-800/60 border border-secondary-700 rounded-xl overflow-hidden">
+    <div className="bg-paper-sub/60 border border-ink-rule rounded-xl overflow-hidden">
       <div className="p-5">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
               <Shield className="h-5 w-5 text-primary-600 dark:text-primary-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-text-primary dark:text-secondary-100">{provider.name}</h3>
+              <h3 className="font-semibold text-ink">{provider.name}</h3>
               {showDiscount && (
                 <span className="inline-block text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
                   {discountPct}% premium discount eligible
@@ -77,13 +77,13 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
           </div>
         </div>
 
-        <p className="text-sm text-text-secondary dark:text-secondary-400 mb-4">
+        <p className="text-sm text-ink-muted mb-4">
           {provider.description}
         </p>
 
         <ul className="grid grid-cols-2 gap-2 mb-4">
           {provider.features.map((feature) => (
-            <li key={feature} className="flex items-center gap-1.5 text-xs text-text-secondary dark:text-secondary-400">
+            <li key={feature} className="flex items-center gap-1.5 text-xs text-ink-muted">
               <div className="w-1.5 h-1.5 rounded-full bg-primary-500 flex-shrink-0" />
               {feature}
             </li>
@@ -94,7 +94,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
           <div className="flex gap-3">
             <button
               onClick={() => setExpanded(!expanded)}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 dark:bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 dark:bg-primary-500 text-ink text-sm font-medium rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors"
             >
               <Shield className="h-4 w-4" />
               Insure This Wallet
@@ -103,13 +103,13 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
               href={provider.coverUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center px-3 py-2.5 border border-secondary-700 dark:border-secondary-600 text-text-secondary dark:text-secondary-400 text-sm rounded-lg hover:bg-secondary-800 dark:hover:bg-secondary-700 transition-colors"
+              className="flex items-center justify-center px-3 py-2.5 border border-ink-rule dark:border-secondary-600 text-ink-muted text-sm rounded-lg hover:bg-paper-sub dark:hover:bg-paper-sub transition-colors"
             >
               <ExternalLink className="h-4 w-4" />
             </a>
           </div>
         ) : (
-          <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-secondary-700/50 text-text-tertiary dark:text-secondary-500 text-sm rounded-lg">
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-paper-sub/50 text-ink-whisper text-sm rounded-lg">
             <Lock className="h-4 w-4" />
             <span>Sentinel tier required</span>
             <a
@@ -124,37 +124,37 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
 
       {/* Pre-filled application form */}
       {expanded && isSentinel && (
-        <div className="border-t border-secondary-700 p-5 bg-secondary-800/40">
-          <h4 className="text-sm font-semibold text-text-primary dark:text-secondary-100 mb-3">
+        <div className="border-t border-ink-rule p-5 bg-paper-sub/40">
+          <h4 className="text-sm font-semibold text-ink mb-3">
             Pre-filled Application
           </h4>
           <div className="space-y-3">
             <div>
-              <label className="block text-xs text-text-secondary dark:text-secondary-400 mb-1">Wallet Address</label>
+              <label className="block text-xs text-ink-muted mb-1">Wallet Address</label>
               <input
                 type="text"
                 readOnly
                 value={walletAddress}
-                className="w-full px-3 py-2 text-sm font-mono bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
+                className="w-full px-3 py-2 text-sm font-mono bg-paper-sub border border-ink-rule dark:border-secondary-600 rounded-lg text-ink"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs text-text-secondary dark:text-secondary-400 mb-1">AllowanceGuard Risk Score</label>
+                <label className="block text-xs text-ink-muted mb-1">AllowanceGuard Risk Score</label>
                 <input
                   type="text"
                   readOnly
                   value={`${riskScore}/100`}
-                  className="w-full px-3 py-2 text-sm bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
+                  className="w-full px-3 py-2 text-sm bg-paper-sub border border-ink-rule dark:border-secondary-600 rounded-lg text-ink"
                 />
               </div>
               <div>
-                <label className="block text-xs text-text-secondary dark:text-secondary-400 mb-1">Discount Eligible</label>
+                <label className="block text-xs text-ink-muted mb-1">Discount Eligible</label>
                 <input
                   type="text"
                   readOnly
                   value={showDiscount ? `Yes (${discountPct}%)` : 'No'}
-                  className="w-full px-3 py-2 text-sm bg-secondary-700 border border-secondary-700 dark:border-secondary-600 rounded-lg text-text-primary dark:text-secondary-200"
+                  className="w-full px-3 py-2 text-sm bg-paper-sub border border-ink-rule dark:border-secondary-600 rounded-lg text-ink"
                 />
               </div>
             </div>
@@ -162,7 +162,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
               href={`${provider.coverUrl}?wallet=${walletAddress}&source=allowanceguard&risk=${riskScore}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-primary-600 dark:bg-primary-500 text-white text-sm font-medium rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors"
+              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-primary-600 dark:bg-primary-500 text-ink text-sm font-medium rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors"
             >
               Continue to {provider.name}
               <ExternalLink className="h-4 w-4" />
@@ -186,7 +186,7 @@ export default function InsuranceIntegration({ riskScore = 0, userTier = 'free' 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-text-primary dark:text-secondary-100">
+        <h2 className="text-lg font-semibold text-ink">
           DeFi Insurance
         </h2>
         {riskScore <= 30 && (
@@ -195,7 +195,7 @@ export default function InsuranceIntegration({ riskScore = 0, userTier = 'free' 
           </span>
         )}
       </div>
-      <p className="text-sm text-text-secondary dark:text-secondary-400">
+      <p className="text-sm text-ink-muted">
         Protect your wallet against smart contract exploits and protocol hacks with decentralized insurance.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

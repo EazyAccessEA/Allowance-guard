@@ -45,7 +45,7 @@ export default function AdminAnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="p-8 text-center text-text-secondary">
+      <div className="p-8 text-center text-ink-muted">
         Loading analytics...
       </div>
     )
@@ -74,14 +74,14 @@ export default function AdminAnalyticsPage() {
 
   return (
     <div className="space-y-8 p-6">
-      <h1 className="text-2xl font-bold text-text-primary">Analytics Dashboard</h1>
-      <p className="text-sm text-text-secondary">
+      <h1 className="text-2xl font-bold text-ink">Analytics Dashboard</h1>
+      <p className="text-sm text-ink-muted">
         Business metrics from the last 30 days. Admin access required.
       </p>
 
       {/* Revenue Summary */}
       <section>
-        <h2 className="mb-4 text-lg font-semibold text-text-primary">Revenue Overview</h2>
+        <h2 className="mb-4 text-lg font-semibold text-ink">Revenue Overview</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <StatCard label="Active Subscribers" value={totalActive} />
           <StatCard label="Trialing" value={totalTrialing} />
@@ -89,25 +89,25 @@ export default function AdminAnalyticsPage() {
         </div>
 
         {revenue.length > 0 && (
-          <div className="mt-4 overflow-x-auto rounded-lg border border-secondary-700">
+          <div className="mt-4 overflow-x-auto rounded-lg border border-ink-rule">
             <table className="w-full text-sm">
-              <thead className="bg-background-light">
+              <thead className="bg-paper-sub">
                 <tr>
-                  <th className="px-4 py-2 text-left font-medium text-text-secondary">Plan</th>
-                  <th className="px-4 py-2 text-left font-medium text-text-secondary">Status</th>
-                  <th className="px-4 py-2 text-right font-medium text-text-secondary">Count</th>
-                  <th className="px-4 py-2 text-right font-medium text-text-secondary">Active</th>
-                  <th className="px-4 py-2 text-right font-medium text-text-secondary">Recent Cancellations</th>
+                  <th className="px-4 py-2 text-left font-medium text-ink-muted">Plan</th>
+                  <th className="px-4 py-2 text-left font-medium text-ink-muted">Status</th>
+                  <th className="px-4 py-2 text-right font-medium text-ink-muted">Count</th>
+                  <th className="px-4 py-2 text-right font-medium text-ink-muted">Active</th>
+                  <th className="px-4 py-2 text-right font-medium text-ink-muted">Recent Cancellations</th>
                 </tr>
               </thead>
               <tbody>
                 {revenue.map((r, i) => (
-                  <tr key={i} className="border-t border-secondary-700">
-                    <td className="px-4 py-2 font-medium capitalize text-text-primary">{r.plan}</td>
-                    <td className="px-4 py-2 text-text-secondary">{r.status}</td>
-                    <td className="px-4 py-2 text-right text-text-primary">{r.subscriber_count}</td>
-                    <td className="px-4 py-2 text-right text-text-primary">{r.active_count}</td>
-                    <td className="px-4 py-2 text-right text-text-primary">{r.recent_cancellations}</td>
+                  <tr key={i} className="border-t border-ink-rule">
+                    <td className="px-4 py-2 font-medium capitalize text-ink">{r.plan}</td>
+                    <td className="px-4 py-2 text-ink-muted">{r.status}</td>
+                    <td className="px-4 py-2 text-right text-ink">{r.subscriber_count}</td>
+                    <td className="px-4 py-2 text-right text-ink">{r.active_count}</td>
+                    <td className="px-4 py-2 text-right text-ink">{r.recent_cancellations}</td>
                   </tr>
                 ))}
               </tbody>
@@ -118,21 +118,21 @@ export default function AdminAnalyticsPage() {
 
       {/* Funnel Events */}
       <section>
-        <h2 className="mb-4 text-lg font-semibold text-text-primary">Funnel Events (30 days)</h2>
+        <h2 className="mb-4 text-lg font-semibold text-ink">Funnel Events (30 days)</h2>
         {Object.keys(funnelTotals).length === 0 ? (
-          <p className="text-sm text-text-secondary">No events tracked yet.</p>
+          <p className="text-sm text-ink-muted">No events tracked yet.</p>
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(funnelTotals).map(([name, data]) => (
               <div
                 key={name}
-                className="rounded-lg border border-secondary-700 bg-background-primary p-4"
+                className="rounded-lg border border-ink-rule bg-paper p-4"
               >
-                <p className="text-xs font-medium uppercase tracking-wide text-text-secondary">
+                <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
                   {name.replace(/_/g, ' ')}
                 </p>
-                <p className="mt-1 text-2xl font-bold text-text-primary">{data.count}</p>
-                <p className="text-xs text-text-secondary">{data.users} unique users</p>
+                <p className="mt-1 text-2xl font-bold text-ink">{data.count}</p>
+                <p className="text-xs text-ink-muted">{data.users} unique users</p>
               </div>
             ))}
           </div>
@@ -152,12 +152,12 @@ function StatCard({
   color?: 'default' | 'red'
 }) {
   return (
-    <div className="rounded-lg border border-secondary-700 bg-background-primary p-4">
-      <p className="text-xs font-medium uppercase tracking-wide text-text-secondary">{label}</p>
+    <div className="rounded-lg border border-ink-rule bg-paper p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">{label}</p>
       <p
         className={cn(
           'mt-1 text-3xl font-bold',
-          color === 'red' ? 'text-red-600' : 'text-text-primary',
+          color === 'red' ? 'text-red-600' : 'text-ink',
         )}
       >
         {value}

@@ -5,15 +5,15 @@ import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScr
 export default function TrustStats() {
   return (
     <CascadingScrollAnimation direction="up" distance={60} delay={200}>
-      <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light dark:from-secondary-900 dark:to-[#0A0E1A]">
+      <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light dark:from-secondary-900 dark:to-paper">
         <Container>
           <div className="max-w-6xl mx-auto">
             <FadeInScale delay={100}>
               <div className="text-center mb-12">
-                <h2 className="text-3xl sm:text-4xl font-bold text-text-primary dark:text-secondary-100 mb-4">
+                <h2 className="text-3xl sm:text-4xl font-bold text-ink mb-4">
                   Trusted by Security-Conscious Users
                 </h2>
-                <p className="text-xl text-text-secondary dark:text-secondary-400">
+                <p className="text-xl text-ink-muted">
                   Protecting digital assets across the Web3 ecosystem
                 </p>
               </div>
@@ -24,10 +24,10 @@ export default function TrustStats() {
                 <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
                   50,000+
                 </div>
-                <div className="text-lg font-semibold text-text-primary mb-1">
+                <div className="text-lg font-semibold text-ink mb-1">
                   Wallets Secured
                 </div>
-                <div className="text-text-secondary">
+                <div className="text-ink-muted">
                   Monthly active users protecting their assets
                 </div>
               </div>
@@ -36,10 +36,10 @@ export default function TrustStats() {
                 <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
                   2M+
                 </div>
-                <div className="text-lg font-semibold text-text-primary mb-1">
+                <div className="text-lg font-semibold text-ink mb-1">
                   Allowances Analyzed
                 </div>
-                <div className="text-text-secondary">
+                <div className="text-ink-muted">
                   Token approvals scanned and risk-assessed
                 </div>
               </div>
@@ -48,10 +48,10 @@ export default function TrustStats() {
                 <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
                   24/7
                 </div>
-                <div className="text-lg font-semibold text-text-primary mb-1">
+                <div className="text-lg font-semibold text-ink mb-1">
                   Security Monitoring
                 </div>
-                <div className="text-text-secondary">
+                <div className="text-ink-muted">
                   Real-time threat detection and alerts
                 </div>
               </div>
@@ -61,10 +61,10 @@ export default function TrustStats() {
       </Section>
 
       {/* Trust Indicators */}
-      <Section className="py-8 bg-surface-base">
+      <Section className="py-8 bg-paper">
         <Container>
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-text-secondary dark:text-secondary-400 font-medium">
+            <p className="text-lg text-ink-muted font-medium">
               No private keys required • Read-only access • Free core • Open source
             </p>
           </div>

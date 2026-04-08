@@ -214,7 +214,7 @@ export default function RuleBuilder() {
             <Settings className="w-5 h-5 text-primary-accent" />
             Automated Revocation Rules
           </h3>
-          <p className="text-sm text-text-secondary mt-1">
+          <p className="text-sm text-ink-muted mt-1">
             Define conditions that automatically trigger revocations or alerts.
           </p>
         </div>
@@ -263,7 +263,7 @@ export default function RuleBuilder() {
 
             {/* Conditions */}
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Conditions (all must match)
               </label>
               <div className="space-y-2">
@@ -274,7 +274,7 @@ export default function RuleBuilder() {
                   return (
                     <div key={idx} className="flex items-center gap-2 flex-wrap">
                       {idx > 0 && (
-                        <span className="text-xs font-medium text-text-tertiary px-2">AND</span>
+                        <span className="text-xs font-medium text-ink-whisper px-2">AND</span>
                       )}
                       <select
                         value={cond.field}
@@ -284,7 +284,7 @@ export default function RuleBuilder() {
                           const defaultValue = newType === 'boolean' ? true : newType === 'number' ? 0 : ''
                           updateCondition(idx, { field: newField, op: 'eq', value: defaultValue })
                         }}
-                        className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                        className="border border-ink-rule rounded-md px-3 py-1.5 text-sm bg-paper"
                       >
                         {CONDITION_FIELDS.map(f => (
                           <option key={f.value} value={f.value}>{f.label}</option>
@@ -294,7 +294,7 @@ export default function RuleBuilder() {
                       <select
                         value={cond.op}
                         onChange={e => updateCondition(idx, { op: e.target.value })}
-                        className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                        className="border border-ink-rule rounded-md px-3 py-1.5 text-sm bg-paper"
                       >
                         {(OPERATORS[fieldType] ?? OPERATORS.text).map(o => (
                           <option key={o.value} value={o.value}>{o.label}</option>
@@ -305,7 +305,7 @@ export default function RuleBuilder() {
                         <select
                           value={String(cond.value)}
                           onChange={e => updateCondition(idx, { value: e.target.value === 'true' })}
-                          className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                          className="border border-ink-rule rounded-md px-3 py-1.5 text-sm bg-paper"
                         >
                           <option value="true">True</option>
                           <option value="false">False</option>
@@ -314,7 +314,7 @@ export default function RuleBuilder() {
                         <select
                           value={String(cond.value)}
                           onChange={e => updateCondition(idx, { value: e.target.value })}
-                          className="border border-secondary-700 rounded-md px-3 py-1.5 text-sm bg-background-primary"
+                          className="border border-ink-rule rounded-md px-3 py-1.5 text-sm bg-paper"
                         >
                           {(fieldDef.options as string[]).map(opt => (
                             <option key={opt} value={opt}>{opt}</option>
@@ -352,7 +352,7 @@ export default function RuleBuilder() {
 
             {/* Action */}
             <div>
-              <label className="block text-sm font-medium text-text-primary mb-2">Action</label>
+              <label className="block text-sm font-medium text-ink mb-2">Action</label>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {ACTIONS.map(({ value, label, icon: Icon, description }) => (
                   <button
@@ -361,7 +361,7 @@ export default function RuleBuilder() {
                     className={`p-3 rounded-lg border text-left transition-all ${
                       newAction === value
                         ? 'border-primary-accent bg-primary-50 ring-1 ring-primary-accent'
-                        : 'border-secondary-700 hover:border-primary-accent/50'
+                        : 'border-ink-rule hover:border-primary-accent/50'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
@@ -369,7 +369,7 @@ export default function RuleBuilder() {
                       <span className="text-sm font-medium">{label}</span>
                       {newAction === value && <Check className="w-3 h-3 text-primary-accent ml-auto" />}
                     </div>
-                    <p className="text-xs text-text-secondary">{description}</p>
+                    <p className="text-xs text-ink-muted">{description}</p>
                   </button>
                 ))}
               </div>
@@ -377,7 +377,7 @@ export default function RuleBuilder() {
 
             {/* Max executions */}
             <div className="flex items-center gap-3">
-              <label className="text-sm font-medium text-text-primary">Max executions/day:</label>
+              <label className="text-sm font-medium text-ink">Max executions/day:</label>
               <Input
                 type="number"
                 value={newMaxExec}
@@ -396,7 +396,7 @@ export default function RuleBuilder() {
             )}
 
             {/* Submit */}
-            <div className="flex gap-2 justify-end pt-2 border-t border-secondary-700">
+            <div className="flex gap-2 justify-end pt-2 border-t border-ink-rule">
               <Button onClick={() => { setCreating(false); resetForm() }} variant="ghost">
                 Cancel
               </Button>
@@ -410,7 +410,7 @@ export default function RuleBuilder() {
 
       {/* Rules List */}
       {loading ? (
-        <div className="text-sm text-text-secondary">Loading rules...</div>
+        <div className="text-sm text-ink-muted">Loading rules...</div>
       ) : rules.length === 0 && !creating ? (
         <Card>
           <CardContent>
@@ -447,28 +447,28 @@ export default function RuleBuilder() {
                       </Badge>
                     </div>
                     {rule.description && (
-                      <p className="text-xs text-text-secondary truncate mt-0.5">{rule.description}</p>
+                      <p className="text-xs text-ink-muted truncate mt-0.5">{rule.description}</p>
                     )}
                   </div>
-                  <div className="text-xs text-text-tertiary mr-2">
+                  <div className="text-xs text-ink-whisper mr-2">
                     {rule.trigger_count} triggers
                   </div>
                   {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </div>
 
                 {isExpanded && (
-                  <CardContent className="border-t border-secondary-700 pt-3 space-y-3">
+                  <CardContent className="border-t border-ink-rule pt-3 space-y-3">
                     {/* Conditions */}
                     <div>
-                      <label className="text-xs font-medium text-text-secondary">Conditions</label>
+                      <label className="text-xs font-medium text-ink-muted">Conditions</label>
                       <div className="mt-1 space-y-1">
                         {(rule.conditions as RuleCondition[]).map((c, i) => (
                           <div key={i} className="text-sm flex items-center gap-1">
-                            {i > 0 && <span className="text-xs text-text-tertiary">AND</span>}
+                            {i > 0 && <span className="text-xs text-ink-whisper">AND</span>}
                             <Badge variant="secondary">
                               {CONDITION_FIELDS.find(f => f.value === c.field)?.label ?? c.field}
                             </Badge>
-                            <span className="text-text-secondary">{c.op}</span>
+                            <span className="text-ink-muted">{c.op}</span>
                             <span className="font-mono">{String(c.value)}</span>
                           </div>
                         ))}
@@ -478,15 +478,15 @@ export default function RuleBuilder() {
                     {/* Stats */}
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div>
-                        <div className="text-xs text-text-secondary">Triggered</div>
+                        <div className="text-xs text-ink-muted">Triggered</div>
                         <div className="text-lg font-bold">{rule.trigger_count}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-text-secondary">Max/Day</div>
+                        <div className="text-xs text-ink-muted">Max/Day</div>
                         <div className="text-lg font-bold">{rule.max_executions_per_day}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-text-secondary">Last Triggered</div>
+                        <div className="text-xs text-ink-muted">Last Triggered</div>
                         <div className="text-sm">
                           {rule.last_triggered_at
                             ? new Date(rule.last_triggered_at).toLocaleDateString()
@@ -496,7 +496,7 @@ export default function RuleBuilder() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex gap-2 justify-end pt-2 border-t border-secondary-700">
+                    <div className="flex gap-2 justify-end pt-2 border-t border-ink-rule">
                       <Button
                         onClick={(e) => { e.stopPropagation(); toggleRule(rule.id, !rule.enabled) }}
                         variant="ghost"

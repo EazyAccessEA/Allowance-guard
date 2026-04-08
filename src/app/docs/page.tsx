@@ -31,12 +31,12 @@ export default function DocsPage() {
     : menuItems
 
   return (
-    <div className="min-h-screen bg-[#0A0E1A] text-slate-100">
+    <div className="min-h-screen bg-paper text-ink">
 
       {/* Hero — Midnight Amber */}
-      <section className="relative overflow-hidden border-b border-slate-700/50">
+      <section className="relative overflow-hidden border-b border-ink-rule/50">
         {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A0E1A] via-[#0F172A] to-[#0A0E1A]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-paper via-paper-sub to-paper" />
         {/* Amber accent glow */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-500/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
@@ -49,23 +49,23 @@ export default function DocsPage() {
               <BookOpen className="w-5 h-5 text-amber-400" />
               <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.15em]">Documentation</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-ink mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
               Build with<br />
               <span className="text-amber-400">AllowanceGuard</span>
             </h1>
-            <p className="text-lg text-slate-400 max-w-xl mb-8">
+            <p className="text-lg text-ink-muted max-w-xl mb-8">
               Guides, API reference, and integration docs. Scan wallets, score risk, and revoke approvals — programmatically or through the dashboard.
             </p>
 
             {/* Search */}
             <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-whisper" />
               <input
                 type="text"
                 placeholder="Search docs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-800/60 border border-slate-700/50 rounded-xl text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-paper-sub/60 border border-ink-rule/50 rounded-xl text-sm text-ink placeholder:text-ink-whisper focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
               />
             </div>
           </div>
@@ -76,17 +76,17 @@ export default function DocsPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group flex items-start gap-3 p-4 rounded-xl bg-slate-800/30 border border-slate-700/40 hover:border-amber-500/30 hover:bg-slate-800/50 transition-all duration-200"
+                className="group flex items-start gap-3 p-4 rounded-xl bg-paper-sub/30 border border-ink-rule/40 hover:border-amber-500/30 hover:bg-paper-sub/50 transition-all duration-200"
               >
                 <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 group-hover:bg-amber-500/15 transition-colors">
                   <link.icon className="w-4 h-4 text-amber-400" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-sm font-medium text-slate-200 group-hover:text-amber-400 transition-colors flex items-center gap-1">
+                  <div className="text-sm font-medium text-ink group-hover:text-amber-400 transition-colors flex items-center gap-1">
                     {link.title}
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">{link.description}</p>
+                  <p className="text-xs text-ink-whisper mt-0.5">{link.description}</p>
                 </div>
               </Link>
             ))}
@@ -112,7 +112,7 @@ export default function DocsPage() {
                 if (groupItems.length === 0) return null
                 return (
                   <div key={group.title}>
-                    <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-[0.15em] mb-2 px-3">
+                    <h3 className="text-[10px] font-semibold text-ink-whisper uppercase tracking-[0.15em] mb-2 px-3">
                       {group.title}
                     </h3>
                     <div className="space-y-0.5">
@@ -127,10 +127,10 @@ export default function DocsPage() {
                               'w-full text-left px-3 py-2 rounded-lg text-sm flex items-center gap-2.5 transition-all duration-150',
                               isActive
                                 ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
-                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent',
+                                : 'text-ink-muted hover:text-ink hover:bg-paper-sub/50 border border-transparent',
                             )}
                           >
-                            <IconComponent className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-400' : 'text-slate-500')} />
+                            <IconComponent className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-400' : 'text-ink-whisper')} />
                             {item.title}
                           </button>
                         )
@@ -141,8 +141,8 @@ export default function DocsPage() {
               })}
 
               {/* Sub-pages */}
-              <div className="pt-4 border-t border-slate-700/50">
-                <h3 className="text-[10px] font-semibold text-slate-500 uppercase tracking-[0.15em] mb-2 px-3">
+              <div className="pt-4 border-t border-ink-rule/50">
+                <h3 className="text-[10px] font-semibold text-ink-whisper uppercase tracking-[0.15em] mb-2 px-3">
                   References
                 </h3>
                 <div className="space-y-0.5">
@@ -157,9 +157,9 @@ export default function DocsPage() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="flex items-center gap-2.5 px-3 py-2 text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 rounded-lg transition-colors"
+                      className="flex items-center gap-2.5 px-3 py-2 text-sm text-ink-muted hover:text-ink hover:bg-paper-sub/50 rounded-lg transition-colors"
                     >
-                      <link.icon className="w-4 h-4 text-slate-500" />
+                      <link.icon className="w-4 h-4 text-ink-whisper" />
                       {link.label}
                     </Link>
                   ))}
@@ -180,8 +180,8 @@ export default function DocsPage() {
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-24">
               {headings.length > 0 && (
-                <div className="rounded-xl border border-slate-700/50 bg-slate-800/30 p-4">
-                  <h4 className="text-[10px] font-semibold text-slate-500 uppercase tracking-[0.15em] mb-3">
+                <div className="rounded-xl border border-ink-rule/50 bg-paper-sub/30 p-4">
+                  <h4 className="text-[10px] font-semibold text-ink-whisper uppercase tracking-[0.15em] mb-3">
                     On this page
                   </h4>
                   <nav className="space-y-1.5">
@@ -190,7 +190,7 @@ export default function DocsPage() {
                         key={index}
                         href={`#${heading.id}`}
                         className={cn(
-                          'block text-sm text-slate-400 hover:text-amber-400 transition-colors',
+                          'block text-sm text-ink-muted hover:text-amber-400 transition-colors',
                           heading.level === 3 && 'ml-3 text-xs',
                         )}
                       >

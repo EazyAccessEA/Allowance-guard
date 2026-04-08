@@ -48,7 +48,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="max-w-4xl mx-auto">
             <Link
               href="/blog"
-              className="inline-flex items-center gap-2 text-text-secondary hover:text-primary-accent transition-colors duration-200 mb-8"
+              className="inline-flex items-center gap-2 text-ink-muted hover:text-primary-accent transition-colors duration-200 mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Blog
@@ -66,15 +66,15 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 )}
               </div>
 
-              <H1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">
+              <H1 className="text-4xl md:text-5xl font-bold text-ink mb-4">
                 {post.title}
               </H1>
 
-              <p className="text-xl text-text-secondary mb-6">
+              <p className="text-xl text-ink-muted mb-6">
                 {post.subtitle}
               </p>
 
-              <div className="flex items-center gap-6 text-sm text-text-secondary">
+              <div className="flex items-center gap-6 text-sm text-ink-muted">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   {new Date(post.publishedAt).toLocaleDateString('en-US', {
@@ -103,7 +103,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         </Container>
       </Section>
 
-      <div className="border-t border-secondary-700" />
+      <div className="border-t border-ink-rule" />
 
       {/* Article Content */}
       <Section className="py-16 bg-gray-50">
@@ -117,16 +117,16 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
             {/* Call to action */}
             <div className="bg-gradient-to-r from-primary-50 to-blue-50 border border-primary-200 rounded-2xl p-8 mb-12 shadow-sm">
-              <h3 className="text-2xl font-bold text-text-primary mb-4">
+              <h3 className="text-2xl font-bold text-ink mb-4">
                 Ready to Secure Your Token Allowances?
               </h3>
-              <p className="text-text-secondary mb-6">
+              <p className="text-ink-muted mb-6">
                 Don&apos;t wait for an attack to happen. Start monitoring and managing your token allowances today with AllowanceGuard.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-primary-accent text-white font-semibold rounded-lg hover:bg-primary-accent/90 transition-colors duration-200 shadow-md hover:shadow-lg"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-primary-accent text-ink font-semibold rounded-lg hover:bg-primary-accent/90 transition-colors duration-200 shadow-md hover:shadow-lg"
                 >
                   Get Started Free
                 </Link>
@@ -140,11 +140,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             {/* Navigation */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 pt-8 border-t border-secondary-700 bg-secondary-800 rounded-lg p-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 pt-8 border-t border-ink-rule bg-paper-sub rounded-lg p-6">
               {prevPost ? (
                 <Link
                   href={`/blog/${prevPost.slug}`}
-                  className="group flex items-center gap-3 text-text-secondary hover:text-primary-accent transition-colors duration-200"
+                  className="group flex items-center gap-3 text-ink-muted hover:text-primary-accent transition-colors duration-200"
                 >
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
                   <div>
@@ -159,7 +159,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               {nextPost ? (
                 <Link
                   href={`/blog/${nextPost.slug}`}
-                  className="group flex items-center gap-3 text-text-secondary hover:text-primary-accent transition-colors duration-200 ml-auto"
+                  className="group flex items-center gap-3 text-ink-muted hover:text-primary-accent transition-colors duration-200 ml-auto"
                 >
                   <div className="text-right">
                     <p className="text-sm font-medium">Next</p>

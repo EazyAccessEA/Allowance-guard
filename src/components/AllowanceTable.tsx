@@ -96,7 +96,7 @@ export default function AllowanceTable({
           <ShieldCheck className="w-8 h-8 text-semantic-success-500" />
         </div>
         <h3 className="mobbin-heading-3 text-semantic-success-700 dark:text-semantic-success-300 mb-2">No active approvals</h3>
-        <p className="mobbin-body text-text-secondary dark:text-secondary-400 mb-6 max-w-md mx-auto">
+        <p className="mobbin-body text-ink-muted mb-6 max-w-md mx-auto">
           Great news — your wallet has no token approvals. You&apos;re safe! Run a scan to double-check across all supported chains.
         </p>
         <Button
@@ -114,8 +114,8 @@ export default function AllowanceTable({
     return (
       <div className="space-y-4" role="region" aria-label="Loading token approvals">
         <div className="flex items-center gap-3" aria-hidden="true">
-          <div className="h-9 w-24 bg-background-light dark:bg-secondary-800 rounded-full animate-pulse" />
-          <div className="h-9 w-32 bg-background-light dark:bg-secondary-800 rounded-full animate-pulse" />
+          <div className="h-9 w-24 bg-paper-sub rounded-full animate-pulse" />
+          <div className="h-9 w-32 bg-paper-sub rounded-full animate-pulse" />
         </div>
         <div aria-live="polite" aria-label="Loading token approvals data">
           <FireartTableSkeleton rows={5} />
@@ -176,7 +176,7 @@ export default function AllowanceTable({
             className={`rounded-xl border p-4 transition-colors duration-100 ${
               sel[keyOf(r)]
                 ? 'border-primary-300 bg-primary-50/50 dark:border-primary-700 dark:bg-primary-900/10'
-                : 'border-secondary-700 bg-secondary-900/60'
+                : 'border-ink-rule bg-paper-deep/60'
             }`}
           >
             <div className="flex items-start justify-between mb-3">
@@ -185,14 +185,14 @@ export default function AllowanceTable({
                   type="checkbox"
                   checked={!!sel[keyOf(r)]}
                   onChange={() => toggle(r)}
-                  className="rounded border-secondary-700 dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-secondary-800 min-w-[18px] min-h-[18px]"
+                  className="rounded border-ink-rule dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-paper-sub min-w-[18px] min-h-[18px]"
                   aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval`}
                 />
                 <div>
-                  <span className="font-medium text-text-primary dark:text-secondary-100">
+                  <span className="font-medium text-ink">
                     {r.token_symbol || r.token_name || 'Unknown'}
                   </span>
-                  <span className="text-xs text-text-tertiary dark:text-secondary-500 font-mono ml-2">
+                  <span className="text-xs text-ink-whisper font-mono ml-2">
                     {r.token_address.slice(0, 6)}...{r.token_address.slice(-4)}
                   </span>
                 </div>
@@ -220,20 +220,20 @@ export default function AllowanceTable({
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div>
-                <span className="text-text-secondary dark:text-secondary-400">Spender:</span>
-                <span className="ml-1 font-medium text-text-primary dark:text-secondary-100">
+                <span className="text-ink-muted">Spender:</span>
+                <span className="ml-1 font-medium text-ink">
                   {r.spender_label || `${r.spender_address.slice(0, 6)}...${r.spender_address.slice(-4)}`}
                 </span>
               </div>
               <div>
-                <span className="text-text-secondary dark:text-secondary-400">Chain:</span>
+                <span className="text-ink-muted">Chain:</span>
                 <Badge variant="secondary" className="text-xs ml-1">
                   {CHAIN_NAMES[r.chain_id] || `${r.chain_id}`}
                 </Badge>
               </div>
               <div>
-                <span className="text-text-secondary dark:text-secondary-400">Amount:</span>
-                <span className="ml-1 font-mono font-medium text-text-primary dark:text-secondary-200">
+                <span className="text-ink-muted">Amount:</span>
+                <span className="ml-1 font-mono font-medium text-ink">
                   {r.is_unlimited ? '∞ Unlimited' : (() => {
                     if (r.token_decimals != null) {
                       const amountBigInt = BigInt(r.amount)
@@ -245,7 +245,7 @@ export default function AllowanceTable({
                 </span>
               </div>
               <div>
-                <span className="text-text-secondary dark:text-secondary-400">Type:</span>
+                <span className="text-ink-muted">Type:</span>
                 <Badge variant="outline" className="text-xs ml-1">{r.standard}</Badge>
               </div>
             </div>
@@ -254,21 +254,21 @@ export default function AllowanceTable({
       </div>
 
       {/* Desktop Table Layout */}
-      <div className="hidden md:block border border-secondary-700 rounded-xl overflow-hidden bg-secondary-900/60 backdrop-blur-xs shadow-subtle dark:shadow-dark-subtle">
+      <div className="hidden md:block border border-ink-rule rounded-xl overflow-hidden bg-paper-deep/60 backdrop-blur-xs shadow-subtle dark:shadow-dark-subtle">
         <div className="overflow-x-auto">
           <table className="w-full text-sm" role="table" aria-label="Token allowances">
             <caption className="sr-only">Token approval allowances with risk assessment and management options</caption>
-            <thead className="bg-background-secondary/80 dark:bg-secondary-800/80 border-b border-secondary-700">
+            <thead className="bg-paper-sub/80 dark:bg-paper-sub/80 border-b border-ink-rule">
               <tr>
-                <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 w-10">
+                <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted w-10">
                   <span className="sr-only">Select for bulk action</span>
                 </th>
-                <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Chain</th>
-                <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Token</th>
-                <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Spender</th>
-                <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Standard</th>
-                <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Amount</th>
-                <th scope="col" className="px-4 py-3.5 text-left font-medium text-text-secondary dark:text-secondary-400 text-xs uppercase tracking-wider">Risk</th>
+                <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Chain</th>
+                <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Token</th>
+                <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Spender</th>
+                <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Standard</th>
+                <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Amount</th>
+                <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Risk</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border-primary dark:divide-secondary-800">
@@ -278,7 +278,7 @@ export default function AllowanceTable({
                   className={`transition-colors duration-100
                     ${sel[keyOf(r)]
                       ? 'bg-primary-50/50 dark:bg-primary-900/10'
-                      : 'hover:bg-background-secondary/50 dark:hover:bg-secondary-800/40'
+                      : 'hover:bg-paper-sub/50 dark:hover:bg-paper-sub/40'
                     }`}
                 >
                   <td className="px-4 py-3.5">
@@ -286,7 +286,7 @@ export default function AllowanceTable({
                       type="checkbox"
                       checked={!!sel[keyOf(r)]}
                       onChange={() => toggle(r)}
-                      className="rounded border-secondary-700 dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-secondary-800"
+                      className="rounded border-ink-rule dark:border-secondary-600 text-primary-700 dark:text-primary-400 focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-paper-sub"
                       aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval for ${r.spender_label || 'Unknown Contract'}`}
                     />
                   </td>
@@ -299,10 +299,10 @@ export default function AllowanceTable({
 
                   <td className="px-4 py-3.5">
                     <div className="flex flex-col">
-                      <span className="font-medium text-text-primary dark:text-secondary-100">
+                      <span className="font-medium text-ink">
                         {r.token_symbol || r.token_name || 'Unknown'}
                       </span>
-                      <span className="text-xs text-text-tertiary dark:text-secondary-500 font-mono">
+                      <span className="text-xs text-ink-whisper font-mono">
                         {r.token_address.slice(0, 6)}...{r.token_address.slice(-4)}
                       </span>
                     </div>
@@ -310,10 +310,10 @@ export default function AllowanceTable({
 
                   <td className="px-4 py-3.5">
                     <div className="flex flex-col">
-                      <span className="font-medium text-text-primary dark:text-secondary-100">
+                      <span className="font-medium text-ink">
                         {r.spender_label || 'Unknown Contract'}
                       </span>
-                      <span className="text-xs text-text-tertiary dark:text-secondary-500 font-mono">
+                      <span className="text-xs text-ink-whisper font-mono">
                         {r.spender_address.slice(0, 6)}...{r.spender_address.slice(-4)}
                       </span>
                       {r.spender_trust && (
@@ -340,7 +340,7 @@ export default function AllowanceTable({
                           &infin; Unlimited
                         </Badge>
                       ) : (
-                        <span className="font-mono text-text-primary dark:text-secondary-200">
+                        <span className="font-mono text-ink">
                           {(() => {
                             if (r.token_decimals != null) {
                               const amountBigInt = BigInt(r.amount)

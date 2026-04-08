@@ -179,18 +179,18 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
         <CardContent>
           {riskHistory.length === 0 ? (
             <div className="text-center py-6">
-              <p className="text-sm text-text-secondary">
+              <p className="text-sm text-ink-muted">
                 No risk history yet. Data will populate after scans.
               </p>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <div className="text-sm text-text-secondary">Current Risk</div>
+                <div className="text-sm text-ink-muted">Current Risk</div>
                 <div className="text-2xl font-bold">{latestRisk?.risk_score ?? '—'}</div>
               </div>
               <div>
-                <div className="text-sm text-text-secondary">Trend ({riskDays}d)</div>
+                <div className="text-sm text-ink-muted">Trend ({riskDays}d)</div>
                 <div className="flex items-center gap-1">
                   {riskTrend > 0 ? (
                     <TrendingUp className="w-4 h-4 text-red-500" />
@@ -198,18 +198,18 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                     <TrendingDown className="w-4 h-4 text-green-500" />
                   ) : null}
                   <span className={`text-lg font-bold ${
-                    riskTrend > 0 ? 'text-red-500' : riskTrend < 0 ? 'text-green-500' : 'text-text-primary'
+                    riskTrend > 0 ? 'text-red-500' : riskTrend < 0 ? 'text-green-500' : 'text-ink'
                   }`}>
                     {riskTrend > 0 ? '+' : ''}{riskTrend}
                   </span>
                 </div>
               </div>
               <div>
-                <div className="text-sm text-text-secondary">Allowances</div>
+                <div className="text-sm text-ink-muted">Allowances</div>
                 <div className="text-2xl font-bold">{latestRisk?.total_allowances ?? '—'}</div>
               </div>
               <div>
-                <div className="text-sm text-text-secondary">High Risk</div>
+                <div className="text-sm text-ink-muted">High Risk</div>
                 <div className="text-2xl font-bold text-semantic-danger">
                   {latestRisk?.high_risk_count ?? '—'}
                 </div>
@@ -219,8 +219,8 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
 
           {/* Mini risk chart (text-based sparkline) */}
           {riskHistory.length > 1 && (
-            <div className="mt-4 pt-4 border-t border-secondary-700">
-              <div className="text-xs text-text-secondary mb-2">Risk Score Over Time</div>
+            <div className="mt-4 pt-4 border-t border-ink-rule">
+              <div className="text-xs text-ink-muted mb-2">Risk Score Over Time</div>
               <div className="flex items-end gap-1 h-16">
                 {riskHistory.map((s, i) => {
                   const maxScore = Math.max(...riskHistory.map(r => r.risk_score), 1)
@@ -237,7 +237,7 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                   )
                 })}
               </div>
-              <div className="flex justify-between text-[10px] text-text-tertiary mt-1">
+              <div className="flex justify-between text-[10px] text-ink-whisper mt-1">
                 <span>{riskHistory.length > 0 ? new Date(riskHistory[0].snapshot_at).toLocaleDateString() : ''}</span>
                 <span>{riskHistory.length > 0 ? new Date(riskHistory[riskHistory.length - 1].snapshot_at).toLocaleDateString() : ''}</span>
               </div>
@@ -268,7 +268,7 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
         <CardContent>
           {/* Filters */}
           {showFilters && (
-            <div className="mb-4 pb-4 border-b border-secondary-700">
+            <div className="mb-4 pb-4 border-b border-ink-rule">
               <div className="flex flex-wrap gap-2">
                 {[
                   { value: 'all', label: 'All Events' },
@@ -292,12 +292,12 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
 
           {/* Events */}
           {loading ? (
-            <div className="text-sm text-text-secondary py-4">Loading timeline...</div>
+            <div className="text-sm text-ink-muted py-4">Loading timeline...</div>
           ) : events.length === 0 ? (
             <div className="text-center py-8">
-              <Clock className="w-8 h-8 text-text-tertiary mx-auto mb-2" />
-              <p className="text-sm text-text-secondary">No events recorded yet</p>
-              <p className="text-xs text-text-tertiary mt-1">
+              <Clock className="w-8 h-8 text-ink-whisper mx-auto mb-2" />
+              <p className="text-sm text-ink-muted">No events recorded yet</p>
+              <p className="text-xs text-ink-whisper mt-1">
                 Historical events will appear here as your wallet is scanned over time.
               </p>
             </div>
@@ -312,19 +312,19 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                     {/* Timeline dot */}
                     <div className="absolute left-2.5 mt-1.5 w-3 h-3 rounded-full border-2 border-background-primary bg-primary-accent" />
 
-                    <div className="flex-1 p-3 rounded-lg border border-secondary-700 bg-background-secondary">
+                    <div className="flex-1 p-3 rounded-lg border border-ink-rule bg-paper-sub">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
                         {eventIcon(evt.event_type)}
                         <Badge variant={eventBadgeVariant(evt.event_type)}>
                           {eventLabel(evt.event_type)}
                         </Badge>
-                        <span className="text-xs text-text-tertiary">Chain {evt.chain_id}</span>
-                        <span className="text-xs text-text-tertiary ml-auto">
+                        <span className="text-xs text-ink-whisper">Chain {evt.chain_id}</span>
+                        <span className="text-xs text-ink-whisper ml-auto">
                           {new Date(evt.created_at).toLocaleString()}
                         </span>
                       </div>
 
-                      <div className="text-sm text-text-secondary">
+                      <div className="text-sm text-ink-muted">
                         <span className="font-mono text-xs">
                           {evt.token_symbol ?? evt.token_address.slice(0, 10) + '...'}
                         </span>
@@ -338,12 +338,12 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                       {(evt.previous_amount !== null || evt.new_amount !== null) && (
                         <div className="flex items-center gap-2 mt-2 text-xs">
                           {evt.previous_amount !== null && (
-                            <span className="text-text-tertiary line-through">
+                            <span className="text-ink-whisper line-through">
                               {formatAmount(evt.previous_amount, evt.previous_unlimited)}
                             </span>
                           )}
                           {evt.previous_amount !== null && evt.new_amount !== null && (
-                            <span className="text-text-tertiary">→</span>
+                            <span className="text-ink-whisper">→</span>
                           )}
                           {evt.new_amount !== null && (
                             <span className="font-medium">
@@ -370,7 +370,7 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                       {/* Tx link */}
                       {evt.tx_hash && (
                         <div className="mt-2">
-                          <span className="text-xs font-mono text-text-tertiary">
+                          <span className="text-xs font-mono text-ink-whisper">
                             tx: {evt.tx_hash.slice(0, 10)}...{evt.tx_hash.slice(-6)}
                           </span>
                         </div>
@@ -384,8 +384,8 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-4 pt-4 border-t border-secondary-700">
-              <div className="text-sm text-text-secondary">
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-ink-rule">
+              <div className="text-sm text-ink-muted">
                 Page {page} of {totalPages}
               </div>
               <div className="flex gap-2">

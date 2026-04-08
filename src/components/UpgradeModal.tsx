@@ -40,11 +40,11 @@ export default function UpgradeModal({ isOpen, onClose, feature, requiredPlan = 
           <Lock className="w-7 h-7 text-amber-400" />
         </div>
 
-        <h3 className="text-lg font-semibold text-text-primary mb-2">
+        <h3 className="text-lg font-semibold text-ink mb-2">
           Unlock {feature}
         </h3>
 
-        <p className="text-sm text-text-secondary leading-relaxed">
+        <p className="text-sm text-ink-muted leading-relaxed">
           {feature} is available on the{' '}
           <span className="font-medium text-amber-400">{requiredPlan} plan</span>
           {requiredPlan === 'Pro' ? ' starting at $9.99/mo' : ' starting at $49.99/mo'}.

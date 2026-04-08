@@ -27,7 +27,7 @@ const modalVariants = cva(
 )
 
 const modalContentVariants = cva(
-  'relative w-full rounded-base bg-secondary-800 p-6 shadow-large animate-modal-in',
+  'relative w-full rounded-base bg-paper-sub p-6 shadow-large animate-modal-in',
   {
     variants: {
       size: {
@@ -117,7 +117,7 @@ const Modal: React.FC<ModalProps> = ({
                 {title && (
                   <h2 
                     id="modal-title"
-                    className="text-xl font-semibold text-text-primary"
+                    className="text-xl font-semibold text-ink"
                   >
                     {title}
                   </h2>
@@ -125,7 +125,7 @@ const Modal: React.FC<ModalProps> = ({
                 {description && (
                   <p 
                     id="modal-description"
-                    className="mt-1 text-sm text-text-secondary"
+                    className="mt-1 text-sm text-ink-muted"
                   >
                     {description}
                   </p>
@@ -137,7 +137,7 @@ const Modal: React.FC<ModalProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={onClose}
-                  className="h-8 w-8 text-text-tertiary hover:text-text-primary"
+                  className="h-8 w-8 text-ink-whisper hover:text-ink"
                   aria-label="Close modal"
                 >
                   <svg

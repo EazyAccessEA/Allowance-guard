@@ -31,8 +31,8 @@ export default function ChainFilter({ active, onChange, counts }: ChainFilterPro
               'transition-all duration-150 border',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-secondary-900',
               isActive
-                ? 'bg-primary-500 text-white border-primary-500 shadow-sm dark:bg-primary-600 dark:border-primary-600'
-                : 'bg-background-primary dark:bg-secondary-800 text-secondary-600 dark:text-secondary-300 border-secondary-700 hover:border-primary-300 dark:hover:border-primary-600 hover:text-primary-600 dark:hover:text-primary-400'
+                ? 'bg-primary-500 text-ink border-primary-500 shadow-sm dark:bg-primary-600 dark:border-primary-600'
+                : 'bg-paper-sub text-secondary-600 dark:text-ink-soft border-ink-rule hover:border-primary-300 dark:hover:border-primary-600 hover:text-primary-600 dark:hover:text-primary-400'
             )}
           >
             {dotColor && !isActive && (
@@ -48,8 +48,8 @@ export default function ChainFilter({ active, onChange, counts }: ChainFilterPro
                 className={cn(
                   'text-xs px-1.5 py-0.5 rounded-full',
                   isActive
-                    ? 'bg-white/20 text-white'
-                    : 'bg-secondary-100 dark:bg-secondary-700 text-secondary-500 dark:text-secondary-400'
+                    ? 'bg-paper-sub text-ink'
+                    : 'bg-secondary-100 dark:bg-paper-sub text-ink-whisper dark:text-ink-muted'
                 )}
               >
                 {count}

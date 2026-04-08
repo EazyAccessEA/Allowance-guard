@@ -64,9 +64,9 @@ export default function ConnectButton({
     
     return (
       <div className={`flex items-center gap-2 ${className}`}>
-        <div className="flex items-center gap-2 px-3 py-2 bg-background-light rounded-base border border-border-default">
+        <div className="flex items-center gap-2 px-3 py-2 bg-paper-sub rounded-base border border-border-default">
           <div className="w-2 h-2 bg-semantic-success rounded-full" />
-          <span className="text-sm font-medium text-text-primary">
+          <span className="text-sm font-medium text-ink">
             {truncatedAddress}
           </span>
         </div>

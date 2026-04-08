@@ -96,8 +96,8 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       className={cn(
         'group relative flex flex-col rounded-2xl p-7 lg:p-8 transition-all duration-300',
         highlighted
-          ? 'bg-white/[0.06] ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/5 md:-mt-4 md:mb-4'
-          : 'bg-white/[0.03] ring-1 ring-white/[0.08] hover:ring-white/[0.15] hover:bg-white/[0.05]'
+          ? 'bg-paper-sub ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/5 md:-mt-4 md:mb-4'
+          : 'bg-paper-sub ring-1 ring-ink-rule hover:ring-ink-rule hover:bg-paper-sub'
       )}
     >
       {/* Highlighted glow */}
@@ -114,7 +114,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* Badge */}
       {highlighted && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center rounded-full bg-amber-500 px-3.5 py-1 text-xs font-semibold text-slate-900 shadow-md shadow-amber-500/20">
+          <span className="inline-flex items-center rounded-full bg-amber-500 px-3.5 py-1 text-xs font-semibold text-ink shadow-md shadow-amber-500/20">
             Most Popular
           </span>
         </div>
@@ -122,10 +122,10 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
       {/* Plan name + description */}
       <div className="mb-6">
-        <h3 className="text-lg font-bold text-white tracking-tight mb-1">
+        <h3 className="text-lg font-bold text-ink tracking-tight mb-1">
           {displayName}
         </h3>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-ink-muted leading-relaxed">
           {PLAN_DESCRIPTIONS[plan]}
         </p>
       </div>
@@ -133,15 +133,15 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* Price — large scale contrast */}
       <div className="mb-8">
         <div className="flex items-baseline gap-1">
-          <span className="text-5xl font-bold tracking-tight text-white">
+          <span className="text-5xl font-bold tracking-tight text-ink">
             {price}
           </span>
           {periodLabel && (
-            <span className="text-base text-slate-500 font-medium">{periodLabel}</span>
+            <span className="text-base text-ink-whisper font-medium">{periodLabel}</span>
           )}
         </div>
         {!isPaid && (
-          <p className="mt-1 text-sm text-slate-500">Free and open source</p>
+          <p className="mt-1 text-sm text-ink-whisper">Free and open source</p>
         )}
         {isPaid && billingPeriod === 'yearly' && savingsPercent > 0 && (
           <p className="mt-1.5 text-sm font-medium text-emerald-400">
@@ -159,8 +159,8 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
               className={cn(
                 'w-full rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]',
                 highlighted
-                  ? 'bg-amber-500 text-slate-900 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
-                  : 'bg-white/10 text-white hover:bg-white/15 ring-1 ring-white/10 active:bg-white/20',
+                  ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
+                  : 'bg-paper-sub text-ink hover:bg-white/15 ring-1 ring-ink-rule active:bg-paper-sub',
               )}
             >
               {ctaText}
@@ -176,7 +176,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
         ) : (
           <Link
             href="/"
-            className="block w-full rounded-xl px-5 py-3 text-sm font-semibold text-center text-slate-300 bg-white/[0.06] hover:bg-white/10 ring-1 ring-white/[0.08] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="block w-full rounded-xl px-5 py-3 text-sm font-semibold text-center text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             {ctaText}
           </Link>
@@ -184,7 +184,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-white/[0.06] mb-6" aria-hidden="true" />
+      <div className="h-px bg-paper-sub mb-6" aria-hidden="true" />
 
       {/* Features list */}
       <ul className="flex flex-col gap-3" role="list">
@@ -197,13 +197,13 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
               />
             ) : (
               <X
-                className="mt-0.5 h-4 w-4 shrink-0 text-slate-600"
+                className="mt-0.5 h-4 w-4 shrink-0 text-ink-whisper"
                 aria-hidden="true"
               />
             )}
             <span
               className={cn(
-                feature.included ? 'text-slate-300' : 'text-slate-600'
+                feature.included ? 'text-ink-soft' : 'text-ink-whisper'
               )}
             >
               {feature.label}

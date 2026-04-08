@@ -14,14 +14,14 @@ export default function DashboardHeader({
   chain = 'Ethereum',
 }: DashboardHeaderProps) {
   return (
-    <header className="flex items-center justify-between px-4 lg:px-6 h-16 border-b border-secondary-700 bg-background-primary dark:bg-dark-bg-secondary">
+    <header className="flex items-center justify-between px-4 lg:px-6 h-16 border-b border-ink-rule bg-paper dark:bg-dark-bg-secondary">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <Shield
           className="h-7 w-7 text-primary-500"
           aria-hidden="true"
         />
-        <span className="text-lg font-semibold tracking-tight text-text-primary dark:text-secondary-100">
+        <span className="text-lg font-semibold tracking-tight text-ink">
           AllowanceGuard
         </span>
       </div>
@@ -35,7 +35,7 @@ export default function DashboardHeader({
               'text-sm font-medium transition-colors duration-150',
               item === 'Dashboard'
                 ? 'text-primary-600 dark:text-primary-400'
-                : 'text-secondary-500 hover:text-text-primary dark:text-secondary-400 dark:hover:text-secondary-200'
+                : 'text-ink-whisper hover:text-ink-muted dark:hover:text-ink'
             )}
           >
             {item}
@@ -53,14 +53,14 @@ export default function DashboardHeader({
           {chain}
         </span>
         <button
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-mono text-text-primary dark:text-secondary-200 bg-secondary-50 dark:bg-secondary-800 border border-secondary-700 hover:border-primary-300 dark:hover:border-primary-600 transition-colors duration-150"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-mono text-ink bg-secondary-50 dark:bg-paper-sub border border-ink-rule hover:border-primary-300 dark:hover:border-primary-600 transition-colors duration-150"
           aria-label={`Connected wallet ${walletAddress}`}
         >
           {walletAddress}
-          <ChevronDown className="h-3.5 w-3.5 text-secondary-400" aria-hidden="true" />
+          <ChevronDown className="h-3.5 w-3.5 text-ink-muted" aria-hidden="true" />
         </button>
         <button
-          className="p-2 rounded-lg text-secondary-400 hover:text-secondary-600 dark:hover:text-secondary-200 hover:bg-secondary-100 dark:hover:bg-secondary-800 transition-colors duration-150"
+          className="p-2 rounded-lg text-ink-muted hover:text-secondary-600 dark:hover:text-ink hover:bg-secondary-100 dark:hover:bg-paper-sub transition-colors duration-150"
           aria-label="Disconnect wallet"
         >
           <LogOut className="h-4 w-4" />

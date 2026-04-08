@@ -27,11 +27,11 @@ export function HexButton({
   const baseClasses = 'rounded-full transition-all duration-200 font-medium inline-flex items-center justify-center border-2 focus:outline-none focus:ring-2 focus:ring-offset-2'
   
   const variantClasses = {
-    primary: 'bg-black text-white border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
-    ghost: 'bg-black text-white border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
-    danger: 'bg-black text-white border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
-    warn: 'bg-black text-white border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
-    info: 'bg-black text-white border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
+    primary: 'bg-black text-ink border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
+    ghost: 'bg-black text-ink border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
+    danger: 'bg-black text-ink border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
+    warn: 'bg-black text-ink border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
+    info: 'bg-black text-ink border-transparent hover:bg-gray-800 focus:ring-gray-500/30',
   }
   
   const sizeClasses = {

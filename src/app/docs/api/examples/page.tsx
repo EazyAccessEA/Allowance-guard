@@ -300,7 +300,7 @@ async function main() {
 main()`
 
   return (
-    <div className="min-h-screen bg-surface-base text-white">
+    <div className="min-h-screen bg-paper text-ink">
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100" />
@@ -392,7 +392,7 @@ main()`
             <H2 className="mb-8">Integration Tips</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <H3 className="mb-4">Error Handling</H3>
                 <p className="text-stone mb-4">
                   Always implement proper error handling for network requests and API responses.
@@ -405,7 +405,7 @@ main()`
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <H3 className="mb-4">Performance</H3>
                 <p className="text-stone mb-4">
                   Optimize your API usage for better performance and user experience.
@@ -418,7 +418,7 @@ main()`
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <H3 className="mb-4">Rate Limiting</H3>
                 <p className="text-stone mb-4">
                   Respect rate limits to ensure reliable API access.
@@ -431,7 +431,7 @@ main()`
                 </ul>
               </div>
 
-              <div className="bg-secondary-800 p-6 rounded-lg border border-secondary-700">
+              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
                 <H3 className="mb-4">Security</H3>
                 <p className="text-stone mb-4">
                   Follow security best practices when integrating the API.

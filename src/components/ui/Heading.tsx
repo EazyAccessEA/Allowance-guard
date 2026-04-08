@@ -1,13 +1,13 @@
 export function H1({ children, className='' }: { children: React.ReactNode; className?: string }) {
-  return <h1 className={`text-5xl sm:text-6xl font-medium tracking-[-0.02em] text-white ${className}`}>{children}</h1>;
+  return <h1 className={`text-5xl sm:text-6xl font-medium tracking-[-0.02em] text-ink ${className}`}>{children}</h1>;
 }
 
 export function H2({ children, className='' }: { children: React.ReactNode; className?: string }) {
-  return <h2 className={`text-3xl sm:text-4xl font-medium tracking-[-0.01em] text-white ${className}`}>{children}</h2>;
+  return <h2 className={`text-3xl sm:text-4xl font-medium tracking-[-0.01em] text-ink ${className}`}>{children}</h2>;
 }
 
 export function H3({ children, className='' }: { children: React.ReactNode; className?: string }) {
-  return <h3 className={`text-2xl sm:text-3xl font-medium tracking-[-0.01em] text-white ${className}`}>{children}</h3>;
+  return <h3 className={`text-2xl sm:text-3xl font-medium tracking-[-0.01em] text-ink ${className}`}>{children}</h3>;
 }
 
 export function Eyebrow({ children, className='' }: { children: React.ReactNode; className?: string }) {

@@ -8,17 +8,17 @@ import Link from 'next/link'
 
 export default function RefundPage() {
   return (
-    <div className="min-h-screen bg-surface-base text-white">
+    <div className="min-h-screen bg-paper text-ink">
 
       {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden bg-secondary-900">
+      <Section className="relative py-24 sm:py-32 overflow-hidden bg-paper-deep">
         <VideoBackground videoSrc="/V3AG.mp4" />
         <div
           className="absolute inset-0 z-10"
           aria-hidden="true"
           style={{
             background:
-              'linear-gradient(to right, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.75) 60%, rgba(15,23,42,0.6) 100%)'
+              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)'
           }}
         />
 
@@ -26,31 +26,31 @@ export default function RefundPage() {
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
             Legal &middot; Refund Policy
           </span>
-          <H1 className="mb-6 text-white">Refund Policy</H1>
-          <p className="text-lg text-slate-300 max-w-reading">
+          <H1 className="mb-6 text-ink">Refund Policy</H1>
+          <p className="text-lg text-ink-soft max-w-reading">
             Fourteen days, no questions asked, on every paid tier. After that the rules are written down here in plain English so nobody is guessing.
           </p>
         </Container>
       </Section>
 
-      <div className="border-t border-white/10" />
+      <div className="border-t border-ink-rule" />
 
       {/* Refund Content */}
       <Section className="py-16">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <div className="max-w-none text-slate-300">
+            <div className="max-w-none text-ink-soft">
 
               {/* 14-Day Guarantee */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">14-Day Money-Back Guarantee</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">14-Day Money-Back Guarantee</H2>
                 <div className="border-l-4 border-emerald-400 pl-6 bg-emerald-500/10 p-4 rounded-r-lg">
                   <p className="text-emerald-200">
                     If you are not satisfied with any paid Allowance Guard subscription, you may request
                     a <strong>full refund within 14 days</strong> of your first payment on that tier. No questions asked.
                   </p>
                 </div>
-                <p className="text-slate-300 mt-4 text-sm">
+                <p className="text-ink-soft mt-4 text-sm">
                   This applies to your first subscription on any paid tier (Pro, Sentinel, API Developer, API Growth).
                   If you previously had a subscription, cancelled, and re-subscribed, the 14-day window applies
                   only to the first subscription.
@@ -59,12 +59,12 @@ export default function RefundPage() {
 
               {/* By Plan Type */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Refunds by Plan Type</H2>
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Refunds by Plan Type</H2>
                 <div className="space-y-6">
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Monthly Subscriptions (Pro, Sentinel)</h3>
-                    <ul className="space-y-2 text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Monthly Subscriptions (Pro, Sentinel)</h3>
+                    <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• <strong>Within 14 days of first payment:</strong> Full refund</li>
                       <li>• <strong>After 14 days:</strong> No refund for the current billing period</li>
                       <li>• Cancellation takes effect at end of billing period — you keep access until then</li>
@@ -72,18 +72,18 @@ export default function RefundPage() {
                     </ul>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Annual Subscriptions (Pro, Sentinel)</h3>
-                    <ul className="space-y-2 text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Annual Subscriptions (Pro, Sentinel)</h3>
+                    <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• <strong>Within 14 days of first payment:</strong> Full refund</li>
                       <li>• <strong>Within 30 days:</strong> Pro-rated refund based on unused months</li>
                       <li>• <strong>After 30 days:</strong> No refund; cancellation takes effect at end of annual period</li>
                     </ul>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">B2B API Tiers (Developer, Growth, Enterprise)</h3>
-                    <ul className="space-y-2 text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">B2B API Tiers (Developer, Growth, Enterprise)</h3>
+                    <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• <strong>Within 14 days of first payment:</strong> Full refund</li>
                       <li>• <strong>After 14 days:</strong> Pro-rated refund based on actual API usage during the billing period</li>
                       <li>• If usage exceeds 50% of your tier&apos;s daily limit on average, the refund is reduced proportionally</li>
@@ -91,17 +91,17 @@ export default function RefundPage() {
                     </ul>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Free Trials</h3>
-                    <ul className="space-y-2 text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Free Trials</h3>
+                    <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• Cancel during the trial period at no charge</li>
                       <li>• If you forget to cancel and are charged, the 14-day guarantee still applies</li>
                     </ul>
                   </div>
 
-                  <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-3 text-white">Donations</h3>
-                    <ul className="space-y-2 text-slate-300 text-sm">
+                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                    <h3 className="text-lg font-semibold mb-3 text-ink">Donations</h3>
+                    <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• Donations are non-refundable once processed</li>
                       <li>• Exception: technical errors (duplicate charges, incorrect amount) — contact us within 7 days</li>
                     </ul>
@@ -111,10 +111,10 @@ export default function RefundPage() {
 
               {/* How to Request */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">How to Request a Refund</H2>
-                <div className="space-y-4 text-slate-300">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">How to Request a Refund</H2>
+                <div className="space-y-4 text-ink-soft">
                   <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg text-center">
+                    <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
                       <div className="text-2xl font-bold text-amber-400 mb-2">1</div>
                       <h3 className="font-medium mb-2">Email Us</h3>
                       <p className="text-sm">
@@ -124,7 +124,7 @@ export default function RefundPage() {
                       </p>
                     </div>
 
-                    <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg text-center">
+                    <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
                       <div className="text-2xl font-bold text-amber-400 mb-2">2</div>
                       <h3 className="font-medium mb-2">We Review</h3>
                       <p className="text-sm">
@@ -132,7 +132,7 @@ export default function RefundPage() {
                       </p>
                     </div>
 
-                    <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg text-center">
+                    <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
                       <div className="text-2xl font-bold text-amber-400 mb-2">3</div>
                       <h3 className="font-medium mb-2">Refund Issued</h3>
                       <p className="text-sm">
@@ -145,8 +145,8 @@ export default function RefundPage() {
 
               {/* Exceptions */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Exceptions &amp; Special Cases</H2>
-                <div className="text-slate-300 space-y-3 text-sm">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Exceptions &amp; Special Cases</H2>
+                <div className="text-ink-soft space-y-3 text-sm">
                   <p>
                     <strong>Service outages:</strong> If a service outage affected your tier and you are covered
                     by our <Link href="/sla" className="text-amber-400 hover:underline">SLA</Link>, you may be eligible
@@ -165,9 +165,9 @@ export default function RefundPage() {
 
               {/* Contact */}
               <div className="mb-12">
-                <H2 className="text-2xl font-semibold mb-4 text-white">Contact</H2>
-                <div className="bg-white/[0.03] border border-white/10 p-6 rounded-lg">
-                  <ul className="space-y-2 text-slate-300 text-sm">
+                <H2 className="text-2xl font-semibold mb-4 text-ink">Contact</H2>
+                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <ul className="space-y-2 text-ink-soft text-sm">
                     <li>Refund requests: <span className="text-amber-400 font-medium">billing@allowanceguard.com</span></li>
                     <li>Billing questions: <span className="text-amber-400 font-medium">billing@allowanceguard.com</span></li>
                     <li>General support: <span className="text-amber-400 font-medium">support@allowanceguard.com</span></li>
@@ -176,7 +176,7 @@ export default function RefundPage() {
               </div>
 
               {/* Last Updated */}
-              <div className="text-center text-sm text-slate-300 border-t border-white/10 pt-8">
+              <div className="text-center text-sm text-ink-soft border-t border-ink-rule pt-8">
                 <p>Last updated: April 2, 2026</p>
                 <p className="mt-2">
                   This refund policy is part of our{' '}

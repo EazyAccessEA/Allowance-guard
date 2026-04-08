@@ -93,7 +93,7 @@ export default function DashboardPrototype() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-background-secondary dark:bg-dark-bg-primary">
+    <div className="min-h-screen bg-paper-sub dark:bg-dark-bg-primary">
       <DashboardHeader />
 
       <main className="max-w-[1200px] mx-auto px-4 lg:px-6 py-6 space-y-6">
@@ -128,8 +128,8 @@ export default function DashboardPrototype() {
         {/* Approval table */}
         <div
           className={cn(
-            'rounded-lg border bg-background-primary dark:bg-dark-bg-secondary',
-            'border-secondary-700',
+            'rounded-lg border bg-paper dark:bg-dark-bg-secondary',
+            'border-ink-rule',
             timeMachine && 'ring-1 ring-primary-200 dark:ring-primary-800'
           )}
         >

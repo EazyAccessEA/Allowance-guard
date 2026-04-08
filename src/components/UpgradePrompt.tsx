@@ -25,7 +25,7 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
   return (
     <div
       className={cn(
-        'relative rounded-xl bg-white/[0.03] ring-1 ring-amber-500/30 p-5',
+        'relative rounded-xl bg-paper-sub ring-1 ring-amber-500/30 p-5',
         className
       )}
       role="alert"
@@ -43,7 +43,7 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
       {/* Dismiss button */}
       <button
         onClick={() => setDismissed(true)}
-        className="absolute right-3 top-3 rounded-full p-1.5 text-slate-500 transition-colors duration-150 hover:bg-white/10 hover:text-slate-300"
+        className="absolute right-3 top-3 rounded-full p-1.5 text-ink-whisper transition-colors duration-150 hover:bg-paper-sub hover:text-ink-soft"
         aria-label="Dismiss upgrade prompt"
       >
         <X className="h-4 w-4" />
@@ -57,10 +57,10 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
 
         {/* Content */}
         <div className="flex-1">
-          <h3 className="text-base font-semibold text-white">
+          <h3 className="text-base font-semibold text-ink">
             Unlock {feature}
           </h3>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-ink-muted">
             {currentLimit !== undefined
               ? `You\u2019ve reached the free tier limit of ${currentLimit} wallets. `
               : ''}
@@ -72,14 +72,14 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/pricing"
-              className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-150 hover:bg-amber-400"
+              className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-ink shadow-sm transition-all duration-150 hover:bg-amber-400"
             >
               View Plans
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
             <button
               onClick={() => setDismissed(true)}
-              className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-slate-400 bg-white/[0.06] hover:bg-white/10 transition-colors duration-150"
+              className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-ink-muted bg-paper-sub hover:bg-paper-sub transition-colors duration-150"
             >
               Continue with Free
             </button>
