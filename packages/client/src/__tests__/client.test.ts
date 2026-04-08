@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest'
-import { AllowanceGuardClient, createClient } from '../src/client'
+import { AllowanceGuardClient, createClient } from '../client'
 import {
   ApiError,
   AuthError,
   NetworkError,
   RateLimitError,
   ValidationError,
-} from '../src/errors'
+} from '../errors'
 
 function jsonResponse(status: number, body: unknown, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {

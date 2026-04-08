@@ -6,7 +6,7 @@ import {
   NetworkError,
   RateLimitError,
   ValidationError,
-} from '../src/errors'
+} from '../errors'
 
 describe('error hierarchy', () => {
   it('every error subclass is an instance of AllowanceGuardError', () => {

@@ -5,19 +5,16 @@
  * OpenAPI 3.1 document at `src/app/api/v1/openapi.json`.
  *
  * Usage:
- *   pnpm dlx openapi-typescript src/app/api/v1/openapi.json -o packages/client/src/types.generated.ts
+ *   pnpm run generate:openapi
  *
- * Or, once `openapi-typescript` is committed as a devDependency of the
- * repo root, run this script directly with `tsx scripts/generate-openapi.ts`.
+ * Requires `openapi-typescript` as a root devDependency (`pnpm install`).
  *
  * Source of truth for the spec itself is `src/app/api/v1/openapi.json`,
  * which is currently hand-authored. A future task is to generate that
  * JSON from the Zod schemas already defined on each `/api/v1/*\/route.ts`
  * via `@asteasolutions/zod-to-openapi` (see
- * docs/architecture/allowance-guard-react-hooks.md §5).
+ * docs/architecture/allowance-guard-react-hooks.md, section 5).
  *
- * Until `openapi-typescript` is installed, running this script emits a
- * helpful error instead of silently succeeding.
  */
 
 /* eslint-disable no-console */
@@ -36,17 +33,15 @@ function main(): number {
     return 1
   }
 
-  // Prefer a locally-installed openapi-typescript; fall back to `pnpm dlx`.
   const result = spawnSync(
     'pnpm',
-    ['dlx', 'openapi-typescript', specPath, '-o', outPath],
+    ['exec', '--', 'openapi-typescript', specPath, '-o', outPath],
     { stdio: 'inherit', cwd: repoRoot },
   )
 
   if (result.status !== 0) {
     console.error(
-      'generate-openapi: openapi-typescript failed. If this is the first ' +
-        'run, install it with: pnpm add -Dw openapi-typescript',
+      'generate-openapi: openapi-typescript failed. Install the root devDependency: pnpm add -Dw openapi-typescript',
     )
     return result.status ?? 1
   }
