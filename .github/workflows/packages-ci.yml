@@ -1,0 +1,48 @@
+name: packages-ci
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - '.github/workflows/packages-ci.yml'
+      - 'pnpm-workspace.yaml'
+  pull_request:
+    paths:
+      - 'packages/**'
+      - '.github/workflows/packages-ci.yml'
+      - 'pnpm-workspace.yaml'
+
+jobs:
+  test:
+    name: typecheck + test + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck @allowance-guard/client
+        run: pnpm --filter @allowance-guard/client typecheck
+
+      - name: Test @allowance-guard/client
+        run: pnpm --filter @allowance-guard/client test
+
+      - name: Build @allowance-guard/client
+        run: pnpm --filter @allowance-guard/client build
+
+      - name: Typecheck @allowance-guard/react
+        run: pnpm --filter @allowance-guard/react typecheck
+
+      - name: Build @allowance-guard/react
+        run: pnpm --filter @allowance-guard/react build

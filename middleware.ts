@@ -199,9 +199,28 @@ function applySecurityHeaders(response: NextResponse, botInfo: ReturnType<typeof
 
 /** Enhanced CORS with Bot Awareness */
 function applyCORS(response: NextResponse, req: NextRequest, _botInfo: ReturnType<typeof isBot>): NextResponse {
+  // /api/v1/* owns its own CORS story — browser-safe public keys need
+  // cross-origin access, which the route-level api-auth middleware grants
+  // per-key. Do NOT overwrite its headers here.
+  if (req.nextUrl.pathname.startsWith('/api/v1/')) {
+    if (req.method === 'OPTIONS') {
+      // Permissive preflight so the route handler's OPTIONS export can finish.
+      const pre = new NextResponse(null, { status: 204 })
+      const origin = req.headers.get('origin') ?? '*'
+      pre.headers.set('access-control-allow-origin', origin)
+      pre.headers.set('access-control-allow-methods', 'GET, OPTIONS')
+      pre.headers.set('access-control-allow-headers', 'authorization, content-type, accept, user-agent')
+      pre.headers.set('access-control-max-age', '600')
+      pre.headers.set('vary', 'origin')
+      pre.headers.set('x-request-id', req.headers.get('x-request-id') || generateUUID())
+      return pre
+    }
+    return response
+  }
+
   const origin = req.headers.get('origin') || ''
   const isSame = origin === ORIGIN
-  
+
   if (req.method === 'OPTIONS') {
     const pre = NextResponse.json({}, { status: 204 })
     pre.headers.set('access-control-allow-methods', 'GET,POST,DELETE,PUT,OPTIONS')
@@ -214,7 +233,7 @@ function applyCORS(response: NextResponse, req: NextRequest, _botInfo: ReturnTyp
     response.headers.set('access-control-allow-origin', isSame ? ORIGIN : 'null')
     response.headers.set('vary', 'origin')
   }
-  
+
   return response
 }
 
