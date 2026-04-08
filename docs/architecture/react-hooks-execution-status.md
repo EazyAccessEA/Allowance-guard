@@ -3,6 +3,24 @@
 > Companion to `docs/architecture/allowance-guard-react-hooks.md`.
 > Tracks what is actually on disk vs. what remains before `v0.1.0` can be published.
 
+## ✅ Completed — MSW suite for @allowance-guard/react
+
+- **`packages/react/vitest.config.ts`** — jsdom environment, globals enabled, v8 coverage, setup file wired.
+- **`packages/react/src/__tests__/setup.ts`** — MSW node server lifecycle: `beforeAll` starts, `afterEach` resets, `afterAll` closes. `onUnhandledRequest: 'error'` so missing handlers fail loudly.
+- **`packages/react/src/__tests__/handlers.ts`** — happy-path handlers for `/chains`, `/allowances`, `/risk-score`, `/scan` against `https://api.test.allowanceguard.com/api/v1`.
+- **`packages/react/src/__tests__/hooks.test.tsx`** — end-to-end tests covering:
+  - provider context enforcement (throws clearly when used outside)
+  - secret-key (`ag_live_*`) hard-fail in the jsdom browser context
+  - `useChains` success + 401 propagation as `AuthError`
+  - `useAllowances` `enabled` gating on wallet + successful fetch
+  - `useRiskScore` happy path
+  - `useScanWallet` mutation invalidates allowances/risk/portfolio queries after success (asserts `isInvalidated === true` on primed cache entries)
+  - `useRevokeApproval` encodes the ERC-20 `approve(spender, 0)` calldata correctly (selector + padded spender + padded zero amount)
+- **`.github/workflows/packages-ci.yml`** — adds `pnpm --filter @allowance-guard/react test` between typecheck and build.
+- **`packages/react/package.json`** — devDeps: `@testing-library/react`, `@types/react-dom`, `jsdom`, `msw`, `react-dom`. Installed via `pnpm install` at the workspace root.
+
+After the install, run `pnpm --filter @allowance-guard/react test` locally to verify. The suite is deterministic (no network, no timers) and should complete in < 2 seconds.
+
 ## ✅ Completed this session
 
 ### Workspace
