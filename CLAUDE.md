@@ -149,9 +149,11 @@ AllowanceGuard uses an **open-core model**:
 
 - **Say**: "Core tool: free and open source. Always."
 - **Say**: "Premium monitoring and API access for power users and teams."
+- **Say**: "Open source core. Independently operated. Built to last."
 - **Don't say**: "Free Forever" (as a blanket statement)
 - **Don't say**: "No premium features, no paywalls, no subscriptions"
 - **Don't say**: "100% free"
+- **Don't say**: "No VC", "No token", "Community-funded", "donation-funded", or any other defensive financial self-disclaimer. These positions the company as a charity/donation project, blocks grant + SEIS/EIS + VC funding applications, and contradicts the actual freemium + B2B API revenue model. If you find these phrases anywhere in copy, replace them with operational claims (open source, independent, sustainable) — never with financial self-disclaimers.
 
 The core scanner remains free. Premium *services* (monitoring, alerts, API, teams, compliance) are paid. This is not betraying the community — it's sustaining the project.
 
