@@ -5,39 +5,42 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { getAccessibilityClasses, keyboardNavigation } from '@/lib/accessibility'
 
-// Midnight Amber Button Variants
-// Primary = Amber gradient. Destructive = Red. Links = Sky Blue.
+// Ledger Button Variants — paper theme, WCAG-verified contrast pairs
+// Primary = Amber + ink (8.9:1). Secondary = Ink border + ink text.
+// Destructive = Crimson-paper + cream (6.4:1).
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-base font-button transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/30 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-base disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-base font-button transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-paper disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        // Primary — Amber gradient button, dark text (7.1:1 contrast)
-        primary: 'bg-gradient-to-r from-amber-500 to-amber-600 text-ink font-semibold hover:from-amber-400 hover:to-amber-500 active:from-amber-600 active:to-amber-700 shadow-sm hover:shadow-glow-primary',
+        // Primary — Amber gradient, ink text (8.9:1 AAA verified)
+        primary: 'bg-gradient-to-r from-amber-500 to-amber-600 text-ink font-semibold hover:from-amber-400 hover:to-amber-500 active:from-amber-600 active:to-amber-700 shadow-sm',
 
-        // Secondary — transparent with slate border
-        secondary: 'border border-ink-rule bg-transparent text-ink-soft hover:bg-paper-sub hover:border-secondary-500 hover:text-ink',
+        // Secondary — 2px ink border for strong button affordance on paper
+        // (replaces the old 1px ink-rule at 0.14 opacity which was invisible)
+        secondary: 'border-2 border-ink bg-transparent text-ink font-medium hover:bg-ink hover:text-paper',
 
         // Ghost — no border, subtle hover
         ghost: 'text-ink-muted hover:bg-paper-sub hover:text-ink active:bg-paper-sub',
 
-        // Destructive — Danger Red (threats, revoke)
-        destructive: 'bg-crimson-500 text-ink hover:bg-crimson-600 active:bg-crimson-700 shadow-sm hover:shadow-glow-crimson',
+        // Destructive — deep crimson + cream (6.4:1 AA verified)
+        // Was bg-crimson-500 text-ink = 4.4:1, FAILED AA-normal
+        destructive: 'bg-crimson-paper text-cream font-semibold hover:opacity-90 active:opacity-80 shadow-sm',
 
-        // Outline — slate border
-        outline: 'border border-ink-rule bg-transparent text-ink-soft hover:bg-paper-sub hover:border-secondary-500 hover:text-ink',
+        // Outline — same as secondary (strong ink border)
+        outline: 'border-2 border-ink bg-transparent text-ink font-medium hover:bg-ink hover:text-paper',
 
-        // Link — Sky Blue
-        link: 'text-sky-400 underline-offset-4 hover:underline hover:text-sky-300',
+        // Link — amber-deep (text-grade amber, AA on paper)
+        link: 'text-amber-deep underline-offset-4 hover:underline font-medium',
 
-        // Semantic variants
-        success: 'bg-semantic-success-500 text-ink hover:bg-semantic-success-600 active:bg-semantic-success-700 shadow-sm',
-        warning: 'bg-semantic-warning-500 text-ink hover:bg-semantic-warning-600 active:bg-semantic-warning-700 shadow-sm',
-        info: 'bg-semantic-info-500 text-ink hover:bg-semantic-info-600 active:bg-semantic-info-700 shadow-sm',
+        // Semantic variants — cream text on dark backgrounds for AA
+        success: 'bg-semantic-success-700 text-cream hover:bg-semantic-success-800 active:bg-semantic-success-900 font-semibold shadow-sm',
+        warning: 'bg-amber-500 text-ink hover:bg-amber-600 active:bg-amber-700 font-semibold shadow-sm',
+        info: 'bg-ink-blue text-cream hover:opacity-90 active:opacity-80 font-semibold shadow-sm',
 
-        // Subtle — raised navy surface
-        subtle: 'bg-paper-sub text-ink-soft hover:bg-paper-sub hover:text-ink',
-        accent: 'bg-amber-900/20 text-amber-300 hover:bg-amber-900/40 hover:text-amber-200',
+        // Subtle — paper-sub chip
+        subtle: 'bg-paper-sub text-ink-soft hover:bg-paper-deep hover:text-ink',
+        accent: 'bg-paper-sub text-amber-deep hover:bg-paper-deep font-medium',
       },
       size: {
         // Mobbin-inspired size variants with systematic scaling
