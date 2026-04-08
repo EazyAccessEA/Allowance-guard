@@ -154,7 +154,7 @@ export default function SampleScanDemo() {
               {/* Amount */}
               <div className="md:col-span-2 md:text-right">
                 <span
-                  className={`font-fraunces italic font-bold text-lg ${
+                  className={`font-plex font-bold text-lg tabular-nums ${
                     row.amount === 'Unlimited' ? 'text-crimson-paper' : 'text-ink'
                   }`}
                 >

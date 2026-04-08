@@ -4,7 +4,7 @@
  * Footer — Ledger aesthetic
  *
  * Publication colophon on paper-deep. Ink section headings with § roman
- * numerals, Fraunces italic wordmark, masthead-style copyright colophon.
+ * numerals, IBM Plex Sans bold wordmark, masthead-style copyright colophon.
  * Closes the page with the signature .ledger-rule (ink + amber hairlines).
  *
  * Council: Editor-in-chief (colophon voice), Maren (back-matter density),
@@ -91,7 +91,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-4">
             <div className="mb-5">
-              <span className="font-fraunces italic text-3xl font-bold text-ink tracking-tight leading-[0.9]">
+              <span className="font-plex font-bold text-3xl text-ink tracking-[-0.03em] leading-[0.9]">
                 Allowance<span className="text-amber-deep">Guard</span>
               </span>
             </div>
@@ -189,7 +189,7 @@ export default function Footer() {
             <span className="font-mono text-[10px] text-ink-muted tracking-wider uppercase">
               &copy; {new Date().getFullYear()} AllowanceGuard · AGPL-3.0 + Commercial
             </span>
-            <span className="font-fraunces italic text-sm text-ink-muted">
+            <span className="font-plex font-medium text-sm text-ink-muted">
               Open source core. Independently operated. Built to last.
             </span>
           </div>

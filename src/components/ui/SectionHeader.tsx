@@ -6,7 +6,7 @@
  * v2 used § symbols and roman numerals (II, III, V…) — that was a UX
  * writer-veto miss. Roman numerals impose cognitive load for zero
  * information gain. v3 uses plain mono numerals and plain category
- * names. The Fraunces italic display headline is preserved as the one
+ * names. The IBM Plex Sans display headline is preserved as the one
  * editorial moment per section. Marginalia numeral kept as the
  * recurring signature but in plain digits.
  *
@@ -20,7 +20,7 @@ import type { ReactNode } from 'react'
 interface SectionHeaderProps {
   number: string                // "01", "02", "03"...
   eyebrow: string               // plain category name
-  title: ReactNode              // Fraunces italic display headline
+  title: ReactNode              // IBM Plex Sans display headline
   lede?: string                 // Optional supporting paragraph
   align?: 'left' | 'center'
   theme?: 'paper' | 'ink'       // 'ink' = cream-on-oxblood (CTABand)
@@ -102,7 +102,7 @@ export default function SectionHeader({
       {/* Display headline — Fraunces italic */}
       <motion.h2
         className={[
-          'font-fraunces-display italic font-normal tracking-tight leading-[0.95] mb-6',
+          'font-display-tight leading-[0.95] mb-6',
           'text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem]',
           headText,
           isCenter ? 'mx-auto' : '',

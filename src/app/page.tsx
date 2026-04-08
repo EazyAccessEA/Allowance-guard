@@ -32,7 +32,7 @@ function ErrorFallback({ resetError }: { error: Error; resetError: () => void })
   return (
     <div className="min-h-screen bg-paper flex items-center justify-center">
       <div className="max-w-md mx-auto text-center p-6">
-        <h2 className="font-fraunces-display italic text-3xl text-ink mb-4">Something went wrong</h2>
+        <h2 className="font-plex font-bold text-3xl text-ink mb-4">Something went wrong</h2>
         <p className="font-plex text-ink-muted mb-6">
           An unexpected error occurred. Try refreshing, or contact support if it persists.
         </p>

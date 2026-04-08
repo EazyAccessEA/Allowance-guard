@@ -4,7 +4,7 @@
  * StatisticsSection — Ledger aesthetic
  *
  * Paper-sub section with the page's loudest type moment: "$3.2B+" in
- * Fraunces italic at display-[15rem]. Supporting stats as a ledger
+ * IBM Plex Sans Black at display-[13rem]. Supporting stats as a ledger
  * dotted-leader table. Risk list with colored square markers.
  */
 
@@ -78,7 +78,7 @@ export default function StatisticsSection() {
               <div className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep mb-4">
                 Lost in 2024
               </div>
-              <div className="font-fraunces-display italic font-bold text-ink tracking-tight leading-[0.85] text-7xl sm:text-8xl lg:text-[11rem] xl:text-[13rem]">
+              <div className="font-display-black text-ink leading-[0.85] text-7xl sm:text-8xl lg:text-[11rem] xl:text-[13rem] tabular-nums">
                 {HERO_STAT.prefix}
                 <CountUp value={HERO_STAT.value} suffix={HERO_STAT.suffix} duration={1.6} delay={0.3} />
               </div>
@@ -116,7 +116,7 @@ export default function StatisticsSection() {
                     <div className="font-plex text-base text-ink font-medium">{s.label}</div>
                     <div className="font-plex text-xs text-ink-whisper mt-0.5">{s.sub}</div>
                   </div>
-                  <div className="font-fraunces-display italic text-4xl lg:text-5xl font-bold text-ink tracking-tight leading-none tabular-nums">
+                  <div className="font-display-tight text-4xl lg:text-5xl text-ink leading-none tabular-nums">
                     {s.prefix ?? ''}
                     <CountUp value={s.value} suffix={s.suffix} duration={1.2} delay={0.3} />
                   </div>
@@ -132,7 +132,7 @@ export default function StatisticsSection() {
             <div className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-3">
               Common approval risks
             </div>
-            <h3 className="font-fraunces-display italic text-3xl lg:text-4xl font-normal text-ink leading-tight">
+            <h3 className="font-display-tight text-3xl lg:text-4xl text-ink leading-tight">
               What the scanner looks for.
             </h3>
           </div>

@@ -97,7 +97,7 @@ export default function Hero({
 
           {/* Headline — plain English, threat-named */}
           <motion.h1
-            className="font-fraunces-display italic font-normal text-ink leading-[0.95] tracking-tight mb-7
+            className="font-display-tight text-ink leading-[0.95] mb-7
               text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem]"
             variants={fadeUp}
             initial={prefersReduced ? 'visible' : 'hidden'}
