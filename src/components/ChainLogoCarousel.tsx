@@ -1,11 +1,20 @@
 import Image from 'next/image'
 
 /**
- * ChainLogoCarousel — Ledger aesthetic
+ * ChainCoverageStrip — calm static trust bar (formerly the marquee)
  *
- * Paper-sub strip framing the page close. Amber hairlines top and bottom
- * (the signature move repeats one last time). Chain logos rendered in ink
- * tone via CSS filter so they unify on paper. Roman numeral headline.
+ * Replaces the old animated carousel. Now positioned right after the hero
+ * as immediate proof: "we cover 15 chains, this is real infrastructure."
+ * Marquee animation removed — coverage is information, not decoration.
+ *
+ * Council:
+ *  #5 Marketing: trust signal lives early in funnel where it converts
+ *  #13 UX writer: static = scannable in 2 seconds; marquee was decoration
+ *  #17 Performance: -1 animation, -2 logo set duplications
+ *  Maren: amber hairlines top + bottom preserved as the signature beat
+ *
+ * Note: file is still named ChainLogoCarousel.tsx to avoid an import
+ * cascade across page.tsx and friends. Component is no longer a carousel.
  */
 
 const CHAINS = [
@@ -26,78 +35,62 @@ const CHAINS = [
   { src: '/chains/celo.svg', alt: 'Celo' },
 ]
 
-const WIDTH = 110
-
 export default function ChainLogoCarousel() {
   return (
-    <section className="paper-sub grain relative py-20 sm:py-24 overflow-hidden">
-      {/* Top amber hairline */}
+    <section className="paper-sub relative py-10 sm:py-12 overflow-hidden">
+      {/* Top amber hairline — signature */}
       <div
         aria-hidden="true"
         className="absolute top-0 inset-x-0 h-px"
         style={{
           background:
-            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.6) 50%, transparent 90%)',
-          boxShadow: '0 0 10px rgba(245,158,11,0.2)',
+            'linear-gradient(90deg, transparent 8%, rgba(133,79,8,0.6) 50%, transparent 92%)',
         }}
       />
 
-      {/* Eyebrow + headline */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-3 mb-4">
-          <span className="h-px w-8 bg-amber-deep" aria-hidden="true" />
-          <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
-            Coverage
+      <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
+        {/* Single-line label + counts */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+          <div className="flex items-baseline gap-3">
+            <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
+              Coverage
+            </span>
+            <span className="font-plex text-sm text-ink-muted">
+              Scanning approvals across <strong className="text-ink font-semibold">15 EVM networks</strong>
+            </span>
+          </div>
+          <span className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase text-ink-whisper">
+            One dashboard · One scan
           </span>
-          <span className="h-px w-8 bg-amber-deep" aria-hidden="true" />
         </div>
-        <p className="font-display-tight text-2xl sm:text-3xl lg:text-4xl text-ink">
-          Fifteen chains. One dashboard.
-        </p>
-      </div>
 
-      {/* Mobile: stacked */}
-      <div className="block sm:hidden">
-        <div className="flex flex-col items-center gap-6 px-4">
+        {/* Static logo grid — calm, scannable, monochrome ink */}
+        <ul
+          className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-8 xl:grid-cols-[repeat(15,minmax(0,1fr))] gap-x-6 gap-y-5 items-center"
+          aria-label="Supported networks"
+        >
           {CHAINS.map((chain) => (
-            <div
-              key={chain.alt}
-              className="flex items-center opacity-70"
-              style={{ filter: 'grayscale(1) brightness(0.2) contrast(1.2)' }}
-            >
-              <Image src={chain.src} alt={chain.alt} width={WIDTH} height={32} className="h-8 w-auto" />
-            </div>
+            <li key={chain.alt} className="flex items-center justify-center">
+              <Image
+                src={chain.src}
+                alt={chain.alt}
+                width={96}
+                height={28}
+                className="h-7 w-auto opacity-85 transition-opacity hover:opacity-100"
+                style={{ filter: 'grayscale(1) brightness(0.25) contrast(1.25)' }}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
-      {/* Desktop: continuous marquee */}
-      <div className="hidden sm:block w-screen relative overflow-hidden h-12 -ml-4 sm:-ml-6 lg:-ml-8">
-        <div className="flex items-center gap-20 lg:gap-28 animate-scroll h-12 whitespace-nowrap">
-          {[0, 1, 2].map((setIndex) => (
-            <div key={setIndex} className="flex items-center gap-20 lg:gap-28 flex-shrink-0">
-              {CHAINS.map((chain) => (
-                <div
-                  key={`${setIndex}-${chain.alt}`}
-                  className="flex items-center opacity-75 hover:opacity-100 transition-opacity duration-300"
-                  style={{ filter: 'grayscale(1) brightness(0.25) contrast(1.15)' }}
-                >
-                  <Image src={chain.src} alt={chain.alt} width={WIDTH} height={32} className="h-8 w-auto" />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom amber hairline */}
+      {/* Bottom amber hairline — signature */}
       <div
         aria-hidden="true"
         className="absolute bottom-0 inset-x-0 h-px"
         style={{
           background:
-            'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.6) 50%, transparent 90%)',
-          boxShadow: '0 0 10px rgba(245,158,11,0.2)',
+            'linear-gradient(90deg, transparent 8%, rgba(133,79,8,0.6) 50%, transparent 92%)',
         }}
       />
     </section>
