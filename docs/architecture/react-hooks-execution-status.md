@@ -55,6 +55,21 @@
 - Per-IP rate limit for public keys (currently only per-key daily + burst; a scraper with the key can still consume the full 500/day from one IP). Tracked as a hardening task, not a blocker for v0.1.0.
 - Tests: middleware behaviour for the GET-only enforcement and origin allow-list.
 
+## ✅ Completed — Comprehensive README + Standing Council standardisation
+
+- **`CLAUDE.md`** — workflow rule #4 ("Convene the Standing Council") and a 19-member Standing Council table added. The council supersedes ad-hoc councils for non-trivial changes. Accessibility specialist (#8) + Design Council's Noor hold WCAG/motion veto power. Investor/founder voice (#11) owns the banned-phrases list. Minimum size 17; current 19. Design Council of 6 remains a sub-council for visual/motion/system work.
+- **`README.md`** — full rewrite (523 lines) drafted under the new Standing Council. Covers: five integration paths (web app, React hooks, REST API, Node SDK, browser extension), consumer + B2B API tiers, all 15 supported chains, three quickstarts, architecture diagram, repository structure, tech stack, local dev setup, env vars, migrations, testing, API reference with the two-tier key auth model, security + disclosure policy, competitive comparison vs Revoke.cash / Blowfish, contributing guide referencing the Standing Council, AGPL-3.0 + commercial dual license, acknowledgments, and contact. Zero banned phrases.
+
+## ✅ Completed — Account UI for public keys
+
+- **`src/components/account/PublicApiKeyCreator.tsx`** — dedicated component that issues `ag_pub_*` keys via `POST /api/keys/public`. Features:
+  - Inline create form with name + optional `allowedOrigins` textarea (newline or comma separated)
+  - One-time plaintext disclosure with copy-to-clipboard, amber warning banner, and an "I've saved it" dismiss
+  - Lists existing public keys (filtered from `GET /api/keys` by `keyType`), shows allowed origins inline
+  - Revoke flow via existing `DELETE /api/keys/[id]`
+  - Helpful inline copy: rate limit (500/day), GET-only, and the env-var name `NEXT_PUBLIC_ALLOWANCE_GUARD_KEY` for one-click integration with `@allowance-guard/react`
+- **`src/app/account/keys/page.tsx`** — mounts the new creator below the existing `ApiKeyManager`. Filters secret-only keys to the existing manager so the two surfaces don't double-render.
+
 ## ✅ Completed — Tests + CI stage
 
 - **`packages/client/src/__tests__/errors.test.ts`** — error hierarchy, status codes, secret-key leakage guard.

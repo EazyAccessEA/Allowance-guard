@@ -181,7 +181,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} AllowanceGuard. AGPL-3.0 + Commercial.
           </span>
           <span className="text-xs text-slate-400">
-            No VC. No token. Community-funded.
+            Open source core. Independently operated. Built to last.
           </span>
         </div>
       </Container>

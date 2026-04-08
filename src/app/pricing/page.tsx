@@ -301,7 +301,7 @@ export default function PricingPage() {
       <section className="pb-16 sm:pb-20">
         <Container className="max-w-2xl text-center">
           <p className="text-sm text-slate-500">
-            Open source core &middot; AGPL-3.0 license &middot; No VC &middot; No token &middot; 14-day refund policy
+            Open source core &middot; AGPL-3.0 license &middot; Independently operated &middot; 14-day refund policy
           </p>
         </Container>
       </section>
