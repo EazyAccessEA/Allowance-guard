@@ -48,7 +48,7 @@ export default function AddressInput({ onSubmit, pending = false, className = ''
       return
     }
     if (!ADDRESS_RE.test(trimmed)) {
-      setError("That doesn't look like an Ethereum address. It should start with 0x and have 42 characters total.")
+      setError("That doesn't look like a wallet address. It should start with 0x and have 42 characters total.")
       return
     }
     setError(null)
