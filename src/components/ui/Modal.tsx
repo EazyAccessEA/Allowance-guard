@@ -41,6 +41,7 @@ export interface ModalProps
   title?: string
   description?: string
   children?: React.ReactNode
+  size?: VariantProps<typeof modalContentVariants>['size']
   showCloseButton?: boolean
   closeOnOverlayClick?: boolean
   footer?: React.ReactNode
