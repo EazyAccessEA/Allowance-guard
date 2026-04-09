@@ -205,7 +205,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     ]),
     explorer: 'https://celoscan.io',
     enabled: !disabledSet.has('42220')
-  }
+  },
   // --- Phase 9.6: Tier 1 ---
   81457: {
     id: 81457,
