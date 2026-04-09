@@ -66,7 +66,7 @@ export async function GET() {
     for (const id of chainIds) {
       const chainKey = `rpc_${id}`
       try {
-        const { result: blockNum, latencyMs } = await timedCheck(() => getBlockNumber(clientFor(id)))
+        const { result: blockNum, latencyMs } = await timedCheck(() => getBlockNumber(clientFor(id as Parameters<typeof clientFor>[0])))
         services[chainKey] = { status: 'ok', latency_ms: latencyMs, details: `block:${blockNum}` }
       } catch (e: unknown) {
         services[chainKey] = {

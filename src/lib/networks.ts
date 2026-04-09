@@ -360,8 +360,8 @@ export const NETWORKS = CHAINS
 export { CHAIN_NAMES, CHAIN_BY_ID, SUPPORTED_CHAINS as CHAIN_META_LIST } from '@/config/chains'
 
 /** ---------- Legacy functions (maintained for compatibility) ---------- */
-export function enabledChainIds(): number[] {
-  return Object.values(CHAINS).filter(c => c.enabled).map(c => c.id)
+export function enabledChainIds(): import('@/lib/chains').SupportedChainId[] {
+  return Object.values(CHAINS).filter(c => c.enabled).map(c => c.id) as import('@/lib/chains').SupportedChainId[]
 }
 
 export function explorerTx(chainId: number, tx: string) {
