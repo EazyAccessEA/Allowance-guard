@@ -60,8 +60,10 @@ const MAP: Record<number, Chain> = {
   42220: celo,
 }
 
+export type SupportedChainId = 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220
+
 const cache = new Map<number, PublicClient>()
-export function clientFor(id: 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220): PublicClient {
+export function clientFor(id: SupportedChainId): PublicClient {
   const hit = cache.get(id); if (hit) return hit
   const cfg = CHAINS[id]
   const chain = MAP[id]
