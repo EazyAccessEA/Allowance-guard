@@ -8,25 +8,32 @@ const DATABASE_URL = process.env.DATABASE_URL
 // Lazy-initialise so the module can be imported without crashing when
 // DATABASE_URL is absent (e.g. during client-side bundling or preview deploys).
 let _sql: ReturnType<typeof neon> | null = null
-function sql(text: string, params?: unknown[]) {
+function getSql() {
   if (!_sql) {
     if (!DATABASE_URL) {
       throw new Error('DATABASE_URL is not set')
     }
     _sql = neon(DATABASE_URL)
   }
-  return (_sql as unknown as (text: string, params?: unknown[]) => Promise<Record<string, unknown>[]>)(text, params)
+  return _sql
 }
 
 /**
  * Pool-compatible wrapper around Neon serverless HTTP driver.
  * Supports `pool.query(text, params)` — the interface used by all existing code.
  * Each call is a stateless HTTP request, no persistent connections.
+ *
+ * Uses .query() for conventional parameterized calls (the direct-call
+ * API was removed in @neondatabase/serverless v1+ in favour of tagged
+ * templates or .query()).
  */
 export const pool = {
   async query(text: string, params?: unknown[]): Promise<{ rows: Record<string, unknown>[]; rowCount: number }> {
-    const rows = await sql(text, params)
-    return { rows, rowCount: rows.length }
+    const sql = getSql()
+    // .query() returns pg-compatible { rows, fields, command, rowCount }
+    const result = await sql.query(text, params ?? [])
+    const rows = (result as { rows?: Record<string, unknown>[] }).rows ?? (result as Record<string, unknown>[])
+    return { rows: Array.isArray(rows) ? rows : [], rowCount: Array.isArray(rows) ? rows.length : 0 }
   },
 }
 
