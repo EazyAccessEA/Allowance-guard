@@ -32,7 +32,9 @@ export function useDashboard() {
 
   const handleError = (err: Error, context: string) => {
     console.error(`Error in ${context}:`, err)
-    setError(err)
+    // Show scan/fetch failures inline — don't crash the whole page.
+    // The page-level ErrorFallback is reserved for truly fatal exceptions
+    // (e.g. the page component itself throws during render).
     setMessage(`Error: ${err.message}`)
   }
 
