@@ -7,6 +7,7 @@ export default function RpcStatusBanner() {
 
   useEffect(() => {
     let t: NodeJS.Timeout
+    const MAX_CONSECUTIVE_FAILS = 10 // stop after ~30min of backoff
 
     const ping = async () => {
       try {
@@ -17,6 +18,11 @@ export default function RpcStatusBanner() {
                  Object.values(j.checks?.chains || {}).some((status: unknown) => String(status).startsWith('fail'))
           setBad(rpcBad)
           failCount.current = rpcBad ? failCount.current + 1 : 0
+        } else if (r.status === 403 || r.status === 401) {
+          // Auth error (e.g. Vercel preview deployment protection).
+          // Don't show degraded banner — this isn't a network issue.
+          // Stop polling entirely.
+          return
         } else {
           failCount.current++
           setBad(true)
@@ -25,7 +31,11 @@ export default function RpcStatusBanner() {
         failCount.current++
         setBad(true)
       }
-      // Back off: 30s → 60s → 120s → max 5min on repeated failures
+
+      // Give up after too many consecutive failures
+      if (failCount.current >= MAX_CONSECUTIVE_FAILS) return
+
+      // Back off: 30s → 60s → 120s → max 5min
       const delay = Math.min(30000 * Math.pow(2, Math.min(failCount.current, 4)), 300000)
       t = setTimeout(ping, delay)
     }
