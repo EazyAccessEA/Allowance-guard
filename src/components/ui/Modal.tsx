@@ -7,22 +7,11 @@ import { Button } from './Button'
 
 // Professional modal variants following design system
 const modalVariants = cva(
-  // Base styles - centered, responsive, accessible
+  // Base styles - full viewport centering wrapper (no max-w here — that's on the content)
   'fixed inset-0 z-50 flex items-center justify-center p-4',
   {
-    variants: {
-      size: {
-        sm: 'max-w-sm',
-        default: 'max-w-md',
-        lg: 'max-w-lg',
-        xl: 'max-w-xl',
-        '2xl': 'max-w-2xl',
-        full: 'max-w-full',
-      },
-    },
-    defaultVariants: {
-      size: 'default',
-    },
+    variants: {},
+    defaultVariants: {},
   }
 )
 
@@ -101,7 +90,7 @@ const Modal: React.FC<ModalProps> = ({
       />
       
       {/* Modal Container */}
-      <div className={cn(modalVariants({ size }))}>
+      <div className={cn(modalVariants())}>
         <div
           className={cn(modalContentVariants({ size }), className)}
           onClick={(e) => e.stopPropagation()}
