@@ -167,7 +167,7 @@ export function LoadingOverlay({
   return (
     <div className={`relative ${className}`}>
       {children}
-      <div className="absolute inset-0 bg-paper/80 backdrop-blur-sm flex items-center justify-center z-10">
+      <div className="absolute inset-0 bg-paper backdrop-blur-sm flex items-center justify-center z-10">
         <div className="bg-paper-sub border border-ink-rule/20 rounded-2xl p-8 shadow-medium text-center">
           <div className="w-12 h-12 bg-gradient-to-r from-cobalt to-emerald rounded-full flex items-center justify-center mx-auto mb-4">
             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />

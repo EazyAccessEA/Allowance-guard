@@ -149,7 +149,7 @@ export default function PublicApiKeyCreator() {
         {justCreated && (
           <div className="rounded-lg border border-amber-500/40 bg-amber-50/5 p-4 space-y-3">
             <div className="flex items-start gap-2">
-              <AlertTriangle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
+              <AlertTriangle className="h-4 w-4 text-amber-deep flex-shrink-0 mt-0.5" />
               <div className="text-sm text-ink">
                 <strong>Save this key now.</strong> It will not be shown again. Store it in your
                 <code className="text-[10px] mx-1">.env.local</code> as
@@ -225,7 +225,7 @@ export default function PublicApiKeyCreator() {
             </p>
 
             {createError && (
-              <p className="text-xs text-semantic-error-500 flex items-center gap-1">
+              <p className="text-xs text-semantic-error-700 flex items-center gap-1">
                 <AlertTriangle className="h-3 w-3" />
                 {createError}
               </p>
@@ -284,7 +284,7 @@ export default function PublicApiKeyCreator() {
                   leftIcon={<Trash2 className="h-4 w-4" />}
                   loading={revokingId === k.id}
                   onClick={() => handleRevoke(k.id)}
-                  className="text-ink-muted hover:text-semantic-error-500"
+                  className="text-ink-muted hover:text-semantic-error-700"
                   ariaLabel={`Revoke key ${k.name}`}
                 >
                   Revoke

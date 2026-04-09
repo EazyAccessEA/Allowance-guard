@@ -24,7 +24,7 @@ export default function TermsPage() {
         />
 
         <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; Terms of Service
           </span>
           <H1 className="mb-6 text-ink">Terms of Service</H1>
@@ -92,7 +92,7 @@ export default function TermsPage() {
                     </p>
                     <p className="text-ink-soft text-sm">
                       Service availability: best effort. No formal SLA. See our{' '}
-                      <Link href="/sla" className="text-amber-400 hover:underline">SLA page</Link> for details.
+                      <Link href="/sla" className="text-amber-deep hover:underline">SLA page</Link> for details.
                     </p>
                   </div>
 
@@ -104,7 +104,7 @@ export default function TermsPage() {
                     </p>
                     <p className="text-ink-soft text-sm">
                       Service availability: 99.5% uptime target, 4-hour response time for critical issues. See our{' '}
-                      <Link href="/sla" className="text-amber-400 hover:underline">SLA page</Link> for full details.
+                      <Link href="/sla" className="text-amber-deep hover:underline">SLA page</Link> for full details.
                     </p>
                   </div>
 
@@ -136,7 +136,7 @@ export default function TermsPage() {
                   </p>
                   <p>
                     <strong>Cancellation:</strong> You may cancel your subscription at any time through your{' '}
-                    <Link href="/account" className="text-amber-400 hover:underline">account dashboard</Link>{' '}
+                    <Link href="/account" className="text-amber-deep hover:underline">account dashboard</Link>{' '}
                     or via the Stripe Customer Portal. Cancellation takes effect at the end of the current billing period.
                     You retain access to paid features until then.
                   </p>
@@ -175,14 +175,14 @@ export default function TermsPage() {
                     </p>
                     <p>
                       <strong>Process:</strong> Request a refund via your account dashboard or by emailing{' '}
-                      <span className="text-amber-400">billing@allowanceguard.com</span>.
+                      <span className="text-amber-deep">billing@allowanceguard.com</span>.
                     </p>
                     <p>
                       <strong>Donations:</strong> Donations are non-refundable once processed, except for technical errors.
                     </p>
                     <p className="mt-2">
                       For full details, see our{' '}
-                      <Link href="/refund" className="text-amber-400 hover:underline">Refund Policy</Link>.
+                      <Link href="/refund" className="text-amber-deep hover:underline">Refund Policy</Link>.
                     </p>
                   </div>
                 </div>
@@ -193,21 +193,21 @@ export default function TermsPage() {
                 <H2 className="text-2xl font-semibold mb-4 text-ink">6. Important Disclaimers</H2>
                 <div className="space-y-4">
                   <div className="border-l-4 border-amber-400 pl-6 py-4 rounded-r-lg bg-amber-400/5">
-                    <h3 className="text-lg font-semibold mb-2 text-amber-300">Not Financial or Legal Advice</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-amber-deep">Not Financial or Legal Advice</h3>
                     <p className="text-ink-soft text-sm leading-relaxed">
                       AllowanceGuard is a security monitoring tool. It is not a broker, dealer, investment adviser, custodian, lawyer, or accountant. Risk scores, labels, and alerts are informational signals, not recommendations. Every decision to approve, hold, or revoke a token permission is yours, and the consequences of that decision are yours alone.
                     </p>
                   </div>
 
                   <div className="border-l-4 border-crimson-500 pl-6 py-4 rounded-r-lg bg-red-500/5">
-                    <h3 className="text-lg font-semibold mb-2 text-red-300">Service Provided &ldquo;As Is&rdquo;</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-red-800">Service Provided &ldquo;As Is&rdquo;</h3>
                     <p className="text-ink-soft text-sm leading-relaxed">
                       To the fullest extent permitted by law, the service is provided on an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis, without warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, completeness, or uninterrupted availability. We do not warrant that the scanner will detect every approval, that risk scores are correct, or that revocation transactions will succeed.
                     </p>
                   </div>
 
                   <div className="border-l-4 border-blue-400 pl-6 py-4 rounded-r-lg bg-blue-500/5">
-                    <h3 className="text-lg font-semibold mb-2 text-blue-300">Blockchain &amp; Wallet Risks</h3>
+                    <h3 className="text-lg font-semibold mb-2 text-blue-800">Blockchain &amp; Wallet Risks</h3>
                     <p className="text-ink-soft text-sm leading-relaxed">
                       Blockchain transactions are irreversible once confirmed. You are solely responsible for verifying every transaction your wallet signs, including the spender address, token contract, amount, and network. Gas fees, RPC availability, mempool congestion, and reorgs may affect whether a transaction succeeds. We do not control, and are not liable for, the behaviour of any blockchain network, node operator, wallet provider, or third-party contract.
                     </p>
@@ -233,7 +233,7 @@ export default function TermsPage() {
                   </p>
                   <p>
                     For complete details, see our{' '}
-                    <Link href="/privacy" className="text-amber-400 hover:underline">Privacy Policy</Link>.
+                    <Link href="/privacy" className="text-amber-deep hover:underline">Privacy Policy</Link>.
                   </p>
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function TermsPage() {
                 <div className="text-ink-soft space-y-3">
                   <p>
                     <strong>By you:</strong> You may cancel your subscription and close your account at any time.
-                    Contact <span className="text-amber-400">legal.support@allowanceguard.com</span> or use the account dashboard.
+                    Contact <span className="text-amber-deep">legal.support@allowanceguard.com</span> or use the account dashboard.
                   </p>
                   <p>
                     <strong>By us:</strong> We may suspend or terminate your account if you violate these terms,
@@ -323,7 +323,7 @@ export default function TermsPage() {
                 <p className="text-ink-soft">
                   We cannot guarantee continuous uptime, accuracy of blockchain data (which depends on RPC providers),
                   success of all transactions, or compatibility with all wallets or browsers.
-                  See our <Link href="/sla" className="text-amber-400 hover:underline">SLA page</Link> for tier-specific details.
+                  See our <Link href="/sla" className="text-amber-deep hover:underline">SLA page</Link> for tier-specific details.
                 </p>
               </div>
 
@@ -342,7 +342,7 @@ export default function TermsPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">14. Limitation of Liability</H2>
                 <div className="border border-red-500/20 bg-red-500/5 p-6 rounded-lg">
-                  <p className="text-red-300 font-semibold mb-3 text-sm uppercase tracking-wider">Please read carefully.</p>
+                  <p className="text-red-800 font-semibold mb-3 text-sm uppercase tracking-wider">Please read carefully.</p>
                   <p className="text-ink-soft text-sm leading-relaxed mb-3">
                     To the maximum extent permitted by applicable law, in no event shall AllowanceGuard, its operators, contributors, affiliates, or licensors be liable for any indirect, incidental, special, consequential, exemplary, or punitive damages, or for any loss of funds, tokens, profits, revenue, goodwill, data, or business opportunities, whether in contract, tort (including negligence), strict liability, or any other legal theory, and whether or not we have been advised of the possibility of such damages.
                   </p>
@@ -367,7 +367,7 @@ export default function TermsPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">16. Governing Law &amp; Dispute Resolution</H2>
                 <p className="text-ink-soft leading-relaxed mb-3">
-                  These terms are governed by the laws of England and Wales, without regard to conflict-of-laws principles. Before bringing any formal claim, you agree to first contact us at <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span> and attempt to resolve the dispute in good faith for at least thirty (30) days.
+                  These terms are governed by the laws of England and Wales, without regard to conflict-of-laws principles. Before bringing any formal claim, you agree to first contact us at <span className="text-amber-deep font-medium">legal.support@allowanceguard.com</span> and attempt to resolve the dispute in good faith for at least thirty (30) days.
                 </p>
                 <p className="text-ink-soft leading-relaxed">
                   If the dispute cannot be resolved through negotiation, it shall be submitted to binding arbitration seated in London, United Kingdom, conducted in English under the rules of the London Court of International Arbitration (LCIA) by a single arbitrator. Judgment on the award may be entered in any court of competent jurisdiction. Nothing in this section prevents either party from seeking injunctive relief in a court of competent jurisdiction to protect intellectual property or confidential information.
@@ -382,8 +382,8 @@ export default function TermsPage() {
                     If you have questions about these terms or need clarification, contact us:
                   </p>
                   <ul className="space-y-2 text-ink-soft text-sm">
-                    <li>General &amp; Legal: <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span></li>
-                    <li>Billing: <span className="text-amber-400 font-medium">billing@allowanceguard.com</span></li>
+                    <li>General &amp; Legal: <span className="text-amber-deep font-medium">legal.support@allowanceguard.com</span></li>
+                    <li>Billing: <span className="text-amber-deep font-medium">billing@allowanceguard.com</span></li>
                   </ul>
                 </div>
               </div>
@@ -392,19 +392,19 @@ export default function TermsPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Related Documents</H2>
                 <div className="flex flex-wrap gap-3">
-                  <Link href="/privacy" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/privacy" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Privacy Policy
                   </Link>
-                  <Link href="/sla" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/sla" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Service Level Agreement
                   </Link>
-                  <Link href="/refund" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/refund" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Refund Policy
                   </Link>
-                  <Link href="/cookies" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/cookies" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Cookie Policy
                   </Link>
-                  <Link href="/dpa" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/dpa" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Data Processing Agreement
                   </Link>
                 </div>

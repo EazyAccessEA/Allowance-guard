@@ -144,7 +144,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           <p className="mt-1 text-sm text-ink-whisper">Free and open source</p>
         )}
         {isPaid && billingPeriod === 'yearly' && savingsPercent > 0 && (
-          <p className="mt-1.5 text-sm font-medium text-emerald-400">
+          <p className="mt-1.5 text-sm font-medium text-emerald-800">
             Save {savingsPercent}% vs monthly
           </p>
         )}
@@ -192,7 +192,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           <li key={feature.label} className="flex items-start gap-2.5 text-sm">
             {feature.included ? (
               <Check
-                className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400"
+                className="mt-0.5 h-4 w-4 shrink-0 text-emerald-800"
                 aria-hidden="true"
               />
             ) : (

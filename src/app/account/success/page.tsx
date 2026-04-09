@@ -71,7 +71,7 @@ function CheckoutSuccessInner() {
           <CardContent className="py-12 space-y-6">
             {!ready ? (
               <>
-                <Loader2 className="h-12 w-12 text-primary-500 animate-spin mx-auto" />
+                <Loader2 className="h-12 w-12 text-amber-deep animate-spin mx-auto" />
                 <h1 className="text-2xl font-bold text-ink">
                   Setting up your subscription...
                 </h1>
@@ -83,7 +83,7 @@ function CheckoutSuccessInner() {
               </>
             ) : (
               <>
-                <CheckCircle className="h-16 w-16 text-semantic-success-500 mx-auto" />
+                <CheckCircle className="h-16 w-16 text-semantic-success-700 mx-auto" />
                 <div className="space-y-2">
                   <h1 className="text-2xl font-bold text-ink">
                     Welcome to AllowanceGuard{' '}

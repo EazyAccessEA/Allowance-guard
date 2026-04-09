@@ -69,7 +69,7 @@ export default function SLAPage() {
                       </tr>
                       <tr className="border-t border-ink-rule">
                         <td className="p-4 font-medium">Sentinel</td>
-                        <td className="p-4 font-semibold text-amber-400">99.5%</td>
+                        <td className="p-4 font-semibold text-amber-deep">99.5%</td>
                         <td className="p-4">~3.65 hours</td>
                         <td className="p-4">4-hour critical, 24-hour general</td>
                       </tr>
@@ -87,13 +87,13 @@ export default function SLAPage() {
                       </tr>
                       <tr className="border-t border-ink-rule bg-paper-sub border border-ink-rule/50">
                         <td className="p-4 font-medium">API Growth</td>
-                        <td className="p-4 font-semibold text-amber-400">99.9%</td>
+                        <td className="p-4 font-semibold text-amber-deep">99.9%</td>
                         <td className="p-4">~43 minutes</td>
                         <td className="p-4">4-hour critical, 12-hour general</td>
                       </tr>
                       <tr className="border-t border-ink-rule">
                         <td className="p-4 font-medium">API Enterprise</td>
-                        <td className="p-4 font-semibold text-amber-400">99.99%</td>
+                        <td className="p-4 font-semibold text-amber-deep">99.99%</td>
                         <td className="p-4">~4.3 minutes</td>
                         <td className="p-4">1-hour critical, 4-hour general</td>
                       </tr>
@@ -132,24 +132,24 @@ export default function SLAPage() {
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Incident Severity Levels</H2>
                 <div className="space-y-4">
                   <div className="border-l-4 border-red-400 pl-6 bg-red-900/20 p-4 rounded-r-lg">
-                    <h3 className="text-lg font-medium mb-1 text-red-300">Critical (P0)</h3>
-                    <p className="text-red-400 text-sm">
+                    <h3 className="text-lg font-medium mb-1 text-red-800">Critical (P0)</h3>
+                    <p className="text-red-800 text-sm">
                       Complete service outage. Users cannot scan or revoke. API returns 5xx for all requests.
                       Response: Within SLA response time. Status page updated within 15 minutes.
                     </p>
                   </div>
 
-                  <div className="border-l-4 border-amber-400 pl-6 bg-amber-900/20 p-4 rounded-r-lg">
-                    <h3 className="text-lg font-medium mb-1 text-amber-300">High (P1)</h3>
-                    <p className="text-amber-400 text-sm">
+                  <div className="border-l-4 border-amber-400 pl-6 bg-paper-sub p-4 rounded-r-lg">
+                    <h3 className="text-lg font-medium mb-1 text-amber-deep">High (P1)</h3>
+                    <p className="text-amber-deep text-sm">
                       Major feature degradation. Monitoring alerts delayed, batch revoke unavailable, or specific chain scanning broken.
                       Response: Within 2x the critical response time.
                     </p>
                   </div>
 
                   <div className="border-l-4 border-blue-400 pl-6 bg-blue-900/20 p-4 rounded-r-lg">
-                    <h3 className="text-lg font-medium mb-1 text-blue-300">Medium (P2)</h3>
-                    <p className="text-blue-400 text-sm">
+                    <h3 className="text-lg font-medium mb-1 text-blue-800">Medium (P2)</h3>
+                    <p className="text-blue-800 text-sm">
                       Minor feature issues. Export delayed, dashboard slow, non-critical UI bugs.
                       Response: Within 4x the critical response time or next business day.
                     </p>
@@ -190,7 +190,7 @@ export default function SLAPage() {
                 </div>
                 <div className="mt-4 text-ink-muted text-sm space-y-2">
                   <p>
-                    <strong>How to claim:</strong> Email <span className="text-amber-400">support@allowanceguard.com</span> within
+                    <strong>How to claim:</strong> Email <span className="text-amber-deep">support@allowanceguard.com</span> within
                     30 days of the affected month with your account details. Credits are verified against our monitoring data.
                   </p>
                   <p>
@@ -210,7 +210,7 @@ export default function SLAPage() {
                       href="https://allowanceguard.instatus.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-amber-400 hover:underline font-medium"
+                      className="text-amber-deep hover:underline font-medium"
                     >
                       public status page
                     </a>.
@@ -228,7 +228,7 @@ export default function SLAPage() {
                       href="https://allowanceguard.instatus.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-amber-400 hover:underline"
+                      className="text-amber-deep hover:underline"
                     >
                       allowanceguard.instatus.com
                     </a>{' '}
@@ -247,7 +247,7 @@ export default function SLAPage() {
                   <li>• Free tier or API Free tier (best-effort only)</li>
                   <li>• Pro tier (best-effort; no uptime guarantee or service credits)</li>
                   <li>• Features in beta or preview</li>
-                  <li>• Accounts in violation of our <Link href="/terms" className="text-amber-400 hover:underline">Terms of Service</Link></li>
+                  <li>• Accounts in violation of our <Link href="/terms" className="text-amber-deep hover:underline">Terms of Service</Link></li>
                   <li>• Accounts with overdue payments</li>
                 </ul>
               </div>
@@ -257,9 +257,9 @@ export default function SLAPage() {
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Support Contacts</H2>
                 <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
                   <ul className="space-y-2 text-ink-muted text-sm">
-                    <li>General support: <span className="text-amber-400 font-medium">support@allowanceguard.com</span></li>
-                    <li>Urgent / P0 issues (Sentinel/Enterprise): <span className="text-amber-400 font-medium">urgent@allowanceguard.com</span></li>
-                    <li>SLA credit claims: <span className="text-amber-400 font-medium">support@allowanceguard.com</span></li>
+                    <li>General support: <span className="text-amber-deep font-medium">support@allowanceguard.com</span></li>
+                    <li>Urgent / P0 issues (Sentinel/Enterprise): <span className="text-amber-deep font-medium">urgent@allowanceguard.com</span></li>
+                    <li>SLA credit claims: <span className="text-amber-deep font-medium">support@allowanceguard.com</span></li>
                   </ul>
                 </div>
               </div>

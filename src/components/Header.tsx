@@ -68,13 +68,13 @@ export default function Header({ isConnected }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full">
+      {/* Opaque background — axe flagged 180 contrast violations when
+          translucent paper was blended over scrolled dark content
+          (effective bg #b6b7b9 vs text-ink-muted #4a4d54 = 4.21:1 FAIL).
+          Opaque guarantees AA/AAA regardless of what's behind it. */}
       <div
-        className="relative border-b border-[rgba(15,17,21,0.08)]"
-        style={{
-          backgroundColor: 'rgba(247, 245, 240, 0.72)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-        }}
+        className="relative border-b border-[rgba(15,17,21,0.10)]"
+        style={{ backgroundColor: '#F7F5F0' }}
       >
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
           <div className="flex h-12 items-center justify-between gap-4">

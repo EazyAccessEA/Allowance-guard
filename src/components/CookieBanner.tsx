@@ -81,8 +81,8 @@ export default function CookieBanner() {
               {/* Header */}
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-900/30 rounded-lg">
-                    <Shield className="w-6 h-6 text-amber-400" />
+                  <div className="p-2 bg-paper-sub rounded-lg">
+                    <Shield className="w-6 h-6 text-amber-deep" />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-ink">
@@ -105,7 +105,7 @@ export default function CookieBanner() {
                 /* Main Banner Content */
                 <div className="space-y-6">
                   <div className="flex items-start gap-4 p-4 bg-paper-sub rounded-xl border border-ink-rule">
-                    <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-amber-deep mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm text-ink mb-2">
                         <strong>Essential for DeFi Security:</strong> We use minimal cookies to protect your wallet and provide secure token approval management.
@@ -119,7 +119,7 @@ export default function CookieBanner() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="p-4 bg-paper-sub rounded-xl border border-ink-rule">
                       <div className="flex items-center gap-2 mb-2">
-                        <Shield className="w-4 h-4 text-emerald-400" />
+                        <Shield className="w-4 h-4 text-emerald-800" />
                         <span className="text-sm font-medium text-ink">Essential</span>
                       </div>
                       <p className="text-xs text-ink-muted">
@@ -128,7 +128,7 @@ export default function CookieBanner() {
                     </div>
                     <div className="p-4 bg-paper-sub rounded-xl border border-ink-rule">
                       <div className="flex items-center gap-2 mb-2">
-                        <Settings className="w-4 h-4 text-sky-400" />
+                        <Settings className="w-4 h-4 text-sky-800" />
                         <span className="text-sm font-medium text-ink">Preferences</span>
                       </div>
                       <p className="text-xs text-ink-muted">
@@ -170,15 +170,15 @@ export default function CookieBanner() {
 
                   <p className="text-xs text-ink-muted text-center">
                     By continuing, you agree to our{' '}
-                    <a href="/terms" className="text-amber-400 hover:text-amber-300 underline">
+                    <a href="/terms" className="text-amber-deep hover:text-amber-deep underline">
                       Terms of Use
                     </a>
                     ,{' '}
-                    <a href="/privacy" className="text-amber-400 hover:text-amber-300 underline">
+                    <a href="/privacy" className="text-amber-deep hover:text-amber-deep underline">
                       Privacy Policy
                     </a>
                     , and{' '}
-                    <a href="/cookies" className="text-amber-400 hover:text-amber-300 underline">
+                    <a href="/cookies" className="text-amber-deep hover:text-amber-deep underline">
                       Cookie Policy
                     </a>
                   </p>
@@ -187,7 +187,7 @@ export default function CookieBanner() {
                 /* Settings Panel */
                 <div className="space-y-6">
                   <div className="flex items-center gap-3">
-                    <Settings className="w-5 h-5 text-amber-400" />
+                    <Settings className="w-5 h-5 text-amber-deep" />
                     <h4 className="text-lg font-semibold text-ink">Customize Cookie Preferences</h4>
                   </div>
 
@@ -196,7 +196,7 @@ export default function CookieBanner() {
                     <div className="p-4 bg-paper-sub rounded-xl border border-ink-rule">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Shield className="w-5 h-5 text-emerald-400" />
+                          <Shield className="w-5 h-5 text-emerald-800" />
                           <div>
                             <h5 className="text-sm font-medium text-ink">Essential Cookies</h5>
                             <p className="text-xs text-ink-muted">
@@ -207,7 +207,7 @@ export default function CookieBanner() {
                             </p>
                           </div>
                         </div>
-                        <div className="px-3 py-1 bg-emerald-900/40 text-emerald-300 rounded-full text-xs font-medium">
+                        <div className="px-3 py-1 bg-emerald-900/40 text-emerald-800 rounded-full text-xs font-medium">
                           Always Active
                         </div>
                       </div>
@@ -217,7 +217,7 @@ export default function CookieBanner() {
                     <div className="p-4 bg-paper-sub rounded-xl border border-ink-rule">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Settings className="w-5 h-5 text-sky-400" />
+                          <Settings className="w-5 h-5 text-sky-800" />
                           <div>
                             <h5 className="text-sm font-medium text-ink">Preference Cookies</h5>
                             <p className="text-xs text-ink-muted">
@@ -310,26 +310,26 @@ export default function CookieBanner() {
                     <div className="flex flex-wrap justify-center gap-4">
                       <a
                         href="/terms"
-                        className="text-amber-400 hover:text-amber-300 underline text-xs"
+                        className="text-amber-deep hover:text-amber-deep underline text-xs"
                       >
                         Terms of Use
                       </a>
                       <a
                         href="/privacy"
-                        className="text-amber-400 hover:text-amber-300 underline text-xs"
+                        className="text-amber-deep hover:text-amber-deep underline text-xs"
                       >
                         Privacy Policy
                       </a>
                       <a
                         href="/cookies"
-                        className="text-amber-400 hover:text-amber-300 underline text-xs"
+                        className="text-amber-deep hover:text-amber-deep underline text-xs"
                       >
                         Cookie Policy
                       </a>
                     </div>
                     <p className="text-xs text-ink-muted text-center mt-3">
                       Questions? Contact us at{' '}
-                      <a href="mailto:legal.support@allowanceguard.com" className="text-amber-400 hover:text-amber-300 underline">
+                      <a href="mailto:legal.support@allowanceguard.com" className="text-amber-deep hover:text-amber-deep underline">
                         legal.support@allowanceguard.com
                       </a>
                     </p>

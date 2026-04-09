@@ -83,7 +83,7 @@ export default function ContactPage() {
         />
 
         <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Contact
           </span>
           <H1 className="mb-6 text-ink">Talk to a human.</H1>
@@ -109,9 +109,9 @@ export default function ContactPage() {
               </p>
 
               {status === 'success' ? (
-                <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-8">
+                <div className="rounded-2xl border border-emerald-500/30 bg-paper-sub p-8">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-6 h-6 text-emerald-800 flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="text-lg font-semibold text-ink mb-2">Message received.</h3>
                       <p className="text-sm text-ink-soft leading-relaxed">
@@ -120,7 +120,7 @@ export default function ContactPage() {
                       <button
                         type="button"
                         onClick={() => setStatus('idle')}
-                        className="mt-4 text-sm font-medium text-amber-400 hover:text-amber-300 transition-colors"
+                        className="mt-4 text-sm font-medium text-amber-deep hover:text-amber-deep transition-colors"
                       >
                         Send another message →
                       </button>
@@ -169,7 +169,7 @@ export default function ContactPage() {
                   {/* Topic */}
                   <fieldset>
                     <legend className="block text-sm font-medium text-ink mb-3">
-                      What is this about? <span className="text-amber-400">*</span>
+                      What is this about? <span className="text-amber-deep">*</span>
                     </legend>
                     <div className="grid sm:grid-cols-2 gap-2">
                       {TOPICS.map((t) => {
@@ -179,7 +179,7 @@ export default function ContactPage() {
                             key={t.value}
                             className={`relative flex flex-col cursor-pointer rounded-xl border px-4 py-3 transition-all ${
                               selected
-                                ? 'border-amber-400/60 bg-amber-400/10'
+                                ? 'border-amber-400/60 bg-paper-sub'
                                 : 'border-ink-rule bg-paper-sub hover:border-ink-rule hover:bg-paper-sub'
                             }`}
                           >
@@ -193,7 +193,7 @@ export default function ContactPage() {
                             />
                             <span
                               className={`text-sm font-semibold ${
-                                selected ? 'text-amber-300' : 'text-ink'
+                                selected ? 'text-amber-deep' : 'text-ink'
                               }`}
                               dangerouslySetInnerHTML={{ __html: t.label }}
                             />
@@ -220,7 +220,7 @@ export default function ContactPage() {
                   {/* Message */}
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-ink mb-2">
-                      Message <span className="text-amber-400">*</span>
+                      Message <span className="text-amber-deep">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -240,9 +240,9 @@ export default function ContactPage() {
 
                   {/* Error */}
                   {status === 'error' && error && (
-                    <div className="flex items-start gap-2 rounded-xl border border-red-500/30 bg-red-500/10 p-4">
-                      <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-red-200">{error}</p>
+                    <div className="flex items-start gap-2 rounded-xl border border-red-500/30 bg-paper-sub p-4">
+                      <AlertCircle className="w-5 h-5 text-red-800 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-red-800">{error}</p>
                     </div>
                   )}
 
@@ -262,7 +262,7 @@ export default function ContactPage() {
                     </button>
                     <p className="text-xs text-ink-whisper">
                       By submitting, you agree to our{' '}
-                      <a href="/privacy" className="text-amber-400 hover:underline">Privacy Policy</a>.
+                      <a href="/privacy" className="text-amber-deep hover:underline">Privacy Policy</a>.
                     </p>
                   </div>
                 </form>
@@ -323,25 +323,25 @@ export default function ContactPage() {
         <Container>
           <div className="py-10 grid sm:grid-cols-3 gap-6 text-sm">
             <TrustItem
-              icon={<Lock className="w-4 h-4 text-amber-400" />}
+              icon={<Lock className="w-4 h-4 text-amber-deep" />}
               title="Encrypted in transit"
             >
               Every message travels over HTTPS. We never sell or share your details.
             </TrustItem>
             <TrustItem
-              icon={<Shield className="w-4 h-4 text-amber-400" />}
+              icon={<Shield className="w-4 h-4 text-amber-deep" />}
               title="PGP for security reports"
             >
-              <a href="/pgp-key.asc" className="text-amber-400 hover:underline">
+              <a href="/pgp-key.asc" className="text-amber-deep hover:underline">
                 Download our public key
               </a>{' '}
               before sending sensitive findings.
             </TrustItem>
             <TrustItem
-              icon={<CheckCircle2 className="w-4 h-4 text-amber-400" />}
+              icon={<CheckCircle2 className="w-4 h-4 text-amber-deep" />}
               title="security.txt"
             >
-              <a href="/.well-known/security.txt" className="text-amber-400 hover:underline">
+              <a href="/.well-known/security.txt" className="text-amber-deep hover:underline">
                 /.well-known/security.txt
               </a>{' '}
               follows RFC 9116.
@@ -380,7 +380,7 @@ function Field({
     <div>
       <label htmlFor={id} className="block text-sm font-medium text-ink mb-2">
         {label}
-        {required && <span className="text-amber-400 ml-1">*</span>}
+        {required && <span className="text-amber-deep ml-1">*</span>}
         {optional && <span className="text-ink-whisper ml-2 text-xs font-normal">optional</span>}
       </label>
       <input
@@ -430,7 +430,7 @@ function ChannelCard({
       <div className="flex items-start gap-4">
         <div
           className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
-            accent ? 'bg-amber-400/15 text-amber-300' : 'bg-paper-sub text-ink-soft'
+            accent ? 'bg-amber-400/15 text-amber-deep' : 'bg-paper-sub text-ink-soft'
           }`}
         >
           {icon}
@@ -438,11 +438,11 @@ function ChannelCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
             <h3 className="text-base font-semibold text-ink">{title}</h3>
-            <ArrowRight className="w-4 h-4 text-ink-whisper group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+            <ArrowRight className="w-4 h-4 text-ink-whisper group-hover:text-amber-deep group-hover:translate-x-0.5 transition-all flex-shrink-0" />
           </div>
           <p className="mt-1 text-sm text-ink-muted leading-relaxed">{description}</p>
           <div className="mt-3 flex items-center justify-between gap-3 text-xs">
-            <span className="font-mono text-amber-400 truncate">{cta}</span>
+            <span className="font-mono text-amber-deep truncate">{cta}</span>
             <span className="text-ink-whisper flex-shrink-0">{meta}</span>
           </div>
         </div>

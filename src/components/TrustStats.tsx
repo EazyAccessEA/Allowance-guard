@@ -21,7 +21,7 @@ export default function TrustStats() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
               <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-amber-deep mb-2">
                   50,000+
                 </div>
                 <div className="text-lg font-semibold text-ink mb-1">
@@ -33,7 +33,7 @@ export default function TrustStats() {
               </div>
 
               <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-amber-deep mb-2">
                   2M+
                 </div>
                 <div className="text-lg font-semibold text-ink mb-1">
@@ -45,7 +45,7 @@ export default function TrustStats() {
               </div>
 
               <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-primary-400 mb-2">
+                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-amber-deep mb-2">
                   24/7
                 </div>
                 <div className="text-lg font-semibold text-ink mb-1">

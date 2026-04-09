@@ -41,7 +41,7 @@ function BillingToggle({
   onChange: (period: BillingPeriod) => void
 }) {
   return (
-    <div className="inline-flex items-center gap-3 rounded-full bg-paper-sub/60 border border-ink-rule/50 px-4 py-2">
+    <div className="inline-flex items-center gap-3 rounded-full bg-paper-sub border border-ink-rule/50 px-4 py-2">
       <button
         type="button"
         onClick={() => onChange('monthly')}
@@ -65,7 +65,7 @@ function BillingToggle({
         )}
       >
         Yearly
-        <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-xs font-semibold text-emerald-400">
+        <span className="rounded-full bg-paper-sub px-2 py-0.5 text-xs font-semibold text-emerald-800">
           Save 34%
         </span>
       </button>
@@ -131,8 +131,8 @@ export default function PricingPage() {
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-28 sm:pb-20 text-center">
           {/* Eyebrow */}
           <div className="flex items-center justify-center gap-2 mb-6">
-            <Shield className="w-4 h-4 text-amber-400" aria-hidden="true" />
-            <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.15em]">
+            <Shield className="w-4 h-4 text-amber-deep" aria-hidden="true" />
+            <span className="text-xs font-semibold text-amber-deep uppercase tracking-[0.15em]">
               Pricing
             </span>
           </div>
@@ -234,7 +234,7 @@ export default function PricingPage() {
                 <tr className="border-b border-ink-rule/50">
                   <th className="py-4 px-4 text-sm font-medium text-ink-muted">Feature</th>
                   <th className="px-4 py-4 text-center text-sm font-medium text-ink-soft">Free</th>
-                  <th className="px-4 py-4 text-center text-sm font-medium text-amber-400">Developer</th>
+                  <th className="px-4 py-4 text-center text-sm font-medium text-amber-deep">Developer</th>
                   <th className="px-4 py-4 text-center text-sm font-medium text-ink-soft">Growth</th>
                   <th className="px-4 py-4 text-center text-sm font-medium text-ink-soft">Enterprise</th>
                 </tr>
@@ -259,7 +259,7 @@ export default function PricingPage() {
                       <td key={i} className="px-4 py-3.5 text-center text-sm">
                         {typeof val === 'boolean' ? (
                           val ? (
-                            <Check className="mx-auto h-5 w-5 text-emerald-400" aria-label="Included" />
+                            <Check className="mx-auto h-5 w-5 text-emerald-800" aria-label="Included" />
                           ) : (
                             <X className="mx-auto h-5 w-5 text-ink-whisper" aria-label="Not included" />
                           )

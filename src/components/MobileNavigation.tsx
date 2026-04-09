@@ -155,7 +155,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
                   />
                 </div>
                 {isConnected && (
-                  <p className="text-sky-400 mt-3 text-sm text-center font-medium">
+                  <p className="text-sky-800 mt-3 text-sm text-center font-medium">
                     Wallet Connected
                   </p>
                 )}

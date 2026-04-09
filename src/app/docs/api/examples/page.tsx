@@ -347,7 +347,7 @@ main()`
               {/* Python Examples */}
               <div>
                 <div className="flex items-center mb-6">
-                  <Code className="mr-3 text-green-600" size={24} />
+                  <Code className="mr-3 text-green-800" size={24} />
                   <H2>Python</H2>
                 </div>
                 <p className="text-stone mb-6">
@@ -359,7 +359,7 @@ main()`
               {/* React Examples */}
               <div>
                 <div className="flex items-center mb-6">
-                  <Globe className="mr-3 text-blue-500" size={24} />
+                  <Globe className="mr-3 text-blue-800" size={24} />
                   <H2>React Component</H2>
                 </div>
                 <p className="text-stone mb-6">

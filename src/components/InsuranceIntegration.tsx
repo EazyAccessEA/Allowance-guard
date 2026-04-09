@@ -59,17 +59,17 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
   const showDiscount = provider.discountEligible && discountPct > 0
 
   return (
-    <div className="bg-paper-sub/60 border border-ink-rule rounded-xl overflow-hidden">
+    <div className="bg-paper-sub border border-ink-rule rounded-xl overflow-hidden">
       <div className="p-5">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-primary-50 dark:bg-primary-900/20 flex items-center justify-center">
-              <Shield className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+              <Shield className="h-5 w-5 text-amber-deep dark:text-amber-deep" />
             </div>
             <div>
               <h3 className="font-semibold text-ink">{provider.name}</h3>
               {showDiscount && (
-                <span className="inline-block text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
+                <span className="inline-block text-xs font-medium text-green-800 dark:text-green-800 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
                   {discountPct}% premium discount eligible
                 </span>
               )}
@@ -109,12 +109,12 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
             </a>
           </div>
         ) : (
-          <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-paper-sub/50 text-ink-whisper text-sm rounded-lg">
+          <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-50 dark:bg-paper-sub text-ink-whisper text-sm rounded-lg">
             <Lock className="h-4 w-4" />
             <span>Sentinel tier required</span>
             <a
               href="/pricing"
-              className="ml-auto text-primary-600 dark:text-primary-400 font-medium flex items-center gap-1 hover:underline"
+              className="ml-auto text-amber-deep dark:text-amber-deep font-medium flex items-center gap-1 hover:underline"
             >
               Upgrade <ArrowRight className="h-3 w-3" />
             </a>
@@ -124,7 +124,7 @@ function InsuranceCard({ provider, walletAddress, riskScore, isSentinel }: Insur
 
       {/* Pre-filled application form */}
       {expanded && isSentinel && (
-        <div className="border-t border-ink-rule p-5 bg-paper-sub/40">
+        <div className="border-t border-ink-rule p-5 bg-paper-sub">
           <h4 className="text-sm font-semibold text-ink mb-3">
             Pre-filled Application
           </h4>
@@ -190,7 +190,7 @@ export default function InsuranceIntegration({ riskScore = 0, userTier = 'free' 
           DeFi Insurance
         </h2>
         {riskScore <= 30 && (
-          <span className="text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">
+          <span className="text-xs font-medium text-green-800 dark:text-green-800 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">
             Low risk — eligible for premium discounts
           </span>
         )}

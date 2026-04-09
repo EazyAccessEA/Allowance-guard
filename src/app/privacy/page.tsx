@@ -24,7 +24,7 @@ export default function PrivacyPage() {
         />
 
         <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; Privacy Policy
           </span>
           <H1 className="mb-6 text-ink">Privacy Policy</H1>
@@ -129,31 +129,31 @@ export default function PrivacyPage() {
                 <H2 className="text-2xl font-semibold mb-4 text-ink">How We Use Your Data</H2>
                 <ul className="space-y-3 text-ink-soft">
                   <li className="flex items-start">
-                    <span className="text-amber-400 mr-3">•</span>
+                    <span className="text-amber-deep mr-3">•</span>
                     <span>Process wallet scans to display token allowances and risk assessments</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-amber-400 mr-3">•</span>
+                    <span className="text-amber-deep mr-3">•</span>
                     <span>Deliver monitoring alerts via email, Slack, or Telegram (Pro/Sentinel)</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-amber-400 mr-3">•</span>
+                    <span className="text-amber-deep mr-3">•</span>
                     <span>Process subscription payments and send billing communications</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-amber-400 mr-3">•</span>
+                    <span className="text-amber-deep mr-3">•</span>
                     <span>Enforce rate limits and usage quotas per subscription tier</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-amber-400 mr-3">•</span>
+                    <span className="text-amber-deep mr-3">•</span>
                     <span>Generate compliance audit reports (Sentinel)</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-amber-400 mr-3">•</span>
+                    <span className="text-amber-deep mr-3">•</span>
                     <span>Monitor for abuse and security threats</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-amber-400 mr-3">•</span>
+                    <span className="text-amber-deep mr-3">•</span>
                     <span>Improve the service through aggregated, anonymized analytics</span>
                   </li>
                 </ul>
@@ -217,7 +217,7 @@ export default function PrivacyPage() {
                     <p className="text-ink-soft text-sm">
                       You may request a copy of all personal data we hold about you.
                       Use the data export feature in your{' '}
-                      <Link href="/account" className="text-amber-400 hover:underline">account dashboard</Link>{' '}
+                      <Link href="/account" className="text-amber-deep hover:underline">account dashboard</Link>{' '}
                       or call the <code className="text-xs bg-paper-sub border border-ink-rule px-1 py-0.5 rounded">GET /api/user/export</code> endpoint.
                     </p>
                   </div>
@@ -252,7 +252,7 @@ export default function PrivacyPage() {
                     <h3 className="text-lg font-semibold mb-3 text-ink">Right to Restrict Processing</h3>
                     <p className="text-ink-soft text-sm">
                       You may disable monitoring for specific wallets or pause your account.
-                      Contact us at <span className="text-amber-400">legal.support@allowanceguard.com</span> for
+                      Contact us at <span className="text-amber-deep">legal.support@allowanceguard.com</span> for
                       broader processing restrictions.
                     </p>
                   </div>
@@ -277,7 +277,7 @@ export default function PrivacyPage() {
                   </p>
                   <p>
                     For full details on cookie types, retention, and controls, see our{' '}
-                    <Link href="/cookies" className="text-amber-400 hover:underline">Cookie Policy</Link>.
+                    <Link href="/cookies" className="text-amber-deep hover:underline">Cookie Policy</Link>.
                   </p>
                 </div>
               </div>
@@ -313,7 +313,7 @@ export default function PrivacyPage() {
                   providers operate. We ensure appropriate safeguards are in place for international transfers,
                   including standard contractual clauses where applicable. Sentinel and Enterprise customers
                   may request a{' '}
-                  <Link href="/dpa" className="text-amber-400 hover:underline">Data Processing Agreement (DPA)</Link>.
+                  <Link href="/dpa" className="text-amber-deep hover:underline">Data Processing Agreement (DPA)</Link>.
                 </p>
               </div>
 
@@ -326,9 +326,9 @@ export default function PrivacyPage() {
                     or want to exercise your rights, contact us:
                   </p>
                   <ul className="space-y-2 text-ink-soft text-sm">
-                    <li>Privacy inquiries: <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span></li>
-                    <li>Data export/deletion: Use your <Link href="/account" className="text-amber-400 hover:underline">account dashboard</Link> or the API endpoints</li>
-                    <li>DPA requests: <span className="text-amber-400 font-medium">legal.support@allowanceguard.com</span></li>
+                    <li>Privacy inquiries: <span className="text-amber-deep font-medium">legal.support@allowanceguard.com</span></li>
+                    <li>Data export/deletion: Use your <Link href="/account" className="text-amber-deep hover:underline">account dashboard</Link> or the API endpoints</li>
+                    <li>DPA requests: <span className="text-amber-deep font-medium">legal.support@allowanceguard.com</span></li>
                   </ul>
                 </div>
               </div>
@@ -337,13 +337,13 @@ export default function PrivacyPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Related Documents</H2>
                 <div className="flex flex-wrap gap-3">
-                  <Link href="/terms" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/terms" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Terms of Service
                   </Link>
-                  <Link href="/cookies" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/cookies" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Cookie Policy
                   </Link>
-                  <Link href="/dpa" className="text-amber-400 hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
+                  <Link href="/dpa" className="text-amber-deep hover:underline text-sm bg-paper-sub border border-ink-rule px-4 py-2 rounded-lg">
                     Data Processing Agreement
                   </Link>
                 </div>

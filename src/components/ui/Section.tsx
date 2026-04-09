@@ -30,7 +30,7 @@ export default function Section({
   // Midnight Amber background variants — dark-first
   const backgroundClasses = {
     default: 'bg-paper',
-    muted: 'bg-paper-sub/50',
+    muted: 'bg-paper-sub',
     accent: 'bg-amber-900/10',
     transparent: 'bg-transparent',
   }

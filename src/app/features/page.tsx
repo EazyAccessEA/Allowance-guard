@@ -22,7 +22,7 @@ export default function FeaturesPage() {
         <div className="absolute inset-0 z-10 hidden dark:block bg-paper-deep/90" />
 
         <Container className="relative text-left max-w-4xl z-10">
-          <span className="inline-block mb-6 text-xs uppercase tracking-[0.2em] font-semibold text-primary-700 dark:text-primary-400">
+          <span className="inline-block mb-6 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep dark:text-amber-deep">
             The AllowanceGuard Platform
           </span>
           <H1 className="mb-6">The invisible attack surface, made visible.</H1>
@@ -41,7 +41,7 @@ export default function FeaturesPage() {
       <Section className="py-32">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-primary-700 dark:text-primary-400">
+            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep dark:text-amber-deep">
               The Problem
             </span>
             <H2 className="mb-8">Token approvals are the largest unaddressed attack vector in Web3.</H2>
@@ -59,7 +59,7 @@ export default function FeaturesPage() {
       <Section className="py-32 bg-paper-sub">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-primary-700 dark:text-primary-400">
+            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep dark:text-amber-deep">
               Core Capabilities
             </span>
             <H2 className="mb-12">A complete approval lifecycle, in one place.</H2>
@@ -109,7 +109,7 @@ export default function FeaturesPage() {
       <Section className="py-32">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-primary-700 dark:text-primary-400">
+            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep dark:text-amber-deep">
               What Makes Us Different
             </span>
             <H2 className="mb-12">Tools no other approval manager offers.</H2>
@@ -159,7 +159,7 @@ export default function FeaturesPage() {
       <Section className="py-32 bg-paper-sub">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-primary-700 dark:text-primary-400">
+            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep dark:text-amber-deep">
               Browser Extension
             </span>
             <H2 className="mb-12">Protection that travels with you.</H2>
@@ -167,18 +167,18 @@ export default function FeaturesPage() {
             <div className="mobbin-card mobbin-card-hover mobbin-fade-in mobbin-stagger-1">
               <div className="p-8">
                 <div className="flex items-center gap-3 mb-4">
-                  <Puzzle className="w-6 h-6 text-primary-700" />
+                  <Puzzle className="w-6 h-6 text-amber-deep" />
                   <h3 className="text-xl font-semibold text-ink">Real-Time Transaction Screening</h3>
                 </div>
                 <p className="text-base text-ink-muted leading-relaxed mb-6">
                   The dashboard catches the past. The extension catches the present. Every approval request is intercepted and analysed before you sign — unlimited amounts, unverified contracts, and known-malicious addresses are flagged in plain English the instant the prompt appears. The warning arrives before the mistake.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-primary-50 text-amber-deep dark:bg-primary-900/30 dark:text-amber-deep">
                     <Globe className="w-4 h-4" />
                     Chrome &middot; Pending Approval
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium bg-primary-50 text-amber-deep dark:bg-primary-900/30 dark:text-amber-deep">
                     Firefox &middot; Pending Approval
                   </span>
                 </div>
@@ -192,7 +192,7 @@ export default function FeaturesPage() {
       <Section className="py-32">
         <Container>
           <div className="max-w-4xl mx-auto">
-            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-primary-700 dark:text-primary-400">
+            <span className="block mb-3 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep dark:text-amber-deep">
               Why It Matters
             </span>
             <H2 className="mb-8">Self-custody without self-defence is just exposure.</H2>
@@ -230,7 +230,7 @@ export default function FeaturesPage() {
               </Link>
               <Link
                 href="/docs"
-                className="inline-flex items-center justify-center rounded-lg px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-primary-700 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-700/30"
+                className="inline-flex items-center justify-center rounded-lg px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-primary-700 text-amber-deep hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-700/30"
               >
                 <Settings className="w-5 h-5 mr-2" />
                 Read the Documentation

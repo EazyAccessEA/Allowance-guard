@@ -44,7 +44,7 @@ function UsageBar({ label, used, limit }: UsageBarProps) {
           {used.toLocaleString()}
           {' / '}
           {isUnlimited ? (
-            <span className="font-medium text-primary-700">Unlimited</span>
+            <span className="font-medium text-amber-deep">Unlimited</span>
           ) : (
             limit.toLocaleString()
           )}
@@ -53,10 +53,10 @@ function UsageBar({ label, used, limit }: UsageBarProps) {
               className={cn(
                 'ml-2 text-xs font-semibold',
                 percentage > 85
-                  ? 'text-semantic-error-500'
+                  ? 'text-semantic-error-700'
                   : percentage > 60
-                    ? 'text-semantic-warning-500'
-                    : 'text-semantic-success-500'
+                    ? 'text-semantic-warning-700'
+                    : 'text-semantic-success-700'
               )}
             >
               ({displayPercentage}%)

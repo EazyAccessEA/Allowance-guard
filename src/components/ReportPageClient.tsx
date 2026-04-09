@@ -61,7 +61,7 @@ export function ReportPageClient({ wallet }: { wallet: string }) {
             </label>
             <button
               onClick={() => window.print()}
-              className="rounded border border-primary-700 dark:border-primary-400 text-primary-700 dark:text-primary-400 px-4 py-2 text-sm hover:bg-primary-700 dark:hover:bg-primary-600 hover:text-ink transition-colors duration-200"
+              className="rounded border border-primary-700 dark:border-primary-400 text-amber-deep dark:text-amber-deep px-4 py-2 text-sm hover:bg-primary-700 dark:hover:bg-primary-600 hover:text-ink transition-colors duration-200"
             >
               Print / Save as PDF
             </button>

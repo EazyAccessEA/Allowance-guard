@@ -84,7 +84,7 @@ export default function AdminDashboard() {
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'overview'
                     ? 'bg-paper-sub text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper/50 dark:hover:bg-paper-sub/50'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper dark:hover:bg-paper-sub'
                 }`}
               >
                 Overview
@@ -94,7 +94,7 @@ export default function AdminDashboard() {
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'audit'
                     ? 'bg-paper-sub text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper/50 dark:hover:bg-paper-sub/50'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper dark:hover:bg-paper-sub'
                 }`}
               >
                 Audit Logs
@@ -104,7 +104,7 @@ export default function AdminDashboard() {
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'performance'
                     ? 'bg-paper-sub text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper/50 dark:hover:bg-paper-sub/50'
+                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper dark:hover:bg-paper-sub'
                 }`}
               >
                 Performance

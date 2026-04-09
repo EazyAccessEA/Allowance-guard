@@ -47,10 +47,10 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={copy}
-      className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-primary-700 transition-colors"
+      className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-amber-deep transition-colors"
       title="Copy to clipboard"
     >
-      {copied ? <Check className="h-3.5 w-3.5 text-semantic-success-500" /> : <Copy className="h-3.5 w-3.5" />}
+      {copied ? <Check className="h-3.5 w-3.5 text-semantic-success-700" /> : <Copy className="h-3.5 w-3.5" />}
       {copied ? 'Copied!' : 'Copy'}
     </button>
   )
@@ -161,7 +161,7 @@ export default function ApiDashboardPage() {
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-amber-deep transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -179,7 +179,7 @@ export default function ApiDashboardPage() {
           </div>
 
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20 px-4 py-3 text-sm text-red-700 dark:text-red-300">
+            <div className="rounded-lg border border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20 px-4 py-3 text-sm text-red-700 dark:text-red-800">
               {error}
               <button onClick={() => setError(null)} className="ml-2 underline">Dismiss</button>
             </div>
@@ -313,7 +313,7 @@ export default function ApiDashboardPage() {
 
               {loadingKeys ? (
                 <div className="flex justify-center py-8">
-                  <Loader2 className="h-5 w-5 animate-spin text-primary-500" />
+                  <Loader2 className="h-5 w-5 animate-spin text-amber-deep" />
                 </div>
               ) : keys.length === 0 ? (
                 <div className="text-center py-8">
@@ -348,7 +348,7 @@ export default function ApiDashboardPage() {
                         onClick={() => handleRevoke(key.id)}
                         variant="ghost"
                         size="sm"
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-800 hover:text-red-700 hover:bg-red-50"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

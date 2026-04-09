@@ -338,7 +338,7 @@ export default function RuleBuilder() {
                           variant="ghost"
                           size="sm"
                         >
-                          <Trash2 className="w-3 h-3 text-red-500" />
+                          <Trash2 className="w-3 h-3 text-red-800" />
                         </Button>
                       )}
                     </div>
@@ -512,7 +512,7 @@ export default function RuleBuilder() {
                         onClick={(e) => { e.stopPropagation(); handleDelete(rule.id) }}
                         variant="ghost"
                         size="sm"
-                        className="text-red-500 hover:text-red-600"
+                        className="text-red-800 hover:text-red-800"
                       >
                         <Trash2 className="w-3 h-3 mr-1" /> Delete
                       </Button>

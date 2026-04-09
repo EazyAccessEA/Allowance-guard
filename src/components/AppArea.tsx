@@ -168,7 +168,7 @@ export default function AppArea({
                 variant="ghost"
                 size="sm"
                 loading={isDisconnecting}
-                className="flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 w-full sm:w-auto"
+                className="flex items-center gap-2 text-red-800 hover:text-red-700 hover:bg-red-50 w-full sm:w-auto"
               >
                 <LogOut className="w-4 h-4" />
                 {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
@@ -319,8 +319,8 @@ export default function AppArea({
                   onClick={() => setActiveTab('allowances')}
                   className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'allowances'
-                      ? 'bg-paper text-primary-600 shadow-sm border border-primary-200'
-                      : 'text-ink-muted hover:text-ink hover:bg-paper/50'
+                      ? 'bg-paper text-amber-deep shadow-sm border border-primary-200'
+                      : 'text-ink-muted hover:text-ink hover:bg-paper'
                   }`}
                 >
                   <span className="hidden sm:inline">Token </span>Allowances
@@ -329,8 +329,8 @@ export default function AppArea({
                   onClick={() => setActiveTab('security')}
                   className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'security'
-                      ? 'bg-paper text-primary-600 shadow-sm border border-primary-200'
-                      : 'text-ink-muted hover:text-ink hover:bg-paper/50'
+                      ? 'bg-paper text-amber-deep shadow-sm border border-primary-200'
+                      : 'text-ink-muted hover:text-ink hover:bg-paper'
                   }`}
                 >
                   Security
@@ -339,8 +339,8 @@ export default function AppArea({
                   onClick={() => setActiveTab('analytics')}
                   className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
                     activeTab === 'analytics'
-                      ? 'bg-paper text-primary-600 shadow-sm border border-primary-200'
-                      : 'text-ink-muted hover:text-ink hover:bg-paper/50'
+                      ? 'bg-paper text-amber-deep shadow-sm border border-primary-200'
+                      : 'text-ink-muted hover:text-ink hover:bg-paper'
                   }`}
                 >
                   Analytics

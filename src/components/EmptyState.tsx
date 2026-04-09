@@ -43,7 +43,7 @@ export default function EmptyState({
         className={cn(
           'flex h-16 w-16 items-center justify-center rounded-2xl mb-5',
           positive
-            ? 'bg-semantic-success-50 dark:bg-semantic-success-900/20 text-semantic-success-500'
+            ? 'bg-semantic-success-50 dark:bg-semantic-success-900/20 text-semantic-success-700'
             : 'bg-paper-sub text-neutral-400 dark:text-ink-whisper',
         )}
       >
@@ -84,7 +84,7 @@ export default function EmptyState({
       {upgradePlan && (
         <Link
           href="/pricing"
-          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary-700 dark:text-primary-400 hover:text-primary-800 transition-colors"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-amber-deep dark:text-amber-deep hover:text-primary-800 transition-colors"
         >
           Upgrade to {upgradePlan === 'sentinel' ? 'Sentinel' : 'Pro'} to unlock
           <ArrowRight className="h-3.5 w-3.5" />

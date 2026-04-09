@@ -84,20 +84,20 @@ export default function AuditDashboard() {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-900/20'
-      case 'high': return 'text-orange-600 bg-orange-50 dark:text-orange-400 dark:bg-orange-900/20'
-      case 'medium': return 'text-yellow-600 bg-yellow-50 dark:text-yellow-400 dark:bg-yellow-900/20'
-      case 'low': return 'text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20'
+      case 'critical': return 'text-red-800 bg-red-50 dark:text-red-800 dark:bg-red-900/20'
+      case 'high': return 'text-orange-600 bg-orange-50 dark:text-orange-800 dark:bg-orange-900/20'
+      case 'medium': return 'text-yellow-600 bg-yellow-50 dark:text-yellow-800 dark:bg-yellow-900/20'
+      case 'low': return 'text-green-800 bg-green-50 dark:text-green-800 dark:bg-green-900/20'
       default: return 'text-ink-muted bg-neutral-50 dark:text-ink-muted dark:bg-paper-sub'
     }
   }
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'security': return 'text-red-600'
+      case 'security': return 'text-red-800'
       case 'authentication': return 'text-blue-600'
       case 'authorization': return 'text-purple-600'
-      case 'data_access': return 'text-green-600'
+      case 'data_access': return 'text-green-800'
       case 'data_modification': return 'text-orange-600'
       case 'system': return 'text-ink-muted dark:text-ink-muted'
       case 'compliance': return 'text-indigo-600'
@@ -144,7 +144,7 @@ export default function AuditDashboard() {
             <div className="text-sm text-ink-muted">Total Events</div>
           </div>
           <div className="bg-paper-sub p-4 rounded-lg border border-ink-rule">
-            <div className="text-2xl font-bold text-red-600">{stats.eventsBySeverity.critical || 0}</div>
+            <div className="text-2xl font-bold text-red-800">{stats.eventsBySeverity.critical || 0}</div>
             <div className="text-sm text-ink-muted">Critical Events</div>
           </div>
           <div className="bg-paper-sub p-4 rounded-lg border border-ink-rule">

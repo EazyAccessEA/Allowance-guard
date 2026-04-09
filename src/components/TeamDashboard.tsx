@@ -29,9 +29,9 @@ interface Member {
 }
 
 const ROLE_ICONS: Record<string, React.ReactNode> = {
-  owner: <Crown className="h-3.5 w-3.5 text-amber-500" />,
-  admin: <Shield className="h-3.5 w-3.5 text-primary-600" />,
-  editor: <UserPlus className="h-3.5 w-3.5 text-blue-500" />,
+  owner: <Crown className="h-3.5 w-3.5 text-amber-deep" />,
+  admin: <Shield className="h-3.5 w-3.5 text-amber-deep" />,
+  editor: <UserPlus className="h-3.5 w-3.5 text-blue-800" />,
   viewer: <Eye className="h-3.5 w-3.5 text-neutral-400" />,
 }
 
@@ -169,7 +169,7 @@ export default function TeamDashboard() {
     return (
       <Card>
         <CardContent className="py-12 flex items-center justify-center">
-          <Loader2 className="h-6 w-6 animate-spin text-primary-500" />
+          <Loader2 className="h-6 w-6 animate-spin text-amber-deep" />
         </CardContent>
       </Card>
     )
@@ -178,7 +178,7 @@ export default function TeamDashboard() {
   return (
     <div className="space-y-6">
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20 px-4 py-3 text-sm text-red-700 dark:text-red-300">
+        <div className="rounded-lg border border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20 px-4 py-3 text-sm text-red-700 dark:text-red-800">
           {error}
           <button onClick={() => setError(null)} className="ml-2 underline">Dismiss</button>
         </div>
@@ -187,7 +187,7 @@ export default function TeamDashboard() {
       {/* Team Selector + Create */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Users className="h-6 w-6 text-primary-600" />
+          <Users className="h-6 w-6 text-amber-deep" />
           <h2 className="text-xl font-bold text-ink">Team Dashboard</h2>
           <Badge variant="info" size="sm">{plan}</Badge>
         </div>
@@ -326,14 +326,14 @@ export default function TeamDashboard() {
             {/* Members List */}
             {membersLoading ? (
               <div className="flex justify-center py-8">
-                <Loader2 className="h-5 w-5 animate-spin text-primary-500" />
+                <Loader2 className="h-5 w-5 animate-spin text-amber-deep" />
               </div>
             ) : (
               <div className="divide-y divide-border-primary">
                 {members.map((member) => (
                   <div key={member.user_id} className="flex items-center justify-between py-3">
                     <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-sm font-medium text-primary-700 dark:text-primary-300">
+                      <div className="h-8 w-8 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-sm font-medium text-amber-deep dark:text-primary-300">
                         {(member.name || member.email)?.[0]?.toUpperCase() ?? '?'}
                       </div>
                       <div>

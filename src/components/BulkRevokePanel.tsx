@@ -103,26 +103,26 @@ function GasCostEstimator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
     <div className="border-t border-neutral-borders pt-4 mb-4">
       <div className="p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg space-y-3">
         <div className="flex items-center gap-2">
-          <Fuel className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-          <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-200">Gas Cost Estimate</h4>
+          <Fuel className="w-5 h-5 text-blue-600 dark:text-blue-800" />
+          <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-800">Gas Cost Estimate</h4>
         </div>
 
         {/* Total cost */}
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Transactions</div>
+            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Transactions</div>
             <div className="text-sm font-bold text-blue-900 dark:text-blue-100">
               {selectedRows.length}
             </div>
           </div>
           <div>
-            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Total Gas</div>
+            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Total Gas</div>
             <div className="text-sm font-bold text-blue-900 dark:text-blue-100">
               {(totalGas / 1000).toFixed(0)}k
             </div>
           </div>
           <div>
-            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Est. Cost</div>
+            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Est. Cost</div>
             <div className="text-sm font-bold text-blue-900 dark:text-blue-100 flex items-center justify-center gap-0.5">
               <DollarSign className="w-3 h-3" />
               {totalCostUsd.toFixed(2)}
@@ -133,10 +133,10 @@ function GasCostEstimator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
         {/* Per-chain breakdown */}
         {Object.keys(byChain).length > 1 && (
           <div className="border-t border-blue-200 dark:border-blue-800 pt-2">
-            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">Per-chain breakdown</div>
+            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Per-chain breakdown</div>
             <div className="flex flex-wrap gap-2">
               {Object.entries(byChain).map(([chainId, { count, gas }]) => (
-                <span key={chainId} className="text-xs text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/50 rounded px-2 py-0.5">
+                <span key={chainId} className="text-xs text-blue-700 dark:text-blue-800 bg-blue-100 dark:bg-blue-900/50 rounded px-2 py-0.5">
                   Chain {chainId}: {count} txs &bull; {(gas / 1000).toFixed(0)}k gas
                 </span>
               ))}
@@ -145,7 +145,7 @@ function GasCostEstimator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
         )}
 
         {/* Gas price info */}
-        <div className="text-[10px] text-blue-500 dark:text-blue-400 flex items-center gap-2">
+        <div className="text-[10px] text-blue-800 dark:text-blue-800 flex items-center gap-2">
           <span>Gas: {currentGasPrice} gwei</span>
           <span>&bull;</span>
           <span>ETH: ${currentEthPrice.toLocaleString()}</span>

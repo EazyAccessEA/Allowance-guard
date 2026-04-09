@@ -53,7 +53,7 @@ function LoginForm() {
 
         {sent ? (
           <div className="text-center space-y-3 py-4">
-            <CheckCircle className="h-12 w-12 text-green-600 mx-auto" />
+            <CheckCircle className="h-12 w-12 text-green-800 mx-auto" />
             <p className="text-sm font-medium text-ink">Check your email</p>
             <p className="text-xs text-ink-muted">
               We sent a sign-in link to <strong>{email}</strong>. It expires in 15 minutes.
@@ -76,7 +76,7 @@ function LoginForm() {
             </label>
 
             {(error || urlError) && (
-              <p className="text-xs text-red-600" role="alert">
+              <p className="text-xs text-red-800" role="alert">
                 {error ?? (urlError === 'invalid_or_expired'
                   ? 'That sign-in link is invalid or has expired.'
                   : 'Something went wrong. Please try again.')}

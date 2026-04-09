@@ -147,7 +147,7 @@ export function ApiPlayground({
               <span className="text-xs text-ink-muted">Status:</span>
               <span
                 className={`text-xs font-mono font-bold ${
-                  status < 300 ? 'text-emerald-400' : status < 500 ? 'text-amber-400' : 'text-red-400'
+                  status < 300 ? 'text-emerald-800' : status < 500 ? 'text-amber-deep' : 'text-red-800'
                 }`}
               >
                 {status}

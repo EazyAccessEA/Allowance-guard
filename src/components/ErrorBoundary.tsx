@@ -49,7 +49,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <Card className="border-semantic-error-200 dark:border-semantic-error-800">
           <CardContent className="py-8 text-center">
-            <AlertTriangle className="h-10 w-10 text-semantic-error-500 mx-auto mb-4" />
+            <AlertTriangle className="h-10 w-10 text-semantic-error-700 mx-auto mb-4" />
             <h3 className="font-semibold text-ink mb-2">
               {this.props.fallbackTitle || 'Something went wrong'}
             </h3>

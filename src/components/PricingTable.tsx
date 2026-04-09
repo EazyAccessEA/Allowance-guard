@@ -110,7 +110,7 @@ function CellValue({ value }: { value: string | boolean }) {
     return <span className="text-sm font-medium text-ink">{value}</span>
   }
   if (value) {
-    return <Check className="mx-auto h-5 w-5 text-emerald-400" aria-label="Included" />
+    return <Check className="mx-auto h-5 w-5 text-emerald-800" aria-label="Included" />
   }
   return <X className="mx-auto h-5 w-5 text-ink-whisper" aria-label="Not included" />
 }
@@ -129,7 +129,7 @@ export default function PricingTable() {
                 key={plan}
                 className={cn(
                   'px-4 py-4 text-center text-sm font-semibold',
-                  plan === 'pro' ? 'text-amber-400' : 'text-ink-soft'
+                  plan === 'pro' ? 'text-amber-deep' : 'text-ink-soft'
                 )}
               >
                 {getPlanDisplayName(plan)}

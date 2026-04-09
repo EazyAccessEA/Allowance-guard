@@ -23,10 +23,10 @@ interface ApiEndpointProps {
 }
 
 const methodColors: Record<string, string> = {
-  GET: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-  POST: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  PUT: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-  DELETE: 'bg-red-500/20 text-red-400 border-red-500/30',
+  GET: 'bg-paper-sub text-emerald-800 border-emerald-500/30',
+  POST: 'bg-paper-sub text-blue-800 border-blue-500/30',
+  PUT: 'bg-paper-sub text-amber-deep border-amber-500/30',
+  DELETE: 'bg-paper-sub text-red-800 border-red-500/30',
 }
 
 export function ApiEndpoint({
@@ -97,7 +97,7 @@ export function ApiEndpoint({
                         <td className="px-3 py-2 font-mono text-xs text-ink-muted">{p.type}</td>
                         <td className="px-3 py-2">
                           {p.required ? (
-                            <span className="text-xs text-red-400">required</span>
+                            <span className="text-xs text-red-800">required</span>
                           ) : (
                             <span className="text-xs text-ink-muted">optional</span>
                           )}
@@ -134,7 +134,7 @@ export function ApiEndpoint({
                         <td className="px-3 py-2 font-mono text-xs text-ink-muted">{p.type}</td>
                         <td className="px-3 py-2">
                           {p.required ? (
-                            <span className="text-xs text-red-400">required</span>
+                            <span className="text-xs text-red-800">required</span>
                           ) : (
                             <span className="text-xs text-ink-muted">optional</span>
                           )}

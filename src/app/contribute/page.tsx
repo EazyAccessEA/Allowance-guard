@@ -142,12 +142,12 @@ export default function ContributePage() {
         <Section className="py-8">
           <Container>
             <div className="max-w-2xl mx-auto text-center">
-              <div className="bg-amber-900/20 border border-amber-700 rounded-lg p-6">
-                <p className="text-sm text-amber-400">
+              <div className="bg-paper-sub border border-amber-700 rounded-lg p-6">
+                <p className="text-sm text-amber-deep">
                   No worries — the core scanner is free forever. If you change your mind, see{' '}
                   <a 
                     href="/docs/contributing" 
-                    className="underline hover:text-amber-300 transition-colors duration-200"
+                    className="underline hover:text-amber-deep transition-colors duration-200"
                   >
                     how to support
                   </a>.
@@ -265,7 +265,7 @@ export default function ContributePage() {
                     Your payment is processed securely by Stripe or Coinbase Commerce. We never store your payment information.
                   </p>
                   <div className="mt-3 flex items-center justify-center gap-2 text-xs text-ink-muted">
-                    <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-emerald-800" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span>SSL Encrypted & PCI Compliant</span>

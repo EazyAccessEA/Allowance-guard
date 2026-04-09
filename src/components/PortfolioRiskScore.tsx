@@ -152,7 +152,7 @@ export default function PortfolioRiskScore() {
   if (error) {
     return (
       <div className="text-center py-8">
-        <AlertTriangle className="mx-auto h-10 w-10 text-amber-500 mb-3" />
+        <AlertTriangle className="mx-auto h-10 w-10 text-amber-deep mb-3" />
         <p className="text-ink-muted">{error}</p>
       </div>
     )
@@ -165,15 +165,15 @@ export default function PortfolioRiskScore() {
       : Minus
 
   const trendColor = data.trend.direction === 'improving'
-    ? 'text-green-600 dark:text-green-400'
+    ? 'text-green-800 dark:text-green-800'
     : data.trend.direction === 'worsening'
-      ? 'text-red-600 dark:text-red-400'
+      ? 'text-red-800 dark:text-red-800'
       : 'text-ink-whisper'
 
   return (
     <div className="space-y-6">
       {/* Main score */}
-      <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 text-center">
+      <div className="bg-paper-sub border border-ink-rule rounded-xl p-6 text-center">
         <h2 className="text-lg font-semibold text-ink mb-4">
           Cross-Chain Portfolio Risk
         </h2>
@@ -190,7 +190,7 @@ export default function PortfolioRiskScore() {
           </div>
 
           {/* Benchmark */}
-          <div className="flex items-center gap-1 text-primary-600 dark:text-primary-400">
+          <div className="flex items-center gap-1 text-amber-deep dark:text-amber-deep">
             <Shield className="h-4 w-4" />
             <span className="text-sm font-medium">
               Safer than {data.benchmark.saferThanPercent}%
@@ -209,7 +209,7 @@ export default function PortfolioRiskScore() {
         ].map(({ label, value, icon: Icon }) => (
           <div
             key={label}
-            className="bg-paper-sub/60 border border-ink-rule rounded-xl p-4 text-center"
+            className="bg-paper-sub border border-ink-rule rounded-xl p-4 text-center"
           >
             <Icon className="h-5 w-5 mx-auto text-ink-whisper mb-1" />
             <p className="text-2xl font-bold text-ink">{value}</p>
@@ -220,7 +220,7 @@ export default function PortfolioRiskScore() {
 
       {/* Per-chain breakdown */}
       {data.chains.length > 0 && (
-        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6">
+        <div className="bg-paper-sub border border-ink-rule rounded-xl p-6">
           <h3 className="text-sm font-semibold text-ink-muted mb-3">
             Risk by Chain
           </h3>

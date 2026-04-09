@@ -161,7 +161,7 @@ export default function BillingPage() {
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-amber-deep transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -191,7 +191,7 @@ export default function BillingPage() {
                 </span>{' '}
                 plan.
                 {planStatus === 'trialing' && (
-                  <span className="ml-1 text-primary-600 font-medium">(Trial)</span>
+                  <span className="ml-1 text-amber-deep font-medium">(Trial)</span>
                 )}
                 {planStatus === 'past_due' && (
                   <span className="ml-1 text-semantic-warning-600 font-medium">(Payment past due)</span>
@@ -285,7 +285,7 @@ export default function BillingPage() {
                             key={feat}
                             className="flex items-start gap-2 text-sm text-ink-muted"
                           >
-                            <Check className="h-4 w-4 text-semantic-success-500 flex-shrink-0 mt-0.5" />
+                            <Check className="h-4 w-4 text-semantic-success-700 flex-shrink-0 mt-0.5" />
                             {feat}
                           </li>
                         ))}
@@ -381,7 +381,7 @@ export default function BillingPage() {
                                   href={inv.invoicePdfUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 transition-colors"
+                                  className="inline-flex items-center gap-1 text-xs text-amber-deep hover:text-amber-deep transition-colors"
                                   title="Download PDF"
                                 >
                                   <Download className="h-3.5 w-3.5" />
@@ -393,7 +393,7 @@ export default function BillingPage() {
                                   href={inv.hostedInvoiceUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 transition-colors"
+                                  className="inline-flex items-center gap-1 text-xs text-amber-deep hover:text-amber-deep transition-colors"
                                   title="View invoice"
                                 >
                                   <FileText className="h-3.5 w-3.5" />

@@ -56,7 +56,7 @@ function UsageStat({
     <Card>
       <CardContent className="py-5">
         <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-700 flex-shrink-0">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-amber-deep flex-shrink-0">
             {icon}
           </div>
           <div className="flex-1 min-w-0">
@@ -176,7 +176,7 @@ export default function UsagePage() {
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-primary-700 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-amber-deep transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account

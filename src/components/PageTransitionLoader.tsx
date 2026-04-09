@@ -55,7 +55,7 @@ export function FireartLoadingOverlay({
   if (!isVisible) return null
 
   return (
-    <div className="fixed inset-0 bg-paper/80 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-paper backdrop-blur-sm z-50 flex items-center justify-center">
       <div className="bg-paper-sub border border-ink-rule/20 rounded-2xl p-8 shadow-medium text-center max-w-sm mx-4">
         <div className="w-16 h-16 bg-gradient-to-r from-cobalt to-emerald rounded-full flex items-center justify-center mx-auto mb-6">
           <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />

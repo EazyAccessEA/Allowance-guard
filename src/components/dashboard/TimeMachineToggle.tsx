@@ -45,7 +45,7 @@ export default function TimeMachineToggle({
 
       <div className="flex items-center gap-2">
         {enabled ? (
-          <Zap className="h-4 w-4 text-primary-500" aria-hidden="true" />
+          <Zap className="h-4 w-4 text-amber-deep" aria-hidden="true" />
         ) : (
           <Clock className="h-4 w-4 text-ink-muted" aria-hidden="true" />
         )}
@@ -55,7 +55,7 @@ export default function TimeMachineToggle({
       </div>
 
       {enabled && (
-        <span className="ml-auto text-xs font-medium text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-900/30 px-2 py-0.5 rounded-full">
+        <span className="ml-auto text-xs font-medium text-amber-deep dark:text-amber-deep bg-primary-100 dark:bg-primary-900/30 px-2 py-0.5 rounded-full">
           Simulation Active
         </span>
       )}

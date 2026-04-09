@@ -14,12 +14,12 @@ const planConfig = {
   free: {
     label: 'Free',
     icon: null,
-    classes: 'border-slate-600 bg-paper-sub/60 text-ink-muted',
+    classes: 'border-slate-600 bg-paper-sub text-ink-muted',
   },
   pro: {
     label: 'Pro',
     icon: Sparkles,
-    classes: 'border-amber-500/30 bg-amber-500/10 text-amber-400',
+    classes: 'border-amber-500/30 bg-amber-500/10 text-amber-deep',
   },
   sentinel: {
     label: 'Sentinel',

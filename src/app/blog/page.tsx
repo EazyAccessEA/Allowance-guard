@@ -157,10 +157,10 @@ const blogPosts: BlogPost[] = [
 
 // Category configuration with colors
 const categoryConfig = {
-  Security: { color: 'bg-red-900/30 text-red-300 border-red-800', gradient: 'from-red-900/30 to-red-900/40' },
-  Education: { color: 'bg-blue-900/30 text-blue-300 border-blue-800', gradient: 'from-blue-900/30 to-blue-900/40' },
-  Innovation: { color: 'bg-yellow-900/30 text-yellow-300 border-yellow-800', gradient: 'from-yellow-900/30 to-yellow-900/40' },
-  Community: { color: 'bg-green-900/30 text-green-300 border-green-800', gradient: 'from-green-900/30 to-green-900/40' },
+  Security: { color: 'bg-red-900/30 text-red-800 border-red-800', gradient: 'from-red-900/30 to-red-900/40' },
+  Education: { color: 'bg-blue-900/30 text-blue-800 border-blue-800', gradient: 'from-blue-900/30 to-blue-900/40' },
+  Innovation: { color: 'bg-yellow-900/30 text-yellow-800 border-yellow-800', gradient: 'from-yellow-900/30 to-yellow-900/40' },
+  Community: { color: 'bg-green-900/30 text-green-800 border-green-800', gradient: 'from-green-900/30 to-green-900/40' },
 }
 
 export default function BlogPage() {
@@ -194,7 +194,7 @@ export default function BlogPage() {
           <Container>
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-12 sm:mb-16">
-                <div className="inline-flex items-center gap-2 bg-amber-900/20 text-amber-400 px-4 py-2 rounded-full text-sm font-medium mb-4 sm:mb-6">
+                <div className="inline-flex items-center gap-2 bg-paper-sub text-amber-deep px-4 py-2 rounded-full text-sm font-medium mb-4 sm:mb-6">
                   Featured Article
                 </div>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink mb-4 sm:mb-6">Our Most Important Insights</h2>
@@ -347,7 +347,7 @@ export default function BlogPage() {
                               </Badge>
                             </div>
                             
-                            <h3 className="text-xl font-bold text-ink mb-3 group-hover:text-amber-400 transition-colors duration-300 line-clamp-2">
+                            <h3 className="text-xl font-bold text-ink mb-3 group-hover:text-amber-deep transition-colors duration-300 line-clamp-2">
                               <Link 
                                 href={`/blog/${post.slug}`}
                                 className="hover:text-primary-accent transition-colors duration-200"
@@ -377,7 +377,7 @@ export default function BlogPage() {
                           
                           <Link 
                             href={`/blog/${post.slug}`}
-                            className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 font-medium text-sm transition-colors duration-200"
+                            className="inline-flex items-center gap-1 text-amber-deep hover:text-amber-deep font-medium text-sm transition-colors duration-200"
                           >
                             Read
                           </Link>

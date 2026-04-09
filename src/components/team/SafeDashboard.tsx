@@ -129,7 +129,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
 
   if (!isSentinel) {
     return (
-      <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-8 text-center">
+      <div className="bg-paper-sub border border-ink-rule rounded-xl p-8 text-center">
         <Lock className="mx-auto h-10 w-10 text-ink-whisper mb-3" />
         <h3 className="text-lg font-semibold text-ink mb-2">
           Multi-Sig Dashboard
@@ -161,8 +161,8 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
   if (!data.isSafe) {
     return (
       <div className="bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800 rounded-xl p-6 text-center">
-        <AlertTriangle className="mx-auto h-8 w-8 text-amber-500 mb-2" />
-        <p className="text-sm text-amber-800 dark:text-amber-300">
+        <AlertTriangle className="mx-auto h-8 w-8 text-amber-deep mb-2" />
+        <p className="text-sm text-amber-800 dark:text-amber-deep">
           This address does not appear to be a Safe (Gnosis Safe) multi-sig wallet on chain {chainId}.
         </p>
       </div>
@@ -175,9 +175,9 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
     <div className="space-y-6">
       {/* Safe Info Card */}
       {data.safeInfo && (
-        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6">
+        <div className="bg-paper-sub border border-ink-rule rounded-xl p-6">
           <div className="flex items-center gap-3 mb-4">
-            <Shield className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+            <Shield className="h-6 w-6 text-amber-deep dark:text-amber-deep" />
             <h3 className="text-lg font-semibold text-ink">
               Safe Multi-Sig
             </h3>
@@ -209,7 +209,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
             </div>
             <div>
               <p className="text-xs text-ink-whisper mb-1">High Risk</p>
-              <p className="text-xl font-bold text-red-600 dark:text-red-400">
+              <p className="text-xl font-bold text-red-800 dark:text-red-800">
                 {data.summary.highRisk}
               </p>
             </div>
@@ -242,7 +242,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
 
       {/* Allowances Table with selection */}
       {data.allowances.length > 0 && (
-        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl overflow-hidden">
+        <div className="bg-paper-sub border border-ink-rule rounded-xl overflow-hidden">
           <div className="p-4 border-b border-ink-rule flex items-center justify-between">
             <h3 className="text-sm font-semibold text-ink">
               Token Approvals ({data.allowances.length})
@@ -297,12 +297,12 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
                 {data.allowances.map((a) => {
                   const key = `${a.tokenAddress}:${a.spenderAddress}`
                   const riskColor =
-                    a.riskScore >= 70 ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
-                      : a.riskScore >= 40 ? 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20'
+                    a.riskScore >= 70 ? 'text-red-800 dark:text-red-800 bg-red-50 dark:bg-red-900/20'
+                      : a.riskScore >= 40 ? 'text-orange-600 dark:text-orange-800 bg-orange-50 dark:bg-orange-900/20'
                         : 'text-ink-muted bg-neutral-50 dark:bg-paper-sub'
 
                   return (
-                    <tr key={key} className="hover:bg-paper-sub dark:hover:bg-paper-sub/50">
+                    <tr key={key} className="hover:bg-paper-sub dark:hover:bg-paper-sub">
                       <td className="px-4 py-2.5">
                         <input
                           type="checkbox"
@@ -319,7 +319,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
                       </td>
                       <td className="px-4 py-2.5 text-xs">
                         {a.isUnlimited ? (
-                          <span className="text-red-600 dark:text-red-400 font-medium">Unlimited</span>
+                          <span className="text-red-800 dark:text-red-800 font-medium">Unlimited</span>
                         ) : (
                           <span className="text-ink-muted font-mono">
                             {a.amount.length > 12 ? a.amount.slice(0, 12) + '...' : a.amount}
@@ -342,7 +342,7 @@ export default function SafeDashboard({ safeAddress, chainId, userTier = 'free' 
 
       {/* Governance Proposal Output */}
       {proposalMarkdown && (
-        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6">
+        <div className="bg-paper-sub border border-ink-rule rounded-xl p-6">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-semibold text-ink flex items-center gap-2">
               <FileText className="h-4 w-4" />

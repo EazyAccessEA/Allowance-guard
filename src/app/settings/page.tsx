@@ -309,7 +309,7 @@ export default function SettingsPage() {
 
                 <button
                   onClick={subscribe}
-                  className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   Subscribe to Alerts
                 </button>
@@ -395,7 +395,7 @@ export default function SettingsPage() {
 
                   <button
                     onClick={savePolicy}
-                    className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Save Policy
                   </button>
@@ -426,7 +426,7 @@ export default function SettingsPage() {
 
                 <button
                   onClick={addSlack}
-                  className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                 >
                   Add Webhook
                 </button>
@@ -495,7 +495,7 @@ export default function SettingsPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={generateShare}
-                    className="bg-primary-700 dark:bg-primary-600 text-ink px-6 py-3 rounded-lg font-medium hover:bg-primary-800 dark:hover:bg-primary-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
                   >
                     Generate / Rotate
                   </button>

@@ -168,7 +168,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
             <Check
               className={cn(
                 'mt-0.5 h-4 w-4 shrink-0',
-                feature.included ? 'text-emerald-400' : 'text-ink-whisper'
+                feature.included ? 'text-emerald-800' : 'text-ink-whisper'
               )}
               aria-hidden="true"
             />

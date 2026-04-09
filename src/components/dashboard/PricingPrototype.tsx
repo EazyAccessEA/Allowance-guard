@@ -88,7 +88,7 @@ export default function PricingPrototype() {
               Yearly
             </span>
             {yearly && (
-              <span className="ml-1 text-xs font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-full">
+              <span className="ml-1 text-xs font-semibold text-amber-deep dark:text-amber-deep bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-full">
                 Save up to 34%
               </span>
             )}
@@ -168,7 +168,7 @@ export default function PricingPrototype() {
                       className="flex items-start gap-2 text-sm text-secondary-600 dark:text-ink-soft"
                     >
                       <Check
-                        className="h-4 w-4 text-primary-500 flex-shrink-0 mt-0.5"
+                        className="h-4 w-4 text-amber-deep flex-shrink-0 mt-0.5"
                         aria-hidden="true"
                       />
                       {feature}
@@ -198,7 +198,7 @@ export default function PricingPrototype() {
                   <th className="text-center py-3 px-4 font-medium text-ink-whisper dark:text-ink-muted w-28">
                     Free
                   </th>
-                  <th className="text-center py-3 px-4 font-semibold text-primary-600 dark:text-primary-400 w-28">
+                  <th className="text-center py-3 px-4 font-semibold text-amber-deep dark:text-amber-deep w-28">
                     Pro
                   </th>
                   <th className="text-center py-3 px-4 font-medium text-ink-whisper dark:text-ink-muted w-28">
@@ -214,7 +214,7 @@ export default function PricingPrototype() {
                       'border-b border-ink-rule/50 dark:border-ink-rule',
                       i % 2 === 0
                         ? 'bg-paper dark:bg-dark-bg-secondary'
-                        : 'bg-secondary-50/50 dark:bg-paper-sub/30'
+                        : 'bg-secondary-50/50 dark:bg-paper-sub'
                     )}
                   >
                     <td className="py-3 px-6 text-ink">
@@ -242,7 +242,7 @@ export default function PricingPrototype() {
                         <td key={tier} className="py-3 px-4 text-center">
                           {val === true ? (
                             <Check
-                              className="h-4 w-4 text-primary-500 mx-auto"
+                              className="h-4 w-4 text-amber-deep mx-auto"
                               aria-label="Included"
                             />
                           ) : val === false ? (

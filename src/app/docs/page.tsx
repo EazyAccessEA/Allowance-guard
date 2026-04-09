@@ -46,12 +46,12 @@ export default function DocsPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 mb-4">
-              <BookOpen className="w-5 h-5 text-amber-400" />
-              <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.15em]">Documentation</span>
+              <BookOpen className="w-5 h-5 text-amber-deep" />
+              <span className="text-xs font-semibold text-amber-deep uppercase tracking-[0.15em]">Documentation</span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-ink mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
               Build with<br />
-              <span className="text-amber-400">AllowanceGuard</span>
+              <span className="text-amber-deep">AllowanceGuard</span>
             </h1>
             <p className="text-lg text-ink-muted max-w-xl mb-8">
               Guides, API reference, and integration docs. Scan wallets, score risk, and revoke approvals — programmatically or through the dashboard.
@@ -65,7 +65,7 @@ export default function DocsPage() {
                 placeholder="Search docs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-paper-sub/60 border border-ink-rule/50 rounded-xl text-sm text-ink placeholder:text-ink-whisper focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-paper-sub border border-ink-rule/50 rounded-xl text-sm text-ink placeholder:text-ink-whisper focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
               />
             </div>
           </div>
@@ -76,13 +76,13 @@ export default function DocsPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group flex items-start gap-3 p-4 rounded-xl bg-paper-sub/30 border border-ink-rule/40 hover:border-amber-500/30 hover:bg-paper-sub/50 transition-all duration-200"
+                className="group flex items-start gap-3 p-4 rounded-xl bg-paper-sub border border-ink-rule/40 hover:border-amber-500/30 hover:bg-paper-sub transition-all duration-200"
               >
-                <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 group-hover:bg-amber-500/15 transition-colors">
-                  <link.icon className="w-4 h-4 text-amber-400" />
+                <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 group-hover:bg-paper-sub transition-colors">
+                  <link.icon className="w-4 h-4 text-amber-deep" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-sm font-medium text-ink group-hover:text-amber-400 transition-colors flex items-center gap-1">
+                  <div className="text-sm font-medium text-ink group-hover:text-amber-deep transition-colors flex items-center gap-1">
                     {link.title}
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </div>
@@ -126,11 +126,11 @@ export default function DocsPage() {
                             className={cn(
                               'w-full text-left px-3 py-2 rounded-lg text-sm flex items-center gap-2.5 transition-all duration-150',
                               isActive
-                                ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
-                                : 'text-ink-muted hover:text-ink hover:bg-paper-sub/50 border border-transparent',
+                                ? 'bg-paper-sub text-amber-deep border border-amber-500/20'
+                                : 'text-ink-muted hover:text-ink hover:bg-paper-sub border border-transparent',
                             )}
                           >
-                            <IconComponent className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-400' : 'text-ink-whisper')} />
+                            <IconComponent className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-deep' : 'text-ink-whisper')} />
                             {item.title}
                           </button>
                         )
@@ -157,7 +157,7 @@ export default function DocsPage() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="flex items-center gap-2.5 px-3 py-2 text-sm text-ink-muted hover:text-ink hover:bg-paper-sub/50 rounded-lg transition-colors"
+                      className="flex items-center gap-2.5 px-3 py-2 text-sm text-ink-muted hover:text-ink hover:bg-paper-sub rounded-lg transition-colors"
                     >
                       <link.icon className="w-4 h-4 text-ink-whisper" />
                       {link.label}
@@ -180,7 +180,7 @@ export default function DocsPage() {
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-24">
               {headings.length > 0 && (
-                <div className="rounded-xl border border-ink-rule/50 bg-paper-sub/30 p-4">
+                <div className="rounded-xl border border-ink-rule/50 bg-paper-sub p-4">
                   <h4 className="text-[10px] font-semibold text-ink-whisper uppercase tracking-[0.15em] mb-3">
                     On this page
                   </h4>
@@ -190,7 +190,7 @@ export default function DocsPage() {
                         key={index}
                         href={`#${heading.id}`}
                         className={cn(
-                          'block text-sm text-ink-muted hover:text-amber-400 transition-colors',
+                          'block text-sm text-ink-muted hover:text-amber-deep transition-colors',
                           heading.level === 3 && 'ml-3 text-xs',
                         )}
                       >

@@ -116,7 +116,7 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
         </Card>
         <Card>
           <CardContent className="pt-4">
-            <div className="text-2xl font-bold text-amber-500">{totalUnlimited}</div>
+            <div className="text-2xl font-bold text-amber-deep">{totalUnlimited}</div>
             <div className="text-xs text-ink-muted">Unlimited Approvals</div>
           </CardContent>
         </Card>
@@ -162,8 +162,8 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <Shield className={`w-5 h-5 flex-shrink-0 ${
-                        w.risk_score >= 70 ? 'text-red-500' :
-                        w.risk_score >= 40 ? 'text-amber-500' : 'text-green-500'
+                        w.risk_score >= 70 ? 'text-red-800' :
+                        w.risk_score >= 40 ? 'text-amber-deep' : 'text-green-800'
                       }`} />
                       <div className="min-w-0">
                         <div className="text-sm font-mono text-ink truncate">
@@ -182,7 +182,7 @@ export default function TeamPortfolioView({ teamId }: TeamPortfolioViewProps) {
                       <div className="text-right">
                         <div className="text-sm font-medium">{w.total_allowances} approvals</div>
                         {w.unlimited_count > 0 && (
-                          <div className="flex items-center gap-1 text-xs text-amber-500">
+                          <div className="flex items-center gap-1 text-xs text-amber-deep">
                             <AlertTriangle className="w-3 h-3" />
                             {w.unlimited_count} unlimited
                           </div>
