@@ -52,13 +52,44 @@ export async function trackEvent(
 }
 
 /**
+ * Reads the analytics consent state from localStorage.
+ *
+ * Returns true only if the user explicitly accepted analytics cookies
+ * in the CookieBanner. If no consent record exists (banner not yet
+ * shown), returns false — we default to privacy-safe.
+ *
+ * This is the ONLY gate between client-side behavioral tracking and
+ * the database. Server-side trackEvent() is NOT gated because it
+ * handles operational/legitimate-interest events (scan_started, etc.)
+ * that the service needs to function.
+ */
+function hasAnalyticsConsent(): boolean {
+  if (typeof window === 'undefined') return false
+  try {
+    const raw = localStorage.getItem('allowance-guard-cookie-consent')
+    if (!raw) return false
+    const prefs = JSON.parse(raw)
+    return prefs.analytics === true
+  } catch {
+    return false
+  }
+}
+
+/**
  * Client-side analytics helper — posts event to the analytics API.
  * Use this in React components (client-side).
+ *
+ * **Gated by cookie consent.** If the user selected "Essential only"
+ * or hasn't responded to the banner yet, this is a no-op. The event
+ * never reaches the server. This makes the CookieBanner's Analytics
+ * toggle control something real.
  */
 export async function trackClientEvent(
   event: AnalyticsEvent,
   metadata?: Record<string, unknown>,
 ): Promise<void> {
+  if (!hasAnalyticsConsent()) return
+
   try {
     await fetch('/api/analytics/track', {
       method: 'POST',

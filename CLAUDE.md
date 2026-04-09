@@ -447,3 +447,5 @@ pnpm run migrate      # Run database migrations
 - Do not make the free tier feel punishing — it should feel generous, with clear value in upgrading
 - Do not gate the free scanner behind authentication. The free tier IS the homepage scanner (`/#scan`). SIWE auth gates Pro/Sentinel/API features only.
 - Do not re-introduce magic-link login. SIWE (EIP-4361) is the primary auth method. Magic link is `@deprecated` and retained only for team invites.
+- Do not bypass the analytics consent gate. `trackClientEvent()` in `src/lib/analytics.ts` checks `localStorage('allowance-guard-cookie-consent').analytics === true` before firing. If the user clicked "Essential only", no client-side behavioral events reach the database. Server-side `trackEvent()` (scan_started, etc.) runs under legitimate interest and is NOT gated — it's operational.
+- Do not set non-essential cookies. The app sets only `ag_sess` (session) and a CSRF token — both essential. The "Analytics" toggle in the cookie banner controls server-side DB tracking, not cookies. Be honest in all consent copy.
