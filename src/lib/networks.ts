@@ -32,7 +32,7 @@ const disabledSet = new Set<string>(
 )
 
 /** ---------- CHAINS (runtime source of truth) ----------
- * All 15 supported chains with RPC endpoint configuration.
+ * All 27 supported EVM chains with RPC endpoint configuration.
  */
 export const CHAINS: Record<number, ChainCfg> = {
   1: {
@@ -205,7 +205,141 @@ export const CHAINS: Record<number, ChainCfg> = {
     ]),
     explorer: 'https://celoscan.io',
     enabled: !disabledSet.has('42220')
-  }
+  },
+  // --- Phase 9.6: Tier 1 ---
+  81457: {
+    id: 81457,
+    name: 'Blast',
+    symbol: 'ETH',
+    rpcs: envList('BLAST_RPC_URLS', [
+      'https://rpc.blast.io',
+      'https://rpc.ankr.com/blast'
+    ]),
+    explorer: 'https://blastscan.io',
+    enabled: !disabledSet.has('81457')
+  },
+  25: {
+    id: 25,
+    name: 'Cronos',
+    symbol: 'CRO',
+    rpcs: envList('CRONOS_RPC_URLS', [
+      'https://evm.cronos.org',
+      'https://rpc.ankr.com/cronos'
+    ]),
+    explorer: 'https://cronoscan.com',
+    enabled: !disabledSet.has('25')
+  },
+  1284: {
+    id: 1284,
+    name: 'Moonbeam',
+    symbol: 'GLMR',
+    rpcs: envList('MOONBEAM_RPC_URLS', [
+      'https://rpc.api.moonbeam.network',
+      'https://rpc.ankr.com/moonbeam'
+    ]),
+    explorer: 'https://moonscan.io',
+    enabled: !disabledSet.has('1284')
+  },
+  1313161554: {
+    id: 1313161554,
+    name: 'Aurora',
+    symbol: 'ETH',
+    rpcs: envList('AURORA_RPC_URLS', [
+      'https://mainnet.aurora.dev',
+      'https://rpc.ankr.com/aurora'
+    ]),
+    explorer: 'https://explorer.aurora.dev',
+    enabled: !disabledSet.has('1313161554')
+  },
+  204: {
+    id: 204,
+    name: 'opBNB',
+    symbol: 'BNB',
+    rpcs: envList('OPBNB_RPC_URLS', [
+      'https://opbnb-mainnet-rpc.bnbchain.org',
+      'https://rpc.ankr.com/opbnb'
+    ]),
+    explorer: 'https://opbnb.bscscan.com',
+    enabled: !disabledSet.has('204')
+  },
+  169: {
+    id: 169,
+    name: 'Manta Pacific',
+    symbol: 'ETH',
+    rpcs: envList('MANTA_RPC_URLS', [
+      'https://pacific-rpc.manta.network/http',
+      'https://rpc.ankr.com/manta'
+    ]),
+    explorer: 'https://pacific-explorer.manta.network',
+    enabled: !disabledSet.has('169')
+  },
+  // --- Phase 9.6: Tier 2 ---
+  34443: {
+    id: 34443,
+    name: 'Mode',
+    symbol: 'ETH',
+    rpcs: envList('MODE_RPC_URLS', [
+      'https://mainnet.mode.network',
+      'https://rpc.ankr.com/mode'
+    ]),
+    explorer: 'https://modescan.io',
+    enabled: !disabledSet.has('34443')
+  },
+  167000: {
+    id: 167000,
+    name: 'Taiko',
+    symbol: 'ETH',
+    rpcs: envList('TAIKO_RPC_URLS', [
+      'https://rpc.mainnet.taiko.xyz',
+      'https://rpc.ankr.com/taiko'
+    ]),
+    explorer: 'https://taikoscan.io',
+    enabled: !disabledSet.has('167000')
+  },
+  1088: {
+    id: 1088,
+    name: 'Metis',
+    symbol: 'METIS',
+    rpcs: envList('METIS_RPC_URLS', [
+      'https://andromeda.metis.io/?owner=1088',
+      'https://rpc.ankr.com/metis'
+    ]),
+    explorer: 'https://andromeda-explorer.metis.io',
+    enabled: !disabledSet.has('1088')
+  },
+  2222: {
+    id: 2222,
+    name: 'Kava',
+    symbol: 'KAVA',
+    rpcs: envList('KAVA_RPC_URLS', [
+      'https://evm.kava.io',
+      'https://rpc.ankr.com/kava_evm'
+    ]),
+    explorer: 'https://kavascan.com',
+    enabled: !disabledSet.has('2222')
+  },
+  7000: {
+    id: 7000,
+    name: 'ZetaChain',
+    symbol: 'ZETA',
+    rpcs: envList('ZETACHAIN_RPC_URLS', [
+      'https://zetachain-evm.blockpi.network/v1/rpc/public',
+      'https://rpc.ankr.com/zetachain_evm'
+    ]),
+    explorer: 'https://zetachain.blockscout.com',
+    enabled: !disabledSet.has('7000')
+  },
+  480: {
+    id: 480,
+    name: 'Worldchain',
+    symbol: 'ETH',
+    rpcs: envList('WORLDCHAIN_RPC_URLS', [
+      'https://worldchain-mainnet.g.alchemy.com/public',
+      'https://rpc.ankr.com/worldchain'
+    ]),
+    explorer: 'https://worldscan.org',
+    enabled: !disabledSet.has('480')
+  },
 } as const
 
 /** ---------- Derived helpers (no hardcoded unions) ---------- */
@@ -226,8 +360,8 @@ export const NETWORKS = CHAINS
 export { CHAIN_NAMES, CHAIN_BY_ID, SUPPORTED_CHAINS as CHAIN_META_LIST } from '@/config/chains'
 
 /** ---------- Legacy functions (maintained for compatibility) ---------- */
-export function enabledChainIds(): Array<1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220> {
-  return (Object.values(CHAINS).filter(c => c.enabled).map(c => c.id) as Array<1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220>)
+export function enabledChainIds(): number[] {
+  return Object.values(CHAINS).filter(c => c.enabled).map(c => c.id)
 }
 
 export function explorerTx(chainId: number, tx: string) {

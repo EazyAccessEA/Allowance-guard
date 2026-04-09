@@ -119,7 +119,7 @@ export function useDashboard() {
     setError(null)
 
     try {
-      const scanResult = await APIClient.startScan(target, ['eth', 'arb', 'base'])
+      const scanResult = await APIClient.startScan(target)
       if (!scanResult.jobId) {
         throw new Error('Failed to get job ID from scan response')
       }

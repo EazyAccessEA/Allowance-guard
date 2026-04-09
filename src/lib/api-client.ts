@@ -67,14 +67,14 @@ export class APIClient {
     return response.json()
   }
 
-  static async startScan(walletAddress: string, chains: string[] = ['eth', 'arb', 'base']) {
+  static async startScan(walletAddress: string, chains?: string[]) {
     if (typeof window === 'undefined') {
       throw new Error('API calls only available on client side')
     }
 
     const response = await this.fetchWithRetry('/api/scan', {
       method: 'POST',
-      body: JSON.stringify({ walletAddress, chains })
+      body: JSON.stringify({ walletAddress, ...(chains?.length ? { chains } : {}) })
     })
 
     return response.json()
