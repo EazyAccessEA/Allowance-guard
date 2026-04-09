@@ -163,7 +163,7 @@ export default function CookieBanner() {
                       <CategoryCard
                         icon={<BarChart3 className="w-4 h-4 text-ink-muted" />}
                         title="Analytics"
-                        description="Anonymous performance data to improve the scanner"
+                        description="Anonymous usage events stored in our database. No third-party tracking. No tracking cookies."
                       />
                     </div>
 
@@ -218,8 +218,8 @@ export default function CookieBanner() {
                     <ToggleRow
                       icon={<BarChart3 className="w-4 h-4 text-ink-muted" />}
                       title="Analytics"
-                      description="Anonymous performance data. No personal info."
-                      retention="Up to 2 years"
+                      description="Usage events (scans, page views) in our database. No third-party services. No tracking cookies set."
+                      retention="Database records, up to 2 years"
                       checked={preferences.analytics}
                       onChange={() => togglePreference('analytics')}
                     />
