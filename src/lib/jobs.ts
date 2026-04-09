@@ -28,9 +28,11 @@ export async function hasRecentScan(wallet: string, minMinutes = 3) {
 }
 
 export async function enqueueScan(wallet: string, chains: number[]) {
+  // JSON.stringify required: neon .query() doesn't auto-serialize objects
+  // like the old direct-call API did.
   const { rows } = await pool.query(
-    `INSERT INTO jobs (type, payload) VALUES ('scan_wallet', $1) RETURNING id`,
-    [ { wallet: wallet.toLowerCase(), chains } ]
+    `INSERT INTO jobs (type, payload) VALUES ('scan_wallet', $1::jsonb) RETURNING id`,
+    [ JSON.stringify({ wallet: wallet.toLowerCase(), chains }) ]
   )
   return rows[0].id as number
 }
