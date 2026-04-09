@@ -28,7 +28,7 @@ This council is consulted on every non-trivial operation. It is the standard, no
 | 4 | Security engineer | Threat model, disclosure policy, key handling, CSP, secrets, auth |
 | 5 | Product marketing | Positioning, tier story, value proposition, segment messaging |
 | 6 | B2B / API economy expert | Developer onboarding, OpenAPI, SDK ergonomics, key tiers |
-| 7 | Visual designer | Hierarchy, badges, screenshots, glassmorphism canon, Five Laws |
+| 7 | Visual designer | Hierarchy, badges, screenshots, Ledger aesthetic canon (homepage), glass canon (dashboard/docs), Five Laws |
 | 8 | Accessibility specialist (**veto power**) | WCAG AA compliance, semantic structure, contrast, motion safety |
 | 9 | Lawyer / compliance counsel | License accuracy, no false promises, securities exposure, GDPR |
 | 10 | DevOps / SRE | Deployment, observability, env vars, rollout safety, incident response |
@@ -282,27 +282,55 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 ### Design Council Process
 Colours, typography, spacing, and component specs are produced through the Design Council process (six architects: Maren/Visual, Idris/Motion, Sable/UX, Kael/Systems, Noor/Accessibility with veto power, Thane/Performance). Output is a **Design Tokens Handbook** with CSS custom properties that becomes the implementation spec.
 
-### Glassmorphism Layer (active — homepage canon)
+### Ledger Aesthetic (active — homepage canon)
 
-The marketing surface uses a unified glassmorphism layer. Homepage cards, eyebrows, and secondary buttons must use the council-approved utilities defined in `src/app/globals.css`:
+> **"Editorial financial publication."** — warm bone paper, ink body, a single oxblood beat.
 
-- `.glass-card` — primary glass surface (cards, panels). 20px blur + 140% saturation, 6%→2.5% white gradient over a 55% slate-900 underlay, 1px white/10 border, inset highlight.
-- `.glass-pill` — eyebrow chips and labels. 12px blur, rounded-full.
-- `.glass-button` — secondary CTAs. 14px blur, white/8 fill, white/18 border.
-- `.glass-drift` — slow 6s drift shimmer for the hero Live Protection panel. Auto-disabled under `prefers-reduced-motion`.
+The homepage uses the **Ledger aesthetic** — a light-first editorial redesign applied across the marketing surface. It establishes a light → dark → light rhythm (paper sections broken only by the single oxblood CTABand) and replaces all glass treatments on the homepage with paper surfaces, ink line-art, and Fraunces italic display type.
+
+**Tokens (Tailwind):**
+- Surfaces: `bg-paper` (#F7F5F0), `bg-paper-sub` (#EFECE3), `bg-paper-deep` (#E6E2D5), `bg-oxblood` (#2D0A0A), `bg-cream` (#F7F5F0 — type on oxblood)
+- Text: `text-ink` (body 17:1), `text-ink-soft` (~12:1), `text-ink-muted` (~7.4:1), `text-ink-whisper` (metadata, AA)
+- Rules: `border-ink-rule` (rgba(15,17,21,0.14)) for hairlines
+- Accents: `text-amber-deep` (#854F08, AA on paper), `text-crimson-paper` (#B3151F, AA on paper), `text-ink-blue` (#0B2545)
+- Type: `font-fraunces` (display, italic), `font-plex` (IBM Plex Sans body), `font-mono` (JetBrains Mono metadata)
+
+**Utilities (`src/app/globals.css`):**
+- `.paper` / `.paper-sub` / `.paper-deep` — section surfaces
+- `.paper-card` — light card with letterpress drop shadow, no blur
+- `.paper-card-raised` — elevated variant for featured content
+- `.paper-pill` / `.paper-button` — chips and secondary CTAs
+- `.grain` — inline SVG noise overlay for printed-paper texture
+- `.ledger-rule` — double separator (strong ink hairline + amber hairline)
+- `.ledger-rule-short` — short variant for section intros
+- `.dotted-leader` — editorial "label ………… value" table row
+- `.deckle-top` — torn-paper transition between dark and paper sections
+- `.font-display-tight` / `.font-display-black` — Plex display tuning
+- `.rule-amber-vert` — vertical amber column rule
 
 **Rules:**
-1. Every glass surface sits over the slate-900/55+ underlay so text contrast stays AAA against blurred backdrops (Noor's veto condition).
-2. Cap visible glass blur layers at ~4 per viewport (Thane).
-3. Glass borders are decorative — focus rings remain solid amber 2px.
-4. The hero headline uses `bg-gradient-to-br from-white via-white to-amber-300 bg-clip-text text-transparent`. The word "approved." stays `text-crimson-500` — that is the only protected color moment.
-5. Vanta NET background renders at 50% opacity behind the hero with a reinforced radial overlay.
-6. New homepage sections must use `.glass-card` for content containers — do not introduce ad-hoc `bg-white/[0.0X] ring-white/[0.0X]` patterns.
+1. Homepage sections use `.paper` / `.paper-sub` / `.paper-deep` with `.grain` for texture. Do not introduce `bg-white`, `bg-slate-*`, or the glassmorphism utilities on homepage surfaces.
+2. The signature move is oversized Fraunces italic numerals / roman numerals as margin notation, paired with `.ledger-rule`. One per major section.
+3. The **single inverse moment** on the homepage is the CTABand (oxblood background, cream Fraunces, protected crimson accent word). No other dark sections.
+4. Protected colour moment: the word "approved." (or equivalent headline accent) stays `text-crimson-paper`. Everything else is ink on paper.
+5. Accessibility (Noor's veto): `ink-whisper` is the lowest-contrast text token allowed on paper (5.18:1 on paper-deep). `ink-muted` and above are required for body copy.
+6. Performance (Thane): Vanta NET has been removed from the homepage (−180KB bundle). Do not re-introduce WebGL backgrounds on marketing pages.
+7. Motion: all entrance animations respect `prefers-reduced-motion`. `.ledger-rule::after` amber glow is also disabled under that query.
 
-See `docs/design-tokens-handbook.md` §10 for the full handbook entry.
+**Where Ledger lives (homepage):**
+- `Hero.tsx` — `.paper .grain .deckle-bottom`, compass SVG watermark, Fraunces/Plex headline, `.paper-card-raised` connected-wallet panel
+- `HowItWorks.tsx` — `.paper .grain`, featured + compact steps in `.paper-card`/`.paper-card-raised`, ink line-art icons
+- `FeaturesPreview.tsx` — `.paper .grain`, alternating editorial rows with ink line-art diagrams in `.paper-card-raised`
+- `StatisticsSection.tsx` — `.paper-sub`, giant Fraunces italic display metric, `.dotted-leader` supporting rows
+- `CTABand.tsx` — `bg-oxblood` (the single inverse moment)
+- `Testimonials.tsx` — `.paper .grain`, featured Fraunces pull-quote + grid of `.paper-card` quotes
+- `ChainLogoCarousel.tsx` — `.paper-sub` closing bookend
 
-### Current Tokens (legacy, to be replaced)
-Until the council process produces the new handbook, `src/design/tokens.ts` remains active. Do not extend it — new work should wait for the redesign output.
+**Legacy glass canon (non-homepage surfaces):**
+The `.glass-card` / `.glass-pill` / `.glass-button` / `.glass-drift` utilities remain in `src/app/globals.css` for the app dashboard, docs, and account pages which still run on the dark Midnight Amber canvas. They are **not** to be used on the homepage. See `docs/design-tokens-handbook.md` §10 (historical) and §11 (Ledger).
+
+### Current Tokens (legacy, still active for dashboard/docs surfaces)
+`src/design/tokens.ts` holds the Midnight Amber token set which remains the source of truth for the dark app surfaces. The homepage does not consume these tokens — it uses the Ledger tokens defined in `tailwind.config.js` and `src/app/globals.css`.
 
 ### Component Library (existing, to be redesigned)
 Located in `src/components/ui/`:
@@ -400,13 +428,12 @@ pnpm run migrate      # Run database migrations
 - Compliance audit export
 - Webhook system for integrations
 
-### Phase 6 — Design Upgrade ✅ → REDESIGN IN PROGRESS
-- Dark mode system with theme provider ✅ (existing, under review)
-- Glassmorphism card system ✅ (existing, under review)
-- Navigation redesign (floating pill nav) ✅ (existing, under review)
-- Animated hero background ✅ (existing, under review)
-- Radial gauge for wallet security score ✅ (existing, under review)
-- **Full visual redesign per new spec** 🔄 — see `docs/allowanceguard-1-strategy-spec (3).md` and `docs/allowanceguard-2-build (3).md`
+### Phase 6 — Design Upgrade ✅ → LEDGER AESTHETIC SHIPPED
+- Dark mode system with theme provider ✅ (dashboard/docs)
+- Glassmorphism card system ✅ (retained for dashboard/docs)
+- Navigation redesign (Apple-discipline minimalism for paper theme) ✅
+- Radial gauge for wallet security score ✅
+- **Homepage Ledger aesthetic** ✅ — light-first editorial redesign. Fraunces + IBM Plex Sans, paper/ink/oxblood palette, `.paper-card` utilities, oversized italic numerals as signature move. See `docs/design-tokens-handbook.md` §11 and CLAUDE.md "Ledger Aesthetic (active — homepage canon)".
 
 ## Do Not
 

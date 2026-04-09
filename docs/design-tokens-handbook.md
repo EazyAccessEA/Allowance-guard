@@ -19,7 +19,10 @@ All components use the `cn()` helper from `src/lib/utils.ts` for conditional cla
 
 ---
 
-## 2. Color System — Midnight Amber
+## 2. Color System — Midnight Amber (dashboard / docs / account)
+
+> **Scope:** Midnight Amber is the active palette for the **dashboard, docs, and account surfaces** that run on a dark canvas (e.g. `AppArea`, `AllowanceTable`, `/docs/**`, `/account/**`).
+> **The homepage does NOT use this palette.** The homepage is on the Ledger aesthetic — see §11 for `paper`, `ink`, `oxblood` and related tokens.
 
 > **"The Warning System"** — Deep navy canvas. Amber = scanning/caution.
 > Red = danger only. Sky blue = safe/links.
@@ -598,12 +601,14 @@ Complete `:root` block mapping all key tokens to CSS variables. Paste into your 
 
 ---
 
-## 10. Glassmorphism Layer
+## 10. Glassmorphism Layer (legacy — dashboard/docs surfaces only)
+
+> **Status:** Superseded on the homepage by §11 Ledger Aesthetic. Retained for the dashboard, docs, and account surfaces that remain on the dark Midnight Amber canvas.
 
 > **"Tactile depth, not transparency theatre."** — Council brief
 > Approved by the full council. Noor: AAA contrast preserved via slate-900/55+ underlay. Thane: blur capped at 4 layers per viewport.
 
-The glassmorphism layer is the active design language for the homepage marketing surface (hero, HowItWorks, FeaturesPreview, Testimonials, CTA). It is implemented as Tailwind component utilities in `src/app/globals.css` so all surfaces share one DNA.
+The glassmorphism layer was the homepage language through April 2026. As of the Ledger redesign (`62e8f71`), the homepage uses paper surfaces (see §11). The glass utilities are preserved for surfaces still running on the dark canvas — the dashboard (`AppArea`, `AllowanceTable`), docs pages, and account/billing pages. Do not use glass utilities on the homepage.
 
 ### 10.1 Utilities
 
@@ -653,14 +658,134 @@ This panel replaced the bottom-of-hero stats grid. Stats now live inside the gla
 - Vanta NET runs at 50% opacity to reduce overdraw cost behind blurred surfaces.
 - `backdrop-filter` is GPU-accelerated on modern Chromium / Safari 16+. Older Safari falls back gracefully (slate-900/55 underlay still legible without blur).
 
-### 10.7 Where Glass Lives
+### 10.7 Where Glass Lives (post-Ledger)
 
 | Component | Glass usage |
 |---|---|
-| `Hero.tsx` | `.glass-pill` eyebrow, `.glass-button` secondary CTA, `.glass-card .glass-drift` Live Protection panel |
-| `HowItWorks.tsx` | `.glass-card` step cards |
-| `FeaturesPreview.tsx` | `.glass-card` feature cards |
-| `Testimonials.tsx` | `.glass-card` testimonial cards |
+| `AppArea.tsx` | Dashboard shell (retained) |
+| `AllowanceTable.tsx` | Table surface on dark canvas (retained) |
+| `src/app/docs/**` | Docs pages (retained) |
+| `src/app/account/**` | Account, billing, keys (retained) |
+| `Hero.tsx`, `HowItWorks.tsx`, `FeaturesPreview.tsx`, `Testimonials.tsx`, `CTABand.tsx`, `StatisticsSection.tsx` | ❌ **Moved to Ledger** — see §11 |
 
-New homepage sections must use `.glass-card` for all content containers. Do not introduce ad-hoc `bg-white/[0.0X] ring-white/[0.0X]` combinations — they will drift away from the unified DNA.
+New dashboard / docs / account surfaces may use `.glass-card`. New homepage surfaces must use `.paper-card` (§11). Do not mix them within a single page.
+
+---
+
+## 11. Ledger Aesthetic (active — homepage canon)
+
+> **"Editorial financial publication."** — Council brief, April 2026
+> Warm bone paper, ink body, Fraunces italic display, oversized numerals as signature. A single oxblood CTABand provides the dark beat. Light → dark → light rhythm.
+
+The Ledger aesthetic is the active design language for the homepage marketing surface. It moves the homepage off the constant dark-mode look into a warm paper, editorial-magazine treatment inspired by financial publications and printed ledgers. Implemented via Tailwind color tokens and component utilities in `src/app/globals.css`.
+
+### 11.1 Palette
+
+| Token              | Hex       | Contrast on paper | Role                              |
+|--------------------|-----------|-------------------|-----------------------------------|
+| `paper`            | `#F7F5F0` | — (canvas)        | Primary section background        |
+| `paper-sub`        | `#EFECE3` | — (tinted canvas) | Tinted cards, panels, secondary surfaces |
+| `paper-deep`       | `#E6E2D5` | — (strong tint)   | Strongest surface contrast        |
+| `ink`              | `#0F1115` | 17:1 AAA          | Body text, headlines              |
+| `ink-soft`         | `#2A2D33` | 12:1 AAA          | Secondary text                    |
+| `ink-muted`        | `#4A4D54` | 7.4:1 AAA         | Tertiary text, body copy          |
+| `ink-whisper`      | `#585C64` | 6.16:1 / 5.68 / 5.18 AA | Metadata, captions, eyebrows |
+| `ink-rule`         | `rgba(15,17,21,0.14)` | — | Hairlines, borders, separators   |
+| `amber-deep`       | `#854F08` | 6.18 / 5.70 / 5.19 AA | Eyebrow + amber accents on paper |
+| `crimson-paper`    | `#B3151F` | 6.33 / 5.84 / 5.32 AA | **Protected accent word**        |
+| `ink-blue`         | `#0B2545` | —                 | Cool data counterpoint            |
+| `oxblood`          | `#2D0A0A` | — (CTABand bg)    | The single dark-inverse section   |
+| `cream`            | `#F7F5F0` | 12.4:1 on oxblood | Type color on oxblood             |
+
+> **Noor's veto:** `ink-whisper` is the lowest contrast permitted on paper. Body copy MUST use `ink-muted` or darker. `amber-deep` and `crimson-paper` are the only brand colours that pass AA on paper — the bright amber `#F59E0B` is too light and is reserved for decorative hairlines (`.ledger-rule::after`, `.rule-amber-vert`).
+
+### 11.2 Typography
+
+| Role     | Font              | Weights used           | Usage                                      |
+|----------|-------------------|------------------------|--------------------------------------------|
+| Display  | **Fraunces**      | 300–900 + italics      | Italic headlines, numeric signatures, pull quotes |
+| Body     | **IBM Plex Sans** | 400, 500, 600, 700     | All body text, headings, cards             |
+| Metadata | **JetBrains Mono**| 400, 700               | Eyebrows, captions, small labels, tabular data |
+| Display tuning | `.font-display-tight` / `.font-display-black` | — | Plex with tight tracking for very large sizes |
+
+Fonts are loaded via `next/font/local` in `src/app/layout.tsx`:
+- `--font-fraunces` — 8 weights + italics
+- `--font-plex` — 5 weights
+- `--font-mono` — JetBrains Mono
+
+Tailwind: `fontFamily.fraunces`, `fontFamily.plex`, `fontFamily.mono`.
+
+### 11.3 Utilities (`src/app/globals.css`)
+
+| Utility              | Purpose                                                         |
+|----------------------|-----------------------------------------------------------------|
+| `.paper`             | Primary paper section surface + grain base                      |
+| `.paper-sub`         | Tinted section surface                                          |
+| `.paper-deep`        | Strongest paper tint                                            |
+| `.paper-card`        | Light card: paper-sub bg, letterpress drop shadow, no blur      |
+| `.paper-card-raised` | Elevated variant: brighter (#FDFAF3), stronger shadow           |
+| `.paper-pill`        | Eyebrow chip (paper-sub fill, ink-rule border, rounded-full)    |
+| `.paper-button`      | Secondary CTA (paper-sub → ink on hover)                        |
+| `.grain`             | SVG noise overlay (3.5% opacity, multiply blend)                |
+| `.ledger-rule`       | Double separator: strong ink hairline + amber hairline          |
+| `.ledger-rule-short` | Short 6rem variant for section intros                           |
+| `.dotted-leader`     | Editorial "label ………… value" row                                |
+| `.deckle-top`        | Torn-paper SVG mask for dark → paper transitions                |
+| `.font-display-tight`| Plex with −3.5% tracking for large display type                 |
+| `.font-display-black`| Plex with −4% tracking for hero-scale type                      |
+| `.rule-amber-vert`   | 1px vertical amber gradient rule for editorial columns          |
+
+### 11.4 Signature Moves
+
+1. **Oversized Fraunces italic numerals as margin notation.** Each major section opens with a large numeral (`01.`, `02.`, `III.`, `IV.`, etc.) set in Fraunces italic at display scale. Paired with the `.ledger-rule` double separator.
+2. **Protected crimson accent.** One word per headline may be set in `text-crimson-paper`. This is the only non-ink color moment on paper. Never more than one per headline.
+3. **The `.ledger-rule` double hairline.** Strong ink above, amber below. Every section divider. The amber glow is disabled under `prefers-reduced-motion`.
+4. **The `.dotted-leader`.** Used for stat rows and metadata — label on the left, ellipsis of dots, value on the right. Evokes printed financial reports.
+5. **The compass watermark.** Custom inline SVG in the hero (`Hero.tsx > CompassWatermark`). Editorial imagery, not stock iconography.
+
+### 11.5 Section-by-Section Canon
+
+| Component              | Surface      | Signature element                                            |
+|------------------------|--------------|--------------------------------------------------------------|
+| `Hero.tsx`             | `.paper .grain .deckle-bottom` | Compass watermark, Plex display headline, `.paper-card-raised` connected-wallet panel, amber hairline accent |
+| `HowItWorks.tsx`       | `.paper .grain` | SectionHeader "03", 7xl numeral on featured step, ink line-art icons, `.paper-card-raised` + `.paper-card` mix |
+| `StatisticsSection.tsx`| `.paper-sub` | Fraunces italic $ metric at display scale, `.dotted-leader` supporting rows |
+| `FeaturesPreview.tsx`  | `.paper .grain` | SectionHeader "04", alternating editorial rows, ink line-art SVG diagrams in `.paper-card-raised` |
+| `CTABand.tsx`          | `bg-oxblood` | **The single dark inverse.** Cream Fraunces italic headline, protected crimson accent word, amber hairline |
+| `Testimonials.tsx`     | `.paper .grain` | SectionHeader "06", giant Fraunces italic open-quote, featured pull-quote in `.paper-card-raised`, compact grid in `.paper-card` |
+| `ChainLogoCarousel.tsx`| `.paper-sub` | Closing bookend, chain logos desaturated via CSS filter       |
+
+### 11.6 Accessibility Constraints (Noor — veto enforced)
+
+- `ink-whisper` (`#585C64`) is the **lowest-contrast text token** permitted on paper. 6.16:1 on paper, 5.68:1 on paper-sub, 5.18:1 on paper-deep. All AA-normal. Do not introduce lighter ink tokens.
+- Body copy (`<p>`, blockquote) must use `ink-muted` or darker.
+- `amber-deep` (`#854F08`) is the only brand amber that passes AA on paper. The bright `amber-500` (`#F59E0B`) is reserved for decorative hairlines where it carries no semantic meaning.
+- `crimson-paper` (`#B3151F`) is the only brand red that passes AA on paper. Use it only for the protected accent word in headlines or for destructive affordances that need to read on paper.
+- Motion: all entrance animations check `prefers-reduced-motion`. `.ledger-rule::after` amber glow is also disabled under that query.
+
+### 11.7 Performance Constraints (Thane)
+
+- **Vanta NET is removed from the homepage.** −180KB bundle. Do not re-introduce WebGL backgrounds on marketing pages.
+- `.grain` is an inline SVG data URI — zero network cost.
+- `.paper-card` / `.paper-card-raised` use only CSS box-shadow (no `backdrop-filter`), so they render cheaply on low-end devices.
+- Fraunces and IBM Plex Sans are served via `next/font/local` with `display: swap` and only the weights actually used are included.
+- Homepage passes Lighthouse performance budget. CLS ≤ 0.05 on mobile.
+
+### 11.8 What Moved From Glass (migration map)
+
+| Old (glass)              | New (Ledger)              |
+|--------------------------|---------------------------|
+| `.glass-card`            | `.paper-card` (or `.paper-card-raised` for featured) |
+| `.glass-pill`            | `.paper-pill`             |
+| `.glass-button`          | `.paper-button`           |
+| `.glass-drift`           | Removed — no drift animations on paper |
+| Vanta NET background     | Removed — compass SVG watermark instead |
+| `bg-surface-base` (navy) | `.paper` / `.paper-sub` / `.paper-deep` |
+| `text-white`             | `text-ink`                |
+| `text-slate-300`         | `text-ink-soft`           |
+| `text-slate-400`         | `text-ink-muted` / `text-ink-whisper` |
+| `text-amber-400` (bright amber on dark) | `text-amber-deep` (deep amber on paper) |
+| `text-crimson-500`       | `text-crimson-paper`      |
+| Space Grotesk display    | Fraunces italic + `.font-display-tight` Plex |
+| Inter body               | IBM Plex Sans             |
 
