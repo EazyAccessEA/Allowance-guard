@@ -201,7 +201,7 @@ export default function ApiKeyManager({
                 <div className="flex-shrink-0">
                   {revokeConfirmId === key.id ? (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-semantic-error-500 flex items-center gap-1">
+                      <span className="text-xs text-semantic-error-700 flex items-center gap-1">
                         <AlertTriangle className="h-3 w-3" />
                         Revoke?
                       </span>
@@ -228,7 +228,7 @@ export default function ApiKeyManager({
                       leftIcon={<Trash2 className="h-4 w-4" />}
                       onClick={() => setRevokeConfirmId(key.id)}
                       ariaLabel={`Revoke key ${key.name}`}
-                      className="text-ink-muted hover:text-semantic-error-500"
+                      className="text-ink-muted hover:text-semantic-error-700"
                     >
                       Revoke
                     </Button>

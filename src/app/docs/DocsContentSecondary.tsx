@@ -23,7 +23,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div key={index} className="border border-ink-rule rounded-lg p-6 bg-paper-sub">
  <div className="flex items-start gap-4 mb-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <IconComponent className="w-6 h-6 text-amber-400" />
+ <IconComponent className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">{alert.type}</h4>
@@ -58,7 +58,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4 mb-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Zap className="w-6 h-6 text-amber-400" />
+ <Zap className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h3 id="how-it-works" className="text-xl font-semibold text-ink mb-3">How It Works</h3>
@@ -76,7 +76,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4 mb-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Bell className="w-6 h-6 text-amber-400" />
+ <Bell className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h3 id="drift-detection" className="text-xl font-semibold text-ink mb-3">Drift Detection</h3>
@@ -94,7 +94,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4 mb-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Settings className="w-6 h-6 text-amber-400" />
+ <Settings className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h3 id="configuration" className="text-xl font-semibold text-ink mb-3">Configuration</h3>
@@ -135,7 +135,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Users className="w-6 h-6 text-amber-400" />
+ <Users className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Owner</h4>
@@ -146,7 +146,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Shield className="w-6 h-6 text-amber-400" />
+ <Shield className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Admin</h4>
@@ -157,7 +157,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Settings className="w-6 h-6 text-amber-400" />
+ <Settings className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Editor</h4>
@@ -168,7 +168,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Search className="w-6 h-6 text-amber-400" />
+ <Search className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Viewer</h4>
@@ -192,7 +192,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Users className="w-6 h-6 text-amber-400" />
+ <Users className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Shared Wallets</h4>
@@ -203,7 +203,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Mail className="w-6 h-6 text-amber-400" />
+ <Mail className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Email Invites</h4>
@@ -214,7 +214,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Shield className="w-6 h-6 text-amber-400" />
+ <Shield className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Role-Based Access</h4>
@@ -225,7 +225,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Bell className="w-6 h-6 text-amber-400" />
+ <Bell className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Team Monitoring</h4>
@@ -250,7 +250,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4 mb-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <Lock className="w-6 h-6 text-amber-400" />
+ <Lock className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Using AllowanceGuard</h4>
@@ -267,7 +267,7 @@ export default function DocsContentSecondary({ section }: Props) {
  <div className="p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-start gap-4 mb-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
- <AlertTriangle className="w-6 h-6 text-amber-400" />
+ <AlertTriangle className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink mb-2">Important Notes</h4>
@@ -418,14 +418,14 @@ export default function DocsContentSecondary({ section }: Props) {
  <p className="text-base text-ink-soft mb-2">
  Available on the Chrome Web Store. Works with all Chromium-based browsers including Brave, Edge, and Opera.
  </p>
- <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Pending Approval</span>
+ <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-800">Pending Approval</span>
  </div>
  <div className="bg-paper-sub border border-ink-rule rounded-xl p-6">
  <h4 className="font-medium text-ink mb-2">Mozilla Firefox</h4>
  <p className="text-base text-ink-soft mb-2">
  Available on Firefox Add-ons. Fully compatible with the latest Firefox releases.
  </p>
- <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Pending Approval</span>
+ <span className="inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-800">Pending Approval</span>
  </div>
  </div>
 

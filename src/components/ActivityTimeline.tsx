@@ -67,7 +67,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
       )}
 
       {error && (
-        <div className="mt-3 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 px-4 py-3 text-sm text-red-700 dark:text-red-300">
+        <div className="mt-3 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 px-4 py-3 text-sm text-red-700 dark:text-red-800">
           {error}
           <button onClick={load} className="ml-2 underline">Retry</button>
         </div>
@@ -84,7 +84,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
           const url = explorerTx(r.chain_id, r.tx_hash)
           const badge =
             r.status === 'verified' ? 'bg-semantic-success-50 dark:bg-semantic-success-900/20 text-semantic-success-700 dark:text-semantic-success-300 border border-semantic-success-200 dark:border-semantic-success-800' :
-            r.status === 'pending'  ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-800' :
+            r.status === 'pending'  ? 'bg-primary-50 dark:bg-primary-900/20 text-amber-deep dark:text-primary-300 border border-primary-200 dark:border-primary-800' :
             r.status === 'mismatch' ? 'bg-semantic-warning-50 dark:bg-semantic-warning-900/20 text-semantic-warning-700 dark:text-semantic-warning-300 border border-semantic-warning-200 dark:border-semantic-warning-800' :
             'bg-semantic-error-50 dark:bg-semantic-error-900/20 text-semantic-error-700 dark:text-semantic-error-300 border border-semantic-error-200 dark:border-semantic-error-800'
           return (
@@ -99,7 +99,7 @@ export default function ActivityTimeline({ wallet }: { wallet: string }) {
                 <div>Pre: <span className="font-mono text-ink">{r.pre_amount}</span>{r.post_amount!=null && <> &middot; Post: <span className="font-mono text-ink">{r.post_amount}</span></>}</div>
               </div>
               <div className="mt-3 flex items-center gap-3 flex-wrap">
-                <a href={url} target="_blank" rel="noopener noreferrer" className="underline text-xs text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300">View on explorer</a>
+                <a href={url} target="_blank" rel="noopener noreferrer" className="underline text-xs text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300">View on explorer</a>
                 {r.status !== 'verified' && (
                   <button onClick={() => verify(r.id)} className="rounded border border-ink-rule dark:border-secondary-600 bg-paper-deep dark:bg-secondary-100 text-ink dark:text-secondary-900 px-3 py-1.5 min-h-[32px] text-xs hover:bg-paper-sub dark:hover:bg-secondary-200 transition-colors">Verify now</button>
                 )}

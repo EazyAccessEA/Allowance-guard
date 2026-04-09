@@ -30,7 +30,7 @@ export default function ContributingPage() {
         />
 
         <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Docs &middot; Contributing
           </span>
           <H1 className="mb-6 text-ink">Fund the mission. Build the public layer.</H1>
@@ -55,7 +55,7 @@ export default function ContributingPage() {
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-amber-400/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-6 h-6 text-amber-400" />
+                    <Shield className="w-6 h-6 text-amber-deep" />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-ink mb-4">Public Good Investment</h3>
@@ -70,15 +70,15 @@ export default function ContributingPage() {
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-amber-400/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-6 h-6 text-amber-400" />
+                    <Heart className="w-6 h-6 text-amber-deep" />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-ink mb-4">Collective Security</h3>
                     <p className="text-lg text-ink-soft leading-relaxed">
-                      Every contribution, regardless of size, directly translates into a safer Web3 for everyone. When you support AllowanceGuard, you are investing in collective security. Approval-based phishing and scams drained <strong>over $200 million from user wallets in 2024 alone</strong> &mdash; a small slice of the wider $8.3B total crypto-theft figure, but a slice that almost any user can prevent with a few clicks.<sup className="text-amber-400">*</sup> Your contribution funds the tools that make those clicks possible.
+                      Every contribution, regardless of size, directly translates into a safer Web3 for everyone. When you support AllowanceGuard, you are investing in collective security. Approval-based phishing and scams drained <strong>over $200 million from user wallets in 2024 alone</strong> &mdash; a small slice of the wider $8.3B total crypto-theft figure, but a slice that almost any user can prevent with a few clicks.<sup className="text-amber-deep">*</sup> Your contribution funds the tools that make those clicks possible.
                     </p>
                     <p className="mt-3 text-xs text-ink-whisper leading-relaxed">
-                      <sup className="text-amber-400">*</sup> Sources: Chainalysis 2024 Crypto Crime Report; CertiK Q3 2024 Web3 Security Report; De.Fi REKT Database 2024.
+                      <sup className="text-amber-deep">*</sup> Sources: Chainalysis 2024 Crypto Crime Report; CertiK Q3 2024 Web3 Security Report; De.Fi REKT Database 2024.
                     </p>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default function ContributingPage() {
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-amber-400/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Zap className="w-6 h-6 text-amber-400" />
+                    <Zap className="w-6 h-6 text-amber-deep" />
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-ink mb-4">Industry Standards</h3>
@@ -147,7 +147,7 @@ export default function ContributingPage() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center">
-                      <Lock className="w-6 h-6 text-red-600" />
+                      <Lock className="w-6 h-6 text-red-800" />
                     </div>
                     <h3 className="text-2xl font-semibold text-ink">Security and Audits</h3>
                   </div>
@@ -174,7 +174,7 @@ export default function ContributingPage() {
                 >
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center">
-                      <Server className="w-6 h-6 text-green-600" />
+                      <Server className="w-6 h-6 text-green-800" />
                     </div>
                     <h3 className="text-2xl font-semibold text-ink">Infrastructure and Hosting</h3>
                   </div>
@@ -262,7 +262,7 @@ export default function ContributingPage() {
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Lock className="w-6 h-6 text-green-600" />
+                    <Lock className="w-6 h-6 text-green-800" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold text-ink mb-6">Security and Verification</h3>
@@ -347,7 +347,7 @@ export default function ContributingPage() {
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-6 h-6 text-green-600" />
+                    <Heart className="w-6 h-6 text-green-800" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold text-ink mb-6">Community Advocacy</h3>

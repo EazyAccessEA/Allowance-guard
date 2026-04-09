@@ -56,9 +56,9 @@ export function BarChart({
     if (!trend) return null
     switch (trend) {
       case 'up':
-        return <span className="text-semantic-success-500">↗</span>
+        return <span className="text-semantic-success-700">↗</span>
       case 'down':
-        return <span className="text-semantic-error-500">↘</span>
+        return <span className="text-semantic-error-700">↘</span>
       default:
         return <span className="text-ink-whisper">→</span>
     }

@@ -104,7 +104,7 @@ export default function SampleScanDemo() {
 
         <div className="paper-card-raised overflow-hidden">
           {/* Table header */}
-          <div className="hidden md:grid md:grid-cols-12 gap-4 px-6 lg:px-8 py-4 border-b border-ink-rule bg-paper-deep/50">
+          <div className="hidden md:grid md:grid-cols-12 gap-4 px-6 lg:px-8 py-4 border-b border-ink-rule bg-paper-deep">
             <div className="col-span-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase text-ink-whisper">
               Token
             </div>

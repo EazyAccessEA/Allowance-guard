@@ -67,7 +67,7 @@ export default function UnsubscribePage() {
       title: 'All Notifications',
       description: 'Stop receiving all emails from Allowance Guard',
       icon: X,
-      color: 'text-red-400',
+      color: 'text-red-800',
       bgColor: 'bg-red-900/20',
       borderColor: 'border-red-800'
     },
@@ -76,7 +76,7 @@ export default function UnsubscribePage() {
       title: 'Security Alerts Only',
       description: 'Keep daily digest but stop receiving immediate security alerts',
       icon: Bell,
-      color: 'text-yellow-400',
+      color: 'text-yellow-800',
       bgColor: 'bg-yellow-900/20',
       borderColor: 'border-yellow-800'
     },
@@ -85,7 +85,7 @@ export default function UnsubscribePage() {
       title: 'Daily Digest Only',
       description: 'Keep security alerts but stop receiving daily summary emails',
       icon: Mail,
-      color: 'text-blue-400',
+      color: 'text-blue-800',
       bgColor: 'bg-blue-900/20',
       borderColor: 'border-blue-800'
     },
@@ -94,7 +94,7 @@ export default function UnsubscribePage() {
       title: 'Marketing Emails Only',
       description: 'Keep security notifications but stop receiving product updates',
       icon: Shield,
-      color: 'text-green-400',
+      color: 'text-green-800',
       bgColor: 'bg-green-900/20',
       borderColor: 'border-green-800'
     }
@@ -132,7 +132,7 @@ export default function UnsubscribePage() {
           {/* Email Input */}
           <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Mail className="w-5 h-5 text-blue-400 mr-2" />
+              <Mail className="w-5 h-5 text-blue-800 mr-2" />
               <h2 className="text-xl font-semibold text-ink">Email Address</h2>
             </div>
 
@@ -205,8 +205,8 @@ export default function UnsubscribePage() {
           {message && (
             <div className={`p-4 rounded-lg flex items-center ${
               status === 'success'
-                ? 'bg-green-900/20 border border-green-800 text-green-300'
-                : 'bg-red-900/20 border border-red-800 text-red-300'
+                ? 'bg-green-900/20 border border-green-800 text-green-800'
+                : 'bg-red-900/20 border border-red-800 text-red-800'
             }`}>
               {status === 'success' ? (
                 <CheckCircle className="w-5 h-5 mr-2" />
@@ -252,7 +252,7 @@ export default function UnsubscribePage() {
               </p>
               <a 
                 href="/preferences" 
-                className="inline-flex items-center text-amber-400 hover:text-amber-300 text-sm font-medium"
+                className="inline-flex items-center text-amber-deep hover:text-amber-deep text-sm font-medium"
               >
                 Manage Preferences
               </a>
@@ -265,7 +265,7 @@ export default function UnsubscribePage() {
               </p>
               <a 
                 href="/contact" 
-                className="inline-flex items-center text-amber-400 hover:text-amber-300 text-sm font-medium"
+                className="inline-flex items-center text-amber-deep hover:text-amber-deep text-sm font-medium"
               >
                 Contact Support
               </a>
@@ -276,10 +276,10 @@ export default function UnsubscribePage() {
         {/* Important Notice */}
         <div className="mt-8 bg-yellow-900/20 border border-yellow-800 rounded-lg p-6">
           <div className="flex items-start">
-            <AlertCircle className="w-5 h-5 text-yellow-400 mt-0.5 mr-3 flex-shrink-0" />
+            <AlertCircle className="w-5 h-5 text-yellow-800 mt-0.5 mr-3 flex-shrink-0" />
             <div>
-              <h4 className="text-sm font-medium text-yellow-300 mb-2">Important Security Notice</h4>
-              <p className="text-sm text-yellow-400">
+              <h4 className="text-sm font-medium text-yellow-800 mb-2">Important Security Notice</h4>
+              <p className="text-sm text-yellow-800">
                 If you unsubscribe from security alerts, you may not be notified of potentially dangerous token approvals. 
                 We recommend keeping at least daily digest emails enabled for your wallet security.
               </p>
@@ -296,9 +296,9 @@ export default function UnsubscribePage() {
               © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
             <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-amber-400 hover:text-amber-300 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-amber-400 hover:text-amber-300 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-amber-400 hover:text-amber-300 text-sm">Cookie Policy</a>
+              <a href="/terms" className="text-amber-deep hover:text-amber-deep text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-amber-deep hover:text-amber-deep text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-amber-deep hover:text-amber-deep text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>

@@ -57,7 +57,7 @@ export default function WalletManager({
       </div>
 
       {validationError && (
-        <p className="text-sm text-red-600" role="alert">{validationError}</p>
+        <p className="text-sm text-red-800" role="alert">{validationError}</p>
       )}
 
       {saved.length === 0 && (

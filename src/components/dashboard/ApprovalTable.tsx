@@ -54,7 +54,7 @@ export default function ApprovalTable({
                   checked={allSelected}
                   onChange={onToggleAll}
                   aria-label="Select all approvals"
-                  className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500 dark:bg-paper-sub"
+                  className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-amber-deep focus:ring-primary-500 dark:bg-paper-sub"
                 />
               </th>
               <th className="py-3 px-3 text-left font-medium text-ink-whisper dark:text-ink-muted uppercase tracking-wide text-xs">
@@ -93,7 +93,7 @@ export default function ApprovalTable({
                   key={approval.id}
                   className={cn(
                     'border-b border-ink-rule/50 dark:border-ink-rule transition-all duration-150',
-                    'hover:bg-secondary-50 dark:hover:bg-paper-sub/50',
+                    'hover:bg-secondary-50 dark:hover:bg-paper-sub',
                     isSelected && 'bg-primary-50/50 dark:bg-primary-900/10',
                     isDimmed && 'opacity-30 pointer-events-none'
                   )}
@@ -104,7 +104,7 @@ export default function ApprovalTable({
                       checked={isSelected}
                       onChange={() => onToggle(approval.id)}
                       aria-label={`Select ${approval.tokenSymbol} approval`}
-                      className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500 dark:bg-paper-sub"
+                      className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-amber-deep focus:ring-primary-500 dark:bg-paper-sub"
                     />
                   </td>
                   <td className="py-3 px-3">
@@ -210,7 +210,7 @@ export default function ApprovalTable({
                     checked={isSelected}
                     onChange={() => onToggle(approval.id)}
                     aria-label={`Select ${approval.tokenSymbol}`}
-                    className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-primary-500 focus:ring-primary-500"
+                    className="h-4 w-4 rounded border-secondary-300 dark:border-secondary-600 text-amber-deep focus:ring-primary-500"
                   />
                   <span className="font-semibold text-ink">
                     {approval.tokenSymbol}

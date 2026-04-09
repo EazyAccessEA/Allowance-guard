@@ -84,7 +84,7 @@ export default function ConnectButton({
             size={size}
             onClick={handleDisconnect}
             loading={isDisconnecting}
-            className="text-xs text-red-600 hover:text-red-700 hover:bg-red-50"
+            className="text-xs text-red-800 hover:text-red-700 hover:bg-red-50"
           >
             {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
           </Button>

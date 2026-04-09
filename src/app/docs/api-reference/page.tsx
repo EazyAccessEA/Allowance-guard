@@ -23,7 +23,7 @@ export default function ApiReferencePage() {
           <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="mb-12">
-              <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+              <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
                 Docs &middot; API Reference
               </span>
               <H1 className="text-ink">API Reference</H1>
@@ -31,7 +31,7 @@ export default function ApiReferencePage() {
                 AllowanceGuard REST API v1. Scan wallets, query allowances, score risk, and simulate revocations &mdash; programmatically across all 15 supported chains.
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
-                <span className="px-3 py-1 bg-amber-400/10 border border-amber-400/30 text-amber-300 text-sm rounded-full font-mono">
+                <span className="px-3 py-1 bg-paper-sub border border-amber-400/30 text-amber-deep text-sm rounded-full font-mono">
                   Base URL: /api/v1
                 </span>
                 <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm rounded-full">
@@ -46,7 +46,7 @@ export default function ApiReferencePage() {
           {/* Authentication */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-ink mb-4 flex items-center gap-2">
-              <Key className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+              <Key className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
               Authentication
             </h2>
             <p className="text-ink-soft mb-4">
@@ -85,7 +85,7 @@ data = res.json()['data']`,
               ]}
             />
             <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-              <p className="text-sm text-amber-600 dark:text-amber-300">
+              <p className="text-sm text-amber-deep dark:text-amber-deep">
                 <strong>Keep your API key secret.</strong> Do not expose it in client-side
                 code. All calls should be made from your server.
               </p>
@@ -95,7 +95,7 @@ data = res.json()['data']`,
           {/* Rate Limits */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-ink mb-4 flex items-center gap-2">
-              <Zap className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+              <Zap className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
               Rate Limits
             </h2>
             <p className="text-ink-soft mb-4">
@@ -133,7 +133,7 @@ data = res.json()['data']`,
           {/* Response Format */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-ink mb-4 flex items-center gap-2">
-              <Activity className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+              <Activity className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
               Response Format
             </h2>
             <p className="text-ink-soft mb-4">
@@ -186,7 +186,7 @@ data = res.json()['data']`,
           {/* Health */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-ink mb-6 flex items-center gap-2">
-              <Globe className="w-6 h-6 text-primary-600 dark:text-primary-400" />
+              <Globe className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
               Endpoints
             </h2>
 
@@ -227,7 +227,7 @@ data = res.json()['data']`,
           {/* Scanning */}
           <div className="mb-12">
             <h3 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+              <Shield className="w-5 h-5 text-amber-deep dark:text-amber-deep" />
               Wallet Scanning
             </h3>
 
@@ -323,7 +323,7 @@ data = res.json()['data']`,
           {/* Risk */}
           <div className="mb-12">
             <h3 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+              <AlertTriangle className="w-5 h-5 text-amber-deep dark:text-amber-deep" />
               Risk Assessment
             </h3>
 
@@ -581,7 +581,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
             <div className="flex justify-center gap-4">
               <a
                 href="/account/keys"
-                className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-ink rounded font-medium transition-colors"
+                className="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-ink rounded font-medium transition-colors"
               >
                 Get API Key
               </a>

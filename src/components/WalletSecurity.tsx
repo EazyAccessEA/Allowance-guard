@@ -20,9 +20,9 @@ function RadialGauge({ score, max = 10 }: { score: number; max?: number }) {
   const offset = circumference * (1 - pct)
 
   const getColor = () => {
-    if (pct <= 0.3) return { stroke: '#22C55E', text: 'text-green-500 dark:text-green-400', label: 'Low' }
-    if (pct <= 0.6) return { stroke: '#F59E0B', text: 'text-amber-500 dark:text-amber-400', label: 'Medium' }
-    return { stroke: '#EF4444', text: 'text-red-500 dark:text-red-400', label: 'High' }
+    if (pct <= 0.3) return { stroke: '#22C55E', text: 'text-green-800 dark:text-green-800', label: 'Low' }
+    if (pct <= 0.6) return { stroke: '#F59E0B', text: 'text-amber-deep dark:text-amber-deep', label: 'Medium' }
+    return { stroke: '#EF4444', text: 'text-red-800 dark:text-red-800', label: 'High' }
   }
 
   const color = getColor()
@@ -114,9 +114,9 @@ export default function WalletSecurity() {
   }
 
   const getRiskLevel = (score: number) => {
-    if (score <= 3) return { level: 'Low', color: 'text-green-600 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-900/20', border: 'border-green-200 dark:border-green-800' }
-    if (score <= 6) return { level: 'Medium', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20', border: 'border-amber-200 dark:border-amber-800' }
-    return { level: 'High', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-900/20', border: 'border-red-200 dark:border-red-800' }
+    if (score <= 3) return { level: 'Low', color: 'text-green-800 dark:text-green-800', bg: 'bg-green-50 dark:bg-green-900/20', border: 'border-green-200 dark:border-green-800' }
+    if (score <= 6) return { level: 'Medium', color: 'text-amber-deep dark:text-amber-deep', bg: 'bg-amber-50 dark:bg-paper-sub', border: 'border-amber-200 dark:border-amber-800' }
+    return { level: 'High', color: 'text-red-800 dark:text-red-800', bg: 'bg-red-50 dark:bg-red-900/20', border: 'border-red-200 dark:border-red-800' }
   }
 
   if (!isConnected || !address) {
@@ -166,7 +166,7 @@ export default function WalletSecurity() {
         </div>
 
         {/* Wallet Address */}
-        <div className="bg-paper-sub/60 rounded-xl p-4 mb-6 border border-ink-rule">
+        <div className="bg-paper-sub rounded-xl p-4 mb-6 border border-ink-rule">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-ink-muted mb-1">Connected Wallet</p>
@@ -188,9 +188,9 @@ export default function WalletSecurity() {
       {/* Security Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Risk Score with Radial Gauge */}
-        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-paper-sub border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
-            <Shield className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+            <Shield className="h-6 w-6 text-amber-deep dark:text-amber-deep" />
             <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${riskInfo.bg} ${riskInfo.color} ${riskInfo.border} border`}>
               {riskInfo.level} Risk
             </span>
@@ -201,10 +201,10 @@ export default function WalletSecurity() {
         </div>
 
         {/* Total Allowances */}
-        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-paper-sub border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
-            <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
-            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800">
+            <Check className="h-6 w-6 text-green-800 dark:text-green-800" />
+            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-800 border border-green-200 dark:border-green-800">
               Active
             </span>
           </div>
@@ -214,10 +214,10 @@ export default function WalletSecurity() {
         </div>
 
         {/* High Risk Allowances */}
-        <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
+        <div className="bg-paper-sub border border-ink-rule rounded-xl p-6 backdrop-blur-xs">
           <div className="flex items-center justify-between mb-4">
-            <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
-            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800">
+            <AlertTriangle className="h-6 w-6 text-red-800 dark:text-red-800" />
+            <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-800 border border-red-200 dark:border-red-800">
               Attention
             </span>
           </div>
@@ -228,7 +228,7 @@ export default function WalletSecurity() {
       </div>
 
       {/* Security Actions */}
-      <div className="bg-paper-sub/60 border border-ink-rule rounded-xl p-6">
+      <div className="bg-paper-sub border border-ink-rule rounded-xl p-6">
         <h3 className="text-lg font-semibold text-ink mb-4">Security Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
@@ -257,19 +257,19 @@ export default function WalletSecurity() {
         <h3 className="text-lg font-semibold text-primary-900 dark:text-primary-200 mb-3">Security Best Practices</h3>
         <ul className="space-y-2.5 text-sm text-primary-800 dark:text-primary-300">
           <li className="flex items-start space-x-2">
-            <Check className="h-4 w-4 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0" />
+            <Check className="h-4 w-4 mt-0.5 text-amber-deep dark:text-amber-deep flex-shrink-0" />
             <span>Regularly review and revoke unnecessary token allowances</span>
           </li>
           <li className="flex items-start space-x-2">
-            <Check className="h-4 w-4 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0" />
+            <Check className="h-4 w-4 mt-0.5 text-amber-deep dark:text-amber-deep flex-shrink-0" />
             <span>Be cautious of unlimited allowances - they pose the highest risk</span>
           </li>
           <li className="flex items-start space-x-2">
-            <Check className="h-4 w-4 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0" />
+            <Check className="h-4 w-4 mt-0.5 text-amber-deep dark:text-amber-deep flex-shrink-0" />
             <span>Only approve tokens for trusted applications and contracts</span>
           </li>
           <li className="flex items-start space-x-2">
-            <Check className="h-4 w-4 mt-0.5 text-primary-600 dark:text-primary-400 flex-shrink-0" />
+            <Check className="h-4 w-4 mt-0.5 text-amber-deep dark:text-amber-deep flex-shrink-0" />
             <span>Monitor your wallet regularly for suspicious activity</span>
           </li>
         </ul>

@@ -29,14 +29,14 @@ export default function SummaryStats({
       label: 'Total Approvals',
       value: total,
       icon: Shield,
-      color: 'text-primary-500',
+      color: 'text-amber-deep',
       bg: 'bg-primary-50 dark:bg-primary-900/20',
     },
     {
       label: 'At Risk',
       value: atRisk,
       icon: AlertTriangle,
-      color: atRisk > 0 ? 'text-semantic-error-500' : 'text-semantic-success-500',
+      color: atRisk > 0 ? 'text-semantic-error-700' : 'text-semantic-success-700',
       bg: atRisk > 0
         ? 'bg-semantic-error-50 dark:bg-semantic-error-900/20'
         : 'bg-semantic-success-50 dark:bg-semantic-success-900/20',
@@ -45,7 +45,7 @@ export default function SummaryStats({
       label: 'Value Exposed',
       value: formatUsd(valueExposed),
       icon: DollarSign,
-      color: valueExposed > 10000 ? 'text-semantic-warning-500' : 'text-ink-whisper',
+      color: valueExposed > 10000 ? 'text-semantic-warning-700' : 'text-ink-whisper',
       bg: valueExposed > 10000
         ? 'bg-semantic-warning-50 dark:bg-semantic-warning-900/20'
         : 'bg-secondary-50 dark:bg-paper-sub',

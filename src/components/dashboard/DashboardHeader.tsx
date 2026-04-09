@@ -18,7 +18,7 @@ export default function DashboardHeader({
       {/* Logo */}
       <div className="flex items-center gap-2">
         <Shield
-          className="h-7 w-7 text-primary-500"
+          className="h-7 w-7 text-amber-deep"
           aria-hidden="true"
         />
         <span className="text-lg font-semibold tracking-tight text-ink">
@@ -34,7 +34,7 @@ export default function DashboardHeader({
             className={cn(
               'text-sm font-medium transition-colors duration-150',
               item === 'Dashboard'
-                ? 'text-primary-600 dark:text-primary-400'
+                ? 'text-amber-deep dark:text-amber-deep'
                 : 'text-ink-whisper hover:text-ink-muted dark:hover:text-ink'
             )}
           >
@@ -45,7 +45,7 @@ export default function DashboardHeader({
 
       {/* Wallet state */}
       <div className="flex items-center gap-3">
-        <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-primary-50 text-primary-700 border border-primary-200 dark:bg-primary-900/20 dark:text-primary-300 dark:border-primary-800">
+        <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-primary-50 text-amber-deep border border-primary-200 dark:bg-primary-900/20 dark:text-primary-300 dark:border-primary-800">
           <span
             className="w-2 h-2 rounded-full bg-semantic-success-500"
             aria-hidden="true"

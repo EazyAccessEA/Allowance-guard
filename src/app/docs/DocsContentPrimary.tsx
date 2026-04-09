@@ -23,7 +23,7 @@ export default function DocsContentPrimary({ section }: Props) {
  What it is
  </h3>
  <p className="text-base text-ink-soft leading-relaxed mb-4">
- AllowanceGuard is an open-source wallet security scanner. It finds every <code className="rounded bg-paper-sub px-1.5 py-0.5 text-xs text-amber-300 font-mono">approve()</code>, <code className="rounded bg-paper-sub px-1.5 py-0.5 text-xs text-amber-300 font-mono">setApprovalForAll()</code>, and Permit2 grant your wallet has ever signed, scores each one against a set of risk heuristics, and lets you revoke them &mdash; one at a time or in a batch.
+ AllowanceGuard is an open-source wallet security scanner. It finds every <code className="rounded bg-paper-sub px-1.5 py-0.5 text-xs text-amber-deep font-mono">approve()</code>, <code className="rounded bg-paper-sub px-1.5 py-0.5 text-xs text-amber-deep font-mono">setApprovalForAll()</code>, and Permit2 grant your wallet has ever signed, scores each one against a set of risk heuristics, and lets you revoke them &mdash; one at a time or in a batch.
  </p>
  <p className="text-base text-ink-soft leading-relaxed">
  It is fully non-custodial. We never receive your private keys, signatures, or seed phrases, so we cannot move your funds &mdash; that capability does not exist in the system.
@@ -44,7 +44,7 @@ export default function DocsContentPrimary({ section }: Props) {
  <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
  <h4 className="font-semibold text-ink mb-2 text-sm">Every approval primitive</h4>
  <p className="text-sm text-ink-soft leading-relaxed">
- ERC-20 <code className="text-xs text-amber-300">approve()</code>, ERC-721 / ERC-1155 <code className="text-xs text-amber-300">setApprovalForAll()</code>, and Permit2 off-chain signed allowances.
+ ERC-20 <code className="text-xs text-amber-deep">approve()</code>, ERC-721 / ERC-1155 <code className="text-xs text-amber-deep">setApprovalForAll()</code>, and Permit2 off-chain signed allowances.
  </p>
  </div>
  <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
@@ -68,7 +68,7 @@ export default function DocsContentPrimary({ section }: Props) {
  <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
  <h4 className="font-semibold text-ink mb-2 text-sm">Public REST API</h4>
  <p className="text-sm text-ink-soft leading-relaxed">
- Programmatic access to scanning, allowances, risk scores, and simulation. See <a href="/docs/api-reference" className="text-amber-400 hover:underline">API Reference</a>.
+ Programmatic access to scanning, allowances, risk scores, and simulation. See <a href="/docs/api-reference" className="text-amber-deep hover:underline">API Reference</a>.
  </p>
  </div>
  </div>
@@ -80,23 +80,23 @@ export default function DocsContentPrimary({ section }: Props) {
  </h3>
  <ol className="space-y-3 text-base text-ink-soft">
  <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">1</span>
+ <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">1</span>
  <span><strong className="text-ink">Connect or paste.</strong> Connect a wallet, or paste any address. Read-only by default.</span>
  </li>
  <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">2</span>
+ <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">2</span>
  <span><strong className="text-ink">Scan.</strong> We index every approval the address has ever granted, across all 15 supported chains, in one pass.</span>
  </li>
  <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">3</span>
+ <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">3</span>
  <span><strong className="text-ink">Score.</strong> Each approval is graded against the risk heuristics and ranked by what can hurt you most.</span>
  </li>
  <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">4</span>
+ <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">4</span>
  <span><strong className="text-ink">Revoke.</strong> Click revoke. We construct the transaction; you sign it in your wallet. Your keys never leave your device.</span>
  </li>
  <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold flex items-center justify-center mt-0.5">5</span>
+ <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">5</span>
  <span><strong className="text-ink">Monitor.</strong> Optional. Set the wallet to rescan on a schedule and alert you when something new and risky appears.</span>
  </li>
  </ol>
@@ -105,7 +105,7 @@ export default function DocsContentPrimary({ section }: Props) {
  <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
  <h4 className="font-semibold text-ink text-sm mb-2">New here? Start with two pages</h4>
  <p className="text-sm text-ink-soft leading-relaxed">
- Read <button onClick={() => { /* handled by parent */ }} className="text-amber-400 hover:underline font-medium">What Are Token Allowances?</button> in <em>Getting Started</em> for the security primer, then jump to <a href="/docs/api-reference" className="text-amber-400 hover:underline font-medium">API Reference</a> if you&rsquo;re building an integration.
+ Read <button onClick={() => { /* handled by parent */ }} className="text-amber-deep hover:underline font-medium">What Are Token Allowances?</button> in <em>Getting Started</em> for the security primer, then jump to <a href="/docs/api-reference" className="text-amber-deep hover:underline font-medium">API Reference</a> if you&rsquo;re building an integration.
  </p>
  </div>
  </div>
@@ -176,14 +176,14 @@ export default function DocsContentPrimary({ section }: Props) {
  <div key={network.chainId} className="flex items-center justify-between p-6 bg-paper-sub border border-ink-rule rounded-lg">
  <div className="flex items-center gap-4">
  <div className="w-12 h-12 bg-amber-500/10 ring-1 ring-amber-500/20 rounded-xl flex items-center justify-center">
- <Globe className="w-6 h-6 text-amber-400" />
+ <Globe className="w-6 h-6 text-amber-deep" />
  </div>
  <div>
  <h4 className="text-lg font-semibold text-ink">{network.name}</h4>
  <p className="text-sm text-ink-soft">Chain ID: {network.chainId}</p>
  </div>
  </div>
- <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-amber-500/10 ring-1 ring-amber-500/20 text-amber-400 border border-amber-500/20">
+ <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-amber-500/10 ring-1 ring-amber-500/20 text-amber-deep border border-amber-500/20">
  {network.status}
  </span>
  </div>

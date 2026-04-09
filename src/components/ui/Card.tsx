@@ -21,7 +21,7 @@ const cardVariants = cva(
         warning: 'border-semantic-warning-200 dark:border-semantic-warning-800 bg-semantic-warning-50 dark:bg-semantic-warning-900/30 hover:border-semantic-warning-300 dark:hover:border-semantic-warning-700',
         danger: 'border-semantic-error-200 dark:border-semantic-error-800 bg-semantic-error-50 dark:bg-semantic-error-900/30 hover:border-semantic-error-300 dark:hover:border-semantic-error-700',
         info: 'border-semantic-info-200 dark:border-semantic-info-800 bg-semantic-info-50 dark:bg-semantic-info-900/30 hover:border-semantic-info-300 dark:hover:border-semantic-info-700',
-        subtle: 'border-neutral-200 dark:border-ink-rule bg-paper-sub/50 hover:border-neutral-300 dark:hover:border-secondary-600',
+        subtle: 'border-neutral-200 dark:border-ink-rule bg-paper-sub hover:border-neutral-300 dark:hover:border-secondary-600',
         accent: 'border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-primary-900/20 hover:border-primary-300 dark:hover:border-primary-700',
         // Glassmorphism variants
         glass: 'bg-paper-deep/60 backdrop-blur-glass border-secondary-600/30 shadow-glass dark:shadow-dark-medium hover:bg-paper-sub/70',

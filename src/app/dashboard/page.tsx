@@ -103,7 +103,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-paper dark:bg-paper">
       {/* Scan bar */}
-      <Section className="py-6 bg-paper-sub dark:bg-paper-deep/50 border-b border-ink-rule">
+      <Section className="py-6 bg-paper-sub dark:bg-paper-deep border-b border-ink-rule">
         <Container>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>

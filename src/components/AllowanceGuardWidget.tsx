@@ -63,13 +63,13 @@ export default function AllowanceGuardWidget({
   const getRiskIcon = (riskLevel: number) => {
     switch (riskLevel) {
       case 1:
-        return <CheckCircle className="text-green-500" size={16} />
+        return <CheckCircle className="text-green-800" size={16} />
       case 2:
-        return <AlertTriangle className="text-yellow-500" size={16} />
+        return <AlertTriangle className="text-yellow-800" size={16} />
       case 3:
-        return <AlertTriangle className="text-orange-500" size={16} />
+        return <AlertTriangle className="text-orange-800" size={16} />
       case 4:
-        return <Shield className="text-red-500" size={16} />
+        return <Shield className="text-red-800" size={16} />
       default:
         return <AlertTriangle className="text-gray-500" size={16} />
     }
@@ -99,11 +99,11 @@ export default function AllowanceGuardWidget({
       <div className={`${themeClasses} border rounded-lg p-4 ${className}`}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <Shield className="text-red-500" size={20} />
+            <Shield className="text-red-800" size={20} />
             <h3 className="font-semibold">AllowanceGuard</h3>
           </div>
         </div>
-        <div className="text-red-600 text-sm">
+        <div className="text-red-800 text-sm">
           Error loading allowances: {error}
         </div>
         <button
@@ -121,7 +121,7 @@ export default function AllowanceGuardWidget({
       {showHeader && (
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <Shield className="text-blue-500" size={20} />
+            <Shield className="text-blue-800" size={20} />
             <h3 className="font-semibold">AllowanceGuard</h3>
             {loading && <RefreshCw className="animate-spin text-gray-500" size={16} />}
           </div>
@@ -164,10 +164,10 @@ export default function AllowanceGuardWidget({
               {displayedAllowances.map((allowance, index) => {
                 // Get risk info without using hook inside callback
                 const riskInfo = allowance.riskLevel >= 7 
-                  ? { color: 'text-red-600', bgColor: 'bg-red-50', label: 'High Risk' }
+                  ? { color: 'text-red-800', bgColor: 'bg-red-50', label: 'High Risk' }
                   : allowance.riskLevel >= 4
                   ? { color: 'text-yellow-600', bgColor: 'bg-yellow-50', label: 'Medium Risk' }
-                  : { color: 'text-green-600', bgColor: 'bg-green-50', label: 'Low Risk' }
+                  : { color: 'text-green-800', bgColor: 'bg-green-50', label: 'Low Risk' }
                 
                 return (
                   <div
@@ -202,7 +202,7 @@ export default function AllowanceGuardWidget({
                               e.stopPropagation()
                               window.open('https://www.allowanceguard.com', '_blank')
                             }}
-                            className="flex items-center space-x-1 text-xs text-blue-500 hover:text-blue-600"
+                            className="flex items-center space-x-1 text-xs text-blue-800 hover:text-blue-600"
                           >
                             <span>Revoke</span>
                             <ExternalLink size={12} />
@@ -220,7 +220,7 @@ export default function AllowanceGuardWidget({
             <div className="mt-4 text-center">
               <button
                 onClick={() => setShowAll(!showAll)}
-                className="flex items-center space-x-1 text-sm text-blue-500 hover:text-blue-600 mx-auto"
+                className="flex items-center space-x-1 text-sm text-blue-800 hover:text-blue-600 mx-auto"
               >
                 {showAll ? <EyeOff size={16} /> : <Eye size={16} />}
                 <span>{showAll ? 'Show Less' : `Show All (${allowances.length})`}</span>
@@ -232,7 +232,7 @@ export default function AllowanceGuardWidget({
             <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={() => window.open('https://www.allowanceguard.com', '_blank')}
-                className="w-full flex items-center justify-center space-x-2 text-sm text-blue-500 hover:text-blue-600"
+                className="w-full flex items-center justify-center space-x-2 text-sm text-blue-800 hover:text-blue-600"
               >
                 <span>View Full Report</span>
                 <ExternalLink size={14} />

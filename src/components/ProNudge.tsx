@@ -15,7 +15,7 @@ const nudgeConfig = {
     icon: Bell,
     message: 'Unlock continuous monitoring — get alerted when new approvals appear',
     borderColor: 'border-l-primary-500',
-    iconColor: 'text-primary-600 dark:text-primary-400',
+    iconColor: 'text-amber-deep dark:text-amber-deep',
     bgColor: 'bg-primary-50 dark:bg-primary-900/20',
   },
   'batch-revoke': {
@@ -69,7 +69,7 @@ export const ProNudge: React.FC<ProNudgeProps> = ({ variant, className }) => {
 
       <Link
         href="/pricing"
-        className="shrink-0 text-sm font-medium text-primary-700 dark:text-primary-400 transition-colors duration-150 hover:text-primary-800 dark:hover:text-primary-300 hover:underline"
+        className="shrink-0 text-sm font-medium text-amber-deep dark:text-amber-deep transition-colors duration-150 hover:text-primary-800 dark:hover:text-primary-300 hover:underline"
       >
         See plans
       </Link>

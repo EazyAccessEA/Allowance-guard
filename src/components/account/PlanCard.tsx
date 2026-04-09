@@ -80,7 +80,7 @@ export default function PlanCard({
         {/* Usage summary */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="flex items-center gap-2 rounded-lg border border-ink-rule p-3">
-            <Wallet className="h-5 w-5 text-primary-700" />
+            <Wallet className="h-5 w-5 text-amber-deep" />
             <div>
               <p className="text-xs text-ink-muted">Wallets</p>
               <p className="text-sm font-semibold text-ink">
@@ -89,7 +89,7 @@ export default function PlanCard({
             </div>
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-ink-rule p-3">
-            <Zap className="h-5 w-5 text-primary-700" />
+            <Zap className="h-5 w-5 text-amber-deep" />
             <div>
               <p className="text-xs text-ink-muted">API Calls / Day</p>
               <p className="text-sm font-semibold text-ink">
@@ -101,7 +101,7 @@ export default function PlanCard({
           </div>
           <div className="flex items-center gap-2 rounded-lg border border-ink-rule p-3">
             <svg
-              className="h-5 w-5 text-primary-700"
+              className="h-5 w-5 text-amber-deep"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"

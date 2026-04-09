@@ -112,7 +112,7 @@ export default function TokenResultCard(p: Props) {
                 href={p.website} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
+                className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-paper-sub text-blue-600 border border-blue-500/20 hover:bg-paper-sub transition-colors"
               >
                 🌐 Website
               </a>

@@ -93,7 +93,7 @@ export default function PaymentMethodModal({
         />
 
         {error && (
-          <p className="text-xs text-red-600" role="alert">
+          <p className="text-xs text-red-800" role="alert">
             {error}
           </p>
         )}
@@ -132,7 +132,7 @@ function MethodButton({
         disabled && 'opacity-60 cursor-not-allowed'
       )}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-base bg-primary-50 text-primary-700">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-base bg-primary-50 text-amber-deep">
         {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : icon}
       </div>
       <div className="flex-1 min-w-0">

@@ -173,7 +173,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
                     {data.permit2Allowances.map((a, i) => (
                       <tr
                         key={`${a.chainId}-${a.token}-${a.spender}-${i}`}
-                        className={`transition-colors duration-100 hover:bg-paper-sub/50 dark:hover:bg-paper-sub/40 ${
+                        className={`transition-colors duration-100 hover:bg-paper-sub dark:hover:bg-paper-sub ${
                           a.isExpired ? 'opacity-50' : ''
                         }`}
                       >

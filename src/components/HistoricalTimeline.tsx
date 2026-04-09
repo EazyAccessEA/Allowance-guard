@@ -106,10 +106,10 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
 
   const eventIcon = (type: WalletEvent['event_type']) => {
     switch (type) {
-      case 'approval_granted': return <Plus className="w-4 h-4 text-blue-500" />
-      case 'approval_changed': return <ArrowUpRight className="w-4 h-4 text-amber-500" />
-      case 'approval_revoked': return <Minus className="w-4 h-4 text-green-500" />
-      case 'risk_changed': return <Shield className="w-4 h-4 text-red-500" />
+      case 'approval_granted': return <Plus className="w-4 h-4 text-blue-800" />
+      case 'approval_changed': return <ArrowUpRight className="w-4 h-4 text-amber-deep" />
+      case 'approval_revoked': return <Minus className="w-4 h-4 text-green-800" />
+      case 'risk_changed': return <Shield className="w-4 h-4 text-red-800" />
     }
   }
 
@@ -193,12 +193,12 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                 <div className="text-sm text-ink-muted">Trend ({riskDays}d)</div>
                 <div className="flex items-center gap-1">
                   {riskTrend > 0 ? (
-                    <TrendingUp className="w-4 h-4 text-red-500" />
+                    <TrendingUp className="w-4 h-4 text-red-800" />
                   ) : riskTrend < 0 ? (
-                    <TrendingDown className="w-4 h-4 text-green-500" />
+                    <TrendingDown className="w-4 h-4 text-green-800" />
                   ) : null}
                   <span className={`text-lg font-bold ${
-                    riskTrend > 0 ? 'text-red-500' : riskTrend < 0 ? 'text-green-500' : 'text-ink'
+                    riskTrend > 0 ? 'text-red-800' : riskTrend < 0 ? 'text-green-800' : 'text-ink'
                   }`}>
                     {riskTrend > 0 ? '+' : ''}{riskTrend}
                   </span>
@@ -359,10 +359,10 @@ export default function HistoricalTimeline({ wallet }: HistoricalTimelineProps) 
                           <Shield className="w-3 h-3" />
                           Risk: {evt.previous_risk_score} → {evt.risk_score}
                           {evt.risk_score > evt.previous_risk_score && (
-                            <TrendingUp className="w-3 h-3 text-red-500" />
+                            <TrendingUp className="w-3 h-3 text-red-800" />
                           )}
                           {evt.risk_score < evt.previous_risk_score && (
-                            <TrendingDown className="w-3 h-3 text-green-500" />
+                            <TrendingDown className="w-3 h-3 text-green-800" />
                           )}
                         </div>
                       )}

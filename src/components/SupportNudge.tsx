@@ -25,7 +25,7 @@ export default function SupportNudge({ when }: { when: 'after-revoke' | 'manual'
     >
       <div className="text-sm text-ink">
         Revocation sent — if this tool helps, consider
-        <Link href="/docs/contributing" className="ml-1 underline text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 transition-colors duration-200">
+        <Link href="/docs/contributing" className="ml-1 underline text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 transition-colors duration-200">
           supporting development
         </Link>. Thank you!
       </div>

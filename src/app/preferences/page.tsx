@@ -99,7 +99,7 @@ export default function PreferencesPage() {
           {/* Email Settings */}
           <div className="bg-paper-deep border border-ink-rule rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
+              <Mail className="w-5 h-5 text-blue-600 dark:text-blue-800 mr-2" />
               <h2 className="text-xl font-semibold text-ink">Email Settings</h2>
             </div>
 
@@ -127,7 +127,7 @@ export default function PreferencesPage() {
           {/* Alert Preferences */}
           <div className="bg-paper-deep border border-ink-rule rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Bell className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+              <Bell className="w-5 h-5 text-green-800 dark:text-green-800 mr-2" />
               <h2 className="text-xl font-semibold text-ink">Alert Preferences</h2>
             </div>
 
@@ -236,7 +236,7 @@ export default function PreferencesPage() {
                     placeholder="https://hooks.slack.com/services/..."
                   />
                   <p className="text-sm text-ink-whisper mt-1">
-                    <a href="/docs" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300">
+                    <a href="/docs" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300">
                       Learn how to set up Slack webhooks
                     </a>
                   </p>
@@ -249,8 +249,8 @@ export default function PreferencesPage() {
           {message && (
             <div className={`p-4 rounded-lg flex items-center ${
               status === 'success'
-                ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-300'
-                : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300'
+                ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-800'
+                : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-800'
             }`}>
               {status === 'success' ? (
                 <CheckCircle className="w-5 h-5 mr-2" />
@@ -266,7 +266,7 @@ export default function PreferencesPage() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 min-h-[44px] bg-primary-700 dark:bg-primary-600 hover:bg-primary-800 dark:hover:bg-primary-500 disabled:opacity-50 text-ink font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 flex items-center disabled:cursor-not-allowed"
+              className="px-6 py-3 min-h-[44px] bg-amber-500 hover:bg-amber-600 dark:hover:bg-primary-500 disabled:opacity-50 text-ink font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 flex items-center disabled:cursor-not-allowed"
             >
               {status === 'loading' ? (
                 <>
@@ -292,15 +292,15 @@ export default function PreferencesPage() {
             If you have questions about your notification preferences or need assistance, we&apos;re here to help.
           </p>
           <div className="space-y-2">
-            <a href="/contact" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">
+            <a href="/contact" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">
               Contact Support
             </a>
             <span className="text-ink-whisper mx-2">•</span>
-            <a href="/faq" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">
+            <a href="/faq" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">
               FAQ
             </a>
             <span className="text-ink-whisper mx-2">•</span>
-            <a href="/docs" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">
+            <a href="/docs" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">
               Documentation
             </a>
           </div>
@@ -315,9 +315,9 @@ export default function PreferencesPage() {
               © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
             <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 text-sm">Cookie Policy</a>
+              <a href="/terms" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>

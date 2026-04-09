@@ -23,7 +23,7 @@ export default function RefundPage() {
         />
 
         <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; Refund Policy
           </span>
           <H1 className="mb-6 text-ink">Refund Policy</H1>
@@ -44,8 +44,8 @@ export default function RefundPage() {
               {/* 14-Day Guarantee */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">14-Day Money-Back Guarantee</H2>
-                <div className="border-l-4 border-emerald-400 pl-6 bg-emerald-500/10 p-4 rounded-r-lg">
-                  <p className="text-emerald-200">
+                <div className="border-l-4 border-emerald-400 pl-6 bg-paper-sub p-4 rounded-r-lg">
+                  <p className="text-emerald-800">
                     If you are not satisfied with any paid Allowance Guard subscription, you may request
                     a <strong>full refund within 14 days</strong> of your first payment on that tier. No questions asked.
                   </p>
@@ -115,17 +115,17 @@ export default function RefundPage() {
                 <div className="space-y-4 text-ink-soft">
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
-                      <div className="text-2xl font-bold text-amber-400 mb-2">1</div>
+                      <div className="text-2xl font-bold text-amber-deep mb-2">1</div>
                       <h3 className="font-medium mb-2">Email Us</h3>
                       <p className="text-sm">
                         Send a refund request to{' '}
-                        <span className="text-amber-400">billing@allowanceguard.com</span>{' '}
+                        <span className="text-amber-deep">billing@allowanceguard.com</span>{' '}
                         with your account email.
                       </p>
                     </div>
 
                     <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
-                      <div className="text-2xl font-bold text-amber-400 mb-2">2</div>
+                      <div className="text-2xl font-bold text-amber-deep mb-2">2</div>
                       <h3 className="font-medium mb-2">We Review</h3>
                       <p className="text-sm">
                         We verify your eligibility and process the refund within 3-5 business days.
@@ -133,7 +133,7 @@ export default function RefundPage() {
                     </div>
 
                     <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
-                      <div className="text-2xl font-bold text-amber-400 mb-2">3</div>
+                      <div className="text-2xl font-bold text-amber-deep mb-2">3</div>
                       <h3 className="font-medium mb-2">Refund Issued</h3>
                       <p className="text-sm">
                         Refund is returned to your original payment method via Stripe. May take 5-10 business days to appear.
@@ -149,7 +149,7 @@ export default function RefundPage() {
                 <div className="text-ink-soft space-y-3 text-sm">
                   <p>
                     <strong>Service outages:</strong> If a service outage affected your tier and you are covered
-                    by our <Link href="/sla" className="text-amber-400 hover:underline">SLA</Link>, you may be eligible
+                    by our <Link href="/sla" className="text-amber-deep hover:underline">SLA</Link>, you may be eligible
                     for service credits instead of a refund.
                   </p>
                   <p>
@@ -168,9 +168,9 @@ export default function RefundPage() {
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Contact</H2>
                 <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
                   <ul className="space-y-2 text-ink-soft text-sm">
-                    <li>Refund requests: <span className="text-amber-400 font-medium">billing@allowanceguard.com</span></li>
-                    <li>Billing questions: <span className="text-amber-400 font-medium">billing@allowanceguard.com</span></li>
-                    <li>General support: <span className="text-amber-400 font-medium">support@allowanceguard.com</span></li>
+                    <li>Refund requests: <span className="text-amber-deep font-medium">billing@allowanceguard.com</span></li>
+                    <li>Billing questions: <span className="text-amber-deep font-medium">billing@allowanceguard.com</span></li>
+                    <li>General support: <span className="text-amber-deep font-medium">support@allowanceguard.com</span></li>
                   </ul>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export default function RefundPage() {
                 <p>Last updated: April 2, 2026</p>
                 <p className="mt-2">
                   This refund policy is part of our{' '}
-                  <Link href="/terms" className="text-amber-400 hover:underline">Terms of Service</Link>.
+                  <Link href="/terms" className="text-amber-deep hover:underline">Terms of Service</Link>.
                 </p>
               </div>
 

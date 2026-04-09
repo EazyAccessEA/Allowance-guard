@@ -95,7 +95,7 @@ export default function AccountPage() {
           {/* Header */}
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-100">
-              <User className="h-5 w-5 text-primary-700" />
+              <User className="h-5 w-5 text-amber-deep" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-ink">
@@ -141,7 +141,7 @@ export default function AccountPage() {
                   'transition-all duration-150 hover:border-primary-300 hover:shadow-md'
                 )}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-primary-700 group-hover:bg-primary-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-amber-deep group-hover:bg-primary-100">
                   <link.icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -152,7 +152,7 @@ export default function AccountPage() {
                     {link.description}
                   </p>
                 </div>
-                <ArrowRight className="h-4 w-4 text-ink-muted group-hover:text-primary-700 transition-colors" />
+                <ArrowRight className="h-4 w-4 text-ink-muted group-hover:text-amber-deep transition-colors" />
               </a>
             ))}
           </div>

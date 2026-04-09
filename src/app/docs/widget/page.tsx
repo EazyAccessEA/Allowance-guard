@@ -89,7 +89,7 @@ export default function WidgetPage() {
           }}
         />
         <Container className="relative text-left max-w-4xl z-10">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Docs &middot; Widget
           </span>
           <H1 className="mb-6 text-ink">AllowanceGuard Widget</H1>
@@ -109,7 +109,7 @@ export default function WidgetPage() {
               <div className="flex items-start gap-3">
                 <span className="mt-1 inline-flex w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
                 <div>
-                  <h3 className="text-sm font-semibold text-amber-300 uppercase tracking-[0.12em] mb-1">
+                  <h3 className="text-sm font-semibold text-amber-deep uppercase tracking-[0.12em] mb-1">
                     Pending store approval
                   </h3>
                   <p className="text-sm text-ink-soft leading-relaxed">
@@ -299,7 +299,7 @@ export default function WidgetPage() {
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-3 text-center text-ink">Installation</H2>
             <p className="text-center text-sm text-ink-muted mb-8">
-              The configuration above is real and runs against the live API. The install snippets below are <strong className="text-amber-400">previews</strong> of what the published install flow will look like once the extension lands in each store.
+              The configuration above is real and runs against the live API. The install snippets below are <strong className="text-amber-deep">previews</strong> of what the published install flow will look like once the extension lands in each store.
             </p>
 
             <div className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-6 mb-8">
@@ -308,9 +308,9 @@ export default function WidgetPage() {
                 What you can do today
               </h3>
               <ul className="text-sm text-ink-soft space-y-2">
-                <li>&middot; Use the <strong className="text-ink">REST API v1</strong> to scan wallets &mdash; see <a href="/docs/api-reference" className="text-amber-400 hover:underline">API Reference</a>.</li>
-                <li>&middot; Clone the <strong className="text-ink">Node.js SDK</strong> from <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a>.</li>
-                <li>&middot; Subscribe to the <a href="https://github.com/EazyAccessEA/Allowance-guard" className="text-amber-400 hover:underline" target="_blank" rel="noopener noreferrer">GitHub repo</a> to be notified when the extension publishes.</li>
+                <li>&middot; Use the <strong className="text-ink">REST API v1</strong> to scan wallets &mdash; see <a href="/docs/api-reference" className="text-amber-deep hover:underline">API Reference</a>.</li>
+                <li>&middot; Clone the <strong className="text-ink">Node.js SDK</strong> from <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-deep hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a>.</li>
+                <li>&middot; Subscribe to the <a href="https://github.com/EazyAccessEA/Allowance-guard" className="text-amber-deep hover:underline" target="_blank" rel="noopener noreferrer">GitHub repo</a> to be notified when the extension publishes.</li>
               </ul>
             </div>
 
@@ -318,10 +318,10 @@ export default function WidgetPage() {
               <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
-                    <Code className="mr-3 text-amber-400" size={20} />
+                    <Code className="mr-3 text-amber-deep" size={20} />
                     <H3>React (preview)</H3>
                   </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
                     Pending
                   </span>
                 </div>
@@ -340,10 +340,10 @@ export default function WidgetPage() {
               <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
-                    <Download className="mr-3 text-amber-400" size={20} />
+                    <Download className="mr-3 text-amber-deep" size={20} />
                     <H3>HTML (preview)</H3>
                   </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
                     Pending
                   </span>
                 </div>

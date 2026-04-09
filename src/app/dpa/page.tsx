@@ -23,7 +23,7 @@ export default function DPAPage() {
         />
 
         <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; GDPR Article 28
           </span>
           <H1 className="mb-6 text-ink">Data Processing Agreement</H1>

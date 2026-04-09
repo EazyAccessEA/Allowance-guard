@@ -53,7 +53,7 @@ export default function AdminAnalyticsPage() {
 
   if (error) {
     return (
-      <div className="p-8 text-center text-red-600">
+      <div className="p-8 text-center text-red-800">
         Error: {error}
       </div>
     )
@@ -157,7 +157,7 @@ function StatCard({
       <p
         className={cn(
           'mt-1 text-3xl font-bold',
-          color === 'red' ? 'text-red-600' : 'text-ink',
+          color === 'red' ? 'text-red-800' : 'text-ink',
         )}
       >
         {value}

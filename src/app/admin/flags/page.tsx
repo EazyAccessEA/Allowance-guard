@@ -177,9 +177,9 @@ export default function AdminFlagsPage() {
                   <p className="mt-1 text-xs text-ink-muted">
                     Rollout: {flag.rollout_percentage}% &middot;{' '}
                     {flag.enabled ? (
-                      <span className="text-green-600">Enabled</span>
+                      <span className="text-green-800">Enabled</span>
                     ) : (
-                      <span className="text-red-500">Disabled</span>
+                      <span className="text-red-800">Disabled</span>
                     )}
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export default function AdminFlagsPage() {
                   </button>
                   <button
                     onClick={() => deleteFlag(flag.id)}
-                    className="rounded-lg border border-red-200 px-3 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
+                    className="rounded-lg border border-red-200 px-3 py-1 text-xs font-medium text-red-800 hover:bg-red-50"
                   >
                     Delete
                   </button>

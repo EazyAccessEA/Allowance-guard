@@ -15,7 +15,7 @@ export default function ComingSoonPage() {
           </p>
           <Link 
             href="/"
-            className="inline-flex items-center px-6 py-3 bg-cobalt text-ink rounded-lg font-medium hover:bg-cobalt/90 transition-colors duration-200"
+            className="inline-flex items-center px-6 py-3 bg-cobalt text-cream rounded-lg font-medium hover:bg-cobalt/90 transition-colors duration-200"
           >
             Return to Homepage
           </Link>

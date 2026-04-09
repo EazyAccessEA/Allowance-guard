@@ -104,10 +104,10 @@ export default function MonitoringDashboard({ wallet }: MonitoringDashboardProps
 
   const eventIcon = (type: MonitoringEvent['event_type']) => {
     switch (type) {
-      case 'new_approval': return <Plus className="w-4 h-4 text-blue-500" />
-      case 'approval_changed': return <ArrowUpRight className="w-4 h-4 text-amber-500" />
-      case 'approval_removed': return <Minus className="w-4 h-4 text-green-500" />
-      case 'risk_increased': return <AlertTriangle className="w-4 h-4 text-red-500" />
+      case 'new_approval': return <Plus className="w-4 h-4 text-blue-800" />
+      case 'approval_changed': return <ArrowUpRight className="w-4 h-4 text-amber-deep" />
+      case 'approval_removed': return <Minus className="w-4 h-4 text-green-800" />
+      case 'risk_increased': return <AlertTriangle className="w-4 h-4 text-red-800" />
     }
   }
 

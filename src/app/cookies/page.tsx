@@ -22,7 +22,7 @@ export default function CookiesPage() {
         />
 
         <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-400">
+          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; Cookie Policy
           </span>
           <H1 className="mb-6 text-ink">Cookie Policy</H1>

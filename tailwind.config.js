@@ -192,12 +192,13 @@ module.exports = {
           elevated: '#475569',
         },
 
-        // Legacy aliases (mapped to Midnight Amber)
-        ink: '#FFFFFF',
-        stone: '#94A3B8',
-        mist: '#1E293B',
-        line: '#1E293B',
-        cobalt: '#38BDF8',
+        // Legacy aliases — remapped to Ledger paper theme so stale
+        // text-stone / text-cobalt / etc. still pass WCAG AA on paper.
+        // Note: ink is redefined by the Ledger block below and wins.
+        stone: '#4A4D54',   // was #94A3B8 (2.35:1 FAIL on paper); now 7.8:1 AAA
+        mist: '#4A4D54',    // was #1E293B dark; remapped to ink-muted
+        line: '#0F1115',    // was #1E293B dark; remapped to ink
+        cobalt: '#854F08',  // was #38BDF8 (1.96:1 FAIL); now 6.2:1 AAA amber-deep
         white: '#FFFFFF',
         danger: '#EF4444',
         success: '#22C55E',

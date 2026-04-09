@@ -52,7 +52,7 @@ export const UpgradePrompt: React.FC<UpgradePromptProps> = ({
       <div className="relative flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-4">
         {/* Icon */}
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500/10 ring-1 ring-amber-500/20">
-          <Lock className="h-5 w-5 text-amber-400" />
+          <Lock className="h-5 w-5 text-amber-deep" />
         </div>
 
         {/* Content */}

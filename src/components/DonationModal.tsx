@@ -101,12 +101,12 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-paper-deep/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-paper-deep flex items-center justify-center z-50 p-4">
       <div className="bg-paper-sub border border-ink-rule rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto shadow-large">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <Heart className="w-8 h-8 text-amber-500 fill-current" />
+            <Heart className="w-8 h-8 text-amber-deep fill-current" />
             <h2 className="text-2xl font-semibold text-ink">Support Allowance Guard</h2>
           </div>
           <button
@@ -132,7 +132,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
           </ul>
 
           <div className="bg-sky-900/20 border border-sky-500/30 rounded-lg p-4">
-            <p className="text-sm text-sky-300">
+            <p className="text-sm text-sky-800">
               <strong>Open Source:</strong> Core tool: free and open source. Always. Premium monitoring and API access available for power users.
             </p>
           </div>
@@ -152,7 +152,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                   }}
                   className={`p-3 text-base font-medium rounded-lg border transition-colors ${
                     amount === preset && !customAmount
-                      ? 'border-amber-500 bg-amber-500/10 text-amber-500'
+                      ? 'border-amber-500 bg-amber-500/10 text-amber-deep'
                       : 'border-ink-rule hover:border-amber-500 text-ink-muted hover:text-ink'
                   }`}
                 >
@@ -189,7 +189,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 onClick={() => setPaymentMethod('stripe')}
                 className={`p-4 text-base font-medium rounded-lg border transition-colors ${
                   paymentMethod === 'stripe'
-                    ? 'border-sky-500 bg-sky-500/10 text-sky-400'
+                    ? 'border-sky-500 bg-sky-500/10 text-sky-800'
                     : 'border-ink-rule hover:border-sky-500 text-ink-muted hover:text-ink'
                 }`}
               >
@@ -204,7 +204,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
                 onClick={() => setPaymentMethod('coinbase')}
                 className={`p-4 text-base font-medium rounded-lg border transition-colors ${
                   paymentMethod === 'coinbase'
-                    ? 'border-sky-500 bg-sky-500/10 text-sky-400'
+                    ? 'border-sky-500 bg-sky-500/10 text-sky-800'
                     : 'border-ink-rule hover:border-sky-500 text-ink-muted hover:text-ink'
                 }`}
               >
@@ -265,7 +265,7 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
 
           {error && (
             <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4">
-              <p className="text-base text-red-400">{error}</p>
+              <p className="text-base text-red-800">{error}</p>
             </div>
           )}
 
