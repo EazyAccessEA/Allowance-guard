@@ -1,3 +1,10 @@
+/**
+ * @deprecated Magic-link auth replaced by SIWE (EIP-4361) in migration 028.
+ * Login flow now lives in src/app/login/page.tsx → /api/auth/{nonce,siwe}.
+ * Kept for rollback safety and to avoid breaking /api/teams/invite which
+ * also uses createMagicLink. Remove in a future pass once team invites
+ * are migrated to a separate flow.
+ */
 import { randomBytes } from 'crypto'
 import { pool } from '@/lib/db'
 

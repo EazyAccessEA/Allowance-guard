@@ -1,3 +1,9 @@
+/**
+ * @deprecated Magic-link login flow replaced by SIWE.
+ * New clients should POST /api/auth/siwe after signing an EIP-4361
+ * message. This endpoint remains so existing magic-link URLs in
+ * transit don't 404, but new logins from /login use the SIWE flow.
+ */
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createMagicLink } from '@/lib/magic-link'
