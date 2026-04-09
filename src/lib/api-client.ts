@@ -32,7 +32,13 @@ export class APIClient {
           }
         }
 
-        throw new Error(`Server error: ${response.status}`)
+        // Server errors (5xx) — read the error body before retrying
+        let serverMsg = `Server error: ${response.status}`
+        try {
+          const errorData = await response.json()
+          if (errorData.error) serverMsg = errorData.error
+        } catch { /* body not JSON, use status code */ }
+        throw new Error(serverMsg)
       } catch (error) {
         lastError = error as Error
 

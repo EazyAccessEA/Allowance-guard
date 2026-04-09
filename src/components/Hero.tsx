@@ -129,7 +129,14 @@ export default function Hero({
             className="max-w-2xl mb-7"
           >
             {!isConnected ? (
-              <AddressInput onSubmit={handleAddressSubmit} pending={isScanning} />
+              <>
+                <AddressInput onSubmit={handleAddressSubmit} pending={isScanning} />
+                {scanMessage && !isScanning && (
+                  <p className={`font-plex text-sm mt-3 ${scanMessage.startsWith('Error') ? 'text-crimson-paper' : 'text-ink-muted'}`}>
+                    {scanMessage}
+                  </p>
+                )}
+              </>
             ) : (
               <div className="paper-card-raised p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
