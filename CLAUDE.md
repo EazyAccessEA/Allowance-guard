@@ -65,7 +65,7 @@ This council is consulted on every non-trivial operation. It is the standard, no
 | Database | PostgreSQL (Neon serverless) via Drizzle ORM |
 | Cache | Redis (Upstash) + DB-backed cache |
 | Payments | Stripe (checkout + billing) + Coinbase Commerce |
-| Auth | Cookie-based sessions (30-day, `ag_sess`) |
+| Auth | SIWE (EIP-4361) → Cookie-based sessions (30-day, `ag_sess`). Magic-link deprecated. |
 | Email | Postmark / SMTP (Nodemailer) |
 | Web3 | Wagmi 2 + Viem 2 + Reown AppKit |
 | Monitoring | Rollbar, Slack webhooks |
@@ -159,6 +159,7 @@ AllowanceGuard uses an **open-core model**:
 - Single-chain view
 - Manual revocation
 - Basic risk labels
+- **No account required.** The free tier product IS the homepage scanner (`AddressInput` at `/#scan`). The pricing page's Free CTA deep-links to `/#scan` which scrolls to the input and auto-focuses it. Signing in (SIWE) is only required for Pro/Sentinel/API features.
 
 ### Pro Tier ($9.99/month or $79/year)
 - Unlimited wallets
@@ -444,3 +445,5 @@ pnpm run migrate      # Run database migrations
 - Do not use `any` types or skip input validation
 - Do not commit `.env` files or secrets
 - Do not make the free tier feel punishing — it should feel generous, with clear value in upgrading
+- Do not gate the free scanner behind authentication. The free tier IS the homepage scanner (`/#scan`). SIWE auth gates Pro/Sentinel/API features only.
+- Do not re-introduce magic-link login. SIWE (EIP-4361) is the primary auth method. Magic link is `@deprecated` and retained only for team invites.
