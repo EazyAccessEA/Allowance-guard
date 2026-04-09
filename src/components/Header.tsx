@@ -16,6 +16,7 @@
  */
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/Badge'
 import ClientConnectButton from '@/components/ClientConnectButton'
@@ -78,12 +79,20 @@ export default function Header({ isConnected }: HeaderProps) {
       >
         <div className="mx-auto max-w-[1280px] px-4 sm:px-6">
           <div className="flex h-12 items-center justify-between gap-4">
-            {/* Wordmark — single color, no accent, no tagline */}
+            {/* Logo mark + wordmark */}
             <Link
               href="/"
               aria-label="AllowanceGuard — home"
-              className="group flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded"
+              className="group flex items-center gap-2.5 flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded"
             >
+              <Image
+                src="/AG_Logo_Ink_128.png"
+                alt=""
+                width={28}
+                height={28}
+                className="transition-transform duration-200 group-hover:scale-105"
+                priority
+              />
               <span className="font-plex font-semibold text-[15px] text-ink leading-none tracking-[-0.01em]">
                 AllowanceGuard
               </span>
