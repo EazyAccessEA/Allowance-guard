@@ -277,7 +277,9 @@
 
 ---
 
-## Phase 6: Design Upgrade (Parallel Track)  ✅ COMPLETE (2026-03-30)
+## Phase 6: Design Upgrade (Parallel Track)  ✅ COMPLETE (2026-03-30) → SUPERSEDED ON HOMEPAGE (2026-04-08)
+
+> **⚠ Historical record.** Phase 6 shipped the dark-mode + glassmorphism system below. The **homepage** has since migrated to the **Ledger aesthetic** (commit `62e8f71`, April 2026) — warm bone paper, Fraunces italic, IBM Plex Sans, single oxblood CTABand. The glass canon described here is retained only for the dashboard, docs, and account surfaces. For the live homepage design system, see `docs/design-tokens-handbook.md` §11 and the "Ledger Aesthetic" section in `CLAUDE.md`.
 
 > **Commit**: Phase 6 — 1 new file, 12 modified files
 >
