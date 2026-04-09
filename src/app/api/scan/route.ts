@@ -11,7 +11,7 @@ import { trackEvent } from '@/lib/analytics'
 
 export const runtime = 'nodejs'
 
-const MAP: Record<string, 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220> = {
+const MAP: Record<string, number> = {
   eth: 1,
   arb: 42161,
   base: 8453,
@@ -26,7 +26,21 @@ const MAP: Record<string, 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|591
   gnosis: 100,
   linea: 59144,
   scroll: 534352,
-  celo: 42220
+  celo: 42220,
+  // Phase 9.6 — Tier 1
+  blast: 81457,
+  cronos: 25,
+  moonbeam: 1284,
+  aurora: 1313161554,
+  opbnb: 204,
+  manta: 169,
+  // Phase 9.6 — Tier 2
+  mode: 34443,
+  taiko: 167000,
+  metis: 1088,
+  kava: 2222,
+  zetachain: 7000,
+  worldchain: 480,
 }
 
 export async function POST(req: Request) {
