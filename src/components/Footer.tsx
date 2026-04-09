@@ -16,6 +16,7 @@
  */
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import { Github, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react'
@@ -77,8 +78,19 @@ export default function Footer() {
       <Container className="py-12 sm:py-14">
         {/* Top disclaimer — replaces the wordmark block. Information > branding. */}
         <div className="mb-10 pb-10 border-b border-[rgba(15,17,21,0.08)] max-w-3xl">
+          <div className="flex items-center gap-3 mb-4">
+            <Image
+              src="/AG_Logo_Ink_128.png"
+              alt=""
+              width={32}
+              height={32}
+            />
+            <span className="font-plex font-bold text-lg text-ink tracking-[-0.02em]">
+              AllowanceGuard
+            </span>
+          </div>
           <p className="font-plex text-[12px] text-ink-whisper leading-[1.6]">
-            <span className="font-semibold text-ink-muted">AllowanceGuard</span> reads public blockchain data to find token approvals on your wallet. We never access your keys or move tokens. Not financial or security advice; use the tool and verify on a block explorer.
+            Reads public blockchain data to find token approvals on your wallet. We never access your keys or move tokens. Not financial or security advice; use the tool and verify on a block explorer.
           </p>
         </div>
 
