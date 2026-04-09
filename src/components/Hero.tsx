@@ -120,13 +120,16 @@ export default function Hero({
             When you used a dApp, you gave it permission to spend your tokens. Most users sign once and forget. The permission stays — until you take it back.
           </motion.p>
 
-          {/* Address input — the reciprocity moment */}
+          {/* Address input — the reciprocity moment.
+              id="scan" so /pricing Free CTA can deep-link here.
+              scroll-mt-20 clears the sticky nav on hash-scroll. */}
           <motion.div
+            id="scan"
             variants={fadeUp}
             initial={prefersReduced ? 'visible' : 'hidden'}
             animate="visible"
             custom={0.45}
-            className="max-w-2xl mb-7"
+            className="max-w-2xl mb-7 scroll-mt-20"
           >
             {!isConnected ? (
               <AddressInput onSubmit={handleAddressSubmit} pending={isScanning} />

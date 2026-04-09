@@ -15,7 +15,7 @@
  *  #13 UX writer: error copy in plain English, no "0x" technobabble
  */
 
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { ArrowRight } from 'lucide-react'
 
 interface AddressInputProps {
@@ -30,6 +30,14 @@ export default function AddressInput({ onSubmit, pending = false, className = ''
   const [value, setValue] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [touched, setTouched] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Auto-focus when arriving via /#scan deep link (from pricing Free CTA)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#scan') {
+      inputRef.current?.focus()
+    }
+  }, [])
 
   const handle = (e: FormEvent) => {
     e.preventDefault()
@@ -63,6 +71,7 @@ export default function AddressInput({ onSubmit, pending = false, className = ''
         }}
       >
         <input
+          ref={inputRef}
           id="address-input"
           type="text"
           inputMode="text"

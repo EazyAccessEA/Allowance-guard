@@ -82,7 +82,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   const savingsPercent = isPaid ? getYearlySavingsPercent(plan as PaidPlan) : 0
 
-  const ctaText = plan === 'free' ? 'Start Scanning' : `Upgrade to ${displayName}`
+  const ctaText = plan === 'free' ? 'Start your free scan' : `Upgrade to ${displayName}`
 
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -175,8 +175,8 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           </>
         ) : (
           <Link
-            href="/"
-            className="block w-full rounded-xl px-5 py-3 text-sm font-semibold text-center text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            href="/#scan"
+            className="block w-full rounded-xl px-5 py-3 text-sm font-semibold text-center text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             {ctaText}
           </Link>
