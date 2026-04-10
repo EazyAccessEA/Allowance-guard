@@ -47,10 +47,10 @@ export async function claimPending(limit = 3) {
   // Neon serverless driver doesn't support pool.connect(); use sequential queries.
   // Use an UPDATE ... RETURNING pattern to atomically claim pending jobs.
   const { rows } = await pool.query(
-    `UPDATE jobs SET status='running', started_at=NOW(), updated_at=NOW(), attempts=attempts+1
+    `UPDATE jobs SET status='running'::job_status, started_at=NOW(), updated_at=NOW(), attempts=attempts+1
      WHERE id IN (
        SELECT id FROM jobs
-       WHERE status='pending'
+       WHERE status='pending'::job_status
        ORDER BY created_at ASC
        LIMIT $1
      )
@@ -66,12 +66,12 @@ export async function claimPending(limit = 3) {
 export async function finishJob(id: number, ok: boolean, error?: string) {
   if (ok) {
     await pool.query(
-      `UPDATE jobs SET status='succeeded', finished_at=NOW(), updated_at=NOW(), error=NULL WHERE id=$1`,
+      `UPDATE jobs SET status='succeeded'::job_status, finished_at=NOW(), updated_at=NOW(), error=NULL WHERE id=$1`,
       [id]
     )
   } else {
     await pool.query(
-      `UPDATE jobs SET status=CASE WHEN attempts>=max_attempts THEN 'failed' ELSE 'pending' END,
+      `UPDATE jobs SET status=(CASE WHEN attempts>=max_attempts THEN 'failed' ELSE 'pending' END)::job_status,
               updated_at=NOW(), finished_at=CASE WHEN attempts>=max_attempts THEN NOW() ELSE NULL END,
               error=$2
        WHERE id=$1`,
