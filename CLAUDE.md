@@ -223,7 +223,7 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 - **Two API key tiers:** `ag_live_*` (secret, server-side, full access) and `ag_pub_*` (public, browser-safe, GET-only, `api_public` plan at 500/day). Public keys are enforced in `src/middleware/api-auth.ts` and issued via `POST /api/keys/public`. See migration `027_api_public_keys.sql`.
 - **`/api/v1` OpenAPI spec** lives at `src/app/api/v1/openapi.json` and is the single source of truth for the `@allowance-guard/client` generated types. Any new v1 endpoint MUST update the spec in the same PR. Run `tsx scripts/generate-openapi.ts` to regenerate client types.
 - Consumer routes use session auth.
-- Cron routes (cleanup, monitoring, rules, webhooks, email) are called by [cron-job.org](https://cron-job.org) — no `CRON_SECRET` auth. Do not add Vercel Cron schedules to `vercel.json`.
+- Cron routes are scheduled via **Vercel Cron** in `vercel.json`. No external scheduler (cron-job.org retired). No `CRON_SECRET` auth — Vercel calls the routes internally. Schedules: `/api/jobs/process` (every 5 min), `/api/monitor/cron` (every 15 min), `/api/rules/evaluate` (every 15 min), `/api/webhooks/process` (every 5 min), `/api/email/cron` (daily 10:00 UTC), `/api/jobs/cleanup` (daily 03:00 UTC).
 
 ### Database
 - Use Drizzle ORM for all queries. No raw SQL.
