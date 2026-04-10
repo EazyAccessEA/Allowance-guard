@@ -1,6 +1,7 @@
 {
   "regions": ["lhr1"],
   "functions": {
+    "app/api/jobs/process/route.ts": { "maxDuration": 180 },
     "app/**/route.ts": { "maxDuration": 60 }
   },
   "crons": [
