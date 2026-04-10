@@ -97,6 +97,12 @@ export async function POST(req: Request) {
 
     L.info('scan.queue.ok', { wallet: addr, jobId })
 
+    // Trigger job processing immediately — server-side, bypasses
+    // Vercel challenge. The client can't call /api/jobs/process
+    // directly because the challenge blocks browser fetches.
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    fetch(`${appUrl}/api/jobs/process`, { method: 'POST' }).catch(() => {})
+
     return NextResponse.json({ ok: true, jobId, message: `Scan queued for ${addr}` })
   } catch (error) {
     // Surface the ACTUAL error message so we stop debugging blind

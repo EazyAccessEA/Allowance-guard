@@ -135,10 +135,9 @@ export function useDashboard() {
         throw new Error(scanResult.error || 'Failed to start scan')
       }
 
-      // Trigger job processing immediately — don't wait for the
-      // 5-minute Vercel Cron. Fire-and-forget: the polling loop below
-      // will pick up the result once the processor finishes (~30s).
-      fetch('/api/jobs/process', { method: 'POST' }).catch(() => {})
+      // Job processing is triggered server-side by the scan route
+      // (bypasses Vercel challenge). The polling loop below picks up
+      // the result once the processor finishes (~30-90s).
 
       let attempts = 0
       const maxAttempts = 40
