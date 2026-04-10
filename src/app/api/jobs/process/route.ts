@@ -26,7 +26,7 @@ async function handle(job: JobRow) {
     try {
       await withTimeout(
         scanWalletOnChain(wallet, chainId as Parameters<typeof scanWalletOnChain>[1]),
-        45_000 // 45s per chain (leave headroom for post-scan within 60s function limit)
+        15_000 // 15s per chain — skip slow RPCs fast; function has 180s total
       )
       scanned++
     } catch (e) {
@@ -69,9 +69,27 @@ async function handle(job: JobRow) {
   })
 }
 
+/**
+ * Reset jobs stuck in 'running' for more than 3 minutes.
+ * These are jobs where the function timed out before finishJob ran.
+ */
+async function resetStuckJobs() {
+  const { rows } = await pool.query(
+    `UPDATE jobs SET status='pending'::job_status, started_at=NULL, updated_at=NOW()
+     WHERE status='running'::job_status AND started_at < NOW() - INTERVAL '3 minutes'
+     RETURNING id`
+  )
+  if (rows.length > 0) {
+    apiLogger.info('reset.stuck.jobs', { count: rows.length, ids: rows.map((r: Record<string, unknown>) => r.id) })
+  }
+}
+
 export async function POST(_req: NextRequest) {
   try {
-    const jobs = await claimPending(2) // small batch
+    // Reset jobs stuck in 'running' from previous timed-out invocations
+    await resetStuckJobs()
+
+    const jobs = await claimPending(1) // one job at a time — each scans 27 chains
     let done = 0
     
     for (const j of jobs) {
