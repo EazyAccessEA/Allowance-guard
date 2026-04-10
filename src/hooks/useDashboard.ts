@@ -120,12 +120,20 @@ export function useDashboard() {
 
     try {
       const scanResult = await APIClient.startScan(target)
-      if (!scanResult.jobId) {
-        throw new Error('Failed to get job ID from scan response')
-      }
 
-      setJobId(scanResult.jobId)
-      setMessage(`Scan queued (#${scanResult.jobId})`)
+      if (scanResult.jobId) {
+        setJobId(scanResult.jobId)
+        setMessage(`Scan queued (#${scanResult.jobId})`)
+      } else if (scanResult.ok) {
+        // Duplicate scan — one is already in progress for this address.
+        // Skip the polling loop and just fetch current allowances.
+        setMessage(scanResult.message || 'Scan already in progress')
+        await fetchAllowances(target, 1, pageSize)
+        setPending(false)
+        return
+      } else {
+        throw new Error(scanResult.error || 'Failed to start scan')
+      }
 
       if (process.env.NODE_ENV !== 'production') {
         fetch('/api/jobs/process', { method: 'POST' }).catch(() => {})
