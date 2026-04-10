@@ -121,8 +121,9 @@ export const CHAINS: Record<number, ChainCfg> = {
     name: 'Fantom',
     symbol: 'FTM',
     rpcs: envList('FANTOM_RPC_URLS', [
-      'https://rpc.ftm.tools',
-      'https://rpc.ankr.com/fantom'
+      'https://rpc.ankr.com/fantom',
+      'https://fantom-rpc.publicnode.com',
+      'https://rpc.ftm.tools'
     ]),
     explorer: 'https://ftmscan.com',
     enabled: !disabledSet.has('250')
