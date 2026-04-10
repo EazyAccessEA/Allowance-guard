@@ -54,14 +54,11 @@ export function rateLimit(options: RateLimitOptions) {
       )
     }
 
-    // Return rate limit headers
-    return NextResponse.next({
-      headers: {
-        'X-RateLimit-Limit': maxRequests.toString(),
-        'X-RateLimit-Remaining': Math.max(0, maxRequests - entry.count).toString(),
-        'X-RateLimit-Reset': Math.ceil(entry.resetTime / 1000).toString()
-      }
-    })
+    // Rate limit passed. Return null — NOT NextResponse.next() which
+    // crashes in App Router route handlers (only works in middleware).
+    // Callers check `if (result instanceof NextResponse)` to detect
+    // a 429 block; null means "request is allowed".
+    return null as unknown as NextResponse
   }
 }
 
