@@ -237,7 +237,7 @@ export async function executeRuleMatches(matches: RuleMatch[]): Promise<void> {
       // Instead, we queue a revocation request that the client picks up.
       if (rule.action === 'auto_revoke' || rule.action === 'queue_revoke') {
         await pool.query(
-          `INSERT INTO jobs (type, payload, status) VALUES ('auto_revoke', $1, 'pending')`,
+          `INSERT INTO jobs (type, payload, status) VALUES ('auto_revoke', $1::jsonb, 'pending'::job_status)`,
           [JSON.stringify({
             wallet_address: allowance.wallet_address,
             chain_id: allowance.chain_id,

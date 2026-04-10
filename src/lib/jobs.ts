@@ -18,7 +18,7 @@ export type JobRow = {
 export async function hasRecentScan(wallet: string, minMinutes = 3) {
   const { rows } = await pool.query(
     `SELECT 1 FROM jobs
-      WHERE type='scan_wallet' AND status IN ('pending','running')
+      WHERE type='scan_wallet' AND status IN ('pending'::job_status,'running'::job_status)
         AND payload->>'wallet' = $1
         AND created_at > NOW() - ($2 || ' minutes')::interval
       LIMIT 1`,
