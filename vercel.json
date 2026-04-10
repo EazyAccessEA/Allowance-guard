@@ -10,5 +10,34 @@
     { "path": "/api/webhooks/process", "schedule": "*/5 * * * *" },
     { "path": "/api/email/cron",      "schedule": "0 10 * * *"   },
     { "path": "/api/jobs/cleanup",    "schedule": "0 3 * * *"    }
-  ]
+  ],
+  "firewall": {
+    "rules": [
+      {
+        "id": "scan-trigger-processor",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/jobs/process" } }
+      },
+      {
+        "id": "healthz",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/healthz" } }
+      },
+      {
+        "id": "scan-endpoint",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/scan" } }
+      },
+      {
+        "id": "allowances-endpoint",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/allowances" } }
+      },
+      {
+        "id": "job-status",
+        "action": "bypass",
+        "condition": { "path": { "prefix": "/api/jobs/" } }
+      }
+    ]
+  }
 }
