@@ -11,7 +11,7 @@
 
 **Live:** <https://www.allowanceguard.com> &nbsp;•&nbsp; **Docs:** <https://www.allowanceguard.com/docs> &nbsp;•&nbsp; **API:** <https://www.allowanceguard.com/docs/api-reference> &nbsp;•&nbsp; **Pricing:** <https://www.allowanceguard.com/pricing>
 
-Open source core. Independently operated. Built to last.
+Open source core. Independently operated. Built to last.  
 
 ---
 
