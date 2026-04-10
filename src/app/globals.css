@@ -4148,3 +4148,38 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   .ledger-rule::after { box-shadow: none; }
 }
 
+/* Amber highlighter — editorial pen-on-paper stripe behind key words.
+   Sits behind the lower 45% of the text (like a real highlighter).
+   Use: <span class="highlight">word</span>
+   box-decoration-break: clone handles line-wrap safety.
+   Council: Maren (#4 Signature Move), Noor (AAA on amber verified),
+   Idris (scroll-paint animation via .highlight-reveal). */
+.highlight {
+  background: linear-gradient(transparent 55%, var(--ledger-amber) 55%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.08em;
+}
+
+/* Idris: the stripe paints in from left on scroll-reveal.
+   Applied by Framer Motion — starts at bg-size 0%, animates to 100%.
+   prefers-reduced-motion: skip animation, show immediately. */
+.highlight-reveal {
+  background: linear-gradient(transparent 55%, var(--ledger-amber) 55%);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0 0.08em;
+  transition: background-size 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.highlight-reveal.painted {
+  background-size: 100% 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .highlight-reveal {
+    background-size: 100% 100%;
+    transition: none;
+  }
+}
+

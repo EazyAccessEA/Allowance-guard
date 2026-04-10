@@ -18,6 +18,7 @@
 
 import { Button } from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
+import Highlight from '@/components/ui/Highlight'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import AddressInput from '@/components/AddressInput'
 import { motion, useReducedMotion } from 'framer-motion'
@@ -104,7 +105,7 @@ export default function Hero({
             animate="visible"
             custom={0.15}
           >
-            Every dApp you&rsquo;ve used
+            Every <Highlight delay={400}>dApp</Highlight> you&rsquo;ve used
             <br />
             <span className="text-ink">can still move your tokens.</span>
           </motion.h1>

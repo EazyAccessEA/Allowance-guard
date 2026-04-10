@@ -17,6 +17,7 @@
 
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
+import Highlight from '@/components/ui/Highlight'
 
 interface SampleApproval {
   token: string
@@ -93,7 +94,7 @@ export default function SampleScanDemo() {
             eyebrow="What you&rsquo;d see"
             title={
               <>
-                Here&rsquo;s what a real scan
+                Here&rsquo;s what a real <Highlight>scan</Highlight>
                 <br />
                 <span className="text-ink-muted">looks like.</span>
               </>
