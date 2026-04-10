@@ -10,6 +10,7 @@
 
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
+import Highlight from '@/components/ui/Highlight'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 import type { ReactNode } from 'react'
 
@@ -58,7 +59,7 @@ export default function HowItWorks() {
               <>
                 Three steps.
                 <br />
-                <span className="text-ink-muted">Under a minute.</span>
+                <span className="text-ink-muted"><Highlight>Under a minute.</Highlight></span>
               </>
             }
             lede="Paste an address or connect your wallet. We do the rest. Every transaction signs in your own wallet — we never touch your tokens."

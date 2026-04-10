@@ -10,6 +10,7 @@
 
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
+import Highlight from '@/components/ui/Highlight'
 import CountUp from '@/components/ui/CountUp'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 
@@ -62,7 +63,7 @@ export default function StatisticsSection() {
             eyebrow="The threat"
             title={
               <>
-                Forgotten approvals are
+                Forgotten <Highlight>approvals</Highlight> are
                 <br />
                 <span className="text-ink-muted">how wallets get drained.</span>
               </>
