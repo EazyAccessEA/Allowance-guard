@@ -231,6 +231,11 @@ The core scanner remains free. Premium *services* (monitoring, alerts, API, team
 - All tables need `created_at` timestamps.
 - Use UUIDs for primary keys on new tables.
 - Monetary values stored in minor units (pence/cents as integers).
+- **Neon serverless `.query()` rules** (the `pool` in `src/lib/db.ts` uses `@neondatabase/serverless`):
+  - Object parameters MUST be `JSON.stringify()`d before passing — `.query()` does NOT auto-serialize objects (e.g. `$1::jsonb` with `JSON.stringify(payload)`).
+  - PostgreSQL enum columns (e.g. `job_status`) MUST have explicit `::enum_type` casts on string literals — `.query()` does NOT auto-cast text to enums (e.g. `'pending'::job_status`, not `'pending'`).
+  - Array parameters for `ANY($1::type[])` may need explicit casting.
+  - When in doubt, cast explicitly. The old `neon()` direct-call API was permissive; `.query()` is strict.
 
 ### Feature Gating
 - Use `checkFeature(userId, feature)` from `src/lib/feature-gate.ts` before serving gated content.
