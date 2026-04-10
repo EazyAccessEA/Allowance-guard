@@ -13,18 +13,41 @@ import { reportError } from '@/lib/rollbar'
 async function handle(job: JobRow) {
   if (job.type !== 'scan_wallet') throw new Error(`Unknown job type: ${job.type}`)
   const { wallet, chains } = job.payload as { wallet: string; chains: number[] }
-  
-  apiLogger.info('Processing scan job', { jobId: job.id, wallet, chains })
-  
-  // Process chains sequentially (safe for RPC rate limits)
+
+  apiLogger.info('Processing scan job', { jobId: job.id, wallet, chainCount: chains.length })
+
+  // Process chains sequentially. Per-chain failures are NON-FATAL —
+  // one broken RPC must not kill a 27-chain scan. Partial results
+  // are better than no results. (#3 Web3 council, #15 Architect)
+  const failed: { chainId: number; error: string }[] = []
+  let scanned = 0
+
   for (const chainId of chains) {
-    await withTimeout(scanWalletOnChain(wallet, chainId as 1|42161|8453|10|137|43114|56), 60_000)
+    try {
+      await withTimeout(
+        scanWalletOnChain(wallet, chainId as Parameters<typeof scanWalletOnChain>[1]),
+        45_000 // 45s per chain (leave headroom for post-scan within 60s function limit)
+      )
+      scanned++
+    } catch (e) {
+      const msg = e instanceof Error ? e.message.slice(0, 200) : String(e)
+      apiLogger.warn('chain.scan.failed', { jobId: job.id, chainId, error: msg })
+      failed.push({ chainId, error: msg })
+    }
   }
-  
-  // Post-scan: risk, enrich, drift
-  await refreshRiskForWallet(wallet)
-  await enrichWallet(wallet)
-  await driftCheckAndNotify(wallet)
+
+  apiLogger.info('chain.scan.summary', {
+    jobId: job.id, wallet, scanned, failed: failed.length, total: chains.length
+  })
+
+  // Post-scan: risk, enrich, drift — run even on partial results
+  try {
+    await refreshRiskForWallet(wallet)
+    await enrichWallet(wallet)
+    await driftCheckAndNotify(wallet)
+  } catch (e) {
+    apiLogger.warn('post-scan.failed', { jobId: job.id, error: e instanceof Error ? e.message : String(e) })
+  }
 
   // Update monitor's last_scan_at if it exists
   await pool.query(
@@ -32,11 +55,18 @@ async function handle(job: JobRow) {
      WHERE wallet_address=$1`,
     [wallet.toLowerCase()]
   )
-  
+
   // Invalidate cache after scan → risk → enrich operations
   await cacheDel(`allow:${wallet.toLowerCase()}:*`)
-  
-  apiLogger.info('Scan job completed', { jobId: job.id, wallet })
+
+  // If ALL chains failed, throw so the job is marked failed
+  if (scanned === 0 && failed.length > 0) {
+    throw new Error(`All ${failed.length} chains failed. First: ${failed[0].error}`)
+  }
+
+  apiLogger.info('Scan job completed', {
+    jobId: job.id, wallet, scanned, failed: failed.length
+  })
 }
 
 export async function POST(_req: NextRequest) {
