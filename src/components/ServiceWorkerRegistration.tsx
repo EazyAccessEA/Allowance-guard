@@ -4,50 +4,27 @@ import { useEffect } from 'react'
 
 export default function ServiceWorkerRegistration() {
   useEffect(() => {
-    if (
-      typeof window !== 'undefined' &&
-      'serviceWorker' in navigator &&
-      process.env.NODE_ENV === 'production'
-    ) {
-      const registerSW = async () => {
-        try {
-          const registration = await navigator.serviceWorker.register('/sw.js', {
-            scope: '/'
-          })
+    if (typeof window === 'undefined' || !('serviceWorker' in navigator)) return
 
-          console.log('🔧 Service Worker registered:', registration.scope)
-
-          // Handle updates
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing
-            if (newWorker) {
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  // New content is available, prompt user to refresh
-                  console.log('🔄 New content available, please refresh')
-                  
-                  // Show update notification
-                  if (confirm('New version available! Refresh to update?')) {
-                    window.location.reload()
-                  }
-                }
-              })
-            }
-          })
-
-          // Handle service worker messages
-          navigator.serviceWorker.addEventListener('message', (event) => {
-            if (event.data && event.data.type === 'CACHE_UPDATED') {
-              console.log('📦 Cache updated:', event.data.cacheName)
-            }
-          })
-
-        } catch (error) {
-          console.error('❌ Service Worker registration failed:', error)
-        }
+    // UNREGISTER any existing service worker. The old SW cached API
+    // responses (including 500 errors), served stale security data,
+    // and crashed on install when cache.addAll failed. A wallet
+    // security scanner must NEVER serve cached blockchain data —
+    // stale "no risks" could mask real risks. There is no offline
+    // use case (you can't scan a blockchain without internet).
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (const reg of registrations) {
+        reg.unregister()
       }
+    })
 
-      registerSW()
+    // Also clear the old SW caches
+    if ('caches' in window) {
+      caches.keys().then((names) => {
+        for (const name of names) {
+          caches.delete(name)
+        }
+      })
     }
   }, [])
 
