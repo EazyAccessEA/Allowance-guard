@@ -44,20 +44,22 @@ const MAP: Record<string, number> = {
 }
 
 export async function POST(req: Request) {
-  const L = withReq(req)
-  
-  // Apply rate limiting
-  const rateLimitResponse = scanRateLimit(req as NextRequest)
-  if (rateLimitResponse instanceof NextResponse) {
-    return rateLimitResponse
-  }
-  
+  // Outer try-catch wraps EVERYTHING including rate limiting and logging
+  // so we never return a bare 500 with no body.
   try {
+    const L = withReq(req)
+
+    // Apply rate limiting
+    const rateLimitResponse = scanRateLimit(req as NextRequest)
+    if (rateLimitResponse instanceof NextResponse) {
+      return rateLimitResponse
+    }
+
     L.info('scan.queue.start', { path: '/api/scan' })
-    
+
     // Validate request with enhanced validation
     const validation = await validateRequest(scanRequestSchema)(req as NextRequest)
-    
+
     if (!validation.success) {
       L.warn('Invalid scan request body', { errors: validation.details })
       return NextResponse.json(
@@ -65,23 +67,23 @@ export async function POST(req: Request) {
         { status: 400 }
       )
     }
-    
+
     const { walletAddress, chains } = validation.data!
     const addr = walletAddress
-    const chainIds = chains?.length 
+    const chainIds = chains?.length
       ? chains.map(c => MAP[c])
       : enabledChainIds()
-    
-    // Increment scan counter
+
+    // Increment scan counter (Redis — swallows errors internally)
     await incrScan()
 
-    // Track scan_started analytics event
+    // Track scan_started analytics event (swallows errors internally)
     trackEvent('scan_started', {
       metadata: { walletAddress: addr, chains: chainIds },
     })
-    
+
     L.info('Enqueueing wallet scan', { address: addr, chains: chainIds })
-    
+
     let jobId: number
     try {
       jobId = await enqueueScan(addr, chainIds)
@@ -92,14 +94,18 @@ export async function POST(req: Request) {
       }
       throw e
     }
-    
+
     L.info('scan.queue.ok', { wallet: addr, jobId })
-    
+
     return NextResponse.json({ ok: true, jobId, message: `Scan queued for ${addr}` })
   } catch (error) {
-    L.error('scan.queue.fail', { 
-      error: error instanceof Error ? error.message : 'Unknown error'
-    })
-    return NextResponse.json({ error: 'Failed to queue scan' }, { status: 500 })
+    // Surface the ACTUAL error message so we stop debugging blind
+    const msg = error instanceof Error ? error.message : String(error)
+    const stack = error instanceof Error ? error.stack?.split('\n').slice(0, 3).join(' | ') : ''
+    console.error('[scan] unhandled:', msg, stack)
+    return NextResponse.json(
+      { error: 'Failed to queue scan', detail: msg },
+      { status: 500 }
+    )
   }
 }
