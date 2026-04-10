@@ -2,5 +2,54 @@
   "regions": ["lhr1"],
   "functions": {
     "app/**/route.ts": { "maxDuration": 60 }
+  },
+  "firewall": {
+    "rules": [
+      {
+        "id": "cron-jobs-cleanup",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/jobs/cleanup" } }
+      },
+      {
+        "id": "cron-jobs-process",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/jobs/process" } }
+      },
+      {
+        "id": "cron-monitor",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/monitor/cron" } }
+      },
+      {
+        "id": "cron-rules-evaluate",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/rules/evaluate" } }
+      },
+      {
+        "id": "cron-webhooks-process",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/webhooks/process" } }
+      },
+      {
+        "id": "cron-email",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/email/cron" } }
+      },
+      {
+        "id": "cron-alerts-daily",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/alerts/daily" } }
+      },
+      {
+        "id": "healthz",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/healthz" } }
+      },
+      {
+        "id": "readiness",
+        "action": "bypass",
+        "condition": { "path": { "eq": "/api/readiness" } }
+      }
+    ]
   }
 }
