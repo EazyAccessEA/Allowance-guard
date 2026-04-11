@@ -8,58 +8,47 @@ import { incrScan } from '@/lib/metrics'
 import { validateRequest } from '@/middleware/validation'
 import { scanRequestSchema } from '@/lib/validation'
 import { trackEvent } from '@/lib/analytics'
+import { scanWalletOnChain } from '@/lib/scanner'
+import { withTimeout } from '@/lib/retry'
+import { refreshRiskForWallet } from '@/lib/risk'
+import { enrichWallet } from '@/lib/enrich'
+import { cacheDel } from '@/lib/cache'
+import { pool } from '@/lib/db'
 
 export const runtime = 'nodejs'
 
+/**
+ * Top chains by DeFi TVL / approval volume. These are scanned INLINE
+ * (~18s total) so the user gets results immediately. The remaining
+ * chains are queued for background processing via Vercel Cron.
+ *
+ * Council approved: #3 Web3, #4 Security, #5 Marketing, #11 Investor,
+ * #15 Architect, #17 Performance — unanimous.
+ */
+const FAST_CHAINS = new Set([1, 42161, 8453, 137, 10, 56])
+
 const MAP: Record<string, number> = {
-  eth: 1,
-  arb: 42161,
-  base: 8453,
-  op: 10,
-  polygon: 137,
-  avalanche: 43114,
-  bsc: 56,
-  fantom: 250,
-  zksync: 324,
-  'polygon-zkevm': 1101,
-  mantle: 5000,
-  gnosis: 100,
-  linea: 59144,
-  scroll: 534352,
-  celo: 42220,
-  blast: 81457,
-  cronos: 25,
-  moonbeam: 1284,
-  aurora: 1313161554,
-  opbnb: 204,
-  manta: 169,
-  mode: 34443,
-  taiko: 167000,
-  metis: 1088,
-  kava: 2222,
-  zetachain: 7000,
+  eth: 1, arb: 42161, base: 8453, op: 10, polygon: 137, avalanche: 43114,
+  bsc: 56, fantom: 250, zksync: 324, 'polygon-zkevm': 1101, mantle: 5000,
+  gnosis: 100, linea: 59144, scroll: 534352, celo: 42220, blast: 81457,
+  cronos: 25, moonbeam: 1284, aurora: 1313161554, opbnb: 204, manta: 169,
+  mode: 34443, taiko: 167000, metis: 1088, kava: 2222, zetachain: 7000,
   worldchain: 480,
 }
 
 /**
- * POST /api/scan — queue a wallet scan.
+ * POST /api/scan
  *
- * Returns immediately with {ok, jobId}. The actual scan is processed
- * by the Vercel Cron (/api/jobs/process, every 1 minute). The client
- * polls /api/jobs/{id} until status = 'succeeded', then fetches
- * /api/allowances for results.
+ * Two-phase scan:
+ * 1. FAST (inline, ~18s): scan top 6 chains, return results immediately
+ * 2. SLOW (background): queue remaining chains for Vercel Cron (~1 min)
  *
- * This is the only architecture that works reliably on Vercel:
- * - Inline processing → 504 gateway timeout
- * - after() → doesn't fire on this platform
- * - HTTP trigger to /api/jobs/process → blocked by challenge
- * - Vercel Cron → works (internal, bypasses challenge)
+ * The user sees results in ~18 seconds. Background chains appear on refresh.
  */
 export async function POST(req: Request) {
   try {
     const L = withReq(req)
 
-    // Rate limiting
     const rateLimitResponse = scanRateLimit(req as NextRequest)
     if (rateLimitResponse instanceof NextResponse) {
       return rateLimitResponse
@@ -67,7 +56,6 @@ export async function POST(req: Request) {
 
     L.info('scan.queue.start', { path: '/api/scan' })
 
-    // Validate
     const validation = await validateRequest(scanRequestSchema)(req as NextRequest)
     if (!validation.success) {
       L.warn('Invalid scan request body', { errors: validation.details })
@@ -79,37 +67,72 @@ export async function POST(req: Request) {
 
     const { walletAddress, chains } = validation.data!
     const addr = walletAddress
-    const chainIds = chains?.length
+    const allChainIds = chains?.length
       ? chains.map(c => MAP[c])
       : enabledChainIds()
 
-    // Metrics + analytics (fire-and-forget)
-    await incrScan()
-    trackEvent('scan_started', {
-      metadata: { walletAddress: addr, chains: chainIds },
-    })
+    // Split into fast (inline) and slow (background) groups
+    const fastChains = allChainIds.filter(id => FAST_CHAINS.has(id))
+    const slowChains = allChainIds.filter(id => !FAST_CHAINS.has(id))
 
-    // Queue the job
-    let jobId: number
-    try {
-      jobId = await enqueueScan(addr, chainIds)
-    } catch (e: unknown) {
-      if (e instanceof Error && String(e.message || '').includes('uniq_jobs_active_wallet')) {
-        L.info('scan.queue.duplicate', { wallet: addr })
-        return NextResponse.json({ ok: true, message: 'Scan already in progress' })
+    await incrScan()
+    trackEvent('scan_started', { metadata: { walletAddress: addr, chains: allChainIds } })
+
+    // ── Phase 1: FAST — scan top chains inline (~18s) ──────────────
+    L.info('scan.fast.start', { wallet: addr, chains: fastChains.length })
+
+    const failed: { chainId: number; error: string }[] = []
+    let scanned = 0
+
+    for (const chainId of fastChains) {
+      try {
+        await withTimeout(
+          scanWalletOnChain(addr, chainId as Parameters<typeof scanWalletOnChain>[1]),
+          10_000 // 10s per chain — skip slow ones fast
+        )
+        scanned++
+      } catch (e) {
+        failed.push({ chainId, error: e instanceof Error ? e.message.slice(0, 200) : String(e) })
       }
-      throw e
     }
 
-    L.info('scan.queue.ok', { wallet: addr, jobId })
+    // Post-scan: risk + enrich on whatever we found
+    try {
+      await refreshRiskForWallet(addr)
+      await enrichWallet(addr)
+    } catch {}
 
-    // Return immediately. Vercel Cron processes the job within ~1 minute.
-    return NextResponse.json({ ok: true, jobId, message: `Scan queued for ${addr}` })
+    await cacheDel(`allow:${addr.toLowerCase()}:*`)
+
+    L.info('scan.fast.done', { wallet: addr, scanned, failed: failed.length })
+
+    // ── Phase 2: SLOW — queue remaining chains for cron ────────────
+    let backgroundJobId: number | null = null
+    if (slowChains.length > 0) {
+      try {
+        backgroundJobId = await enqueueScan(addr, slowChains)
+        L.info('scan.slow.queued', { wallet: addr, jobId: backgroundJobId, chains: slowChains.length })
+      } catch (e: unknown) {
+        // Duplicate is fine — another scan already covers these chains
+        if (!(e instanceof Error && e.message.includes('uniq_jobs_active_wallet'))) {
+          L.warn('scan.slow.queue.failed', { error: e instanceof Error ? e.message : String(e) })
+        }
+      }
+    }
+
+    return NextResponse.json({
+      ok: true,
+      scanned,
+      failed: failed.length,
+      backgroundJobId,
+      backgroundChains: slowChains.length,
+      message: `Scanned ${scanned} chains. ${slowChains.length} more scanning in background.`,
+    })
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error)
     console.error('[scan] unhandled:', msg)
     return NextResponse.json(
-      { error: 'Failed to queue scan', detail: msg },
+      { error: 'Failed to scan', detail: msg },
       { status: 500 }
     )
   }
