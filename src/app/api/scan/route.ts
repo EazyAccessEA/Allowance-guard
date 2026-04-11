@@ -1,15 +1,22 @@
 // app/api/scan/route.ts
-import { NextResponse, NextRequest } from 'next/server'
-import { enqueueScan } from '@/lib/jobs'
-import { withReq } from '@/lib/logger'
+import { NextResponse, NextRequest, after } from 'next/server'
+import { enqueueScan, claimPending, finishJob } from '@/lib/jobs'
+import { withReq, apiLogger } from '@/lib/logger'
 import { enabledChainIds } from '@/lib/networks'
 import { scanRateLimit } from '@/lib/rate-limit'
 import { incrScan } from '@/lib/metrics'
 import { validateRequest } from '@/middleware/validation'
 import { scanRequestSchema } from '@/lib/validation'
 import { trackEvent } from '@/lib/analytics'
+import { scanWalletOnChain } from '@/lib/scanner'
+import { withTimeout } from '@/lib/retry'
+import { refreshRiskForWallet } from '@/lib/risk'
+import { enrichWallet } from '@/lib/enrich'
+import { cacheDel } from '@/lib/cache'
+import { pool } from '@/lib/db'
 
 export const runtime = 'nodejs'
+export const maxDuration = 180 // 3 min — enough for 27-chain scan in after()
 
 const MAP: Record<string, number> = {
   eth: 1,
@@ -97,11 +104,53 @@ export async function POST(req: Request) {
 
     L.info('scan.queue.ok', { wallet: addr, jobId })
 
-    // Trigger job processing immediately — server-side, bypasses
-    // Vercel challenge. The client can't call /api/jobs/process
-    // directly because the challenge blocks browser fetches.
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    fetch(`${appUrl}/api/jobs/process`, { method: 'POST' }).catch(() => {})
+    // Process the scan job in the BACKGROUND after the response is sent.
+    // after() runs using the function's remaining execution time (180s).
+    // No HTTP call needed — bypasses Vercel's challenge entirely.
+    after(async () => {
+      try {
+        const jobs = await claimPending(1)
+        for (const job of jobs) {
+          const payload = job.payload as { wallet: string; chains: number[] }
+          const failed: { chainId: number; error: string }[] = []
+          let scanned = 0
+
+          for (const chainId of payload.chains) {
+            try {
+              await withTimeout(
+                scanWalletOnChain(payload.wallet, chainId as Parameters<typeof scanWalletOnChain>[1]),
+                15_000
+              )
+              scanned++
+            } catch (e) {
+              failed.push({ chainId, error: e instanceof Error ? e.message.slice(0, 200) : String(e) })
+            }
+          }
+
+          // Post-scan tasks
+          try {
+            await refreshRiskForWallet(payload.wallet)
+            await enrichWallet(payload.wallet)
+          } catch {}
+
+          await pool.query(
+            `UPDATE wallet_monitors SET last_scan_at=NOW(), updated_at=NOW() WHERE wallet_address=$1`,
+            [payload.wallet.toLowerCase()]
+          )
+          await cacheDel(`allow:${payload.wallet.toLowerCase()}:*`)
+
+          if (scanned === 0 && failed.length > 0) {
+            await finishJob(job.id, false, `All ${failed.length} chains failed`)
+          } else {
+            await finishJob(job.id, true)
+          }
+
+          apiLogger.info('scan.after.done', { jobId: job.id, scanned, failed: failed.length })
+        }
+      } catch (e) {
+        apiLogger.error('scan.after.error', { error: e instanceof Error ? e.message : String(e) })
+      }
+    })
 
     return NextResponse.json({ ok: true, jobId, message: `Scan queued for ${addr}` })
   } catch (error) {
