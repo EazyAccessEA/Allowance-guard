@@ -163,7 +163,7 @@ AllowanceGuard uses an **open-core model**:
 
 ### Pro Tier ($9.99/month or $79/year)
 - Unlimited wallets
-- Multi-chain portfolio view (all 10 chains)
+- Multi-chain portfolio view (all 27 chains)
 - Continuous monitoring with email/Telegram alerts
 - Batch revocation with gas savings display
 - Historical risk timeline
@@ -369,17 +369,34 @@ E2E_FAKE_PAYMENTS=true    # Skip Stripe/Coinbase in tests
 E2E_FAKE_EMAIL=true       # Skip email sending in tests
 ```
 
-## Supported Chains
+## Supported Chains (27 EVM networks)
 1. Ethereum (mainnet)
 2. Arbitrum
 3. Base
-4. Polygon
-5. Optimism
+4. Optimism
+5. Polygon
 6. Avalanche
 7. BNB Smart Chain (BSC)
 8. Fantom
 9. zkSync Era
 10. Polygon zkEVM
+11. Mantle
+12. Gnosis
+13. Linea
+14. Scroll
+15. Celo
+16. Blast
+17. Cronos
+18. Moonbeam
+19. Aurora
+20. opBNB
+21. Manta Pacific
+22. Mode
+23. Taiko
+24. Metis
+25. Kava
+26. ZetaChain
+27. Worldchain
 
 ## Common Commands
 

@@ -170,7 +170,7 @@ export default function Hero({
               <span className="font-plex text-sm text-ink-whisper">Or:</span>
               <ClientConnectButton variant="secondary" size="default" />
               <span className="font-plex text-xs text-ink-whisper">
-                connect to scan your own wallet across all 15 chains
+                connect to scan your own wallet across all 27 chains
               </span>
             </motion.div>
           )}

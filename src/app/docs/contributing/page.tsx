@@ -214,7 +214,7 @@ export default function ContributingPage() {
                 {expandedSection === 'future' && (
                   <div className="px-8 pb-8 animate-fade-in expand-enter">
                     <p className="text-lg text-ink-soft leading-relaxed">
-                      Your contributions enable us to build specific, upcoming features that will significantly expand AllowanceGuard&rsquo;s capabilities. These include adding chain support beyond our current 15 EVM networks, sharper risk-detection rules informed by post-mortem analysis of new exploits, mobile applications for iOS and Android, advanced team collaboration features, and deeper integrations with popular DeFi protocols.
+                      Your contributions enable us to build specific, upcoming features that will significantly expand AllowanceGuard&rsquo;s capabilities. These include adding chain support beyond our current 27 EVM networks, sharper risk-detection rules informed by post-mortem analysis of new exploits, mobile applications for iOS and Android, advanced team collaboration features, and deeper integrations with popular DeFi protocols.
                     </p>
                   </div>
                 )}

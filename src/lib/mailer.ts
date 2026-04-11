@@ -416,13 +416,13 @@ export async function sendReEngagementEmail(to: string, plan: string) {
       <h3 style="margin-top: 0;">Here's what you're missing:</h3>
       <ul style="margin-bottom: 0;">
         ${planLabel === 'Sentinel' ? `
-        <li>Monitoring up to 50 wallets across 15 chains</li>
+        <li>Monitoring up to 50 wallets across 27 chains</li>
         <li>Automated revocation rules protecting your assets 24/7</li>
         <li>Team dashboard with role-based access</li>
         <li>Compliance-ready audit logs</li>
         <li>Webhook integrations and priority support</li>
         ` : `
-        <li>Unlimited wallet scanning across all 15 chains</li>
+        <li>Unlimited wallet scanning across all 27 chains</li>
         <li>Continuous monitoring with real-time email alerts</li>
         <li>Batch revocation with gas savings</li>
         <li>Historical risk timeline for your approvals</li>
