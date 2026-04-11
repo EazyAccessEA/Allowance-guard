@@ -42,25 +42,24 @@ export async function getJob(id: number) {
   return rows[0] || null
 }
 
-/** Claim up to N jobs for processing. */
-export async function claimPending(limit = 3) {
-  // Neon serverless driver doesn't support pool.connect(); use sequential queries.
-  // Use an UPDATE ... RETURNING pattern to atomically claim pending jobs.
-  const { rows } = await pool.query(
-    `UPDATE jobs SET status='running'::job_status, started_at=NOW(), updated_at=NOW(), attempts=attempts+1
-     WHERE id IN (
-       SELECT id FROM jobs
-       WHERE status='pending'::job_status
-       ORDER BY created_at ASC
-       LIMIT $1
-     )
-     RETURNING id`,
-    [limit]
+/** Claim the oldest pending job for processing. */
+export async function claimPending(_limit = 1) {
+  // Step 1: find the oldest pending job (simple SELECT, no subquery)
+  const { rows: pending } = await pool.query(
+    `SELECT id FROM jobs WHERE status='pending'::job_status ORDER BY created_at ASC LIMIT 1`
   )
-  if (!rows.length) return []
-  const ids = rows.map((r: Record<string, unknown>) => r.id)
-  const { rows: jobs } = await pool.query(`SELECT * FROM jobs WHERE id = ANY($1::bigint[])`, [ids])
-  return jobs as unknown as JobRow[]
+  if (!pending.length) return []
+
+  // Step 2: atomically claim it (check status again to prevent double-claim)
+  const jobId = pending[0].id
+  const { rows: claimed } = await pool.query(
+    `UPDATE jobs SET status='running'::job_status, started_at=NOW(), updated_at=NOW(), attempts=attempts+1
+     WHERE id=$1 AND status='pending'::job_status
+     RETURNING *`,
+    [jobId]
+  )
+  if (!claimed.length) return [] // another worker claimed it first
+  return claimed as unknown as JobRow[]
 }
 
 export async function finishJob(id: number, ok: boolean, error?: string) {

@@ -89,6 +89,13 @@ export async function POST(_req: NextRequest) {
     // Reset jobs stuck in 'running' from previous timed-out invocations
     await resetStuckJobs()
 
+    // Debug: count pending jobs so we can see if the queue has work
+    const { rows: debugRows } = await pool.query(
+      `SELECT COUNT(*)::int as cnt FROM jobs WHERE status='pending'::job_status`
+    )
+    const pendingCount = debugRows[0]?.cnt ?? 0
+    apiLogger.info('jobs.process.start', { pendingCount })
+
     const jobs = await claimPending(1) // one job at a time — each scans 27 chains
     let done = 0
     
@@ -106,7 +113,7 @@ export async function POST(_req: NextRequest) {
       }
     }
     
-    return NextResponse.json({ ok: true, claimed: jobs.length, processed: done })
+    return NextResponse.json({ ok: true, pending: pendingCount, claimed: jobs.length, processed: done })
   } catch (error) {
     reportError(error instanceof Error ? error : new Error(String(error)))
     apiLogger.error('Job processor error', { error: error instanceof Error ? error.message : 'Unknown error' })
