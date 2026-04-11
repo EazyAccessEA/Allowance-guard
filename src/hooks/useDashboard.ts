@@ -119,59 +119,32 @@ export function useDashboard() {
     setError(null)
 
     try {
+      // The scan route processes the job INLINE and returns when done.
+      // No polling needed — the response itself contains the result.
+      setMessage('Scanning — this takes 30–90 seconds…')
       const scanResult = await APIClient.startScan(target)
 
-      if (scanResult.jobId) {
-        setJobId(scanResult.jobId)
-        setMessage(`Scan queued (#${scanResult.jobId})`)
-      } else if (scanResult.ok) {
-        // Duplicate scan — one is already in progress for this address.
-        // Skip the polling loop and just fetch current allowances.
+      if (scanResult.ok && scanResult.scanned != null) {
+        // Inline scan completed — results are already in the DB
+        setMessage(`Scan complete — ${scanResult.scanned} chains scanned`)
+        if (scanResult.jobId) setJobId(scanResult.jobId)
+      } else if (scanResult.ok && !scanResult.jobId) {
+        // Duplicate scan — fetch whatever is already available
         setMessage(scanResult.message || 'Scan already in progress')
-        await fetchAllowances(target, 1, pageSize)
-        setPending(false)
-        return
+      } else if (scanResult.jobId) {
+        // Fallback: if server returned jobId without scanned count,
+        // it may be using the old async flow. Set message and continue.
+        setJobId(scanResult.jobId)
+        setMessage(scanResult.message || 'Scan queued')
       } else {
         throw new Error(scanResult.error || 'Failed to start scan')
       }
 
-      // Job processing is triggered server-side by the scan route
-      // (bypasses Vercel challenge). The polling loop below picks up
-      // the result once the processor finishes (~30-90s).
-
-      let attempts = 0
-      const maxAttempts = 40
-
-      while (attempts < maxAttempts) {
-        await new Promise((r) => setTimeout(r, 3000))
-        attempts++
-
-        try {
-          const status = await APIClient.getJobStatus(scanResult.jobId)
-          if (status.status === 'succeeded') {
-            setMessage('Scan complete')
-            break
-          }
-          if (status.status === 'failed') {
-            throw new Error(`Scan failed: ${status.error || 'Unknown error'}`)
-          }
-          setMessage(`Scanning… (attempt ${status.attempts || attempts})`)
-        } catch (pollError) {
-          console.error('Polling error:', pollError)
-          if (attempts >= maxAttempts) {
-            throw new Error('Scan timed out - please try again')
-          }
-        }
-      }
-
+      // Fetch the results
       try {
-        await Promise.allSettled([
-          APIClient.refreshRisk(target),
-          APIClient.enrichData(target),
-        ])
         await fetchAllowances(target, 1, pageSize)
       } catch (postScanError) {
-        console.error('Post-scan tasks failed:', postScanError)
+        console.error('Post-scan fetch failed:', postScanError)
       }
     } catch (err) {
       handleError(err as Error, 'startScan')

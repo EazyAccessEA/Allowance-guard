@@ -104,55 +104,48 @@ export async function POST(req: Request) {
 
     L.info('scan.queue.ok', { wallet: addr, jobId })
 
-    // Process the scan job in the BACKGROUND after the response is sent.
-    // after() runs using the function's remaining execution time (180s).
-    // No HTTP call needed — bypasses Vercel's challenge entirely.
-    after(async () => {
+    // Process the scan INLINE — not via after(), not via HTTP trigger,
+    // not via cron. The response waits until the scan completes (~30-90s).
+    // This is the only reliable path because Vercel's challenge blocks
+    // all HTTP triggers, and after() doesn't fire on this platform.
+    const failed: { chainId: number; error: string }[] = []
+    let scanned = 0
+
+    for (const chainId of chainIds) {
       try {
-        const jobs = await claimPending(1)
-        for (const job of jobs) {
-          const payload = job.payload as { wallet: string; chains: number[] }
-          const failed: { chainId: number; error: string }[] = []
-          let scanned = 0
-
-          for (const chainId of payload.chains) {
-            try {
-              await withTimeout(
-                scanWalletOnChain(payload.wallet, chainId as Parameters<typeof scanWalletOnChain>[1]),
-                15_000
-              )
-              scanned++
-            } catch (e) {
-              failed.push({ chainId, error: e instanceof Error ? e.message.slice(0, 200) : String(e) })
-            }
-          }
-
-          // Post-scan tasks
-          try {
-            await refreshRiskForWallet(payload.wallet)
-            await enrichWallet(payload.wallet)
-          } catch {}
-
-          await pool.query(
-            `UPDATE wallet_monitors SET last_scan_at=NOW(), updated_at=NOW() WHERE wallet_address=$1`,
-            [payload.wallet.toLowerCase()]
-          )
-          await cacheDel(`allow:${payload.wallet.toLowerCase()}:*`)
-
-          if (scanned === 0 && failed.length > 0) {
-            await finishJob(job.id, false, `All ${failed.length} chains failed`)
-          } else {
-            await finishJob(job.id, true)
-          }
-
-          apiLogger.info('scan.after.done', { jobId: job.id, scanned, failed: failed.length })
-        }
+        await withTimeout(
+          scanWalletOnChain(addr, chainId as Parameters<typeof scanWalletOnChain>[1]),
+          15_000
+        )
+        scanned++
       } catch (e) {
-        apiLogger.error('scan.after.error', { error: e instanceof Error ? e.message : String(e) })
+        failed.push({ chainId, error: e instanceof Error ? e.message.slice(0, 200) : String(e) })
       }
-    })
+    }
 
-    return NextResponse.json({ ok: true, jobId, message: `Scan queued for ${addr}` })
+    L.info('scan.inline.summary', { jobId, wallet: addr, scanned, failed: failed.length, total: chainIds.length })
+
+    // Post-scan tasks
+    try {
+      await refreshRiskForWallet(addr)
+      await enrichWallet(addr)
+    } catch (e) {
+      L.warn('scan.post.failed', { error: e instanceof Error ? e.message : String(e) })
+    }
+
+    await pool.query(
+      `UPDATE wallet_monitors SET last_scan_at=NOW(), updated_at=NOW() WHERE wallet_address=$1`,
+      [addr.toLowerCase()]
+    )
+    await cacheDel(`allow:${addr.toLowerCase()}:*`)
+
+    if (scanned === 0 && failed.length > 0) {
+      await finishJob(jobId, false, `All ${failed.length} chains failed. First: ${failed[0].error}`)
+      return NextResponse.json({ ok: true, jobId, scanned: 0, failed: failed.length, message: 'Scan failed — all chains unreachable' })
+    }
+
+    await finishJob(jobId, true)
+    return NextResponse.json({ ok: true, jobId, scanned, failed: failed.length, message: `Scanned ${scanned} chains` })
   } catch (error) {
     // Surface the ACTUAL error message so we stop debugging blind
     const msg = error instanceof Error ? error.message : String(error)
