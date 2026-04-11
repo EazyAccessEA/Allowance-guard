@@ -91,9 +91,33 @@ export default function PrivacyPage() {
                   <div className="border-l-4 border-amber-400 pl-6">
                     <h3 className="text-lg font-semibold mb-2 text-ink">Email Addresses</h3>
                     <p className="text-ink-soft">
-                      Used for: account authentication (magic links), subscription billing notifications,
-                      monitoring alerts (Pro/Sentinel), trial expiration notices, and security notifications.
+                      Used for: subscription billing notifications,
+                      monitoring alerts (Pro/Sentinel), trial expiration notices, security notifications,
+                      and team invitations. Account authentication uses SIWE (Sign-In with Ethereum) &mdash;
+                      you sign a message with your wallet, no email required for login.
                       Never shared with third parties for marketing.
+                    </p>
+                  </div>
+
+                  <div className="border-l-4 border-amber-400 pl-6">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Wallet Addresses</h3>
+                    <p className="text-ink-soft">
+                      When you scan a wallet (with or without signing in), we store the wallet address to retrieve
+                      and display your token approvals. When you sign in via SIWE (Sign-In with Ethereum), your
+                      wallet address is linked to your account and may constitute personal data under GDPR if it
+                      can be associated with you. We use wallet addresses solely for providing the scanning,
+                      monitoring, and alerting services you requested.
+                    </p>
+                  </div>
+
+                  <div className="border-l-4 border-amber-400 pl-6">
+                    <h3 className="text-lg font-semibold mb-2 text-ink">Analytics Events</h3>
+                    <p className="text-ink-soft">
+                      If you accept analytics in the cookie banner, we collect anonymous usage events
+                      (e.g. scan started, wallet connected) stored in our own database &mdash; not via
+                      third-party analytics services and not via cookies. These events are gated by your
+                      consent: if you select &ldquo;Essential only,&rdquo; no analytics events are recorded.
+                      You can change your preference at any time by clearing your browser storage.
                     </p>
                   </div>
 

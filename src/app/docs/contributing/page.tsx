@@ -35,7 +35,7 @@ export default function ContributingPage() {
           </span>
           <H1 className="mb-6 text-ink">Fund the mission. Build the public layer.</H1>
           <p className="text-lg text-ink-soft max-w-reading">
-            AllowanceGuard&rsquo;s core scanner is open source and free forever. The premium tiers fund the team &mdash; but the public good only stays public if the people who benefit from it pitch in. Code, bug reports, and donations all count.
+            AllowanceGuard&rsquo;s core scanner is free and open source. Always. The premium tiers fund the team &mdash; but the public good only stays public if the people who benefit from it pitch in. Code, bug reports, and donations all count.
           </p>
         </Container>
       </Section>
