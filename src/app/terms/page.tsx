@@ -202,7 +202,7 @@ export default function TermsPage() {
                   <div className="border-l-4 border-crimson-500 pl-6 py-4 rounded-r-lg bg-red-500/5">
                     <h3 className="text-lg font-semibold mb-2 text-red-800">Service Provided &ldquo;As Is&rdquo;</h3>
                     <p className="text-ink-soft text-sm leading-relaxed">
-                      To the fullest extent permitted by law, the service is provided on an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis, without warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, completeness, or uninterrupted availability. We do not warrant that the scanner will detect every approval, that risk scores are correct, or that revocation transactions will succeed.
+                      To the fullest extent permitted by law, the service is provided on an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis, without warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, completeness, or uninterrupted availability. We do not warrant that the scanner will detect every approval, that risk scores are correct, or that revocation transactions will succeed. Scan results reflect data available from supported networks at the time of the scan. RPC failures, blockchain delays, or network congestion may result in incomplete results for one or more chains. Always verify critical security decisions on a block explorer.
                     </p>
                   </div>
 

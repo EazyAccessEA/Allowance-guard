@@ -202,8 +202,8 @@ export default function CookieBanner() {
                     <ToggleRow
                       icon={<Shield className="w-4 h-4 text-emerald-800" />}
                       title="Essential"
-                      description="Required. Wallet connection, session, CSRF."
-                      retention="Session-based"
+                      description="Required. Wallet session (ag_sess, 30 days) and CSRF protection."
+                      retention="Up to 30 days"
                       checked={true}
                       disabled={true}
                     />

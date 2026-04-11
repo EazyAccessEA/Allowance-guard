@@ -144,7 +144,7 @@ export default function ContributePage() {
             <div className="max-w-2xl mx-auto text-center">
               <div className="bg-paper-sub border border-amber-700 rounded-lg p-6">
                 <p className="text-sm text-amber-deep">
-                  No worries — the core scanner is free forever. If you change your mind, see{' '}
+                  No worries — the core scanner is free and open source. Always. If you change your mind, see{' '}
                   <a 
                     href="/docs/contributing" 
                     className="underline hover:text-amber-deep transition-colors duration-200"

@@ -76,14 +76,18 @@ export default function CookiesPage() {
                 </div>
 
                 <div className="border border-ink-rule rounded-md p-6 mb-6 bg-paper-sub">
-                  <h3 className="text-lg text-ink mb-3">Analytics Cookies</h3>
+                  <h3 className="text-lg text-ink mb-3">Analytics (Not Cookie-Based)</h3>
                   <p className="text-base text-ink-soft mb-3">
-                    These cookies help us understand how our service is used to improve it.
+                    AllowanceGuard does not set analytics cookies. Instead, if you accept analytics in the
+                    cookie banner, we collect anonymous usage events (e.g. scan started, wallet connected) and
+                    store them in our own database &mdash; not via third-party analytics services. No tracking
+                    cookies are set for this purpose.
                   </p>
                   <ul className="space-y-2 text-base text-ink-soft">
-                    <li>• <strong>Usage Statistics:</strong> Anonymous data about how the service is used</li>
-                    <li>• <strong>Performance Monitoring:</strong> Data to improve site speed and reliability</li>
-                    <li>• <strong>Error Tracking:</strong> Information about technical issues (no personal data)</li>
+                    <li>• <strong>Consent-gated:</strong> If you select &ldquo;Essential only,&rdquo; zero analytics events are recorded</li>
+                    <li>• <strong>Server-side storage:</strong> Events stored in our PostgreSQL database, not in your browser</li>
+                    <li>• <strong>No third parties:</strong> No Google Analytics, Mixpanel, or any external tracker</li>
+                    <li>• <strong>Error Tracking:</strong> Rollbar may receive error reports for debugging (no personal data)</li>
                   </ul>
                 </div>
               </section>
@@ -133,9 +137,10 @@ export default function CookiesPage() {
                   Different cookies are stored for different periods:
                 </p>
                 <ul className="space-y-2 text-base text-ink-soft">
-                  <li>• <strong>Session Cookies:</strong> Deleted when you close your browser</li>
-                  <li>• <strong>Preference Cookies:</strong> Stored for up to 1 year</li>
-                  <li>• <strong>Analytics Cookies:</strong> Stored for up to 2 years</li>
+                  <li>• <strong>Session Cookie (ag_sess):</strong> Up to 30 days</li>
+                  <li>• <strong>CSRF Token:</strong> Per-session (deleted when you close your browser)</li>
+                  <li>• <strong>Cookie Consent Preference:</strong> Stored in localStorage (no expiry, clearable anytime)</li>
+                  <li>• <strong>Analytics Events:</strong> Database records retained up to 2 years (not cookies)</li>
                 </ul>
               </section>
 
