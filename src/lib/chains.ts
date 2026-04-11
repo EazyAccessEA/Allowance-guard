@@ -31,7 +31,7 @@ function makeTransport(endpoints: RpcEndpoint[], chainId: number): Transport {
     .map(ep =>
       http(ep.url, {
         timeout: ep.timeoutMs ?? 12_000,
-        batch: true,
+        batch: false,
         retryCount: 0,     // we'll own retry policy outside
         onFetchResponse: async () => { 
           if (!notBanned(ep.url)) ban.delete(ep.url); 
