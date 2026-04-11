@@ -124,6 +124,7 @@ export async function POST(req: Request) {
       ok: true,
       scanned,
       failed: failed.length,
+      failedDetails: failed.slice(0, 6),
       backgroundJobId,
       backgroundChains: slowChains.length,
       message: `Scanned ${scanned} chains. ${slowChains.length} more scanning in background.`,
