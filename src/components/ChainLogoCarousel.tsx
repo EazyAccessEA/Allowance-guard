@@ -13,7 +13,7 @@
  * aesthetic without depending on third-party brand assets.
  *
  * Council:
- *  #5 Marketing: trust signal preserved — the count "15 EVM networks" and
+ *  #5 Marketing: trust signal preserved — the count "27 EVM networks" and
  *    the full list of names remain the proof
  *  #7 Visual / Maren: uniform type beats broken mixed-media
  *  #8 Accessibility / Noor: text has native AA contrast and native
@@ -29,8 +29,8 @@ const CHAINS = [
   'Ethereum',
   'Arbitrum',
   'Base',
-  'Polygon',
   'Optimism',
+  'Polygon',
   'Avalanche',
   'BNB Chain',
   'Fantom',
@@ -41,6 +41,18 @@ const CHAINS = [
   'Linea',
   'Scroll',
   'Celo',
+  'Blast',
+  'Cronos',
+  'Moonbeam',
+  'Aurora',
+  'opBNB',
+  'Manta Pacific',
+  'Mode',
+  'Taiko',
+  'Metis',
+  'Kava',
+  'ZetaChain',
+  'Worldchain',
 ]
 
 export default function ChainLogoCarousel() {
@@ -64,7 +76,7 @@ export default function ChainLogoCarousel() {
               Coverage
             </span>
             <span className="font-plex text-sm text-ink-muted">
-              Scanning approvals across <strong className="text-ink font-semibold">15 EVM networks</strong>
+              Scanning approvals across <strong className="text-ink font-semibold">27 EVM networks</strong>
             </span>
           </div>
           <span className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase text-ink-whisper">

@@ -58,7 +58,7 @@ export default function TermsPage() {
                     Allowance Guard is a Web3 wallet security platform. The core scanner is free and open source. Premium services are available via paid subscriptions.
                   </p>
                   <ul className="mt-4 space-y-2 text-ink-soft">
-                    <li>• View and manage token approvals across 15 blockchain networks</li>
+                    <li>• View and manage token approvals across 27 blockchain networks</li>
                     <li>• Identify risky, unlimited, and Permit2 approvals</li>
                     <li>• Revoke token approvals with one-click transactions</li>
                     <li>• <strong>Pro/Sentinel:</strong> Continuous monitoring, email/Telegram alerts, batch revocation, historical timeline, export reports</li>

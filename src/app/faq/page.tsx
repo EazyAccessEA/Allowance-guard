@@ -153,7 +153,7 @@ export default function FAQPage() {
                 <div className="p-8">
                   <h3 className="mobbin-heading-3 text-ink mb-6">Which wallets and chains do you support?</h3>
                   <p className="mobbin-body-large text-ink-muted leading-relaxed">
-                    Any EVM-compatible wallet: MetaMask, Coinbase Wallet, WalletConnect, and others. We cover 15 chains: Ethereum, Arbitrum, Base, Polygon, Optimism, Avalanche, BNB Chain, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, and Celo.
+                    Any EVM-compatible wallet: MetaMask, Coinbase Wallet, WalletConnect, and others. We cover 27 EVM chains: Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, BNB Chain, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, Celo, Blast, Cronos, Moonbeam, Aurora, opBNB, Manta Pacific, Mode, Taiko, Metis, Kava, ZetaChain, and Worldchain.
                   </p>
                 </div>
               </div>

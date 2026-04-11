@@ -14,7 +14,7 @@ export default function DocsContentPrimary({ section }: Props) {
  AllowanceGuard Documentation
  </h2>
  <p className="text-lg text-ink-soft leading-relaxed">
- Find and revoke risky token approvals across 15 EVM chains &mdash; through the dashboard, the browser extension, or the public API. These docs cover all three.
+ Find and revoke risky token approvals across 27 EVM chains &mdash; through the dashboard, the browser extension, or the public API. These docs cover all three.
  </p>
  </div>
 
@@ -36,7 +36,7 @@ export default function DocsContentPrimary({ section }: Props) {
  </h3>
  <div className="grid sm:grid-cols-2 gap-4">
  <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
- <h4 className="font-semibold text-ink mb-2 text-sm">15 EVM chains</h4>
+ <h4 className="font-semibold text-ink mb-2 text-sm">27 EVM chains</h4>
  <p className="text-sm text-ink-soft leading-relaxed">
  Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, BNB Chain, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, and Celo.
  </p>

@@ -39,7 +39,7 @@ export const TIERS: PricingTier[] = [
     highlighted: true,
     features: [
       'Unlimited wallets',
-      'Multi-chain portfolio (15 chains)',
+      'Multi-chain portfolio (27 chains)',
       'Continuous monitoring',
       'Email & Telegram alerts',
       'Batch revocation',
