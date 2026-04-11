@@ -1,22 +1,15 @@
 // app/api/scan/route.ts
-import { NextResponse, NextRequest, after } from 'next/server'
-import { enqueueScan, claimPending, finishJob } from '@/lib/jobs'
-import { withReq, apiLogger } from '@/lib/logger'
+import { NextResponse, NextRequest } from 'next/server'
+import { enqueueScan } from '@/lib/jobs'
+import { withReq } from '@/lib/logger'
 import { enabledChainIds } from '@/lib/networks'
 import { scanRateLimit } from '@/lib/rate-limit'
 import { incrScan } from '@/lib/metrics'
 import { validateRequest } from '@/middleware/validation'
 import { scanRequestSchema } from '@/lib/validation'
 import { trackEvent } from '@/lib/analytics'
-import { scanWalletOnChain } from '@/lib/scanner'
-import { withTimeout } from '@/lib/retry'
-import { refreshRiskForWallet } from '@/lib/risk'
-import { enrichWallet } from '@/lib/enrich'
-import { cacheDel } from '@/lib/cache'
-import { pool } from '@/lib/db'
 
 export const runtime = 'nodejs'
-export const maxDuration = 180 // 3 min — enough for 27-chain scan in after()
 
 const MAP: Record<string, number> = {
   eth: 1,
@@ -34,14 +27,12 @@ const MAP: Record<string, number> = {
   linea: 59144,
   scroll: 534352,
   celo: 42220,
-  // Phase 9.6 — Tier 1
   blast: 81457,
   cronos: 25,
   moonbeam: 1284,
   aurora: 1313161554,
   opbnb: 204,
   manta: 169,
-  // Phase 9.6 — Tier 2
   mode: 34443,
   taiko: 167000,
   metis: 1088,
@@ -50,13 +41,25 @@ const MAP: Record<string, number> = {
   worldchain: 480,
 }
 
+/**
+ * POST /api/scan — queue a wallet scan.
+ *
+ * Returns immediately with {ok, jobId}. The actual scan is processed
+ * by the Vercel Cron (/api/jobs/process, every 1 minute). The client
+ * polls /api/jobs/{id} until status = 'succeeded', then fetches
+ * /api/allowances for results.
+ *
+ * This is the only architecture that works reliably on Vercel:
+ * - Inline processing → 504 gateway timeout
+ * - after() → doesn't fire on this platform
+ * - HTTP trigger to /api/jobs/process → blocked by challenge
+ * - Vercel Cron → works (internal, bypasses challenge)
+ */
 export async function POST(req: Request) {
-  // Outer try-catch wraps EVERYTHING including rate limiting and logging
-  // so we never return a bare 500 with no body.
   try {
     const L = withReq(req)
 
-    // Apply rate limiting
+    // Rate limiting
     const rateLimitResponse = scanRateLimit(req as NextRequest)
     if (rateLimitResponse instanceof NextResponse) {
       return rateLimitResponse
@@ -64,9 +67,8 @@ export async function POST(req: Request) {
 
     L.info('scan.queue.start', { path: '/api/scan' })
 
-    // Validate request with enhanced validation
+    // Validate
     const validation = await validateRequest(scanRequestSchema)(req as NextRequest)
-
     if (!validation.success) {
       L.warn('Invalid scan request body', { errors: validation.details })
       return NextResponse.json(
@@ -81,16 +83,13 @@ export async function POST(req: Request) {
       ? chains.map(c => MAP[c])
       : enabledChainIds()
 
-    // Increment scan counter (Redis — swallows errors internally)
+    // Metrics + analytics (fire-and-forget)
     await incrScan()
-
-    // Track scan_started analytics event (swallows errors internally)
     trackEvent('scan_started', {
       metadata: { walletAddress: addr, chains: chainIds },
     })
 
-    L.info('Enqueueing wallet scan', { address: addr, chains: chainIds })
-
+    // Queue the job
     let jobId: number
     try {
       jobId = await enqueueScan(addr, chainIds)
@@ -104,53 +103,11 @@ export async function POST(req: Request) {
 
     L.info('scan.queue.ok', { wallet: addr, jobId })
 
-    // Process the scan INLINE — not via after(), not via HTTP trigger,
-    // not via cron. The response waits until the scan completes (~30-90s).
-    // This is the only reliable path because Vercel's challenge blocks
-    // all HTTP triggers, and after() doesn't fire on this platform.
-    const failed: { chainId: number; error: string }[] = []
-    let scanned = 0
-
-    for (const chainId of chainIds) {
-      try {
-        await withTimeout(
-          scanWalletOnChain(addr, chainId as Parameters<typeof scanWalletOnChain>[1]),
-          15_000
-        )
-        scanned++
-      } catch (e) {
-        failed.push({ chainId, error: e instanceof Error ? e.message.slice(0, 200) : String(e) })
-      }
-    }
-
-    L.info('scan.inline.summary', { jobId, wallet: addr, scanned, failed: failed.length, total: chainIds.length })
-
-    // Post-scan tasks
-    try {
-      await refreshRiskForWallet(addr)
-      await enrichWallet(addr)
-    } catch (e) {
-      L.warn('scan.post.failed', { error: e instanceof Error ? e.message : String(e) })
-    }
-
-    await pool.query(
-      `UPDATE wallet_monitors SET last_scan_at=NOW(), updated_at=NOW() WHERE wallet_address=$1`,
-      [addr.toLowerCase()]
-    )
-    await cacheDel(`allow:${addr.toLowerCase()}:*`)
-
-    if (scanned === 0 && failed.length > 0) {
-      await finishJob(jobId, false, `All ${failed.length} chains failed. First: ${failed[0].error}`)
-      return NextResponse.json({ ok: true, jobId, scanned: 0, failed: failed.length, message: 'Scan failed — all chains unreachable' })
-    }
-
-    await finishJob(jobId, true)
-    return NextResponse.json({ ok: true, jobId, scanned, failed: failed.length, message: `Scanned ${scanned} chains` })
+    // Return immediately. Vercel Cron processes the job within ~1 minute.
+    return NextResponse.json({ ok: true, jobId, message: `Scan queued for ${addr}` })
   } catch (error) {
-    // Surface the ACTUAL error message so we stop debugging blind
     const msg = error instanceof Error ? error.message : String(error)
-    const stack = error instanceof Error ? error.stack?.split('\n').slice(0, 3).join(' | ') : ''
-    console.error('[scan] unhandled:', msg, stack)
+    console.error('[scan] unhandled:', msg)
     return NextResponse.json(
       { error: 'Failed to queue scan', detail: msg },
       { status: 500 }

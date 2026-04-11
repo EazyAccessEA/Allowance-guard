@@ -5,7 +5,7 @@
     "app/**/route.ts": { "maxDuration": 60 }
   },
   "crons": [
-    { "path": "/api/jobs/process",    "schedule": "*/5 * * * *"  },
+    { "path": "/api/jobs/process",    "schedule": "* * * * *"    },
     { "path": "/api/monitor/cron",    "schedule": "*/15 * * * *" },
     { "path": "/api/rules/evaluate",  "schedule": "*/15 * * * *" },
     { "path": "/api/webhooks/process", "schedule": "*/5 * * * *" },
