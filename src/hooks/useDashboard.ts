@@ -115,66 +115,30 @@ export function useDashboard() {
     if (pending) return
 
     setPending(true)
-    setMessage('Queuing…')
+    setMessage('Scanning top chains…')
     setError(null)
 
     try {
+      // Phase 1: scan top 6 chains inline (~18s), returns with results
       const scanResult = await APIClient.startScan(target)
 
-      if (scanResult.jobId) {
-        setJobId(scanResult.jobId)
-        setMessage('Scan queued — processing starts within 1 minute…')
-      } else if (scanResult.ok) {
-        // Duplicate scan — fetch whatever is already available
+      if (scanResult.ok && scanResult.scanned != null) {
+        // Fast scan completed — results are in the DB
+        const bg = scanResult.backgroundChains || 0
+        setMessage(
+          bg > 0
+            ? `Found approvals on ${scanResult.scanned} chains. ${bg} more scanning in background.`
+            : `Scan complete — ${scanResult.scanned} chains checked.`
+        )
+      } else if (scanResult.ok && !scanResult.scanned) {
+        // Duplicate or already-in-progress scan
         setMessage(scanResult.message || 'Scan already in progress')
-        await fetchAllowances(target, 1, pageSize)
-        setPending(false)
-        return
       } else {
         throw new Error(scanResult.error || 'Failed to start scan')
       }
 
-      // Poll job status every 5 seconds, up to 3 minutes.
-      // Vercel Cron processes jobs every 1 minute, scanning takes 30-90s.
-      let attempts = 0
-      const maxAttempts = 36 // 36 × 5s = 3 minutes
-
-      while (attempts < maxAttempts) {
-        await new Promise((r) => setTimeout(r, 5000))
-        attempts++
-
-        try {
-          const status = await APIClient.getJobStatus(scanResult.jobId)
-          if (status.status === 'succeeded') {
-            setMessage('Scan complete')
-            break
-          }
-          if (status.status === 'failed') {
-            throw new Error(`Scan failed: ${status.error || 'Unknown error'}`)
-          }
-          // Show progress
-          if (status.status === 'running') {
-            setMessage(`Scanning ${target.slice(0, 8)}… across 27 chains`)
-          } else {
-            setMessage(`Waiting for processor… (${attempts * 5}s)`)
-          }
-        } catch (pollError) {
-          if (pollError instanceof Error && pollError.message.startsWith('Scan failed:')) {
-            throw pollError
-          }
-          console.warn('Poll error (retrying):', pollError)
-          if (attempts >= maxAttempts) {
-            throw new Error('Scan timed out — the processor may be busy. Try again in a minute.')
-          }
-        }
-      }
-
-      // Fetch results
+      // Fetch results — fast-path results are already in the DB
       try {
-        await Promise.allSettled([
-          APIClient.refreshRisk(target),
-          APIClient.enrichData(target),
-        ])
         await fetchAllowances(target, 1, pageSize)
       } catch (postScanError) {
         console.error('Post-scan fetch failed:', postScanError)
