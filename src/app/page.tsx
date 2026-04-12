@@ -1,161 +1,120 @@
-'use client'
-
-import Hero from '@/components/Hero'
-import HowItWorks from '@/components/HowItWorks'
-import FeaturesPreview from '@/components/FeaturesPreview'
-import CTABand from '@/components/CTABand'
-import SampleScanDemo from '@/components/SampleScanDemo'
-import ChainLogoCarousel from '@/components/ChainLogoCarousel'
-import { LazySection } from '@/components/LazySection'
-import { WalletErrorBoundary, RpcErrorBoundary } from '@/components/ErrorBoundary'
+import type { Metadata } from 'next'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { useDashboard } from '@/hooks/useDashboard'
-import dynamicImport from 'next/dynamic'
+import { Eyebrow } from '@/components/ui/Heading'
+import SubscribeForm from '@/app/coming-soon/SubscribeForm'
 
-const StatisticsSection = dynamicImport(() => import('@/components/StatisticsSection'), {
-  loading: () => <div className="animate-pulse bg-paper-sub h-64 w-full" />,
-  ssr: false,
-})
-
-const AppArea = dynamicImport(() => import('@/components/AppArea'), {
-  loading: () => <div className="animate-pulse bg-paper-sub h-96 w-full" />,
-  ssr: false,
-})
-
-const ActivityTimeline = dynamicImport(() => import('@/components/ActivityTimeline'), {
-  loading: () => <div className="animate-pulse bg-paper-sub h-48 w-full" />,
-  ssr: false,
-})
-
-function ErrorFallback({ resetError }: { error: Error; resetError: () => void }) {
-  return (
-    <div className="min-h-screen bg-paper flex items-center justify-center">
-      <div className="max-w-md mx-auto text-center p-6">
-        <h2 className="font-plex font-bold text-3xl text-ink mb-4">Something went wrong</h2>
-        <p className="font-plex text-ink-muted mb-6">
-          An unexpected error occurred. Try refreshing, or contact support if it persists.
-        </p>
-        <button
-          onClick={resetError}
-          className="bg-ink text-paper px-6 py-2 font-plex font-semibold hover:bg-amber-deep transition-colors"
-        >
-          Try Again
-        </button>
-      </div>
-    </div>
-  )
+export const metadata: Metadata = {
+  title: 'AllowanceGuard — Coming Soon',
+  description:
+    'The next generation of wallet security tools. Join the waitlist for early access.',
+  openGraph: {
+    title: 'AllowanceGuard — Coming Soon',
+    description:
+      'Join the waitlist for early access to AllowanceGuard.',
+    url: 'https://www.allowanceguard.com',
+  },
 }
 
-/**
- * Homepage — conversion flow for the Scared Retail persona.
- *
- * Order:
- *  1. Hero (plain-English threat + AddressInput above the fold)
- *  2. Threat (loss aversion: forgotten approvals drain wallets)
- *  3. SampleScanDemo (recognition: here's what a scan looks like)
- *  4. HowItWorks (clarity: three steps, plain copy)
- *  5. FeaturesPreview (differentiation)
- *  6. CTABand (now your turn — single dark inverse moment)
- *  7. ChainLogoCarousel (trust closing bookend)
- *  8. AppArea (inline when wallet selected/connected)
- *
- * Cuts vs v1: Testimonials section removed entirely (no fakes).
- * Will be reinstated when real testimonials exist.
- */
+const UPCOMING = [
+  {
+    numeral: 'I',
+    title: 'Mobile App',
+    description: 'Monitor approvals and revoke on the go. Push notifications for real-time alerts.',
+  },
+  {
+    numeral: 'II',
+    title: 'Developer SDK',
+    description: 'Embed approval scanning and revocation in your own dApp with a few lines of code.',
+  },
+  {
+    numeral: 'III',
+    title: 'New Chains',
+    description: 'Expanding beyond 27 chains. Solana, Sui, and more on the roadmap.',
+  },
+] as const
+
 export default function HomePage() {
-  const {
-    connectedAddress,
-    isConnected,
-    selectedWallet,
-    setSelectedWallet,
-    isHydrated,
-    rows,
-    total,
-    page,
-    pageSize,
-    pending,
-    message,
-    error,
-    startScan,
-    handlePage,
-    handlePageSize,
-    handleRefresh,
-    resetError,
-  } = useDashboard()
-
-  if (error) {
-    return <ErrorFallback error={error} resetError={resetError} />
-  }
-
   return (
-    <div className="min-h-screen bg-paper">
-      {/* 1 — Hero */}
-      <div className="relative z-20">
-        <WalletErrorBoundary>
-          <Hero
-            isConnected={isConnected}
-            onScan={startScan}
-            isScanning={pending}
-            scanMessage={message}
-            onWalletSelect={setSelectedWallet}
-          />
-        </WalletErrorBoundary>
-      </div>
+    <div className="min-h-screen bg-paper text-ink">
+      {/* Hero */}
+      <Section className="relative pt-24 pb-16 sm:pt-32 sm:pb-20 paper grain overflow-hidden">
+        {/* Signature oversized watermark */}
+        <div
+          className="absolute top-8 right-4 sm:right-12 text-[12rem] sm:text-[18rem] leading-none font-serif italic text-ink/[0.03] select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          &amp;
+        </div>
 
-      {/* 2 — Chain coverage (immediate trust evidence) */}
-      <ChainLogoCarousel />
+        <Container size="sm" className="relative z-10">
+          <Eyebrow className="mb-5 text-amber-deep">Early access</Eyebrow>
 
-      {/* 3 — The threat (loss aversion early) */}
-      <LazySection>
-        <StatisticsSection />
-      </LazySection>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif italic text-ink tracking-[-0.02em] leading-[1.1] mb-6">
+            Something new is{' '}
+            <span className="text-crimson-paper">brewing.</span>
+          </h1>
 
-      {/* 4 — Sample scan (recognition + reciprocity) */}
-      <SampleScanDemo />
+          <p className="text-lg sm:text-xl text-ink-soft font-plex leading-relaxed max-w-xl mb-10">
+            We're building the next generation of wallet security tools.
+            Join the waitlist and be the first to know.
+          </p>
 
-      {/* 5 — How it works */}
-      <HowItWorks />
+          <div className="ledger-rule-short mb-10" />
+        </Container>
+      </Section>
 
-      {/* 6 — Features */}
-      <FeaturesPreview />
+      {/* What's coming */}
+      <Section background="muted" className="paper-sub grain py-16 sm:py-20">
+        <Container size="sm">
+          <h2 className="text-2xl sm:text-3xl font-medium text-ink tracking-[-0.01em] mb-10 font-plex">
+            On the horizon
+          </h2>
 
-      {/* 7 — CTA (the single dark moment) */}
-      <CTABand isConnected={isConnected} onScan={startScan} isScanning={pending} />
+          <div className="space-y-6">
+            {UPCOMING.map((item) => (
+              <div
+                key={item.numeral}
+                className="paper-card p-6 sm:p-8 flex gap-5 sm:gap-7 items-start"
+              >
+                <span
+                  className="text-3xl sm:text-4xl font-serif italic text-amber-deep/60 leading-none select-none shrink-0 mt-0.5"
+                  aria-hidden="true"
+                >
+                  {item.numeral}
+                </span>
+                <div>
+                  <h3 className="text-lg font-medium text-ink mb-1 font-plex">
+                    {item.title}
+                  </h3>
+                  <p className="text-ink-muted text-[15px] leading-relaxed font-plex">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
 
-      {/* Inline dashboard when a wallet is selected (paste OR connect) */}
-      {isHydrated && selectedWallet && (
-        <RpcErrorBoundary>
-          <LazySection>
-            <div id="security-dashboard" className="scroll-mt-20" data-testid="security-dashboard">
-              <AppArea
-                isConnected={isConnected}
-                selectedWallet={selectedWallet}
-                setSelectedWallet={setSelectedWallet}
-                rows={rows}
-                total={total}
-                page={page}
-                pageSize={pageSize}
-                onPage={handlePage}
-                onPageSize={handlePageSize}
-                onRefresh={handleRefresh}
-                connectedAddress={connectedAddress}
-                canRevoke={isConnected}
-                loading={pending}
-              />
-            </div>
-          </LazySection>
-        </RpcErrorBoundary>
-      )}
+      {/* Subscribe form */}
+      <Section className="paper grain py-16 sm:py-24">
+        <Container size="xs" className="max-w-md">
+          <SubscribeForm />
+        </Container>
+      </Section>
 
-      {/* Activity timeline */}
-      {isHydrated && selectedWallet && (
-        <Section>
-          <Container>
-            <ActivityTimeline wallet={selectedWallet} />
-          </Container>
-        </Section>
-      )}
+      {/* Oxblood closing band */}
+      <section className="bg-oxblood py-14 sm:py-16 text-center">
+        <Container size="sm">
+          <h2 className="text-2xl sm:text-3xl font-serif italic text-cream tracking-[-0.01em] mb-4">
+            Wallet security, <span className="text-crimson-paper">reimagined.</span>
+          </h2>
+          <p className="text-cream/70 font-plex text-[15px] max-w-md mx-auto">
+            Open source. Independently operated. Built to last.
+          </p>
+        </Container>
+      </section>
     </div>
   )
 }

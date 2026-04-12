@@ -21,6 +21,9 @@ export * from './schema/webhooks'
 export * from './schema/analytics'
 export * from './schema/feature-flags'
 
+// Export waitlist schema
+export * from './schema/waitlist'
+
 export const donations = pgTable('donations', {
   id: uuid('id').defaultRandom().primaryKey(),
   stripeSessionId: text('stripe_session_id').notNull().unique(),

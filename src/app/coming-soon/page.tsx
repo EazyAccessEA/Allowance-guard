@@ -1,27 +1,5 @@
-import Link from 'next/link'
-import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
-import { H1 } from '@/components/ui/Heading'
+import { redirect } from 'next/navigation'
 
 export default function ComingSoonPage() {
-  return (
-    <div className="min-h-screen bg-paper text-ink">
-      
-      <Section className="pt-20 pb-24 sm:pt-24 sm:pb-32">
-        <Container className="text-center">
-          <H1 className="mb-8">Coming Soon</H1>
-          <p className="text-xl text-stone leading-relaxed mb-8 max-w-2xl mx-auto">
-            This feature is in development. Check back soon or follow us for updates.
-          </p>
-          <Link 
-            href="/"
-            className="inline-flex items-center px-6 py-3 bg-cobalt text-cream rounded-lg font-medium hover:bg-cobalt/90 transition-colors duration-200"
-          >
-            Return to Homepage
-          </Link>
-        </Container>
-      </Section>
-
-    </div>
-  )
+  redirect('/')
 }

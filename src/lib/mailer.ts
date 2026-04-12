@@ -497,6 +497,44 @@ export async function sendFailedPaymentEmail(to: string, plan: string, attemptCo
   )
 }
 
+// Waitlist welcome email — sent immediately on subscribe
+export async function sendWaitlistWelcomeEmail(to: string, interest: string, unsubId: string) {
+  const interestLabels: Record<string, string> = {
+    general: 'AllowanceGuard updates',
+    mobile: 'the mobile app',
+    sdk: 'the developer SDK',
+    api: 'the B2B API',
+    chains: 'new chain support',
+  }
+  const interestLabel = interestLabels[interest] || 'AllowanceGuard updates'
+  const unsubUrl = `https://www.allowanceguard.com/api/unsubscribe/waitlist?id=${encodeURIComponent(unsubId)}`
+
+  const content = `
+    <h2 style="color:#0F1115;font-size:22px;margin-top:0;">You're on the list.</h2>
+
+    <p>Thanks for signing up — we'll keep you posted on <strong>${interestLabel}</strong>.</p>
+
+    <div class="success-box">
+      <h3 style="margin-top:0;">What to expect</h3>
+      <ul style="margin-bottom:0;">
+        <li>Early access when we launch new features</li>
+        <li>Occasional updates — no spam, ever</li>
+        <li>A heads-up before public announcements</li>
+      </ul>
+    </div>
+
+    <p style="color:#6b7280;font-size:13px;margin-top:24px;">
+      Changed your mind? <a href="${unsubUrl}" style="color:#3b82f6;">Unsubscribe</a> at any time.
+    </p>
+  `
+
+  return sendMail(
+    to,
+    `You're on the AllowanceGuard waitlist — ${interestLabel}`,
+    content,
+  )
+}
+
 // Test function for SMTP configuration
 export async function testSMTPConnection() {
   try {
