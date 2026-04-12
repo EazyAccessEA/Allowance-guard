@@ -56,7 +56,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-ink-soft font-plex leading-relaxed max-w-xl mb-10">
-            We're building the next generation of wallet security tools.
+            We&apos;re building the next generation of wallet security tools.
             Join the waitlist and be the first to know.
           </p>
 

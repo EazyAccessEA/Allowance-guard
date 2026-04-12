@@ -66,9 +66,9 @@ export default function SubscribeForm() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-xl font-medium text-ink mb-2 font-plex">You're on the list.</h3>
+        <h3 className="text-xl font-medium text-ink mb-2 font-plex">You&apos;re on the list.</h3>
         <p className="text-ink-muted font-plex leading-relaxed">
-          Check your inbox for a welcome email. We'll be in touch when there's news worth sharing.
+          Check your inbox for a welcome email. We&apos;ll be in touch when there&apos;s news worth sharing.
         </p>
       </div>
     )
@@ -90,7 +90,7 @@ export default function SubscribeForm() {
       {/* Interest selector */}
       <fieldset className="mb-5">
         <legend className="text-xs uppercase tracking-[0.15em] text-ink-muted mb-2.5 font-plex font-medium">
-          I'm interested in
+          I&apos;m interested in
         </legend>
         <div className="flex flex-wrap gap-2">
           {INTERESTS.map((opt) => (
