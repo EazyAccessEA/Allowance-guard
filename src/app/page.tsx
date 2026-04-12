@@ -1,119 +1,250 @@
-import type { Metadata } from 'next'
-import Container from '@/components/ui/Container'
-import Section from '@/components/ui/Section'
-import { Eyebrow } from '@/components/ui/Heading'
-import SubscribeForm from '@/app/coming-soon/SubscribeForm'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'AllowanceGuard — Coming Soon',
-  description:
-    'The next generation of wallet security tools. Join the waitlist for early access.',
-  openGraph: {
-    title: 'AllowanceGuard — Coming Soon',
-    description:
-      'Join the waitlist for early access to AllowanceGuard.',
-    url: 'https://www.allowanceguard.com',
-  },
-}
+/**
+ * Homepage — Coming Soon / Waitlist Capture
+ *
+ * Product not yet live. This page replaces the full scanner homepage
+ * with a waitlist capture using the Ledger aesthetic and the actual
+ * component system (SectionHeader, CascadingScrollAnimation, Highlight,
+ * paper-card, paper-button, font-display-tight).
+ *
+ * Council:
+ *  Maren: font-display-tight headlines, Highlight signature move, atmospheric oxblood band
+ *  Kael: uses SectionHeader, paper-card, paper-button — no ad-hoc patterns
+ *  Idris: CascadingScrollAnimation on every section
+ *  #13 UX writer: plain mono numerals, no roman numerals (v3 veto)
+ *  Noor: AAA contrast preserved, semantic form, aria-live
+ *  Thane: no heavy JS — SubscribeForm is the only client island
+ */
+
+import Container from '@/components/ui/Container'
+import SectionHeader from '@/components/ui/SectionHeader'
+import Highlight from '@/components/ui/Highlight'
+import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
+import SubscribeForm from '@/app/coming-soon/SubscribeForm'
 
 const UPCOMING = [
   {
-    numeral: 'I',
-    title: 'Mobile App',
-    description: 'Monitor approvals and revoke on the go. Push notifications for real-time alerts.',
+    number: '01',
+    eyebrow: 'Mobile',
+    title: 'A native app for approvals on the go.',
+    description:
+      'Monitor approvals, receive push alerts, and revoke from your phone. Your wallet security travels with you.',
   },
   {
-    numeral: 'II',
-    title: 'Developer SDK',
-    description: 'Embed approval scanning and revocation in your own dApp with a few lines of code.',
+    number: '02',
+    eyebrow: 'SDK',
+    title: 'Embed security in your own dApp.',
+    description:
+      'A few lines of code to scan approvals, score risk, and trigger revocation — directly inside your product.',
   },
   {
-    numeral: 'III',
-    title: 'New Chains',
-    description: 'Expanding beyond 27 chains. Solana, Sui, and more on the roadmap.',
+    number: '03',
+    eyebrow: 'Chains',
+    title: 'Expanding beyond 27 networks.',
+    description:
+      'Solana, Sui, and more on the roadmap. Every chain gets the same depth of coverage.',
   },
-] as const
+]
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-paper text-ink">
-      {/* Hero */}
-      <Section className="relative pt-24 pb-16 sm:pt-32 sm:pb-20 paper grain overflow-hidden">
-        {/* Signature oversized watermark */}
+    <div className="min-h-screen bg-paper">
+      {/* ── Hero ── */}
+      <section className="paper grain relative min-h-[70svh] flex items-center overflow-hidden">
+        {/* Warm gradient wash — same as live Hero */}
         <div
-          className="absolute top-8 right-4 sm:right-12 text-[12rem] sm:text-[18rem] leading-none font-serif italic text-ink/[0.03] select-none pointer-events-none"
           aria-hidden="true"
-        >
-          &amp;
-        </div>
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 55% at 15% 25%, rgba(245,158,11,0.14) 0%, transparent 55%),' +
+              'radial-gradient(ellipse 60% 45% at 85% 80%, rgba(220,38,38,0.07) 0%, transparent 60%),' +
+              'radial-gradient(ellipse 90% 70% at 50% 50%, rgba(250,244,230,0.6) 0%, transparent 80%)',
+          }}
+        />
 
-        <Container size="sm" className="relative z-10">
-          <Eyebrow className="mb-5 text-amber-deep">Early access</Eyebrow>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif italic text-ink tracking-[-0.02em] leading-[1.1] mb-6">
-            Something new is{' '}
-            <span className="text-crimson-paper">brewing.</span>
-          </h1>
-
-          <p className="text-lg sm:text-xl text-ink-soft font-plex leading-relaxed max-w-xl mb-10">
-            We&apos;re building the next generation of wallet security tools.
-            Join the waitlist and be the first to know.
-          </p>
-
-          <div className="ledger-rule-short mb-10" />
-        </Container>
-      </Section>
-
-      {/* What's coming */}
-      <Section background="muted" className="paper-sub grain py-16 sm:py-20">
-        <Container size="sm">
-          <h2 className="text-2xl sm:text-3xl font-medium text-ink tracking-[-0.01em] mb-10 font-plex">
-            On the horizon
-          </h2>
-
-          <div className="space-y-6">
-            {UPCOMING.map((item) => (
-              <div
-                key={item.numeral}
-                className="paper-card p-6 sm:p-8 flex gap-5 sm:gap-7 items-start"
-              >
-                <span
-                  className="text-3xl sm:text-4xl font-serif italic text-amber-deep/60 leading-none select-none shrink-0 mt-0.5"
-                  aria-hidden="true"
-                >
-                  {item.numeral}
+        <Container className="relative z-10 py-20 sm:py-24 lg:py-28">
+          <div className="max-w-4xl">
+            <CascadingScrollAnimation direction="up" distance={40} delay={0}>
+              <div className="inline-flex items-baseline gap-3 mb-8">
+                <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
+                  Coming Soon
                 </span>
-                <div>
-                  <h3 className="text-lg font-medium text-ink mb-1 font-plex">
+                <span className="h-px w-12 bg-ink-rule" aria-hidden="true" />
+                <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
+                  Open Source
+                </span>
+              </div>
+            </CascadingScrollAnimation>
+
+            <CascadingScrollAnimation direction="up" distance={40} delay={150}>
+              <h1 className="font-display-tight text-ink leading-[0.95] mb-7 text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+                Wallet security,{' '}
+                <Highlight>reimagined.</Highlight>
+              </h1>
+            </CascadingScrollAnimation>
+
+            <CascadingScrollAnimation direction="up" distance={40} delay={300}>
+              <p className="font-plex text-lg sm:text-xl text-ink-soft mb-10 max-w-2xl leading-[1.55]">
+                We&apos;re building the next generation of token approval security.
+                Join the waitlist — be the first to know when we launch.
+              </p>
+            </CascadingScrollAnimation>
+
+            {/* Signature amber hairline */}
+            <CascadingScrollAnimation direction="up" distance={20} delay={450}>
+              <div
+                className="h-px max-w-md"
+                aria-hidden="true"
+                style={{
+                  background:
+                    'linear-gradient(90deg, #F59E0B 0%, rgba(245,158,11,0.35) 60%, transparent 100%)',
+                  boxShadow: '0 0 6px rgba(245, 158, 11, 0.2)',
+                }}
+              />
+            </CascadingScrollAnimation>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── What's coming ── */}
+      <section className="paper-sub grain relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+        <Container>
+          <div className="mb-20 lg:mb-24">
+            <SectionHeader
+              number="01"
+              eyebrow="On the horizon"
+              title={
+                <>
+                  Three things{' '}
+                  <span className="text-ink-muted">
+                    <Highlight>worth waiting for.</Highlight>
+                  </span>
+                </>
+              }
+              lede="Every feature earns its place. Here's what's next."
+            />
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+            {UPCOMING.map((item, i) => (
+              <CascadingScrollAnimation
+                key={item.number}
+                direction="up"
+                distance={40}
+                delay={i * 120}
+              >
+                <div className="paper-card p-8 sm:p-10 h-full flex flex-col">
+                  <div className="flex items-baseline gap-4 mb-5">
+                    <span
+                      className="font-mono text-[11px] font-bold tracking-[0.22em] text-ink/80"
+                      aria-hidden="true"
+                    >
+                      {item.number}
+                    </span>
+                    <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
+                      {item.eyebrow}
+                    </span>
+                  </div>
+                  <h3 className="font-display-tight text-ink leading-[1.05] text-2xl sm:text-3xl mb-4">
                     {item.title}
                   </h3>
-                  <p className="text-ink-muted text-[15px] leading-relaxed font-plex">
+                  <p className="font-plex text-ink-muted text-[15px] leading-relaxed mt-auto">
                     {item.description}
                   </p>
                 </div>
-              </div>
+              </CascadingScrollAnimation>
             ))}
           </div>
         </Container>
-      </Section>
+      </section>
 
-      {/* Subscribe form */}
-      <Section className="paper grain py-16 sm:py-24">
-        <Container size="xs" className="max-w-md">
-          <SubscribeForm />
+      {/* ── Email capture ── */}
+      <section className="paper grain relative py-24 sm:py-32 overflow-hidden">
+        <Container>
+          <CascadingScrollAnimation direction="up" distance={40} delay={0}>
+            <div className="max-w-md mx-auto">
+              <SubscribeForm />
+            </div>
+          </CascadingScrollAnimation>
         </Container>
-      </Section>
+      </section>
 
-      {/* Oxblood closing band */}
-      <section className="bg-oxblood py-14 sm:py-16 text-center">
-        <Container size="sm">
-          <h2 className="text-2xl sm:text-3xl font-serif italic text-cream tracking-[-0.01em] mb-4">
-            Wallet security, <span className="text-crimson-paper">reimagined.</span>
-          </h2>
-          <p className="text-cream/70 font-plex text-[15px] max-w-md mx-auto">
-            Open source. Independently operated. Built to last.
-          </p>
+      {/* ── Oxblood closing band — the single dark inverse moment ── */}
+      <section className="relative py-32 sm:py-40 bg-oxblood overflow-hidden">
+        {/* Atmospheric crimson glow */}
+        <div
+          aria-hidden="true"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[600px] pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 60% 50%, rgba(220,38,38,0.18) 0%, transparent 65%)',
+            filter: 'blur(40px)',
+          }}
+        />
+        {/* Amber undertone */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[300px] pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse, rgba(245,158,11,0.10) 0%, transparent 70%)',
+            filter: 'blur(40px)',
+          }}
+        />
+
+        {/* Top amber hairline */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{
+            background:
+              'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.5) 50%, transparent 90%)',
+            boxShadow: '0 0 12px rgba(245,158,11,0.25)',
+          }}
+        />
+
+        <Container>
+          <CascadingScrollAnimation direction="up" distance={50} delay={0}>
+            <div className="max-w-5xl mx-auto text-center">
+              <div className="inline-flex items-center gap-3 mb-12">
+                <span className="h-px w-8 bg-amber-500" aria-hidden="true" />
+                <span className="font-mono text-[10px] font-bold tracking-[0.28em] uppercase text-amber-500">
+                  The mission
+                </span>
+                <span className="h-px w-8 bg-amber-500" aria-hidden="true" />
+              </div>
+
+              <h2 className="font-display-black leading-[0.9] mb-10 text-5xl sm:text-6xl lg:text-7xl xl:text-[8rem]">
+                <span className="text-cream">Open source.</span>
+                <br />
+                <span className="text-amber-500">
+                  Built to last.
+                </span>
+              </h2>
+
+              <p className="font-plex text-lg sm:text-xl text-cream/75 leading-[1.55] max-w-2xl mx-auto">
+                Independently operated. No shortcuts. No compromise.
+                Wallet security that earns your trust.
+              </p>
+
+              <p className="mt-8 font-mono text-xs text-cream/50 tracking-wider uppercase">
+                Non-custodial &nbsp;·&nbsp; Read-only access &nbsp;·&nbsp; Open source core
+              </p>
+            </div>
+          </CascadingScrollAnimation>
         </Container>
+
+        {/* Bottom amber hairline */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 inset-x-0 h-px"
+          style={{
+            background:
+              'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.5) 50%, transparent 90%)',
+            boxShadow: '0 0 12px rgba(245,158,11,0.25)',
+          }}
+        />
       </section>
     </div>
   )
