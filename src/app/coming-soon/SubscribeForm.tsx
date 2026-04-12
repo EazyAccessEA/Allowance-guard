@@ -1,5 +1,15 @@
 'use client'
 
+/**
+ * SubscribeForm — waitlist email capture
+ *
+ * Council:
+ *  Kael: uses paper-card, paper-pill active pattern, no ad-hoc rounding
+ *  Maren: no bg-white (Ledger rule #1), amber-deep success indicator
+ *  Noor: semantic form, aria-live, focus-visible, sr-only label
+ *  #13 UX: terse microcopy, no fluff
+ */
+
 import { useState, useRef } from 'react'
 
 const INTERESTS = [
@@ -61,13 +71,14 @@ export default function SubscribeForm() {
         role="status"
         aria-live="polite"
       >
-        <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-5">
-          <svg className="w-7 h-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+        {/* Amber check — on-palette */}
+        <div className="w-14 h-14 border-2 border-amber-deep/30 bg-paper-sub flex items-center justify-center mx-auto mb-5">
+          <svg className="w-7 h-7 text-amber-deep" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-xl font-medium text-ink mb-2 font-plex">You&apos;re on the list.</h3>
-        <p className="text-ink-muted font-plex leading-relaxed">
+        <h3 className="font-display-tight text-ink text-xl mb-2">You&apos;re on the list.</h3>
+        <p className="font-plex text-ink-muted leading-relaxed">
           Check your inbox for a welcome email. We&apos;ll be in touch when there&apos;s news worth sharing.
         </p>
       </div>
@@ -80,16 +91,16 @@ export default function SubscribeForm() {
       className="paper-card p-8 sm:p-10"
       noValidate
     >
-      <h3 className="text-xl font-medium text-ink mb-1 font-plex">
+      <h3 className="font-display-tight text-ink text-xl mb-1">
         Get early access
       </h3>
-      <p className="text-ink-muted text-sm mb-6 font-plex">
+      <p className="font-plex text-ink-muted text-sm mb-6">
         Be the first to know when we launch. No spam — just the important stuff.
       </p>
 
-      {/* Interest selector */}
+      {/* Interest selector — paper-pill pattern */}
       <fieldset className="mb-5">
-        <legend className="text-xs uppercase tracking-[0.15em] text-ink-muted mb-2.5 font-plex font-medium">
+        <legend className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-3">
           I&apos;m interested in
         </legend>
         <div className="flex flex-wrap gap-2">
@@ -98,14 +109,14 @@ export default function SubscribeForm() {
               key={opt.value}
               type="button"
               onClick={() => setInterest(opt.value)}
-              className={`
-                px-3.5 py-1.5 rounded-full text-sm font-medium font-plex transition-colors duration-150
-                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper
-                ${interest === opt.value
+              className={[
+                'px-3.5 py-1.5 text-sm font-medium font-plex transition-colors duration-150',
+                'border border-ink-rule',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper',
+                interest === opt.value
                   ? 'bg-ink text-paper'
-                  : 'bg-paper-deep text-ink-soft hover:bg-paper-sub hover:text-ink border border-ink-rule'
-                }
-              `}
+                  : 'bg-paper-deep text-ink-soft hover:bg-paper-sub hover:text-ink',
+              ].join(' ')}
               aria-pressed={interest === opt.value}
             >
               {opt.label}
@@ -129,26 +140,25 @@ export default function SubscribeForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
-            className="
-              flex-1 px-4 py-3 rounded-lg border border-ink-rule bg-white
-              text-ink placeholder:text-ink-whisper font-plex text-[15px]
-              focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent
-              transition-shadow duration-150
-            "
+            className={[
+              'flex-1 px-4 py-3 border border-ink-rule bg-paper',
+              'text-ink placeholder:text-ink-whisper font-plex text-[15px]',
+              'focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent',
+              'transition-shadow duration-150',
+            ].join(' ')}
             aria-describedby={status === 'error' ? 'subscribe-error' : undefined}
           />
           <button
             type="submit"
             disabled={status === 'submitting' || !email.trim()}
-            className="
-              px-6 py-3 rounded-lg font-medium text-[15px] font-plex
-              bg-oxblood text-cream
-              hover:bg-oxblood/90 active:bg-oxblood/80
-              disabled:opacity-50 disabled:cursor-not-allowed
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-2 focus-visible:ring-offset-paper
-              transition-all duration-150
-              whitespace-nowrap
-            "
+            className={[
+              'px-6 py-3 font-medium text-[15px] font-plex whitespace-nowrap',
+              'bg-oxblood text-cream border border-oxblood',
+              'hover:bg-oxblood/90 active:bg-oxblood/80',
+              'disabled:opacity-50 disabled:cursor-not-allowed',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-2 focus-visible:ring-offset-paper',
+              'transition-all duration-150',
+            ].join(' ')}
           >
             {status === 'submitting' ? (
               <span className="flex items-center gap-2">
@@ -182,7 +192,7 @@ export default function SubscribeForm() {
       )}
 
       {/* Privacy note */}
-      <p className="text-xs text-ink-whisper mt-4 font-plex leading-relaxed">
+      <p className="font-plex text-xs text-ink-whisper mt-4 leading-relaxed">
         We respect your privacy. Unsubscribe anytime.{' '}
         <a href="/privacy" className="underline hover:text-ink-muted transition-colors">
           Privacy policy
