@@ -237,17 +237,50 @@ function applyCORS(response: NextResponse, req: NextRequest, _botInfo: ReturnTyp
   return response
 }
 
+/* ── Maintenance gate ─────────────────────────────────────────────────
+ * While the product is pre-launch, redirect every page request to `/`
+ * unless the visitor has the `ag_bypass` cookie (set via /api/bypass).
+ *
+ * Bypass paths: homepage, static assets, API routes (so webhooks, cron,
+ * and the bypass endpoint itself keep working), and /privacy + /terms
+ * (legal pages must stay accessible).
+ * ──────────────────────────────────────────────────────────────────── */
+const MAINTENANCE_BYPASS_COOKIE = 'ag_bypass'
+const MAINTENANCE_ALLOWED = new Set(['/', '/privacy', '/terms', '/coming-soon'])
+
+function isMaintenanceAllowed(pathname: string): boolean {
+  if (MAINTENANCE_ALLOWED.has(pathname)) return true
+  // All API routes stay open (webhooks, cron, bypass, subscribe, etc.)
+  if (pathname.startsWith('/api/') || pathname.startsWith('/api')) return true
+  return false
+}
+
 /** Main Middleware Function with Comprehensive Error Handling */
 export async function middleware(req: NextRequest) {
   const requestId = req.headers.get('x-request-id') || generateUUID()
   let botInfo: ReturnType<typeof isBot> = { isBot: false, category: 'unknown', priority: 'low' }
-  
+
   try {
     // 0. Skip middleware for health checks to prevent 403 errors
     if (req.nextUrl.pathname === '/api/healthz') {
       const response = NextResponse.next()
       response.headers.set('x-request-id', requestId)
       return response
+    }
+
+    // 0.5  Maintenance gate — redirect gated pages to homepage
+    const bypassSecret = process.env.MAINTENANCE_BYPASS_SECRET
+    if (bypassSecret) {
+      const pathname = req.nextUrl.pathname
+      if (!isMaintenanceAllowed(pathname)) {
+        const cookie = req.cookies.get(MAINTENANCE_BYPASS_COOKIE)
+        if (cookie?.value !== bypassSecret) {
+          const url = req.nextUrl.clone()
+          url.pathname = '/'
+          url.search = ''
+          return NextResponse.redirect(url)
+        }
+      }
     }
     
     // 1. Intelligent Bot Detection
