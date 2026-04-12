@@ -41,7 +41,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('ETHEREUM_RPC_URLS', [
       'https://eth.llamarpc.com',
-      'https://rpc.ankr.com/eth'
+      'https://eth.drpc.org'
     ]),
     explorer: 'https://etherscan.io',
     enabled: !disabledSet.has('1')
@@ -52,7 +52,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('ARBITRUM_RPC_URLS', [
       'https://arb1.arbitrum.io/rpc',
-      'https://rpc.ankr.com/arbitrum'
+      'https://arbitrum.drpc.org'
     ]),
     explorer: 'https://arbiscan.io',
     enabled: !disabledSet.has('42161')
@@ -63,7 +63,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('BASE_RPC_URLS', [
       'https://mainnet.base.org',
-      'https://rpc.ankr.com/base'
+      'https://base.drpc.org'
     ]),
     explorer: 'https://basescan.org',
     enabled: !disabledSet.has('8453')
@@ -76,7 +76,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('OPTIMISM_RPC_URLS', [
       'https://mainnet.optimism.io',
-      'https://rpc.ankr.com/optimism'
+      'https://optimism.drpc.org'
     ]),
     explorer: 'https://optimistic.etherscan.io',
     enabled: !disabledSet.has('10')
@@ -87,7 +87,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'MATIC',
     rpcs: envList('POLYGON_RPC_URLS', [
       'https://polygon-rpc.com',
-      'https://rpc.ankr.com/polygon'
+      'https://polygon.drpc.org'
     ]),
     explorer: 'https://polygonscan.com',
     enabled: !disabledSet.has('137')
@@ -98,7 +98,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'AVAX',
     rpcs: envList('AVALANCHE_RPC_URLS', [
       'https://api.avax.network/ext/bc/C/rpc',
-      'https://rpc.ankr.com/avalanche'
+      'https://avalanche.drpc.org'
     ]),
     explorer: 'https://snowtrace.io',
     enabled: !disabledSet.has('43114')
@@ -109,7 +109,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'BNB',
     rpcs: envList('BSC_RPC_URLS', [
       'https://bsc-dataseed.binance.org',
-      'https://rpc.ankr.com/bsc'
+      'https://bsc.drpc.org'
     ]),
     explorer: 'https://bscscan.com',
     enabled: !disabledSet.has('56')
@@ -121,7 +121,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     name: 'Fantom',
     symbol: 'FTM',
     rpcs: envList('FANTOM_RPC_URLS', [
-      'https://rpc.ankr.com/fantom',
+      'https://fantom.drpc.org',
       'https://fantom-rpc.publicnode.com',
       'https://rpc.ftm.tools'
     ]),
@@ -134,7 +134,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('ZKSYNC_RPC_URLS', [
       'https://mainnet.era.zksync.io',
-      'https://rpc.ankr.com/zksync_era'
+      'https://zksync.drpc.org'
     ]),
     explorer: 'https://explorer.zksync.io',
     enabled: !disabledSet.has('324')
@@ -145,7 +145,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('POLYGON_ZKEVM_RPC_URLS', [
       'https://zkevm-rpc.com',
-      'https://rpc.ankr.com/polygon_zkevm'
+      'https://polygon-zkevm.drpc.org'
     ]),
     explorer: 'https://zkevm.polygonscan.com',
     enabled: !disabledSet.has('1101')
@@ -158,7 +158,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'MNT',
     rpcs: envList('MANTLE_RPC_URLS', [
       'https://rpc.mantle.xyz',
-      'https://rpc.ankr.com/mantle'
+      'https://mantle.drpc.org'
     ]),
     explorer: 'https://mantlescan.xyz',
     enabled: !disabledSet.has('5000')
@@ -169,7 +169,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'xDAI',
     rpcs: envList('GNOSIS_RPC_URLS', [
       'https://rpc.gnosischain.com',
-      'https://rpc.ankr.com/gnosis'
+      'https://gnosis.drpc.org'
     ]),
     explorer: 'https://gnosisscan.io',
     enabled: !disabledSet.has('100')
@@ -180,7 +180,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('LINEA_RPC_URLS', [
       'https://rpc.linea.build',
-      'https://rpc.ankr.com/linea'
+      'https://linea.drpc.org'
     ]),
     explorer: 'https://lineascan.build',
     enabled: !disabledSet.has('59144')
@@ -191,7 +191,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('SCROLL_RPC_URLS', [
       'https://rpc.scroll.io',
-      'https://rpc.ankr.com/scroll'
+      'https://scroll.drpc.org'
     ]),
     explorer: 'https://scroll.blockscout.com',
     enabled: !disabledSet.has('534352')
@@ -202,7 +202,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'CELO',
     rpcs: envList('CELO_RPC_URLS', [
       'https://forno.celo.org',
-      'https://rpc.ankr.com/celo'
+      'https://celo.drpc.org'
     ]),
     explorer: 'https://celoscan.io',
     enabled: !disabledSet.has('42220')
@@ -214,7 +214,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('BLAST_RPC_URLS', [
       'https://rpc.blast.io',
-      'https://rpc.ankr.com/blast'
+      'https://blast.drpc.org'
     ]),
     explorer: 'https://blastscan.io',
     enabled: !disabledSet.has('81457')
@@ -225,7 +225,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'CRO',
     rpcs: envList('CRONOS_RPC_URLS', [
       'https://evm.cronos.org',
-      'https://rpc.ankr.com/cronos'
+      'https://cronos.drpc.org'
     ]),
     explorer: 'https://cronoscan.com',
     enabled: !disabledSet.has('25')
@@ -236,7 +236,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'GLMR',
     rpcs: envList('MOONBEAM_RPC_URLS', [
       'https://rpc.api.moonbeam.network',
-      'https://rpc.ankr.com/moonbeam'
+      'https://moonbeam.drpc.org'
     ]),
     explorer: 'https://moonscan.io',
     enabled: !disabledSet.has('1284')
@@ -247,7 +247,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('AURORA_RPC_URLS', [
       'https://mainnet.aurora.dev',
-      'https://rpc.ankr.com/aurora'
+      'https://aurora.drpc.org'
     ]),
     explorer: 'https://explorer.aurora.dev',
     enabled: !disabledSet.has('1313161554')
@@ -258,7 +258,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'BNB',
     rpcs: envList('OPBNB_RPC_URLS', [
       'https://opbnb-mainnet-rpc.bnbchain.org',
-      'https://rpc.ankr.com/opbnb'
+      'https://opbnb.drpc.org'
     ]),
     explorer: 'https://opbnb.bscscan.com',
     enabled: !disabledSet.has('204')
@@ -269,7 +269,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('MANTA_RPC_URLS', [
       'https://pacific-rpc.manta.network/http',
-      'https://rpc.ankr.com/manta'
+      'https://manta-pacific.drpc.org'
     ]),
     explorer: 'https://pacific-explorer.manta.network',
     enabled: !disabledSet.has('169')
@@ -281,7 +281,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('MODE_RPC_URLS', [
       'https://mainnet.mode.network',
-      'https://rpc.ankr.com/mode'
+      'https://mode.drpc.org'
     ]),
     explorer: 'https://modescan.io',
     enabled: !disabledSet.has('34443')
@@ -292,7 +292,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('TAIKO_RPC_URLS', [
       'https://rpc.mainnet.taiko.xyz',
-      'https://rpc.ankr.com/taiko'
+      'https://taiko.drpc.org'
     ]),
     explorer: 'https://taikoscan.io',
     enabled: !disabledSet.has('167000')
@@ -303,7 +303,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'METIS',
     rpcs: envList('METIS_RPC_URLS', [
       'https://andromeda.metis.io/?owner=1088',
-      'https://rpc.ankr.com/metis'
+      'https://metis.drpc.org'
     ]),
     explorer: 'https://andromeda-explorer.metis.io',
     enabled: !disabledSet.has('1088')
@@ -314,7 +314,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'KAVA',
     rpcs: envList('KAVA_RPC_URLS', [
       'https://evm.kava.io',
-      'https://rpc.ankr.com/kava_evm'
+      'https://kava.drpc.org'
     ]),
     explorer: 'https://kavascan.com',
     enabled: !disabledSet.has('2222')
@@ -325,7 +325,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ZETA',
     rpcs: envList('ZETACHAIN_RPC_URLS', [
       'https://zetachain-evm.blockpi.network/v1/rpc/public',
-      'https://rpc.ankr.com/zetachain_evm'
+      'https://zetachain.drpc.org'
     ]),
     explorer: 'https://zetachain.blockscout.com',
     enabled: !disabledSet.has('7000')
@@ -336,7 +336,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     symbol: 'ETH',
     rpcs: envList('WORLDCHAIN_RPC_URLS', [
       'https://worldchain-mainnet.g.alchemy.com/public',
-      'https://rpc.ankr.com/worldchain'
+      'https://worldchain.drpc.org'
     ]),
     explorer: 'https://worldscan.org',
     enabled: !disabledSet.has('480')

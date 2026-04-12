@@ -5,7 +5,8 @@ import { upsertAllowance } from './db'
 import { withRetry } from './retry'
 import { enabledChainIds } from './networks'
 
-const CHUNK = BigInt(50_000)  // adjust if RPC complains
+const CHUNK = BigInt(10_000)    // 10k blocks per getLogs
+const LOOKBACK = BigInt(50_000) // ~7 days on mainnet — keeps getLogs calls under 5 per chain
 const UINT256_MAX = (BigInt(1) << BigInt(256)) - BigInt(1)
 
 async function latestBlock(c: ReturnType<typeof clientFor>) {
@@ -28,8 +29,13 @@ export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453|10
   const c = clientFor(chainId)
   const tip = await latestBlock(c)
 
+  // Start from a reasonable lookback, not block 0.
+  // Scanning from genesis = 400+ RPC calls that free RPCs reject.
+  // 500k blocks ≈ 70 days on mainnet, catches recent approvals.
+  const start = tip > LOOKBACK ? tip - LOOKBACK : BigInt(0)
+
   // 1) ERC20 Approval(owner, spender, value)
-  for (const [fromBlock, toBlock] of await rangeChunks(BigInt(0), tip)) {
+  for (const [fromBlock, toBlock] of await rangeChunks(start, tip)) {
     const logs = await withRetry(() => c.getLogs({
       event: ERC20_Approval,
       args: { owner: w },
@@ -58,7 +64,7 @@ export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453|10
   }
 
   // 2) ERC721/1155 ApprovalForAll(owner, operator, approved)
-  for (const [fromBlock, toBlock] of await rangeChunks(BigInt(0), tip)) {
+  for (const [fromBlock, toBlock] of await rangeChunks(start, tip)) {
     const logs = await withRetry(() => c.getLogs({
       event: ERC721_ApprovalForAll,
       args: { owner: w },
