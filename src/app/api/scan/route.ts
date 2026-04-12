@@ -88,7 +88,7 @@ export async function POST(req: Request) {
       try {
         await withTimeout(
           scanWalletOnChain(addr, chainId as Parameters<typeof scanWalletOnChain>[1]),
-          10_000 // 10s per chain — skip slow ones fast
+          30_000 // 30s per chain — enough for ~5 getLogs calls
         )
         scanned++
       } catch (e) {
