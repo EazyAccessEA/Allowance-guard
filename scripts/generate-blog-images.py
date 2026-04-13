@@ -1,12 +1,19 @@
 """
-Generate blog featured images via Runware API.
+Generate blog featured images via Runware API — v2.
 
-Council #25 (AI Image Director) + #26 (Visual Brand Photographer):
-- Style: Dark moody 3D conceptual renders with warm amber/gold accent lighting
-- Matches Ledger palette: oxblood darks, amber highlights, paper warmth
-- 1200x630 (OpenGraph optimal, 1.91:1 aspect ratio)
-- WebP output for performance
-- Conceptual, not literal — each image tells the story of the blog topic
+Council #27 (Prompt Engineer / Photorealism) rules:
+  1. One subject, one sentence. No compound scenes.
+  2. Name the material. "Brushed gold metal" not "golden."
+  3. Name the lighting. "Soft studio lighting from top-left."
+  4. Name the background. "Clean warm cream background."
+  5. Max 30 words per prompt.
+
+Council #28 (Prompt Engineer / Brand Systems) rules:
+  - Warm amber + cream tones throughout (Ledger palette)
+  - Consistent editorial product photography style
+  - Centered composition, shallow DoF, clean negative space
+
+Model: FLUX 1.1 Pro (runware:5@1) — 30 steps.
 """
 
 import asyncio
@@ -17,108 +24,98 @@ import httpx
 API_KEY = os.environ.get("RUNWARE_API_KEY", "iCSzmgzsJNF1Z3dpITcEDdrLPzD3odWp")
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "public", "images", "blog")
 
-# Council #25 style system
-STYLE_SUFFIX = (
-    "dark moody cinematic 3D render, warm amber and gold accent lighting, "
-    "deep oxblood and dark brown shadows, editorial quality, conceptual abstract, "
-    "soft depth of field, professional product photography style, "
-    "subtle paper texture overlay, high detail, 8k quality"
-)
 NEGATIVE = (
-    "text, watermark, logo, cartoon, anime, low quality, blurry, stock photo, "
-    "oversaturated, neon, bright colors, white background, people faces, hands"
+    "text, words, letters, watermark, signature, blurry, low quality, "
+    "cartoon, anime, oversaturated, cluttered, busy background"
 )
 
-# Council #25 + #26 prompt design per post
 BLOG_IMAGES = [
     {
         "filename": "open-source-stronger-our-license-update.webp",
-        "prompt": "An open padlock transforming into flowing source code streams, golden light emanating from the open lock, surrounded by interconnected nodes and network paths",
+        "prompt": "A brushed gold open padlock lying on its side on a clean cream surface, soft studio lighting, warm amber tones, shallow depth of field",
     },
     {
         "filename": "hardware-wallets-and-multisigs.webp",
-        "prompt": "A sleek hardware security device floating above a glowing amber vault, multiple crystalline keys orbiting around it, digital security shields layered in depth",
+        "prompt": "A sleek matte black hardware wallet device standing upright on a cream surface, warm amber side-light, product photography, shallow depth of field",
     },
     {
         "filename": "understanding-smart-contract-risk.webp",
-        "prompt": "A translucent glass smart contract document with visible cracks and fracture lines, amber warning light illuminating the flaws, layers of code visible beneath the surface",
+        "prompt": "A translucent glass cube with a visible crack running through it, warm studio lighting on cream background, editorial product shot",
     },
     {
         "filename": "building-your-personal-web3-security-routine.webp",
-        "prompt": "A ritual arrangement of security tools on a dark surface: a shield, a magnifying glass, a clock, and a checklist, all rendered in amber-lit glass and metal",
+        "prompt": "A neat row of three small security tools — a magnifying glass, a small shield, and a key — arranged on cream paper, overhead soft lighting",
     },
     {
         "filename": "gas-fees-and-revocations.webp",
-        "prompt": "Ethereum gas flame being carefully controlled and optimized, flowing through efficient crystalline pipes, amber energy particles being compressed and refined",
+        "prompt": "A single Ethereum diamond logo rendered in polished amber glass, sitting on a clean white surface, soft warm studio light from above",
     },
     {
         "filename": "understanding-layer-2-networks.webp",
-        "prompt": "Multiple translucent blockchain layers stacked vertically with data flowing between them, the top layer glowing with amber efficiency, connected by light bridges",
+        "prompt": "Three thin glass layers stacked with slight offset, amber light passing through them, clean white background, minimal, architectural",
     },
     {
         "filename": "red-team-yourself.webp",
-        "prompt": "A chess board where one side plays both colors, a magnifying glass examining the dark pieces, amber light revealing hidden attack vectors and defensive positions",
+        "prompt": "A chess knight piece in dark metal next to one in brushed gold, facing each other on a cream surface, dramatic side-light, shallow depth of field",
     },
     {
         "filename": "programmable-safety.webp",
-        "prompt": "An autonomous security system made of interlocking gears and circuits, self-adjusting mechanisms glowing with amber energy, protective barriers activating automatically",
+        "prompt": "A set of interlocking brass gears arranged in a precise pattern on cream paper, warm overhead lighting, engineering diagram aesthetic",
     },
     {
         "filename": "staying-safe-with-defi-dapps.webp",
-        "prompt": "A glowing connect wallet button floating in space with visible permission threads extending from it, some threads golden and safe, others red and dangerous",
+        "prompt": "A glowing amber connect button floating above a clean white surface, soft reflection below, minimal, UI element as physical object",
     },
     {
         "filename": "how-to-self-audit-your-wallet.webp",
-        "prompt": "An open digital wallet being examined under a warm amber spotlight, its contents organized and catalogued, approval documents floating around it in an orderly audit",
+        "prompt": "An open leather-bound ledger book with amber bookmark ribbon, on a cream desk surface, warm natural window light from left side",
     },
     {
         "filename": "what-are-token-allowances.webp",
-        "prompt": "A signed permission slip transforming into digital code, hovering above an open vault, golden approval stamps and revocation seals arranged around it",
+        "prompt": "A formal wax seal stamp next to a pressed seal on cream paper, amber wax, overhead soft lighting, editorial still life",
     },
     {
         "filename": "from-dapp-user-to-security-advocate.webp",
-        "prompt": "A single shield multiplying into many shields spreading outward in a network pattern, amber light connecting them, community protection growing from one source",
+        "prompt": "A single small shield casting a long protective shadow over a row of smaller objects, warm side-light, cream background, minimal",
     },
     {
         "filename": "permit2-and-eip-2612.webp",
-        "prompt": "A digital signature pen signing an ethereal document that dissolves into cryptographic particles, dual approval mechanisms shown as parallel golden pathways",
+        "prompt": "A fountain pen signing a glowing digital document floating above a desk, warm amber light, cream background, editorial",
     },
     {
         "filename": "anatomy-of-an-approval-exploit.webp",
-        "prompt": "A cross-section cutaway of a blockchain transaction revealing hidden malicious code inside, red warning indicators contrasting with amber protective barriers",
+        "prompt": "A chain with one broken link lying on a dark surface, amber spotlight illuminating the break, dramatic contrast, forensic photography",
     },
     {
         "filename": "cross-chain-security-bridging.webp",
-        "prompt": "Multiple blockchain islands connected by glowing bridges, one bridge showing structural vulnerabilities with amber warning lights, others standing strong and secure",
+        "prompt": "A minimalist bridge structure made of amber glass connecting two stone platforms, clean grey background, architectural model photography",
     },
     {
         "filename": "why-we-open-sourced.webp",
-        "prompt": "A transparent glass building with all its internal machinery visible, golden light flowing through open doors, source code carved into the glass walls like an inscription",
+        "prompt": "A transparent glass box with visible internal mechanisms, sitting on a cream surface, warm amber backlighting, product photography",
     },
     {
         "filename": "non-technical-guide-to-approvals.webp",
-        "prompt": "A simple dashboard interface rendered as a physical wooden desk with organized amber-lit cards, each card showing clear icons for risk levels, approvals, and actions",
+        "prompt": "A simple dashboard card with a green checkmark and amber gauge rendered as a physical object on a cream desk, soft overhead light",
     },
 ]
 
 
 async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Semaphore):
-    """Generate a single image via Runware HTTP API."""
     async with sem:
-        full_prompt = f"{item['prompt']}, {STYLE_SUFFIX}"
         payload = [
             {
                 "taskType": "imageInference",
                 "taskUUID": str(uuid.uuid4()),
-                "positivePrompt": full_prompt,
+                "positivePrompt": item["prompt"],
                 "negativePrompt": NEGATIVE,
-                "model": "runware:101@1",  # FLUX Schnell — fast, high quality
-                "width": 1216,  # closest to 1200 divisible by 64
-                "height": 640,  # closest to 630 divisible by 64
+                "model": "runware:5@1",
+                "width": 1024,
+                "height": 576,
                 "numberResults": 1,
                 "outputFormat": "WEBP",
                 "outputType": "URL",
-                "steps": 4,
+                "steps": 30,
             }
         ]
 
@@ -136,24 +133,17 @@ async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Sem
             resp.raise_for_status()
             data = resp.json()
 
-            # Extract image URL from response
             image_url = None
             if isinstance(data, dict) and "data" in data:
                 for result in data["data"]:
                     if "imageURL" in result:
                         image_url = result["imageURL"]
                         break
-            elif isinstance(data, list):
-                for result in data:
-                    if "imageURL" in result:
-                        image_url = result["imageURL"]
-                        break
 
             if not image_url:
-                print(f"  ERROR: No imageURL in response for {item['filename']}: {data}")
+                print(f"  ERROR: No imageURL for {item['filename']}: {data}")
                 return
 
-            # Download the image
             img_resp = await client.get(image_url, timeout=60.0)
             img_resp.raise_for_status()
 
@@ -170,15 +160,15 @@ async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Sem
 
 async def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    print(f"Generating {len(BLOG_IMAGES)} blog images via Runware...")
+    print(f"Generating {len(BLOG_IMAGES)} images — FLUX 1.1 Pro, 30 steps")
     print(f"Output: {OUTPUT_DIR}\n")
 
-    sem = asyncio.Semaphore(4)  # max 4 concurrent requests
+    sem = asyncio.Semaphore(3)  # 3 concurrent — be polite to the API
     async with httpx.AsyncClient() as client:
         tasks = [generate_image(client, item, sem) for item in BLOG_IMAGES]
         await asyncio.gather(*tasks)
 
-    print(f"\nDone. Check {OUTPUT_DIR}/")
+    print(f"\nDone.")
 
 
 if __name__ == "__main__":
