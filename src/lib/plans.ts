@@ -87,7 +87,7 @@ export const CONSUMER_PLAN_LIMITS: Record<ConsumerPlan, PlanLimits> = {
   },
   pro: {
     maxWallets: -1, // unlimited
-    maxChains: 15,
+    maxChains: 27,
     maxApiCallsPerDay: 500,
     monitoring: true,
     batchRevoke: true,
@@ -102,7 +102,7 @@ export const CONSUMER_PLAN_LIMITS: Record<ConsumerPlan, PlanLimits> = {
   },
   sentinel: {
     maxWallets: -1,
-    maxChains: 15,
+    maxChains: 27,
     maxApiCallsPerDay: 2000,
     monitoring: true,
     batchRevoke: true,

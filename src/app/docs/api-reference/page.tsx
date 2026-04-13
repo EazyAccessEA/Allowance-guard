@@ -28,7 +28,7 @@ export default function ApiReferencePage() {
               </span>
               <H1 className="text-ink">API Reference</H1>
               <p className="text-ink-soft mt-4 text-lg max-w-2xl">
-                AllowanceGuard REST API v1. Scan wallets, query allowances, score risk, and simulate revocations &mdash; programmatically across all 15 supported chains.
+                AllowanceGuard REST API v1. Scan wallets, query allowances, score risk, and simulate revocations &mdash; programmatically across all 27 supported chains.
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
                 <span className="px-3 py-1 bg-paper-sub border border-amber-400/30 text-amber-deep text-sm  font-mono">
