@@ -8,7 +8,7 @@ export const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
 
 if (!projectId) throw new Error('NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID is missing')
 
-// All 15 supported chains — matches src/config/chains.ts
+// All 27 supported chains — matches src/config/chains.ts
 export const networks = [mainnet, arbitrum, base, polygon, optimism, avalanche, bsc, fantom, zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo]
 
 export const wagmiAdapter = new WagmiAdapter({

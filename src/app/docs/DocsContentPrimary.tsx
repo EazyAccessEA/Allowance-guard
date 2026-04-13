@@ -85,7 +85,7 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
  </li>
  <li className="flex gap-3">
  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">2</span>
- <span><strong className="text-ink">Scan.</strong> We index every approval the address has ever granted, across all 15 supported chains, in one pass.</span>
+ <span><strong className="text-ink">Scan.</strong> We index every approval the address has ever granted, across all 27 supported chains, in one pass.</span>
  </li>
  <li className="flex gap-3">
  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">3</span>
@@ -132,7 +132,7 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
  <div className="space-y-4 mb-6">
  <div>
  <h4 className="font-medium text-ink mb-2">What AllowanceGuard Does:</h4>
- <p className="text-base text-ink-soft">Scans your wallet across all 15 supported EVM chains to identify all token approvals, displays them in an easy-to-understand dashboard, assesses each approval for potential security risks, provides one-click revocation tools to remove dangerous permissions, and offers monitoring and alert systems to notify you of new approvals.</p>
+ <p className="text-base text-ink-soft">Scans your wallet across all 27 supported EVM chains to identify all token approvals, displays them in an easy-to-understand dashboard, assesses each approval for potential security risks, provides one-click revocation tools to remove dangerous permissions, and offers monitoring and alert systems to notify you of new approvals.</p>
  </div>
  <div>
  <h4 className="font-medium text-ink mb-2">What AllowanceGuard Does NOT Do:</h4>
@@ -358,7 +358,7 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
  <div className="space-y-4 mb-6">
  <div>
  <h4 className="font-medium text-ink mb-2">Accessing Token Discovery</h4>
- <p className="text-base text-ink-soft">Navigate to the &quot;Discover Tokens&quot; page to explore our token database. This feature allows you to search and discover tokens across all 15 supported EVM chains with advanced filtering and categorization.</p>
+ <p className="text-base text-ink-soft">Navigate to the &quot;Discover Tokens&quot; page to explore our token database. This feature allows you to search and discover tokens across all 27 supported EVM chains with advanced filtering and categorization.</p>
  </div>
  <div>
  <h4 className="font-medium text-ink mb-2">Advanced Search Features</h4>
@@ -395,7 +395,7 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
  </div>
  <div>
  <h4 className="font-medium text-ink mb-2">Blockchain Indexer</h4>
- <p className="text-base text-ink-soft">Custom indexing system that scans blockchain data to identify token approvals and contract interactions. The indexer processes historical data and maintains real-time updates to ensure complete coverage of all allowance-related activities across all 15 supported chains.</p>
+ <p className="text-base text-ink-soft">Custom indexing system that scans blockchain data to identify token approvals and contract interactions. The indexer processes historical data and maintains real-time updates to ensure complete coverage of all allowance-related activities across all 27 supported chains.</p>
  </div>
  <div>
  <h4 className="font-medium text-ink mb-2">Risk Engine</h4>

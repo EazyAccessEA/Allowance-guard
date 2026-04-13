@@ -151,7 +151,7 @@ export const CHAINS: Record<number, ChainCfg> = {
     enabled: !disabledSet.has('1101')
   },
 
-  // --- Phase 9.5b: Expansion to 15 chains ---
+  // --- Phase 9.5b: Expansion to 27 chains ---
   5000: {
     id: 5000,
     name: 'Mantle',

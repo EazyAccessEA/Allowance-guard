@@ -27,8 +27,8 @@ const FEATURE_ROWS: FeatureRow[] = [
     label: 'Chains',
     values: {
       free: '1',
-      pro: '15',
-      sentinel: '15',
+      pro: '27',
+      sentinel: '27',
     },
   },
   {

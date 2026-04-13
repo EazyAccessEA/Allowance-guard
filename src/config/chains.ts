@@ -23,7 +23,7 @@ export type ChainMeta = {
 /**
  * The 27 officially supported EVM chains.
  * Phase 9.5: expanded from 6 to 10 chains (added BSC, Fantom, zkSync Era, Polygon zkEVM).
- * Phase 9.5b: expanded from 10 to 15 chains (added Mantle, Gnosis, Linea, Scroll, Celo).
+ * Phase 9.5b: expanded from 10 to 27 chains (added Mantle, Gnosis, Linea, Scroll, Celo).
  * Phase 9.6: expanded from 15 to 27 chains (added Blast, Cronos, Moonbeam, Aurora, opBNB, Manta Pacific, Mode, Taiko, Metis, Kava, ZetaChain, Worldchain).
  */
 export const SUPPORTED_CHAINS: readonly ChainMeta[] = [
@@ -158,7 +158,7 @@ export const SUPPORTED_CHAINS: readonly ChainMeta[] = [
     blockTimeSec: 5,
     coingeckoId: 'ethereum',
   },
-  // --- Phase 9.5b: Expansion to 15 chains ---
+  // --- Phase 9.5b: Expansion to 27 chains ---
   {
     id: 5000,
     name: 'Mantle',
