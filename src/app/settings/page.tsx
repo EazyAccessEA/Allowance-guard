@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import { InlineError } from '@/components/ErrorBoundary'
 
@@ -255,19 +254,8 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-paper-deep text-ink">
 
-      {/* Hero Section - Fireart Style with Animated Background */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
-        {/* Video Background */}
-        <VideoBackground
-          videoSrc="/V3AG.mp4"
-        />
-        {/* Gradient overlay for better text readability - 10% left, 45% right */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
+      {/* Hero */}
+      <Section className="relative py-24 sm:py-32 overflow-hidden paper grain">
 
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Settings</H1>

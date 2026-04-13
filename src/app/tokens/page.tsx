@@ -3,7 +3,6 @@ import { useCallback, useMemo, useState } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import TokenSearchControls from '@/components/tokens/TokenSearchControls'
 import TokenResults from '@/components/tokens/TokenResults'
 import { Search, Filter, Sparkles } from 'lucide-react'
@@ -42,7 +41,6 @@ export default function TokensPage() {
     <div className="min-h-screen bg-paper-deep text-ink">
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <VideoBackground videoSrc="/V3AG.mp4" />
         <div
           className="absolute inset-0"
           style={{

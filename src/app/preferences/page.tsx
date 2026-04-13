@@ -75,7 +75,7 @@ export default function PreferencesPage() {
           <div className="flex items-center justify-center">
             <div className="relative w-12 h-12 mr-3">
               <Image
-                src="/AG_Logo2.png"
+                src="/images/branding/ag-logo.png"
                 alt=""
                 fill
                 className="object-contain"

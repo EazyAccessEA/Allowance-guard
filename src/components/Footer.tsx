@@ -80,7 +80,7 @@ export default function Footer() {
         <div className="mb-10 pb-10 border-b border-[rgba(15,17,21,0.08)] max-w-3xl">
           <div className="flex items-center gap-3 mb-4">
             <Image
-              src="/AG_Logo_Ink_128.png"
+              src="/images/branding/ag-logo-ink-128.png"
               alt=""
               width={32}
               height={32}

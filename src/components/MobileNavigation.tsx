@@ -111,7 +111,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 flex items-center justify-center">
                   <Image
-                    src="/AG_Logo2.png"
+                    src="/images/branding/ag-logo.png"
                     alt="Allowance Guard Logo"
                     width={36}
                     height={36}
