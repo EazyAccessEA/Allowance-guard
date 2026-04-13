@@ -149,7 +149,7 @@ export default function RootLayout({
         {/* CSS files are handled by Next.js automatically */}
         {/* Critical CSS preloading - Next.js handles this automatically */}
         
-        {/* Logo is now inline SVG — no preload needed */}
+        <link rel="preload" href="/images/branding/ag-logo-ink.png" as="image" type="image/png" />
         
         {/* Fonts are handled by Next.js font optimization */}
         

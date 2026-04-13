@@ -15,7 +15,7 @@ import {
   Search,
   CreditCard,
 } from 'lucide-react'
-import Logo from '@/components/ui/Logo'
+import Image from 'next/image'
 
 interface MobileNavigationProps {
   isConnected: boolean
@@ -110,7 +110,7 @@ function MobileNavigation({ isConnected }: MobileNavigationProps) {
             <div className="flex items-center justify-between px-6 py-5 border-b border-ink-rule">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 flex items-center justify-center">
-                  <Logo size={36} variant="ink" />
+                  <Image src="/images/branding/ag-logo-ink.png" alt="AllowanceGuard" width={36} height={36} />
                 </div>
                 <div>
                   <h2
