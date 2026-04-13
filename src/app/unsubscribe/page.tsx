@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { CheckCircle, AlertCircle, Mail, Bell, Shield, X } from 'lucide-react'
+import Logo from '@/components/ui/Logo'
 
 export default function UnsubscribePage() {
   const [email, setEmail] = useState('')
@@ -106,13 +106,8 @@ export default function UnsubscribePage() {
       <header className="bg-paper-deep border-b border-ink-rule">
         <div className="max-w-4xl mx-auto px-4 py-6 sm:px-6">
           <div className="flex items-center justify-center">
-            <div className="relative w-12 h-12 mr-3">
-              <Image
-                src="/images/branding/ag-logo.png"
-                alt=""
-                fill
-                className="object-contain"
-              />
+            <div className="w-12 h-12 mr-3 flex items-center justify-center">
+              <Logo size={40} variant="ink" />
             </div>
             <h1 className="text-2xl font-bold text-ink">Allowance Guard</h1>
           </div>
