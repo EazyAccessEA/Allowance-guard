@@ -43,6 +43,7 @@ const blogPosts: BlogPost[] = [
     readTime: '5 min read',
     category: 'Community',
     featured: false,
+    image: '/images/blog/open-source-stronger-our-license-update.webp',
   },
   {
     slug: 'hardware-wallets-and-multisigs-elevating-your-security',
@@ -53,7 +54,7 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Security',
     featured: true,
-    image: '/images/blog/hardware-wallets-and-multisigs.png',
+    image: '/images/blog/hardware-wallets-and-multisigs.webp',
   },
   {
     slug: 'understanding-smart-contract-risk-beyond-allowances',
@@ -64,7 +65,7 @@ const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Security',
     featured: false,
-    image: '/u3182613983_High-detail_3D_render_of_an_open_semi-transparent_50162c0f-297f-4156-aa76-5016cafeb9c5_2.png',
+    image: '/images/blog/understanding-smart-contract-risk.webp',
   },
   {
     slug: 'building-your-personal-web3-security-routine',
@@ -75,7 +76,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/building-your-personal-web3-security-routine.png',
+    image: '/images/blog/building-your-personal-web3-security-routine.webp',
   },
   {
     slug: 'gas-fees-and-revocations-making-security-cost-effective',
@@ -86,7 +87,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/gas-fees-and-revocations.png',
+    image: '/images/blog/gas-fees-and-revocations.webp',
   },
   {
     slug: 'understanding-layer-2-networks-how-they-work',
@@ -97,7 +98,7 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Education',
     featured: false,
-    image: '/images/blog/understanding-layer-2-networks.png',
+    image: '/images/blog/understanding-layer-2-networks.webp',
   },
   {
     slug: 'red-team-yourself-simulating-an-attack-on-your-wallet',
@@ -108,7 +109,7 @@ const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/red-team-yourself.png',
+    image: '/images/blog/red-team-yourself.webp',
   },
   {
     slug: 'programmable-safety-future-allowance-security',
@@ -119,7 +120,7 @@ const blogPosts: BlogPost[] = [
     readTime: '9 min read',
     category: 'Innovation',
     featured: false,
-    image: '/images/blog/programmable-safety.png',
+    image: '/images/blog/programmable-safety.webp',
   },
   {
     slug: 'staying-safe-with-defi-dapps',
@@ -130,7 +131,7 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/staying-safe-with-defi-dapps.png',
+    image: '/images/blog/staying-safe-with-defi-dapps.webp',
   },
   {
     slug: 'how-to-self-audit-your-wallet',
@@ -141,7 +142,7 @@ const blogPosts: BlogPost[] = [
     readTime: '6 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/how-to-self-audit-your-wallet.png',
+    image: '/images/blog/how-to-self-audit-your-wallet.webp',
   },
   {
     slug: 'what-are-token-allowances',
@@ -152,7 +153,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/what-are-token-allowances.png',
+    image: '/images/blog/what-are-token-allowances.webp',
   },
   {
     slug: 'from-dapp-user-to-security-advocate-building-community-trust',
@@ -163,7 +164,7 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Community',
     featured: false,
-    image: '/images/blog/from-dapp-user-to-security-advocate.png',
+    image: '/images/blog/from-dapp-user-to-security-advocate.webp',
   },
   {
     slug: 'permit2-and-eip-2612-the-new-approval-frontier',
@@ -174,6 +175,7 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Security',
     featured: false,
+    image: '/images/blog/permit2-and-eip-2612.webp',
   },
   {
     slug: 'anatomy-of-an-approval-exploit',
@@ -184,6 +186,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
+    image: '/images/blog/anatomy-of-an-approval-exploit.webp',
   },
   {
     slug: 'cross-chain-security-bridging-without-getting-burned',
@@ -194,6 +197,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Education',
     featured: false,
+    image: '/images/blog/cross-chain-security-bridging.webp',
   },
   {
     slug: 'why-we-open-sourced-our-security-scanner',
@@ -204,6 +208,7 @@ const blogPosts: BlogPost[] = [
     readTime: '6 min read',
     category: 'Community',
     featured: false,
+    image: '/images/blog/why-we-open-sourced.webp',
   },
   {
     slug: 'a-non-technical-guide-to-reading-token-approvals',
@@ -214,6 +219,7 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Education',
     featured: false,
+    image: '/images/blog/non-technical-guide-to-approvals.webp',
   },
 ]
 
