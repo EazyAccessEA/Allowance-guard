@@ -82,7 +82,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   const savingsPercent = isPaid ? getYearlySavingsPercent(plan as PaidPlan) : 0
 
-  const ctaText = plan === 'free' ? 'Start your free scan' : `Upgrade to ${displayName}`
+  const ctaText = plan === 'free' ? 'Join the waitlist' : `Upgrade to ${displayName}`
 
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -94,7 +94,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
   return (
     <div
       className={cn(
-        'group relative flex flex-col rounded-2xl p-7 lg:p-8 transition-all duration-300',
+        'group relative flex flex-col  p-7 lg:p-8 transition-all duration-300',
         highlighted
           ? 'bg-paper-sub ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/5 md:-mt-4 md:mb-4'
           : 'bg-paper-sub ring-1 ring-ink-rule hover:ring-ink-rule hover:bg-paper-sub'
@@ -103,7 +103,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* Highlighted glow */}
       {highlighted && (
         <div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
+          className="absolute inset-0  pointer-events-none"
           aria-hidden="true"
           style={{
             background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%)',
@@ -114,7 +114,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* Badge */}
       {highlighted && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center rounded-full bg-amber-500 px-3.5 py-1 text-xs font-semibold text-ink shadow-md shadow-amber-500/20">
+          <span className="inline-flex items-center  bg-amber-500 px-3.5 py-1 text-xs font-semibold text-ink shadow-md shadow-amber-500/20">
             Most Popular
           </span>
         </div>
@@ -157,7 +157,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
             <button
               onClick={handleUpgrade}
               className={cn(
-                'w-full rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]',
+                'w-full  px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]',
                 highlighted
                   ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
                   : 'bg-paper-sub text-ink hover:bg-white/15 ring-1 ring-ink-rule active:bg-paper-sub',
@@ -175,8 +175,8 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           </>
         ) : (
           <Link
-            href="/#scan"
-            className="block w-full rounded-xl px-5 py-3 text-sm font-semibold text-center text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            href="/"
+            className="block w-full  px-5 py-3 text-sm font-semibold text-center text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             {ctaText}
           </Link>
