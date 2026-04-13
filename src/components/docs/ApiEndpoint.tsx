@@ -42,11 +42,11 @@ export function ApiEndpoint({
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className="border-2 border-ink-rule rounded-lg overflow-hidden mb-6">
+    <div className="border-2 border-ink-rule  overflow-hidden mb-6">
       {/* Header */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center gap-3 p-4 bg-paper-sub hover:bg-paper-sub/80 dark:hover:bg-paper-sub/80 transition-colors text-left"
+        className="w-full flex items-center gap-3 p-4 bg-paper-sub hover:bg-paper-sub/80  transition-colors text-left"
       >
         {expanded ? (
           <ChevronDown className="w-4 h-4 text-ink-muted shrink-0" />

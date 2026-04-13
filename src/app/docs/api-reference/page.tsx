@@ -17,7 +17,7 @@ const rateLimits = [
 
 export default function ApiReferencePage() {
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
+    <div className="min-h-screen bg-paper text-ink">
       <Section className="py-16 sm:py-20">
         <Container>
           <div className="max-w-4xl mx-auto">
@@ -27,17 +27,17 @@ export default function ApiReferencePage() {
                 Docs &middot; API Reference
               </span>
               <H1 className="text-ink">API Reference</H1>
-              <p className="text-ink-soft mt-4 text-lg max-w-reading">
+              <p className="text-ink-soft mt-4 text-lg max-w-2xl">
                 AllowanceGuard REST API v1. Scan wallets, query allowances, score risk, and simulate revocations &mdash; programmatically across all 15 supported chains.
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
-                <span className="px-3 py-1 bg-paper-sub border border-amber-400/30 text-amber-deep text-sm rounded-full font-mono">
+                <span className="px-3 py-1 bg-paper-sub border border-amber-400/30 text-amber-deep text-sm  font-mono">
                   Base URL: /api/v1
                 </span>
-                <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm rounded-full">
+                <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm ">
                   JSON responses
                 </span>
-                <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm rounded-full">
+                <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm ">
                   Bearer token auth
                 </span>
               </div>
@@ -84,7 +84,7 @@ data = res.json()['data']`,
                 },
               ]}
             />
-            <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 ">
               <p className="text-sm text-amber-deep dark:text-amber-deep">
                 <strong>Keep your API key secret.</strong> Do not expose it in client-side
                 code. All calls should be made from your server.
@@ -102,7 +102,7 @@ data = res.json()['data']`,
               Rate limits are applied per API key based on your plan. Every response includes
               rate limit headers.
             </p>
-            <div className="border border-ink-rule rounded-lg overflow-hidden">
+            <div className="border border-ink-rule  overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-paper-sub border border-ink-rule text-left">
@@ -541,7 +541,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
           {/* Error Codes */}
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-ink mb-4">Error Codes</h2>
-            <div className="border border-ink-rule rounded-lg overflow-hidden">
+            <div className="border border-ink-rule  overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-paper-sub border border-ink-rule text-left">
@@ -573,7 +573,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
           </div>
 
           {/* CTA */}
-          <div className="text-center p-8 bg-paper-sub border border-ink-rule border-2 border-ink-rule rounded-lg">
+          <div className="text-center p-8 bg-paper-sub border border-ink-rule border-2 border-ink-rule ">
             <h3 className="text-xl font-bold text-ink mb-2">Ready to integrate?</h3>
             <p className="text-ink-soft mb-4">
               Get your API key from the Account dashboard and start building.
@@ -587,7 +587,7 @@ curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
               </a>
               <a
                 href="/pricing"
-                className="px-6 py-2 bg-paper-deep border border-ink-rule text-ink rounded font-medium hover:bg-paper-sub dark:hover:bg-paper-sub transition-colors"
+                className="px-6 py-2 bg-paper border border-ink-rule text-ink rounded font-medium hover:bg-paper-sub dark:hover:bg-paper-sub transition-colors"
               >
                 View Plans
               </a>

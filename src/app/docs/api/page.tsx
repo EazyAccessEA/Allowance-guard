@@ -2,34 +2,19 @@
 
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
+import { H2 } from '@/components/ui/Heading'
+import DocsHero from '../DocsHero'
 
 export default function APIPage() {
 
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
-      
-      {/* Hero Section */}
-      <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <VideoBackground videoSrc="/V3AG.mp4" />
-        <div
-          className="absolute inset-0 dark:hidden"
-          style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,1.0) 0%, rgba(255,255,255,0.75) 100%)'
-          }}
-        />
-        <div className="absolute inset-0 hidden dark:block bg-paper-deep/90" />
-        
-        <Container className="relative text-left max-w-4xl z-10">
-          <H1 className="mb-6">Allowance Guard API v1 Reference</H1>
-          <p className="text-lg text-ink-muted leading-relaxed mb-8">
-            A RESTful API for retrieving token allowance and risk data for any Ethereum address. All endpoints are public and read-only. Data is indexed from the blockchain and updated continuously.
-          </p>
-        </Container>
-      </Section>
+    <div className="min-h-screen bg-paper text-ink">
 
-      <div className="border-t border-ink-rule" />
+      <DocsHero
+        eyebrow="API v1"
+        title="AllowanceGuard REST API."
+        lede="A RESTful API for retrieving token allowance and risk data for any Ethereum address. All endpoints are read-only. Data is indexed from the blockchain and updated continuously."
+      />
 
       {/* Quick Start */}
       <Section className="py-32">
@@ -38,7 +23,7 @@ export default function APIPage() {
             <H2 className="mb-8">Quick Start</H2>
             
             <h3 className="text-2xl font-semibold text-ink mb-6">Base URL</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-8">
               <pre className="text-sm text-ink overflow-x-auto">
 {`https://www.allowanceguard.com/api`}
               </pre>
@@ -55,7 +40,7 @@ export default function APIPage() {
             </p>
 
             <h3 className="text-2xl font-semibold text-ink mb-6">Headers</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-8">
               <pre className="text-sm text-ink overflow-x-auto">
 {`Accept: application/json
 Content-Type: application/json`}
@@ -63,7 +48,7 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-ink mb-6">Code Example</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-8">
               <pre className="text-sm text-ink overflow-x-auto">
 {`curl -X GET "https://www.allowanceguard.com/api/allowances?wallet=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&page=1&pageSize=25" \\
   -H "Accept: application/json"`}
@@ -85,7 +70,7 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-ink mb-4">Parameters</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-ink-rule">
@@ -125,7 +110,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "allowances": [
@@ -155,7 +140,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-ink mb-4">Example Request</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <pre className="text-sm text-ink overflow-x-auto">
 {`curl -X GET "https://www.allowanceguard.com/api/allowances?wallet=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&page=1&pageSize=25&riskOnly=true" \\
   -H "Accept: application/json"`}
@@ -168,7 +153,7 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-ink mb-4">Parameters</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-ink-rule">
@@ -196,7 +181,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "receipts": [
@@ -226,7 +211,7 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-ink mb-4">Request Body</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "walletAddress": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -236,7 +221,7 @@ Content-Type: application/json`}
             </div>
 
             <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "ok": true,
@@ -252,7 +237,7 @@ Content-Type: application/json`}
             </p>
             
             <h4 className="text-xl font-semibold text-ink mb-4">Response Body</h4>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <pre className="text-sm text-ink overflow-x-auto">
 {`{
   "id": 456,
@@ -282,21 +267,21 @@ Content-Type: application/json`}
             </p>
             
             <div className="space-y-4">
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+              <div className="bg-paper-sub border border-ink-rule  p-6">
                 <h4 className="text-lg font-semibold text-ink mb-2">High Risk (score ≥ 50)</h4>
                 <p className="text-stone">
                   Unlimited allowances that pose immediate security risk. These allow complete drainage of token balances.
                 </p>
               </div>
               
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+              <div className="bg-paper-sub border border-ink-rule  p-6">
                 <h4 className="text-lg font-semibold text-ink mb-2">Medium Risk (score ≥ 10)</h4>
                 <p className="text-stone">
                   Stale allowances that have not been used for extended periods (90+ days). May indicate forgotten permissions.
                 </p>
               </div>
               
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+              <div className="bg-paper-sub border border-ink-rule  p-6">
                 <h4 className="text-lg font-semibold text-ink mb-2">Low Risk (score &lt; 10)</h4>
                 <p className="text-stone">
                   Recent, limited allowances that are likely safe and actively used.
@@ -305,7 +290,7 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-ink mb-6 mt-8">Chain ID Enum</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-6">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-6">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-ink-rule">
@@ -336,14 +321,14 @@ Content-Type: application/json`}
 
             <h3 className="text-2xl font-semibold text-ink mb-6">Risk Flags</h3>
             <div className="space-y-4">
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+              <div className="bg-paper-sub border border-ink-rule  p-6">
                 <h4 className="text-lg font-semibold text-ink mb-2">UNLIMITED</h4>
                 <p className="text-stone">
                   The allowance amount equals the maximum uint256 value, giving unlimited access to the token.
                 </p>
               </div>
               
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+              <div className="bg-paper-sub border border-ink-rule  p-6">
                 <h4 className="text-lg font-semibold text-ink mb-2">STALE</h4>
                 <p className="text-stone">
                   The allowance was last seen more than 90 days ago (650,000 blocks on Ethereum, 900,000 blocks on Arbitrum/Base).
@@ -366,7 +351,7 @@ Content-Type: application/json`}
             </p>
             
             <h3 className="text-2xl font-semibold text-ink mb-6">Error Codes</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-8">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-ink-rule">
@@ -418,7 +403,7 @@ Content-Type: application/json`}
             </p>
             
             <h3 className="text-2xl font-semibold text-ink mb-6">Step 1: Fetch Allowances</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-8">
               <pre className="text-sm text-ink overflow-x-auto">
 {`async function fetchAllowances(walletAddress) {
   const response = await fetch(
@@ -431,7 +416,7 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-ink mb-6">Step 2: Display Data</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-8">
               <pre className="text-sm text-ink overflow-x-auto">
 {`function renderAllowances(allowances) {
   return allowances.map(allowance => {
@@ -453,7 +438,7 @@ Content-Type: application/json`}
             </div>
 
             <h3 className="text-2xl font-semibold text-ink mb-6">Step 3: Facilitate Action</h3>
-            <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 mb-8">
+            <div className="bg-paper-sub border border-ink-rule  p-6 mb-8">
               <pre className="text-sm text-ink overflow-x-auto">
 {`async function revokeAllowance(tokenAddress, spenderAddress, signer) {
   const tokenContract = new ethers.Contract(tokenAddress, [

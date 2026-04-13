@@ -1,21 +1,31 @@
 'use client'
 
+/**
+ * Docs landing — Ledger aesthetic.
+ *
+ * Must remain 'use client' — search state + section navigation.
+ *
+ * Council:
+ *  Kael: Remove rounded-xl/rounded-lg, use paper-card/paper-button, no bg-sky-500
+ *  Maren: grain on hero, font-display-tight headline, no inline fontFamily
+ *  Idris: No CascadingScrollAnimation on interactive content (breaks section switching)
+ *  Noor: Search input has proper label, nav buttons have full-width click targets
+ *  #20 Brand: "Build with AllowanceGuard" → "Documentation" (editorial, not developer-bro)
+ */
+
 import { useState } from 'react'
 import Link from 'next/link'
 import { menuItems, headingsMap } from './docs-data'
 import DocsContentPrimary from './DocsContentPrimary'
 import DocsContentSecondary from './DocsContentSecondary'
-import {
-  BookOpen, Code2, Puzzle, Heart, Search,
-  ArrowRight, Shield, Zap, Globe,
-} from 'lucide-react'
+import { ArrowRight, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const quickLinks = [
-  { title: 'API Reference', description: 'REST API v1 — endpoints, auth, and rate limits', href: '/docs/api-reference', icon: Code2 },
-  { title: 'Integration Guide', description: 'Widget, React hooks, and Node.js SDK setup', href: '/docs/integration', icon: Puzzle },
-  { title: 'Widget Builder', description: 'Configure and preview the embeddable widget', href: '/docs/widget', icon: Zap },
-  { title: 'Contributing', description: 'Report bugs, submit code, or fund the project', href: '/docs/contributing', icon: Heart },
+  { title: 'API Reference', description: 'REST API v1 — endpoints, auth, rate limits', href: '/docs/api-reference' },
+  { title: 'Integration Guide', description: 'Widget, React hooks, Node.js SDK', href: '/docs/integration' },
+  { title: 'Widget Builder', description: 'Configure and preview the embeddable widget', href: '/docs/widget' },
+  { title: 'Contributing', description: 'Report bugs, submit code, or support the project', href: '/docs/contributing' },
 ]
 
 export default function DocsPage() {
@@ -33,39 +43,53 @@ export default function DocsPage() {
   return (
     <div className="min-h-screen bg-paper text-ink">
 
-      {/* Hero — Midnight Amber */}
-      <section className="relative overflow-hidden border-b border-ink-rule/50">
-        {/* Gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-paper via-paper-sub to-paper" />
-        {/* Amber accent glow */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-500/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
-        {/* Signature line — amber horizontal rule */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+      {/* ── Hero ── */}
+      <section className="paper grain relative overflow-hidden border-b border-ink-rule">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 55% at 15% 25%, rgba(245,158,11,0.10) 0%, transparent 55%),' +
+              'radial-gradient(ellipse 90% 70% at 50% 50%, rgba(250,244,230,0.6) 0%, transparent 80%)',
+          }}
+        />
+        {/* Amber hairline at bottom */}
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 right-0 h-px"
+          style={{
+            background: 'linear-gradient(90deg, transparent 10%, rgba(245,158,11,0.5) 50%, transparent 90%)',
+          }}
+        />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-4">
-              <BookOpen className="w-5 h-5 text-amber-deep" />
-              <span className="text-xs font-semibold text-amber-deep uppercase tracking-[0.15em]">Documentation</span>
+            <div className="inline-flex items-baseline gap-3 mb-6">
+              <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
+                Documentation
+              </span>
+              <span className="h-px w-12 bg-ink-rule" aria-hidden="true" />
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-ink mb-4" style={{ fontFamily: 'Space Grotesk, system-ui, sans-serif' }}>
-              Build with<br />
-              <span className="text-amber-deep">AllowanceGuard</span>
+
+            <h1 className="font-display-tight text-ink leading-[0.95] text-4xl sm:text-5xl lg:text-6xl mb-5">
+              Guides, API reference, and integration docs.
             </h1>
-            <p className="text-lg text-ink-muted max-w-xl mb-8">
-              Guides, API reference, and integration docs. Scan wallets, score risk, and revoke approvals — programmatically or through the dashboard.
+            <p className="font-plex text-lg text-ink-muted max-w-xl mb-8">
+              Scan wallets, score risk, and revoke approvals — programmatically or through the dashboard.
             </p>
 
             {/* Search */}
             <div className="relative max-w-md">
+              <label htmlFor="docs-search" className="sr-only">Search documentation</label>
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-whisper" />
               <input
+                id="docs-search"
                 type="text"
                 placeholder="Search docs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-paper-sub border border-ink-rule/50 rounded-xl text-sm text-ink placeholder:text-ink-whisper focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-paper border border-ink-rule text-sm font-plex text-ink placeholder:text-ink-whisper focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent transition-shadow"
               />
             </div>
           </div>
@@ -76,17 +100,14 @@ export default function DocsPage() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="group flex items-start gap-3 p-4 rounded-xl bg-paper-sub border border-ink-rule/40 hover:border-amber-500/30 hover:bg-paper-sub transition-all duration-200"
+                className="group paper-card p-4 flex items-start gap-3 hover:border-amber-deep/30 transition-colors duration-150"
               >
-                <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0 group-hover:bg-paper-sub transition-colors">
-                  <link.icon className="w-4 h-4 text-amber-deep" />
-                </div>
                 <div className="min-w-0">
-                  <div className="text-sm font-medium text-ink group-hover:text-amber-deep transition-colors flex items-center gap-1">
+                  <div className="text-sm font-medium font-plex text-ink group-hover:text-amber-deep transition-colors flex items-center gap-1">
                     {link.title}
                     <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </div>
-                  <p className="text-xs text-ink-whisper mt-0.5">{link.description}</p>
+                  <p className="font-plex text-xs text-ink-whisper mt-0.5">{link.description}</p>
                 </div>
               </Link>
             ))}
@@ -94,14 +115,13 @@ export default function DocsPage() {
         </div>
       </section>
 
-      {/* Main content area */}
+      {/* ── Main content ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-          {/* Left sidebar — Navigation */}
+          {/* Left sidebar */}
           <div className="lg:col-span-3">
             <div className="sticky top-24 space-y-6">
-              {/* Grouped nav */}
               {[
                 { title: 'Getting Started', ids: ['overview', 'getting-started', 'core-concepts'] },
                 { title: 'Using AllowanceGuard', ids: ['usage-guides', 'revoking', 'alerts', 'monitoring', 'teams'] },
@@ -112,7 +132,7 @@ export default function DocsPage() {
                 if (groupItems.length === 0) return null
                 return (
                   <div key={group.title}>
-                    <h3 className="text-[10px] font-semibold text-ink-whisper uppercase tracking-[0.15em] mb-2 px-3">
+                    <h3 className="font-mono text-[10px] font-bold text-ink-whisper uppercase tracking-[0.22em] mb-2 px-3">
                       {group.title}
                     </h3>
                     <div className="space-y-0.5">
@@ -124,10 +144,10 @@ export default function DocsPage() {
                             key={item.id}
                             onClick={() => { setActiveSection(item.id); setSearchQuery('') }}
                             className={cn(
-                              'w-full text-left px-3 py-2 rounded-lg text-sm flex items-center gap-2.5 transition-all duration-150',
+                              'w-full text-left px-3 py-2 text-sm font-plex flex items-center gap-2.5 transition-all duration-150 border',
                               isActive
-                                ? 'bg-paper-sub text-amber-deep border border-amber-500/20'
-                                : 'text-ink-muted hover:text-ink hover:bg-paper-sub border border-transparent',
+                                ? 'bg-paper-sub text-amber-deep border-amber-deep/20'
+                                : 'text-ink-muted hover:text-ink hover:bg-paper-sub border-transparent',
                             )}
                           >
                             <IconComponent className={cn('w-4 h-4 shrink-0', isActive ? 'text-amber-deep' : 'text-ink-whisper')} />
@@ -141,25 +161,24 @@ export default function DocsPage() {
               })}
 
               {/* Sub-pages */}
-              <div className="pt-4 border-t border-ink-rule/50">
-                <h3 className="text-[10px] font-semibold text-ink-whisper uppercase tracking-[0.15em] mb-2 px-3">
+              <div className="pt-4 border-t border-ink-rule">
+                <h3 className="font-mono text-[10px] font-bold text-ink-whisper uppercase tracking-[0.22em] mb-2 px-3">
                   References
                 </h3>
                 <div className="space-y-0.5">
                   {[
-                    { href: '/docs/api-reference', label: 'API Reference', icon: Code2 },
-                    { href: '/docs/api', label: 'API v1 Docs', icon: Globe },
-                    { href: '/docs/api/examples', label: 'Code Examples', icon: Zap },
-                    { href: '/docs/integration', label: 'Integration', icon: Puzzle },
-                    { href: '/docs/widget', label: 'Widget Builder', icon: Shield },
-                    { href: '/docs/contributing', label: 'Contributing', icon: Heart },
+                    { href: '/docs/api-reference', label: 'API Reference' },
+                    { href: '/docs/api', label: 'API v1 Docs' },
+                    { href: '/docs/api/examples', label: 'Code Examples' },
+                    { href: '/docs/integration', label: 'Integration' },
+                    { href: '/docs/widget', label: 'Widget Builder' },
+                    { href: '/docs/contributing', label: 'Contributing' },
                   ].map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="flex items-center gap-2.5 px-3 py-2 text-sm text-ink-muted hover:text-ink hover:bg-paper-sub rounded-lg transition-colors"
+                      className="flex items-center gap-2.5 px-3 py-2 text-sm font-plex text-ink-muted hover:text-ink hover:bg-paper-sub border border-transparent transition-colors"
                     >
-                      <link.icon className="w-4 h-4 text-ink-whisper" />
                       {link.label}
                     </Link>
                   ))}
@@ -180,8 +199,8 @@ export default function DocsPage() {
           <div className="hidden lg:block lg:col-span-3">
             <div className="sticky top-24">
               {headings.length > 0 && (
-                <div className="rounded-xl border border-ink-rule/50 bg-paper-sub p-4">
-                  <h4 className="text-[10px] font-semibold text-ink-whisper uppercase tracking-[0.15em] mb-3">
+                <div className="paper-card p-4">
+                  <h4 className="font-mono text-[10px] font-bold text-ink-whisper uppercase tracking-[0.22em] mb-3">
                     On this page
                   </h4>
                   <nav className="space-y-1.5">
@@ -190,7 +209,7 @@ export default function DocsPage() {
                         key={index}
                         href={`#${heading.id}`}
                         className={cn(
-                          'block text-sm text-ink-muted hover:text-amber-deep transition-colors',
+                          'block text-sm font-plex text-ink-muted hover:text-amber-deep transition-colors',
                           heading.level === 3 && 'ml-3 text-xs',
                         )}
                       >

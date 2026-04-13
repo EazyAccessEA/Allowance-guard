@@ -28,7 +28,7 @@ export default function WidgetPage() {
       >
         {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
       </button>
-      <pre className="bg-gray-900 text-gray-100 p-6 rounded-lg overflow-x-auto text-sm">
+      <pre className="bg-ink text-paper p-6 font-mono overflow-x-auto text-sm">
         <code className={`language-${language}`}>{code}</code>
       </pre>
     </div>
@@ -138,7 +138,7 @@ export default function WidgetPage() {
                   </div>
                 </div>
                 
-                <div className="border border-ink-rule rounded-lg p-4 bg-paper-sub">
+                <div className="border border-ink-rule  p-4 bg-paper-sub">
                   <AllowanceGuardWidget
                     walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
                     chainId={1}
@@ -315,7 +315,7 @@ export default function WidgetPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 opacity-70">
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+              <div className="bg-paper-sub border border-ink-rule  p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Code className="mr-3 text-amber-deep" size={20} />
@@ -337,7 +337,7 @@ export default function WidgetPage() {
                 </div>
               </div>
 
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6">
+              <div className="bg-paper-sub border border-ink-rule  p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Download className="mr-3 text-amber-deep" size={20} />
@@ -369,7 +369,7 @@ export default function WidgetPage() {
           <div className="max-w-4xl mx-auto">
             <H2 className="mb-8 text-center">Widget Properties</H2>
             
-            <div className="bg-paper-sub border border-ink-rule rounded-lg overflow-hidden">
+            <div className="bg-paper-sub border border-ink-rule  overflow-hidden">
               <table className="w-full">
                 <thead className="bg-paper-sub">
                   <tr>

@@ -1,9 +1,8 @@
 'use client'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import DonationButton from '@/components/DonationButton'
+import DocsHero from '../DocsHero'
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, Heart, Shield, Zap, Users, DollarSign, Lock, Server, Rocket } from 'lucide-react'
 
@@ -15,32 +14,13 @@ export default function ContributingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
+    <div className="min-h-screen bg-paper text-ink">
 
-      {/* Hero Section */}
-      <Section className="relative py-20 sm:py-28 overflow-hidden bg-paper-deep">
-        <VideoBackground videoSrc="/V3AG.mp4" />
-        <div
-          className="absolute inset-0 z-10"
-          aria-hidden="true"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)'
-          }}
-        />
-
-        <Container className="relative text-left max-w-4xl z-20">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
-            Docs &middot; Contributing
-          </span>
-          <H1 className="mb-6 text-ink">Fund the mission. Build the public layer.</H1>
-          <p className="text-lg text-ink-soft max-w-reading">
-            AllowanceGuard&rsquo;s core scanner is free and open source. Always. The premium tiers fund the team &mdash; but the public good only stays public if the people who benefit from it pitch in. Code, bug reports, and donations all count.
-          </p>
-        </Container>
-      </Section>
-
-      <div className="border-t border-ink-rule" />
+      <DocsHero
+        eyebrow="Contributing"
+        title="Fund the mission. Build the public layer."
+        lede="AllowanceGuard's core scanner is free and open source. Always. Code, bug reports, and donations all count."
+      />
 
       {/* The Why: Our Mission and Your Impact - Enhanced with cards */}
       <Section className="py-32">
@@ -54,7 +34,7 @@ export default function ContributingPage() {
               {/* Enhanced paragraph 1 with card styling */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-amber-400/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-amber-400/15  flex items-center justify-center flex-shrink-0">
                     <Shield className="w-6 h-6 text-amber-deep" />
                   </div>
                   <div>
@@ -69,7 +49,7 @@ export default function ContributingPage() {
               {/* Enhanced paragraph 2 with card styling */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-amber-400/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-amber-400/15  flex items-center justify-center flex-shrink-0">
                     <Heart className="w-6 h-6 text-amber-deep" />
                   </div>
                   <div>
@@ -87,7 +67,7 @@ export default function ContributingPage() {
               {/* Enhanced paragraph 3 with card styling */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-amber-400/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-amber-400/15  flex items-center justify-center flex-shrink-0">
                     <Zap className="w-6 h-6 text-amber-deep" />
                   </div>
                   <div>
@@ -119,7 +99,7 @@ export default function ContributingPage() {
                   className="w-full p-8 text-left hover:bg-paper-sub transition-colors duration-200 flex items-center justify-between micro-bounce"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 bg-blue-50  flex items-center justify-center">
                       <Users className="w-6 h-6 text-blue-600" />
                     </div>
                     <h3 className="text-2xl font-semibold text-ink">Development Costs</h3>
@@ -146,7 +126,7 @@ export default function ContributingPage() {
                   className="w-full p-8 text-left hover:bg-paper-sub transition-colors duration-200 flex items-center justify-between micro-bounce"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 bg-red-50  flex items-center justify-center">
                       <Lock className="w-6 h-6 text-red-800" />
                     </div>
                     <h3 className="text-2xl font-semibold text-ink">Security and Audits</h3>
@@ -173,7 +153,7 @@ export default function ContributingPage() {
                   className="w-full p-8 text-left hover:bg-paper-sub transition-colors duration-200 flex items-center justify-between micro-bounce"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 bg-green-50  flex items-center justify-center">
                       <Server className="w-6 h-6 text-green-800" />
                     </div>
                     <h3 className="text-2xl font-semibold text-ink">Infrastructure and Hosting</h3>
@@ -200,7 +180,7 @@ export default function ContributingPage() {
                   className="w-full p-8 text-left hover:bg-paper-sub transition-colors duration-200 flex items-center justify-between micro-bounce"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 bg-purple-50  flex items-center justify-center">
                       <Rocket className="w-6 h-6 text-purple-600" />
                     </div>
                     <h3 className="text-2xl font-semibold text-ink">Future Development</h3>
@@ -236,7 +216,7 @@ export default function ContributingPage() {
               {/* Multiple Payment Options - Enhanced with card */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-50  flex items-center justify-center flex-shrink-0">
                     <DollarSign className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
@@ -261,7 +241,7 @@ export default function ContributingPage() {
               {/* Security and Verification - Enhanced with card */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-green-50  flex items-center justify-center flex-shrink-0">
                     <Lock className="w-6 h-6 text-green-800" />
                   </div>
                   <div>
@@ -276,7 +256,7 @@ export default function ContributingPage() {
               {/* Recurring Contributions - Enhanced with card */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-purple-50  flex items-center justify-center flex-shrink-0">
                     <Zap className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>
@@ -331,7 +311,7 @@ export default function ContributingPage() {
               {/* Technical Contribution - Enhanced with card */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-blue-50  flex items-center justify-center flex-shrink-0">
                     <Users className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
@@ -346,7 +326,7 @@ export default function ContributingPage() {
               {/* Community Advocacy - Enhanced with card */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-green-50  flex items-center justify-center flex-shrink-0">
                     <Heart className="w-6 h-6 text-green-800" />
                   </div>
                   <div>
@@ -361,7 +341,7 @@ export default function ContributingPage() {
               {/* Feedback and Testing - Enhanced with card */}
               <div className="bg-paper-sub rounded-2xl p-8 shadow-sm border border-ink-rule hover:shadow-md transition-all duration-300 hover:-translate-y-1 card-hover">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-purple-50  flex items-center justify-center flex-shrink-0">
                     <Zap className="w-6 h-6 text-purple-600" />
                   </div>
                   <div>

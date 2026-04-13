@@ -28,7 +28,7 @@ export function CodeExample({ tabs }: CodeExampleProps) {
   }
 
   return (
-    <div className="border-2 border-ink-rule rounded-lg overflow-hidden">
+    <div className="border-2 border-ink-rule  overflow-hidden">
       {/* Language tabs */}
       <div className="flex items-center bg-paper-sub border-b-2 border-ink-rule">
         <div className="flex">
@@ -39,8 +39,8 @@ export function CodeExample({ tabs }: CodeExampleProps) {
               className={cn(
                 'px-4 py-2 text-xs font-medium transition-colors',
                 i === activeTab
-                  ? 'text-ink bg-paper-deep border-b-2 border-primary-600 dark:border-primary-400 -mb-[2px]'
-                  : 'text-ink-muted hover:text-ink dark:hover:text-ink',
+                  ? 'text-ink bg-paper-deep border-b-2 border-amber-deep -mb-[2px]'
+                  : 'text-ink-muted hover:text-ink ',
               )}
             >
               {tab.label}
@@ -49,7 +49,7 @@ export function CodeExample({ tabs }: CodeExampleProps) {
         </div>
         <button
           onClick={copyToClipboard}
-          className="ml-auto mr-3 text-xs text-ink-muted hover:text-ink dark:hover:text-ink transition-colors"
+          className="ml-auto mr-3 text-xs text-ink-muted hover:text-ink  transition-colors"
         >
           {copied ? 'Copied!' : 'Copy'}
         </button>
