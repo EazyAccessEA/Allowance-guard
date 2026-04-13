@@ -2276,5 +2276,224 @@ export const blogPosts: BlogPost[] = [
     category: 'Innovation',
     featured: false,
     tags: ['security-tools', 'wallet-security', 'risk-scoring', 'multi-chain', 'best-practices'],
+  },
+
+  {
+    slug: 'what-happens-when-a-protocol-gets-hacked',
+    title: 'What Happens When a Protocol Gets Hacked',
+    subtitle: 'A step-by-step playbook for the first hour after an exploit.',
+    content: `
+      <p>You wake up to a flood of messages. A protocol you use has been exploited. Millions drained. The front-end is down. Twitter is chaos. Your wallet has an active approval to the compromised contract. What do you do?</p>
+      <p>Most people freeze. The ones who don\u2019t lose the least. This is the playbook for the first hour.</p>
+      <h2>Minute 0\u201310: Confirm the Exploit</h2>
+      <p>Before you act, confirm the exploit is real. Check the protocol\u2019s official Twitter/X account and Discord. Check on-chain data via Etherscan or the relevant block explorer. Look for large, unusual outflows from the protocol\u2019s contracts. Do not trust DMs, random Telegram messages, or unofficial sources \u2014 phishing campaigns launch within minutes of every major exploit, impersonating the affected protocol.</p>
+      <h2>Minute 10\u201320: Revoke Your Approvals</h2>
+      <p>If you have an active approval to the compromised contract, revoke it immediately. This is the single most important action. An approval is a standing permission \u2014 even if the exploit has been \u201Cpatched,\u201D your approval may still grant access to a vulnerable code path. Use <a href="/" className="text-amber-deep hover:underline">AllowanceGuard</a> or any approval manager to find and revoke the relevant allowance. Do not wait for the protocol team to tell you it\u2019s safe.</p>
+      <h2>Minute 20\u201340: Move Vulnerable Assets</h2>
+      <p>If the compromised contract has approval to tokens with significant value, and you cannot revoke quickly (network congestion, gas spikes), consider moving the tokens to a different wallet that has no approval to the compromised contract. This is a brute-force defence \u2014 if the tokens aren\u2019t in the approved wallet, the approval is worthless.</p>
+      <h2>Minute 40\u201360: Assess Your Exposure</h2>
+      <p>Once the immediate threat is neutralised, audit the rest of your approvals. An exploit in one protocol may indicate a broader vulnerability \u2014 shared codebases, forked contracts, or common dependencies. Scan every chain you use. Look for approvals to contracts in the same ecosystem as the compromised one.</p>
+      <h2>After the First Hour</h2>
+      <ul>
+        <li><strong>Follow the post-mortem.</strong> Reputable protocols publish detailed post-mortems within 24\u201372 hours. Read them. They tell you what was vulnerable and whether your actions were sufficient.</li>
+        <li><strong>Check for compensation.</strong> Some protocols offer partial recovery through insurance funds, treasury reimbursement, or governance votes. Follow the official channels.</li>
+        <li><strong>Update your security routine.</strong> If this exploit caught you off guard, your monitoring wasn\u2019t working. Set up continuous monitoring so the next alert comes before the Twitter thread.</li>
+      </ul>
+      <h2>The Rule</h2>
+      <p>In the first hour after an exploit, the order of operations is: <strong>confirm, revoke, move, assess.</strong> Every minute you spend reading Twitter instead of revoking is a minute your approval is live and your tokens are at risk. Act first. Read later.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '6 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['exploits', 'incident-response', 'revoke', 'playbook', 'security'],
+  },
+
+  {
+    slug: 'allowanceguard-vs-manual-security',
+    title: 'AllowanceGuard vs Manual Security: A Comparison',
+    subtitle: 'What you gain when you stop doing it by hand.',
+    content: `
+      <p>You can manage your token approvals manually. Open Etherscan, navigate to the token approval checker, find your wallet, scroll through the list, identify the risky ones, submit individual revocation transactions, pay gas for each one, and repeat on every chain you\u2019ve ever used. It works. It\u2019s also the digital equivalent of doing your taxes with a pencil and paper \u2014 technically possible, practically unsustainable.</p>
+      <h2>The Manual Approach</h2>
+      <p>The DIY security workflow looks like this:</p>
+      <ol>
+        <li>Open a block explorer for each chain you use</li>
+        <li>Navigate to the token approval page for your wallet</li>
+        <li>Read through the list of active approvals</li>
+        <li>Research each spender address to determine if it\u2019s legitimate</li>
+        <li>Decide which approvals to revoke based on your own risk assessment</li>
+        <li>Submit individual revocation transactions, one at a time</li>
+        <li>Pay separate gas fees for each revocation</li>
+        <li>Repeat for every chain. Remember to come back and do it again next month.</li>
+      </ol>
+      <p>This works for one wallet on one chain if you\u2019re disciplined. It breaks down the moment you have multiple wallets, multiple chains, or a life that prevents you from doing a manual audit every month.</p>
+      <h2>What Tooling Adds</h2>
+      <table>
+        <thead><tr><th>Capability</th><th>Manual (Etherscan)</th><th>Security Tool</th></tr></thead>
+        <tbody>
+          <tr><td>Multi-chain scan</td><td>One chain at a time</td><td>All chains in one pass</td></tr>
+          <tr><td>Risk scoring</td><td>Your judgment</td><td>Automated scoring against threat data</td></tr>
+          <tr><td>Batch revocation</td><td>One at a time</td><td>Multiple in one transaction, 50\u201370% gas savings</td></tr>
+          <tr><td>Continuous monitoring</td><td>Remember to check</td><td>Automatic alerts when risk changes</td></tr>
+          <tr><td>Historical tracking</td><td>None</td><td>Timeline of approval changes over time</td></tr>
+          <tr><td>Time to audit</td><td>30\u201360 minutes per chain</td><td>Under 60 seconds, all chains</td></tr>
+        </tbody>
+      </table>
+      <h2>When Manual Is Enough</h2>
+      <p>If you have one wallet, on one chain, with fewer than ten active approvals, and you check monthly \u2014 manual works. Most people don\u2019t fit that description.</p>
+      <h2>When You Need Tooling</h2>
+      <p>The moment any of these are true, manual security becomes a liability:</p>
+      <ul>
+        <li>You use more than one chain</li>
+        <li>You have more than one wallet</li>
+        <li>You interact with new dApps regularly</li>
+        <li>You manage funds for others (DAO, treasury, team)</li>
+        <li>You don\u2019t audit monthly (be honest)</li>
+      </ul>
+      <p>The question isn\u2019t whether a tool is better than manual \u2014 it obviously is. The question is whether the risk you\u2019re carrying justifies the effort of managing it by hand. For most active DeFi users, it doesn\u2019t.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '6 min read',
+    category: 'Innovation',
+    featured: false,
+    tags: ['comparison', 'manual-security', 'tooling', 'efficiency', 'approvals'],
+  },
+
+  {
+    slug: 'the-web3-security-glossary',
+    title: 'The Web3 Security Glossary',
+    subtitle: 'Every term you need to know, defined plainly.',
+    content: `
+      <p>Web3 security has its own vocabulary. If you\u2019ve ever read a security post and stumbled on terms like \u201Cspender,\u201D \u201Callowance,\u201D or \u201CERC-4337,\u201D this glossary is for you. Every term defined in plain language, alphabetically.</p>
+      <h2>A</h2>
+      <p><strong>Account Abstraction (ERC-4337)</strong> \u2014 A standard that turns your wallet from a simple key pair into a programmable smart contract. Enables session keys, batched transactions, gas sponsorship, and social recovery.</p>
+      <p><strong>Allowance</strong> \u2014 The amount of a specific token that a spender contract is permitted to move from your wallet. Set via the <code>approve()</code> function. Also called an \u201Capproval.\u201D</p>
+      <p><strong>Approval</strong> \u2014 The act of granting a smart contract permission to move your tokens. Creates an allowance. Persists until revoked.</p>
+      <h2>B</h2>
+      <p><strong>Batch Revocation</strong> \u2014 Revoking multiple token approvals in a single transaction. Saves gas compared to revoking one at a time.</p>
+      <p><strong>Bridge</strong> \u2014 A protocol that transfers tokens between different blockchain networks. Bridges hold large amounts of locked tokens, making them high-value targets.</p>
+      <h2>C\u2013D</h2>
+      <p><strong>CFG Scale</strong> \u2014 Not Web3 \u2014 this is an AI image generation parameter. If you\u2019re here from the blog images discussion, wrong glossary.</p>
+      <p><strong>Contract</strong> \u2014 A program deployed on a blockchain that executes automatically when called. Smart contracts hold the logic for DeFi protocols, token transfers, and approval management.</p>
+      <p><strong>Custodial</strong> \u2014 A service that holds your private keys on your behalf (e.g., a centralised exchange). Opposite of non-custodial.</p>
+      <h2>E\u2013G</h2>
+      <p><strong>EIP-2612</strong> \u2014 A standard that adds a <code>permit()</code> function to ERC-20 tokens, allowing approvals via off-chain signatures instead of on-chain transactions.</p>
+      <p><strong>ERC-20</strong> \u2014 The most common token standard on Ethereum and EVM chains. Defines functions including <code>approve()</code>, <code>transferFrom()</code>, and <code>allowance()</code>.</p>
+      <p><strong>EOA (Externally Owned Account)</strong> \u2014 A traditional wallet controlled by a private key. Not a smart contract. The default wallet type in MetaMask, Ledger, etc.</p>
+      <p><strong>Gas</strong> \u2014 The fee paid to execute a transaction on a blockchain. Measured in the network\u2019s native token (ETH, MATIC, etc.).</p>
+      <h2>N\u2013P</h2>
+      <p><strong>Non-Custodial</strong> \u2014 A service that never holds your private keys. You retain full control of your assets. AllowanceGuard is non-custodial by design.</p>
+      <p><strong>Permit2</strong> \u2014 A universal approval manager created by Uniswap Labs. You approve Permit2 once per token, then dApps request access via signed messages instead of on-chain transactions.</p>
+      <p><strong>Private Key</strong> \u2014 The secret string that controls your wallet. Whoever has it can move all your assets. Never share it with anyone, including security tools.</p>
+      <h2>R\u2013S</h2>
+      <p><strong>Revoke</strong> \u2014 The act of setting an approval to zero, removing a spender\u2019s permission to move your tokens. Costs a small gas fee. Reversible (you can re-approve later).</p>
+      <p><strong>Risk Score</strong> \u2014 A numerical assessment of how dangerous a specific approval is. Factors include: amount (unlimited vs limited), spender verification, contract age, known exploit history, and token value at risk.</p>
+      <p><strong>Seed Phrase</strong> \u2014 A 12\u201324 word recovery phrase that can regenerate your private key. Equivalent to your private key in terms of access. Never store digitally.</p>
+      <p><strong>Session Key</strong> \u2014 A temporary, scoped permission granted by a smart account (ERC-4337). Expires automatically. Replaces blanket approvals in account-abstracted wallets.</p>
+      <p><strong>Spender</strong> \u2014 The smart contract address that has been granted permission to move your tokens. Shown in approval dashboards as the entity your approval was granted to.</p>
+      <h2>T\u2013U</h2>
+      <p><strong>Token</strong> \u2014 A digital asset on a blockchain. ERC-20 (fungible), ERC-721 (NFT), and ERC-1155 (multi-token) are the most common standards.</p>
+      <p><strong>transferFrom()</strong> \u2014 The ERC-20 function a spender calls to move tokens from your wallet. Only works if you\u2019ve granted an approval for at least the requested amount.</p>
+      <p><strong>Unlimited Approval</strong> \u2014 An approval set to the maximum possible amount (<code>uint256.max</code>). Means the spender can move your entire balance of that token, now and in the future. The most common and most dangerous approval type.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '6 min read',
+    category: 'Education',
+    featured: false,
+    tags: ['glossary', 'definitions', 'reference', 'beginners', 'web3'],
+  },
+
+  {
+    slug: 'multi-chain-security-one-wallet-27-attack-surfaces',
+    title: 'Multi-Chain Security: One Wallet, 27 Attack Surfaces',
+    subtitle: 'Every chain you touch is another set of permissions to manage.',
+    content: `
+      <p>Your wallet address is the same on every EVM chain. Your approvals are not. Every time you bridge to a new chain and interact with a dApp, you create a new set of token approvals on that chain \u2014 independent of every other chain, managed by different contracts, with different risk profiles. One wallet, 27 potential attack surfaces.</p>
+      <h2>The Sprawl Problem</h2>
+      <p>Most DeFi users start on Ethereum mainnet. Then they bridge to Arbitrum for cheaper gas. Then Base because a friend told them about a new DEX. Then Polygon for an NFT mint. Then Optimism because a protocol they use launched there. Each interaction leaves behind approvals. After a year, a moderately active user has approvals on 4\u20138 chains \u2014 most of which they\u2019ve forgotten about.</p>
+      <p>The approvals on each chain are completely independent. Revoking an approval on Ethereum does nothing to the same spender\u2019s approval on Arbitrum. A compromised contract on Base doesn\u2019t affect Polygon. But a compromised contract on Base that has your approval on Base can drain your tokens on Base \u2014 and you might not even know you had tokens there.</p>
+      <h2>Why Single-Chain Tools Fail</h2>
+      <p>A security tool that only scans one chain at a time creates a false sense of security. You scan Ethereum, see a clean report, and feel safe. Meanwhile, you have unlimited approvals to three unverified contracts on Arbitrum, a stale approval on Polygon from a protocol that was exploited last month, and tokens sitting in a bridge contract on Base that you forgot to revoke.</p>
+      <p>Multi-chain security requires multi-chain scanning. Not \u201Cselect a network from this dropdown.\u201D All networks, scanned in parallel, scored together, presented in one view.</p>
+      <h2>The Cross-Chain Risk Multiplier</h2>
+      <p>Approval risk multiplies across chains because:</p>
+      <ul>
+        <li><strong>Attention is finite.</strong> You can\u2019t manually audit 8 chains monthly. You\u2019ll do one or two and neglect the rest.</li>
+        <li><strong>Protocols fork across chains.</strong> The same contract code deployed on 5 chains means a vulnerability affects all 5.</li>
+        <li><strong>Bridge approvals are the most dangerous.</strong> They\u2019re high-value targets, and they exist on the source chain where your tokens originated.</li>
+        <li><strong>Gas costs vary.</strong> Revoking on mainnet costs $5\u201315. On L2s it costs $0.01\u20130.05. Users delay mainnet revocations because of cost, leaving the highest-value approvals active the longest.</li>
+      </ul>
+      <h2>What to Do</h2>
+      <ol>
+        <li><strong>Scan every chain.</strong> Use a tool that covers all the networks you\u2019ve ever touched \u2014 not just the ones you remember.</li>
+        <li><strong>Start with L2 revocations.</strong> They\u2019re nearly free. Clean up Arbitrum, Base, Optimism, and Polygon first. Then address mainnet.</li>
+        <li><strong>Audit bridge approvals specifically.</strong> These are your highest-risk, highest-value approvals. Revoke them after every bridge transfer.</li>
+        <li><strong>Set up cross-chain monitoring.</strong> Get alerts when new high-risk approvals appear on any chain \u2014 not just the one you\u2019re thinking about.</li>
+      </ol>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '7 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['multi-chain', 'cross-chain', 'approval-sprawl', 'l2', 'security'],
+  },
+
+  {
+    slug: 'the-principles-behind-allowanceguard',
+    title: 'The Principles Behind AllowanceGuard',
+    subtitle: 'What we believe and why it shapes what we build.',
+    content: `
+      <p>Every product encodes the beliefs of the people who built it. Here are ours.</p>
+      <h2>Non-Custodial by Architecture</h2>
+      <p>We don\u2019t ask for your private keys because the system is designed so we never need them. All scanning uses public blockchain data. All revocations are standard ERC-20 transactions signed in your own wallet. We couldn\u2019t access your assets if we wanted to \u2014 the capability doesn\u2019t exist in the code. Trust should be a property of the architecture, not a line in a terms of service.</p>
+      <h2>Open Source Core</h2>
+      <p>The scanner that protects users is free and public. Anyone can read the code, audit the risk scoring logic, fork the project, or self-host it. We chose AGPL-3.0 specifically because it protects the community: anyone can use and modify the code, but if they run it as a competing service, they must share their modifications. The core is a public good. Premium services \u2014 monitoring, team dashboards, the API \u2014 fund its development.</p>
+      <h2>No Data Selling</h2>
+      <p>We do not sell user data. We do not share wallet addresses with third parties for marketing. We do not track your on-chain activity beyond scans you explicitly trigger. The business model is subscriptions and API access \u2014 not data extraction. If the product is free, you are not the product. If the product is paid, you are the customer.</p>
+      <h2>Free Where It Counts</h2>
+      <p>The core scanner is free. Scanning your wallet, seeing your approvals, understanding your risk, revoking dangerous permissions \u2014 these are not premium features. They are baseline security that everyone deserves. Premium features are for power users and teams who need continuous monitoring, automation, compliance exports, and API access. The free tier is not a demo. It is the product.</p>
+      <h2>Accuracy Over Speed</h2>
+      <p>We would rather show you a correct risk score in 30 seconds than an incorrect one in 3 seconds. The risk engine checks contract verification status, known exploit databases, approval amounts, spender reputation, and behavioural anomalies. When RPC data is incomplete, we say so rather than guessing. A security tool that gives false confidence is worse than no tool at all.</p>
+      <h2>Build to Last</h2>
+      <p>AllowanceGuard is independently operated. We do not have investors demanding growth-at-all-costs. We do not have a token that needs price support. We have a product, customers, and an open-source community. The company is structured to be sustainable, not to exit. If we disappeared tomorrow, the code would still be available for anyone to run. That\u2019s the point.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '5 min read',
+    category: 'Community',
+    featured: false,
+    tags: ['principles', 'values', 'non-custodial', 'open-source', 'mission'],
+  },
+
+  {
+    slug: 'five-minutes-to-a-safer-wallet',
+    title: 'Five Minutes to a Safer Wallet',
+    subtitle: 'The fastest path from zero to audited.',
+    content: `
+      <p>You\u2019ve heard about token approvals. You know they\u2019re a risk. You\u2019ve been meaning to do something about it. Here\u2019s the five-minute version.</p>
+      <h2>Minute 1: Scan</h2>
+      <p>Go to <a href="/" className="text-amber-deep hover:underline">AllowanceGuard</a>. Paste your wallet address. You don\u2019t need to connect your wallet or create an account. The scan runs across all supported chains automatically.</p>
+      <h2>Minute 2: Read the Results</h2>
+      <p>You\u2019ll see a list of every active token approval your wallet has. Each one shows: the token, the spender (the contract you gave permission to), the amount approved, and a risk score. Focus on the ones marked <strong>Critical</strong> or <strong>High</strong>. These are the approvals most likely to cause you harm if exploited.</p>
+      <h2>Minute 3: Understand What You\u2019re Looking At</h2>
+      <p>An \u201Cunlimited\u201D approval means the spender can move your entire balance of that token at any time. A \u201Cstale\u201D approval means you haven\u2019t interacted with the spender recently \u2014 it\u2019s a forgotten permission. An \u201Cunverified\u201D spender means the contract\u2019s source code hasn\u2019t been published. Any of these is a reason to revoke.</p>
+      <h2>Minute 4: Revoke the Worst Ones</h2>
+      <p>Connect your wallet (you\u2019ll need to sign the revocation transactions). Start with any approval marked Critical. Click \u201CRevoke.\u201D Your wallet will ask you to confirm a transaction \u2014 this sets the approval to zero. Cost: a few cents on L2 chains, a few dollars on Ethereum mainnet. You can batch multiple revocations to save gas.</p>
+      <h2>Minute 5: Set a Reminder</h2>
+      <p>Open your calendar. Set a monthly reminder: \u201CAudit wallet approvals.\u201D The scan takes under a minute once you know what you\u2019re looking at. Security isn\u2019t a one-time event \u2014 it\u2019s a habit. Five minutes a month is all it takes.</p>
+      <h2>What\u2019s Next</h2>
+      <p>If you want to go deeper:</p>
+      <ul>
+        <li>Read <a href="/blog/what-are-token-allowances" className="text-amber-deep hover:underline">What Are Token Allowances</a> for the full explanation</li>
+        <li>Read <a href="/blog/a-non-technical-guide-to-reading-token-approvals" className="text-amber-deep hover:underline">A Non-Technical Guide to Reading Token Approvals</a> to understand every column on the dashboard</li>
+        <li>Set up continuous monitoring (Pro tier) so you get alerted automatically when a new risky approval appears</li>
+      </ul>
+      <p>Five minutes. That\u2019s all it takes to go from \u201CI should probably do something about this\u201D to \u201CI\u2019ve done it.\u201D</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '4 min read',
+    category: 'Education',
+    featured: false,
+    tags: ['quickstart', 'beginners', 'audit', 'five-minutes', 'guide'],
   }
 ]
