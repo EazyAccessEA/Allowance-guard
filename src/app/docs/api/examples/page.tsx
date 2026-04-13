@@ -19,11 +19,11 @@ export default function APIExamplesPage() {
     <div className="relative">
       <button
         onClick={() => copyToClipboard(code, id)}
-        className="absolute top-4 right-4 p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+        className="absolute top-4 right-4 p-2 bg-paper-sub hover:bg-paper-deep border border-ink-rule transition-colors"
       >
         {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
       </button>
-      <pre className="bg-gray-900 text-gray-100 p-6 rounded-lg overflow-x-auto text-sm">
+      <pre className="bg-ink text-paper p-6 overflow-x-auto text-sm font-mono">
         <code className={`language-${language}`}>{code}</code>
       </pre>
     </div>

@@ -77,7 +77,7 @@ export function ApiPlayground({
   }
 
   return (
-    <div className="border-2 border-ink-rule rounded-lg overflow-hidden">
+    <div className="border-2 border-ink-rule  overflow-hidden">
       <div className="bg-paper-sub p-4 border-b-2 border-ink-rule">
         <h4 className="text-sm font-bold text-ink mb-3">Try it out</h4>
 
@@ -89,7 +89,7 @@ export function ApiPlayground({
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             placeholder="ag_live_..."
-            className="w-full px-3 py-2 bg-paper-deep border border-ink-rule rounded text-sm font-mono text-ink placeholder:text-ink-muted/50 dark:placeholder:text-ink-muted/50 focus:outline-none focus:border-primary-600 dark:focus:border-primary-400"
+            className="w-full px-3 py-2 bg-paper-deep border border-ink-rule rounded text-sm font-mono text-ink placeholder:text-ink-muted/50  focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent"
           />
         </div>
 
@@ -105,7 +105,7 @@ export function ApiPlayground({
                 <input
                   value={value}
                   onChange={(e) => setParams((p) => ({ ...p, [key]: e.target.value }))}
-                  className="flex-1 px-3 py-1.5 bg-paper-deep border border-ink-rule rounded text-sm font-mono text-ink focus:outline-none focus:border-primary-600 dark:focus:border-primary-400"
+                  className="flex-1 px-3 py-1.5 bg-paper-deep border border-ink-rule rounded text-sm font-mono text-ink focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent"
                 />
               </div>
             ))}
@@ -120,7 +120,7 @@ export function ApiPlayground({
               value={body}
               onChange={(e) => setBody(e.target.value)}
               rows={5}
-              className="w-full px-3 py-2 bg-paper-deep border border-ink-rule rounded text-sm font-mono text-ink focus:outline-none focus:border-primary-600 dark:focus:border-primary-400 resize-y"
+              className="w-full px-3 py-2 bg-paper-deep border border-ink-rule rounded text-sm font-mono text-ink focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent resize-y"
             />
           </div>
         )}

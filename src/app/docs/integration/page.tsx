@@ -24,7 +24,7 @@ export default function IntegrationPage() {
       >
         {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
       </button>
-      <pre className="bg-gray-900 text-gray-100 p-6 rounded-lg overflow-x-auto text-sm">
+      <pre className="bg-ink text-paper p-6 font-mono overflow-x-auto text-sm">
         <code className={`language-${language}`}>{code}</code>
       </pre>
     </div>
@@ -217,7 +217,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-paper-sub border border-ink-rule  p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Globe className="mr-3 text-amber-deep" size={24} />
@@ -238,7 +238,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 hover:shadow-lg transition-shadow opacity-75">
+              <div className="bg-paper-sub border border-ink-rule  p-6 hover:shadow-lg transition-shadow opacity-75">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Zap className="mr-3 text-ink-whisper" size={24} />
@@ -259,7 +259,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-paper-sub border border-ink-rule rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div className="bg-paper-sub border border-ink-rule  p-6 hover:shadow-lg transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Package className="mr-3 text-amber-deep" size={24} />
@@ -393,7 +393,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
+              <div className="bg-paper-sub p-6  border border-ink-rule">
                 <div className="flex items-center justify-between mb-4">
                   <H3>REST API v1</H3>
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-800 bg-paper-sub border border-emerald-500/30 px-2 py-0.5 rounded-full">
@@ -409,7 +409,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </a>
               </div>
 
-              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
+              <div className="bg-paper-sub p-6  border border-ink-rule">
                 <div className="flex items-center justify-between mb-4">
                   <H3>Browser Extension</H3>
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
@@ -424,7 +424,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </div>
               </div>
 
-              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
+              <div className="bg-paper-sub p-6  border border-ink-rule">
                 <div className="flex items-center justify-between mb-4">
                   <H3>Node.js SDK</H3>
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
@@ -453,7 +453,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
             <H2 className="mb-8 text-center">Best Practices</H2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
+              <div className="bg-paper-sub p-6  border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Shield className="mr-3 text-green-800" size={20} />
                   <H3>Security</H3>
@@ -466,7 +466,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
+              <div className="bg-paper-sub p-6  border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Zap className="mr-3 text-blue-600" size={20} />
                   <H3>Performance</H3>
@@ -479,7 +479,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
+              <div className="bg-paper-sub p-6  border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Globe className="mr-3 text-purple-600" size={20} />
                   <H3>User Experience</H3>
@@ -492,7 +492,7 @@ checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
                 </ul>
               </div>
 
-              <div className="bg-paper-sub p-6 rounded-lg border border-ink-rule">
+              <div className="bg-paper-sub p-6  border border-ink-rule">
                 <div className="flex items-center mb-4">
                   <Package className="mr-3 text-orange-600" size={20} />
                   <H3>Integration</H3>
