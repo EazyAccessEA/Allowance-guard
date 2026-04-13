@@ -86,6 +86,7 @@ const nextConfig = {
   
   // Performance optimizations
   experimental: {
+    viewTransition: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-toast', '@reown/appkit', 'wagmi', 'react', 'react-dom'],
     webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
     // Optimize CSS loading

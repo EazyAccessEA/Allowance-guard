@@ -1,6 +1,31 @@
 /* Fonts moved to layout.tsx for better performance */
 /* Theano Didot font import removed to fix MIME type errors */
 
+/* ── View Transitions — smooth page navigation ──────────────────────
+ * Council: Idris (200ms crossfade), Maren (subtle, not performative),
+ * Noor (reduced-motion respects), Thane (zero JS, browser-native).
+ * ─────────────────────────────────────────────────────────────────── */
+::view-transition-old(root) {
+  animation: view-fade-out 200ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+::view-transition-new(root) {
+  animation: view-fade-in 200ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+@keyframes view-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes view-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
 /* Critical CSS - Above the fold styles */
 @layer base {
   html {
