@@ -1,19 +1,13 @@
 """
-Generate blog featured images via Runware API — v2.
+Generate blog featured images via Runware API — v3 (Nano Banana 2).
 
-Council #27 (Prompt Engineer / Photorealism) rules:
-  1. One subject, one sentence. No compound scenes.
-  2. Name the material. "Brushed gold metal" not "golden."
-  3. Name the lighting. "Soft studio lighting from top-left."
-  4. Name the background. "Clean warm cream background."
-  5. Max 30 words per prompt.
+Model: google:2@1 (Nano Banana 2) — Google's high-quality model.
+No steps param, no negativePrompt — model handles these internally.
+Dimensions: 1408x768 (closest 16:9-ish ratio supported).
 
-Council #28 (Prompt Engineer / Brand Systems) rules:
-  - Warm amber + cream tones throughout (Ledger palette)
-  - Consistent editorial product photography style
-  - Centered composition, shallow DoF, clean negative space
-
-Model: FLUX 1.1 Pro (runware:5@1) — 30 steps.
+Council #27 + #28 prompt rules:
+  One subject, name the material, name the lighting, name the background.
+  Max 30 words. Warm amber + cream tones.
 """
 
 import asyncio
@@ -23,11 +17,6 @@ import httpx
 
 API_KEY = os.environ.get("RUNWARE_API_KEY", "iCSzmgzsJNF1Z3dpITcEDdrLPzD3odWp")
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "public", "images", "blog")
-
-NEGATIVE = (
-    "text, words, letters, watermark, signature, blurry, low quality, "
-    "cartoon, anime, oversaturated, cluttered, busy background"
-)
 
 BLOG_IMAGES = [
     {
@@ -98,6 +87,14 @@ BLOG_IMAGES = [
         "filename": "non-technical-guide-to-approvals.webp",
         "prompt": "A simple dashboard card with a green checkmark and amber gauge rendered as a physical object on a cream desk, soft overhead light",
     },
+    {
+        "filename": "account-abstraction-future-of-approvals.webp",
+        "prompt": "A modern smart card with a glowing circuit pattern sitting upright on a cream surface, warm amber side-light, product photography, shallow depth of field",
+    },
+    {
+        "filename": "why-most-wallet-security-tools-fail.webp",
+        "prompt": "A broken magnifying glass lying next to an intact one on a cream surface, warm studio lighting, editorial still life, shallow depth of field",
+    },
 ]
 
 
@@ -108,14 +105,12 @@ async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Sem
                 "taskType": "imageInference",
                 "taskUUID": str(uuid.uuid4()),
                 "positivePrompt": item["prompt"],
-                "negativePrompt": NEGATIVE,
-                "model": "runware:5@1",
-                "width": 1024,
-                "height": 576,
+                "model": "google:2@1",
+                "width": 1408,
+                "height": 768,
                 "numberResults": 1,
                 "outputFormat": "WEBP",
                 "outputType": "URL",
-                "steps": 30,
             }
         ]
 
@@ -160,10 +155,10 @@ async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Sem
 
 async def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    print(f"Generating {len(BLOG_IMAGES)} images — FLUX 1.1 Pro, 30 steps")
+    print(f"Generating {len(BLOG_IMAGES)} images — Nano Banana 2 (google:2@1)")
     print(f"Output: {OUTPUT_DIR}\n")
 
-    sem = asyncio.Semaphore(3)  # 3 concurrent — be polite to the API
+    sem = asyncio.Semaphore(3)
     async with httpx.AsyncClient() as client:
         tasks = [generate_image(client, item, sem) for item in BLOG_IMAGES]
         await asyncio.gather(*tasks)
