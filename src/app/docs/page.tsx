@@ -190,7 +190,7 @@ export default function DocsPage() {
           {/* Main content */}
           <div className="lg:col-span-6">
             <div className="max-w-none">
-              <DocsContentPrimary section={activeSection} />
+              <DocsContentPrimary section={activeSection} onNavigate={(s) => { setActiveSection(s); setSearchQuery(''); window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
               <DocsContentSecondary section={activeSection} />
             </div>
           </div>
