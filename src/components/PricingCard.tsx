@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Check, X } from 'lucide-react'
+import { Check, X, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   type ConsumerPlan,
@@ -12,7 +12,6 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { trackClientEvent } from '@/lib/analytics'
-import PaymentMethodModal from './PaymentMethodModal'
 
 interface PricingCardProps {
   plan: 'free' | 'pro' | 'sentinel'
@@ -84,11 +83,27 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   const ctaText = plan === 'free' ? 'Join the waitlist' : `Upgrade to ${displayName}`
 
-  const [modalOpen, setModalOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  function handleUpgrade() {
+  async function handleUpgrade() {
+    if (loading) return
+    setLoading(true)
     trackClientEvent('upgrade_clicked', { plan, billingPeriod })
-    setModalOpen(true)
+    try {
+      const res = await fetch('/api/billing/create-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, billingPeriod }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setLoading(false)
+      }
+    } catch {
+      setLoading(false)
+    }
   }
 
   return (
@@ -153,26 +168,23 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* CTA */}
       <div className="mb-8">
         {isPaid ? (
-          <>
-            <button
-              onClick={handleUpgrade}
-              className={cn(
-                'w-full  px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0E1A]',
-                highlighted
-                  ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
-                  : 'bg-paper-sub text-ink hover:bg-white/15 ring-1 ring-ink-rule active:bg-paper-sub',
-              )}
-            >
-              {ctaText}
-            </button>
-            <PaymentMethodModal
-              isOpen={modalOpen}
-              onClose={() => setModalOpen(false)}
-              plan={plan}
-              planDisplayName={displayName}
-              billingPeriod={billingPeriod}
-            />
-          </>
+          <button
+            onClick={handleUpgrade}
+            disabled={loading}
+            className={cn(
+              'w-full px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed',
+              highlighted
+                ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
+                : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule active:bg-paper-sub',
+            )}
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Redirecting...
+              </span>
+            ) : ctaText}
+          </button>
         ) : (
           <Link
             href="/"
