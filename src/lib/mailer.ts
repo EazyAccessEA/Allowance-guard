@@ -154,7 +154,7 @@ export function createEmailHTML(content: string, recipientEmail: string): string
   <div class="container">
     <div class="top-border"></div>
     <div class="header">
-      <img src="https://www.allowanceguard.com/images/branding/ag-logo-email.png" alt="Allowance Guard" style="width: 80px; height: 80px; margin: 0 auto 20px auto; display: block;">
+      <img src="https://www.allowanceguard.com/images/branding/ag-logo-white.png" alt="Allowance Guard" style="width: 80px; height: 80px; margin: 0 auto 20px auto; display: block;">
       <h1>Allowance Guard</h1>
       <p style="margin: 10px 0 0 0; opacity: 0.9;">Security alerts for your token approvals</p>
     </div>
