@@ -221,6 +221,28 @@ const blogPosts: BlogPost[] = [
     featured: false,
     image: '/images/blog/non-technical-guide-to-approvals.webp',
   },
+  {
+    slug: 'account-abstraction-future-of-wallet-approvals',
+    title: 'Account Abstraction and the Future of Wallet Approvals',
+    subtitle: 'Smart accounts change everything about how permissions work.',
+    excerpt: 'ERC-4337 smart accounts replace blanket approvals with session keys, batched transactions, and wallet-level spending limits. Here\u2019s what changes.',
+    publishedAt: '2026-04-13',
+    readTime: '8 min read',
+    category: 'Education',
+    featured: false,
+    image: '/images/blog/account-abstraction-future-of-approvals.webp',
+  },
+  {
+    slug: 'why-most-wallet-security-tools-fail',
+    title: 'Why Most Wallet Security Tools Fail',
+    subtitle: 'The five blind spots that leave users exposed.',
+    excerpt: 'Single-chain blindness, lists without scores, no monitoring, one-at-a-time revocation, custody requirements. If your tool has any of these, it\u2019s not enough.',
+    publishedAt: '2026-04-13',
+    readTime: '7 min read',
+    category: 'Innovation',
+    featured: false,
+    image: '/images/blog/why-most-wallet-security-tools-fail.webp',
+  },
 ]
 
 function formatDate(date: string) {
