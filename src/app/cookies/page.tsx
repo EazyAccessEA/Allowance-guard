@@ -2,7 +2,6 @@
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 
 export default function CookiesPage() {
 
@@ -11,22 +10,14 @@ export default function CookiesPage() {
       
       {/* Hero Section - Fireart Style with Animated Background */}
       <Section className="relative py-24 sm:py-32 overflow-hidden bg-paper-deep">
-        <VideoBackground videoSrc="/V3AG.mp4" />
-        <div
-          className="absolute inset-0 z-10"
-          aria-hidden="true"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)'
-          }}
-        />
+        
 
         <Container className="relative text-left max-w-4xl z-20">
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; Cookie Policy
           </span>
           <H1 className="mb-6 text-ink">Cookie Policy</H1>
-          <p className="text-lg text-ink-soft max-w-reading">
+          <p className="text-lg text-ink-soft max-w-2xl">
             A short, honest account of every cookie AllowanceGuard sets on your device, why it exists, how long it lives, and how to switch off the ones that are not strictly necessary.
           </p>
         </Container>
@@ -36,7 +27,7 @@ export default function CookiesPage() {
 
       <Section>
         <Container>
-          <div className="max-w-reading">
+          <div className="max-w-2xl">
             <div className="space-y-8">
               <section>
                 <H2 className="mb-4">1. What Are Cookies</H2>

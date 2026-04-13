@@ -1,7 +1,6 @@
 'use client'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import VideoBackground from '@/components/VideoBackground'
 
 export default function FAQPage() {
 
@@ -10,7 +9,6 @@ export default function FAQPage() {
       
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <VideoBackground videoSrc="/V3AG.mp4" />
         
         {/* Gradient overlay */}
         <div
@@ -267,13 +265,13 @@ export default function FAQPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mobbin-fade-in">
               <a 
                 href="/contact" 
-                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-amber-500 text-ink rounded-lg hover:bg-amber-400 transition-all duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring bg-amber-500 text-ink hover:bg-amber-400 transition-all duration-200"
               >
                 Contact Support
               </a>
               <a 
                 href="/docs" 
-                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-ink-rule text-ink rounded-lg hover:bg-paper-sub hover:text-ink transition-all duration-200"
+                className="inline-flex items-center justify-center px-8 py-4 mobbin-body font-medium mobbin-hover-lift mobbin-focus-ring border border-ink-rule text-ink hover:bg-paper-sub hover:text-ink transition-all duration-200"
               >
                 Documentation
               </a>
