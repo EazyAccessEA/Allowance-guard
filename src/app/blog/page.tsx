@@ -290,8 +290,8 @@ export default function BlogPage() {
                 <article className="paper-card-raised overflow-hidden">
                   <div className="grid lg:grid-cols-2">
                     {featuredPost.image && (
-                      <div className="relative h-48 lg:h-auto min-h-[200px] overflow-hidden bg-paper">
-                        <Image src={featuredPost.image} alt={featuredPost.title} fill className="object-contain p-8" />
+                      <div className="relative h-48 lg:h-auto min-h-[200px] overflow-hidden bg-paper-sub">
+                        <Image src={featuredPost.image} alt={featuredPost.title} fill className="object-contain p-6" />
                       </div>
                     )}
                     <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
@@ -352,7 +352,7 @@ export default function BlogPage() {
                 <CascadingScrollAnimation key={post.slug} direction="up" distance={30} delay={(i % 3) * 80}>
                   <article className="paper-card overflow-hidden h-full flex flex-col group">
                     {post.image && (
-                      <div className="relative h-36 overflow-hidden bg-paper">
+                      <div className="relative h-36 overflow-hidden bg-paper-sub border-b border-ink-rule">
                         <Image src={post.image} alt={post.title} fill className="object-contain p-4" />
                       </div>
                     )}
