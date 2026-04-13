@@ -15,7 +15,6 @@
  */
 
 import Link from 'next/link'
-import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Highlight from '@/components/ui/Highlight'
@@ -30,7 +29,6 @@ interface BlogPost {
   readTime: string
   category: string
   featured: boolean
-  image?: string
 }
 
 const blogPosts: BlogPost[] = [
@@ -43,7 +41,6 @@ const blogPosts: BlogPost[] = [
     readTime: '5 min read',
     category: 'Community',
     featured: false,
-    image: '/images/blog/open-source-stronger-our-license-update.webp',
   },
   {
     slug: 'hardware-wallets-and-multisigs-elevating-your-security',
@@ -54,7 +51,6 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Security',
     featured: true,
-    image: '/images/blog/hardware-wallets-and-multisigs.webp',
   },
   {
     slug: 'understanding-smart-contract-risk-beyond-allowances',
@@ -65,7 +61,6 @@ const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/understanding-smart-contract-risk.webp',
   },
   {
     slug: 'building-your-personal-web3-security-routine',
@@ -76,7 +71,6 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/building-your-personal-web3-security-routine.webp',
   },
   {
     slug: 'gas-fees-and-revocations-making-security-cost-effective',
@@ -87,7 +81,6 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/gas-fees-and-revocations.webp',
   },
   {
     slug: 'understanding-layer-2-networks-how-they-work',
@@ -98,7 +91,6 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Education',
     featured: false,
-    image: '/images/blog/understanding-layer-2-networks.webp',
   },
   {
     slug: 'red-team-yourself-simulating-an-attack-on-your-wallet',
@@ -109,7 +101,6 @@ const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/red-team-yourself.webp',
   },
   {
     slug: 'programmable-safety-future-allowance-security',
@@ -120,7 +111,6 @@ const blogPosts: BlogPost[] = [
     readTime: '9 min read',
     category: 'Innovation',
     featured: false,
-    image: '/images/blog/programmable-safety.webp',
   },
   {
     slug: 'staying-safe-with-defi-dapps',
@@ -131,7 +121,6 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/staying-safe-with-defi-dapps.webp',
   },
   {
     slug: 'how-to-self-audit-your-wallet',
@@ -142,7 +131,6 @@ const blogPosts: BlogPost[] = [
     readTime: '6 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/how-to-self-audit-your-wallet.webp',
   },
   {
     slug: 'what-are-token-allowances',
@@ -153,7 +141,6 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/what-are-token-allowances.webp',
   },
   {
     slug: 'from-dapp-user-to-security-advocate-building-community-trust',
@@ -164,7 +151,6 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Community',
     featured: false,
-    image: '/images/blog/from-dapp-user-to-security-advocate.webp',
   },
   {
     slug: 'permit2-and-eip-2612-the-new-approval-frontier',
@@ -175,7 +161,6 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/permit2-and-eip-2612.webp',
   },
   {
     slug: 'anatomy-of-an-approval-exploit',
@@ -186,7 +171,6 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/images/blog/anatomy-of-an-approval-exploit.webp',
   },
   {
     slug: 'cross-chain-security-bridging-without-getting-burned',
@@ -197,7 +181,6 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Education',
     featured: false,
-    image: '/images/blog/cross-chain-security-bridging.webp',
   },
   {
     slug: 'why-we-open-sourced-our-security-scanner',
@@ -208,7 +191,6 @@ const blogPosts: BlogPost[] = [
     readTime: '6 min read',
     category: 'Community',
     featured: false,
-    image: '/images/blog/why-we-open-sourced.webp',
   },
   {
     slug: 'a-non-technical-guide-to-reading-token-approvals',
@@ -219,7 +201,6 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Education',
     featured: false,
-    image: '/images/blog/non-technical-guide-to-approvals.webp',
   },
   {
     slug: 'account-abstraction-future-of-wallet-approvals',
@@ -230,7 +211,6 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Education',
     featured: false,
-    image: '/images/blog/account-abstraction-future-of-approvals.webp',
   },
   {
     slug: 'why-most-wallet-security-tools-fail',
@@ -241,7 +221,6 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Innovation',
     featured: false,
-    image: '/images/blog/why-most-wallet-security-tools-fail.webp',
   },
 ]
 
@@ -288,21 +267,6 @@ export default function BlogPage() {
             <div className="max-w-5xl mx-auto">
               <CascadingScrollAnimation direction="up" distance={40} delay={0}>
                 <article className="paper-card-raised overflow-hidden">
-                  <div className="grid lg:grid-cols-2">
-                    {/* Image */}
-                    {featuredPost.image && (
-                      <div className="relative h-64 lg:h-auto min-h-[280px] overflow-hidden">
-                        <Image
-                          src={featuredPost.image}
-                          alt={featuredPost.title}
-                          fill
-                          className="object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-paper/40 to-transparent lg:bg-gradient-to-r" />
-                      </div>
-                    )}
-
-                    {/* Content */}
                     <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
                       <div className="inline-flex items-baseline gap-3 mb-5">
                         <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
@@ -336,7 +300,6 @@ export default function BlogPage() {
                         </Link>
                       </div>
                     </div>
-                  </div>
                 </article>
               </CascadingScrollAnimation>
             </div>
@@ -359,20 +322,7 @@ export default function BlogPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {regularPosts.map((post, i) => (
                 <CascadingScrollAnimation key={post.slug} direction="up" distance={30} delay={(i % 3) * 80}>
-                  <article className="paper-card overflow-hidden h-full flex flex-col group">
-                    {/* Image */}
-                    {post.image && (
-                      <div className="relative h-44 overflow-hidden">
-                        <Image
-                          src={post.image}
-                          alt={post.title}
-                          fill
-                          className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-paper/30 to-transparent" />
-                      </div>
-                    )}
-
+                  <article className="paper-card h-full flex flex-col group">
                     <div className="p-6 flex flex-col flex-1">
                       {/* Category mono label */}
                       <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-3">
