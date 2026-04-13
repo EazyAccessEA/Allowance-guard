@@ -117,7 +117,7 @@ function CellValue({ value }: { value: string | boolean }) {
 
 export default function PricingTable() {
   return (
-    <div className="w-full overflow-x-auto rounded-xl bg-paper-sub ring-1 ring-ink-rule p-1">
+    <div className="w-full overflow-x-auto bg-paper-sub border border-ink-rule p-1">
       <table className="w-full min-w-[600px] border-collapse text-left">
         <thead>
           <tr className="border-b border-ink-rule/50">

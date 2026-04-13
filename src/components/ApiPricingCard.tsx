@@ -72,7 +72,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
   return (
     <div
       className={cn(
-        'group relative flex flex-col rounded-2xl p-6 lg:p-7 transition-all duration-300',
+        'group relative flex flex-col  p-6 lg:p-7 transition-all duration-300',
         highlighted
           ? 'bg-paper-sub ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/5'
           : 'bg-paper-sub ring-1 ring-ink-rule hover:ring-ink-rule hover:bg-paper-sub'
@@ -81,7 +81,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
       {/* Highlighted glow */}
       {highlighted && (
         <div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
+          className="absolute inset-0  pointer-events-none"
           aria-hidden="true"
           style={{
             background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%)',
@@ -91,7 +91,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
 
       {highlighted && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center rounded-full bg-amber-500 px-3 py-0.5 text-xs font-semibold text-ink shadow-md shadow-amber-500/20">
+          <span className="inline-flex items-center  bg-amber-500 px-3 py-0.5 text-xs font-semibold text-ink shadow-md shadow-amber-500/20">
             Most Popular
           </span>
         </div>
@@ -122,7 +122,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
         {isEnterprise ? (
           <a
             href="mailto:sales@allowanceguard.com?subject=Enterprise API Inquiry"
-            className="flex items-center justify-center w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200"
+            className="flex items-center justify-center w-full  px-4 py-2.5 text-sm font-semibold text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200"
           >
             <Mail className="mr-2 h-4 w-4" />
             Contact Sales
@@ -132,7 +132,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
             <button
               onClick={handleUpgrade}
               className={cn(
-                'w-full rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+                'w-full  px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
                 highlighted
                   ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20'
                   : 'bg-paper-sub text-ink hover:bg-white/15 ring-1 ring-ink-rule',
@@ -151,7 +151,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
         ) : (
           <a
             href="/account/api-keys"
-            className="block w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-center text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200"
+            className="block w-full  px-4 py-2.5 text-sm font-semibold text-center text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200"
           >
             Get Free API Key
           </a>
