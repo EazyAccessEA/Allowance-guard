@@ -1,6 +1,13 @@
-# AllowanceGuard
+<p align="center">
+  <img src="public/images/branding/ag-logo-readme.png" alt="AllowanceGuard" width="240" />
+</p>
 
-> **Open source Web3 wallet security.** Scan any wallet for risky token approvals across 15 EVM chains, score the risk of every active allowance, simulate the impact of revoking them, and batch-revoke in a single signed transaction.
+<h1 align="center">AllowanceGuard</h1>
+
+<p align="center">
+  <strong>Open source Web3 wallet security.</strong><br>
+  Scan any wallet for risky token approvals across 27 EVM chains, score the risk of every active allowance, simulate the impact of revoking them, and batch-revoke in a single signed transaction.
+</p>
 
 [![License: AGPL-3.0 + Commercial](https://img.shields.io/badge/license-AGPL--3.0%20%2B%20Commercial-blue.svg)](LICENSE)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
@@ -45,7 +52,7 @@ Open source core. Independently operated. Built to last.
 AllowanceGuard is a **non-custodial wallet-security platform** that tracks every token approval (allowance) across supported EVM chains, scores each approval's risk, and lets users revoke dangerous ones in a single signed transaction. The core scanner is free and open source. Premium monitoring, team dashboards, and the B2B API sustain the project.
 
 - **Non-custodial by design.** We never ask for or store private keys. All scanning uses public chain data. All revocations are signed by the user in their own wallet.
-- **Cross-chain from day one.** 15 EVM networks. One dashboard. One risk score.
+- **Cross-chain from day one.** 27 EVM networks. One dashboard. One risk score.
 - **Built to integrate.** Web app, React hooks (`@allowance-guard/react`), REST API, Node SDK, and a browser extension — five ways to ship AllowanceGuard into your workflow.
 
 ---
@@ -123,7 +130,7 @@ The **core scanner is free and open source. Always.** Premium *services* — con
 | Feature | Free | Pro | Sentinel |
 |---|---|---|---|
 | Wallets tracked | 3 | Unlimited | 50 monitored |
-| Chains visible | 1 at a time | All 15 | All 15 |
+| Chains visible | 1 at a time | All 27 | All 27 |
 | Risk scoring | Basic | Full | Full + automated rules |
 | Batch revocation | — | Included | Included |
 | Continuous monitoring + alerts | — | Email + Telegram | Email + Telegram + Webhooks |
@@ -152,7 +159,7 @@ Full API docs: <https://www.allowanceguard.com/docs/api-reference>. Issue keys f
 
 ## Supported chains
 
-All 15 chains share one risk engine, one dashboard, one API.
+All 27 chains share one risk engine, one dashboard, one API.
 
 | # | Chain | Chain ID | Status |
 |---|---|---|---|
@@ -171,6 +178,18 @@ All 15 chains share one risk engine, one dashboard, one API.
 | 13 | Linea | 59144 | Live |
 | 14 | Scroll | 534352 | Live |
 | 15 | Celo | 42220 | Live |
+| 16 | Blast | 81457 | Live |
+| 17 | Cronos | 25 | Live |
+| 18 | Moonbeam | 1284 | Live |
+| 19 | Aurora | 1313161554 | Live |
+| 20 | opBNB | 204 | Live |
+| 21 | Manta Pacific | 169 | Live |
+| 22 | Mode | 34443 | Live |
+| 23 | Taiko | 167000 | Live |
+| 24 | Metis | 1088 | Live |
+| 25 | Kava | 2222 | Live |
+| 26 | ZetaChain | 7000 | Live |
+| 27 | Worldchain | 480 | Live |
 
 Adding a chain is a migration + RPC config — see `src/lib/networks.ts`.
 
@@ -447,7 +466,7 @@ Please **do not** open a public GitHub issue for security reports.
 | | **AllowanceGuard** | Revoke.cash | Blowfish |
 |---|---|---|---|
 | Model | Open-core freemium + B2B API | Free / donations | B2B API (paid) |
-| Chains | 15 EVM | 100+ | 10+ |
+| Chains | 27 EVM | 100+ | 10+ |
 | Risk scoring | Continuous, cross-chain portfolio score | Per-approval flags | Real-time tx simulation |
 | Batch revoke | Yes, with gas-savings estimate | Yes | No (simulation only) |
 | Time-machine simulation | Yes | No | No |
@@ -474,7 +493,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the detailed guide, [`CODE_OF_CONDU
 
 ### Standing Council
 
-Non-trivial changes (code, copy, schema, APIs, infrastructure) are reviewed against the 19-person Standing Council defined in [`CLAUDE.md`](CLAUDE.md) — editor-in-chief, OSS maintainer, Web3 expert, security engineer, product marketing, B2B sales, visual designer, accessibility specialist (veto), compliance counsel, DevOps, founder voice, ecosystem strategist, UX writer, DX engineer, staff architect, QA, perf, DBA, privacy specialist. Pull requests that materially change user-facing copy, public APIs, or the design system are expected to reference the relevant council members in their description.
+Non-trivial changes (code, copy, schema, APIs, infrastructure) are reviewed against the 29-person Standing Council defined in [`CLAUDE.md`](CLAUDE.md). The council includes specialists in: editorial, open source, Web3/DeFi, security, product marketing, B2B, visual design, accessibility (veto power), legal/compliance, DevOps, investor voice, ecosystem strategy, UX writing, DX, architecture, QA, performance, databases, privacy/GDPR, brand copywriting, technical copywriting, conversion copywriting, regulatory counsel, data protection law (veto power), AI image direction, visual brand photography, prompt engineering, and art direction. Pull requests that materially change user-facing copy, public APIs, or the design system are expected to reference the relevant council members in their description.
 
 ---
 
@@ -504,7 +523,7 @@ Built with and standing on the shoulders of:
 - [TanStack Query](https://tanstack.com/query) for data fetching in `@allowance-guard/react`
 - [Tailwind CSS](https://tailwindcss.com/) and [Lucide](https://lucide.dev/)
 - [Playwright](https://playwright.dev/) and [Vitest](https://vitest.dev/) for testing
-- Public RPC providers, block explorers, and token lists across all 15 supported chains
+- Public RPC providers, block explorers, and token lists across all 27 supported chains
 
 And every open-source maintainer whose library we depend on but haven't named — thank you.
 
@@ -520,4 +539,6 @@ And every open-source maintainer whose library we depend on but haven't named �
 
 ---
 
-<sub>Open source core. Independently operated. Built to last.</sub>
+<p align="center">
+  <sub>Open source core. Independently operated. Built to last.</sub>
+</p>
