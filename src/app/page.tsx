@@ -17,6 +17,7 @@
  *  Thane: no heavy JS — SubscribeForm is the only client island
  */
 
+import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Highlight from '@/components/ui/Highlight'
@@ -52,7 +53,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-paper">
       {/* ── Hero ── */}
       <section className="paper grain relative min-h-[70svh] flex items-center overflow-hidden">
-        {/* Warm gradient wash — same as live Hero */}
+        {/* Warm gradient wash */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
@@ -63,6 +64,20 @@ export default function HomePage() {
               'radial-gradient(ellipse 90% 70% at 50% 50%, rgba(250,244,230,0.6) 0%, transparent 80%)',
           }}
         />
+
+        {/* Compass — editorial still life, positioned as decorative watermark */}
+        <div
+          aria-hidden="true"
+          className="absolute -right-16 bottom-0 sm:right-0 lg:right-[5%] w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] lg:w-[500px] lg:h-[500px] pointer-events-none select-none opacity-[0.12] mix-blend-multiply"
+        >
+          <Image
+            src="/images/branding/hero-compass.webp"
+            alt=""
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
 
         <Container className="relative z-10 py-20 sm:py-24 lg:py-28">
           <div className="max-w-4xl">
