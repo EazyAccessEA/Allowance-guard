@@ -1,10 +1,10 @@
 import { Globe } from 'lucide-react'
 import { supportedNetworks } from './docs-data'
 
-interface Props { section: string }
+interface Props { section: string; onNavigate?: (section: string) => void }
 
 /** Docs content sections: overview through advanced-topics */
-export default function DocsContentPrimary({ section }: Props) {
+export default function DocsContentPrimary({ section, onNavigate }: Props) {
  switch (section) {
  case 'overview':
  return (
@@ -105,7 +105,7 @@ export default function DocsContentPrimary({ section }: Props) {
  <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
  <h4 className="font-semibold text-ink text-sm mb-2">New here? Start with two pages</h4>
  <p className="text-sm text-ink-soft leading-relaxed">
- Read <button onClick={() => { /* handled by parent */ }} className="text-amber-deep hover:underline font-medium">What Are Token Allowances?</button> in <em>Getting Started</em> for the security primer, then jump to <a href="/docs/api-reference" className="text-amber-deep hover:underline font-medium">API Reference</a> if you&rsquo;re building an integration.
+ Read <button onClick={() => onNavigate?.('getting-started')} className="text-amber-deep hover:underline font-medium">What Are Token Allowances?</button> in <em>Getting Started</em> for the security primer, then jump to <a href="/docs/api-reference" className="text-amber-deep hover:underline font-medium">API Reference</a> if you&rsquo;re building an integration.
  </p>
  </div>
  </div>
