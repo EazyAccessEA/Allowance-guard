@@ -3,21 +3,19 @@
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import Link from 'next/link'
 
 export default function SLAPage() {
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
+    <div className="min-h-screen bg-paper text-ink">
 
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <VideoBackground videoSrc="/V3AG.mp4" />
         <div className="absolute inset-0 z-10 bg-paper-deep/85" />
 
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Service Level Agreement</H1>
-          <p className="text-xl text-ink-muted max-w-reading mb-8">
+          <p className="text-xl text-ink-muted max-w-2xl mb-8">
             Our commitment to uptime, response times, and service quality — broken down by tier.
           </p>
         </Container>
@@ -45,7 +43,7 @@ export default function SLAPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Uptime Targets</H2>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-ink-muted border border-ink-rule rounded-lg">
+                  <table className="w-full text-sm text-ink-muted border border-ink-rule">
                     <thead className="bg-paper-sub border border-ink-rule">
                       <tr>
                         <th className="text-left p-4 font-medium">Tier</th>
@@ -105,7 +103,7 @@ export default function SLAPage() {
               {/* Definition of Downtime */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Definition of Downtime</H2>
-                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                <div className="bg-paper-sub border border-ink-rule p-6">
                   <p className="text-ink-muted mb-4">
                     <strong>&quot;Downtime&quot;</strong> is defined as the complete inability to perform core operations:
                   </p>
@@ -165,7 +163,7 @@ export default function SLAPage() {
                   for service credits applied to your next billing cycle.
                 </p>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-ink-muted border border-ink-rule rounded-lg">
+                  <table className="w-full text-sm text-ink-muted border border-ink-rule">
                     <thead className="bg-paper-sub border border-ink-rule">
                       <tr>
                         <th className="text-left p-4 font-medium">Monthly Uptime</th>
@@ -203,7 +201,7 @@ export default function SLAPage() {
               {/* Monitoring */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Monitoring &amp; Status</H2>
-                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-ink-muted">
+                <div className="bg-paper-sub border border-ink-rule p-6 text-ink-muted">
                   <p className="mb-3">
                     We monitor service health using automated systems. Real-time status is available on our{' '}
                     <a
@@ -255,7 +253,7 @@ export default function SLAPage() {
               {/* Contact */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Support Contacts</H2>
-                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                <div className="bg-paper-sub border border-ink-rule p-6">
                   <ul className="space-y-2 text-ink-muted text-sm">
                     <li>General support: <span className="text-amber-deep font-medium">support@allowanceguard.com</span></li>
                     <li>Urgent / P0 issues (Sentinel/Enterprise): <span className="text-amber-deep font-medium">urgent@allowanceguard.com</span></li>

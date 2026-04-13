@@ -3,7 +3,6 @@
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import Link from 'next/link'
 
 export default function RefundPage() {
@@ -12,22 +11,14 @@ export default function RefundPage() {
 
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden bg-paper-deep">
-        <VideoBackground videoSrc="/V3AG.mp4" />
-        <div
-          className="absolute inset-0 z-10"
-          aria-hidden="true"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)'
-          }}
-        />
+        
 
         <Container className="relative text-left max-w-4xl z-20">
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; Refund Policy
           </span>
           <H1 className="mb-6 text-ink">Refund Policy</H1>
-          <p className="text-lg text-ink-soft max-w-reading">
+          <p className="text-lg text-ink-soft max-w-2xl">
             Fourteen days, no questions asked, on every paid tier. After that the rules are written down here in plain English so nobody is guessing.
           </p>
         </Container>
@@ -62,7 +53,7 @@ export default function RefundPage() {
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Refunds by Plan Type</H2>
                 <div className="space-y-6">
 
-                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <div className="bg-paper-sub border border-ink-rule p-6">
                     <h3 className="text-lg font-semibold mb-3 text-ink">Monthly Subscriptions (Pro, Sentinel)</h3>
                     <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• <strong>Within 14 days of first payment:</strong> Full refund</li>
@@ -72,7 +63,7 @@ export default function RefundPage() {
                     </ul>
                   </div>
 
-                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <div className="bg-paper-sub border border-ink-rule p-6">
                     <h3 className="text-lg font-semibold mb-3 text-ink">Annual Subscriptions (Pro, Sentinel)</h3>
                     <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• <strong>Within 14 days of first payment:</strong> Full refund</li>
@@ -81,7 +72,7 @@ export default function RefundPage() {
                     </ul>
                   </div>
 
-                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <div className="bg-paper-sub border border-ink-rule p-6">
                     <h3 className="text-lg font-semibold mb-3 text-ink">B2B API Tiers (Developer, Growth, Enterprise)</h3>
                     <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• <strong>Within 14 days of first payment:</strong> Full refund</li>
@@ -91,7 +82,7 @@ export default function RefundPage() {
                     </ul>
                   </div>
 
-                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <div className="bg-paper-sub border border-ink-rule p-6">
                     <h3 className="text-lg font-semibold mb-3 text-ink">Free Trials</h3>
                     <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• Cancel during the trial period at no charge</li>
@@ -99,7 +90,7 @@ export default function RefundPage() {
                     </ul>
                   </div>
 
-                  <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                  <div className="bg-paper-sub border border-ink-rule p-6">
                     <h3 className="text-lg font-semibold mb-3 text-ink">Donations</h3>
                     <ul className="space-y-2 text-ink-soft text-sm">
                       <li>• Donations are non-refundable once processed</li>
@@ -114,7 +105,7 @@ export default function RefundPage() {
                 <H2 className="text-2xl font-semibold mb-4 text-ink">How to Request a Refund</H2>
                 <div className="space-y-4 text-ink-soft">
                   <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
+                    <div className="bg-paper-sub border border-ink-rule p-6 text-center">
                       <div className="text-2xl font-bold text-amber-deep mb-2">1</div>
                       <h3 className="font-medium mb-2">Email Us</h3>
                       <p className="text-sm">
@@ -124,7 +115,7 @@ export default function RefundPage() {
                       </p>
                     </div>
 
-                    <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
+                    <div className="bg-paper-sub border border-ink-rule p-6 text-center">
                       <div className="text-2xl font-bold text-amber-deep mb-2">2</div>
                       <h3 className="font-medium mb-2">We Review</h3>
                       <p className="text-sm">
@@ -132,7 +123,7 @@ export default function RefundPage() {
                       </p>
                     </div>
 
-                    <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg text-center">
+                    <div className="bg-paper-sub border border-ink-rule p-6 text-center">
                       <div className="text-2xl font-bold text-amber-deep mb-2">3</div>
                       <h3 className="font-medium mb-2">Refund Issued</h3>
                       <p className="text-sm">
@@ -166,7 +157,7 @@ export default function RefundPage() {
               {/* Contact */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4 text-ink">Contact</H2>
-                <div className="bg-paper-sub border border-ink-rule p-6 rounded-lg">
+                <div className="bg-paper-sub border border-ink-rule p-6">
                   <ul className="space-y-2 text-ink-soft text-sm">
                     <li>Refund requests: <span className="text-amber-deep font-medium">billing@allowanceguard.com</span></li>
                     <li>Billing questions: <span className="text-amber-deep font-medium">billing@allowanceguard.com</span></li>

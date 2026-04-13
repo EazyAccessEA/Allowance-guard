@@ -6,7 +6,6 @@ import { loadStripe } from '@stripe/stripe-js'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import { DollarSign, Heart, CreditCard, Coins } from 'lucide-react'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
@@ -118,18 +117,17 @@ export default function ContributePage() {
   }
 
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
+    <div className="min-h-screen bg-paper text-ink">
       
       {/* Hero Section */}
       <Section className="relative pt-20 pb-24 sm:pt-24 sm:pb-32 overflow-hidden">
-        <VideoBackground videoSrc="/V3AG.mp4" />
         
         {/* Gradient overlay */}
         <div className="absolute inset-0 z-10 bg-paper-deep/90" />
         
         <Container className="relative text-left max-w-4xl z-10">
           <H1 className="mb-6">Support Allowance Guard</H1>
-          <p className="text-lg text-ink-muted max-w-reading">
+          <p className="text-lg text-ink-muted max-w-2xl">
             Help us maintain and improve the security infrastructure that protects the Web3 ecosystem. Your contribution directly funds development, security audits, and infrastructure costs.
           </p>
         </Container>
@@ -142,7 +140,7 @@ export default function ContributePage() {
         <Section className="py-8">
           <Container>
             <div className="max-w-2xl mx-auto text-center">
-              <div className="bg-paper-sub border border-amber-700 rounded-lg p-6">
+              <div className="bg-paper-sub border border-amber-700 p-6">
                 <p className="text-sm text-amber-deep">
                   No worries — the core scanner is free and open source. Always. If you change your mind, see{' '}
                   <a 
@@ -162,9 +160,9 @@ export default function ContributePage() {
       <Section className="py-32">
         <Container>
           <div className="max-w-md mx-auto">
-            <div className="bg-paper-sub border border-ink-rule rounded-2xl p-8 shadow-large">
+            <div className="bg-paper-sub border border-ink-rule p-8 shadow-large">
               <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 rounded-full mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 mb-4">
                   <Heart className="w-8 h-8 text-ink fill-current" />
                 </div>
                 <h2 className="text-2xl font-semibold text-ink mb-2">Make a Contribution</h2>
@@ -187,7 +185,7 @@ export default function ContributePage() {
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
                       placeholder="25.00"
-                      className="w-full px-3 py-4 pl-10 text-lg border border-ink-rule rounded-lg bg-paper-deep text-ink placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
+                      className="w-full px-3 py-4 pl-10 text-lg border border-ink-rule bg-paper-deep text-ink placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
                     />
                   </div>
                 </div>
@@ -202,7 +200,7 @@ export default function ContributePage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full px-3 py-4 text-lg border border-ink-rule rounded-lg bg-paper-deep text-ink placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
+                    className="w-full px-3 py-4 text-lg border border-ink-rule bg-paper-deep text-ink placeholder-secondary-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition-colors duration-200"
                   />
                 </div>
 
@@ -210,11 +208,11 @@ export default function ContributePage() {
                   <button
                     onClick={handleStripeContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-amber-500 hover:bg-amber-400 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-amber-500 hover:bg-amber-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingCard ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-slate-900 border-t-transparent animate-spin" />
                         <span>Redirecting...</span>
                       </>
                     ) : (
@@ -228,12 +226,12 @@ export default function ContributePage() {
                   <button
                     onClick={handleCryptoContribute}
                     disabled={loadingCard || loadingCrypto}
-                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-paper-deep border border-ink-rule hover:bg-paper-sub rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-3 px-6 py-4 text-lg font-medium text-ink bg-paper-deep border border-ink-rule hover:bg-paper-sub transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
                     title="Pay with ETH, USDC, BTC and more - Secured by Coinbase Commerce"
                   >
                     {loadingCrypto ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-secondary-100 border-t-transparent rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-secondary-100 border-t-transparent animate-spin" />
                         <span>Opening...</span>
                       </>
                     ) : (
@@ -246,13 +244,13 @@ export default function ContributePage() {
                 </div>
 
                 {error && (
-                  <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
+                  <div className="bg-red-900/20 border border-red-700 p-4">
                     <p className="text-base text-crimson">{error}</p>
                   </div>
                 )}
 
                 {message && (
-                  <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-4">
+                  <div className="bg-blue-900/20 border border-blue-700 p-4">
                     <p className="text-base text-cobalt">{message}</p>
                   </div>
                 )}
@@ -278,25 +276,25 @@ export default function ContributePage() {
             <div className="mt-12 text-center">
               <h3 className="text-xl font-semibold text-ink mb-4">How Your Contribution Helps</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-                <div className="bg-paper-sub rounded-lg p-6">
+                <div className="bg-paper-sub p-6">
                   <h4 className="font-semibold text-ink mb-2">Development</h4>
                   <p className="text-sm text-ink-muted">
                     Funding new features, security improvements, and user experience enhancements.
                   </p>
                 </div>
-                <div className="bg-paper-sub rounded-lg p-6">
+                <div className="bg-paper-sub p-6">
                   <h4 className="font-semibold text-ink mb-2">Infrastructure</h4>
                   <p className="text-sm text-ink-muted">
                     Maintaining servers, databases, and ensuring reliable service uptime.
                   </p>
                 </div>
-                <div className="bg-paper-sub rounded-lg p-6">
+                <div className="bg-paper-sub p-6">
                   <h4 className="font-semibold text-ink mb-2">Security Audits</h4>
                   <p className="text-sm text-ink-muted">
                     Regular security assessments and penetration testing to keep the platform secure.
                   </p>
                 </div>
-                <div className="bg-paper-sub rounded-lg p-6">
+                <div className="bg-paper-sub p-6">
                   <h4 className="font-semibold text-ink mb-2">Community</h4>
                   <p className="text-sm text-ink-muted">
                     Supporting open source development and building educational resources.

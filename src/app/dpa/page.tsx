@@ -3,7 +3,6 @@
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1, H2 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import Link from 'next/link'
 
 export default function DPAPage() {
@@ -12,22 +11,14 @@ export default function DPAPage() {
 
       {/* Hero Section */}
       <Section className="relative py-24 sm:py-32 overflow-hidden bg-paper-deep">
-        <VideoBackground videoSrc="/V3AG.mp4" />
-        <div
-          className="absolute inset-0 z-10"
-          aria-hidden="true"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)'
-          }}
-        />
+        
 
         <Container className="relative text-left max-w-4xl z-20">
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Legal &middot; GDPR Article 28
           </span>
           <H1 className="mb-6 text-ink">Data Processing Agreement</H1>
-          <p className="text-lg text-ink-soft max-w-reading">
+          <p className="text-lg text-ink-soft max-w-2xl">
             The standard DPA for Sentinel and Enterprise customers who process personal data through AllowanceGuard. Plain language where the law allows it; precise language where it doesn&rsquo;t.
           </p>
         </Container>
@@ -43,7 +34,7 @@ export default function DPAPage() {
 
               {/* Availability Notice */}
               <div className="mb-12">
-                <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg">
+                <div className="bg-blue-50 border border-blue-200 p-6">
                   <h3 className="text-lg font-medium mb-2 text-blue-800">Who Needs a DPA?</h3>
                   <p className="text-blue-700 text-sm mb-3">
                     A Data Processing Agreement is available for <strong>Sentinel tier</strong> and{' '}
@@ -90,7 +81,7 @@ export default function DPAPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">3. Scope of Processing</H2>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-stone border border-line rounded-lg">
+                  <table className="w-full text-sm text-stone border border-line">
                     <tbody>
                       <tr className="border-b border-line">
                         <td className="p-3 font-medium bg-paper-sub w-1/3">Subject matter</td>
@@ -140,27 +131,27 @@ export default function DPAPage() {
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">5. Technical &amp; Organizational Measures</H2>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-paper-sub p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Encryption</h3>
                     <p className="text-stone text-xs">Data encrypted at rest (AES-256) and in transit (TLS 1.2+). API keys hashed before storage.</p>
                   </div>
-                  <div className="bg-paper-sub p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Access Control</h3>
                     <p className="text-stone text-xs">Role-based access, session-based authentication, CSRF protection, rate limiting on all endpoints.</p>
                   </div>
-                  <div className="bg-paper-sub p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Audit Logging</h3>
                     <p className="text-stone text-xs">All data access and modifications logged with actor, timestamp, and action. Logs retained for 90 days.</p>
                   </div>
-                  <div className="bg-paper-sub p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Infrastructure</h3>
                     <p className="text-stone text-xs">Hosted on Vercel (SOC 2). Database on Neon (encrypted, isolated). Redis on Upstash (encrypted).</p>
                   </div>
-                  <div className="bg-paper-sub p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Incident Response</h3>
                     <p className="text-stone text-xs">Automated error monitoring (Rollbar). Breach notification within 72 hours per GDPR Article 33.</p>
                   </div>
-                  <div className="bg-paper-sub p-4 rounded-lg">
+                  <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Data Minimization</h3>
                     <p className="text-stone text-xs">Only data necessary for service delivery is collected. Automated cleanup of expired data.</p>
                   </div>
@@ -175,7 +166,7 @@ export default function DPAPage() {
                   notify the Customer at least 30 days before adding or replacing a sub-processor.
                 </p>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-stone border border-line rounded-lg">
+                  <table className="w-full text-sm text-stone border border-line">
                     <thead className="bg-paper-sub">
                       <tr>
                         <th className="text-left p-3 font-medium">Sub-processor</th>
@@ -263,7 +254,7 @@ export default function DPAPage() {
               {/* How to Execute */}
               <div className="mb-12">
                 <H2 className="text-2xl font-semibold mb-4">Request a Signed DPA</H2>
-                <div className="bg-paper-sub p-6 rounded-lg">
+                <div className="bg-paper-sub p-6">
                   <p className="text-stone mb-4">
                     To execute this DPA for your organization, contact us with your company details:
                   </p>

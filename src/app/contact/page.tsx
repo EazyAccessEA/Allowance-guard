@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
-import VideoBackground from '@/components/VideoBackground'
 import {
   Mail,
   Shield,
@@ -69,25 +68,17 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
+    <div className="min-h-screen bg-paper text-ink">
       {/* ============ HERO ============ */}
       <Section className="relative py-24 sm:py-32 overflow-hidden">
-        <VideoBackground videoSrc="/V3AG.mp4" />
-        <div
-          className="absolute inset-0 z-10"
-          aria-hidden="true"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(247,245,240,0.92) 0%, rgba(247,245,240,0.78) 60%, rgba(247,245,240,0.65) 100%)',
-          }}
-        />
+        
 
         <Container className="relative text-left max-w-4xl z-20">
           <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
             Contact
           </span>
           <H1 className="mb-6 text-ink">Talk to a human.</H1>
-          <p className="text-lg text-ink-soft max-w-reading">
+          <p className="text-lg text-ink-soft max-w-2xl">
             Bug reports, security disclosures, partnerships, press, funding &mdash; all of it lands in front of someone who can actually help. Choose a topic, write what you need, and we&rsquo;ll be back inside one business day. Critical security reports inside two hours.
           </p>
         </Container>
@@ -109,7 +100,7 @@ export default function ContactPage() {
               </p>
 
               {status === 'success' ? (
-                <div className="rounded-2xl border border-emerald-500/30 bg-paper-sub p-8">
+                <div className="border border-emerald-500/30 bg-paper-sub p-8">
                   <div className="flex items-start gap-3">
                     <CheckCircle2 className="w-6 h-6 text-emerald-800 flex-shrink-0 mt-0.5" />
                     <div>
@@ -177,7 +168,7 @@ export default function ContactPage() {
                         return (
                           <label
                             key={t.value}
-                            className={`relative flex flex-col cursor-pointer rounded-xl border px-4 py-3 transition-all ${
+                            className={`relative flex flex-col cursor-pointer border px-4 py-3 transition-all ${
                               selected
                                 ? 'border-amber-400/60 bg-paper-sub'
                                 : 'border-ink-rule bg-paper-sub hover:border-ink-rule hover:bg-paper-sub'
@@ -231,7 +222,7 @@ export default function ContactPage() {
                       value={form.message}
                       onChange={(e) => update('message', e.target.value)}
                       placeholder="Tell us what's going on. The more context, the faster we can help."
-                      className="w-full rounded-xl bg-paper-sub border border-ink-rule px-4 py-3 text-sm text-ink placeholder-ink-whisper resize-y focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
+                      className="w-full bg-paper-sub border border-ink-rule px-4 py-3 text-sm text-ink placeholder-ink-whisper resize-y focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
                     />
                     <p className="mt-1.5 text-xs text-ink-whisper">
                       {form.message.length} / 5000
@@ -240,7 +231,7 @@ export default function ContactPage() {
 
                   {/* Error */}
                   {status === 'error' && error && (
-                    <div className="flex items-start gap-2 rounded-xl border border-red-500/30 bg-paper-sub p-4">
+                    <div className="flex items-start gap-2 border border-red-500/30 bg-paper-sub p-4">
                       <AlertCircle className="w-5 h-5 text-red-800 flex-shrink-0 mt-0.5" />
                       <p className="text-sm text-red-800">{error}</p>
                     </div>
@@ -251,7 +242,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={status === 'submitting'}
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-amber-500 text-ink text-sm font-semibold hover:bg-amber-400 disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-paper-deep"
+                      className="inline-flex items-center justify-center px-6 py-3 bg-amber-500 text-ink text-sm font-semibold hover:bg-amber-400 disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-paper-deep"
                     >
                       {status === 'submitting' ? 'Sending…' : (
                         <>
@@ -391,7 +382,7 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className="w-full rounded-xl bg-paper-sub border border-ink-rule px-4 py-3 text-sm text-ink placeholder-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
+        className="w-full bg-paper-sub border border-ink-rule px-4 py-3 text-sm text-ink placeholder-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/40 transition-colors"
       />
     </div>
   )
@@ -421,7 +412,7 @@ function ChannelCard({
       href={href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
-      className={`block group rounded-2xl border p-5 transition-all ${
+      className={`block group border p-5 transition-all ${
         accent
           ? 'border-amber-400/30 bg-amber-400/5 hover:border-amber-400/60'
           : 'border-ink-rule bg-paper-sub hover:border-ink-rule hover:bg-paper-sub'
@@ -429,7 +420,7 @@ function ChannelCard({
     >
       <div className="flex items-start gap-4">
         <div
-          className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
+          className={`flex-shrink-0 w-10 h-10 flex items-center justify-center ${
             accent ? 'bg-amber-400/15 text-amber-deep' : 'bg-paper-sub text-ink-soft'
           }`}
         >
