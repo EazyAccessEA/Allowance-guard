@@ -134,9 +134,6 @@ export default function Footer() {
               onToggle={() => toggleSection('legal')}
             >
               <ul className="space-y-2 mt-4">
-                <FooterLink href="/terms">Terms</FooterLink>
-                <FooterLink href="/privacy">Privacy</FooterLink>
-                <FooterLink href="/cookies">Cookies</FooterLink>
                 <FooterLink href="/dpa">DPA</FooterLink>
                 <FooterLink href="/sla">SLA</FooterLink>
                 <FooterLink href="/refund">Refunds</FooterLink>
@@ -152,7 +149,13 @@ export default function Footer() {
         <div className="mt-14 pt-6 border-t border-[rgba(15,17,21,0.08)]">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <p className="font-plex text-[12px] text-ink-whisper">
-              © {new Date().getFullYear()} AllowanceGuard. AGPL-3.0 + Commercial.
+              © {new Date().getFullYear()} AllowanceGuard.
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              <Link href="/terms" className="hover:text-ink transition-colors">Terms</Link>
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              <Link href="/privacy" className="hover:text-ink transition-colors">Privacy</Link>
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              <Link href="/cookies" className="hover:text-ink transition-colors">Cookies</Link>
             </p>
 
             {/* Social — tiny, inline with copyright bar */}
