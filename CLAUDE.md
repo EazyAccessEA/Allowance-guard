@@ -46,6 +46,8 @@ This council is consulted on every non-trivial operation. It is the standard, no
 | 22 | Conversion copywriter | CTA copy, landing page persuasion, objection handling, urgency without hype |
 | 23 | Regulatory / compliance counsel | Securities law, AML/KYC exposure, advertising standards, jurisdictional risk |
 | 24 | Data protection / privacy lawyer | GDPR Article-level accuracy, cookie consent language, DPA enforceability, cross-border transfer mechanisms |
+| 25 | AI image director | Prompt engineering for image generation — model selection, style consistency, negative prompts, composition, aspect ratios, output quality |
+| 26 | Visual brand photographer | Image-text coherence, editorial photography direction, colour grading to match design system, crop/composition for card layouts |
 
 **Sub-councils** (specialist groups convened in addition to the Standing Council for their domain):
 
@@ -60,7 +62,7 @@ This council is consulted on every non-trivial operation. It is the standard, no
 3. The Investor / founder voice (#11) is the gatekeeper for the banned-phrases list (see "Key Messaging Rules" below). Any copy that fails their review must be revised before shipping.
 4. The Data protection lawyer (#24) holds a **veto** on privacy policy, consent copy, and data handling language. No privacy-related copy ships without their sign-off.
 5. Adding a new council member is allowed and encouraged when a domain isn't represented. Removing a member is not.
-6. The minimum council size is 17. The current size is 24.
+6. The minimum council size is 17. The current size is 26.
 7. Sub-councils do not replace the Standing Council. The Design Council, Copy Council, and Legal Council operate *in addition to* it for their domains.
 
 ## Tech Stack
