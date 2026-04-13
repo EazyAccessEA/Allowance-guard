@@ -16,9 +16,9 @@
  */
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Badge } from '@/components/ui/Badge'
+import Logo from '@/components/ui/Logo'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import MobileNavigation from '@/components/MobileNavigation'
 import PlanBadge from '@/components/PlanBadge'
@@ -85,14 +85,7 @@ export default function Header({ isConnected }: HeaderProps) {
               aria-label="AllowanceGuard — home"
               className="group flex items-center gap-2.5 flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded"
             >
-              <Image
-                src="/images/branding/ag-logo-ink-128.png"
-                alt=""
-                width={28}
-                height={28}
-                className="transition-transform duration-200 group-hover:scale-105"
-                priority
-              />
+              <Logo size={28} variant="ink" className="transition-transform duration-200 group-hover:scale-105" />
               <span className="font-plex font-semibold text-[15px] text-ink leading-none tracking-[-0.01em]">
                 AllowanceGuard
               </span>

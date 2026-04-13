@@ -113,17 +113,19 @@ export const metadata: Metadata = {
   },
   manifest: '/site.webmanifest',
   openGraph: {
-    title: 'Allowance Guard',
-    description: 'Open-source, free tool to view and revoke token approvals safely.',
-    url: '/',
-    siteName: 'Allowance Guard',
+    title: 'AllowanceGuard',
+    description: 'Wallet security, reimagined. Scan token approvals, score risk, and revoke — across 27 chains.',
+    url: 'https://www.allowanceguard.com',
+    siteName: 'AllowanceGuard',
     type: 'website',
+    images: [{ url: 'https://www.allowanceguard.com/og-image.webp', width: 2816, height: 1536, alt: 'AllowanceGuard — Wallet security, reimagined' }],
   },
   alternates: { canonical: '/' },
   twitter: {
     card: 'summary_large_image',
-    title: 'Allowance Guard',
-    description: 'Open-source, free tool to view and revoke token approvals safely.'
+    title: 'AllowanceGuard',
+    description: 'Wallet security, reimagined. Scan token approvals, score risk, and revoke — across 27 chains.',
+    images: ['https://www.allowanceguard.com/og-image.webp'],
   }
 }
 
@@ -147,9 +149,7 @@ export default function RootLayout({
         {/* CSS files are handled by Next.js automatically */}
         {/* Critical CSS preloading - Next.js handles this automatically */}
         
-        {/* Preload critical images - only preload if they exist and are used */}
-        <link rel="preload" href="/images/branding/ag-logo.png" as="image" type="image/png" />
-        <link rel="preload" href="/AllowanceGuard_BG.png" as="image" type="image/png" />
+        {/* Logo is now inline SVG — no preload needed */}
         
         {/* Fonts are handled by Next.js font optimization */}
         

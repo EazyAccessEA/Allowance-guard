@@ -63,7 +63,7 @@ export async function GET(req: Request) {
   // Load logo
   let logoBuffer: Buffer | null = null
   try {
-    logoBuffer = readFileSync(join(process.cwd(), 'public', 'images/branding/ag-logo.png'))
+    logoBuffer = readFileSync(join(process.cwd(), 'public', 'images/branding/ag-logo-email.png'))
   } catch {
     // Logo not available — continue without it
   }

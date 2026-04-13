@@ -16,9 +16,9 @@
  */
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
+import Logo from '@/components/ui/Logo'
 import { Github, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface FooterSectionProps {
@@ -79,12 +79,7 @@ export default function Footer() {
         {/* Top disclaimer — replaces the wordmark block. Information > branding. */}
         <div className="mb-10 pb-10 border-b border-[rgba(15,17,21,0.08)] max-w-3xl">
           <div className="flex items-center gap-3 mb-4">
-            <Image
-              src="/images/branding/ag-logo-ink-128.png"
-              alt=""
-              width={32}
-              height={32}
-            />
+            <Logo size={32} variant="ink" />
             <span className="font-plex font-bold text-lg text-ink tracking-[-0.02em]">
               AllowanceGuard
             </span>
