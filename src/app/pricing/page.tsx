@@ -43,6 +43,11 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
       'Your premium features stay active until the end of the current billing period. After that, your account reverts to the Free plan. Your data is kept \u2014 premium features are paused, not deleted.',
   },
   {
+    question: 'Do you accept cryptocurrency?',
+    answer:
+      'Crypto payments are coming soon. We\u2019re integrating stablecoin (USDC) payments and will announce when they\u2019re available. Currently, all subscriptions are processed securely via Stripe (cards).',
+  },
+  {
     question: 'Do you offer refunds?',
     answer:
       'Full refund within 14 days of your first payment. After that, cancel any time \u2014 your access continues through the billing period, but partial refunds are not issued.',

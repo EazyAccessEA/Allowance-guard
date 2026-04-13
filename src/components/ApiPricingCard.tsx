@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Check, Mail } from 'lucide-react'
+import { Check, Mail, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   type ApiPlan,
@@ -11,7 +11,6 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { trackClientEvent } from '@/lib/analytics'
-import PaymentMethodModal from './PaymentMethodModal'
 
 type ApiPaidPlan = 'api_developer' | 'api_growth'
 type ApiCardPlan = 'api_free' | ApiPaidPlan | 'api_enterprise'
@@ -62,11 +61,27 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
 
   const periodLabel = isEnterprise ? '' : '/mo'
 
-  const [modalOpen, setModalOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  function handleUpgrade() {
+  async function handleUpgrade() {
+    if (loading) return
+    setLoading(true)
     trackClientEvent('upgrade_clicked', { plan, billingPeriod: 'monthly' })
-    setModalOpen(true)
+    try {
+      const res = await fetch('/api/billing/create-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, billingPeriod: 'monthly' }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setLoading(false)
+      }
+    } catch {
+      setLoading(false)
+    }
   }
 
   return (
@@ -128,26 +143,23 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
             Contact Sales
           </a>
         ) : isPaid ? (
-          <>
             <button
               onClick={handleUpgrade}
+              disabled={loading}
               className={cn(
-                'w-full  px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500',
+                'w-full px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 disabled:opacity-60 disabled:cursor-not-allowed',
                 highlighted
                   ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20'
-                  : 'bg-paper-sub text-ink hover:bg-white/15 ring-1 ring-ink-rule',
+                  : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule',
               )}
             >
-              {`Get ${displayName}`}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Redirecting...
+                </span>
+              ) : `Get ${displayName}`}
             </button>
-            <PaymentMethodModal
-              isOpen={modalOpen}
-              onClose={() => setModalOpen(false)}
-              plan={plan}
-              planDisplayName={displayName}
-              billingPeriod="monthly"
-            />
-          </>
         ) : (
           <a
             href="/account/api-keys"
