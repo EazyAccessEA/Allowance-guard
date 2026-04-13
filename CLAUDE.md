@@ -41,19 +41,27 @@ This council is consulted on every non-trivial operation. It is the standard, no
 | 17 | Performance engineer | Bundle size, Core Web Vitals, runtime cost, Lighthouse |
 | 18 | Database engineer / DBA | Migration safety, query plans, locks, index strategy |
 | 19 | Privacy / GDPR specialist | Data handling, retention, user rights, cross-border transfer |
+| 20 | Brand copywriter | Voice, tone, narrative arc, headline craft, emotional resonance |
+| 21 | Technical copywriter | Accuracy of claims, precision in feature descriptions, no hand-waving |
+| 22 | Conversion copywriter | CTA copy, landing page persuasion, objection handling, urgency without hype |
+| 23 | Regulatory / compliance counsel | Securities law, AML/KYC exposure, advertising standards, jurisdictional risk |
+| 24 | Data protection / privacy lawyer | GDPR Article-level accuracy, cookie consent language, DPA enforceability, cross-border transfer mechanisms |
 
 **Sub-councils** (specialist groups convened in addition to the Standing Council for their domain):
 
 - **Design Council (6)** — Maren (Visual), Idris (Motion), Sable (UX), Kael (Systems), Noor (Accessibility, **veto power**), Thane (Performance). Convened for visual / motion / system design work as documented in the redesign specs in `docs/`.
+- **Copy Council (3)** — #20 Brand, #21 Technical, #22 Conversion. Convened for any user-facing copy: marketing pages, legal pages, emails, microcopy, blog posts. Every sentence must survive all three lenses: does it sound right (#20), is it accurate (#21), does it move the reader (#22)?
+- **Legal Council (3)** — #9 Lawyer/compliance, #23 Regulatory, #24 Data protection. Convened for legal pages, privacy policy, terms, DPA, consent copy, and any claim that could create liability. #24 has **veto power** on privacy/consent language.
 
 **Rules of operation:**
 
 1. The council is consulted in spirit, not in literal roleplay. You reason through the change as the relevant members would.
 2. The Accessibility specialist (#8) and the Design Council's Noor both hold a **veto** on anything that would degrade WCAG AA compliance, semantic structure, contrast, or motion safety.
 3. The Investor / founder voice (#11) is the gatekeeper for the banned-phrases list (see "Key Messaging Rules" below). Any copy that fails their review must be revised before shipping.
-4. Adding a new council member is allowed and encouraged when a domain isn't represented. Removing a member is not.
-5. The minimum council size is 17. The current size is 19.
-6. Sub-councils do not replace the Standing Council. The Design Council operates *in addition to* it for design work.
+4. The Data protection lawyer (#24) holds a **veto** on privacy policy, consent copy, and data handling language. No privacy-related copy ships without their sign-off.
+5. Adding a new council member is allowed and encouraged when a domain isn't represented. Removing a member is not.
+6. The minimum council size is 17. The current size is 24.
+7. Sub-councils do not replace the Standing Council. The Design Council, Copy Council, and Legal Council operate *in addition to* it for their domains.
 
 ## Tech Stack
 
