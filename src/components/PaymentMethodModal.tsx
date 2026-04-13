@@ -86,10 +86,10 @@ export default function PaymentMethodModal({
         <MethodButton
           icon={<Bitcoin className="h-5 w-5" />}
           title="Cryptocurrency"
-          subtitle="Pay with BTC, ETH, USDC via Coinbase Commerce. Manual renewal."
-          loading={loading === 'coinbase'}
-          disabled={loading !== null}
-          onClick={() => startCheckout('coinbase')}
+          subtitle="Crypto payments are temporarily unavailable. We're migrating to the new Coinbase API."
+          loading={false}
+          disabled={true}
+          onClick={() => {}}
         />
 
         {error && (

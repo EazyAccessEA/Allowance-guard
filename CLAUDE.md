@@ -51,6 +51,8 @@ This council is consulted on every non-trivial operation. It is the standard, no
 | 27 | Senior prompt engineer (photorealism) | Concrete subject matter, composition rules, lighting direction, camera angle, depth of field. Anti-pattern: abstract concept soup |
 | 28 | Senior prompt engineer (brand systems) | Prompt-to-brand consistency, colour palette enforcement through prompt language, series cohesion across multiple generations |
 | 29 | Art Director | Series cohesion across generated image sets. Enforces consistent background temperature, object materiality, lighting direction, and colour grade. Rejects any image that breaks the set. |
+| 30 | Payment systems engineer | Stripe, Coinbase, crypto payment gateways, PCI compliance, webhook reliability, subscription lifecycle |
+| 31 | Crypto payments specialist | On-chain payments, stablecoin checkout, Coinbase Commerce/Business APIs, Base L2 payments, USDC flows |
 
 **Sub-councils** (specialist groups convened in addition to the Standing Council for their domain):
 
@@ -65,7 +67,7 @@ This council is consulted on every non-trivial operation. It is the standard, no
 3. The Investor / founder voice (#11) is the gatekeeper for the banned-phrases list (see "Key Messaging Rules" below). Any copy that fails their review must be revised before shipping.
 4. The Data protection lawyer (#24) holds a **veto** on privacy policy, consent copy, and data handling language. No privacy-related copy ships without their sign-off.
 5. Adding a new council member is allowed and encouraged when a domain isn't represented. Removing a member is not.
-6. The minimum council size is 17. The current size is 29.
+6. The minimum council size is 17. The current size is 31.
 7. Sub-councils do not replace the Standing Council. The Design Council, Copy Council, and Legal Council operate *in addition to* it for their domains.
 
 ## Tech Stack
