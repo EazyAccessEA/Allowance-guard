@@ -14,8 +14,10 @@
  *  #22 Conversion: Featured article earns prime position, clear read CTA
  */
 
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Search } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Highlight from '@/components/ui/Highlight'
@@ -243,6 +245,72 @@ const blogPosts: BlogPost[] = [
     featured: false,
     image: '/images/blog/why-most-wallet-security-tools-fail.webp',
   },
+  {
+    slug: 'what-happens-when-a-protocol-gets-hacked',
+    title: 'What Happens When a Protocol Gets Hacked',
+    subtitle: 'A step-by-step playbook for the first hour after an exploit.',
+    excerpt: 'Confirm, revoke, move, assess. The order matters. Here\u2019s what to do in the first 60 minutes.',
+    publishedAt: '2026-04-13',
+    readTime: '6 min read',
+    category: 'Security',
+    featured: false,
+    image: '/images/blog/what-happens-when-a-protocol-gets-hacked.webp',
+  },
+  {
+    slug: 'allowanceguard-vs-manual-security',
+    title: 'AllowanceGuard vs Manual Security: A Comparison',
+    subtitle: 'What you gain when you stop doing it by hand.',
+    excerpt: 'Manual approval management works for one wallet on one chain. For everything else, you need tooling.',
+    publishedAt: '2026-04-13',
+    readTime: '6 min read',
+    category: 'Innovation',
+    featured: false,
+    image: '/images/blog/allowanceguard-vs-manual-security.webp',
+  },
+  {
+    slug: 'the-web3-security-glossary',
+    title: 'The Web3 Security Glossary',
+    subtitle: 'Every term you need to know, defined plainly.',
+    excerpt: 'Approval, allowance, spender, permit, session key, revoke \u2014 every Web3 security term defined in one place.',
+    publishedAt: '2026-04-13',
+    readTime: '6 min read',
+    category: 'Education',
+    featured: false,
+    image: '/images/blog/the-web3-security-glossary.webp',
+  },
+  {
+    slug: 'multi-chain-security-one-wallet-27-attack-surfaces',
+    title: 'Multi-Chain Security: One Wallet, 27 Attack Surfaces',
+    subtitle: 'Every chain you touch is another set of permissions to manage.',
+    excerpt: 'Your wallet address is the same on every EVM chain. Your approvals are not. One wallet, 27 potential attack surfaces.',
+    publishedAt: '2026-04-13',
+    readTime: '7 min read',
+    category: 'Security',
+    featured: false,
+    image: '/images/blog/multi-chain-security-one-wallet-27-attack-surfaces.webp',
+  },
+  {
+    slug: 'the-principles-behind-allowanceguard',
+    title: 'The Principles Behind AllowanceGuard',
+    subtitle: 'What we believe and why it shapes what we build.',
+    excerpt: 'Non-custodial by architecture. Open source core. No data selling. Free where it counts. Built to last.',
+    publishedAt: '2026-04-13',
+    readTime: '5 min read',
+    category: 'Community',
+    featured: false,
+    image: '/images/blog/the-principles-behind-allowanceguard.webp',
+  },
+  {
+    slug: 'five-minutes-to-a-safer-wallet',
+    title: 'Five Minutes to a Safer Wallet',
+    subtitle: 'The fastest path from zero to audited.',
+    excerpt: 'Scan, read, revoke, set a reminder. Five minutes is all it takes to go from exposed to audited.',
+    publishedAt: '2026-04-13',
+    readTime: '4 min read',
+    category: 'Education',
+    featured: false,
+    image: '/images/blog/five-minutes-to-a-safer-wallet.webp',
+  },
 ]
 
 function formatDate(date: string) {
@@ -253,9 +321,32 @@ function formatDateShort(date: string) {
   return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
+const CATEGORIES = ['All', 'Security', 'Education', 'Community', 'Innovation'] as const
+
 export default function BlogPage() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeCategory, setActiveCategory] = useState<string>('All')
+
   const featuredPost = blogPosts.find(post => post.featured)
-  const regularPosts = blogPosts.filter(post => !post.featured)
+
+  const filteredPosts = useMemo(() => {
+    const nonFeatured = blogPosts.filter(post => !post.featured)
+    return nonFeatured.filter(post => {
+      const matchesCategory = activeCategory === 'All' || post.category === activeCategory
+      const matchesSearch = !searchQuery ||
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesCategory && matchesSearch
+    })
+  }, [searchQuery, activeCategory])
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: blogPosts.length }
+    for (const post of blogPosts) {
+      counts[post.category] = (counts[post.category] || 0) + 1
+    }
+    return counts
+  }, [])
 
   return (
     <div className="min-h-screen bg-paper">
@@ -347,8 +438,51 @@ export default function BlogPage() {
               />
             </div>
 
+            {/* Search + category filter */}
+            <div className="mb-10 space-y-4">
+              {/* Search */}
+              <div className="relative max-w-md">
+                <label htmlFor="blog-search" className="sr-only">Search articles</label>
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-whisper" aria-hidden="true" />
+                <input
+                  id="blog-search"
+                  type="text"
+                  placeholder="Search articles..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 bg-paper border border-ink-rule text-sm font-plex text-ink placeholder:text-ink-whisper focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent transition-shadow"
+                />
+              </div>
+
+              {/* Category pills */}
+              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    aria-pressed={activeCategory === cat}
+                    className={[
+                      'px-3 py-1.5 font-mono text-[10px] font-bold tracking-[0.22em] uppercase border border-ink-rule transition-colors duration-150',
+                      activeCategory === cat
+                        ? 'bg-ink text-paper'
+                        : 'bg-paper text-ink-muted hover:text-ink hover:bg-paper-sub',
+                    ].join(' ')}
+                  >
+                    {cat} ({categoryCounts[cat] || 0})
+                  </button>
+                ))}
+              </div>
+
+              {/* Result count */}
+              {(searchQuery || activeCategory !== 'All') && (
+                <p className="font-plex text-sm text-ink-whisper" aria-live="polite">
+                  Showing {filteredPosts.length} of {blogPosts.length - 1} articles
+                </p>
+              )}
+            </div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regularPosts.map((post, i) => (
+              {filteredPosts.map((post, i) => (
                 <CascadingScrollAnimation key={post.slug} direction="up" distance={30} delay={(i % 3) * 80}>
                   <article className="paper-card overflow-hidden h-full flex flex-col group">
                     {post.image && (
