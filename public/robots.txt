@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /account
+Disallow: /dashboard
+Disallow: /login
+Disallow: /settings
+Disallow: /preferences
+Disallow: /ops
+Disallow: /home
+Disallow: /api/
+
+Sitemap: https://www.allowanceguard.com/sitemap.xml
