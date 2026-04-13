@@ -201,18 +201,14 @@ export default function DonationModal({ isOpen, onClose }: DonationModalProps) {
               </button>
               
               <button
-                onClick={() => setPaymentMethod('coinbase')}
-                className={`p-4 text-base font-medium rounded-lg border transition-colors ${
-                  paymentMethod === 'coinbase'
-                    ? 'border-sky-500 bg-sky-500/10 text-sky-800'
-                    : 'border-ink-rule hover:border-sky-500 text-ink-muted hover:text-ink'
-                }`}
+                disabled
+                className="p-4 text-base font-medium border border-ink-rule text-ink-whisper cursor-not-allowed opacity-60"
               >
                 <div className="flex items-center justify-center gap-2">
                   <Coins className="w-4 h-4" />
                   <span>Cryptocurrency</span>
                 </div>
-                <p className="text-xs text-ink-muted mt-1">Via Coinbase</p>
+                <p className="text-xs text-ink-whisper mt-1">Temporarily unavailable</p>
               </button>
             </div>
           </div>

@@ -25,7 +25,7 @@ const quickLinks = [
   { title: 'API Reference', description: 'REST API v1 — endpoints, auth, rate limits', href: '/docs/api-reference' },
   { title: 'Integration Guide', description: 'Widget, React hooks, Node.js SDK', href: '/docs/integration' },
   { title: 'Widget Builder', description: 'Configure and preview the embeddable widget', href: '/docs/widget' },
-  { title: 'Contributing', description: 'Report bugs, submit code, or support the project', href: '/docs/contributing' },
+  { title: 'Networks', description: 'All 27 supported EVM chains and their status', href: '/networks' },
 ]
 
 export default function DocsPage() {
@@ -172,7 +172,6 @@ export default function DocsPage() {
                     { href: '/docs/api/examples', label: 'Code Examples' },
                     { href: '/docs/integration', label: 'Integration' },
                     { href: '/docs/widget', label: 'Widget Builder' },
-                    { href: '/docs/contributing', label: 'Contributing' },
                   ].map((link) => (
                     <Link
                       key={link.href}

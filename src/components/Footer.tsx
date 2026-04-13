@@ -122,7 +122,7 @@ export default function Footer() {
                 </FooterLink>
                 <FooterLink href="/blog">Blog</FooterLink>
                 <FooterLink href="/contact">Contact</FooterLink>
-                <FooterLink href="/docs/contributing">Contributing</FooterLink>
+                <FooterLink href="/faq">FAQ</FooterLink>
               </ul>
             </FooterSection>
           </div>
@@ -152,15 +152,7 @@ export default function Footer() {
         <div className="mt-14 pt-6 border-t border-[rgba(15,17,21,0.08)]">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <p className="font-plex text-[12px] text-ink-whisper">
-              Copyright © {new Date().getFullYear()} AllowanceGuard.
-              <span className="mx-1.5 text-ink-whisper/50">·</span>
-              AGPL-3.0 + Commercial.
-              <span className="mx-1.5 text-ink-whisper/50">·</span>
-              <Link href="/terms" className="hover:text-ink transition-colors">Terms of Use</Link>
-              <span className="mx-1.5 text-ink-whisper/50">·</span>
-              <Link href="/privacy" className="hover:text-ink transition-colors">Privacy</Link>
-              <span className="mx-1.5 text-ink-whisper/50">·</span>
-              <Link href="/cookies" className="hover:text-ink transition-colors">Cookies</Link>
+              © {new Date().getFullYear()} AllowanceGuard. AGPL-3.0 + Commercial.
             </p>
 
             {/* Social — tiny, inline with copyright bar */}

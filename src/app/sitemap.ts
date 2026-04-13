@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/faq`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/networks`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE}/contribute`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
 
     // Blog index
     { url: `${BASE}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
@@ -26,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/docs/api`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/docs/api-reference`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/docs/api/examples`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE}/docs/contributing`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/docs/integration`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/docs/widget`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
 
