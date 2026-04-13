@@ -23,9 +23,21 @@ export default function CascadingScrollAnimation({
 }: CascadingScrollAnimationProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
+  const [prefersReduced, setPrefersReduced] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mq.matches) { setPrefersReduced(true); setIsVisible(true); setHasAnimated(true) }
+    const handler = (e: MediaQueryListEvent) => {
+      if (e.matches) { setPrefersReduced(true); setIsVisible(true); setHasAnimated(true) }
+    }
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  useEffect(() => {
+    if (prefersReduced) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
@@ -46,7 +58,7 @@ export default function CascadingScrollAnimation({
     }
 
     return () => observer.disconnect()
-  }, [delay, threshold, hasAnimated])
+  }, [delay, threshold, hasAnimated, prefersReduced])
 
   const getTransform = () => {
     if (!isVisible) {
@@ -176,9 +188,10 @@ export function ParallaxScroll({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
     const handleScroll = () => {
       if (ref.current) {
-        // const _rect = ref.current.getBoundingClientRect() // Unused variable removed
         const scrolled = window.pageYOffset
         const rate = scrolled * speed
         setOffset(rate)

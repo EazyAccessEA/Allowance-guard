@@ -17,7 +17,6 @@
  *  Thane: no heavy JS — SubscribeForm is the only client island
  */
 
-import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Highlight from '@/components/ui/Highlight'
@@ -65,18 +64,59 @@ export default function HomePage() {
           }}
         />
 
-        {/* Compass — editorial still life, positioned as decorative watermark */}
+        {/* Compass SVG watermark — the signature editorial motif */}
         <div
           aria-hidden="true"
-          className="absolute -right-16 bottom-0 sm:right-0 lg:right-[5%] w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] lg:w-[500px] lg:h-[500px] pointer-events-none select-none opacity-[0.12] mix-blend-multiply"
+          className="absolute -right-40 -bottom-40 sm:right-[-10%] sm:bottom-[-12%] lg:right-[-2%] lg:bottom-[-15%] w-[700px] h-[700px] sm:w-[900px] sm:h-[900px] pointer-events-none select-none opacity-[0.14]"
         >
-          <Image
-            src="/images/branding/hero-compass.webp"
-            alt=""
-            fill
-            className="object-contain"
-            priority
-          />
+          <svg viewBox="0 0 400 400" className="w-full h-full">
+            <g fill="none" stroke="#141210" strokeWidth="0.75">
+              <circle cx="200" cy="200" r="195" />
+              <circle cx="200" cy="200" r="180" />
+              <circle cx="200" cy="200" r="160" strokeDasharray="2 3" />
+              <circle cx="200" cy="200" r="140" />
+              <circle cx="200" cy="200" r="115" strokeDasharray="1 4" />
+              <circle cx="200" cy="200" r="90" />
+              <circle cx="200" cy="200" r="60" />
+            </g>
+            <g stroke="#141210" strokeWidth="0.9">
+              {Array.from({ length: 72 }).map((_, i) => {
+                const angle = (i * 360) / 72
+                const rad = (angle * Math.PI) / 180
+                const isMajor = i % 6 === 0
+                const inner = isMajor ? 172 : 177
+                const outer = 184
+                return (
+                  <line
+                    key={i}
+                    x1={200 + Math.cos(rad) * inner}
+                    y1={200 + Math.sin(rad) * inner}
+                    x2={200 + Math.cos(rad) * outer}
+                    y2={200 + Math.sin(rad) * outer}
+                    strokeWidth={isMajor ? 1.5 : 0.6}
+                  />
+                )
+              })}
+            </g>
+            <g stroke="#141210" strokeWidth="0.8">
+              <line x1="200" y1="20" x2="200" y2="380" />
+              <line x1="20" y1="200" x2="380" y2="200" />
+            </g>
+            <g fill="none" stroke="#141210" strokeWidth="1">
+              <path d="M 200 110 L 215 200 L 200 290 L 185 200 Z" fill="rgba(20,18,16,0.06)" />
+              <path d="M 110 200 L 200 185 L 290 200 L 200 215 Z" fill="rgba(20,18,16,0.06)" />
+              <path d="M 137 137 L 210 195 L 263 263 L 190 205 Z" fill="rgba(245,158,11,0.12)" />
+              <path d="M 263 137 L 205 190 L 137 263 L 195 210 Z" fill="rgba(245,158,11,0.12)" />
+            </g>
+            <circle cx="200" cy="200" r="6" fill="#F59E0B" />
+            <circle cx="200" cy="200" r="14" fill="none" stroke="#F59E0B" strokeWidth="1.5" />
+            <g fill="#141210" fontFamily="serif" fontSize="10" fontStyle="italic" textAnchor="middle">
+              <text x="200" y="50">N</text>
+              <text x="355" y="205">E</text>
+              <text x="200" y="360">S</text>
+              <text x="45" y="205">W</text>
+            </g>
+          </svg>
         </div>
 
         <Container className="relative z-10 py-20 sm:py-24 lg:py-28">
