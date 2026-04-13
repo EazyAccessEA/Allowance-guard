@@ -148,7 +148,7 @@ export default function RootLayout({
         {/* Critical CSS preloading - Next.js handles this automatically */}
         
         {/* Preload critical images - only preload if they exist and are used */}
-        <link rel="preload" href="/AG_Logo2.png" as="image" type="image/png" />
+        <link rel="preload" href="/images/branding/ag-logo.png" as="image" type="image/png" />
         <link rel="preload" href="/AllowanceGuard_BG.png" as="image" type="image/png" />
         
         {/* Fonts are handled by Next.js font optimization */}

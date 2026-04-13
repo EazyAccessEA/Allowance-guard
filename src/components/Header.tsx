@@ -86,7 +86,7 @@ export default function Header({ isConnected }: HeaderProps) {
               className="group flex items-center gap-2.5 flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded"
             >
               <Image
-                src="/AG_Logo_Ink_128.png"
+                src="/images/branding/ag-logo-ink-128.png"
                 alt=""
                 width={28}
                 height={28}

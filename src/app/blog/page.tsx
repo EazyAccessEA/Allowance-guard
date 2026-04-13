@@ -53,7 +53,7 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Security',
     featured: true,
-    image: '/Hardware Wallets and Multisigs.png',
+    image: '/images/blog/hardware-wallets-and-multisigs.png',
   },
   {
     slug: 'understanding-smart-contract-risk-beyond-allowances',
@@ -75,7 +75,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/Building Your Personal Web3 Security Routine.png',
+    image: '/images/blog/building-your-personal-web3-security-routine.png',
   },
   {
     slug: 'gas-fees-and-revocations-making-security-cost-effective',
@@ -86,7 +86,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/Gas.png',
+    image: '/images/blog/gas-fees-and-revocations.png',
   },
   {
     slug: 'understanding-layer-2-networks-how-they-work',
@@ -97,7 +97,7 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Education',
     featured: false,
-    image: '/Layer2.png',
+    image: '/images/blog/understanding-layer-2-networks.png',
   },
   {
     slug: 'red-team-yourself-simulating-an-attack-on-your-wallet',
@@ -108,7 +108,7 @@ const blogPosts: BlogPost[] = [
     readTime: '10 min read',
     category: 'Security',
     featured: false,
-    image: '/Red_Team.png',
+    image: '/images/blog/red-team-yourself.png',
   },
   {
     slug: 'programmable-safety-future-allowance-security',
@@ -119,7 +119,7 @@ const blogPosts: BlogPost[] = [
     readTime: '9 min read',
     category: 'Innovation',
     featured: false,
-    image: '/Programmable Safety.png',
+    image: '/images/blog/programmable-safety.png',
   },
   {
     slug: 'staying-safe-with-defi-dapps',
@@ -130,7 +130,7 @@ const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Security',
     featured: false,
-    image: '/Staying Safe With DeFi Dapps.png',
+    image: '/images/blog/staying-safe-with-defi-dapps.png',
   },
   {
     slug: 'how-to-self-audit-your-wallet',
@@ -141,7 +141,7 @@ const blogPosts: BlogPost[] = [
     readTime: '6 min read',
     category: 'Security',
     featured: false,
-    image: '/How to self audit.png',
+    image: '/images/blog/how-to-self-audit-your-wallet.png',
   },
   {
     slug: 'what-are-token-allowances',
@@ -152,7 +152,7 @@ const blogPosts: BlogPost[] = [
     readTime: '8 min read',
     category: 'Security',
     featured: false,
-    image: '/What are token allowances.png',
+    image: '/images/blog/what-are-token-allowances.png',
   },
   {
     slug: 'from-dapp-user-to-security-advocate-building-community-trust',
@@ -163,7 +163,7 @@ const blogPosts: BlogPost[] = [
     readTime: '12 min read',
     category: 'Community',
     featured: false,
-    image: '/From Dapp User.png',
+    image: '/images/blog/from-dapp-user-to-security-advocate.png',
   },
   {
     slug: 'permit2-and-eip-2612-the-new-approval-frontier',
