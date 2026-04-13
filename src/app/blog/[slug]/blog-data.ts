@@ -98,8 +98,8 @@ const blogContent = {
       <p>Multisigs are not just for large DAOs managing treasuries. They are arguably the most robust security setup an individual can achieve. You can create a personal multisig where you control all the signing keys, but distribute them across different devices and locations.</p>
       <p>A powerful 2-of-3 personal setup might look like this:</p>
       <ul>
-      <li><strong>Signer 1:</strong> Your primary hardware wallet (e.g., a <a href="https://shop.ledger.com/?r=c748f3b6c81b" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Ledger</a>), used for initiating transactions.</li>
-      <li><strong>Signer 2:</strong> A second hardware wallet from a different brand (e.g., a <a href="https://trezor.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Trezor</a>), stored securely in a separate location like a safe deposit box or a trusted family member's home.</li>
+      <li><strong>Signer 1:</strong> Your primary hardware wallet (e.g., a <a href="https://shop.ledger.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Ledger</a>), used for initiating transactions.</li>
+      <li><strong>Signer 2:</strong> A second hardware wallet from a different brand (e.g., a <a href="https://trezor.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Trezor</a>), stored securely in a separate location like a safe deposit box or a trusted family member's home.</li>
         <li><strong>Signer 3:</strong> A hot wallet on your mobile phone, used only as a secondary confirmation device.</li>
       </ul>
       <p>With this structure, an attacker would need to compromise you in two different locations to steal your funds, a dramatically harder task.</p>
@@ -111,7 +111,7 @@ const blogContent = {
       <p>This means an attacker would need to physically steal multiple hardware devices from different locations and compromise their PINs or seed phrases to gain control. This is the model used by institutional custodians to secure billions of dollars in digital assets, and it is fully accessible to any individual user willing to adopt the practice.</p>
       <p>This approach, combined with diligent allowance management, creates a security posture where:</p>
       <ul>
-        <li>Permissions are limited (via <a href="/" className="text-primary-accent hover:text-primary-accent/80 underline">AllowanceGuard</a>).</li>
+        <li>Permissions are limited (via <a href="/" className="text-amber-deep hover:underline">AllowanceGuard</a>).</li>
         <li>Signatures are protected (via hardware wallets).</li>
         <li>Control is decentralized (via multisig).</li>
       </ul>
@@ -122,7 +122,7 @@ const blogContent = {
       <p>Adopting this level of security is a gradual process. The goal is to progressively move your assets to safer storage as their value increases.</p>
       <h3>Setting Up Your First Hardware Wallet</h3>
       <ol>
-      <li><strong>Buy Directly from the Manufacturer:</strong> Purchase your device only from the official websites of reputable brands like <a href="https://shop.ledger.com/?r=c748f3b6c81b" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Ledger</a>, <a href="https://trezor.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Trezor</a>, <a href="https://keyst.one/?rfsn=8853588.a928f0&utm_source=refersion&utm_medium=affiliate&utm_campaign=8853588.a928f0" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Keystone</a>, or <a href="https://gridplus.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">GridPlus</a>. This prevents supply chain attacks where a device is tampered with before it reaches you.</li>
+      <li><strong>Buy Directly from the Manufacturer:</strong> Purchase your device only from the official websites of reputable brands like <a href="https://shop.ledger.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Ledger</a>, <a href="https://trezor.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Trezor</a>, <a href="https://keyst.one/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Keystone</a>, or <a href="https://gridplus.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">GridPlus</a>. This prevents supply chain attacks where a device is tampered with before it reaches you.</li>
       <li><strong>Verify the Packaging:</strong> Ensure the device's packaging is sealed and shows no signs of tampering.</li>
         <li><strong>Initialize the Device:</strong> Follow the official instructions carefully. During this process, the device will generate your new private key and show you a 24-word recovery phrase (seed phrase).</li>
         <li><strong>Secure Your Seed Phrase:</strong> Write down your seed phrase on paper or a steel plate. Never store it digitally (no photos, no text files, no password managers). Store your physical backup in a secure, private location. This phrase is the only backup for your funds if your device is lost or broken.</li>
@@ -133,7 +133,7 @@ const blogContent = {
   multisigSetup: `
       <h3>Creating Your First Personal Multisig</h3>
       <ol>
-        <li><strong>Use a Trusted Platform:</strong> <a href="https://safe.global/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Safe{Wallet}</a> (formerly Gnosis Safe) is the battle-tested industry standard for creating multisig wallets. It is a user-friendly interface for deploying your own personal security contract.</li>
+        <li><strong>Use a Trusted Platform:</strong> <a href="https://safe.global/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Safe</a> (formerly Gnosis Safe) is the battle-tested industry standard for creating multisig wallets. It is a user-friendly interface for deploying your own personal security contract.</li>
         <li><strong>Choose Your Signers:</strong> Decide which of your existing wallets will be the signers. You can start with a 2-of-2 setup using your browser wallet and a new hardware wallet.</li>
         <li><strong>Set Your Threshold:</strong> Define the policy (e.g., 2 out of 2 signatures required).</li>
         <li><strong>Deploy and Fund:</strong> Deploy the Safe contract to the blockchain. Once created, you will have a new address for your multisig. Send a small test amount to this address first before moving significant assets.</li>
@@ -145,7 +145,7 @@ const blogContent = {
       <ol>
         <li><strong>Buy a Hardware Wallet:</strong> If you hold a meaningful amount of crypto in a browser wallet, make purchasing a hardware wallet your top security priority for this quarter.</li>
       <li><strong>Migrate Your Long-Term Holdings:</strong> Move any assets you don't need for daily trading or interaction to your new hardware wallet.</li>
-        <li><strong>Experiment with a Test Multisig:</strong> Create a <a href="https://safe.global/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Safe{Wallet}</a> on a low-cost network (like Polygon or Arbitrum) with a few dollars. Practice sending and confirming transactions to understand the workflow before using it for high-value assets.</li>
+        <li><strong>Experiment with a Test Multisig:</strong> Create a <a href="https://safe.global/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Safe</a> on a low-cost network (like Polygon or Arbitrum) with a few dollars. Practice sending and confirming transactions to understand the workflow before using it for high-value assets.</li>
         <li><strong>Build Your Personal Security Roadmap:</strong> Plan your evolution. Start with a hot wallet, graduate to a hardware wallet for storage, and aim for a personal multisig as your ultimate vault.</li>
       </ol>
     <p>Moving to hardware wallets and multisigs is the most significant step you can take to secure your digital sovereignty. It's a deliberate choice to trade a little convenience for a tremendous amount of security and peace of mind.</p>
@@ -241,9 +241,9 @@ export const blogPosts: BlogPost[] = [
       <p>If you have questions about the license change, you can:</p>
 
       <ul>
-        <li>Open a discussion on our <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" class="text-primary-accent hover:text-primary-accent/80 underline">GitHub repository</a></li>
-        <li>Email us at <strong>legal.support@allowanceguard.com</strong> for licensing questions</li>
-        <li>Email us at <strong>support@allowanceguard.com</strong> for general questions</li>
+        <li>Open a discussion on our <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">GitHub repository</a></li>
+        <li>Email us at <a href="mailto:legal.support@allowanceguard.com" className="text-amber-deep hover:underline">legal.support@allowanceguard.com</a> for licensing questions</li>
+        <li>Email us at <a href="mailto:support@allowanceguard.com" className="text-amber-deep hover:underline">support@allowanceguard.com</a> for general questions</li>
       </ul>
 
       <p>Thank you for being part of the AllowanceGuard community. We are building something that matters, and we are doing it in the open.</p>
@@ -430,7 +430,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Contract risk assessment</strong> is your second line of defense, helping you decide which protocols are trustworthy enough to interact with in the first place.</li>
       </ul>
 
-      <p>When you combine these, your security posture becomes proactive. If you see a governance proposal to remove a timelock or a suspicious upgrade to a contract you use, you can immediately use a tool like <a href="/" className="text-primary-accent hover:text-primary-accent/80 underline">AllowanceGuard</a> to revoke your approval before any potential damage is done.</p>
+      <p>When you combine these, your security posture becomes proactive. If you see a governance proposal to remove a timelock or a suspicious upgrade to a contract you use, you can immediately use a tool like <a href="/" className="text-amber-deep hover:underline">AllowanceGuard</a> to revoke your approval before any potential damage is done.</p>
 
       <h2>Practical Next Steps</h2>
       
@@ -479,7 +479,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Priority Fee (The Express Shipping Tip):</strong> This is an optional tip you add to incentivize validators (the postal workers) to prioritize your package over others. A higher tip gets your transaction processed faster.</li>
       </ul>
 
-      <p>For a simple <code>revoke</code> transaction, the package size is small. Therefore, the <strong>Base Fee</strong> is the primary driver of your total cost. Your path to saving money lies in managing when and how you pay it. You can monitor current network fees using a tool like the <a href="https://etherscan.io/gastracker" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Etherscan Gas Tracker</a>.</p>
+      <p>For a simple <code>revoke</code> transaction, the package size is small. Therefore, the <strong>Base Fee</strong> is the primary driver of your total cost. Your path to saving money lies in managing when and how you pay it. You can monitor current network fees using a tool like the <a href="https://etherscan.io/gastracker" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Etherscan Gas Tracker</a>.</p>
 
       <h2>Four Strategies for Affordable Security</h2>
 
@@ -487,14 +487,14 @@ export const blogPosts: BlogPost[] = [
 
       <h3>1. Change Your Location: Use Layer 2 Networks</h3>
 
-      <p>The most impactful way to save on gas is to transact on a <strong>Layer 2 (L2)</strong> network. L2s are scaling solutions like <a href="https://arbiscan.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Arbitrum</a>, <a href="https://optimistic.etherscan.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Optimism</a>, <a href="https://basescan.org/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Base</a>, and <a href="https://polygonscan.com/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Polygon</a> that are built on top of Ethereum. They process transactions separately and then bundle them together, inheriting the security of the main network while offering significantly lower fees.</p>
+      <p>The most impactful way to save on gas is to transact on a <strong>Layer 2 (L2)</strong> network. L2s are scaling solutions like <a href="https://arbiscan.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Arbitrum</a>, <a href="https://optimistic.etherscan.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Optimism</a>, <a href="https://basescan.org/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Base</a>, and <a href="https://polygonscan.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Polygon</a> that are built on top of Ethereum. They process transactions separately and then bundle them together, inheriting the security of the main network while offering significantly lower fees.</p>
 
       <table>
         <thead>
           <tr>
             <th>Action</th>
-            <th>Estimated Cost on Ethereum Mainnet (High Congestion)</th>
-            <th>Estimated Cost on an L2 Network (Arbitrum)</th>
+            <th>Approx. Cost on Ethereum Mainnet*</th>
+            <th>Approx. Cost on an L2 (Arbitrum)*</th>
           </tr>
         </thead>
         <tbody>
@@ -506,7 +506,9 @@ export const blogPosts: BlogPost[] = [
         </tbody>
       </table>
 
-      <p>The cost difference is staggering. By choosing to interact with applications and tokens on L2s, you reduce the cost of security maintenance by 99% or more. Explore the ecosystem of active L2 networks on a site like <a href="https://l2beat.com/scaling/tvl" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">L2BEAT</a> to find where your favorite dapps are deployed.</p>
+      <p><em>* Gas prices fluctuate constantly with network demand and ETH price. These figures are illustrative — check <a href="https://etherscan.io/gastracker" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Etherscan Gas Tracker</a> for current rates.</em></p>
+
+      <p>The cost difference is staggering. By choosing to interact with applications and tokens on L2s, you reduce the cost of security maintenance by 99% or more. Explore the ecosystem of active L2 networks on a site like <a href="https://l2beat.com/scaling/tvl" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">L2BEAT</a> to find where your favorite dapps are deployed.</p>
 
       <h3>2. Ship in Bulk: Batch Your Revocations</h3>
 
@@ -518,7 +520,7 @@ export const blogPosts: BlogPost[] = [
 
       <p>Blockchain network activity follows predictable human patterns. Congestion, and therefore the base fee, is often highest during standard business hours in Europe and the US. It tends to drop significantly during evenings, nights, and weekends.</p>
 
-      <p>By simply timing your non-urgent security maintenance for these off-peak periods, you can often cut your costs by 30-50% or more. Use a gas price forecasting tool, like the one offered by <a href="https://www.blocknative.com/gas-estimator" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Blocknative</a>, to identify the cheapest times to submit your transactions. Patience is a powerful cost-saving tool.</p>
+      <p>By simply timing your non-urgent security maintenance for these off-peak periods, you can often cut your costs by 30-50% or more. Use a gas price forecasting tool, like the one offered by <a href="https://www.blocknative.com/gas-estimator" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Blocknative</a>, to identify the cheapest times to submit your transactions. Patience is a powerful cost-saving tool.</p>
 
       <h3>4. Don&apos;t Pay for Overnight Shipping: Set a Sensible Priority Fee</h3>
 
@@ -640,7 +642,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>The Fraud Proof System:</strong> After the batch is posted, a "challenge period" begins (typically lasting about seven days). During this window, anyone on the network (called a verifier) can examine the batch. If they find a fraudulent transaction, they can submit a <strong>fraud proof</strong> to the L1. If the proof is valid, the fraudulent batch is reverted, and the malicious operator is penalized (by losing their staked collateral). The verifier who submitted the proof is rewarded.</li>
         <li><strong>Analogy:</strong> Imagine a bank teller who accepts a large stack of cheques for deposit. To save time, they don&apos;t verify every single signature on the spot. They optimistically add the total to the account balance and publish the result. For the next seven days, the bank&apos;s fraud department has the right to review the cheques. If they find a forgery, they reverse the deposit and penalize the fraudulent account.</li>
         <li><strong>User Impact:</strong> This system is highly efficient. The main drawback is the long withdrawal time. When you want to move your funds from an Optimistic Rollup back to Ethereum L1, you must wait for the seven-day challenge period to expire to ensure the transaction is final. (Though third-party "bridge" services often offer faster, fee-based withdrawals).</li>
-        <li><strong>Examples:</strong> <a href="https://arbitrum.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Arbitrum</a>, <a href="https://www.optimism.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Optimism</a>, <a href="https://www.base.org/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Base</a>.</li>
+        <li><strong>Examples:</strong> <a href="https://arbitrum.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Arbitrum</a>, <a href="https://www.optimism.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Optimism</a>, <a href="https://www.base.org/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Base</a>.</li>
       </ul>
 
       <h3>2. Zero-Knowledge (ZK) Rollups</h3>
@@ -652,7 +654,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>The Validity Proof System:</strong> The L1 smart contract only needs to verify this small, elegant proof. It doesn&apos;t need to re-execute any of the thousands of transactions in the batch. If the proof is valid, the batch is instantly accepted as final. There is no challenge period.</li>
         <li><strong>Analogy:</strong> Imagine a student turning in a 1,000-question math exam. Instead of the teacher re-solving every single problem to check the work, the student provides a special cryptographic "answer key" that, in a single check, mathematically proves that all 1,000 answers are correct. The teacher&apos;s job becomes incredibly fast.</li>
         <li><strong>User Impact:</strong> The key advantage is speed and finality. Since the validity of transactions is proven upfront, there is no need for a long challenge period. Withdrawals from a ZK-Rollup back to Ethereum L1 can be processed as soon as the L1 contract verifies the proof, which is typically just minutes.</li>
-        <li><strong>Examples:</strong> <a href="https://polygon.technology/polygon-zkevm" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Polygon zkEVM</a>, <a href="https://zksync.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">zkSync</a>, <a href="https://www.starknet.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Starknet</a>.</li>
+        <li><strong>Examples:</strong> <a href="https://polygon.technology/polygon-zkevm" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Polygon zkEVM</a>, <a href="https://zksync.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">zkSync</a>, <a href="https://www.starknet.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Starknet</a>.</li>
       </ul>
 
       <h2>Comparison Table: Optimistic vs. ZK-Rollups</h2>
@@ -879,7 +881,7 @@ export const blogPosts: BlogPost[] = [
         <li><strong>Schedule Your First Drill:</strong> Open your calendar now and block out 90 minutes in the next month for a "Wallet Security Drill."</li>
         <li><strong>Start with Recovery:</strong> The disaster recovery drill is the most critical and can be done on your own. Make this your first priority.</li>
         <li><strong>Enlist Your Ally:</strong> Reach out to a trusted friend and ask if they would be willing to help you with a controlled phishing simulation.</li>
-        <li><strong>Perform a Post-Drill Cleanup:</strong> After your drills, use a tool like <a href="/" className="text-primary-accent hover:text-primary-accent/80 underline">AllowanceGuard</a> to immediately act on your findings, revoking the risky allowances and cleaning up the vulnerabilities you discovered.</li>
+        <li><strong>Perform a Post-Drill Cleanup:</strong> After your drills, use a tool like <a href="/" className="text-amber-deep hover:underline">AllowanceGuard</a> to immediately act on your findings, revoking the risky allowances and cleaning up the vulnerabilities you discovered.</li>
       </ol>
     `,
     publishedAt: '2024-12-19',
@@ -922,7 +924,7 @@ export const blogPosts: BlogPost[] = [
 
       <h3>Principle 1: Educate, Don&apos;t Expose</h3>
 
-      <p>Sharing knowledge should never mean sharing your personal information. Your wallet address, balances, and transaction history are private. To learn the fundamentals of digital privacy beyond Web3, the Electronic Frontier Foundation&apos;s Surveillance Self-Defense guide is an excellent starting point.</p>
+      <p>Sharing knowledge should never mean sharing your personal information. Your wallet address, balances, and transaction history are private. To learn the fundamentals of digital privacy beyond Web3, the <a href="https://ssd.eff.org/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Electronic Frontier Foundation&apos;s Surveillance Self-Defense guide</a> is an excellent starting point.</p>
 
       <ul>
         <li><strong>Use a Dedicated Persona:</strong> Consider using a pseudonymous account (on X, Discord, etc.) specifically for sharing security content. This separates your public advocacy from your private on-chain activity.</li>
@@ -998,7 +1000,7 @@ export const blogPosts: BlogPost[] = [
 
       <ul>
         <li><strong>Never Guarantee Safety:</strong> A responsible advocate never says, "This protocol is 100% safe." They use nuanced language: "This protocol has been audited by multiple firms and uses a timelock for upgrades, which significantly reduces risk. However, no smart contract is ever entirely without risk."</li>
-        <li><strong>Admit What You Don&apos;t Know:</strong> If someone asks a question you can&apos;t answer, the best response is, "That&apos;s a great question. I&apos;m not an expert on that specific topic, but here is a resource from a security researcher who is." Pointing to experts builds more trust than pretending to be one. Build a library of trusted, expert sources you can share, such as the technical blog from OpenZeppelin Security or the foundational OWASP Smart Contract Top 10.</li>
+        <li><strong>Admit What You Don&apos;t Know:</strong> If someone asks a question you can&apos;t answer, the best response is, "That&apos;s a great question. I&apos;m not an expert on that specific topic, but here is a resource from a security researcher who is." Pointing to experts builds more trust than pretending to be one. Build a library of trusted, expert sources you can share, such as the technical blog from <a href="https://blog.openzeppelin.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">OpenZeppelin Security</a> or the foundational <a href="https://owasp.org/www-project-smart-contract-top-10/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">OWASP Smart Contract Top 10</a>.</li>
         <li><strong>Emphasize Habits Over Tools:</strong> Tools are essential, but they are not a substitute for good judgment. Always remind your community that even the best security setup can be defeated by a single moment of carelessness. Technology is the seatbelt; user vigilance is the careful driver.</li>
       </ul>
       
@@ -1037,7 +1039,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>The Two-Step Dance: <code>approve</code> and <code>transferFrom</code></h2>
 
-      <p>To understand why allowances exist, we need to look at how a standard token, like an <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">ERC-20 token</a> on Ethereum, is designed. A smart contract cannot simply reach into your wallet and take your tokens without permission. That would be theft.</p>
+      <p>To understand why allowances exist, we need to look at how a standard token, like an <a href="https://ethereum.org/en/developers/docs/standards/tokens/erc-20/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">ERC-20 token</a> on Ethereum, is designed. A smart contract cannot simply reach into your wallet and take your tokens without permission. That would be theft.</p>
 
       <p>Instead, a two-step process is required for any dapp to use your funds:</p>
 
@@ -1099,7 +1101,7 @@ export const blogPosts: BlogPost[] = [
 
       <ol>
         <li><strong>Regular Audits:</strong> The most important habit you can build is to periodically review all active allowances for your wallet. A diligent user checks their permissions at least once a quarter.</li>
-        <li><strong>Use Allowance Checkers:</strong> You cannot see these approvals in your standard wallet interface. You must use a specialized tool that reads the public state of the blockchain. Tools like AllowanceGuard, <a href="https://revoke.cash/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Revoke.cash</a>, or the built-in <a href="https://etherscan.io/tokenapprovalchecker" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Token Approval Checker on Etherscan</a> provide a clear dashboard of every permission you&apos;ve ever granted.</li>
+        <li><strong>Use Allowance Checkers:</strong> You cannot see these approvals in your standard wallet interface. You must use a specialized tool that reads the public state of the blockchain. Tools like AllowanceGuard, <a href="https://revoke.cash/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Revoke.cash</a>, or the built-in <a href="https://etherscan.io/tokenapprovalchecker" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Token Approval Checker on Etherscan</a> provide a clear dashboard of every permission you&apos;ve ever granted.</li>
         <li><strong>Revoke What You Don&apos;t Use:</strong> If you see an approval for a dapp you no longer use, revoke it. This is the digital equivalent of changing the locks. Revoking an approval requires an on-chain transaction, which will cost a small gas fee, but it is a tiny price to pay to eliminate a potential vector of attack.</li>
       </ol>
 
@@ -1617,7 +1619,7 @@ export const blogPosts: BlogPost[] = [
       <p><strong>The Fix:</strong> Never find a dapp via Google search, a random link in a social media bio, or an unsolicited DM.</p>
 
       <ol>
-        <li><strong>Find the Official Source Once:</strong> Go to the project's official, verified X (formerly Twitter) account or a trusted industry aggregator like <a href="https://defillama.com/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">DeFiLlama</a> or <a href="https://www.coingecko.com/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">CoinGecko</a>.</li>
+        <li><strong>Find the Official Source Once:</strong> Go to the project's official, verified X (formerly Twitter) account or a trusted industry aggregator like <a href="https://defillama.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">DeFiLlama</a> or <a href="https://www.coingecko.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">CoinGecko</a>.</li>
         <li><strong>Bookmark It:</strong> Once you have the correct URL, bookmark it in your browser.</li>
         <li><strong>Use Only the Bookmark:</strong> From that point forward, only ever access the dapp through your trusted bookmark. This one habit neutralizes the vast majority of phishing attacks.</li>
       </ol>
@@ -1636,7 +1638,7 @@ export const blogPosts: BlogPost[] = [
 
       <p>The front-end website is just a user interface. The real work happens at the smart contract level. You should verify that the website is interacting with the official, audited smart contract.</p>
 
-      <p>You can find the official contract address on the project's documentation or on a trusted aggregator. You can then use a block explorer like <a href="https://etherscan.io/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Etherscan</a> to view the contract itself. Is the code verified? Does the address on the website match the official one? This step ensures you're not interacting with a malicious imposter contract.</p>
+      <p>You can find the official contract address on the project's documentation or on a trusted aggregator. You can then use a block explorer like <a href="https://etherscan.io/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Etherscan</a> to view the contract itself. Is the code verified? Does the address on the website match the official one? This step ensures you're not interacting with a malicious imposter contract.</p>
 
       <h2>The Signature Request: Reading the Fine Print</h2>
 
@@ -1677,7 +1679,7 @@ export const blogPosts: BlogPost[] = [
 
       <ul>
         <li><strong>Revoke After Use:</strong> For any dapp that is not part of your daily routine, make it a habit to revoke the token approvals after you have finished your transaction. This is the digital equivalent of taking your key back from the valet. The small gas fee is a tiny price to pay for peace of mind.</li>
-        <li><strong>The Scheduled Audit:</strong> As we covered in our guide on self-auditing, you must have a recurring, calendarized appointment to review all your active allowances. Once a quarter, use a tool like AllowanceGuard or <a href="https://revoke.cash/" target="_blank" rel="noopener noreferrer" className="text-primary-accent hover:text-primary-accent/80 underline">Revoke.cash</a> to perform a full audit and clean out any permissions that are old, unused, or unnecessarily large.</li>
+        <li><strong>The Scheduled Audit:</strong> As we covered in our guide on self-auditing, you must have a recurring, calendarized appointment to review all your active allowances. Once a quarter, use a tool like AllowanceGuard or <a href="https://revoke.cash/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Revoke.cash</a> to perform a full audit and clean out any permissions that are old, unused, or unnecessarily large.</li>
       </ul>
 
       <p>This simple "revoke and review" habit prevents the silent accumulation of risk that is the root cause of so many DeFi exploits.</p>
@@ -1697,5 +1699,414 @@ export const blogPosts: BlogPost[] = [
     readTime: '7 min read',
     category: 'Security',
     featured: false
+  },
+
+  // ── New posts (April 2026) ──────────────────────────────────────────
+
+  {
+    slug: 'permit2-and-eip-2612-the-new-approval-frontier',
+    title: 'Permit2 and EIP-2612: The New Approval Frontier',
+    subtitle: 'The approval mechanism is evolving. Here\u2019s what you need to know.',
+    content: `
+      <p>If you\u2019ve used Uniswap, 1inch, or any modern DEX in the past year, you\u2019ve probably encountered a new kind of approval flow. Instead of the familiar \u201cApprove\u201d transaction followed by a swap, you signed a message in your wallet and the swap just\u2026 happened. No separate approval transaction. No gas for the approval step.</p>
+
+      <p>That\u2019s Permit2 at work. And while it\u2019s a genuine improvement in user experience, it introduces a new class of risk that most users don\u2019t yet understand.</p>
+
+      <h2>The Problem Permit2 Solves</h2>
+
+      <p>Classic ERC-20 approvals have a well-known friction: before a DEX can move your tokens, you must send an on-chain <code>approve</code> transaction. This costs gas, takes time, and creates a persistent, often unlimited, allowance that lingers until you manually revoke it.</p>
+
+      <p>Uniswap Labs created <a href="https://docs.uniswap.org/contracts/permit2/overview" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Permit2</a> as a universal approval manager. The idea: you approve Permit2 once per token, and from that point forward, any dApp that integrates with Permit2 can request access through a <strong>signed message</strong> rather than a separate on-chain transaction.</p>
+
+      <p>EIP-2612 is the underlying standard that makes this possible. It adds a <code>permit</code> function to ERC-20 tokens, allowing approvals via off-chain signatures rather than on-chain transactions.</p>
+
+      <h2>How Permit2 Works</h2>
+
+      <ol>
+        <li><strong>One-time approval:</strong> You send a single on-chain <code>approve</code> transaction granting the Permit2 contract access to a specific token. This is the only gas you pay for approvals.</li>
+        <li><strong>Signed permits:</strong> When a dApp wants to move your tokens, it asks you to sign a typed message (EIP-712). This signature specifies: which token, how much, which spender, and an expiration timestamp.</li>
+        <li><strong>Execution:</strong> The dApp submits your signature to the Permit2 contract, which verifies it and transfers the tokens in a single transaction.</li>
+      </ol>
+
+      <p>The result: fewer transactions, lower gas costs, and approvals that expire automatically.</p>
+
+      <h2>The New Risks</h2>
+
+      <p>Permit2 is better designed than legacy approvals, but it creates new attack surfaces:</p>
+
+      <h3>Signature phishing</h3>
+      <p>Because Permit2 approvals are <em>off-chain signatures</em>, they don\u2019t appear as on-chain transactions in your wallet history. A phishing site can ask you to sign a Permit2 message that grants an attacker access to your tokens \u2014 and because it\u2019s just a signature, not a transaction, many users don\u2019t scrutinise it carefully.</p>
+
+      <p>The signed message is valid even if you close the phishing site. The attacker can submit it later, at their convenience.</p>
+
+      <h3>Batch permissions</h3>
+      <p>Permit2 supports <strong>batch permits</strong> \u2014 a single signature can authorise access to multiple tokens at once. A malicious dApp could bundle permissions for every token in your wallet into one signature request. If you sign without reading, you\u2019ve approved everything in one click.</p>
+
+      <h3>The Permit2 \u201Csuperapproval\u201D</h3>
+      <p>When you first approve Permit2 for a token, you\u2019re typically granting it an <strong>unlimited allowance</strong>. This means the Permit2 contract can move any amount of that token, subject only to the individual signed permits. If the Permit2 contract itself were compromised, all tokens you\u2019ve approved to it would be at risk.</p>
+
+      <h2>How to Protect Yourself</h2>
+
+      <ul>
+        <li><strong>Read every signature request carefully.</strong> Your wallet will show you the EIP-712 typed data. Look for: the spender address, the token, the amount, and the expiration. If any field looks wrong, reject it.</li>
+        <li><strong>Never sign Permit2 messages on unfamiliar sites.</strong> Phishing sites can present themselves as legitimate dApps. Bookmark your trusted dApps and only sign from those bookmarks.</li>
+        <li><strong>Audit your Permit2 approvals.</strong> Tools like AllowanceGuard scan for Permit2 allowances alongside classic ERC-20 approvals. If you\u2019ve approved Permit2 for tokens you no longer use, revoke the base approval.</li>
+        <li><strong>Prefer short expiration times.</strong> When a dApp lets you choose, set permit expirations to hours or days, not months. Most legitimate dApps submit the signature immediately.</li>
+        <li><strong>Check for batch requests.</strong> If a signature request covers multiple tokens, that\u2019s unusual. Legitimate dApps typically request one token at a time. Multiple tokens in a single permit is a red flag.</li>
+      </ul>
+
+      <h2>The Bigger Picture</h2>
+
+      <p>Permit2 and EIP-2612 represent a genuine improvement to the approval model. Expiring, scoped, gasless approvals are what the ecosystem has needed for years. But better UX also means more sophisticated attack vectors. The security hygiene doesn\u2019t change \u2014 it just moves from on-chain transactions to off-chain signatures.</p>
+
+      <p>The rule remains the same: understand what you\u2019re signing before you sign it.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '7 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['permit2', 'eip-2612', 'approvals', 'signatures', 'phishing'],
+  },
+
+  {
+    slug: 'anatomy-of-an-approval-exploit',
+    title: 'The Anatomy of an Approval Exploit',
+    subtitle: 'How a forgotten allowance becomes a seven-figure loss.',
+    content: `
+      <p>On a quiet Tuesday in March 2024, a DeFi trader lost $1.4 million in under 90 seconds. No phishing link. No malicious download. No compromised seed phrase. The attacker used a token approval the trader had granted eight months earlier and completely forgotten about.</p>
+
+      <p>This is not a rare event. Approval-based exploits are the single most common attack vector in DeFi, responsible for over $3 billion in cumulative losses. And every one of them follows the same basic pattern.</p>
+
+      <h2>The Setup: How Approvals Become Weapons</h2>
+
+      <p>Every time you interact with a DeFi protocol, you grant it a <strong>token allowance</strong> \u2014 permission to move a specific token from your wallet. Most protocols request <em>unlimited</em> approval to save you gas on future transactions. This is the norm, not the exception.</p>
+
+      <p>The allowance persists indefinitely. It does not expire. It does not reduce when you stop using the protocol. It sits in the blockchain\u2019s state, waiting.</p>
+
+      <p>An attacker needs only one of these conditions to exploit it:</p>
+
+      <ol>
+        <li><strong>The approved contract has an unpatched vulnerability.</strong> A bug in the contract\u2019s logic allows the attacker to call <code>transferFrom</code> on your tokens through an unintended code path.</li>
+        <li><strong>The contract is upgradeable and gets hijacked.</strong> The admin key is compromised, and the attacker upgrades the contract to include a drain function. Your existing approval now authorises a completely different piece of code.</li>
+        <li><strong>You approved a malicious contract directly.</strong> A phishing site mimicked a legitimate dApp. The approval you granted goes to an attacker-controlled contract that can drain you at any time.</li>
+      </ol>
+
+      <h2>The Kill Chain: Step by Step</h2>
+
+      <p>Here\u2019s how a typical approval exploit unfolds:</p>
+
+      <h3>Step 1: Reconnaissance</h3>
+      <p>The attacker scans the blockchain for wallets with high-value token balances that have active unlimited approvals to a target contract. This data is entirely public. Anyone can query it.</p>
+
+      <h3>Step 2: Trigger</h3>
+      <p>The attacker exploits the contract vulnerability or submits a malicious upgrade. The contract\u2019s behaviour changes, but every existing approval remains valid.</p>
+
+      <h3>Step 3: Drain</h3>
+      <p>The attacker calls <code>transferFrom</code> on every approved wallet, sweeping tokens to their own address. This happens programmatically \u2014 hundreds of wallets can be drained in a single block.</p>
+
+      <h3>Step 4: Exit</h3>
+      <p>The stolen tokens are swapped through DEXs and bridged across chains within minutes. By the time the exploit is noticed, the funds are being laundered through mixers or cross-chain bridges.</p>
+
+      <p>The entire sequence, from trigger to exit, typically takes less than 10 minutes.</p>
+
+      <h2>Real-World Examples</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Exploit</th>
+            <th>Date</th>
+            <th>Loss</th>
+            <th>Root cause</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Multichain (Anyswap)</strong></td>
+            <td>Jul 2023</td>
+            <td>$126M</td>
+            <td>Compromised admin keys triggered withdrawals via existing approvals</td>
+          </tr>
+          <tr>
+            <td><strong>Badger DAO</strong></td>
+            <td>Dec 2021</td>
+            <td>$120M</td>
+            <td>Injected malicious approval requests via compromised frontend</td>
+          </tr>
+          <tr>
+            <td><strong>Transit Swap</strong></td>
+            <td>Oct 2022</td>
+            <td>$21M</td>
+            <td>Contract vulnerability allowed arbitrary <code>transferFrom</code> calls on approved tokens</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>In every case, the users had done nothing wrong at the time of the exploit. The approvals were granted during legitimate use of the protocol. The vulnerability came later.</p>
+
+      <h2>The Defence: Limiting Your Blast Radius</h2>
+
+      <p>You cannot prevent a protocol from being hacked. But you can limit what a hack can take from you:</p>
+
+      <ul>
+        <li><strong>Revoke approvals you\u2019re not actively using.</strong> If you haven\u2019t interacted with a protocol in 30 days, revoke its allowance. The gas cost of re-approving later is trivial compared to losing your tokens.</li>
+        <li><strong>Avoid unlimited approvals when possible.</strong> Some wallets and dApps let you set a custom approval amount. Approve only what you need for the current transaction.</li>
+        <li><strong>Audit regularly.</strong> Use <a href="/" className="text-amber-deep hover:underline">AllowanceGuard</a> to scan your wallet on a weekly or monthly cadence. Make it a habit, not a reaction.</li>
+        <li><strong>Segment your wallets.</strong> Keep your long-term holdings in a wallet that never interacts with dApps. Use a separate \u201Cburner\u201D wallet for DeFi activity, funded only with what you can afford to lose.</li>
+        <li><strong>Watch for governance changes.</strong> If a protocol you use announces a contract upgrade or admin key rotation, review your approvals immediately.</li>
+      </ul>
+
+      <h2>The Uncomfortable Truth</h2>
+
+      <p>Every unlimited approval is a contingent liability. It\u2019s a signed cheque with the amount left blank, held by a third party whose security you don\u2019t control. Most of the time, nothing happens. But when something does, the losses are total and instant.</p>
+
+      <p>The traders who lost $3 billion to approval exploits didn\u2019t make a mistake on the day they were drained. They made the mistake months or years earlier, when they granted an approval and forgot about it.</p>
+
+      <p>Don\u2019t be the next case study. Audit your approvals today.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '8 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['exploits', 'approvals', 'transferFrom', 'security', 'defi'],
+  },
+
+  {
+    slug: 'cross-chain-security-bridging-without-getting-burned',
+    title: 'Cross-Chain Security: Bridging Without Getting Burned',
+    subtitle: 'Bridge exploits are the largest category of DeFi loss. Here\u2019s how to stay safe.',
+    content: `
+      <p>In 2022 alone, cross-chain bridge exploits accounted for over $2 billion in stolen funds. The Ronin Bridge ($625M), Wormhole ($320M), and Nomad ($190M) hacks weren\u2019t edge cases \u2014 they were the defining security events of the year. Bridges are where the most money is lost in DeFi, and it\u2019s not close.</p>
+
+      <p>If you use multiple blockchain networks \u2014 and in 2026, most active DeFi users do \u2014 you\u2019re using bridges. Understanding their risks isn\u2019t optional. It\u2019s essential.</p>
+
+      <h2>What Bridges Do and Why They\u2019re Vulnerable</h2>
+
+      <p>A cross-chain bridge transfers value between blockchains that can\u2019t natively communicate. You deposit tokens on Chain A, and the bridge mints or releases equivalent tokens on Chain B. The bridge holds your original tokens in custody until you want to move them back.</p>
+
+      <p>This creates a massive honeypot. A bridge securing billions in locked tokens is the highest-value target in DeFi. And bridges are architecturally complex \u2014 they combine smart contracts, off-chain relayers, validator sets, and cross-chain message passing. More complexity means more attack surface.</p>
+
+      <h2>The Three Ways Bridges Fail</h2>
+
+      <h3>1. Validator compromise</h3>
+      <p>Many bridges use a small set of validators to confirm cross-chain messages. If an attacker compromises enough validators, they can forge messages and drain the bridge. The <strong>Ronin Bridge</strong> hack ($625M) exploited exactly this: the attacker compromised 5 of 9 validator keys and submitted fraudulent withdrawal requests.</p>
+
+      <h3>2. Smart contract vulnerabilities</h3>
+      <p>The bridge\u2019s smart contracts must handle token locking, minting, burning, and message verification. A bug in any of these functions can be catastrophic. The <strong>Wormhole</strong> hack ($320M) exploited a signature verification bug that let the attacker mint wrapped ETH without depositing real ETH.</p>
+
+      <h3>3. Verification failures</h3>
+      <p>The <strong>Nomad</strong> hack ($190M) was caused by a configuration error that made every message pass verification. Once one attacker discovered this, hundreds of others copied the exploit transaction \u2014 it became a free-for-all.</p>
+
+      <h2>How to Bridge More Safely</h2>
+
+      <ul>
+        <li><strong>Use canonical bridges when available.</strong> Each L2 has an \u201Cofficial\u201D bridge operated by the rollup team (e.g., Arbitrum Bridge, Optimism Gateway, Base Bridge). These inherit the security of the L1 and are the safest option, though withdrawals to L1 may take 7 days for optimistic rollups.</li>
+        <li><strong>Prefer bridges with fraud proofs or ZK verification.</strong> Bridges that use cryptographic proofs to verify messages are fundamentally more secure than those relying on multisig validator sets.</li>
+        <li><strong>Check bridge TVL and track record.</strong> A bridge that has held billions for years without incident is a better bet than a new one with attractive yields. Check <a href="https://l2beat.com/bridges/tvl" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">L2BEAT</a> for bridge security assessments.</li>
+        <li><strong>Bridge only what you need.</strong> Don\u2019t leave large amounts sitting in a bridge\u2019s wrapped tokens on the destination chain. Bridge, use, and bridge back \u2014 or use native tokens where possible.</li>
+        <li><strong>Revoke bridge approvals after use.</strong> Bridges require token approvals on the source chain. Once your transfer is complete, revoke the approval. If the bridge contract is later compromised, your tokens on the source chain remain safe.</li>
+        <li><strong>Wait for finality.</strong> Don\u2019t assume a bridge transfer is \u201Cdone\u201D when the destination chain shows a balance. On optimistic rollups, the canonical bridge has a 7-day challenge period. Third-party bridges may release funds faster, but they\u2019re assuming the finality risk on your behalf.</li>
+      </ul>
+
+      <h2>AllowanceGuard and Multi-Chain Security</h2>
+
+      <p>AllowanceGuard scans 27 EVM networks. When you bridge to a new chain and interact with dApps there, those approvals are tracked too. A single scan shows your approval exposure across every chain you\u2019ve ever used \u2014 including approvals to bridge contracts themselves.</p>
+
+      <p>This matters because bridge approvals are among the most dangerous to leave active. The approved contract holds hundreds of millions in user funds, making it a prime target. Revoking a bridge approval after use is one of the highest-impact security actions you can take.</p>
+
+      <h2>Practical Next Steps</h2>
+
+      <ol>
+        <li><strong>Audit your bridge approvals.</strong> Scan your wallet on every chain you\u2019ve used. Look for active approvals to bridge contracts you\u2019ve already finished using. Revoke them.</li>
+        <li><strong>Default to canonical bridges.</strong> For L2 transfers, use the rollup\u2019s official bridge unless you have a specific reason not to.</li>
+        <li><strong>Bookmark trusted bridges.</strong> Phishing sites that impersonate popular bridges are common. Use bookmarks, not search results.</li>
+        <li><strong>Monitor bridge security disclosures.</strong> Follow <a href="https://l2beat.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">L2BEAT</a> and the bridge project\u2019s official channels for security updates.</li>
+      </ol>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '8 min read',
+    category: 'Education',
+    featured: false,
+    tags: ['bridges', 'cross-chain', 'l2', 'security', 'multi-chain'],
+  },
+
+  {
+    slug: 'why-we-open-sourced-our-security-scanner',
+    title: 'Why We Open-Sourced Our Security Scanner',
+    subtitle: 'The story behind AllowanceGuard and the decision to build in the open.',
+    content: `
+      <p>AllowanceGuard started with a spreadsheet.</p>
+
+      <p>In early 2024, after yet another approval-based exploit made headlines, we sat down and tried to catalogue every token approval across our own wallets. We had a dozen wallets across eight chains. Some had been active for years. The spreadsheet grew to hundreds of rows \u2014 and we still weren\u2019t confident it was complete.</p>
+
+      <p>That was the moment we knew this needed to be a tool, not a spreadsheet. And we knew it needed to be open source.</p>
+
+      <h2>The Problem We Set Out to Solve</h2>
+
+      <p>Token approvals are the most common attack vector in DeFi, yet the tools available to manage them were either incomplete, hard to use, or limited to a single chain. Most users had no idea how many active approvals they had, let alone which ones were risky.</p>
+
+      <p>We wanted to build something that:</p>
+
+      <ul>
+        <li>Scanned multiple chains in a single pass</li>
+        <li>Scored risk, not just listed approvals</li>
+        <li>Made revocation simple and safe</li>
+        <li>Never required custody or access to your private keys</li>
+      </ul>
+
+      <h2>Why Open Source?</h2>
+
+      <p>A security tool that asks you to trust it with your wallet data has a credibility problem if its code is a black box. We believe in a simple principle: <strong>trust is earned through transparency</strong>.</p>
+
+      <p>Open-sourcing AllowanceGuard means:</p>
+
+      <ul>
+        <li><strong>You can verify what the code does.</strong> Every RPC call, every risk heuristic, every data transformation is visible on <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">GitHub</a>. We don\u2019t ask you to take our word for it.</li>
+        <li><strong>Security researchers can audit it.</strong> Open code gets more eyes. Vulnerabilities are found and fixed faster when anyone can inspect the codebase.</li>
+        <li><strong>The community can contribute.</strong> Chain support, risk scoring improvements, UI enhancements \u2014 contributions from the community make the tool better for everyone.</li>
+        <li><strong>The tool survives us.</strong> If AllowanceGuard the company disappeared tomorrow, the code would still be available. Anyone could fork it and keep it running. Your security shouldn\u2019t depend on our business continuity.</li>
+      </ul>
+
+      <h2>Open Source Doesn\u2019t Mean Unsustainable</h2>
+
+      <p>We\u2019re building AllowanceGuard as an open-core product. The core scanner \u2014 scan your wallet, see your approvals, revoke the risky ones \u2014 is free and open source. Always.</p>
+
+      <p>Premium features for power users and teams (continuous monitoring, automated rules, compliance exports, API access) are paid. This isn\u2019t a contradiction. It\u2019s how we fund the development of the free tool that everyone uses.</p>
+
+      <p>We chose the <a href="/blog/open-source-stronger-our-license-update" className="text-amber-deep hover:underline">AGPL-3.0 license</a> specifically because it protects the community. Anyone can use, modify, and redistribute the code. But if someone takes it, modifies it, and runs it as a competing web service, they must share their modifications. This prevents free-riding while keeping the ecosystem open.</p>
+
+      <h2>What We\u2019ve Built So Far</h2>
+
+      <ul>
+        <li><strong>27 EVM chains</strong> scanned in a single pass</li>
+        <li><strong>Risk scoring</strong> that flags unlimited approvals, unverified contracts, and known threats</li>
+        <li><strong>Batch revocation</strong> to clean up multiple approvals in one transaction</li>
+        <li><strong>Non-custodial by design</strong> \u2014 we never touch your keys, never move your tokens</li>
+        <li><strong>No account required</strong> for the free scanner \u2014 paste an address and go</li>
+      </ul>
+
+      <h2>What\u2019s Next</h2>
+
+      <p>We\u2019re working on a native mobile app, a developer SDK for embedding security scanning in other dApps, and expanding chain coverage beyond EVM networks. If you want to be the first to know, <a href="/" className="text-amber-deep hover:underline">join the waitlist</a>.</p>
+
+      <p>And if you want to contribute, the <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">repo is open</a>. We welcome pull requests, bug reports, and security disclosures.</p>
+
+      <p>AllowanceGuard exists because Web3 security should be accessible to everyone \u2014 not just those who can read Solidity. Building it in the open is how we earn the trust to make that possible.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '6 min read',
+    category: 'Community',
+    featured: false,
+    tags: ['open-source', 'allowanceguard', 'transparency', 'agpl', 'community'],
+  },
+
+  {
+    slug: 'a-non-technical-guide-to-reading-token-approvals',
+    title: 'A Non-Technical Guide to Reading Token Approvals',
+    subtitle: 'What every column, number, and label on your approval dashboard actually means.',
+    content: `
+      <p>You\u2019ve scanned your wallet. The results are in. And now you\u2019re looking at a table full of contract addresses, token names, approval amounts, and risk labels \u2014 and you\u2019re not sure what any of it means or what to do about it.</p>
+
+      <p>You\u2019re not alone. Token approval dashboards are designed by people who already understand them. This guide is for everyone else.</p>
+
+      <p>We\u2019ll walk through every piece of information you see when you scan a wallet, explain what it means in plain language, and tell you exactly when to worry and when not to.</p>
+
+      <h2>The Basics: What Is an Approval?</h2>
+
+      <p>When you use a DeFi app \u2014 swapping tokens, providing liquidity, staking \u2014 you give that app <strong>permission to move a specific token from your wallet</strong>. This permission is called an approval (or allowance). It\u2019s stored on the blockchain and stays active until you revoke it.</p>
+
+      <p>Think of it as giving someone a signed permission slip to withdraw from your bank account. The slip doesn\u2019t expire. The person can use it whenever they want, for up to the amount you specified.</p>
+
+      <h2>Reading Your Approval Dashboard</h2>
+
+      <h3>Token</h3>
+      <p>The name and symbol of the token you\u2019ve approved (e.g., USDC, WETH, DAI). This is the asset that\u2019s at risk \u2014 the token the approved contract can move.</p>
+
+      <h3>Approved Spender</h3>
+      <p>The contract address you gave permission to. This is usually a DEX router, lending protocol, or bridge contract. The address itself is a long string of characters like <code>0x68b3...4a2f</code>. What matters more is the <strong>label</strong> \u2014 the name of the protocol the address belongs to. If the spender is labelled (e.g., \u201CUniswap V3 Router\u201D), it means the address has been verified. If it says \u201CUnknown\u201D or has no label, that\u2019s a flag worth investigating.</p>
+
+      <h3>Approved Amount</h3>
+      <p>How much of the token the spender is allowed to move. You\u2019ll typically see one of three values:</p>
+
+      <ul>
+        <li><strong>Unlimited / MAX</strong> \u2014 The spender can move <em>all</em> of this token from your wallet, no matter how much you hold. This is the most common and most dangerous type. It\u2019s set because it saves gas, but it means one vulnerability in the spender contract could drain your entire balance of that token.</li>
+        <li><strong>A specific number</strong> (e.g., 1,000 USDC) \u2014 The spender can move up to this amount. Once used, the remaining allowance decreases. This is safer because it limits your exposure.</li>
+        <li><strong>0</strong> \u2014 The approval has been revoked. The spender can no longer move this token. This is the safe state.</li>
+      </ul>
+
+      <h3>Risk Level</h3>
+      <p>A score or label indicating how risky this particular approval is. This is where automated analysis earns its value. Common risk factors include:</p>
+
+      <ul>
+        <li><strong>Critical</strong> \u2014 Unlimited approval to an unverified or flagged contract. Act immediately.</li>
+        <li><strong>High</strong> \u2014 Unlimited approval to a contract that hasn\u2019t been interacted with recently, or one with known vulnerabilities.</li>
+        <li><strong>Medium</strong> \u2014 Limited approval to a known protocol, but with a large amount.</li>
+        <li><strong>Low</strong> \u2014 Small approval to a verified, well-known protocol with a clean track record.</li>
+      </ul>
+
+      <h3>Last Used</h3>
+      <p>When you last interacted with this spender contract. An approval to a protocol you used six months ago and haven\u2019t touched since is higher risk than one you used yesterday. Stale approvals are the most dangerous \u2014 you\u2019ve forgotten about them, but they\u2019re still active.</p>
+
+      <h3>Chain</h3>
+      <p>Which blockchain network this approval exists on (e.g., Ethereum, Arbitrum, Base). If you use multiple chains, you\u2019ll have separate approvals on each one. All of them need to be managed.</p>
+
+      <h2>What to Do: A Simple Decision Framework</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unlimited approval to an unknown/unverified contract</td>
+            <td><strong>Revoke immediately.</strong></td>
+          </tr>
+          <tr>
+            <td>Unlimited approval to a known protocol you no longer use</td>
+            <td><strong>Revoke.</strong> You can re-approve later if needed.</td>
+          </tr>
+          <tr>
+            <td>Unlimited approval to a protocol you use daily</td>
+            <td><strong>Consider reducing</strong> to a specific amount if your wallet supports it. Otherwise, keep it but review monthly.</td>
+          </tr>
+          <tr>
+            <td>Small, specific approval to a verified protocol</td>
+            <td><strong>Low priority.</strong> Review during your next regular audit.</td>
+          </tr>
+          <tr>
+            <td>Any approval flagged as Critical</td>
+            <td><strong>Revoke immediately.</strong> Investigate the spender.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Revoking: What Happens When You Click the Button</h2>
+
+      <p>Revoking an approval sends a small on-chain transaction that sets the approved amount to zero. This costs a small amount of gas (a few cents on L2 networks, potentially a few dollars on Ethereum mainnet).</p>
+
+      <p>Revoking does <strong>not</strong> move any tokens. It does <strong>not</strong> affect tokens you\u2019ve already deposited in a protocol. It simply removes the spender\u2019s permission to move tokens from your wallet in the future.</p>
+
+      <p>If you revoke an approval for a protocol you still use, you\u2019ll simply be asked to approve it again the next time you interact with it. There\u2019s no permanent consequence to revoking \u2014 it\u2019s always reversible.</p>
+
+      <h2>Building the Habit</h2>
+
+      <p>You don\u2019t need to understand every technical detail of token approvals to stay safe. You need three habits:</p>
+
+      <ol>
+        <li><strong>Scan monthly.</strong> Pick a day. Set a reminder. It takes under a minute.</li>
+        <li><strong>Revoke what you don\u2019t recognise.</strong> If you can\u2019t remember what a spender is, revoke it. You can always re-approve.</li>
+        <li><strong>Pay attention to \u201CUnlimited.\u201D</strong> Every unlimited approval is a blank cheque. Treat it accordingly.</li>
+      </ol>
+
+      <p>Security in Web3 isn\u2019t about being a developer. It\u2019s about being deliberate. And now you know enough to be exactly that.</p>
+    `,
+    publishedAt: '2026-04-13',
+    readTime: '7 min read',
+    category: 'Education',
+    featured: false,
+    tags: ['approvals', 'beginners', 'dashboard', 'risk', 'guide'],
   }
 ]
