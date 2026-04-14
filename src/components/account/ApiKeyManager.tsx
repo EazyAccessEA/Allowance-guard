@@ -23,7 +23,7 @@ interface ApiKey {
 
 interface ApiKeyManagerProps {
   keys: ApiKey[]
-  onCreateKey: (name: string) => Promise<void>
+  onCreateKey: (name: string) => Promise<string | void>
   onRevokeKey: (id: string) => Promise<void>
   maxKeys?: number
 }
@@ -39,17 +39,30 @@ export default function ApiKeyManager({
   const [showCreate, setShowCreate] = useState(false)
   const [revokeConfirmId, setRevokeConfirmId] = useState<string | null>(null)
   const [revoking, setRevoking] = useState(false)
+  // Plaintext key shown once after creation. Cleared when user dismisses.
+  const [justCreatedKey, setJustCreatedKey] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
 
   async function handleCreate() {
     if (!newKeyName.trim()) return
     setCreating(true)
     try {
-      await onCreateKey(newKeyName.trim())
+      const key = await onCreateKey(newKeyName.trim())
       setNewKeyName('')
       setShowCreate(false)
+      if (typeof key === 'string' && key) {
+        setJustCreatedKey(key)
+      }
     } finally {
       setCreating(false)
     }
+  }
+
+  function handleCopyKey() {
+    if (!justCreatedKey) return
+    navigator.clipboard.writeText(justCreatedKey)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   async function handleRevoke(id: string) {
@@ -97,6 +110,44 @@ export default function ApiKeyManager({
         )}
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* One-time plaintext disclosure after key creation.
+            This is the only chance to copy the key — it is never stored. */}
+        {justCreatedKey && (
+          <div className="border-l-2 border-amber-deep bg-paper-sub p-4 space-y-3">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-amber-deep flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-semibold text-ink">
+                  Your new API key — copy it now
+                </p>
+                <p className="text-xs text-ink-muted mt-1">
+                  This is the only time you&rsquo;ll see the full key. Store it securely.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 text-xs font-mono text-ink bg-paper border border-ink-rule px-3 py-2 break-all">
+                {justCreatedKey}
+              </code>
+              <Button
+                variant="secondary"
+                size="sm"
+                leftIcon={<Copy className="h-3 w-3" />}
+                onClick={handleCopyKey}
+              >
+                {copied ? 'Copied' : 'Copy'}
+              </Button>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setJustCreatedKey(null)}
+            >
+              I&rsquo;ve saved it — dismiss
+            </Button>
+          </div>
+        )}
+
         {/* Create form */}
         {showCreate && (
           <div className="rounded-lg border border-ink-rule p-4 space-y-3">

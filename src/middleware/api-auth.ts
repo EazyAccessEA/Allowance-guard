@@ -118,11 +118,12 @@ export async function authenticateApiKey(
         apiKey,
         NextResponse.json(
           {
-            error: 'Rate limit exceeded',
+            error: 'Daily rate limit exceeded',
             code: 'RATE_LIMIT_EXCEEDED',
             limit: apiKey.rateLimit,
             used: rateCheck.used,
-            resetsIn: '24h',
+            window: 'rolling 24h',
+            message: 'Limit is enforced over a rolling 24-hour window. Quota frees up as oldest requests age out.',
           },
           {
             status: 429,

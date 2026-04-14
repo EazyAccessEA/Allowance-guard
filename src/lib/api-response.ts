@@ -22,7 +22,8 @@ export interface ApiMeta {
   rateLimit?: {
     limit: number | 'unlimited'
     remaining: number | 'unlimited'
-    resetsAt: string
+    /** Limit window. Always 'rolling-24h' — quota frees up as oldest requests age out. */
+    window: 'rolling-24h'
   }
 }
 
@@ -59,7 +60,7 @@ function buildMeta(apiKey?: ValidatedKey | null): ApiMeta {
     meta.rateLimit = {
       limit: apiKey.rateLimit === -1 ? 'unlimited' : apiKey.rateLimit,
       remaining: remaining === 'unlimited' ? 'unlimited' : Number(remaining ?? 0),
-      resetsAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      window: 'rolling-24h',
     }
   }
 
@@ -131,11 +132,11 @@ export const apiNotFound = (msg = 'Resource not found', apiKey?: ValidatedKey | 
 
 export const apiRateLimited = (apiKey: ValidatedKey, used: number) =>
   apiError(
-    'Rate limit exceeded',
+    'Daily rate limit exceeded',
     'RATE_LIMIT_EXCEEDED',
     429,
     apiKey,
-    { limit: apiKey.rateLimit, used, resetsIn: '24h' },
+    { limit: apiKey.rateLimit, used, window: 'rolling-24h' },
   )
 
 export const apiServerError = (msg = 'Internal server error', apiKey?: ValidatedKey | null) =>

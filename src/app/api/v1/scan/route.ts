@@ -54,7 +54,10 @@ export async function POST(req: NextRequest) {
   try {
     let jobId: number
     try {
-      jobId = await enqueueScan(wallet, chainIds)
+      jobId = await enqueueScan(wallet, chainIds, {
+        userId: apiKey.userId,
+        apiKeyId: apiKey.id,
+      })
     } catch (e: unknown) {
       if (e instanceof Error && String(e.message).includes('uniq_jobs_active_wallet')) {
         const response = apiSuccess(
