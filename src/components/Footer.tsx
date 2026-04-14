@@ -156,6 +156,8 @@ export default function Footer() {
               <Link href="/privacy" className="hover:text-ink transition-colors">Privacy</Link>
               <span className="mx-1.5 text-ink-whisper/50">·</span>
               <Link href="/cookies" className="hover:text-ink transition-colors">Cookies</Link>
+              <span className="mx-1.5 text-ink-whisper/50">·</span>
+              <Link href="/sitemap" className="hover:text-ink transition-colors">Sitemap</Link>
             </p>
 
             {/* Social — tiny, inline with copyright bar */}

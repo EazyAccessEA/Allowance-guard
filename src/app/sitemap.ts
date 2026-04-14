@@ -35,6 +35,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/dpa`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/sla`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/refund`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+
+    // Sitemap (human-readable)
+    { url: `${BASE}/sitemap`, lastModified: now, changeFrequency: 'weekly', priority: 0.3 },
   ]
 
   // Dynamic blog posts
