@@ -43,7 +43,7 @@ export default function KeysPage() {
   }, [fetchKeys])
 
   const handleCreateKey = useCallback(
-    async (name: string) => {
+    async (name: string): Promise<string> => {
       const res = await fetch('/api/keys', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -52,7 +52,11 @@ export default function KeysPage() {
       if (!res.ok) {
         throw new Error('Failed to create API key')
       }
+      const json = await res.json()
       await fetchKeys()
+      // Return the plaintext key so the UI can show it once.
+      // The key is never stored — this is the only chance to display it.
+      return json.key as string
     },
     [fetchKeys]
   )

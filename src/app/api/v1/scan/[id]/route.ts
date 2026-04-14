@@ -37,6 +37,27 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
       return apiNotFound('Scan not found', apiKey)
     }
 
+    // Enforce ownership: scans can only be read by the user/key that created
+    // them. Return 404 (not 403) to avoid leaking whether a given scanId exists.
+    // Legacy jobs without ownership metadata (created before enforcement) are
+    // accessible only to the scan's own API key or same-user keys.
+    const payload = (job.payload ?? {}) as { userId?: number; apiKeyId?: string }
+    const ownerUserId = payload.userId
+    const ownerKeyId = payload.apiKeyId
+
+    if (ownerUserId !== undefined && ownerUserId !== apiKey.userId) {
+      apiLogger.warn('v1.scan.status.forbidden', {
+        scanId,
+        requestingUserId: apiKey.userId,
+        jobOwnerUserId: ownerUserId,
+      })
+      return apiNotFound('Scan not found', apiKey)
+    }
+    if (ownerKeyId !== undefined && ownerKeyId !== apiKey.id && ownerUserId === undefined) {
+      // Per-key enforcement only when there's no user-level ownership recorded
+      return apiNotFound('Scan not found', apiKey)
+    }
+
     const response = apiSuccess(
       {
         scanId: job.id,

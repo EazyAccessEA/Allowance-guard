@@ -27,12 +27,25 @@ export async function hasRecentScan(wallet: string, minMinutes = 3) {
   return !!rows[0]
 }
 
-export async function enqueueScan(wallet: string, chains: number[]) {
+export interface ScanOwnership {
+  /** User ID that owns the scan job. Used for /api/v1/scan/:id authorization. */
+  userId?: number
+  /** API key ID that created the scan. Used for /api/v1/scan/:id authorization. */
+  apiKeyId?: string
+}
+
+export async function enqueueScan(wallet: string, chains: number[], ownership?: ScanOwnership) {
   // JSON.stringify required: neon .query() doesn't auto-serialize objects
   // like the old direct-call API did.
+  const payload = {
+    wallet: wallet.toLowerCase(),
+    chains,
+    ...(ownership?.userId !== undefined && { userId: ownership.userId }),
+    ...(ownership?.apiKeyId !== undefined && { apiKeyId: ownership.apiKeyId }),
+  }
   const { rows } = await pool.query(
     `INSERT INTO jobs (type, payload) VALUES ('scan_wallet', $1::jsonb) RETURNING id`,
-    [ JSON.stringify({ wallet: wallet.toLowerCase(), chains }) ]
+    [JSON.stringify(payload)],
   )
   return rows[0].id as number
 }
