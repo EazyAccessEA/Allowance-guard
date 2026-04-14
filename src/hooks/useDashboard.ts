@@ -26,7 +26,7 @@ export function useDashboard() {
   const [pageSize, setPageSize] = useState(25)
   const [total, setTotal] = useState(0)
   const [pending, setPending] = useState(false)
-  const [, setJobId] = useState<number | null>(null)
+  const [jobId, setJobId] = useState<number | null>(null)
   const [message, setMessage] = useState('')
   const [error, setError] = useState<Error | null>(null)
 
@@ -75,6 +75,69 @@ export function useDashboard() {
       fetchAllowances(selectedWallet)
     }
   }, [selectedWallet, isHydrated, fetchAllowances])
+
+  // Poll background job — refreshes allowances when slow chains complete.
+  // Council #33 P1 fix: previously jobId was set but never read, so
+  // background chain results were invisible until manual refresh.
+  useEffect(() => {
+    if (!jobId || !selectedWallet) return
+
+    let cancelled = false
+    let attempts = 0
+    const MAX_ATTEMPTS = 60 // 5 minutes at 5s intervals
+
+    const poll = async () => {
+      if (cancelled) return
+      attempts++
+
+      try {
+        const status = await APIClient.getJobStatus(jobId)
+
+        if (status.status === 'completed') {
+          if (!cancelled) {
+            setMessage('All chains scanned.')
+            setJobId(null)
+            await fetchAllowances(selectedWallet)
+          }
+          return
+        }
+
+        if (status.status === 'failed') {
+          if (!cancelled) {
+            setMessage('Background scan finished with some errors. Refresh to see partial results.')
+            setJobId(null)
+          }
+          return
+        }
+
+        if (attempts >= MAX_ATTEMPTS) {
+          if (!cancelled) {
+            setMessage('Background scan taking longer than expected. Refresh manually if needed.')
+            setJobId(null)
+          }
+          return
+        }
+
+        // Still pending/running — poll again
+        setTimeout(poll, 5000)
+      } catch (err) {
+        console.error('Job poll failed:', err)
+        if (attempts < MAX_ATTEMPTS) {
+          setTimeout(poll, 5000)
+        } else if (!cancelled) {
+          setJobId(null)
+        }
+      }
+    }
+
+    // First poll after 5s (give the job time to start)
+    const initialTimer = setTimeout(poll, 5000)
+
+    return () => {
+      cancelled = true
+      clearTimeout(initialTimer)
+    }
+  }, [jobId, selectedWallet, fetchAllowances])
 
   // Auto-scroll to dashboard on homepage
   useEffect(() => {
@@ -130,6 +193,10 @@ export function useDashboard() {
             ? `Found approvals on ${scanResult.scanned} chains. ${bg} more scanning in background.`
             : `Scan complete — ${scanResult.scanned} chains checked.`
         )
+        // Track background job for polling (Council #33 P1 fix)
+        if (scanResult.backgroundJobId) {
+          setJobId(scanResult.backgroundJobId)
+        }
       } else if (scanResult.ok && !scanResult.scanned) {
         // Duplicate or already-in-progress scan
         setMessage(scanResult.message || 'Scan already in progress')

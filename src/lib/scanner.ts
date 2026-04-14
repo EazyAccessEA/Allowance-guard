@@ -1,5 +1,5 @@
 // lib/scanner.ts
-import { clientFor } from './chains'
+import { clientFor, type SupportedChainId } from './chains'
 import { ERC20_Approval, ERC721_ApprovalForAll } from './abi'
 import { upsertAllowance } from './db'
 import { withRetry } from './retry'
@@ -24,7 +24,7 @@ async function rangeChunks(from: bigint, to: bigint) {
   return res
 }
 
-export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220) {
+export async function scanWalletOnChain(wallet: string, chainId: SupportedChainId) {
   const w = wallet.toLowerCase() as `0x${string}`
   const c = clientFor(chainId)
   const tip = await latestBlock(c)
@@ -92,8 +92,8 @@ export async function scanWalletOnChain(wallet: string, chainId: 1|42161|8453|10
   }
 }
 
-export async function scanWalletOnAllChains(wallet: string, chainIds?: Array<1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220>) {
-  const ids = (chainIds && chainIds.length) ? chainIds : enabledChainIds()
+export async function scanWalletOnAllChains(wallet: string, chainIds?: SupportedChainId[]) {
+  const ids = (chainIds && chainIds.length) ? chainIds : (enabledChainIds() as SupportedChainId[])
   for (const id of ids) {
     await scanWalletOnChain(wallet, id)
   }
