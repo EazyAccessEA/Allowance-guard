@@ -229,7 +229,7 @@ export default function PrivacyPage() {
                     </div>
                     <div className="flex items-start gap-3">
                       <code className="font-mono text-xs bg-paper-sub border border-ink-rule px-2 py-1 shrink-0 mt-0.5">ag_csrf</code>
-                      <span className="font-plex text-ink-muted text-sm">Cross-site request forgery protection. HttpOnly, Secure, SameSite=Strict.</span>
+                      <span className="font-plex text-ink-muted text-sm">Cross-site request forgery protection. Secure, SameSite=Lax, 30-day expiry. Readable by JavaScript so the client can echo the token in an x-csrf-token header.</span>
                     </div>
                   </div>
                 </div>
