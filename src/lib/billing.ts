@@ -2,7 +2,6 @@ import Stripe from 'stripe'
 import { pool } from '@/lib/db'
 import { apiLogger } from '@/lib/logger'
 import type { ConsumerPlan } from '@/lib/plans'
-import { getPlanDisplayName } from '@/lib/plans'
 
 // ---------------------------------------------------------------------------
 // Stripe client
@@ -32,17 +31,6 @@ export const stripe: Stripe = new Proxy({} as Stripe, {
 // ---------------------------------------------------------------------------
 
 const INVOICE_FOOTER = 'AllowanceGuard — Web3 wallet security. Core tool: free and open source. Always.\nhttps://www.allowanceguard.com | support@allowanceguard.com'
-
-/**
- * Build custom_fields array for Stripe invoices.
- * Stripe allows up to 2 custom fields on invoices.
- */
-function invoiceCustomFields(plan: string, userId: number): Stripe.Checkout.SessionCreateParams.InvoiceCreation.InvoiceData.CustomField[] {
-  return [
-    { name: 'Plan', value: getPlanDisplayName(plan as ConsumerPlan) },
-    { name: 'Account ID', value: `AG-${userId}` },
-  ]
-}
 
 // ---------------------------------------------------------------------------
 // Customer management
@@ -123,16 +111,10 @@ export async function createCheckoutSession(opts: CreateSubscriptionOptions): Pr
       automatic_tax: { enabled: true },
       allow_promotion_codes: true,
     }),
-    // Custom invoice branding — applied to every invoice generated from this subscription
-    invoice_creation: {
-      enabled: true,
-      invoice_data: {
-        description: `AllowanceGuard ${getPlanDisplayName(opts.plan as ConsumerPlan)} subscription`,
-        custom_fields: invoiceCustomFields(opts.plan, opts.userId),
-        footer: INVOICE_FOOTER,
-        rendering_options: { amount_tax_display: 'include_inclusive_tax' },
-      },
-    },
+    // Note: invoice_creation is NOT supported on subscription-mode checkout.
+    // Stripe automatically creates invoices for subscription payments.
+    // Invoice branding (description, footer, custom fields) is configured at
+    // the customer level (invoice_settings) or in the Stripe Dashboard.
   }
 
   if (opts.trialDays && opts.trialDays > 0) {
@@ -206,8 +188,12 @@ export async function syncSubscription(sub: Stripe.Subscription): Promise<void> 
       sub.id,
       plan,
       sub.status,
-      sub.items.data[0]?.current_period_start ?? 0,
-      sub.items.data[0]?.current_period_end ?? 0,
+      // Stripe API: current_period_start/_end live on the subscription itself,
+      // not on items.data[0] (which was the shape in older API versions).
+      (sub as unknown as { current_period_start?: number }).current_period_start
+        ?? sub.items.data[0]?.current_period_start ?? 0,
+      (sub as unknown as { current_period_end?: number }).current_period_end
+        ?? sub.items.data[0]?.current_period_end ?? 0,
       sub.cancel_at_period_end,
       JSON.stringify(sub.metadata ?? {}),
     ],

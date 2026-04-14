@@ -69,9 +69,8 @@ export async function POST(req: Request) {
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.allowanceguard.com'
 
-    // Pro tier gets a 7-day free trial
-    const trialDays = plan === 'pro' ? 7 : undefined
-
+    // No hardcoded trials. If a trial is desired, configure it on the price
+    // in the Stripe Dashboard and disclose it on the pricing page.
     const checkoutUrl = await createCheckoutSession({
       userId: session.user_id as number,
       email: session.email as string,
@@ -79,7 +78,6 @@ export async function POST(req: Request) {
       plan,
       successUrl: `${appUrl}/account/success?session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${appUrl}/pricing`,
-      trialDays,
     })
 
     L.info('billing.subscribe.checkout_created', {
@@ -88,7 +86,7 @@ export async function POST(req: Request) {
       interval,
     })
 
-    return NextResponse.json({ ok: true, checkoutUrl })
+    return NextResponse.json({ ok: true, url: checkoutUrl })
   } catch (error) {
     if (error instanceof Error && error.message === 'UNAUTHENTICATED') {
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 })

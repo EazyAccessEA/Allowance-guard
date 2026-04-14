@@ -93,7 +93,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       const res = await fetch('/api/billing/create-subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, billingPeriod }),
+        body: JSON.stringify({ plan, interval: billingPeriod }),
       })
       const data = await res.json()
       if (data.url) {
