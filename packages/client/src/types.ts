@@ -111,6 +111,46 @@ export interface PortfolioRiskResponse {
   }>
 }
 
+export interface RiskCheckRequest {
+  token: Address
+  spender: Address
+  chainId: ChainId
+  /** Raw integer amount as a decimal string, or the literal `"unlimited"`. */
+  amount?: string
+}
+
+export interface RiskCheckFlag {
+  code: string
+  severity: 'low' | 'medium' | 'high' | 'critical'
+  message: string
+}
+
+export interface RiskCheckResponse {
+  chainId: ChainId
+  token: {
+    address: Address
+    name: string | null
+    symbol: string | null
+    decimals: number | null
+  }
+  spender: {
+    address: Address
+    label: string | null
+    trusted: boolean
+    affectedWallets: number
+  }
+  approval: {
+    amount: string | null
+    isUnlimited: boolean
+  }
+  risk: {
+    score: number
+    level: RiskLevel
+    flags: RiskCheckFlag[]
+  }
+  recommendation: string
+}
+
 export interface ScanResponse {
   scanId: number
   wallet: Address

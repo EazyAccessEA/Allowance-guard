@@ -1,7 +1,6 @@
 packages:
   - '.'
   - 'extension'
-  - 'sdk'
   - 'packages/*'
 
 onlyBuiltDependencies:

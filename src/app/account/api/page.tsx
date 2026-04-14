@@ -91,7 +91,7 @@ export default function ApiDashboardPage() {
           apiCallsToday: json.usage?.apiCallsToday ?? 0,
           apiCallsLimit: json.limits?.maxApiCallsPerDay ?? 50,
           apiCallsThisMonth: json.dailyApiCalls?.reduce((s: number, d: { count: number }) => s + d.count, 0) ?? 0,
-          rateLimitPerMinute: 10,
+          rateLimitPerMinute: json.limits?.burstPerMinute ?? 10,
           dailyHistory: json.dailyApiCalls ?? [],
         })
       }
@@ -269,7 +269,9 @@ export default function ApiDashboardPage() {
                   <>
                     <p className="text-xs text-ink-muted">Rate Limit</p>
                     <p className="text-2xl font-bold text-ink mt-1">
-                      {usage?.rateLimitPerMinute ?? 10}/min
+                      {usage?.rateLimitPerMinute === -1
+                        ? 'Unlimited'
+                        : `${usage?.rateLimitPerMinute ?? 10}/min`}
                     </p>
                   </>
                 )}

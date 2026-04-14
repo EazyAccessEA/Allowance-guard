@@ -12,13 +12,15 @@
 import { ApiError, AuthError, NetworkError, RateLimitError, ValidationError } from './errors'
 import { getChains } from './methods/chains'
 import { listAllowances, type ListAllowancesArgs } from './methods/allowances'
-import { getRiskScore, getPortfolioRisk, type GetRiskScoreArgs } from './methods/risk'
+import { getRiskScore, getPortfolioRisk, riskCheck, type GetRiskScoreArgs } from './methods/risk'
 import { triggerScan, type ScanArgs } from './methods/scan'
 import { simulateRevoke } from './methods/simulate'
 import type {
   AllowancesResponse,
   Chain,
   PortfolioRiskResponse,
+  RiskCheckRequest,
+  RiskCheckResponse,
   RiskScoreResponse,
   ScanResponse,
   SimulateResponse,
@@ -185,6 +187,10 @@ export class AllowanceGuardClient {
 
   getPortfolioRisk(args: { wallet: Address }, opts?: RequestOptions): Promise<PortfolioRiskResponse> {
     return getPortfolioRisk(this, args, opts)
+  }
+
+  riskCheck(args: RiskCheckRequest, opts?: RequestOptions): Promise<RiskCheckResponse> {
+    return riskCheck(this, args, opts)
   }
 
   triggerScan(args: ScanArgs, opts?: RequestOptions): Promise<ScanResponse> {
