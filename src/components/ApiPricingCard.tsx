@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react'
 import { Check, Mail, Loader2 } from 'lucide-react'
+import { useAccount } from 'wagmi'
+import { useAppKit } from '@reown/appkit/react'
 import { cn } from '@/lib/utils'
 import {
   type ApiPlan,
@@ -11,6 +13,7 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { trackClientEvent } from '@/lib/analytics'
+import { useSiweSignIn, SiweCancelledError } from '@/hooks/useSiweSignIn'
 
 type ApiPaidPlan = 'api_developer' | 'api_growth'
 type ApiCardPlan = 'api_free' | ApiPaidPlan | 'api_enterprise'
@@ -80,35 +83,64 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
     ? getApiYearlySavingsPercent(plan as ApiPaidPlan)
     : 0
 
+  const { isConnected } = useAccount()
+  const { open } = useAppKit()
+  const { signIn, isSigningIn } = useSiweSignIn({
+    statement: `Sign in to subscribe to AllowanceGuard ${displayName}.`,
+  })
+
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function postCheckout(): Promise<{ ok: boolean; url?: string; error?: string; status: number }> {
+    const res = await fetch('/api/billing/create-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan, interval: billingPeriod }),
+    })
+    const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string }
+    return { ok: res.ok, url: data.url, error: data.error, status: res.status }
+  }
 
   async function handleUpgrade() {
-    if (loading) return
+    if (loading || isSigningIn) return
+    setError(null)
+
+    if (!isConnected) {
+      trackClientEvent('upgrade_clicked', { plan, billingPeriod, stage: 'connect_wallet' })
+      try { await open() } catch { /* user closed the modal */ }
+      return
+    }
+
     setLoading(true)
     trackClientEvent('upgrade_clicked', { plan, billingPeriod })
+
     try {
-      const res = await fetch('/api/billing/create-subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, interval: billingPeriod }),
-      })
+      let result = await postCheckout()
 
-      // Not signed in — bounce through SIWE login then come back to pricing
-      if (res.status === 401) {
-        window.location.href = `/login?redirect=${encodeURIComponent('/pricing')}`
-        return
+      if (result.status === 401) {
+        try {
+          await signIn()
+        } catch (signErr) {
+          if (signErr instanceof SiweCancelledError) {
+            setError('Signature cancelled. Try again when ready.')
+          } else {
+            setError(signErr instanceof Error ? signErr.message : 'Sign-in failed.')
+          }
+          setLoading(false)
+          return
+        }
+        result = await postCheckout()
       }
 
-      const data = await res.json().catch(() => ({}))
-      if (res.ok && data.url) {
-        window.location.href = data.url
+      if (result.ok && result.url) {
+        window.location.href = result.url
         return
       }
-
-      alert(data.error ?? 'Could not start checkout. Please try again.')
+      setError(result.error ?? 'Could not start checkout. Please try again.')
       setLoading(false)
     } catch {
-      alert('Network error. Please try again.')
+      setError('Network error. Please try again.')
       setLoading(false)
     }
   }
@@ -177,9 +209,10 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
             Contact Sales
           </a>
         ) : isPaid ? (
+          <>
             <button
               onClick={handleUpgrade}
-              disabled={loading}
+              disabled={loading || isSigningIn}
               className={cn(
                 'w-full px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 disabled:opacity-60 disabled:cursor-not-allowed',
                 highlighted
@@ -187,13 +220,29 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
                   : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule',
               )}
             >
-              {loading ? (
+              {isSigningIn ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Redirecting...
+                  Waiting for signature…
                 </span>
-              ) : `Get ${displayName}`}
+              ) : loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Redirecting…
+                </span>
+              ) : !isConnected ? `Connect wallet to subscribe` : `Get ${displayName}`}
             </button>
+            {isConnected && (
+              <p className="mt-2 text-[11px] text-ink-whisper text-center">
+                One wallet signature, then secure checkout via Stripe.
+              </p>
+            )}
+            {error && (
+              <p className="mt-2 text-xs text-red-800 text-center" role="alert">
+                {error}
+              </p>
+            )}
+          </>
         ) : (
           <a
             href="/account/api-keys"
