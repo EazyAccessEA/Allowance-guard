@@ -42,3 +42,8 @@ next-env.d.ts
 
 # OpenAPI → client types (regenerate with pnpm run generate:openapi)
 packages/client/src/types.generated.ts
+
+# Claude scratch / in-flight task notes. Tracked skeleton only (.gitkeep).
+# Security engineer (#4) veto: scratch notes often contain tokens/URLs/paste-dumps.
+context/*
+!context/.gitkeep
