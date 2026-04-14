@@ -14,10 +14,19 @@ import { trackClientEvent } from '@/lib/analytics'
 
 type ApiPaidPlan = 'api_developer' | 'api_growth'
 type ApiCardPlan = 'api_free' | ApiPaidPlan | 'api_enterprise'
+type BillingPeriod = 'monthly' | 'yearly'
 
 interface ApiPricingCardProps {
   plan: ApiCardPlan
+  billingPeriod?: BillingPeriod
   highlighted?: boolean
+}
+
+function getApiYearlySavingsPercent(plan: ApiPaidPlan): number {
+  const prices = API_PRICES[plan]
+  const monthlyTotal = prices.monthlyPence * 12
+  const yearlyTotal = prices.yearlyPence
+  return Math.round(((monthlyTotal - yearlyTotal) / monthlyTotal) * 100)
 }
 
 const PLAN_DESCRIPTIONS: Record<ApiCardPlan, string> = {
@@ -47,31 +56,41 @@ function getApiFeatures(plan: ApiCardPlan): { label: string; included: boolean }
   ]
 }
 
-export default function ApiPricingCard({ plan, highlighted = false }: ApiPricingCardProps) {
+export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highlighted = false }: ApiPricingCardProps) {
   const displayName = getPlanDisplayName(plan)
   const features = getApiFeatures(plan)
   const isPaid = plan === 'api_developer' || plan === 'api_growth'
   const isEnterprise = plan === 'api_enterprise'
 
   const price = isPaid
-    ? formatPrice(API_PRICES[plan as ApiPaidPlan].monthlyPence)
+    ? billingPeriod === 'yearly'
+      ? formatPrice(API_PRICES[plan as ApiPaidPlan].yearlyPence)
+      : formatPrice(API_PRICES[plan as ApiPaidPlan].monthlyPence)
     : isEnterprise
       ? 'Custom'
       : '$0'
 
-  const periodLabel = isEnterprise ? '' : '/mo'
+  const periodLabel = isEnterprise
+    ? ''
+    : isPaid && billingPeriod === 'yearly'
+      ? '/yr'
+      : '/mo'
+
+  const savingsPercent = isPaid && billingPeriod === 'yearly'
+    ? getApiYearlySavingsPercent(plan as ApiPaidPlan)
+    : 0
 
   const [loading, setLoading] = useState(false)
 
   async function handleUpgrade() {
     if (loading) return
     setLoading(true)
-    trackClientEvent('upgrade_clicked', { plan, billingPeriod: 'monthly' })
+    trackClientEvent('upgrade_clicked', { plan, billingPeriod })
     try {
       const res = await fetch('/api/billing/create-subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, interval: 'monthly' }),
+        body: JSON.stringify({ plan, interval: billingPeriod }),
       })
       const data = await res.json()
       if (data.url) {
@@ -130,6 +149,11 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
             <span className="text-sm text-ink-whisper font-medium">{periodLabel}</span>
           )}
         </div>
+        {savingsPercent > 0 && (
+          <p className="mt-1.5 text-xs font-medium text-emerald-800">
+            Save {savingsPercent}% vs monthly
+          </p>
+        )}
       </div>
 
       {/* CTA */}

@@ -37,22 +37,40 @@ See `ARCHITECTURE.md` for directory structure, API rules, DB rules, and supporte
 Required for development:
 
 ```
-DATABASE_URL              # Neon PostgreSQL connection string
-REDIS_URL                 # Upstash Redis (or REDIS_HOST/PORT/PASSWORD)
-STRIPE_SECRET_KEY         # Stripe API key
-STRIPE_WEBHOOK_SECRET     # Stripe webhook signing secret
-COINBASE_COMMERCE_API_KEY # Coinbase Commerce
+# Core
+DATABASE_URL                          # Neon PostgreSQL connection string
+REDIS_URL                             # Upstash Redis (or REDIS_HOST/PORT/PASSWORD)
+NEXT_PUBLIC_APP_URL                   # App URL (https://www.allowanceguard.com)
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID  # WalletConnect
-NEXT_PUBLIC_APP_URL       # App URL (https://www.allowanceguard.com)
-POSTMARK_SERVER_TOKEN     # Email (or SMTP_HOST/PORT/USER/PASS)
-SLACK_WEBHOOK_URL         # Slack notifications
-ROLLBAR_ACCESS_TOKEN      # Error monitoring
+
+# Stripe — keys
+STRIPE_SECRET_KEY                     # Server-side API key (sk_live_* / sk_test_*)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY    # Browser key (pk_live_* / pk_test_*)
+STRIPE_BILLING_WEBHOOK_SECRET         # Signs /api/billing/webhook (subscriptions)
+STRIPE_WEBHOOK_SECRET                 # Signs /api/stripe/webhook (legacy contributions); also read as fallback by billing webhook
+
+# Stripe — price IDs (8 total; all read by src/lib/plans.ts)
+STRIPE_PRICE_PRO_MONTHLY              # Pro, $9.99/mo
+STRIPE_PRICE_PRO_YEARLY               # Pro, $79/yr
+STRIPE_PRICE_SENTINEL_MONTHLY         # Sentinel, $49.99/mo
+STRIPE_PRICE_SENTINEL_YEARLY          # Sentinel, $499/yr
+STRIPE_PRICE_API_DEVELOPER            # API Developer, $39/mo
+STRIPE_PRICE_API_DEVELOPER_YEARLY     # API Developer, $374/yr
+STRIPE_PRICE_API_GROWTH               # API Growth, $149/mo
+STRIPE_PRICE_API_GROWTH_YEARLY        # API Growth, $1,490/yr
+
+# Email / ops
+POSTMARK_SERVER_TOKEN                 # Email (or SMTP_HOST/PORT/USER/PASS)
+SLACK_WEBHOOK_URL                     # Slack notifications
+ROLLBAR_ACCESS_TOKEN                  # Error monitoring
 ```
+
+> **Missing any Stripe price ID → 500 at upgrade time** for that tier. All 8 must be set. See `decisions/0001-open-core-model.md` for the tier rationale and `BUSINESS.md` for the amount-to-tier mapping.
 
 Test mode flags:
 
 ```
-E2E_FAKE_PAYMENTS=true    # Skip Stripe/Coinbase in tests
+E2E_FAKE_PAYMENTS=true    # Skip Stripe in tests
 E2E_FAKE_EMAIL=true       # Skip email sending in tests
 ```
 
@@ -70,3 +88,4 @@ pnpm run migrate      # Run database migrations
 ## Changelog
 
 - 2026-04-14: Split from `CLAUDE.md`. Env vars got a "NAMES ONLY" header.
+- 2026-04-14: Added all 8 Stripe price env vars + `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` + `STRIPE_BILLING_WEBHOOK_SECRET`. Removed `COINBASE_COMMERCE_API_KEY` (dead since main commit `e875c93`). Grouped vars by concern.
