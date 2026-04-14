@@ -1,10 +1,18 @@
 // lib/chains.ts
 import { createPublicClient, http, fallback, type Transport, type PublicClient, type Chain } from 'viem'
-import { mainnet, arbitrum, base, optimism, polygon, avalanche, bsc, fantom, zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo } from 'viem/chains'
+import {
+  mainnet, arbitrum, base, optimism, polygon, avalanche, bsc, fantom,
+  zkSync, polygonZkEvm, mantle, gnosis, linea, scroll, celo,
+  blast, cronos, moonbeam, aurora, opBNB, manta, mode, taiko,
+  metis, kava, zetachain, worldchain,
+} from 'viem/chains'
 import { CHAINS, type RpcEndpoint } from './networks'
 import { incrRpc } from '@/lib/metrics'
 
-// simple in-memory circuit breaker (prod: use Redis if you want cross-instance sharing)
+// In-memory RPC circuit breaker. Resets on every serverless cold start,
+// so on Vercel it's effectively per-request. viem's fallback() transport
+// already handles per-request RPC failover — this adds a warmup optimisation.
+// TODO (Council #34): move to Redis for cross-instance persistence.
 const ban: Map<string, number> = new Map() // key: url -> unix ms expiry
 
 function notBanned(url: string) {
@@ -43,6 +51,7 @@ function makeTransport(endpoints: RpcEndpoint[], chainId: number): Transport {
 }
 
 const MAP: Record<number, Chain> = {
+  // Phase 9.5 (original 15)
   1: mainnet,
   42161: arbitrum,
   8453: base,
@@ -58,9 +67,26 @@ const MAP: Record<number, Chain> = {
   59144: linea,
   534352: scroll,
   42220: celo,
+  // Phase 9.6 expansion (+12 — Council #32 P0 fix)
+  81457: blast,
+  25: cronos,
+  1284: moonbeam,
+  1313161554: aurora,
+  204: opBNB,
+  169: manta,
+  34443: mode,
+  167000: taiko,
+  1088: metis,
+  2222: kava,
+  7000: zetachain,
+  480: worldchain,
 }
 
-export type SupportedChainId = 1|42161|8453|10|137|43114|56|250|324|1101|5000|100|59144|534352|42220
+export type SupportedChainId =
+  | 1 | 42161 | 8453 | 10 | 137 | 43114 | 56 | 250 | 324 | 1101
+  | 5000 | 100 | 59144 | 534352 | 42220
+  | 81457 | 25 | 1284 | 1313161554 | 204 | 169 | 34443 | 167000
+  | 1088 | 2222 | 7000 | 480
 
 const cache = new Map<number, PublicClient>()
 export function clientFor(id: SupportedChainId): PublicClient {

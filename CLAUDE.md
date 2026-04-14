@@ -1,5 +1,112 @@
 # AllowanceGuard — Claude Code Instructions
 
+# Startup Routine
+
+## Foundation
+
+At the start of every session or task:
+
+1. Read everything in `context/`  
+   This is the working foundation for the current environment, project, or task.
+
+2. Read `MEMORY.md`  
+   This is the accumulated record of learned preferences, corrections, project context, and operating rules.
+
+3. Use both together  
+   Let `context/` define the immediate situation, and let `MEMORY.md` define continuity over time.  
+   Every task should be shaped by both.
+
+---
+
+# Memory System
+
+When I correct you, clarify a preference, or you learn something important, update the relevant section in `MEMORY.md`.
+
+## Update Categories
+
+### Voice
+Use for:
+- tone preferences
+- phrasing preferences
+- writing corrections
+- stylistic rules
+- words or expressions to avoid
+
+### Process
+Use for:
+- how I want tasks handled
+- workflow preferences
+- sequencing of work
+- approval or review expectations
+- recurring ways of operating
+
+### People
+Use for:
+- who people are
+- relationships
+- roles
+- relevant personal or professional context
+
+### Projects
+Use for:
+- active work
+- current tasks
+- priorities
+- project status
+- ongoing decisions
+
+### Output
+Use for:
+- preferred formats
+- file naming conventions
+- delivery style
+- structure expectations
+- presentation preferences
+
+### Tools
+Use for:
+- which tools to use
+- when to use them
+- how to use them
+- tool-specific constraints or preferences
+
+---
+
+# Update Rules
+
+## Keep `MEMORY.md` current
+
+When something changes, update the existing entry in place.
+
+Do not simply append new information underneath outdated information.
+
+The file should always reflect the latest accurate state, not a historical pile of contradictions.
+
+## Prefer replacement over accumulation
+
+If a preference, workflow, project status, or fact changes:
+- replace outdated information
+- remove stale details
+- keep the file clean and authoritative
+
+## Write for reuse
+
+Entries in `MEMORY.md` should be:
+- clear
+- concise
+- specific
+- easy to apply in future tasks
+
+Avoid vague notes that will be useless later.
+
+---
+
+# Principle
+
+`context/` explains the present.  
+`MEMORY.md` preserves continuity.  
+Use both to produce consistent, accurate work every time.
+
 ## Project Identity
 
 AllowanceGuard is a **Web3 wallet security platform** that helps users monitor, assess, and revoke token approvals across multiple blockchain networks. It is transitioning from a free donation-funded tool to a **revenue-generating open-core product** with freemium consumer tiers, a B2B API, and institutional compliance features.
@@ -53,6 +160,9 @@ This council is consulted on every non-trivial operation. It is the standard, no
 | 29 | Art Director | Series cohesion across generated image sets. Enforces consistent background temperature, object materiality, lighting direction, and colour grade. Rejects any image that breaks the set. |
 | 30 | Payment systems engineer | Stripe, Coinbase, crypto payment gateways, PCI compliance, webhook reliability, subscription lifecycle |
 | 31 | Crypto payments specialist | On-chain payments, stablecoin checkout, Coinbase Commerce/Business APIs, Base L2 payments, USDC flows |
+| 32 | Blockchain engineer (EVM) | Viem/ethers.js, RPC providers, multicall, ERC-20 approve/transferFrom, token approval indexing, chain-specific quirks |
+| 33 | Backend engineer (Node.js/Next.js) | API routes, job queues, database queries, caching, error handling, Neon serverless, Drizzle ORM |
+| 34 | Full-stack debugging engineer | End-to-end request tracing, RPC failure modes, timeout handling, error propagation, logging, production debugging |
 
 **Sub-councils** (specialist groups convened in addition to the Standing Council for their domain):
 
@@ -67,7 +177,7 @@ This council is consulted on every non-trivial operation. It is the standard, no
 3. The Investor / founder voice (#11) is the gatekeeper for the banned-phrases list (see "Key Messaging Rules" below). Any copy that fails their review must be revised before shipping.
 4. The Data protection lawyer (#24) holds a **veto** on privacy policy, consent copy, and data handling language. No privacy-related copy ships without their sign-off.
 5. Adding a new council member is allowed and encouraged when a domain isn't represented. Removing a member is not.
-6. The minimum council size is 17. The current size is 31.
+6. The minimum council size is 17. The current size is 34.
 7. Sub-councils do not replace the Standing Council. The Design Council, Copy Council, and Legal Council operate *in addition to* it for their domains.
 
 ## Tech Stack

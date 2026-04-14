@@ -21,9 +21,18 @@ export const paginationSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(100).default(25)
 })
 
+// Chain slugs accepted by POST /api/scan. Must mirror the MAP in
+// src/app/api/scan/route.ts. Council #32 P0 fix — was only 3 of 27.
+const CHAIN_SLUGS = [
+  'eth', 'arb', 'base', 'op', 'polygon', 'avalanche', 'bsc', 'fantom',
+  'zksync', 'polygon-zkevm', 'mantle', 'gnosis', 'linea', 'scroll', 'celo',
+  'blast', 'cronos', 'moonbeam', 'aurora', 'opbnb', 'manta', 'mode',
+  'taiko', 'metis', 'kava', 'zetachain', 'worldchain',
+] as const
+
 export const scanRequestSchema = z.object({
   walletAddress: walletAddressSchema,
-  chains: z.array(z.enum(['eth', 'arb', 'base'])).optional()
+  chains: z.array(z.enum(CHAIN_SLUGS)).optional()
 })
 
 export const allowanceQuerySchema = z.object({
