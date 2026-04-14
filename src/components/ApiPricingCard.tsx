@@ -71,7 +71,7 @@ export default function ApiPricingCard({ plan, highlighted = false }: ApiPricing
       const res = await fetch('/api/billing/create-subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, billingPeriod: 'monthly' }),
+        body: JSON.stringify({ plan, interval: 'monthly' }),
       })
       const data = await res.json()
       if (data.url) {

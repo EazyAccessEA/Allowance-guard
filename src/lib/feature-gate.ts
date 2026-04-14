@@ -103,7 +103,7 @@ export async function checkApiQuota(userId: number): Promise<FeatureCheckResult>
 }
 
 /**
- * Check chain access — free tier gets 1 chain, paid get all 6.
+ * Check chain access — free tier gets 1 chain, paid get all 27.
  */
 export async function checkChainAccess(userId: number, requestedChains: number): Promise<FeatureCheckResult> {
   const sub = await getUserSubscription(userId)
