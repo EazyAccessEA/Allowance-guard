@@ -3,6 +3,8 @@ import type {
   Address,
   ChainId,
   PortfolioRiskResponse,
+  RiskCheckRequest,
+  RiskCheckResponse,
   RiskScoreResponse,
 } from '../types'
 
@@ -32,5 +34,21 @@ export function getPortfolioRisk(
     method: 'GET',
     signal: opts?.signal,
     query: { wallet: args.wallet },
+  })
+}
+
+/**
+ * Pre-signing risk assessment for a proposed `approve()` transaction.
+ * Call BEFORE the user signs to surface known-spender / unlimited-amount risks.
+ */
+export function riskCheck(
+  client: AllowanceGuardClient,
+  args: RiskCheckRequest,
+  opts?: RequestOptions,
+): Promise<RiskCheckResponse> {
+  return client.request<RiskCheckResponse>('/risk-check', {
+    method: 'POST',
+    signal: opts?.signal,
+    body: JSON.stringify(args),
   })
 }

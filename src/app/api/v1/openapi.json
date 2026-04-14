@@ -3,14 +3,14 @@
   "info": {
     "title": "AllowanceGuard API",
     "version": "1.0.0",
-    "description": "Public REST API for AllowanceGuard — wallet security, token approval monitoring, and risk scoring across 10+ EVM chains.\n\nAll endpoints require API key authentication via the `Authorization: Bearer <key>` header. Two key tiers are supported:\n\n- **Secret keys** (`ag_live_*`) — full access, server-side only\n- **Public keys** (`ag_pub_*`) — read-only (GET only), browser-safe, rate-limited\n\nSee https://www.allowanceguard.com/docs/integration for the full integration guide.",
+    "description": "Public REST API for AllowanceGuard — wallet security, token approval monitoring, and risk scoring across 27 EVM chains.\n\nAll endpoints require API key authentication via the `Authorization: Bearer <key>` header. Two key tiers are supported:\n\n- **Secret keys** (`ag_live_*`) — full access, server-side only\n- **Public keys** (`ag_pub_*`) — read-only (GET only), browser-safe, rate-limited\n\nSee https://www.allowanceguard.com/docs/integration for the full integration guide.",
     "contact": {
       "name": "AllowanceGuard Support",
       "url": "https://www.allowanceguard.com",
       "email": "legal.support@allowanceguard.com"
     },
     "license": {
-      "name": "Commercial / GPL-3.0-or-later",
+      "name": "Commercial / AGPL-3.0-or-later",
       "url": "https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE"
     }
   },
@@ -238,6 +238,43 @@
           },
           "400": { "$ref": "#/components/responses/BadRequest" },
           "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/scan/{id}": {
+      "get": {
+        "tags": ["scan"],
+        "summary": "Get scan job status",
+        "description": "Returns the current status of a previously-submitted scan. Ownership is enforced — a scan can only be read by the user (or, for legacy scans, the API key) that created it. Returns 404 (not 403) on ownership mismatch to avoid leaking job existence.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "minimum": 1 },
+            "description": "Scan ID returned by `POST /scan`"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scan status",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ScanStatusResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": {
+            "description": "Scan not found, or not owned by the authenticated key",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
           "429": { "$ref": "#/components/responses/RateLimited" }
         }
       }
@@ -587,6 +624,26 @@
           "chains": { "type": "array", "items": { "$ref": "#/components/schemas/ChainId" } },
           "status": { "type": "string", "enum": ["pending", "running", "complete", "failed"] },
           "statusUrl": { "type": "string" }
+        }
+      },
+      "ScanStatusResponse": {
+        "type": "object",
+        "required": ["scanId", "status", "wallet", "chains"],
+        "properties": {
+          "scanId": { "type": "integer" },
+          "status": { "type": "string", "enum": ["pending", "running", "complete", "failed"] },
+          "wallet": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/Address" },
+              { "type": "null" }
+            ]
+          },
+          "chains": { "type": "array", "items": { "$ref": "#/components/schemas/ChainId" } },
+          "attempts": { "type": "integer" },
+          "error": { "type": ["string", "null"] },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "startedAt": { "type": ["string", "null"], "format": "date-time" },
+          "completedAt": { "type": ["string", "null"], "format": "date-time" }
         }
       },
       "SimulateRequest": {

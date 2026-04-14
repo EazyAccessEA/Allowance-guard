@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { requireUser } from '@/lib/auth'
 import { getUserSubscription } from '@/lib/billing'
-import { getPlanLimits } from '@/lib/plans'
+import { getPlanLimits, API_PLAN_LIMITS, type ApiPlan } from '@/lib/plans'
 import { pool } from '@/lib/db'
 import { withReq } from '@/lib/logger'
 
@@ -68,13 +68,27 @@ export async function GET(req: Request) {
       [userId],
     )
 
+    // Burst limit is per-key (not per-user). All of a user's secret keys are
+    // upgraded together via upgradeApiKeyPlan, so reading any active secret
+    // key gives the correct tier. Defaults to api_free if the user has no keys.
+    const activeKey = await pool.query(
+      `SELECT plan FROM api_keys
+       WHERE user_id = $1 AND key_type = 'secret' AND revoked_at IS NULL
+       ORDER BY created_at DESC LIMIT 1`,
+      [userId],
+    )
+    const apiPlan = (activeKey.rows[0]?.plan as ApiPlan | undefined) ?? 'api_free'
+    const burstPerMinute = API_PLAN_LIMITS[apiPlan]?.burstPerMinute ?? API_PLAN_LIMITS.api_free.burstPerMinute
+
     return NextResponse.json({
       plan: subscription.plan,
+      apiPlan,
       limits: {
         maxWallets: limits.maxWallets,
         maxApiCallsPerDay: limits.maxApiCallsPerDay,
         maxChains: limits.maxChains,
         maxMonitoredWallets: limits.maxMonitoredWallets,
+        burstPerMinute,
       },
       usage: {
         apiCallsToday: todayCalls.rows[0]?.count ?? 0,
