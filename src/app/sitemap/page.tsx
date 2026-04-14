@@ -43,7 +43,6 @@ const GROUPS: Group[] = [
     links: [
       { href: '/docs', label: 'Documentation home' },
       { href: '/docs/api-reference', label: 'API reference' },
-      { href: '/docs/api/examples', label: 'Code examples' },
       { href: '/docs/integration', label: 'Integration guide' },
       { href: '/docs/widget', label: 'Widget builder' },
     ],

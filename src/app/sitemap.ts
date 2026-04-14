@@ -23,7 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Documentation
     { url: `${BASE}/docs`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/docs/api-reference`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/docs/api/examples`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/docs/integration`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/docs/widget`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
 

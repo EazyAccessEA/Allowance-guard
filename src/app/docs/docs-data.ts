@@ -57,23 +57,18 @@ export const alertFeatures = [
   { type: 'Job Processing', description: 'Background scan queue with 5-minute intervals and automatic retries.', features: ['Queue management', 'Status tracking', 'Auto-retry'] },
 ]
 
+// Public B2B API surface. All endpoints require Authorization: Bearer ag_live_*
+// (or ag_pub_* for read-only browser use). Full reference: /docs/api-reference.
 export const apiEndpoints = [
-  { endpoint: '/api/scan', method: 'POST', description: 'Queue a wallet scan. Returns job ID.' },
-  { endpoint: '/api/allowances', method: 'GET', description: 'Paginated allowances for a wallet.' },
-  { endpoint: '/api/jobs/[id]', method: 'GET', description: 'Poll scan job status by ID.' },
-  { endpoint: '/api/alerts/subscribe', method: 'POST', description: 'Subscribe a wallet to alert notifications.' },
-  { endpoint: '/api/alerts/daily', method: 'GET', description: 'Trigger daily digest delivery.' },
-  { endpoint: '/api/jobs/process', method: 'GET', description: 'Process queued scan jobs.' },
-  { endpoint: '/api/monitor', method: 'GET/POST', description: 'Read or update monitoring configuration.' },
-  { endpoint: '/api/monitor/run', method: 'GET', description: 'Execute due monitoring scans.' },
-  { endpoint: '/api/auth/magic/request', method: 'POST', description: 'Request a magic link email.' },
-  { endpoint: '/api/auth/magic/verify', method: 'GET', description: 'Verify magic link token.' },
-  { endpoint: '/api/auth/me', method: 'GET', description: 'Return current authenticated user.' },
-  { endpoint: '/api/auth/signout', method: 'POST', description: 'End current session.' },
-  { endpoint: '/api/teams', method: 'GET/POST', description: 'List teams or create a new one.' },
-  { endpoint: '/api/teams/wallets', method: 'GET/POST', description: 'List or add wallets to a team.' },
-  { endpoint: '/api/teams/invite', method: 'POST', description: 'Send an invitation to a team member.' },
-  { endpoint: '/api/invites/accept', method: 'POST', description: 'Accept a team invitation by token.' },
+  { endpoint: '/api/v1/health', method: 'GET', description: 'Service health and dependency status. Public, no auth.' },
+  { endpoint: '/api/v1/chains', method: 'GET', description: 'List the 27 supported chains.' },
+  { endpoint: '/api/v1/allowances', method: 'GET', description: 'Paginated token approvals for a wallet.' },
+  { endpoint: '/api/v1/risk-score', method: 'GET', description: 'Aggregated wallet risk score.' },
+  { endpoint: '/api/v1/portfolio-risk', method: 'GET', description: 'Cross-chain portfolio risk with per-chain breakdown.' },
+  { endpoint: '/api/v1/risk-check', method: 'POST', description: 'Pre-signing assessment of a proposed approval.' },
+  { endpoint: '/api/v1/scan', method: 'POST', description: 'Trigger a wallet scan. Returns scanId + statusUrl.' },
+  { endpoint: '/api/v1/scan/{id}', method: 'GET', description: 'Poll scan job status. Ownership-enforced.' },
+  { endpoint: '/api/v1/simulate', method: 'POST', description: 'Time-machine: simulate revoking approvals.' },
 ]
 
 export const faqItems = [

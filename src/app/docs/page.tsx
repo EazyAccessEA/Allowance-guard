@@ -168,7 +168,6 @@ export default function DocsPage() {
                 <div className="space-y-0.5">
                   {[
                     { href: '/docs/api-reference', label: 'API Reference' },
-                    { href: '/docs/api/examples', label: 'Code Examples' },
                     { href: '/docs/integration', label: 'Integration' },
                     { href: '/docs/widget', label: 'Widget Builder' },
                   ].map((link) => (
