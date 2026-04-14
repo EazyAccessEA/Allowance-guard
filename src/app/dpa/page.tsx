@@ -145,7 +145,7 @@ export default function DPAPage() {
                   </div>
                   <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Infrastructure</h3>
-                    <p className="text-stone text-xs">Hosted on Vercel (SOC 2). Database on Neon (encrypted, isolated). Redis on Upstash (encrypted).</p>
+                    <p className="text-stone text-xs">Hosted on Vercel (SOC 2). Database on Neon (encrypted, isolated). Optional Redis cache via REDIS_URL (encrypted in transit).</p>
                   </div>
                   <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Incident Response</h3>
@@ -183,11 +183,6 @@ export default function DPAPage() {
                       <tr className="border-t border-line">
                         <td className="p-3">Neon Inc.</td>
                         <td className="p-3">PostgreSQL database hosting</td>
-                        <td className="p-3">US / EU</td>
-                      </tr>
-                      <tr className="border-t border-line">
-                        <td className="p-3">Upstash Inc.</td>
-                        <td className="p-3">Redis caching &amp; rate limiting</td>
                         <td className="p-3">US / EU</td>
                       </tr>
                       <tr className="border-t border-line">

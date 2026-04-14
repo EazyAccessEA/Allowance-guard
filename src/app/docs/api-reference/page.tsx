@@ -32,7 +32,7 @@ export default function ApiReferencePage() {
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
                 <span className="px-3 py-1 bg-paper-sub border border-amber-400/30 text-amber-deep text-sm  font-mono">
-                  Base URL: /api/v1
+                  Base URL: https://www.allowanceguard.com/api/v1
                 </span>
                 <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm ">
                   JSON responses
@@ -156,7 +156,7 @@ data = res.json()['data']`,
     "rateLimit": {
       "limit": 10000,
       "remaining": 9999,
-      "resetsAt": "2026-03-31T12:00:00.000Z"
+      "window": "rolling-24h"
     }
   }
 }`,
@@ -216,7 +216,7 @@ data = res.json()['data']`,
       { "chainId": 42161, "name": "Arbitrum", "symbol": "ETH", "explorer": "https://arbiscan.io" },
       { "chainId": 8453, "name": "Base", "symbol": "ETH", "explorer": "https://basescan.org" }
     ],
-    "count": 7
+    "count": 27
   },
   "error": null,
   "meta": { ... }

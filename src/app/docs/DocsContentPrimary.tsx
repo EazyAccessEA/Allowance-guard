@@ -419,35 +419,40 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
  </div>
  </div>
  
- <h3 id="api-reference" className="text-xl font-semibold text-ink mb-3">API Reference (Public)</h3>
+ <h3 id="api-reference" className="text-xl font-semibold text-ink mb-3">API Reference (v1)</h3>
+ <p className="text-base text-ink-soft mb-4">All v1 endpoints require <code className="font-mono text-sm">Authorization: Bearer ag_live_*</code> (or <code className="font-mono text-sm">ag_pub_*</code> for read-only browser use). Base URL: <code className="font-mono text-sm">https://www.allowanceguard.com/api/v1</code>. Full schemas, error codes, and code samples live in the <a href="/docs/api-reference" className="text-amber-deep hover:underline">API Reference</a>.</p>
  <div className="space-y-4 mb-6">
  <div>
  <h4 className="font-medium text-ink mb-2">Scan Endpoint</h4>
- <p className="text-base text-ink-soft">POST /api/scan - Queue a wallet scan job. Accepts wallet address and network parameters. Returns job ID for status tracking. Rate limited to prevent abuse while ensuring responsive service for legitimate users.</p>
+ <p className="text-base text-ink-soft">POST /api/v1/scan — Queue a wallet scan. Returns scanId and statusUrl. Rate-limited per API key plan.</p>
+ </div>
+ <div>
+ <h4 className="font-medium text-ink mb-2">Scan Status Endpoint</h4>
+ <p className="text-base text-ink-soft">GET /api/v1/scan/{'{id}'} — Poll scan status. Ownership-enforced: returns 404 for scans owned by a different key.</p>
  </div>
  <div>
  <h4 className="font-medium text-ink mb-2">Allowances Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/allowances - Retrieve paginated allowance data for a wallet. Supports filtering by risk level, network, and token type. Returns structured data with risk scores and metadata for easy integration.</p>
+ <p className="text-base text-ink-soft">GET /api/v1/allowances — Paginated approvals for a wallet. Supports chainId, riskOnly, page, and pageSize query parameters. Returns risk scores and token metadata.</p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Job Status Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/jobs/[id] - Check the status of a scan job. Returns current progress, completion status, and any error messages. Essential for implementing proper loading states and error handling in client applications.</p>
+ <h4 className="font-medium text-ink mb-2">Risk Score Endpoint</h4>
+ <p className="text-base text-ink-soft">GET /api/v1/risk-score — Aggregated wallet risk score with breakdown and top risks. Optional chainId filter.</p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Token Search Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/tokens/search - Search and discover tokens across multiple blockchains. Supports fuzzy search, category filtering, and relevance scoring. Returns paginated results with token metadata, categories, and verification status.</p>
+ <h4 className="font-medium text-ink mb-2">Portfolio Risk Endpoint</h4>
+ <p className="text-base text-ink-soft">GET /api/v1/portfolio-risk — Cross-chain portfolio risk score with per-chain breakdown, trend, and benchmark comparison.</p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Token Categories Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/tokens/categories - Retrieve all available token categories with usage counts. Useful for building category filters and understanding the token taxonomy.</p>
+ <h4 className="font-medium text-ink mb-2">Risk Check Endpoint</h4>
+ <p className="text-base text-ink-soft">POST /api/v1/risk-check — Pre-signing risk assessment for a proposed approve() transaction. Surfaces unknown-spender and unlimited-amount risks before the user signs.</p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Token Submission Endpoint</h4>
- <p className="text-base text-ink-soft">POST /api/tokens/submit - Submit new tokens for community curation. Validates tokens on-chain and queues them for review. Requires email contact and token metadata including name, symbol, and standard.</p>
+ <h4 className="font-medium text-ink mb-2">Simulate Endpoint</h4>
+ <p className="text-base text-ink-soft">POST /api/v1/simulate — Time-machine: returns a before/after risk comparison for a hypothetical revoke without changing state.</p>
  </div>
  <div>
  <h4 className="font-medium text-ink mb-2">Chains Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/chains - Retrieve supported blockchain networks with their configuration. Returns chain IDs, names, symbols, and RPC endpoints for integration with wallet providers.</p>
+ <p className="text-base text-ink-soft">GET /api/v1/chains — List of all 27 supported chains with chainId, name, symbol, and explorer URL.</p>
  </div>
  </div>
  </div>
