@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { Check, X, Loader2 } from 'lucide-react'
+import { useAccount } from 'wagmi'
+import { useAppKit } from '@reown/appkit/react'
 import { cn } from '@/lib/utils'
 import {
   type ConsumerPlan,
@@ -12,6 +14,7 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { trackClientEvent } from '@/lib/analytics'
+import { useSiweSignIn, SiweCancelledError } from '@/hooks/useSiweSignIn'
 
 interface PricingCardProps {
   plan: 'free' | 'pro' | 'sentinel'
@@ -81,37 +84,75 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   const savingsPercent = isPaid ? getYearlySavingsPercent(plan as PaidPlan) : 0
 
-  const ctaText = plan === 'free' ? 'Join the waitlist' : `Upgrade to ${displayName}`
+  const { isConnected } = useAccount()
+  const { open } = useAppKit()
+  const { signIn, isSigningIn } = useSiweSignIn({
+    statement: `Sign in to subscribe to AllowanceGuard ${displayName}.`,
+  })
 
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // CTA reflects what the next click will actually do
+  const ctaText = (() => {
+    if (plan === 'free') return 'Join the waitlist'
+    if (!isConnected) return `Connect wallet to subscribe`
+    return `Upgrade to ${displayName}`
+  })()
+
+  async function postCheckout(): Promise<{ ok: boolean; url?: string; error?: string; status: number }> {
+    const res = await fetch('/api/billing/create-subscription', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan, interval: billingPeriod }),
+    })
+    const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string }
+    return { ok: res.ok, url: data.url, error: data.error, status: res.status }
+  }
 
   async function handleUpgrade() {
-    if (loading) return
+    if (loading || isSigningIn) return
+    setError(null)
+
+    // Step 1 — wallet must be connected before SIWE is possible
+    if (!isConnected) {
+      trackClientEvent('upgrade_clicked', { plan, billingPeriod, stage: 'connect_wallet' })
+      try { await open() } catch { /* user closed the modal */ }
+      return // The CTA label flips to "Upgrade to X"; user clicks again to continue
+    }
+
     setLoading(true)
     trackClientEvent('upgrade_clicked', { plan, billingPeriod })
+
     try {
-      const res = await fetch('/api/billing/create-subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan, interval: billingPeriod }),
-      })
+      // Step 2 — try checkout. Skip SIWE if a session already exists.
+      let result = await postCheckout()
 
-      // Not signed in — bounce through SIWE login then come back to pricing
-      if (res.status === 401) {
-        window.location.href = `/login?redirect=${encodeURIComponent('/pricing')}`
-        return
+      // Step 3 — 401 means no session: run SIWE inline, then retry once
+      if (result.status === 401) {
+        try {
+          await signIn()
+        } catch (signErr) {
+          if (signErr instanceof SiweCancelledError) {
+            setError('Signature cancelled. Try again when ready.')
+          } else {
+            setError(signErr instanceof Error ? signErr.message : 'Sign-in failed.')
+          }
+          setLoading(false)
+          return
+        }
+        result = await postCheckout()
       }
 
-      const data = await res.json().catch(() => ({}))
-      if (res.ok && data.url) {
-        window.location.href = data.url
+      // Step 4 — redirect to Stripe, or surface a clear error
+      if (result.ok && result.url) {
+        window.location.href = result.url
         return
       }
-
-      alert(data.error ?? 'Could not start checkout. Please try again.')
+      setError(result.error ?? 'Could not start checkout. Please try again.')
       setLoading(false)
     } catch {
-      alert('Network error. Please try again.')
+      setError('Network error. Please try again.')
       setLoading(false)
     }
   }
@@ -178,23 +219,40 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* CTA */}
       <div className="mb-8">
         {isPaid ? (
-          <button
-            onClick={handleUpgrade}
-            disabled={loading}
-            className={cn(
-              'w-full px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed',
-              highlighted
-                ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
-                : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule active:bg-paper-sub',
+          <>
+            <button
+              onClick={handleUpgrade}
+              disabled={loading || isSigningIn}
+              className={cn(
+                'w-full px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed',
+                highlighted
+                  ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
+                  : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule active:bg-paper-sub',
+              )}
+            >
+              {isSigningIn ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Waiting for signature…
+                </span>
+              ) : loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Redirecting…
+                </span>
+              ) : ctaText}
+            </button>
+            {isConnected && (
+              <p className="mt-2 text-[11px] text-ink-whisper text-center">
+                One wallet signature, then secure checkout via Stripe.
+              </p>
             )}
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Redirecting...
-              </span>
-            ) : ctaText}
-          </button>
+            {error && (
+              <p className="mt-2 text-xs text-red-800 text-center" role="alert">
+                {error}
+              </p>
+            )}
+          </>
         ) : (
           <Link
             href="/"
