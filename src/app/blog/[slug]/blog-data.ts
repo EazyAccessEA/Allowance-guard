@@ -2495,5 +2495,146 @@ export const blogPosts: BlogPost[] = [
     category: 'Education',
     featured: false,
     tags: ['quickstart', 'beginners', 'audit', 'five-minutes', 'guide'],
+  },
+
+  {
+    slug: 'nft-approvals-setapprovalforall-trap',
+    title: 'NFT Approvals: The setApprovalForAll Trap',
+    subtitle: 'The one function that can drain your entire collection.',
+    content: `
+      <p>When you list an NFT on a marketplace, you sign something called <code>setApprovalForAll</code>. It\u2019s the NFT equivalent of an ERC-20 token approval — but with a crucial difference. Instead of approving a specific amount of a specific token, you\u2019re giving a contract permission to transfer <strong>every NFT you own or will ever own</strong> from a specific collection.</p>
+      <p>Most NFT holders click through this approval without thinking. Then they wonder how their Bored Ape got stolen while they were asleep.</p>
+      <h2>What setApprovalForAll Actually Does</h2>
+      <p>The ERC-721 and ERC-1155 standards define <code>setApprovalForAll(operator, approved)</code>. When you call it with <code>approved = true</code>, the operator address can move any NFT in that collection you hold — now or in the future. No per-token check. No amount limit. Total control.</p>
+      <p>Compare this to ERC-20\u2019s <code>approve(spender, amount)</code>: you can set a specific spending cap, and you can approve a much smaller amount than you hold. With NFTs, it\u2019s all or nothing. The function only accepts a boolean.</p>
+      <h2>Why It\u2019s Dangerous</h2>
+      <p>Every major NFT marketplace (OpenSea, Blur, LooksRare, X2Y2) needs <code>setApprovalForAll</code> to function. You grant it once per collection, and every future listing uses the same approval. That\u2019s efficient. It\u2019s also what makes it catastrophic when things go wrong.</p>
+      <p>Three failure modes in the past three years:</p>
+      <ul>
+        <li><strong>Compromised marketplace contracts.</strong> If the marketplace contract is exploited, every user who has ever listed an NFT on it is at risk — not just the active listings.</li>
+        <li><strong>Phishing sites.</strong> A fake OpenSea clone asks you to "verify" your listing. You sign a <code>setApprovalForAll</code> approving a malicious contract. Your entire collection is drained.</li>
+        <li><strong>Malicious upgrades.</strong> Some marketplace proxies can be upgraded by an admin key. If that key is compromised, the contract you approved becomes a contract controlled by the attacker.</li>
+      </ul>
+      <h2>The Attack You Don\u2019t See Coming</h2>
+      <p>The most insidious version: you signed a <code>setApprovalForAll</code> to a marketplace a year ago. The marketplace shut down. You forgot about it. An attacker buys the abandoned contract address or discovers a stale admin key. They drain every collection that still has active approvals to that contract. Your approval is still live. You signed it and walked away.</p>
+      <p>This is the <strong>stale approval problem</strong> specific to NFTs. Unlike ERC-20 tokens where you might spot a drained balance, NFTs sit silently in your wallet until the moment they don\u2019t.</p>
+      <h2>How to Protect Yourself</h2>
+      <ul>
+        <li><strong>Audit your NFT approvals quarterly.</strong> Separately from ERC-20 approvals. Scan each collection for active <code>setApprovalForAll</code> grants and revoke any to marketplaces you no longer use.</li>
+        <li><strong>Revoke after selling out.</strong> Once you\u2019ve sold the last NFT in a collection, revoke the marketplace approval. You can always re-grant it if you come back.</li>
+        <li><strong>Use a separate wallet for minting and trading.</strong> Keep long-hold NFTs in a cold wallet that has never signed <code>setApprovalForAll</code> to any marketplace. Only your active trading wallet carries the risk.</li>
+        <li><strong>Watch for upgradeable contracts.</strong> If a marketplace announces an upgrade or admin key rotation, revoke your approvals and re-grant to the new contract if you trust it.</li>
+        <li><strong>Check both standards.</strong> ERC-721 and ERC-1155 both use <code>setApprovalForAll</code>. A scan that only checks ERC-20 approvals will miss these entirely.</li>
+      </ul>
+      <h2>The Rule</h2>
+      <p>Every <code>setApprovalForAll</code> you\u2019ve ever signed is a persistent permission on an entire collection. Treat each one like a signed cheque with your whole NFT collection as collateral. Review them. Revoke the ones you don\u2019t need. The one you forgot about is the one that drains you.</p>
+    `,
+    publishedAt: '2026-04-14',
+    readTime: '6 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['nft', 'setapprovalforall', 'erc-721', 'erc-1155', 'marketplaces'],
+  },
+
+  {
+    slug: 'new-generation-signature-phishing',
+    title: 'The New Generation of Signature Phishing Attacks',
+    subtitle: 'Signature phishing has evolved. Here\u2019s what you\u2019re now up against.',
+    content: `
+      <p>Two years ago, signature phishing meant a fake site asking you to sign a transaction that drained your wallet. Users learned to check transaction amounts and spender addresses. Attackers adapted.</p>
+      <p>The 2026 generation of signature phishing doesn\u2019t need you to approve a transaction at all. It works by exploiting the <strong>gap between what your wallet shows you and what you\u2019re actually signing</strong>.</p>
+      <h2>Attack 1: Blind Signing on Hardware Wallets</h2>
+      <p>Hardware wallets can\u2019t decode every transaction. When a dApp asks you to sign a complex multicall or smart-contract interaction, your Ledger or Trezor shows you a hex string and a prompt: "Blind sign?" Most users click yes because the alternative is not using the dApp.</p>
+      <p>Attackers craft transactions that look routine but include a hidden <code>setApprovalForAll</code> or <code>permit</code> call. Your hardware wallet displays unverified data. You approve. The malicious call executes alongside the legitimate one.</p>
+      <p><strong>Defence</strong>: never blind sign. If your wallet can\u2019t verify a transaction, don\u2019t sign it. Use a wallet with clear signing support for the specific protocol (Ledger has expanded protocol support in recent firmware).</p>
+      <h2>Attack 2: Permit2 Signature Trees</h2>
+      <p>Permit2 allows batch signatures — one signature authorising multiple token spends. Attackers hide malicious tokens inside an otherwise legitimate signature tree. The wallet shows you the top-level structure ("Approve 3 tokens") but hides the details of each token and spender.</p>
+      <p>A legitimate DEX might ask you to approve USDC, USDT, and DAI to a router. A malicious site asks you to approve USDC, USDT, and a fourth token — one with a malicious spender address that drains any matching token you hold.</p>
+      <p><strong>Defence</strong>: always expand Permit2 signature trees fully before signing. Verify each token and each spender address individually. If your wallet doesn\u2019t let you inspect the full tree, don\u2019t use it for Permit2.</p>
+      <h2>Attack 3: Intent Swapping</h2>
+      <p>You visit a dApp. The UI shows a clear action: "Buy NFT for 0.5 ETH." You click. Your wallet prompts. But the signature request has been swapped — the UI shows one thing, the actual EIP-712 payload is different. This happens when the dApp\u2019s frontend is compromised (injected malicious JS), the wallet connection is hijacked (WalletConnect impersonation), or the signature is crafted to look benign in a preview but have dangerous effects on execution.</p>
+      <p><strong>Defence</strong>: read the actual EIP-712 data your wallet displays, not the dApp\u2019s UI. If your wallet shows different data than the website says it should, reject the signature immediately. This is where hardware wallets with trusted displays become critical — they show you what you\u2019re actually signing, independent of the dApp.</p>
+      <h2>Attack 4: Gasless Signatures for Off-Chain Actions</h2>
+      <p>Some attacks don\u2019t need you to broadcast a transaction. A gasless <code>permit</code> signature (EIP-2612) or an off-chain order (Seaport, 0x) can be submitted by the attacker days later. You sign what looks like a harmless message. The attacker holds it. When convenient, they submit it on-chain.</p>
+      <p>By the time the transaction appears on-chain, you\u2019ve long since forgotten about the signature. The tokens vanish. No drain transaction appears in your history at the time of the theft — only the signature, which most wallets don\u2019t log.</p>
+      <p><strong>Defence</strong>: be extremely cautious with off-chain signature requests. Never sign a message you don\u2019t understand. If a site asks you to sign something to "verify ownership" or "update permissions" without any on-chain transaction, close the site.</p>
+      <h2>The Common Thread</h2>
+      <p>All four attacks exploit the same weakness: <strong>wallet UIs can\u2019t always show you what you\u2019re actually signing</strong>. Complex transactions, batch signatures, and off-chain data are all hard to render safely. Attackers weaponise that gap.</p>
+      <p>The old advice — "check the spender address, check the amount" — isn\u2019t enough anymore. The new advice:</p>
+      <ol>
+        <li><strong>If you can\u2019t read it, don\u2019t sign it.</strong></li>
+        <li><strong>If the UI says one thing and the wallet shows another, trust the wallet.</strong></li>
+        <li><strong>Never blind sign anything.</strong></li>
+        <li><strong>Off-chain signatures are transactions you haven\u2019t seen yet.</strong></li>
+      </ol>
+      <p>Signature phishing is no longer about spotting the fake OpenSea URL. It\u2019s about knowing exactly what your signature does — every time, without exception.</p>
+    `,
+    publishedAt: '2026-04-14',
+    readTime: '7 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['phishing', 'signatures', 'permit2', 'eip-712', 'hardware-wallets'],
+  },
+
+  {
+    slug: 'i-think-ive-been-scammed-now-what',
+    title: 'I Think I\u2019ve Been Scammed — Now What?',
+    subtitle: 'A step-by-step playbook for the first hour after a wallet compromise.',
+    content: `
+      <p>You signed something you shouldn\u2019t have. You approved a malicious contract. You connected to a phishing site. You\u2019re staring at your wallet wondering how much you just lost.</p>
+      <p>Stop. Breathe. Read this carefully. Every minute matters.</p>
+      <h2>Minute 0–5: Assess, Don\u2019t Panic</h2>
+      <p>First question: <strong>has anything actually been taken, or are you worried it might be?</strong> Open your wallet and check token balances. Check NFT holdings. Check open approvals. If nothing has moved yet, you have time.</p>
+      <p>If funds are already gone, your immediate goal is to prevent <strong>more</strong> from being taken. Attackers often drain in waves — large-value tokens first, then smaller positions, then NFTs. The longer your approvals stay active, the more they take.</p>
+      <h2>Minute 5–15: Revoke Every Approval You Can</h2>
+      <p>Scan your wallet with an approval checker. Revoke everything non-essential. Specifically:</p>
+      <ul>
+        <li>Every approval to a contract you don\u2019t recognise</li>
+        <li>Every unlimited approval, regardless of the spender</li>
+        <li>Every <code>setApprovalForAll</code> on your NFTs</li>
+        <li>Every Permit2 approval on tokens with significant value</li>
+      </ul>
+      <p>Do this on every chain your wallet has ever used. Not just the chain where you think the scam happened. Attackers often have standing approvals they collected previously.</p>
+      <h2>Minute 15–30: Move What You Can</h2>
+      <p>If a wallet is actively being drained, you need to get assets out before approvals can be used. Priority:</p>
+      <ol>
+        <li><strong>High-value tokens first.</strong> Move large stablecoin, ETH, or WBTC positions to a fresh wallet with no approvals.</li>
+        <li><strong>NFTs next.</strong> Transfer valuable NFTs to a clean wallet. Note: if <code>setApprovalForAll</code> is already granted on the collection to a malicious contract, the attacker can still transfer NFTs <em>from</em> the destination wallet back to themselves unless you move to a wallet the attacker has no approvals on.</li>
+        <li><strong>Check for claimed airdrops.</strong> Some scam contracts masquerade as airdrops and drain tokens when the user "claims." Do not claim anything.</li>
+      </ol>
+      <p>Use a wallet you\u2019ve never connected to any dApp. A hardware wallet initialised for this purpose is ideal.</p>
+      <h2>Minute 30–60: Document Everything</h2>
+      <p>While the drain is fresh, collect evidence:</p>
+      <ul>
+        <li>The transaction hash of the malicious signature or transaction</li>
+        <li>The contract address that drained you</li>
+        <li>The URL of the site that tricked you (screenshot, don\u2019t revisit)</li>
+        <li>The time and date</li>
+        <li>Your wallet address</li>
+      </ul>
+      <p>This evidence is necessary for any future investigation, chain analysis, insurance claim, or law enforcement report.</p>
+      <h2>Hour 1+: Report and Recover</h2>
+      <p><strong>Report the scam.</strong> File reports with:</p>
+      <ul>
+        <li><a href="https://chainabuse.com/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">Chainabuse</a> — shared database of malicious addresses</li>
+        <li><a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">IC3</a> (FBI) — if you\u2019re in the US</li>
+        <li>Your local police cyber crime unit</li>
+        <li>The protocol or marketplace whose brand was impersonated (OpenSea, Uniswap, etc. all have security teams)</li>
+      </ul>
+      <p><strong>Do not pay recovery scammers.</strong> After any public scam report, you will be contacted by people claiming they can "recover your funds for a fee." They are scammers preying on scam victims. Real recovery, when it happens, comes through law enforcement or chain analytics firms working with exchanges — never through DMs.</p>
+      <p><strong>Check if you\u2019re covered.</strong> Some wallets and platforms offer limited insurance or reimbursement for specific scam types. Coinbase, MetaMask, and some hardware wallet vendors have recovery programmes. Check the terms.</p>
+      <h2>After the Incident</h2>
+      <p>The wallet that was compromised should be considered burned. Even after you revoke every visible approval, there may be signatures you signed that haven\u2019t been submitted yet. Treat the wallet as untrusted permanently.</p>
+      <p>Do not move large assets back into it. Do not treat it as a long-term holding address. If it still holds value you can\u2019t easily move (e.g., locked tokens, staked positions), plan to migrate everything out as soon as the lock expires.</p>
+      <h2>The Hardest Rule</h2>
+      <p>Most scam victims are embarrassed. They don\u2019t report. They don\u2019t tell friends. They try to move on quietly. This is exactly what scammers rely on — silence lets the same attack work on the next person.</p>
+      <p>If you\u2019ve been scammed, talk about it. Post on social media. File the reports. Add the attacker address to abuse databases. Your experience is the one thing that might stop the next person from losing the same way.</p>
+      <p>Getting scammed isn\u2019t a reflection of your intelligence. Web3 is a hostile environment by design, and even experienced users get hit. What matters is what you do in the first hour after — and what you do with the story afterwards.</p>
+    `,
+    publishedAt: '2026-04-14',
+    readTime: '8 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['incident-response', 'scams', 'recovery', 'playbook', 'security'],
   }
 ]
