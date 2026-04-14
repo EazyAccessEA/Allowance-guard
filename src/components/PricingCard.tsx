@@ -95,13 +95,23 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan, interval: billingPeriod }),
       })
-      const data = await res.json()
-      if (data.url) {
-        window.location.href = data.url
-      } else {
-        setLoading(false)
+
+      // Not signed in — bounce through SIWE login then come back to pricing
+      if (res.status === 401) {
+        window.location.href = `/login?redirect=${encodeURIComponent('/pricing')}`
+        return
       }
+
+      const data = await res.json().catch(() => ({}))
+      if (res.ok && data.url) {
+        window.location.href = data.url
+        return
+      }
+
+      alert(data.error ?? 'Could not start checkout. Please try again.')
+      setLoading(false)
     } catch {
+      alert('Network error. Please try again.')
       setLoading(false)
     }
   }
