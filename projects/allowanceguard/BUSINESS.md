@@ -55,6 +55,12 @@ These are the amounts that must match in the Stripe Dashboard for each price ID.
 
 Implementation note: internally priced in minor units (pence/cents) per `src/lib/plans.ts` — e.g. `monthlyPence: 999` = $9.99.
 
+### Trial policy
+
+**No trials are applied from code.** If a trial is desired on any tier, configure `trial_period_days` on the corresponding Stripe Price in the Dashboard. Stripe will then apply the trial automatically when a subscription is created against that price.
+
+Historical note: a silent 7-day trial was previously hardcoded for the Pro tier. It was removed (main commit `1742615`) because it bypassed disclosure discipline — users were being charged on day 8 without the trial being advertised on the pricing page. Trial economics should be tuned by ops, not by code.
+
 ## Key Messaging Rules
 
 **CRITICAL**: The old "Free Forever" / "no premium features, no paywalls" messaging is replaced. Current positioning:
@@ -86,3 +92,4 @@ Banned-phrase enforcement also lives in `memory/VOICE.md`. The rationale (produc
 
 - 2026-04-14: Split from `CLAUDE.md`. Rationale for banned phrases now lives here; the rule itself lives in `memory/VOICE.md`.
 - 2026-04-14: Added yearly API pricing ($374 Developer, $1,490 Growth) and a price-to-Stripe mapping table as SSoT for tier amounts. Amounts verified against `src/lib/plans.ts:198-211` and confirmed by operator against Stripe Dashboard.
+- 2026-04-14: Added trial policy section. Trials are no longer applied from code (removed in main commit `1742615`); configure `trial_period_days` on the Stripe Price if needed.

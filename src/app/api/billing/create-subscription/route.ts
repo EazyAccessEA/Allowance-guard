@@ -39,20 +39,14 @@ export async function POST(req: Request) {
     let priceId: string
 
     if (isApiPlan(plan)) {
-      // API plans only support monthly billing currently
       const apiPrices = API_PRICES[plan as Exclude<ApiPlan, 'api_free' | 'api_enterprise' | 'api_public'>]
       if (!apiPrices) {
         return NextResponse.json({ error: 'Invalid API plan' }, { status: 400 })
       }
-      if (interval === 'yearly') {
-        return NextResponse.json(
-          { error: 'API plans currently support monthly billing only' },
-          { status: 400 },
-        )
-      }
-      priceId = apiPrices.stripePriceIdMonthly
+      priceId = interval === 'yearly'
+        ? apiPrices.stripePriceIdYearly
+        : apiPrices.stripePriceIdMonthly
     } else {
-      // Consumer plans support monthly and yearly
       const consumerPrices = CONSUMER_PRICES[plan as Exclude<ConsumerPlan, 'free'>]
       if (!consumerPrices) {
         return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })

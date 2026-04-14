@@ -224,10 +224,10 @@ export default function PricingPage() {
 
           <CascadingScrollAnimation direction="up" distance={40} delay={100}>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              <ApiPricingCard plan="api_free" />
-              <ApiPricingCard plan="api_developer" highlighted />
-              <ApiPricingCard plan="api_growth" />
-              <ApiPricingCard plan="api_enterprise" />
+              <ApiPricingCard plan="api_free" billingPeriod={billingPeriod} />
+              <ApiPricingCard plan="api_developer" billingPeriod={billingPeriod} highlighted />
+              <ApiPricingCard plan="api_growth" billingPeriod={billingPeriod} />
+              <ApiPricingCard plan="api_enterprise" billingPeriod={billingPeriod} />
             </div>
           </CascadingScrollAnimation>
         </Container>
@@ -257,7 +257,12 @@ export default function PricingPage() {
                     { label: 'Burst rate (req/min)', values: ['10', '60', '300', 'Unlimited'] },
                     { label: 'Webhook integrations', values: [false, true, true, true] },
                     { label: 'Priority processing', values: [false, false, true, true] },
-                    { label: 'Price', values: ['Free', '$39/mo', '$149/mo', 'Custom'] },
+                    {
+                      label: 'Price',
+                      values: billingPeriod === 'yearly'
+                        ? ['Free', '$374/yr', '$1,490/yr', 'Custom']
+                        : ['Free', '$39/mo', '$149/mo', 'Custom'],
+                    },
                   ].map((row, idx) => (
                     <tr
                       key={row.label}

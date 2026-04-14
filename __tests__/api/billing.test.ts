@@ -40,6 +40,16 @@ jest.mock('@/lib/plans', () => ({
       stripePriceIdYearly: 'price_sentinel_yearly',
     },
   },
+  API_PRICES: {
+    api_developer: {
+      stripePriceIdMonthly: 'price_api_dev_monthly',
+      stripePriceIdYearly: 'price_api_dev_yearly',
+    },
+    api_growth: {
+      stripePriceIdMonthly: 'price_api_growth_monthly',
+      stripePriceIdYearly: 'price_api_growth_yearly',
+    },
+  },
 }))
 
 jest.mock('@/middleware/validation', () => ({
@@ -115,7 +125,7 @@ describe('POST /api/billing/create-subscription', () => {
 
     expect(res.status).toBe(200)
     expect(json.ok).toBe(true)
-    expect(json.checkoutUrl).toBe('https://checkout.stripe.com/session123')
+    expect(json.url).toBe('https://checkout.stripe.com/session123')
   })
 
   test('validates plan - accepts sentinel plan', async () => {
@@ -139,7 +149,7 @@ describe('POST /api/billing/create-subscription', () => {
 
     expect(res.status).toBe(200)
     expect(json.ok).toBe(true)
-    expect(json.checkoutUrl).toContain('stripe.com')
+    expect(json.url).toContain('stripe.com')
   })
 
   test('rejects invalid plan', async () => {
@@ -163,7 +173,7 @@ describe('POST /api/billing/create-subscription', () => {
     expect(res.status).toBe(400)
   })
 
-  test('returns checkout URL', async () => {
+  test('returns checkout URL under response key "url" (P0-1 regression)', async () => {
     mockRequireUser.mockResolvedValue({ user_id: 1, email: 'user@example.com' })
     mockValidateRequest.mockReturnValue(() =>
       Promise.resolve({
@@ -183,7 +193,32 @@ describe('POST /api/billing/create-subscription', () => {
     const res = await POST(req)
     const json = await res.json()
 
-    expect(json.checkoutUrl).toBe(expectedUrl)
+    expect(json.url).toBe(expectedUrl)
+    // The old response key `checkoutUrl` used to break the UI (which reads data.url).
+    expect(json.checkoutUrl).toBeUndefined()
+  })
+
+  test('API plan supports yearly billing', async () => {
+    mockRequireUser.mockResolvedValue({ user_id: 1, email: 'user@example.com' })
+    mockValidateRequest.mockReturnValue(() =>
+      Promise.resolve({
+        success: true,
+        data: { plan: 'api_developer', interval: 'yearly' },
+      }),
+    )
+    mockCreateCheckoutSession.mockResolvedValue('https://checkout.stripe.com/api_yearly')
+
+    const { POST } = await import('@/app/api/billing/create-subscription/route')
+    const req = createRequest(
+      'POST',
+      'http://localhost:3000/api/billing/create-subscription',
+      { plan: 'api_developer', interval: 'yearly' },
+    )
+    const res = await POST(req)
+    const json = await res.json()
+
+    expect(res.status).toBe(200)
+    expect(json.url).toBe('https://checkout.stripe.com/api_yearly')
   })
 })
 
