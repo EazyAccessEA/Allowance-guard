@@ -66,6 +66,8 @@ If a domain isn't represented (e.g. regulatory area not covered, or shipping in 
 | 32 | Blockchain engineer (EVM) | Viem/ethers.js, RPC providers, multicall, ERC-20 approve/transferFrom, token approval indexing, chain-specific quirks |
 | 33 | Backend engineer (Node.js/Next.js) | API routes, job queues, database queries, caching, error handling, Neon serverless, Drizzle ORM |
 | 34 | Full-stack debugging engineer | End-to-end request tracing, RPC failure modes, timeout handling, error propagation, logging, production debugging |
+| 35 | Product analyst | Evidence-first metrics, experiment rigor, funnel analysis, hypothesis/result discipline, aggregated-only data handling |
+| 36 | Operations manager | Support triage, docs coherence, finance snapshots, vendor review, internal coordination, incident post-mortems |
 
 ## Sub-councils
 
@@ -82,10 +84,11 @@ Specialist groups convened **in addition to** the Standing Council for their dom
 3. The Investor / founder voice (#11) is the gatekeeper for the banned-phrases list (see `memory/VOICE.md`). Any copy that fails their review must be revised before shipping.
 4. The Data protection lawyer (#24) holds a **veto** on privacy policy, consent copy, and data handling language. No privacy-related copy ships without their sign-off.
 5. Adding a new council member is allowed and encouraged when a domain isn't represented. Removing a member is not.
-6. The minimum council size is 17. The current size is 34.
+6. The minimum council size is 17. The current size is 36.
 7. Sub-councils do not replace the Standing Council. The Design, Copy, and Legal Councils operate *in addition to* it for their domains.
 
 ## Changelog
 
 - 2026-04-14: Split from `CLAUDE.md`. No content change.
 - 2026-04-14: Added council members #32 Blockchain engineer (EVM), #33 Backend engineer (Node.js/Next.js), #34 Full-stack debugging engineer. Current size: 34. (Merged from main commit `31e6556`.)
+- 2026-04-16: Added #35 Product analyst and #36 Operations manager. Current size: 36. Added for pilot of data-intelligence and admin-ops departments; council members ship before the departments they own.

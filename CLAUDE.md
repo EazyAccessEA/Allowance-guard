@@ -65,6 +65,14 @@ Index: `memory/README.md`. Maintenance rules (replace-over-accumulate) also live
 
 Skills live under `.claude/skills/` (market-research, positioning, content-strategy, writer, seo, social, outreach, conversion, analytics, campaign-manager, image-direction, web-implementation). Autonomy level 2 — user approves every publish, send, and `src/` edit.
 
+### Product & Engineering managed-agent system — `memory/product-engineering/` + `.claude/skills/`
+
+| When working on... | Read |
+|--------------------|------|
+| Features, bugs, migrations, chain onboarding, refactors, payments, webhooks, incidents | `memory/product-engineering/MEMORY.md` + `docs/product-engineering-agents.md` |
+
+Skills live under `.claude/skills/` (build-feature, fix-bug, write-migration, debug-prod-incident, refactor-component, add-chain, implement-checkout-flow, webhook-review). Autonomy level 2 for most, **level 1 (fresh confirm per write)** for `write-migration` and `implement-checkout-flow`. Payment-touching skills convene the Payment Sub-council (#30, #31, #4). Plan → diff → tests; user commits and deploys.
+
 ## The four workflow rules (full text in `memory/PROCESS.md`)
 
 1. **Plan first.** Outline files, approach, steps before writing code.
@@ -81,3 +89,4 @@ Skills live under `.claude/skills/` (market-research, positioning, content-strat
 ## Changelog
 
 - 2026-04-14: Rewritten as slim entry point. Project knowledge moved to `projects/allowanceguard/`. Behaviour rules moved to `memory/`. Startup routine preserved at the top.
+- 2026-04-16: Added Product & Engineering managed-agent system (pilot 1 of 6 new departments). 8 skills + 7 scoped memory files + runbook. Council members #35 Product analyst and #36 Operations manager added in `memory/PROCESS.md` for future pilots.
