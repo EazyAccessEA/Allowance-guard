@@ -73,6 +73,14 @@ Skills live under `.claude/skills/` (market-research, positioning, content-strat
 
 Skills live under `.claude/skills/` (build-feature, fix-bug, write-migration, debug-prod-incident, refactor-component, add-chain, implement-checkout-flow, webhook-review). Autonomy level 2 for most, **level 1 (fresh confirm per write)** for `write-migration` and `implement-checkout-flow`. Payment-touching skills convene the Payment Sub-council (#30, #31, #4). Plan → diff → tests; user commits and deploys.
 
+### Design managed-agent system — `memory/design/` + `.claude/skills/`
+
+| When working on... | Read |
+|--------------------|------|
+| Marketing surfaces (Ledger), app surfaces (Glass), components, tokens, motion, drift audits, critiques | `memory/design/MEMORY.md` + `docs/design-agents.md` |
+
+Skills live under `.claude/skills/` (design-ledger-surface, design-glass-surface, design-component, design-token, design-motion, design-system-audit, design-critique). Autonomy level 2 across the board — design skills produce specs/proposals/audits/critiques; they never write under `src/`. Marketing surfaces land via `web-implementation`; app surfaces and components land via `build-feature`. Design Council (Maren/Kael/Idris/Sable/Noor-VETO/Thane) + #7 convenes on every skill run. Noor holds the **VETO** on accessibility.
+
 ## The four workflow rules (full text in `memory/PROCESS.md`)
 
 1. **Plan first.** Outline files, approach, steps before writing code.
@@ -90,3 +98,4 @@ Skills live under `.claude/skills/` (build-feature, fix-bug, write-migration, de
 
 - 2026-04-14: Rewritten as slim entry point. Project knowledge moved to `projects/allowanceguard/`. Behaviour rules moved to `memory/`. Startup routine preserved at the top.
 - 2026-04-16: Added Product & Engineering managed-agent system (pilot 1 of 6 new departments). 8 skills + 7 scoped memory files + runbook. Council members #35 Product analyst and #36 Operations manager added in `memory/PROCESS.md` for future pilots.
+- 2026-04-16: Added Design managed-agent system (pilot 2). 7 project-scoped skills (Ledger + Glass surfaces, component / token / motion proposals, drift audit, per-surface critique) + 6 scoped memory files + runbook. Design Council leads; Noor holds VETO on accessibility.
