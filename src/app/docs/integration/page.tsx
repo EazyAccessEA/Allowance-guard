@@ -1,43 +1,41 @@
 'use client'
 
+/**
+ * Integration guide — quiet-bold Ledger layout.
+ *
+ * Full rewrite. Delete icon-prefixed H2/H3 headings, amber-tinted
+ * release-status banner, alternating bg-paper-sub section strips, four
+ * colour-coded best-practices cards. Keep the live AllowanceGuardWidget
+ * demo (interactive UI earns its frame) and the code snippet blocks
+ * (they teach).
+ *
+ * Council:
+ *  Kael: No rounded-* card frames. No emerald-*, yellow-*, blue-*,
+ *   purple-*, orange-* colour-coded icons. Paper-only canvas.
+ *  #7 Maren: One bg (bg-paper). Scale contrast carries the page.
+ *  #21 Technical: Every release status, code example, and caveat
+ *   preserved exactly as documented.
+ *  #22 Conversion: Each section ends with one inline amber-deep link
+ *   to the next logical page (api-reference, widget builder, github).
+ *  Noor: amber-deep links AA on paper; no bg-amber-500 fills used for
+ *   text surfaces.
+ */
+
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2, H3 } from '@/components/ui/Heading'
+import Link from 'next/link'
 import { useState } from 'react'
-import { Copy, Check, Code, Package, Globe, Zap, Shield } from 'lucide-react'
+import { Copy, Check } from 'lucide-react'
 import AllowanceGuardWidget from '@/components/AllowanceGuardWidget'
 
-export default function IntegrationPage() {
-  const [copiedCode, setCopiedCode] = useState<string | null>(null)
-
-  const copyToClipboard = (code: string, id: string) => {
-    navigator.clipboard.writeText(code)
-    setCopiedCode(id)
-    setTimeout(() => setCopiedCode(null), 2000)
-  }
-
-  const CodeBlock = ({ code, language, id }: { code: string; language: string; id: string }) => (
-    <div className="relative">
-      <button
-        onClick={() => copyToClipboard(code, id)}
-        className="absolute top-4 right-4 p-2 bg-paper-sub hover:bg-paper-sub text-ink rounded-md transition-colors"
-      >
-        {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
-      </button>
-      <pre className="bg-ink text-paper p-6 font-mono overflow-x-auto text-sm">
-        <code className={`language-${language}`}>{code}</code>
-      </pre>
-    </div>
-  )
-
-  const reactWidgetCode = `import React from 'react'
+const reactWidgetCode = `import React from 'react'
 import AllowanceGuardWidget from 'allowance-guard-widget'
 
 function MyApp() {
   return (
     <div>
       <h1>My DeFi App</h1>
-      
+
       {/* Embed AllowanceGuard Widget */}
       <AllowanceGuardWidget
         walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
@@ -55,7 +53,7 @@ function MyApp() {
 
 export default MyApp`
 
-  const htmlWidgetCode = `<!DOCTYPE html>
+const htmlWidgetCode = `<!DOCTYPE html>
 <html>
 <head>
   <title>My DeFi App</title>
@@ -63,10 +61,10 @@ export default MyApp`
 </head>
 <body>
   <h1>My DeFi App</h1>
-  
+
   <!-- AllowanceGuard Widget -->
   <div id="allowance-guard-widget"></div>
-  
+
   <script>
     // Initialize the widget
     AllowanceGuardWidget.init({
@@ -84,8 +82,8 @@ export default MyApp`
 </body>
 </html>`
 
-  const reactHooksCode = `import React, { useState, useEffect } from 'react'
-import { useAllowances, useRiskAssessment, useNetworks } from 'allowance-guard-hooks'
+const reactHooksCode = `import React from 'react'
+import { useAllowances, useNetworks } from 'allowance-guard-hooks'
 
 function MyWalletComponent({ walletAddress }) {
   const { data: allowances, loading, error } = useAllowances({
@@ -103,7 +101,7 @@ function MyWalletComponent({ walletAddress }) {
     <div>
       <h2>Wallet Security Status</h2>
       <p>Supported networks: {networks?.supported.length || 0}</p>
-      
+
       <div className="allowances-list">
         {allowances.map((allowance, index) => (
           <div key={index} className="allowance-item">
@@ -120,7 +118,7 @@ function MyWalletComponent({ walletAddress }) {
 
 export default MyWalletComponent`
 
-  const nodeSDKCode = `const AllowanceGuardSDK = require('allowance-guard-sdk')
+const nodeSDKCode = `const AllowanceGuardSDK = require('allowance-guard-sdk')
 
 // Initialize the SDK
 const sdk = new AllowanceGuardSDK({
@@ -130,24 +128,21 @@ const sdk = new AllowanceGuardSDK({
 
 async function checkWalletSecurity(walletAddress) {
   try {
-    // Get allowances
     const allowances = await sdk.getAllowances(walletAddress, {
       riskOnly: true,
       pageSize: 50
     })
 
-    // Analyze risk
     const criticalAllowances = allowances.data.filter(a => a.riskLevel >= 3)
-    
+
     console.log(\`Found \${criticalAllowances.length} high-risk allowances\`)
-    
-    // Export report
+
     const csvData = await sdk.exportAllowances(walletAddress, 'csv')
-    
+
     return {
       totalAllowances: allowances.data.length,
       criticalAllowances: criticalAllowances.length,
-      csvData: csvData
+      csvData
     }
   } catch (error) {
     console.error('Error checking wallet security:', error)
@@ -155,356 +150,299 @@ async function checkWalletSecurity(walletAddress) {
   }
 }
 
-// Usage
 checkWalletSecurity('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045')
-  .then(result => {
-    console.log('Security check completed:', result)
-  })
-  .catch(error => {
-    console.error('Security check failed:', error)
-  })`
+  .then(result => console.log('Security check completed:', result))
+  .catch(error => console.error('Security check failed:', error))`
+
+export default function IntegrationPage() {
+  const [copiedCode, setCopiedCode] = useState<string | null>(null)
+
+  const copyToClipboard = (code: string, id: string) => {
+    navigator.clipboard.writeText(code)
+    setCopiedCode(id)
+    setTimeout(() => setCopiedCode(null), 2000)
+  }
+
+  const CodeBlock = ({ code, language, id }: { code: string; language: string; id: string }) => (
+    <div className="relative">
+      <button
+        onClick={() => copyToClipboard(code, id)}
+        className="absolute top-3 right-3 p-2 bg-paper-sub hover:bg-paper-deep text-ink transition-colors"
+        aria-label={copiedCode === id ? 'Copied' : 'Copy code'}
+      >
+        {copiedCode === id ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+      </button>
+      <pre className="bg-ink text-paper p-6 font-mono overflow-x-auto text-sm leading-[1.6]">
+        <code className={`language-${language}`}>{code}</code>
+      </pre>
+    </div>
+  )
 
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
-      {/* Hero Section */}
-      <Section className="relative py-20 sm:py-28 overflow-hidden bg-paper-deep">
-        <div
-          className="absolute inset-0 z-0"
-          aria-hidden="true"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(245,158,11,0.06) 0%, transparent 70%)',
-          }}
-        />
-        <Container className="relative text-left max-w-4xl z-10">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
-            Docs &middot; Integration
-          </span>
-          <H1 className="mb-6 text-ink">Integration Guide</H1>
-          <p className="text-lg text-ink-soft max-w-reading">
-            Drop AllowanceGuard into your dApp, wallet, or service. Embed the widget, call the REST API, or build against React hooks &mdash; pick the integration that fits your stack and ship in an afternoon.
-          </p>
-        </Container>
-      </Section>
-
-      <div className="border-t border-ink-rule" />
-
-      {/* Integration Options */}
-      <Section className="py-16">
+    <div className="min-h-screen bg-paper text-ink">
+      <Section className="py-16 sm:py-24 lg:py-28">
         <Container>
-          <div className="max-w-6xl mx-auto">
-            <H2 className="mb-6 text-center text-ink">Choose Your Integration Method</H2>
+          <div className="max-w-4xl mx-auto space-y-20">
 
-            {/* Release status banner */}
-            <div className="mb-12 rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
-              <h3 className="text-sm font-semibold text-amber-deep uppercase tracking-[0.12em] mb-3">
-                Release status
-              </h3>
-              <ul className="space-y-2 text-sm text-ink-soft">
-                <li>
-                  <strong className="text-ink">REST API v1</strong> &mdash; <span className="text-emerald-800">Live.</span> Public, documented, rate-limited per tier. See <a href="/docs/api-reference" className="text-amber-deep hover:underline">API Reference</a>.
-                </li>
-                <li>
-                  <strong className="text-ink">Browser extension</strong> &mdash; <span className="text-amber-deep">Submitted.</span> Awaiting Chrome Web Store and Firefox Add-ons review.
-                </li>
-                <li>
-                  <strong className="text-ink">Node.js SDK</strong> &mdash; <span className="text-amber-deep">Source available.</span> Code lives in <code className="text-xs text-amber-deep bg-paper-sub px-1.5 py-0.5 rounded">/sdk</code> on GitHub. npm publish pending.
-                </li>
-                <li>
-                  <strong className="text-ink">React hooks</strong> &mdash; <span className="text-ink-muted">On the roadmap.</span> Not yet started.
-                </li>
-              </ul>
-            </div>
+            {/* Hero — three lines */}
+            <header className="space-y-5">
+              <div className="inline-flex items-baseline gap-3">
+                <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
+                  Docs &middot; Integration
+                </span>
+                <span className="h-px w-12 bg-ink-rule" aria-hidden="true" />
+              </div>
+              <h1 className="font-display-tight text-ink tracking-tight leading-[1.0] text-5xl sm:text-6xl lg:text-7xl">
+                Integration.
+              </h1>
+              <p className="font-plex text-lg sm:text-xl text-ink-muted leading-[1.55] max-w-2xl">
+                Drop AllowanceGuard into your dApp, wallet, or backend. Embed the widget, call the REST API, or build against React hooks &mdash; pick the path that fits your stack and ship in an afternoon.
+              </p>
+            </header>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="bg-paper-sub border border-ink-rule  p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <Globe className="mr-3 text-amber-deep" size={24} />
-                    <H3>Embeddable Widget</H3>
-                  </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
-                    Pending
-                  </span>
+            {/* Status today */}
+            <section className="space-y-6">
+              <h2 id="status-today" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Status today.
+              </h2>
+              <dl className="border-t border-b border-ink-rule divide-y divide-ink-rule">
+                <div className="flex flex-col sm:flex-row sm:gap-8 py-4">
+                  <dt className="font-plex font-semibold text-ink text-base sm:w-48 shrink-0">REST API v1</dt>
+                  <dd className="font-plex text-base text-ink-muted leading-[1.65] flex-1 m-0">
+                    <span className="text-ink font-semibold">Live.</span> Public, documented, rate-limited per tier.{' '}
+                    <Link href="/docs/api-reference" className="text-amber-deep hover:underline underline-offset-2">API reference</Link>.
+                  </dd>
                 </div>
-                <p className="text-ink-soft mb-4">
-                  Drop-in browser extension. Submitted to Chrome Web Store and Firefox Add-ons; awaiting reviewer approval.
+                <div className="flex flex-col sm:flex-row sm:gap-8 py-4">
+                  <dt className="font-plex font-semibold text-ink text-base sm:w-48 shrink-0">Browser extension</dt>
+                  <dd className="font-plex text-base text-ink-muted leading-[1.65] flex-1 m-0">
+                    <span className="text-amber-deep font-semibold">Submitted.</span> Awaiting Chrome Web Store and Firefox Add-ons review.
+                  </dd>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:gap-8 py-4">
+                  <dt className="font-plex font-semibold text-ink text-base sm:w-48 shrink-0">Node.js SDK</dt>
+                  <dd className="font-plex text-base text-ink-muted leading-[1.65] flex-1 m-0">
+                    <span className="text-amber-deep font-semibold">Source available.</span> Code in{' '}
+                    <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-deep hover:underline underline-offset-2" target="_blank" rel="noopener noreferrer"><code className="font-mono text-[0.85em]">/sdk</code></Link>{' '}
+                    on GitHub. npm publish pending.
+                  </dd>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:gap-8 py-4">
+                  <dt className="font-plex font-semibold text-ink text-base sm:w-48 shrink-0">React hooks</dt>
+                  <dd className="font-plex text-base text-ink-muted leading-[1.65] flex-1 m-0">
+                    <span className="text-ink-whisper font-semibold">On the roadmap.</span> Not started.
+                  </dd>
+                </div>
+              </dl>
+            </section>
+
+            {/* Three paths */}
+            <section className="space-y-10">
+              <div className="space-y-4">
+                <h2 id="three-paths" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                  Three paths in.
+                </h2>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Widgets render UI. Hooks give you data. The SDK automates from your server. Pick one.
                 </p>
-                <ul className="text-sm text-ink-soft space-y-2">
-                  <li>&middot; Zero configuration</li>
-                  <li>&middot; Real-time approval screening</li>
-                  <li>&middot; Works on every dApp</li>
-                  <li>&middot; No account required</li>
-                </ul>
               </div>
-
-              <div className="bg-paper-sub border border-ink-rule  p-6 hover:shadow-lg transition-shadow opacity-75">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <Zap className="mr-3 text-ink-whisper" size={24} />
-                    <H3>React Hooks</H3>
-                  </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-muted bg-paper-sub border border-ink-rule px-2 py-0.5 rounded-full">
-                    Roadmap
-                  </span>
+              <div className="grid sm:grid-cols-3 gap-x-10 gap-y-8">
+                <div>
+                  <h3 className="font-plex font-semibold text-ink text-base mb-2">Embeddable widget</h3>
+                  <p className="font-plex text-base text-ink-muted leading-[1.6] mb-3">
+                    Drop-in component. Zero configuration, real-time approval screening, works on every dApp, no account required.
+                  </p>
+                  <Link href="/docs/widget" className="font-plex text-sm text-amber-deep hover:underline underline-offset-2">Widget builder &rarr;</Link>
                 </div>
-                <p className="text-ink-soft mb-4">
-                  Custom React hooks for seamless integration into React applications.
+                <div>
+                  <h3 className="font-plex font-semibold text-ink text-base mb-2">React hooks</h3>
+                  <p className="font-plex text-base text-ink-muted leading-[1.6] mb-3">
+                    TypeScript-first hooks for reading allowances and risk scores. Automatic caching, error handling, and real-time updates when shipped.
+                  </p>
+                  <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Roadmap</span>
+                </div>
+                <div>
+                  <h3 className="font-plex font-semibold text-ink text-base mb-2">Node.js SDK</h3>
+                  <p className="font-plex text-base text-ink-muted leading-[1.6] mb-3">
+                    Server-side scanning, monitoring, and automated revocation. Complete v1 coverage, retries, rate-limit handling, AGPL-3.0 (commercial licence available).
+                  </p>
+                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" target="_blank" rel="noopener noreferrer" className="font-plex text-sm text-amber-deep hover:underline underline-offset-2">
+                    Source on GitHub &rarr;
+                  </Link>
+                </div>
+              </div>
+            </section>
+
+            {/* Live widget demo */}
+            <section className="space-y-6">
+              <h2 id="live-demo" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Live demo.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Rendered below against Vitalik&rsquo;s public wallet, Ethereum mainnet. Left: all allowances. Right: risky only, compact.
+              </p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <h3 className="font-plex font-semibold text-ink text-sm">All allowances</h3>
+                  <AllowanceGuardWidget
+                    walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+                    chainId={1}
+                    showRiskOnly={false}
+                    maxItems={5}
+                    theme="light"
+                    compact={false}
+                  />
+                </div>
+                <div className="space-y-3">
+                  <h3 className="font-plex font-semibold text-ink text-sm">High risk only</h3>
+                  <AllowanceGuardWidget
+                    walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+                    chainId={1}
+                    showRiskOnly={true}
+                    maxItems={5}
+                    theme="light"
+                    compact={true}
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Code examples */}
+            <section className="space-y-10">
+              <div className="space-y-4">
+                <h2 id="code-examples" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                  Copy-paste snippets.
+                </h2>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Four ready-to-run examples. Replace the wallet address and API key with your own.
                 </p>
-                <ul className="text-sm text-ink-soft space-y-2">
-                  <li>• TypeScript support</li>
-                  <li>• Automatic caching</li>
-                  <li>• Error handling</li>
-                  <li>• Real-time updates</li>
-                </ul>
               </div>
 
-              <div className="bg-paper-sub border border-ink-rule  p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <Package className="mr-3 text-amber-deep" size={24} />
-                    <H3>Node.js SDK</H3>
-                  </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
-                    GitHub
-                  </span>
-                </div>
-                <p className="text-ink-soft mb-4">
-                  Backend SDK for server-side scanning, monitoring, and automated revocation. Source available now in <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-deep hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a>; npm publish pending.
-                </p>
-                <ul className="text-sm text-ink-soft space-y-2">
-                  <li>&middot; Complete v1 API coverage</li>
-                  <li>&middot; Built-in retry &amp; rate-limit handling</li>
-                  <li>&middot; Batch operations</li>
-                  <li>&middot; AGPL-3.0 (commercial license available)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Live Widget Demo */}
-      <Section className="py-16 bg-paper-sub">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8 text-center">Live Widget Demo</H2>
-            <p className="text-center text-ink-soft mb-8">
-              See the AllowanceGuard widget in action with real data.
-            </p>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div>
-                <H3 className="mb-4">All Allowances</H3>
-                <AllowanceGuardWidget
-                  walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-                  chainId={1}
-                  showRiskOnly={false}
-                  maxItems={5}
-                  theme="light"
-                  compact={false}
-                />
-              </div>
-              
-              <div>
-                <H3 className="mb-4">High Risk Only</H3>
-                <AllowanceGuardWidget
-                  walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-                  chainId={1}
-                  showRiskOnly={true}
-                  maxItems={5}
-                  theme="light"
-                  compact={true}
-                />
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Code Examples */}
-      <Section className="py-16">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <H2 className="mb-12 text-center">Code Examples</H2>
-            
-            <div className="space-y-12">
-              
-              {/* React Widget */}
-              <div>
-                <div className="flex items-center mb-6">
-                  <Globe className="mr-3 text-blue-600" size={24} />
-                  <H3>React Widget Integration</H3>
-                </div>
-                <p className="text-ink-soft mb-6">
-                  Install the widget package and embed it in your React application.
+              <div className="space-y-5">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">React widget.</h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Install <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">allowance-guard-widget</code> and render it like any other component.
                 </p>
                 <CodeBlock code={reactWidgetCode} language="jsx" id="react-widget" />
               </div>
 
-              {/* HTML Widget */}
-              <div>
-                <div className="flex items-center mb-6">
-                  <Code className="mr-3 text-green-800" size={24} />
-                  <H3>HTML/JavaScript Integration</H3>
-                </div>
-                <p className="text-ink-soft mb-6">
-                  Include the widget script and initialize it in any HTML page.
+              <div className="space-y-5">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">Plain HTML.</h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  One script tag, one init call. Works in any HTML page without a build step.
                 </p>
                 <CodeBlock code={htmlWidgetCode} language="html" id="html-widget" />
               </div>
 
-              {/* React Hooks */}
-              <div>
-                <div className="flex items-center mb-6">
-                  <Zap className="mr-3 text-yellow-600" size={24} />
-                  <H3>React Hooks Integration</H3>
-                </div>
-                <p className="text-ink-soft mb-6">
-                  Use our custom hooks for more control over data fetching and state management.
+              <div className="space-y-5">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">React hooks.</h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Data layer for teams that want to render the approvals themselves. Typed responses, automatic pagination.
                 </p>
                 <CodeBlock code={reactHooksCode} language="jsx" id="react-hooks" />
               </div>
 
-              {/* Node.js SDK */}
-              <div>
-                <div className="flex items-center mb-6">
-                  <Package className="mr-3 text-purple-600" size={24} />
-                  <H3>Node.js SDK Integration</H3>
-                </div>
-                <p className="text-ink-soft mb-6">
-                  Use the SDK in your backend services for comprehensive wallet security analysis.
+              <div className="space-y-5">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">Node.js SDK.</h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Server-side wallet security analysis. Scan in bulk, filter by risk, export CSV.
                 </p>
                 <CodeBlock code={nodeSDKCode} language="javascript" id="node-sdk" />
               </div>
+            </section>
 
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Installation Instructions */}
-      <Section className="py-16 bg-paper-sub">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-3 text-center text-ink">Installation</H2>
-            <p className="text-center text-sm text-ink-muted mb-10">
-              The REST API is live today. The browser extension and SDK are in pre-release &mdash; install instructions reflect their current status.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-paper-sub p-6  border border-ink-rule">
-                <div className="flex items-center justify-between mb-4">
-                  <H3>REST API v1</H3>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-emerald-800 bg-paper-sub border border-emerald-500/30 px-2 py-0.5 rounded-full">
-                    Live
-                  </span>
-                </div>
-                <p className="text-sm text-ink-soft mb-3">
-                  Authenticate with a bearer token, hit the v1 endpoints from any language. No install step.
+            {/* Installation */}
+            <section className="space-y-10">
+              <div className="space-y-4">
+                <h2 id="installation" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                  Installation.
+                </h2>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  The REST API is live today. The browser extension and SDK are in pre-release &mdash; instructions reflect their current status.
                 </p>
-                <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs overflow-x-auto">curl -H &quot;Authorization: Bearer ag_...&quot; \{'\n'}  https://www.allowanceguard.com/api/v1/chains</pre>
-                <a href="/docs/api-reference" className="inline-block mt-3 text-xs font-medium text-amber-deep hover:underline">
-                  Read the API reference &rarr;
-                </a>
               </div>
 
-              <div className="bg-paper-sub p-6  border border-ink-rule">
-                <div className="flex items-center justify-between mb-4">
-                  <H3>Browser Extension</H3>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
-                    Pending
-                  </span>
-                </div>
-                <p className="text-sm text-ink-soft mb-3">
-                  Submitted to the Chrome Web Store and Firefox Add-ons. Once approved, install with a single click &mdash; no developer setup required.
+              <div className="space-y-6">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">REST API v1. <span className="font-plex text-xs tracking-[0.15em] uppercase text-ink-whisper align-middle ml-2">Live</span></h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Authenticate with a bearer token. Hit the v1 endpoints from any language. No install step.
                 </p>
-                <div className="rounded-md bg-paper-deep/60 border border-ink-rule text-ink-muted text-xs p-3">
-                  Awaiting reviewer approval. We&rsquo;ll announce on GitHub and X when it&rsquo;s live.
-                </div>
-              </div>
-
-              <div className="bg-paper-sub p-6  border border-ink-rule">
-                <div className="flex items-center justify-between mb-4">
-                  <H3>Node.js SDK</H3>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
-                    GitHub
-                  </span>
-                </div>
-                <p className="text-sm text-ink-soft mb-3">
-                  Source available now in <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-deep hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a> on GitHub. npm publish pending.
+                <pre className="bg-ink text-paper p-5 font-mono text-sm overflow-x-auto">curl -H &quot;Authorization: Bearer ag_...&quot; \{'\n'}  https://www.allowanceguard.com/api/v1/chains</pre>
+                <p className="font-plex text-sm text-ink-muted">
+                  <Link href="/docs/api-reference" className="text-amber-deep hover:underline underline-offset-2">Read the API reference &rarr;</Link>
                 </p>
-                <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs overflow-x-auto">git clone https://github.com/{'\n'}  EazyAccessEA/Allowance-guard.git{'\n'}cd Allowance-guard/sdk &amp;&amp; npm i</pre>
               </div>
-            </div>
 
-            {/* Footer note */}
-            <div className="mt-10 text-center text-xs text-ink-whisper">
-              Looking for React hooks? They&rsquo;re on the roadmap &mdash; track progress in <a href="https://github.com/EazyAccessEA/Allowance-guard/issues" className="text-amber-deep hover:underline" target="_blank" rel="noopener noreferrer">GitHub Issues</a>.
-            </div>
-          </div>
-        </Container>
-      </Section>
+              <div className="space-y-4">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">Browser extension. <span className="font-plex text-xs tracking-[0.15em] uppercase text-amber-deep align-middle ml-2">Pending</span></h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Submitted to the Chrome Web Store and Firefox Add-ons. Once approved, install with a single click &mdash; no developer setup required. We&rsquo;ll announce on GitHub and X when the listings are live.
+                </p>
+              </div>
 
-      {/* Best Practices */}
-      <Section className="py-16">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8 text-center">Best Practices</H2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-paper-sub p-6  border border-ink-rule">
-                <div className="flex items-center mb-4">
-                  <Shield className="mr-3 text-green-800" size={20} />
-                  <H3>Security</H3>
+              <div className="space-y-6">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">Node.js SDK. <span className="font-plex text-xs tracking-[0.15em] uppercase text-amber-deep align-middle ml-2">Source on GitHub</span></h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Source lives in{' '}
+                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2"><code className="font-mono text-[0.9em]">/sdk</code></Link>. npm publish pending.
+                </p>
+                <pre className="bg-ink text-paper p-5 font-mono text-sm overflow-x-auto">git clone https://github.com/{'\n'}  EazyAccessEA/Allowance-guard.git{'\n'}cd Allowance-guard/sdk &amp;&amp; npm i</pre>
+              </div>
+
+              <p className="font-plex text-sm text-ink-muted pt-6 border-t border-ink-rule">
+                Looking for React hooks? On the roadmap &mdash; track progress in{' '}
+                <Link href="https://github.com/EazyAccessEA/Allowance-guard/issues" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2">GitHub Issues</Link>.
+              </p>
+            </section>
+
+            {/* Best practices */}
+            <section className="space-y-6">
+              <h2 id="best-practices" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Before you ship.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Four buckets of housekeeping that save you support tickets later.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
+                <div>
+                  <h3 className="font-plex font-semibold text-ink text-base mb-3">Security</h3>
+                  <ul className="space-y-1.5 font-plex text-base text-ink-muted leading-[1.6]">
+                    <li>· Validate wallet addresses client-side</li>
+                    <li>· Use HTTPS for every API request</li>
+                    <li>· Handle errors explicitly; do not swallow them</li>
+                    <li>· Never expose <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">ag_live_*</code> keys in browser code</li>
+                  </ul>
                 </div>
-                <ul className="text-sm text-ink-soft space-y-2">
-                  <li>• Always validate wallet addresses client-side</li>
-                  <li>• Use HTTPS for all API requests</li>
-                  <li>• Implement proper error handling</li>
-                  <li>• Don&apos;t expose API keys in client-side code</li>
-                </ul>
-              </div>
-
-              <div className="bg-paper-sub p-6  border border-ink-rule">
-                <div className="flex items-center mb-4">
-                  <Zap className="mr-3 text-blue-600" size={20} />
-                  <H3>Performance</H3>
+                <div>
+                  <h3 className="font-plex font-semibold text-ink text-base mb-3">Performance</h3>
+                  <ul className="space-y-1.5 font-plex text-base text-ink-muted leading-[1.6]">
+                    <li>· Paginate large result sets; don&rsquo;t request 100 at once</li>
+                    <li>· Cache responses client-side where feasible</li>
+                    <li>· Debounce user-input-driven queries</li>
+                    <li>· Pick a sensible default page size</li>
+                  </ul>
                 </div>
-                <ul className="text-sm text-ink-soft space-y-2">
-                  <li>• Use pagination for large datasets</li>
-                  <li>• Implement client-side caching</li>
-                  <li>• Debounce user input for search</li>
-                  <li>• Use appropriate page sizes</li>
-                </ul>
-              </div>
-
-              <div className="bg-paper-sub p-6  border border-ink-rule">
-                <div className="flex items-center mb-4">
-                  <Globe className="mr-3 text-purple-600" size={20} />
-                  <H3>User Experience</H3>
+                <div>
+                  <h3 className="font-plex font-semibold text-ink text-base mb-3">User experience</h3>
+                  <ul className="space-y-1.5 font-plex text-base text-ink-muted leading-[1.6]">
+                    <li>· Show loading states while scans run</li>
+                    <li>· Give clear error messages, not generic codes</li>
+                    <li>· Use consistent theming across the widget and your UI</li>
+                    <li>· Test on mobile viewports</li>
+                  </ul>
                 </div>
-                <ul className="text-sm text-ink-soft space-y-2">
-                  <li>• Show loading states during API calls</li>
-                  <li>• Provide clear error messages</li>
-                  <li>• Use consistent theming</li>
-                  <li>• Make widgets mobile-responsive</li>
-                </ul>
-              </div>
-
-              <div className="bg-paper-sub p-6  border border-ink-rule">
-                <div className="flex items-center mb-4">
-                  <Package className="mr-3 text-orange-600" size={20} />
-                  <H3>Integration</H3>
+                <div>
+                  <h3 className="font-plex font-semibold text-ink text-base mb-3">Integration</h3>
+                  <ul className="space-y-1.5 font-plex text-base text-ink-muted leading-[1.6]">
+                    <li>· Test with multiple wallet addresses and chains</li>
+                    <li>· Handle network switching gracefully</li>
+                    <li>· Use the provided TypeScript types</li>
+                    <li>· Pin to a specific version; follow semver</li>
+                  </ul>
                 </div>
-                <ul className="text-sm text-ink-soft space-y-2">
-                  <li>• Test with multiple wallet addresses</li>
-                  <li>• Handle network switching gracefully</li>
-                  <li>• Implement proper TypeScript types</li>
-                  <li>• Follow semantic versioning</li>
-                </ul>
               </div>
-            </div>
+            </section>
+
           </div>
         </Container>
       </Section>

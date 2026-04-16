@@ -472,4 +472,12 @@ const THIRD_PARTIES = [
   { name: 'Rollbar', purpose: 'Error monitoring. Receives anonymised error data and stack traces.' },
   { name: 'Reown (WalletConnect)', purpose: 'Wallet connection protocol. Facilitates wallet sign-in.' },
   { name: 'Blockchain RPCs', purpose: 'Public blockchain data queries. Only wallet addresses sent — no personal data.' },
+  {
+    name: 'Cloudflare Turnstile',
+    purpose:
+      'Bot verification on forms (waitlist, contact). Receives your IP ' +
+      'address and the challenge token when you submit a form. Used for ' +
+      'fraud prevention and security only — no advertising, no cross-site ' +
+      'tracking, no tracking cookies.',
+  },
 ]
