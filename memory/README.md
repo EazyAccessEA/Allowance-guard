@@ -13,6 +13,10 @@ Global rules about how Claude operates, independent of any specific project.
 
 Maintenance rules live at the bottom of this file — read them before editing any memory file.
 
+## Scoped memory
+
+- `memory/marketing/` — marketing managed-agent system memory. Loaded only when a marketing skill is active. See `memory/marketing/MEMORY.md` for the index. Sits under the global rules in this directory; does not replace them.
+
 ## Load order
 
 `CLAUDE.md` is loaded on every session. Files here are loaded **on demand** when the task enters their domain. Do not read all of them upfront.
