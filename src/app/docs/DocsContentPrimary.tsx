@@ -1,6 +1,7 @@
 import { Globe, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { supportedNetworks } from './docs-data'
+import ArchitectureSection from './sections/ArchitectureSection'
 
 interface Props { section: string; onNavigate?: (section: string) => void }
 
@@ -146,53 +147,73 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
 
  case 'getting-started':
  return (
- <div className="space-y-8">
- <div>
- <h2 id="getting-started" className="text-2xl font-semibold text-ink mb-4">Getting Started with AllowanceGuard</h2>
- 
- <h3 id="what-are-token-allowances" className="text-xl font-semibold text-ink mb-3">What Are Token Allowances?</h3>
- <p className="text-base text-ink-soft mb-3">
- An <strong className="text-ink">allowance</strong> is a standing order that says &ldquo;this smart contract can spend up to X of my tokens.&rdquo; You grant one every time you swap on Uniswap, list on OpenSea, or stake on Lido. The dApp needs the permission to function.
+ <div className="space-y-16">
+ <section className="space-y-5">
+ <h2 id="getting-started" className="font-display-tight text-ink tracking-tight leading-[1.0] text-4xl sm:text-5xl">
+ Token allowances.
+ </h2>
+ <p className="font-plex text-lg text-ink-muted leading-[1.6]">
+ An <strong className="text-ink font-semibold">allowance</strong> is a standing order that says &ldquo;this smart contract can spend up to X of my tokens.&rdquo; You grant one every time you swap on Uniswap, list on OpenSea, or stake on Lido. The dApp needs the permission to function.
  </p>
- <p className="text-base text-ink-soft mb-3">
- The problem: the permission <strong className="text-ink">stays granted long after you stop using the dApp</strong>. Most users sign once and forget. The contract still has the right to move those tokens &mdash; until you revoke it.
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ The problem: <strong className="text-ink font-semibold">the permission stays granted long after you stop using the dApp</strong>. Most users sign once and forget. The contract still has the right to move those tokens &mdash; until you revoke it.
  </p>
- <p className="text-base text-ink-soft mb-6">
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
  If that contract is later exploited, drained, upgraded by a malicious admin, or was malicious to begin with, your tokens are gone. AllowanceGuard exists so you don&rsquo;t leave that door open.
  </p>
- 
- <h3 id="what-this-tool-does" className="text-xl font-semibold text-ink mb-3">What This Tool Does (And Does Not Do)</h3>
- <div className="space-y-4 mb-6">
+ </section>
+
+ <section className="space-y-7">
+ <h3 id="what-this-tool-does" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ What this tool does, and doesn&rsquo;t.
+ </h3>
+ <div className="grid sm:grid-cols-2 gap-x-10 gap-y-6">
  <div>
- <h4 className="font-medium text-ink mb-2">What AllowanceGuard Does:</h4>
- <p className="text-base text-ink-soft">Scans your wallet across all 27 supported EVM chains to identify all token approvals, displays them in an easy-to-understand dashboard, assesses each approval for potential security risks, provides one-click revocation tools to remove dangerous permissions, and offers monitoring and alert systems to notify you of new approvals.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">What AllowanceGuard Does NOT Do:</h4>
- <p className="text-base text-ink-soft">Cannot move your funds or access your private keys, cannot prevent all types of scams or security threats, cannot recover funds that have already been stolen, cannot automatically revoke approvals without your explicit permission, and cannot access any information beyond what is publicly available on the blockchain.</p>
- </div>
- </div>
- 
- <h3 id="connecting-your-wallet" className="text-xl font-semibold text-ink mb-3">Connecting Your Wallet: A Step-by-Step Guide</h3>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Step 1: Click &quot;Connect Wallet&quot;</h4>
- <p className="text-base text-ink-soft">On the AllowanceGuard homepage, click the &quot;Connect Wallet&quot; button. This will open a modal showing supported wallet options including MetaMask, WalletConnect, and other EVM-compatible wallets.</p>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Does</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Scans your wallet across all 27 supported EVM chains, identifies every token approval, scores each one against transparent risk heuristics, and provides one-click revocation. Offers optional monitoring that re-scans on a schedule and alerts you to new high-risk approvals.
+ </p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Step 2: Select Your Wallet Provider</h4>
- <p className="text-base text-ink-soft">Choose your preferred wallet from the list. If you&apos;re using MetaMask, it will prompt you to connect. If using WalletConnect, you&apos;ll see a QR code to scan with your mobile wallet.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Step 3: Approve the Connection</h4>
- <p className="text-base text-ink-soft">Your wallet will show a connection request. This request only asks for permission to read your public wallet address and view your token balances. It does NOT request permission to move your funds or access your private keys. Click &quot;Connect&quot; or &quot;Approve&quot; in your wallet.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">What the Connection Means:</h4>
- <p className="text-base text-ink-soft">The connection establishes a read-only link between AllowanceGuard and your wallet. We can see your public address and the allowances associated with it, but we cannot sign transactions, move funds, or access any private information. You sign every transaction yourself; we never have the ability to.</p>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Doesn&rsquo;t</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Cannot move your funds. Cannot access your private keys. Cannot prevent every scam or recover stolen funds. Cannot revoke automatically without your signature. Cannot access anything beyond public on-chain data.
+ </p>
  </div>
  </div>
- </div>
+ </section>
+
+ <section className="space-y-6">
+ <h3 id="connect-your-wallet" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ Connecting your wallet.
+ </h3>
+ <ol className="space-y-5">
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">01</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Click Connect Wallet.</strong> On the homepage, the Connect Wallet button opens a modal with MetaMask, WalletConnect, and other EVM-compatible wallets.
+ </p>
+ </li>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">02</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Choose your provider.</strong> Pick your wallet. MetaMask prompts directly. WalletConnect shows a QR code to scan with a mobile wallet.
+ </p>
+ </li>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">03</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Approve the connection.</strong> Your wallet asks for permission to read your public address and balances. It does <em>not</em> request permission to move funds or access your keys.
+ </p>
+ </li>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">04</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">What the connection means.</strong> Read-only link between AllowanceGuard and your wallet. We see your public address and allowances. We cannot sign transactions. You sign every transaction yourself &mdash; we have no ability to.
+ </p>
+ </li>
+ </ol>
+ </section>
  </div>
  )
 
@@ -292,205 +313,160 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
 
  case 'core-concepts':
  return (
- <div className="space-y-8">
- <div>
- <h2 id="core-concepts" className="text-2xl font-semibold text-ink mb-4">Understanding Core Concepts</h2>
- 
- <h3 id="revocation-process" className="text-xl font-semibold text-ink mb-3">The Revocation Process Explained</h3>
- <p className="text-base text-ink-soft mb-6">
- When you revoke an allowance, you are executing a blockchain transaction that sets the spending limit for that specific token and contract to zero. This is accomplished by calling the standard ERC-20 &apos;approve(spender, 0)&apos; function or the ERC-721 &apos;setApprovalForAll(spender, false)&apos; function. These are the same functions used by all legitimate DeFi applications and have been extensively tested by the broader Ethereum community. The transaction requires gas fees because it must be processed and confirmed by the network validators. Once confirmed, the smart contract can no longer access those tokens unless you explicitly grant a new allowance.
+ <div className="space-y-16">
+ <section className="space-y-5">
+ <h2 id="core-concepts" className="font-display-tight text-ink tracking-tight leading-[1.0] text-4xl sm:text-5xl">
+ Core concepts.
+ </h2>
+ <p className="font-plex text-lg text-ink-muted leading-[1.6]">
+ Three ideas underpin everything AllowanceGuard does. Read them once.
  </p>
- 
- <h3 id="data-privacy-security" className="text-xl font-semibold text-ink mb-3">Data Privacy and Security</h3>
- <div className="space-y-4 mb-6">
+ </section>
+
+ <section className="space-y-5">
+ <h3 id="revocation-process" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ Revocation sets the allowance to zero.
+ </h3>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ A revocation is a blockchain transaction that sets the spending limit for a specific token and contract to zero. For ERC-20, it calls <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">approve(spender, 0)</code>. For ERC-721 and ERC-1155, it calls <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">setApprovalForAll(spender, false)</code>. Both are standard ERC functions used by every legitimate dApp and extensively audited. Gas pays the network validators. Once confirmed, the contract cannot access those tokens again until you explicitly grant a new allowance.
+ </p>
+ </section>
+
+ <section className="space-y-7">
+ <h3 id="data-privacy" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ We read public data. Nothing else.
+ </h3>
+ <div className="grid sm:grid-cols-3 gap-x-10 gap-y-6">
  <div>
- <h4 className="font-medium text-ink mb-2">What Data We Fetch</h4>
- <p className="text-base text-ink-soft">We only access public on-chain data including your wallet address, token balances, and allowance information. This data is already publicly available on the blockchain and can be viewed by anyone using block explorers like Etherscan. We do not access any private information, transaction history beyond allowances, or personal data.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">What Data We Store</h4>
- <p className="text-base text-ink-soft">We cache allowance data temporarily to improve performance and reduce API calls. This cached data is encrypted at rest using AES-256 encryption and is automatically purged after defined retention periods. We also collect anonymized usage telemetry to improve the product, but this data cannot be linked to individual users or wallet addresses.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">What We Never Store</h4>
- <p className="text-base text-ink-soft">We never store private keys, seed phrases, personal information, or any data that could compromise your security. Your private keys never leave your device, and we cannot access your funds under any circumstances. All transactions are signed locally by your wallet, because the keys never leave your device.</p>
- </div>
- </div>
- 
- <h3 id="non-custodial-nature" className="text-xl font-semibold text-ink mb-3">Non-Custodial Security Model</h3>
- <p className="text-base text-ink-soft mb-4">
- AllowanceGuard operates on a strict non-custodial model, meaning we never hold your private keys, funds, or sensitive credentials. All security operations are executed directly from your wallet with your explicit approval. This model ensures that you stay in full custody of your assets while we surface the risks worth knowing about. The platform serves as a security advisor and tool provider, not a custodian or intermediary for your funds.
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">What we fetch</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Only public on-chain data &mdash; your wallet address, token balances, and allowances. Already visible on any block explorer.
  </p>
  </div>
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">What we cache</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Allowance data, briefly, to avoid re-querying RPCs. Encrypted at rest (AES-256), auto-purged on a retention schedule. Anonymised usage telemetry that cannot be linked to a wallet.
+ </p>
+ </div>
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">What we never store</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Private keys. Seed phrases. Personal information. Signed transactions. Anything that could move your funds. Those never reach our infrastructure.
+ </p>
+ </div>
+ </div>
+ </section>
+
+ <section className="space-y-5">
+ <h3 id="non-custodial" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ You sign every transaction. Always.
+ </h3>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ AllowanceGuard is strictly non-custodial. We never hold your private keys, your funds, or any credential that could move them. Every revoke goes through your own wallet with your explicit signature. The platform advises and builds transactions &mdash; it does not custody, intermediate, or act on your behalf.
+ </p>
+ </section>
  </div>
  )
 
  case 'usage-guides':
  return (
- <div className="space-y-8">
+ <div className="space-y-16">
+ <section className="space-y-5">
+ <h2 id="usage-guides" className="font-display-tight text-ink tracking-tight leading-[1.0] text-4xl sm:text-5xl">
+ How-to guides.
+ </h2>
+ <p className="font-plex text-lg text-ink-muted leading-[1.6]">
+ Four things you&rsquo;ll do in the dashboard. In order of frequency.
+ </p>
+ </section>
+
+ <section className="space-y-7">
+ <h3 id="dashboard" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ Read your dashboard.
+ </h3>
+ <div className="grid sm:grid-cols-2 gap-x-10 gap-y-6">
  <div>
- <h2 id="usage-guides" className="text-2xl font-semibold text-ink mb-4">How-To Guides</h2>
- 
- <h3 id="interpret-dashboard" className="text-xl font-semibold text-ink mb-3">How to Interpret Your Allowance Dashboard</h3>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Token Column</h4>
- <p className="text-base text-ink-soft">Shows the specific token that has been approved, including the token symbol, name, and contract address. Click on the token name to view additional details and verify the contract address on block explorers.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Spender Column</h4>
- <p className="text-base text-ink-soft">Displays the smart contract address that has permission to spend your tokens. This is the contract you granted the allowance to, such as a DEX router or NFT marketplace. Verify this address matches the intended protocol.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Amount Column</h4>
- <p className="text-base text-ink-soft">Shows the approved spending amount. Look for &quot;Unlimited&quot; which indicates the maximum possible allowance (2^256-1), representing the highest security risk. Specific amounts show the exact token quantity the contract can spend.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Risk Score Column</h4>
- <p className="text-base text-ink-soft">Displays the calculated risk score based on our heuristic analysis. High scores (80+) require immediate attention, medium scores (40-79) should be reviewed, and low scores (0-39) are generally safe but worth periodic review.</p>
- </div>
- </div>
- 
- <h3 id="revoke-single-allowance" className="text-xl font-semibold text-ink mb-3">How to Revoke a Single Allowance</h3>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Step 1: Identify the Allowance</h4>
- <p className="text-base text-ink-soft">Review your allowance list and identify the approval you want to revoke. Pay special attention to high-risk scores and unlimited allowances that pose immediate security threats.</p>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Token</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Symbol, name, contract address. Click the name to view details and verify the contract on its explorer.
+ </p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Step 2: Click the Revoke Button</h4>
- <p className="text-base text-ink-soft">Click the &quot;Revoke&quot; button next to the specific allowance. This will prepare a transaction that sets the allowance amount to zero, completely removing the contract&apos;s spending permission.</p>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Spender</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ The smart contract you granted the allowance to. Check the address matches the protocol you expect &mdash; DEX router, NFT marketplace, lending vault.
+ </p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Step 3: Review the Transaction</h4>
- <p className="text-base text-ink-soft">Your wallet will display the transaction details including the gas fee estimate. Review the spender address and token to ensure you&apos;re revoking the correct allowance. The transaction will call the approve function with a zero amount.</p>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Amount</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ The approved spending ceiling. <em>Unlimited</em> means 2^256&minus;1 &mdash; the highest-risk state. A specific number is safer.
+ </p>
  </div>
  <div>
- <h4 className="font-medium text-ink mb-2">Step 4: Confirm and Sign</h4>
- <p className="text-base text-ink-soft">Confirm the transaction in your wallet and pay the required gas fee. Once the transaction is confirmed on the blockchain, the allowance will be set to zero and the security risk will be eliminated.</p>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Risk score</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ 80+ act now. 40&ndash;79 review soon. 0&ndash;39 generally safe. The rule breakdown is always visible on the row.
+ </p>
  </div>
  </div>
- 
- <h3 id="batch-revoke-allowances" className="text-xl font-semibold text-ink mb-3">How to Batch Revoke Allowances</h3>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Select Multiple Allowances</h4>
- <p className="text-base text-ink-soft">Use the checkboxes to select multiple allowances you want to revoke. This is particularly useful for cleaning up multiple stale or risky approvals in a single transaction, saving significant gas costs.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Batch Revoke Operation</h4>
- <p className="text-base text-ink-soft">Click the &quot;Batch Revoke&quot; button to prepare a single transaction that revokes all selected allowances. Our smart contract optimization ensures maximum gas efficiency by batching multiple revocation operations.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Gas Optimization Benefits</h4>
- <p className="text-base text-ink-soft">Batch operations can reduce gas costs by up to 70% compared to individual revocations, as you only pay the base transaction fee once instead of multiple times. This makes it cost-effective to clean up many allowances simultaneously.</p>
- </div>
- </div>
- 
- <h3 id="token-discovery-search" className="text-xl font-semibold text-ink mb-3">Token Discovery & Search</h3>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Accessing Token Discovery</h4>
- <p className="text-base text-ink-soft">Navigate to the &quot;Discover Tokens&quot; page to explore our token database. This feature allows you to search and discover tokens across all 27 supported EVM chains with advanced filtering and categorization.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Advanced Search Features</h4>
- <p className="text-base text-ink-soft">Use fuzzy search to find tokens by name, symbol, or contract address. Filter by blockchain network, token category (DeFi, NFT, Stablecoins, etc.), and verification status. The search uses PostgreSQL trigram indexing for fast, relevant results.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Token Categories</h4>
- <p className="text-base text-ink-soft">Browse tokens by category including Stablecoins, DeFi protocols, NFT collections, Governance tokens, and more. Each category is curated by the community and verified by our team to ensure accuracy and relevance.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Community Curation</h4>
- <p className="text-base text-ink-soft">Submit new tokens for inclusion in our database through the token submission system. All submissions are validated on-chain and reviewed by our curation team before being added to the public database.</p>
- </div>
- </div>
- </div>
+ </section>
+
+ <section className="space-y-6">
+ <h3 id="single-revoke" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ Revoke one approval.
+ </h3>
+ <ol className="space-y-5">
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">01</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Find the approval.</strong> Sort by risk to surface the most urgent first. Check unlimited approvals and high scores before anything else.
+ </p>
+ </li>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">02</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Click Revoke.</strong> We construct the transaction that sets the allowance to zero &mdash; nothing else.
+ </p>
+ </li>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">03</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Verify in your wallet.</strong> Your wallet shows the gas fee and the transaction details. Confirm the spender address matches what you expect.
+ </p>
+ </li>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">04</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Sign and send.</strong> Once the transaction confirms, the allowance is zero on-chain. The risk is gone.
+ </p>
+ </li>
+ </ol>
+ </section>
+
+ <section className="space-y-5">
+ <h3 id="batch-revoke" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ Revoke many at once.
+ </h3>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Tick the checkboxes on several approvals and click <strong className="text-ink font-semibold">Batch revoke</strong>. A single transaction revokes every selected allowance &mdash; which cuts gas roughly 70% versus one-by-one, because you pay the base transaction fee once instead of many times. Especially helpful on L1.
+ </p>
+ </section>
+
+ <section className="space-y-5">
+ <h3 id="token-discovery" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
+ Find and search tokens.
+ </h3>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ The Discover Tokens page exposes our token database across all 27 chains. Fuzzy search by name, symbol, or contract address (PostgreSQL trigram index, so typos are forgiving). Filter by chain, category &mdash; DeFi, NFT, stablecoins, governance &mdash; and verification status. Submit new tokens; submissions are validated on-chain and reviewed before going public.
+ </p>
+ </section>
  </div>
  )
 
  case 'advanced-topics':
- return (
- <div className="space-y-8">
- <div>
- <h2 id="advanced-topics" className="text-2xl font-semibold text-ink mb-4">Advanced Topics</h2>
- 
- <h3 id="architecture" className="text-xl font-semibold text-ink mb-3">AllowanceGuard&apos;s Architecture</h3>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Frontend Layer</h4>
- <p className="text-base text-ink-soft">Built with Next.js and React, providing a responsive, client-side interface that connects directly to user wallets via MetaMask and WalletConnect protocols. The frontend handles wallet connections, transaction signing, and user interactions while preserving the non-custodial guarantee.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Backend API</h4>
- <p className="text-base text-ink-soft">Node.js-based API layer that processes scan requests, manages job queues, and provides allowance data. The backend coordinates with blockchain RPC providers and maintains cached data for performance optimization while ensuring data freshness and accuracy.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Blockchain Indexer</h4>
- <p className="text-base text-ink-soft">Custom indexing system that scans blockchain data to identify token approvals and contract interactions. The indexer processes historical data and maintains real-time updates to ensure complete coverage of all allowance-related activities across all 27 supported chains.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Risk Engine</h4>
- <p className="text-base text-ink-soft">Rule-based risk engine. Each allowance is graded against on-chain metadata, contract verification, spender concentration, age, and known exploit signatures. Every score is transparent — you can see why an approval is flagged.</p>
- </div>
- </div>
- 
- <h3 id="smart-contract-integration" className="text-xl font-semibold text-ink mb-3">Smart Contract Integration</h3>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Standard ERC Functions</h4>
- <p className="text-base text-ink-soft">AllowanceGuard uses only standard, well-audited ERC-20 and ERC-721 functions for revocation operations. We do not deploy custom smart contracts that could introduce additional attack vectors. All operations use the standard approve(spender, 0) and setApprovalForAll(spender, false) functions.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Batch Revoke Contract</h4>
- <p className="text-base text-ink-soft">For gas optimization, we provide a verified batch revocation contract that allows multiple allowances to be revoked in a single transaction. The contract address and ABI are publicly available for transparency and can be verified on block explorers.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Developer Integration</h4>
- <p className="text-base text-ink-soft">Developers can integrate directly with our APIs or use our smart contracts for their own applications. We provide documentation, code examples, and support for the common Web3 libraries (ethers.js, viem, web3.js).</p>
- </div>
- </div>
- 
- <h3 id="api-reference" className="text-xl font-semibold text-ink mb-3">API Reference (v1)</h3>
- <p className="text-base text-ink-soft mb-4">All v1 endpoints require <code className="font-mono text-sm">Authorization: Bearer ag_live_*</code> (or <code className="font-mono text-sm">ag_pub_*</code> for read-only browser use). Base URL: <code className="font-mono text-sm">https://www.allowanceguard.com/api/v1</code>. Full schemas, error codes, and code samples live in the <a href="/docs/api-reference" className="text-amber-deep hover:underline">API Reference</a>.</p>
- <div className="space-y-4 mb-6">
- <div>
- <h4 className="font-medium text-ink mb-2">Scan Endpoint</h4>
- <p className="text-base text-ink-soft">POST /api/v1/scan — Queue a wallet scan. Returns scanId and statusUrl. Rate-limited per API key plan.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Scan Status Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/v1/scan/{'{id}'} — Poll scan status. Ownership-enforced: returns 404 for scans owned by a different key.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Allowances Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/v1/allowances — Paginated approvals for a wallet. Supports chainId, riskOnly, page, and pageSize query parameters. Returns risk scores and token metadata.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Risk Score Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/v1/risk-score — Aggregated wallet risk score with breakdown and top risks. Optional chainId filter.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Portfolio Risk Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/v1/portfolio-risk — Cross-chain portfolio risk score with per-chain breakdown, trend, and benchmark comparison.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Risk Check Endpoint</h4>
- <p className="text-base text-ink-soft">POST /api/v1/risk-check — Pre-signing risk assessment for a proposed approve() transaction. Surfaces unknown-spender and unlimited-amount risks before the user signs.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Simulate Endpoint</h4>
- <p className="text-base text-ink-soft">POST /api/v1/simulate — Time-machine: returns a before/after risk comparison for a hypothetical revoke without changing state.</p>
- </div>
- <div>
- <h4 className="font-medium text-ink mb-2">Chains Endpoint</h4>
- <p className="text-base text-ink-soft">GET /api/v1/chains — List of all 27 supported chains with chainId, name, symbol, and explorer URL.</p>
- </div>
- </div>
- </div>
- </div>
- )
+ return <ArchitectureSection />
  default:
  return null
  }
