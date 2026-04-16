@@ -129,10 +129,10 @@ Cron jobs are managed externally via [cron-job.org](https://cron-job.org):
 - Verify webhook is active in Slack
 - Check console logs for errors
 
-**Redis metrics not updating:**
-- Verify `REDIS_URL` is configured
-- Check Redis connection in logs
-- System works without Redis (graceful degradation)
+**Upstash metrics not updating:**
+- Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set
+- Check `[metrics]` warnings in logs for Upstash call failures
+- System works without Upstash (graceful degradation — counters silently drop, cache falls back to the Postgres `cache` table)
 
 **Dashboard access denied:**
 - Verify `OPS_DASH_TOKEN` matches environment variable
