@@ -6,6 +6,7 @@ import { waitlistSubscribers } from '@/db/schema'
 import { eq, and, sql } from 'drizzle-orm'
 import { limitOrThrow } from '@/lib/ratelimit'
 import { sendWaitlistWelcomeEmail } from '@/lib/mailer'
+import { verifyTurnstileToken } from '@/lib/turnstile'
 
 export const runtime = 'nodejs'
 
@@ -15,21 +16,16 @@ const SubscribeSchema = z.object({
   referrer: z.string().max(512).optional(),
   // Honeypot — real users leave this blank
   website: z.string().max(0).optional().or(z.literal('')),
+  // Cloudflare Turnstile token. Verified server-side before any DB work.
+  // Optional so the API stays backward compatible when the key isn't
+  // configured yet; verifyTurnstileToken() fails open in that case.
+  turnstileToken: z.string().max(4096).nullable().optional(),
 })
 
 export async function POST(req: Request) {
   try {
     const h = await nextHeaders()
     const ip = h.get('x-forwarded-for')?.split(',')[0] || h.get('x-real-ip') || 'unknown'
-
-    try {
-      await limitOrThrow(ip, 'subscribe')
-    } catch {
-      return NextResponse.json(
-        { error: 'Too many requests. Please wait a few minutes and try again.' },
-        { status: 429 },
-      )
-    }
 
     const body = await req.json().catch(() => null)
     if (!body) {
@@ -42,6 +38,26 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: issue?.message ?? 'Invalid input.' },
         { status: 400 },
+      )
+    }
+
+    // Turnstile first — before rate-limit and DB work, so bots get
+    // rejected at the cheapest possible point. In dev (no secret set)
+    // this short-circuits to true.
+    const verified = await verifyTurnstileToken(parsed.data.turnstileToken, ip)
+    if (!verified) {
+      return NextResponse.json(
+        { error: 'Bot verification failed. Refresh the page and try again.' },
+        { status: 403 },
+      )
+    }
+
+    try {
+      await limitOrThrow(ip, 'subscribe')
+    } catch {
+      return NextResponse.json(
+        { error: 'Too many requests. Please wait a few minutes and try again.' },
+        { status: 429 },
       )
     }
 

@@ -7,10 +7,14 @@
  *  Kael: uses paper-card, paper-pill active pattern, no ad-hoc rounding
  *  Maren: no bg-white (Ledger rule #1), amber-deep success indicator
  *  Noor: semantic form, aria-live, focus-visible, sr-only label
+ *  #4 Security: Cloudflare Turnstile token required for submission when
+ *   NEXT_PUBLIC_TURNSTILE_SITE_KEY is configured. Honeypot retained as
+ *   a second line of defence.
  *  #13 UX: terse microcopy, no fluff
  */
 
-import { useState, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
+import TurnstileWidget from '@/components/TurnstileWidget'
 
 const INTERESTS = [
   { value: 'general', label: 'All updates' },
@@ -22,16 +26,33 @@ const INTERESTS = [
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
+const TURNSTILE_ENABLED = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+
 export default function SubscribeForm() {
   const [email, setEmail] = useState('')
   const [interest, setInterest] = useState('general')
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token)
+  }, [])
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken(null)
+  }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (status === 'submitting') return
+
+    if (TURNSTILE_ENABLED && !turnstileToken) {
+      setErrorMsg('Please complete the bot check, then try again.')
+      setStatus('error')
+      return
+    }
 
     setStatus('submitting')
     setErrorMsg('')
@@ -48,6 +69,7 @@ export default function SubscribeForm() {
           interest,
           referrer: window.location.href,
           website: honeypot,
+          turnstileToken,
         }),
       })
 
@@ -150,7 +172,11 @@ export default function SubscribeForm() {
           />
           <button
             type="submit"
-            disabled={status === 'submitting' || !email.trim()}
+            disabled={
+              status === 'submitting' ||
+              !email.trim() ||
+              (TURNSTILE_ENABLED && !turnstileToken)
+            }
             className={[
               'px-6 py-3 font-medium text-[15px] font-plex whitespace-nowrap',
               'bg-oxblood text-cream border border-oxblood',
@@ -179,6 +205,19 @@ export default function SubscribeForm() {
       <div className="absolute -left-[9999px]" aria-hidden="true">
         <input type="text" name="website" tabIndex={-1} autoComplete="off" />
       </div>
+
+      {/* Cloudflare Turnstile — bot verification. Renders nothing when
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY is not set (dev / preview fallback). */}
+      {TURNSTILE_ENABLED && (
+        <div className="mt-4">
+          <TurnstileWidget
+            action="waitlist"
+            onVerify={handleTurnstileVerify}
+            onExpire={handleTurnstileExpire}
+            onError={handleTurnstileExpire}
+          />
+        </div>
+      )}
 
       {/* Error message */}
       {status === 'error' && (
