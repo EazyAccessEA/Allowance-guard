@@ -84,6 +84,14 @@ If you'd rather not hear from us again, reply "no thanks" and we'll drop the thr
 - Do not use personal social data (DOB, family, political views) found in research. Public professional signal only.
 - Do not touch `src/`.
 
+## Companion skills
+
+Reach for these during drafting. Never to mask the sender or fabricate context.
+
+- `clarify` — tighten the subject line and the single ask before emit.
+- `marketing-psychology` — apply reciprocity / specificity / commitment framing. Persuasion, never manipulation.
+- `brainstorming` — when the target is unusual, explore ask variants before drafting.
+
 ## Memory
 
 Read before writing:

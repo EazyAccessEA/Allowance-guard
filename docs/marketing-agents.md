@@ -27,6 +27,30 @@ If an output conflicts with that, it goes back. Every time.
 | `campaign-manager` | Orchestrates all of the above | The weekly cycle as one run |
 | `web-implementation` | Lands approved copy / SVG into `src/` | After you've approved a draft |
 
+## Companion skills map
+
+Each marketing skill can reach for general-purpose Claude Code skills during its workflow. Companions are advisory — they do not bypass any Council gate or the deny list in `.claude/settings.json`. Per-skill details live at the end of each `SKILL.md`.
+
+| Marketing skill | Companion skills |
+|---|---|
+| `market-research` | `audit-website`, `browser-use` |
+| `positioning` | `marketing-psychology`, `brainstorming`, `critique` |
+| `content-strategy` | `brainstorming`, `marketing-psychology` |
+| `writer` | `clarify`, `marketing-psychology`, `simplify`, `brainstorming` |
+| `seo` | `audit-website`, `browser-use` |
+| `social` | `clarify`, `marketing-psychology`, `brainstorming` |
+| `outreach` | `clarify`, `marketing-psychology`, `brainstorming` |
+| `conversion` | `marketing-psychology`, `critique`, `clarify`, `brainstorming` |
+| `analytics` | — |
+| `image-direction` | `frontend-design`, `arrange`, `colorize`, `distill`, `typeset`, `polish` |
+| `campaign-manager` | inherits downstream |
+| `web-implementation` | `polish`, `harden`, `normalize`, `audit`, `adapt`, `typeset`, `arrange`, `optimize`, `simplify`, `extract` |
+
+Guardrails:
+- `browser-use` and `audit-website` stay read-only — no form submission, no login, no capture of personal data.
+- `image-direction` companions are reference-only. `web-implementation` still owns every `src/` write.
+- Companions never replace the Copy Council, Legal Council, Design Council, or Image Council gates.
+
 ## The weekly cycle (one prompt)
 
 Paste this into Claude Code from the repo root:

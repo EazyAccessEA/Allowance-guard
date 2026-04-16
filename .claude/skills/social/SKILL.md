@@ -87,6 +87,14 @@ Every post survives all three lenses: #20 (voice), #21 (accuracy), #22 (moves th
 - Do not engage in replies as Allowance Guard without user approval.
 - Do not touch `src/`.
 
+## Companion skills
+
+Reach for these during drafting.
+
+- `clarify` — tighten hook lines and CTAs before emit.
+- `marketing-psychology` — apply platform-appropriate cognitive levers (curiosity gap, specificity, loss aversion) to opening lines.
+- `brainstorming` — when the angle is new, generate post shapes before drafting.
+
 ## Memory
 
 Read before writing:

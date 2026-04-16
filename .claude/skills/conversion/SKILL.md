@@ -108,6 +108,15 @@ If the surface claims protection, security, or data handling — Legal Council p
 - Do not change the offer without the user's sign-off. Copy edits the language of the offer, not the offer itself.
 - Do not run experiments. The user ships them.
 
+## Companion skills
+
+Reach for these when shaping variants and hypotheses.
+
+- `marketing-psychology` — apply anchoring, loss aversion, social proof, commitment to variant hypotheses.
+- `critique` — challenge each variant from a reader lens before declaring the measurement plan.
+- `clarify` — tighten CTAs, eyebrows, subheads.
+- `brainstorming` — explore objection and reframe space before drafting variants.
+
 ## Memory
 
 Read before writing:

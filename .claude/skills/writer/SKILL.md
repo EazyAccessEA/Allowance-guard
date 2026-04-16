@@ -84,6 +84,15 @@ Security-tooling register. Never memecoin register. See `memory/marketing/brand.
 - Do not request or use analytics data tied to individual users.
 - Do not write outreach emails (that's `outreach` — different legal register).
 
+## Companion skills
+
+Reach for these during drafting. Never to bypass the Copy Council pass.
+
+- `clarify` — tighten microcopy (buttons, errors, link text) before emit.
+- `marketing-psychology` — at outline stage, pressure-test the angle.
+- `simplify` — after the first draft, cut repetition and weak abstractions.
+- `brainstorming` — when the angle is open, explore before outlining.
+
 ## Memory
 
 Read before writing:

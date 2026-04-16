@@ -45,3 +45,7 @@ Scoped memory for the Allowance Guard marketing managed-agent system. Loaded onl
 3. Canonical sources on demand when a fact needs verifying.
 
 Do not read every file every time. Conserve tokens.
+
+## Companion skills
+
+Each marketing skill's `SKILL.md` ends with a `## Companion skills` block — general-purpose Claude Code skills (e.g. `clarify`, `marketing-psychology`, `audit-website`, `polish`) the skill may reach for during its workflow. Companions are advisory; they never bypass the Copy Council, Legal Council, Design Council, or the deny list in `.claude/settings.json`. `browser-use` and `audit-website` stay read-only. `image-direction` companions are reference-only — `web-implementation` still owns every `src/` write. Full map: `docs/marketing-agents.md`.

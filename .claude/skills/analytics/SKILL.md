@@ -75,6 +75,10 @@ Uses operational language: "traffic moved", "conversion fell", "cohort shifted" 
 - Do not touch `src/`.
 - Do not share the raw export with third parties.
 
+## Companion skills
+
+None. Analytics stays analytical. Route creative follow-ups via the `Actions` block to the named skill.
+
 ## Memory
 
 Read before writing:

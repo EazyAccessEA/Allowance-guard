@@ -89,6 +89,13 @@ Never use these phrases in any output. Gatekeeper: #11 Investor/founder voice.
 - Do not touch `src/`.
 - Do not email, DM, or post anywhere. Research only.
 
+## Companion skills
+
+Reach for these during research — never to draft copy.
+
+- `audit-website` — audit a competitor site for SEO / content gaps. Read-only; no form submission.
+- `browser-use` — read competitor pages and SERPs for structured notes. No interaction, no capture of personal data.
+
 ## Memory
 
 Read before writing:

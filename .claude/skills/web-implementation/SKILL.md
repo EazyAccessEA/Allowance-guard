@@ -74,6 +74,21 @@ If the artefact implies a change outside this list, stop and ask.
 - Do not clean up unrelated code you happen to see. Keep the change small.
 - Do not touch the dashboard or docs surfaces (glass canon lives there).
 
+## Companion skills
+
+Reach for these when landing an approved artefact. All advisory; never a substitute for the approved draft. Stay inside the allowed surfaces.
+
+- `polish` — final alignment, spacing, micro-detail before commit.
+- `harden` — overflow, i18n, empty-state handling on surfaces that take variable copy.
+- `normalize` — re-align new copy to the Ledger token set when the change is visible at multiple breakpoints.
+- `audit` — P0–P3 check on any surface that gains new interaction or markup.
+- `adapt` — verify the surface holds at mobile and at the desktop paper canvas.
+- `typeset` — Fraunces / Plex / JetBrains Mono hierarchy preserved.
+- `arrange` — visual rhythm on multi-row or multi-column changes.
+- `optimize` — respect Thane's bundle budget. No net growth on marketing pages.
+- `simplify` — before commit, trim any dead code the change introduced.
+- `extract` — if the edit reveals a reused pattern, flag it to the user. Do not extract without approval.
+
 ## Memory
 
 Read before editing:

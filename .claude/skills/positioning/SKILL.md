@@ -91,6 +91,14 @@ Trade-off: <when it wins, when it loses>
 - Do not make pricing changes.
 - Do not touch `src/`.
 
+## Companion skills
+
+Reach for these when picking the message.
+
+- `marketing-psychology` — stress-test the recommended line against persuasion frameworks (anchoring, loss aversion, social proof) before emit.
+- `brainstorming` — before drafting three messages, explore the angle space.
+- `critique` — challenge the recommended line from a reader lens.
+
 ## Memory
 
 Read before writing:

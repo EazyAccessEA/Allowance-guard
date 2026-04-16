@@ -114,6 +114,10 @@ If any gate fails: do not emit. Name the failure, name the artefact, return it t
 - Do not change skill tool allowances or settings. That belongs in the plan file and `.claude/settings.json`.
 - Do not skip Step 9. Ever.
 
+## Companion skills
+
+`campaign-manager` orchestrates the specialists and does not invoke companions directly. Each specialist's companion map fires inside its own workstream step.
+
 ## Memory
 
 Read before running:

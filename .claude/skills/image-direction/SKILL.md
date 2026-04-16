@@ -107,6 +107,17 @@ Paper `#F7F5F0` · paper-sub `#EFECE3` · paper-deep `#E6E2D5` · ink `#141210` 
 - No writes under `src/`.
 - No consumption of wallet addresses or PII to generate imagery.
 
+## Companion skills
+
+Reach for these during direction. All advisory — `image-direction` never writes under `src/`; `web-implementation` places every artefact.
+
+- `frontend-design` — reference for JSX composition when drafting SVG.
+- `arrange` — check layout, spacing, and rhythm across a multi-asset set.
+- `colorize` — sanity-check palette usage against the closed palette in `imagery.md`. Nothing new ships outside canon.
+- `distill` — reduce icon complexity to hairline essentials.
+- `typeset` — when a diagram carries labels, check Fraunces / Plex fit.
+- `polish` — final alignment, stroke consistency, viewBox cleanliness before emit.
+
 ## Memory
 
 Read before drafting:
