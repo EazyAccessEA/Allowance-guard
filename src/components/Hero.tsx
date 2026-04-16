@@ -1,19 +1,25 @@
 'use client'
 
 /**
- * Hero v3 — Scared Retail primary persona
+ * Hero v4 — Scanner-first ("tool-first hero")
  *
- * Plain-English headline that names the threat. Address input above
- * the fold so the visitor can scan WITHOUT connecting a wallet — the
- * micro-commitment ladder starts low. Trust micro-row directly under
- * the input. Compass watermark kept as editorial imagery.
+ * The scanner IS the promise. Address input is the primary element in
+ * the viewport — no scroll, no ambiguity. Fraunces sentence demotes to
+ * a caption that explains what the input does. The subhead paragraph
+ * from v3 was deleted: two explanatory sentences under an action add
+ * ambiguity the tool shouldn't have to overcome. Compass watermark and
+ * amber hairline signature move kept intact.
  *
  * Council:
- *  #5 Marketing: single-sentence promise, threat-named
- *  #4 Security: paste flow uses rate-limited public scan endpoint
- *  #13 UX writer: no jargon, no roman numerals, no "approved." riddle
- *  #11 Investor voice: action over prestige
- *  Noor: AAA contrast preserved
+ *  #22 Conversion: input-above-headline — highest-leverage pattern
+ *  #7 Maren / Visual: Fraunces voice preserved as caption
+ *  #13 UX writer: caption-under-action removes the read-then-act riddle
+ *  #8 Noor / Accessibility (veto): sr-only label, aria-describedby,
+ *    contrast tokens, prefers-reduced-motion — all preserved
+ *  #17 Thane / Performance: one motion block removed, no bundle delta
+ *  #5 Marketing + #3 Web3: threat-named, EVM-accurate
+ *  #4 Security: /api/scan flow unchanged
+ *  #11 Investor voice: no banned phrases
  */
 
 import { Button } from '@/components/ui/Button'
@@ -75,15 +81,15 @@ export default function Hero({
       {/* Compass watermark */}
       <CompassWatermark />
 
-      <Container className="relative z-10 py-20 sm:py-24 lg:py-28">
+      <Container className="relative z-10 py-16 sm:py-20 lg:py-24">
         <div className="max-w-4xl">
-          {/* Eyebrow — small, plain, no MMXXIV */}
+          {/* Eyebrow — tool label, first line in view */}
           <motion.div
             variants={fadeUp}
             initial={prefersReduced ? 'visible' : 'hidden'}
             animate="visible"
             custom={0}
-            className="mb-8"
+            className="mb-6"
           >
             <div className="inline-flex items-baseline gap-3">
               <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
@@ -96,32 +102,7 @@ export default function Hero({
             </div>
           </motion.div>
 
-          {/* Headline — plain English, threat-named */}
-          <motion.h1
-            className="font-display-tight text-ink leading-[0.95] mb-7
-              text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem]"
-            variants={fadeUp}
-            initial={prefersReduced ? 'visible' : 'hidden'}
-            animate="visible"
-            custom={0.15}
-          >
-            Every <Highlight delay={400}>dApp</Highlight> you&rsquo;ve used
-            <br />
-            <span className="text-ink">can still move your tokens.</span>
-          </motion.h1>
-
-          {/* Subheadline — explains the threat in one sentence */}
-          <motion.p
-            className="font-plex text-lg sm:text-xl text-ink-soft mb-10 max-w-2xl leading-[1.55]"
-            variants={fadeUp}
-            initial={prefersReduced ? 'visible' : 'hidden'}
-            animate="visible"
-            custom={0.3}
-          >
-            When you used a dApp, you gave it permission to spend your tokens. Most users sign once and forget. The permission stays — until you take it back.
-          </motion.p>
-
-          {/* Address input — the reciprocity moment.
+          {/* Address input — the primary element. No ambiguity.
               id="scan" so /pricing Free CTA can deep-link here.
               scroll-mt-20 clears the sticky nav on hash-scroll. */}
           <motion.div
@@ -129,8 +110,8 @@ export default function Hero({
             variants={fadeUp}
             initial={prefersReduced ? 'visible' : 'hidden'}
             animate="visible"
-            custom={0.45}
-            className="max-w-2xl mb-7 scroll-mt-20"
+            custom={0.15}
+            className="max-w-2xl mb-8 scroll-mt-20"
           >
             {!isConnected ? (
               <AddressInput onSubmit={handleAddressSubmit} pending={isScanning} />
@@ -158,14 +139,26 @@ export default function Hero({
             )}
           </motion.div>
 
+          {/* Caption — demoted Fraunces sentence. Voice preserved, hierarchy flipped. */}
+          <motion.p
+            className="font-fraunces italic text-ink-soft leading-[1.15] mb-8 max-w-3xl
+              text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem]"
+            variants={fadeUp}
+            initial={prefersReduced ? 'visible' : 'hidden'}
+            animate="visible"
+            custom={0.3}
+          >
+            Every <Highlight delay={400}>dApp</Highlight> you&rsquo;ve used can still move your tokens.
+          </motion.p>
+
           {/* Secondary action — connect wallet for the user who wants to scan their own */}
           {!isConnected && (
             <motion.div
               variants={fadeUp}
               initial={prefersReduced ? 'visible' : 'hidden'}
               animate="visible"
-              custom={0.6}
-              className="flex flex-wrap items-center gap-3 mb-12"
+              custom={0.5}
+              className="flex flex-wrap items-center gap-3 mb-10"
             >
               <span className="font-plex text-sm text-ink-whisper">Or:</span>
               <ClientConnectButton variant="secondary" size="default" />
@@ -186,7 +179,7 @@ export default function Hero({
             }}
             initial={prefersReduced ? { scaleX: 1 } : { scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 0.7, delay: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.7, delay: 0.75, ease: [0.25, 0.1, 0.25, 1] }}
           />
         </div>
       </Container>

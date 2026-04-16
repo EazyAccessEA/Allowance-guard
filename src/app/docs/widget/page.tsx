@@ -1,11 +1,43 @@
 'use client'
 
+/**
+ * Widget builder — quiet-bold Ledger layout.
+ *
+ * The interactive configuration UI (theme buttons, checkboxes, range,
+ * wallet input) earns its frame — this is a live tool. Everything else
+ * is prose: the hero, the pending-status note, the installation
+ * preview, the props table.
+ *
+ * Council:
+ *  Kael: Interactive controls use paper-sub backgrounds with
+ *   border-ink-rule, no rounded-md, no bg-blue-500 state.
+ *  #7 Maren: Scale contrast. One canvas (bg-paper).
+ *  #21 Technical: Every prop documented in the table matches the
+ *   AllowanceGuardWidget component signature.
+ *  Noor: amber-deep for active state; form controls labelled properly.
+ */
+
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1, H2, H3 } from '@/components/ui/Heading'
+import Link from 'next/link'
 import { useState } from 'react'
-import { Copy, Check, Code, Download, Eye, Settings } from 'lucide-react'
+import { Copy, Check } from 'lucide-react'
 import AllowanceGuardWidget from '@/components/AllowanceGuardWidget'
+import { cn } from '@/lib/utils'
+
+const DEMO_WALLET = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
+
+interface Prop { name: string; type: string; defaultValue: string; description: string }
+
+const props: Prop[] = [
+  { name: 'walletAddress',    type: 'string',   defaultValue: '—',         description: 'The wallet address to display allowances for' },
+  { name: 'chainId',          type: 'number',   defaultValue: '1',         description: 'The chain ID to filter by' },
+  { name: 'showRiskOnly',     type: 'boolean',  defaultValue: 'false',     description: 'Show only high-risk allowances' },
+  { name: 'maxItems',         type: 'number',   defaultValue: '10',        description: 'Maximum number of allowances to display' },
+  { name: 'theme',            type: 'string',   defaultValue: "'light'",   description: "Widget theme: 'light', 'dark', or 'auto'" },
+  { name: 'compact',          type: 'boolean',  defaultValue: 'false',     description: 'Use compact display mode' },
+  { name: 'onAllowanceClick', type: 'function', defaultValue: '—',         description: 'Callback fired when an allowance is clicked' },
+]
 
 export default function WidgetPage() {
   const [copiedCode, setCopiedCode] = useState<string | null>(null)
@@ -24,19 +56,19 @@ export default function WidgetPage() {
     <div className="relative">
       <button
         onClick={() => copyToClipboard(code, id)}
-        className="absolute top-4 right-4 p-2 bg-paper-sub hover:bg-paper-sub text-ink rounded-md transition-colors"
+        className="absolute top-3 right-3 p-2 bg-paper-sub hover:bg-paper-deep text-ink transition-colors"
+        aria-label={copiedCode === id ? 'Copied' : 'Copy code'}
       >
-        {copiedCode === id ? <Check size={16} /> : <Copy size={16} />}
+        {copiedCode === id ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
       </button>
-      <pre className="bg-ink text-paper p-6 font-mono overflow-x-auto text-sm">
+      <pre className="bg-ink text-paper p-6 font-mono overflow-x-auto text-sm leading-[1.6]">
         <code className={`language-${language}`}>{code}</code>
       </pre>
     </div>
   )
 
-  const generateWidgetCode = () => {
-    return `<AllowanceGuardWidget
-  walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+  const reactCode = `<AllowanceGuardWidget
+  walletAddress="${DEMO_WALLET}"
   chainId={1}
   showRiskOnly={${showRiskOnly}}
   maxItems={${maxItems}}
@@ -46,10 +78,8 @@ export default function WidgetPage() {
     console.log('Allowance clicked:', allowance)
   }}
 />`
-  }
 
-  const generateHTMLCode = () => {
-    return `<!DOCTYPE html>
+  const htmlCode = `<!DOCTYPE html>
 <html>
 <head>
   <title>My DeFi App</title>
@@ -57,11 +87,11 @@ export default function WidgetPage() {
 </head>
 <body>
   <div id="allowance-guard-widget"></div>
-  
+
   <script>
     AllowanceGuardWidget.init({
       container: '#allowance-guard-widget',
-      walletAddress: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
+      walletAddress: '${DEMO_WALLET}',
       chainId: 1,
       showRiskOnly: ${showRiskOnly},
       maxItems: ${maxItems},
@@ -74,111 +104,83 @@ export default function WidgetPage() {
   </script>
 </body>
 </html>`
-  }
 
   return (
-    <div className="min-h-screen bg-paper-deep text-ink">
-      {/* Hero Section */}
-      <Section className="relative py-20 sm:py-28 overflow-hidden bg-paper-deep">
-        <div
-          className="absolute inset-0 z-0"
-          aria-hidden="true"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(245,158,11,0.06) 0%, transparent 70%)',
-          }}
-        />
-        <Container className="relative text-left max-w-4xl z-10">
-          <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
-            Docs &middot; Widget
-          </span>
-          <H1 className="mb-6 text-ink">AllowanceGuard Widget</H1>
-          <p className="text-lg text-ink-soft max-w-reading">
-            A drop-in security component you can paste into any website. Configure it below, copy the snippet, and your users get an approval scanner without leaving your page.
-          </p>
-        </Container>
-      </Section>
-
-      <div className="border-t border-ink-rule" />
-
-      {/* Status banner */}
-      <Section className="pt-10 pb-0">
+    <div className="min-h-screen bg-paper text-ink">
+      <Section className="py-16 sm:py-24 lg:py-28">
         <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
-              <div className="flex items-start gap-3">
-                <span className="mt-1 inline-flex w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm font-semibold text-amber-deep uppercase tracking-[0.12em] mb-1">
-                    Pending store approval
-                  </h3>
-                  <p className="text-sm text-ink-soft leading-relaxed">
-                    The browser extension is built and submitted to the <strong className="text-ink">Chrome Web Store</strong> and <strong className="text-ink">Firefox Add-ons</strong>. Reviewer approval is pending. The configuration playground below works today; install snippets will go live the moment the extension lands in each store.
-                  </p>
-                </div>
+          <div className="max-w-5xl mx-auto space-y-20">
+
+            {/* Hero — three lines */}
+            <header className="space-y-5 max-w-4xl">
+              <div className="inline-flex items-baseline gap-3">
+                <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
+                  Docs &middot; Widget
+                </span>
+                <span className="h-px w-12 bg-ink-rule" aria-hidden="true" />
               </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
+              <h1 className="font-display-tight text-ink tracking-tight leading-[1.0] text-5xl sm:text-6xl lg:text-7xl">
+                Widget builder.
+              </h1>
+              <p className="font-plex text-lg sm:text-xl text-ink-muted leading-[1.55] max-w-2xl">
+                A drop-in security component you can paste into any website. Configure it below, copy the snippet, and your users get an approval scanner without leaving your page.
+              </p>
+              <p className="font-plex text-sm text-ink-muted leading-[1.6] pt-3 border-t border-ink-rule max-w-2xl">
+                <strong className="text-ink font-semibold">Pending store approval.</strong> The extension is submitted to the Chrome Web Store and Firefox Add-ons and awaiting reviewer approval. The configuration playground below works today; install snippets go live the moment the extension lands in each store.
+              </p>
+            </header>
 
-      {/* Live Preview */}
-      <Section className="py-16">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Live preview + configuration */}
+            <section className="space-y-8">
+              <h2 id="live-preview" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Configure and preview.
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-              {/* Widget Preview */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <H2>Live Preview</H2>
-                  <div className="flex items-center space-x-2">
-                    <Eye size={20} className="text-ink-muted" />
-                    <span className="text-sm text-ink-muted">Real-time preview</span>
+                {/* Preview column */}
+                <div className="space-y-4">
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="font-plex font-semibold text-ink text-base">Live preview</h3>
+                    <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Real-time</span>
                   </div>
-                </div>
-                
-                <div className="border border-ink-rule  p-4 bg-paper-sub">
-                  <AllowanceGuardWidget
-                    walletAddress="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-                    chainId={1}
-                    showRiskOnly={showRiskOnly}
-                    maxItems={maxItems}
-                    theme={selectedTheme}
-                    compact={compactMode}
-                    onAllowanceClick={(allowance) => {
-                      console.log('Allowance clicked:', allowance)
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Configuration Panel */}
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <H2>Configuration</H2>
-                  <div className="flex items-center space-x-2">
-                    <Settings size={20} className="text-ink-muted" />
-                    <span className="text-sm text-ink-muted">Customize widget</span>
+                  <div className="border border-ink-rule p-4 bg-paper-sub">
+                    <AllowanceGuardWidget
+                      walletAddress={DEMO_WALLET}
+                      chainId={1}
+                      showRiskOnly={showRiskOnly}
+                      maxItems={maxItems}
+                      theme={selectedTheme}
+                      compact={compactMode}
+                      onAllowanceClick={(allowance) => {
+                        console.log('Allowance clicked:', allowance)
+                      }}
+                    />
                   </div>
                 </div>
 
+                {/* Configuration column */}
                 <div className="space-y-6">
-                  {/* Theme Selection */}
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="font-plex font-semibold text-ink text-base">Configuration</h3>
+                    <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Customise</span>
+                  </div>
+
+                  {/* Theme */}
                   <div>
-                    <label className="block text-sm font-medium text-ink-soft mb-2">
+                    <label className="block font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-2">
                       Theme
                     </label>
-                    <div className="flex space-x-2">
-                      {['light', 'dark', 'auto'].map((theme) => (
+                    <div className="flex gap-2">
+                      {(['light', 'dark', 'auto'] as const).map((theme) => (
                         <button
                           key={theme}
-                          onClick={() => setSelectedTheme(theme as 'light' | 'dark' | 'auto')}
-                          className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                          onClick={() => setSelectedTheme(theme)}
+                          className={cn(
+                            'px-4 py-2 text-sm font-plex font-medium transition-colors border',
                             selectedTheme === theme
-                              ? 'bg-blue-500 text-ink'
-                              : 'bg-paper-deep/60 border border-ink-rule text-ink text-ink-soft hover:bg-paper-sub'
-                          }`}
+                              ? 'bg-ink text-paper border-ink'
+                              : 'bg-paper-sub text-ink-muted border-ink-rule hover:border-amber-deep hover:text-ink',
+                          )}
                         >
                           {theme.charAt(0).toUpperCase() + theme.slice(1)}
                         </button>
@@ -186,309 +188,182 @@ export default function WidgetPage() {
                     </div>
                   </div>
 
-                  {/* Display Options */}
+                  {/* Display options */}
                   <div>
-                    <label className="block text-sm font-medium text-ink-soft mb-2">
-                      Display Options
-                    </label>
-                    <div className="space-y-3">
-                      <label className="flex items-center">
+                    <span className="block font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-2">
+                      Display options
+                    </span>
+                    <div className="space-y-2">
+                      <label className="flex items-center gap-2 font-plex text-sm text-ink">
                         <input
                           type="checkbox"
                           checked={showRiskOnly}
                           onChange={(e) => setShowRiskOnly(e.target.checked)}
-                          className="mr-2"
+                          className="accent-amber-deep"
                         />
-                        <span className="text-sm">Show only risky allowances</span>
+                        Show only risky allowances
                       </label>
-                      <label className="flex items-center">
+                      <label className="flex items-center gap-2 font-plex text-sm text-ink">
                         <input
                           type="checkbox"
                           checked={compactMode}
                           onChange={(e) => setCompactMode(e.target.checked)}
-                          className="mr-2"
+                          className="accent-amber-deep"
                         />
-                        <span className="text-sm">Compact mode</span>
+                        Compact mode
                       </label>
                     </div>
                   </div>
 
-                  {/* Max Items */}
+                  {/* Max items */}
                   <div>
-                    <label className="block text-sm font-medium text-ink-soft mb-2">
-                      Max Items: {maxItems}
+                    <label htmlFor="max-items" className="flex items-baseline justify-between font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-2">
+                      <span>Max items</span>
+                      <span className="text-amber-deep tabular-nums">{maxItems}</span>
                     </label>
                     <input
+                      id="max-items"
                       type="range"
                       min="3"
                       max="20"
                       value={maxItems}
                       onChange={(e) => setMaxItems(parseInt(e.target.value))}
-                      className="w-full"
+                      className="w-full accent-amber-deep"
                     />
                   </div>
 
-                  {/* Wallet Address */}
+                  {/* Wallet address (demo) */}
                   <div>
-                    <label className="block text-sm font-medium text-ink-soft mb-2">
-                      Wallet Address
+                    <label htmlFor="demo-wallet" className="block font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-2">
+                      Wallet address
                     </label>
                     <input
+                      id="demo-wallet"
                       type="text"
-                      value="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+                      value={DEMO_WALLET}
                       readOnly
-                      className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-sm font-mono"
+                      className="w-full px-3 py-2 bg-paper-sub border border-ink-rule font-mono text-sm text-ink"
                     />
-                    <p className="text-xs text-ink-muted mt-1">
-                      Demo wallet (Vitalik&apos;s address)
-                    </p>
+                    <p className="font-plex text-xs text-ink-whisper mt-1">Demo wallet &mdash; Vitalik&rsquo;s public address.</p>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
+            </section>
 
-      {/* Code Generation */}
-      <Section className="py-16 bg-paper-sub">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8 text-center">Generated Code</H2>
-            
-            <div className="space-y-8">
-              
-              {/* React Code */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <H3>React Component</H3>
-                  <button
-                    onClick={() => copyToClipboard(generateWidgetCode(), 'react-code')}
-                    className="flex items-center space-x-2 px-3 py-1 bg-blue-500 text-ink rounded text-sm hover:bg-blue-600 transition-colors"
-                  >
-                    <Copy size={14} />
-                    <span>Copy</span>
-                  </button>
-                </div>
-                <CodeBlock code={generateWidgetCode()} language="jsx" id="react-code" />
+            {/* Generated code */}
+            <section className="space-y-8">
+              <h2 id="generated-code" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Generated code.
+              </h2>
+
+              <div className="space-y-5">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">React component.</h3>
+                <CodeBlock code={reactCode} language="jsx" id="react-code" />
               </div>
 
-              {/* HTML Code */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <H3>HTML/JavaScript</H3>
-                  <button
-                    onClick={() => copyToClipboard(generateHTMLCode(), 'html-code')}
-                    className="flex items-center space-x-2 px-3 py-1 bg-green-500 text-ink rounded text-sm hover:bg-green-600 transition-colors"
-                  >
-                    <Copy size={14} />
-                    <span>Copy</span>
-                  </button>
-                </div>
-                <CodeBlock code={generateHTMLCode()} language="html" id="html-code" />
+              <div className="space-y-5">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">Plain HTML.</h3>
+                <CodeBlock code={htmlCode} language="html" id="html-code" />
+              </div>
+            </section>
+
+            {/* Installation preview */}
+            <section className="space-y-6">
+              <h2 id="installation" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Installation.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                The configuration above runs against the live API today. The install snippets below are previews of the published flow &mdash; they become copy-paste-ready the moment the extension lands in each store.
+              </p>
+
+              <div className="space-y-4">
+                <h3 className="font-plex font-semibold text-ink text-base">What you can do right now</h3>
+                <ul className="space-y-2 font-plex text-base text-ink-muted leading-[1.6]">
+                  <li className="flex items-baseline gap-3">
+                    <span className="font-mono text-xs text-ink-whisper font-semibold shrink-0" aria-hidden="true">—</span>
+                    <span className="flex-1">Use the REST API v1 to scan wallets. See the{' '}
+                      <Link href="/docs/api-reference" className="text-amber-deep hover:underline underline-offset-2">API reference</Link>.
+                    </span>
+                  </li>
+                  <li className="flex items-baseline gap-3">
+                    <span className="font-mono text-xs text-ink-whisper font-semibold shrink-0" aria-hidden="true">—</span>
+                    <span className="flex-1">Clone the Node.js SDK from{' '}
+                      <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2"><code className="font-mono text-[0.9em]">/sdk</code></Link>.
+                    </span>
+                  </li>
+                  <li className="flex items-baseline gap-3">
+                    <span className="font-mono text-xs text-ink-whisper font-semibold shrink-0" aria-hidden="true">—</span>
+                    <span className="flex-1">Watch the{' '}
+                      <Link href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2">GitHub repository</Link>{' '}
+                      to be notified when the extension publishes.
+                    </span>
+                  </li>
+                </ul>
               </div>
 
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Installation — placeholder while pending store approval */}
-      <Section className="py-16">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-3 text-center text-ink">Installation</H2>
-            <p className="text-center text-sm text-ink-muted mb-8">
-              The configuration above is real and runs against the live API. The install snippets below are <strong className="text-amber-deep">previews</strong> of what the published install flow will look like once the extension lands in each store.
-            </p>
-
-            <div className="rounded-2xl border border-amber-400/20 bg-amber-400/[0.04] p-6 mb-8">
-              <h3 className="text-sm font-semibold text-ink mb-3 flex items-center gap-2">
-                <span className="inline-flex w-2 h-2 rounded-full bg-amber-400" />
-                What you can do today
-              </h3>
-              <ul className="text-sm text-ink-soft space-y-2">
-                <li>&middot; Use the <strong className="text-ink">REST API v1</strong> to scan wallets &mdash; see <a href="/docs/api-reference" className="text-amber-deep hover:underline">API Reference</a>.</li>
-                <li>&middot; Clone the <strong className="text-ink">Node.js SDK</strong> from <a href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-deep hover:underline" target="_blank" rel="noopener noreferrer"><code className="text-xs">/sdk</code></a>.</li>
-                <li>&middot; Subscribe to the <a href="https://github.com/EazyAccessEA/Allowance-guard" className="text-amber-deep hover:underline" target="_blank" rel="noopener noreferrer">GitHub repo</a> to be notified when the extension publishes.</li>
-              </ul>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 opacity-70">
-              <div className="bg-paper-sub border border-ink-rule  p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <Code className="mr-3 text-amber-deep" size={20} />
-                    <H3>React (preview)</H3>
-                  </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
-                    Pending
-                  </span>
-                </div>
+              <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8 pt-4">
                 <div className="space-y-3">
-                  <div>
-                    <p className="text-xs font-medium text-ink-muted mb-1">1. Install (when published):</p>
-                    <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs">npm install allowance-guard-widget</pre>
+                  <div className="flex items-baseline gap-3">
+                    <h3 className="font-plex font-semibold text-ink text-base">React (preview)</h3>
+                    <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-amber-deep">Pending</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-ink-muted mb-1">2. Use:</p>
-                    <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs overflow-x-auto">{generateWidgetCode()}</pre>
+                    <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-1">1. Install (when published)</p>
+                    <pre className="bg-ink text-paper p-3 font-mono text-xs overflow-x-auto">npm install allowance-guard-widget</pre>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-1">2. Use</p>
+                    <pre className="bg-ink text-paper p-3 font-mono text-xs overflow-x-auto">{reactCode}</pre>
                   </div>
                 </div>
-              </div>
 
-              <div className="bg-paper-sub border border-ink-rule  p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <Download className="mr-3 text-amber-deep" size={20} />
-                    <H3>HTML (preview)</H3>
-                  </div>
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-deep bg-paper-sub border border-amber-400/30 px-2 py-0.5 rounded-full">
-                    Pending
-                  </span>
-                </div>
                 <div className="space-y-3">
-                  <div>
-                    <p className="text-xs font-medium text-ink-muted mb-1">1. Include the script:</p>
-                    <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs overflow-x-auto">&lt;script src=&quot;https://cdn.allowanceguard.com/widget.js&quot;&gt;&lt;/script&gt;</pre>
+                  <div className="flex items-baseline gap-3">
+                    <h3 className="font-plex font-semibold text-ink text-base">HTML (preview)</h3>
+                    <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-amber-deep">Pending</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-ink-muted mb-1">2. Mount and initialise:</p>
-                    <pre className="bg-paper-deep/60 border border-ink-rule text-ink p-3 rounded text-xs">&lt;div id=&quot;allowance-guard&quot;&gt;&lt;/div&gt;{'\n'}AllowanceGuard.init(&#123;...&#125;)</pre>
+                    <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-1">1. Include the script</p>
+                    <pre className="bg-ink text-paper p-3 font-mono text-xs overflow-x-auto">&lt;script src=&quot;https://cdn.allowanceguard.com/widget.js&quot;&gt;&lt;/script&gt;</pre>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper mb-1">2. Mount and initialise</p>
+                    <pre className="bg-ink text-paper p-3 font-mono text-xs overflow-x-auto">&lt;div id=&quot;allowance-guard&quot;&gt;&lt;/div&gt;{'\n'}AllowanceGuard.init(&#123;...&#125;)</pre>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
+            </section>
 
-      {/* Widget Properties */}
-      <Section className="py-16 bg-paper-sub">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <H2 className="mb-8 text-center">Widget Properties</H2>
-            
-            <div className="bg-paper-sub border border-ink-rule  overflow-hidden">
-              <table className="w-full">
-                <thead className="bg-paper-sub">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
-                      Property
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
-                      Type
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
-                      Default
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">
-                      Description
-                    </th>
+            {/* Widget properties */}
+            <section className="space-y-6">
+              <h2 id="widget-properties" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Widget properties.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Seven props. Only <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">walletAddress</code> is required; defaults work for the rest.
+              </p>
+              <table className="w-full text-sm border-t border-b border-ink-rule">
+                <thead>
+                  <tr className="border-b border-ink-rule">
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Property</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Type</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Default</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Description</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-ink">
-                      walletAddress
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      string
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      -
-                    </td>
-                    <td className="px-6 py-4 text-sm text-ink-muted">
-                      The wallet address to display allowances for
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-ink">
-                      chainId
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      number
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      1
-                    </td>
-                    <td className="px-6 py-4 text-sm text-ink-muted">
-                      The blockchain chain ID to filter by
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-ink">
-                      showRiskOnly
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      boolean
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      false
-                    </td>
-                    <td className="px-6 py-4 text-sm text-ink-muted">
-                      Show only high-risk allowances
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-ink">
-                      maxItems
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      number
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      10
-                    </td>
-                    <td className="px-6 py-4 text-sm text-ink-muted">
-                      Maximum number of allowances to display
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-ink">
-                      theme
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      string
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      &apos;light&apos;
-                    </td>
-                    <td className="px-6 py-4 text-sm text-ink-muted">
-                      Widget theme: &apos;light&apos;, &apos;dark&apos;, or &apos;auto&apos;
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-ink">
-                      compact
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      boolean
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      false
-                    </td>
-                    <td className="px-6 py-4 text-sm text-ink-muted">
-                      Use compact display mode
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-ink">
-                      onAllowanceClick
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      function
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-ink-muted">
-                      -
-                    </td>
-                    <td className="px-6 py-4 text-sm text-ink-muted">
-                      Callback when an allowance is clicked
-                    </td>
-                  </tr>
+                <tbody className="divide-y divide-ink-rule">
+                  {props.map((p) => (
+                    <tr key={p.name}>
+                      <td className="px-4 py-3 font-mono text-sm text-amber-deep whitespace-nowrap">{p.name}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-ink-muted whitespace-nowrap">{p.type}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-ink-muted whitespace-nowrap">{p.defaultValue}</td>
+                      <td className="px-4 py-3 font-plex text-sm text-ink-muted leading-[1.5]">{p.description}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
-            </div>
+            </section>
+
           </div>
         </Container>
       </Section>

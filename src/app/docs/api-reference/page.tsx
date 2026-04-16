@@ -1,153 +1,166 @@
 'use client'
 
+/**
+ * API reference — quiet-bold Ledger layout.
+ *
+ * Single-column prose with display headings, flat tables with divide-y
+ * hairlines, and ApiEndpoint / CodeExample components preserved as
+ * teaching surfaces. No icon-prefixed section headings, no amber-tinted
+ * callout boxes, no button-style CTAs — those were chrome.
+ *
+ * Council:
+ *  Kael: No rounded-* card frames. No bg-amber-500 fills. No dark: tokens.
+ *  #7 Maren: H1 at display scale carries the page; H2s state the thing.
+ *  #21 Technical: Endpoint coverage intact — Health, Chains, Scan, Scan
+ *   status, Allowances, Risk score, Risk check, Simulate. All preserved.
+ *  #22 Conversion: Closing CTA is a quiet sentence with two inline links,
+ *   not a framed button row.
+ *  Noor: amber-deep on paper is AA; table uses text-ink / text-ink-muted.
+ */
+
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
-import { H1 } from '@/components/ui/Heading'
 import { ApiEndpoint } from '@/components/docs/ApiEndpoint'
 import { CodeExample } from '@/components/docs/CodeExample'
 import { ApiPlayground } from '@/components/docs/ApiPlayground'
-import { Key, Shield, Zap, Globe, AlertTriangle, Activity } from 'lucide-react'
+import Link from 'next/link'
 
 const rateLimits = [
-  { plan: 'Free', daily: '100', burst: '10', price: '$0' },
-  { plan: 'Developer', daily: '10,000', burst: '60', price: '$39/mo' },
-  { plan: 'Growth', daily: '100,000', burst: '300', price: '$149/mo' },
-  { plan: 'Enterprise', daily: 'Unlimited', burst: 'Unlimited', price: 'Custom' },
+  { plan: 'Free',        daily: '100',        burst: '10',        price: '$0' },
+  { plan: 'Developer',   daily: '10,000',     burst: '60',        price: '$39/mo' },
+  { plan: 'Growth',      daily: '100,000',    burst: '300',       price: '$149/mo' },
+  { plan: 'Enterprise',  daily: 'Unlimited',  burst: 'Unlimited', price: 'Custom' },
+]
+
+const errorCodes: Array<[string, string, string]> = [
+  ['400', 'BAD_REQUEST',               'Invalid request parameters or body'],
+  ['401', 'MISSING_AUTH',              'No Authorization header provided'],
+  ['401', 'INVALID_API_KEY',           'API key is invalid, expired, or revoked'],
+  ['403', 'FORBIDDEN',                 'Insufficient plan permissions'],
+  ['404', 'NOT_FOUND',                 'Resource does not exist'],
+  ['429', 'RATE_LIMIT_EXCEEDED',       'Daily rate limit exceeded'],
+  ['429', 'BURST_RATE_LIMIT_EXCEEDED', 'Per-minute burst limit exceeded'],
+  ['500', 'INTERNAL_ERROR',            'Unexpected server error'],
 ]
 
 export default function ApiReferencePage() {
   return (
     <div className="min-h-screen bg-paper text-ink">
-      <Section className="py-16 sm:py-20">
+      <Section className="py-16 sm:py-24 lg:py-28">
         <Container>
-          <div className="max-w-4xl mx-auto">
-            {/* Header */}
-            <div className="mb-12">
-              <span className="inline-block mb-4 text-xs uppercase tracking-[0.2em] font-semibold text-amber-deep">
-                Docs &middot; API Reference
-              </span>
-              <H1 className="text-ink">API Reference</H1>
-              <p className="text-ink-soft mt-4 text-lg max-w-2xl">
-                AllowanceGuard REST API v1. Scan wallets, query allowances, score risk, and simulate revocations &mdash; programmatically across all 27 supported chains.
-              </p>
-              <div className="flex flex-wrap gap-3 mt-6">
-                <span className="px-3 py-1 bg-paper-sub border border-amber-400/30 text-amber-deep text-sm  font-mono">
-                  Base URL: https://www.allowanceguard.com/api/v1
-                </span>
-                <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm ">
-                  JSON responses
-                </span>
-                <span className="px-3 py-1 bg-paper-sub border border-ink-rule text-ink-soft text-sm ">
-                  Bearer token auth
-                </span>
-              </div>
-            </div>
+          <div className="max-w-4xl mx-auto space-y-20">
 
-          {/* Authentication */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ink mb-4 flex items-center gap-2">
-              <Key className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
-              Authentication
-            </h2>
-            <p className="text-ink-soft mb-4">
-              All API endpoints (except <code className="text-sm bg-paper-sub border border-ink-rule px-1 rounded">/health</code>)
-              require an API key sent via the <code className="text-sm bg-paper-sub border border-ink-rule px-1 rounded">Authorization</code> header.
-            </p>
-            <CodeExample
-              tabs={[
-                {
-                  language: 'bash',
-                  label: 'cURL',
-                  code: `curl -H "Authorization: Bearer ag_live_your_key_here" \\
+            {/* Hero — three lines */}
+            <header className="space-y-5">
+              <div className="inline-flex items-baseline gap-3">
+                <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">
+                  Docs &middot; API reference
+                </span>
+                <span className="h-px w-12 bg-ink-rule" aria-hidden="true" />
+              </div>
+              <h1 className="font-display-tight text-ink tracking-tight leading-[1.0] text-5xl sm:text-6xl lg:text-7xl">
+                API reference.
+              </h1>
+              <p className="font-plex text-lg sm:text-xl text-ink-muted leading-[1.55] max-w-2xl">
+                AllowanceGuard REST API v1. Scan wallets, query allowances, score risk, and simulate revocations &mdash; programmatically across all 27 supported EVM chains. Base URL{' '}
+                <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">https://www.allowanceguard.com/api/v1</code>. JSON responses, Bearer-token authentication.
+              </p>
+            </header>
+
+            {/* Authentication */}
+            <section className="space-y-6">
+              <h2 id="authentication" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Authentication.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Every endpoint except <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">/health</code> requires an API key, sent as a Bearer token in the <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">Authorization</code> header.
+              </p>
+              <CodeExample
+                tabs={[
+                  {
+                    language: 'bash',
+                    label: 'cURL',
+                    code: `curl -H "Authorization: Bearer ag_live_your_key_here" \\
   https://www.allowanceguard.com/api/v1/chains`,
-                },
-                {
-                  language: 'javascript',
-                  label: 'JavaScript',
-                  code: `const res = await fetch('https://www.allowanceguard.com/api/v1/chains', {
+                  },
+                  {
+                    language: 'javascript',
+                    label: 'JavaScript',
+                    code: `const res = await fetch('https://www.allowanceguard.com/api/v1/chains', {
   headers: {
     'Authorization': 'Bearer ag_live_your_key_here',
   },
 });
 const { data } = await res.json();`,
-                },
-                {
-                  language: 'python',
-                  label: 'Python',
-                  code: `import requests
+                  },
+                  {
+                    language: 'python',
+                    label: 'Python',
+                    code: `import requests
 
 res = requests.get(
     'https://www.allowanceguard.com/api/v1/chains',
     headers={'Authorization': 'Bearer ag_live_your_key_here'}
 )
 data = res.json()['data']`,
-                },
-              ]}
-            />
-            <div className="mt-4 p-4 bg-amber-500/10 border border-amber-500/20 ">
-              <p className="text-sm text-amber-deep dark:text-amber-deep">
-                <strong>Keep your API key secret.</strong> Do not expose it in client-side
-                code. All calls should be made from your server.
+                  },
+                ]}
+              />
+              <p className="font-plex text-sm text-ink-muted leading-[1.6] pt-2 border-t border-ink-rule">
+                <strong className="text-ink font-semibold">Keep your API key secret.</strong> Never expose an <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">ag_live_*</code> key in client-side code. Use an <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">ag_pub_*</code> read-only key for browser contexts, or proxy through your server.
               </p>
-            </div>
-          </div>
+            </section>
 
-          {/* Rate Limits */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ink mb-4 flex items-center gap-2">
-              <Zap className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
-              Rate Limits
-            </h2>
-            <p className="text-ink-soft mb-4">
-              Rate limits are applied per API key based on your plan. Every response includes
-              rate limit headers.
-            </p>
-            <div className="border border-ink-rule  overflow-hidden">
-              <table className="w-full text-sm">
+            {/* Rate limits */}
+            <section className="space-y-6">
+              <h2 id="rate-limits" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Rate limits.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Applied per API key, based on plan. Every response carries rate-limit headers so you can back off cleanly.
+              </p>
+              <table className="w-full text-sm border-t border-b border-ink-rule">
                 <thead>
-                  <tr className="bg-paper-sub border border-ink-rule text-left">
-                    <th className="px-4 py-3 font-medium text-ink-soft">Plan</th>
-                    <th className="px-4 py-3 font-medium text-ink-soft">Daily Limit</th>
-                    <th className="px-4 py-3 font-medium text-ink-soft">Burst (per min)</th>
-                    <th className="px-4 py-3 font-medium text-ink-soft">Price</th>
+                  <tr className="border-b border-ink-rule">
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Plan</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Daily limit</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Burst / min</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Price</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-ink-rule">
                   {rateLimits.map((r) => (
-                    <tr key={r.plan} className="border-t border-ink-rule">
-                      <td className="px-4 py-3 text-ink font-medium">{r.plan}</td>
-                      <td className="px-4 py-3 font-mono text-ink-soft">{r.daily}</td>
-                      <td className="px-4 py-3 font-mono text-ink-soft">{r.burst}</td>
-                      <td className="px-4 py-3 text-ink-soft">{r.price}</td>
+                    <tr key={r.plan}>
+                      <td className="px-4 py-3 font-plex font-semibold text-ink">{r.plan}</td>
+                      <td className="px-4 py-3 font-mono text-ink-muted">{r.daily}</td>
+                      <td className="px-4 py-3 font-mono text-ink-muted">{r.burst}</td>
+                      <td className="px-4 py-3 font-plex text-ink-muted">{r.price}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-            <p className="text-xs text-ink-soft mt-3">
-              Headers: <code className="bg-paper-sub border border-ink-rule px-1 rounded">X-RateLimit-Limit</code>,{' '}
-              <code className="bg-paper-sub border border-ink-rule px-1 rounded">X-RateLimit-Remaining</code>
-            </p>
-          </div>
+              <p className="font-plex text-sm text-ink-muted leading-[1.6]">
+                Response headers: <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">X-RateLimit-Limit</code>, <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">X-RateLimit-Remaining</code>, <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">X-RateLimit-Reset</code>.
+              </p>
+            </section>
 
-          {/* Response Format */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ink mb-4 flex items-center gap-2">
-              <Activity className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
-              Response Format
-            </h2>
-            <p className="text-ink-soft mb-4">
-              All endpoints return a consistent JSON envelope with{' '}
-              <code className="text-sm bg-paper-sub border border-ink-rule px-1 rounded">data</code>,{' '}
-              <code className="text-sm bg-paper-sub border border-ink-rule px-1 rounded">error</code>, and{' '}
-              <code className="text-sm bg-paper-sub border border-ink-rule px-1 rounded">meta</code> fields.
-            </p>
-            <CodeExample
-              tabs={[
-                {
-                  language: 'json',
-                  label: 'Success',
-                  code: `{
+            {/* Response format */}
+            <section className="space-y-6">
+              <h2 id="response-format" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Response format.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Every endpoint returns a consistent JSON envelope with{' '}
+                <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">data</code>,{' '}
+                <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">error</code>, and{' '}
+                <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">meta</code> fields. Exactly one of <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">data</code> or <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">error</code> is non-null on every response.
+              </p>
+              <CodeExample
+                tabs={[
+                  {
+                    language: 'json',
+                    label: 'Success',
+                    code: `{
   "data": { ... },
   "error": null,
   "meta": {
@@ -160,11 +173,11 @@ data = res.json()['data']`,
     }
   }
 }`,
-                },
-                {
-                  language: 'json',
-                  label: 'Error',
-                  code: `{
+                  },
+                  {
+                    language: 'json',
+                    label: 'Error',
+                    code: `{
   "data": null,
   "error": {
     "message": "Validation failed",
@@ -176,40 +189,43 @@ data = res.json()['data']`,
     "timestamp": "2026-03-30T12:00:00.000Z"
   }
 }`,
-                },
-              ]}
-            />
-          </div>
+                  },
+                ]}
+              />
+            </section>
 
-          {/* ——————— Endpoints ——————— */}
+            {/* Endpoints */}
+            <section className="space-y-10">
+              <div className="space-y-4">
+                <h2 id="endpoints" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                  Endpoints.
+                </h2>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Eight endpoints, grouped by purpose. The interactive panels let you test against your own key.
+                </p>
+              </div>
 
-          {/* Health */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ink mb-6 flex items-center gap-2">
-              <Globe className="w-6 h-6 text-amber-deep dark:text-amber-deep" />
-              Endpoints
-            </h2>
-
-            <h3 className="text-lg font-bold text-ink mb-3">Health & Info</h3>
-
-            <ApiEndpoint
-              method="GET"
-              path="/api/v1/health"
-              description="Check API and service health status. No authentication required."
-              auth={false}
-              responseExample={`{
+              <div className="space-y-6">
+                <h3 id="health-info" className="font-display-tight text-ink tracking-tight text-2xl">
+                  Health &amp; info.
+                </h3>
+                <ApiEndpoint
+                  method="GET"
+                  path="/api/v1/health"
+                  description="Check API and service health. No authentication required."
+                  auth={false}
+                  responseExample={`{
   "status": "healthy",
   "version": "v1",
   "services": { "api": "ok", "database": "ok", "cache": "ok" },
   "timestamp": "2026-03-30T12:00:00.000Z"
 }`}
-            />
-
-            <ApiEndpoint
-              method="GET"
-              path="/api/v1/chains"
-              description="List all supported blockchain networks with their chain IDs, symbols, and explorer URLs."
-              responseExample={`{
+                />
+                <ApiEndpoint
+                  method="GET"
+                  path="/api/v1/chains"
+                  description="List every supported chain with chainId, name, symbol, and explorer URL."
+                  responseExample={`{
   "data": {
     "chains": [
       { "chainId": 1, "name": "Ethereum", "symbol": "ETH", "explorer": "https://etherscan.io" },
@@ -221,25 +237,22 @@ data = res.json()['data']`,
   "error": null,
   "meta": { ... }
 }`}
-            />
-          </div>
+                />
+              </div>
 
-          {/* Scanning */}
-          <div className="mb-12">
-            <h3 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
-              <Shield className="w-5 h-5 text-amber-deep dark:text-amber-deep" />
-              Wallet Scanning
-            </h3>
-
-            <ApiEndpoint
-              method="POST"
-              path="/api/v1/scan"
-              description="Submit a wallet address for scanning. Returns a scan ID to poll for results."
-              bodyParams={[
-                { name: 'wallet', type: 'string', required: true, description: 'Wallet address (0x...)' },
-                { name: 'chains', type: 'number[]', required: false, description: 'Chain IDs to scan. Defaults to all enabled chains.' },
-              ]}
-              responseExample={`{
+              <div className="space-y-6">
+                <h3 id="wallet-scanning" className="font-display-tight text-ink tracking-tight text-2xl">
+                  Wallet scanning.
+                </h3>
+                <ApiEndpoint
+                  method="POST"
+                  path="/api/v1/scan"
+                  description="Submit a wallet for scanning. Returns a scan ID for polling."
+                  bodyParams={[
+                    { name: 'wallet', type: 'string',   required: true,  description: 'Wallet address (0x...)' },
+                    { name: 'chains', type: 'number[]', required: false, description: 'Chain IDs to scan. Defaults to all enabled chains.' },
+                  ]}
+                  responseExample={`{
   "data": {
     "scanId": 12345,
     "wallet": "0x1234...abcd",
@@ -250,16 +263,15 @@ data = res.json()['data']`,
   "error": null,
   "meta": { ... }
 }`}
-            />
-
-            <ApiEndpoint
-              method="GET"
-              path="/api/v1/scan/:id"
-              description="Check the status of a previously submitted scan job."
-              params={[
-                { name: 'id', type: 'number', required: true, description: 'Scan job ID returned from POST /api/v1/scan' },
-              ]}
-              responseExample={`{
+                />
+                <ApiEndpoint
+                  method="GET"
+                  path="/api/v1/scan/:id"
+                  description="Check a scan job's status. 404s for scans owned by a different key."
+                  params={[
+                    { name: 'id', type: 'number', required: true, description: 'Scan job ID returned from POST /api/v1/scan' },
+                  ]}
+                  responseExample={`{
   "data": {
     "scanId": 12345,
     "status": "succeeded",
@@ -274,25 +286,25 @@ data = res.json()['data']`,
   "error": null,
   "meta": { ... }
 }`}
-            />
-          </div>
+                />
+              </div>
 
-          {/* Allowances */}
-          <div className="mb-12">
-            <h3 className="text-lg font-bold text-ink mb-3">Allowances</h3>
-
-            <ApiEndpoint
-              method="GET"
-              path="/api/v1/allowances"
-              description="Retrieve token allowances for a wallet, with optional filtering by chain and risk level."
-              params={[
-                { name: 'wallet', type: 'string', required: true, description: 'Wallet address (0x...)' },
-                { name: 'chainId', type: 'number', required: false, description: 'Filter by chain ID' },
-                { name: 'riskOnly', type: 'boolean', required: false, description: 'Only return risky/unlimited allowances' },
-                { name: 'page', type: 'number', required: false, description: 'Page number (default: 1)' },
-                { name: 'pageSize', type: 'number', required: false, description: 'Results per page (default: 25, max: 100)' },
-              ]}
-              responseExample={`{
+              <div className="space-y-6">
+                <h3 id="allowances" className="font-display-tight text-ink tracking-tight text-2xl">
+                  Allowances.
+                </h3>
+                <ApiEndpoint
+                  method="GET"
+                  path="/api/v1/allowances"
+                  description="Token allowances for a wallet, optionally filtered by chain and risk level."
+                  params={[
+                    { name: 'wallet',   type: 'string',  required: true,  description: 'Wallet address (0x...)' },
+                    { name: 'chainId',  type: 'number',  required: false, description: 'Filter by chain ID' },
+                    { name: 'riskOnly', type: 'boolean', required: false, description: 'Only return risky / unlimited allowances' },
+                    { name: 'page',     type: 'number',  required: false, description: 'Page number (default: 1)' },
+                    { name: 'pageSize', type: 'number',  required: false, description: 'Results per page (default: 25, max: 100)' },
+                  ]}
+                  responseExample={`{
   "data": {
     "allowances": [
       {
@@ -311,31 +323,28 @@ data = res.json()['data']`,
   "error": null,
   "meta": { ... }
 }`}
-            >
-              <ApiPlayground
-                method="GET"
-                path="/api/v1/allowances"
-                defaultParams={{ wallet: '', chainId: '', riskOnly: '', page: '1', pageSize: '25' }}
-              />
-            </ApiEndpoint>
-          </div>
+                >
+                  <ApiPlayground
+                    method="GET"
+                    path="/api/v1/allowances"
+                    defaultParams={{ wallet: '', chainId: '', riskOnly: '', page: '1', pageSize: '25' }}
+                  />
+                </ApiEndpoint>
+              </div>
 
-          {/* Risk */}
-          <div className="mb-12">
-            <h3 className="text-lg font-bold text-ink mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-amber-deep dark:text-amber-deep" />
-              Risk Assessment
-            </h3>
-
-            <ApiEndpoint
-              method="GET"
-              path="/api/v1/risk-score"
-              description="Get an aggregated risk score (0-100) for a wallet with risk breakdown and top risky allowances."
-              params={[
-                { name: 'wallet', type: 'string', required: true, description: 'Wallet address (0x...)' },
-                { name: 'chainId', type: 'number', required: false, description: 'Filter by chain ID' },
-              ]}
-              responseExample={`{
+              <div className="space-y-6">
+                <h3 id="risk-assessment" className="font-display-tight text-ink tracking-tight text-2xl">
+                  Risk assessment.
+                </h3>
+                <ApiEndpoint
+                  method="GET"
+                  path="/api/v1/risk-score"
+                  description="Aggregated wallet risk score (0–100) with breakdown and top risky allowances."
+                  params={[
+                    { name: 'wallet',  type: 'string', required: true,  description: 'Wallet address (0x...)' },
+                    { name: 'chainId', type: 'number', required: false, description: 'Filter by chain ID' },
+                  ]}
+                  responseExample={`{
   "data": {
     "wallet": "0x1234...abcd",
     "riskScore": 45,
@@ -353,25 +362,20 @@ data = res.json()['data']`,
   "error": null,
   "meta": { ... }
 }`}
-            >
-              <ApiPlayground
-                method="GET"
-                path="/api/v1/risk-score"
-                defaultParams={{ wallet: '' }}
-              />
-            </ApiEndpoint>
-
-            <ApiEndpoint
-              method="POST"
-              path="/api/v1/risk-check"
-              description="Pre-signing risk assessment. Evaluate the risk of a token approval BEFORE the user signs. Ideal for wallet providers and dApp frontends."
-              bodyParams={[
-                { name: 'token', type: 'string', required: true, description: 'Token contract address (0x...)' },
-                { name: 'spender', type: 'string', required: true, description: 'Spender contract address (0x...)' },
-                { name: 'chainId', type: 'number', required: true, description: 'Chain ID' },
-                { name: 'amount', type: 'string', required: false, description: 'Approval amount (raw) or "unlimited"' },
-              ]}
-              responseExample={`{
+                >
+                  <ApiPlayground method="GET" path="/api/v1/risk-score" defaultParams={{ wallet: '' }} />
+                </ApiEndpoint>
+                <ApiEndpoint
+                  method="POST"
+                  path="/api/v1/risk-check"
+                  description="Pre-signing risk assessment. Evaluate a proposed approval before the user signs. For wallet providers and dApp frontends."
+                  bodyParams={[
+                    { name: 'token',   type: 'string', required: true,  description: 'Token contract address (0x...)' },
+                    { name: 'spender', type: 'string', required: true,  description: 'Spender contract address (0x...)' },
+                    { name: 'chainId', type: 'number', required: true,  description: 'Chain ID' },
+                    { name: 'amount',  type: 'string', required: false, description: 'Approval amount (raw) or "unlimited"' },
+                  ]}
+                  responseExample={`{
   "data": {
     "token": { "address": "0xdac17f...", "symbol": "USDT" },
     "spender": { "address": "0x68b346...", "label": "Uniswap V3 Router", "trusted": true },
@@ -388,40 +392,40 @@ data = res.json()['data']`,
   "error": null,
   "meta": { ... }
 }`}
-            >
-              <ApiPlayground
-                method="POST"
-                path="/api/v1/risk-check"
-                defaultBody={`{
+                >
+                  <ApiPlayground
+                    method="POST"
+                    path="/api/v1/risk-check"
+                    defaultBody={`{
   "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
   "spender": "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45",
   "chainId": 1,
   "amount": "unlimited"
 }`}
-              />
-            </ApiEndpoint>
-          </div>
+                  />
+                </ApiEndpoint>
+              </div>
 
-          {/* Simulation */}
-          <div className="mb-12">
-            <h3 className="text-lg font-bold text-ink mb-3">Simulation</h3>
-
-            <ApiEndpoint
-              method="POST"
-              path="/api/v1/simulate"
-              description="Time Machine simulation. See how your wallet's risk score would change if specific allowances were revoked."
-              bodyParams={[
-                { name: 'wallet', type: 'string', required: true, description: 'Wallet address (0x...)' },
-                { name: 'chainId', type: 'number', required: false, description: 'Filter by chain ID' },
-                { name: 'revokeAll', type: 'boolean', required: false, description: 'Simulate revoking all allowances' },
-                { name: 'revokeSpenders', type: 'string[]', required: false, description: 'List of spender addresses to simulate revoking' },
-              ]}
-              responseExample={`{
+              <div className="space-y-6">
+                <h3 id="simulation" className="font-display-tight text-ink tracking-tight text-2xl">
+                  Simulation.
+                </h3>
+                <ApiEndpoint
+                  method="POST"
+                  path="/api/v1/simulate"
+                  description="Time-machine simulation. Returns how a wallet's risk score would change if specific allowances were revoked. No state change."
+                  bodyParams={[
+                    { name: 'wallet',         type: 'string',   required: true,  description: 'Wallet address (0x...)' },
+                    { name: 'chainId',        type: 'number',   required: false, description: 'Filter by chain ID' },
+                    { name: 'revokeAll',      type: 'boolean',  required: false, description: 'Simulate revoking all allowances' },
+                    { name: 'revokeSpenders', type: 'string[]', required: false, description: 'List of spender addresses to simulate revoking' },
+                  ]}
+                  responseExample={`{
   "data": {
     "wallet": "0x1234...abcd",
     "simulation": {
       "before": { "riskScore": 45, "totalAllowances": 15, "unlimitedAllowances": 3 },
-      "after": { "riskScore": 10, "totalAllowances": 8, "unlimitedAllowances": 0 },
+      "after":  { "riskScore": 10, "totalAllowances": 8,  "unlimitedAllowances": 0 },
       "improvement": {
         "scoreReduction": 35,
         "allowancesRevoked": 7,
@@ -432,30 +436,33 @@ data = res.json()['data']`,
   "error": null,
   "meta": { ... }
 }`}
-            >
-              <ApiPlayground
-                method="POST"
-                path="/api/v1/simulate"
-                defaultBody={`{
+                >
+                  <ApiPlayground
+                    method="POST"
+                    path="/api/v1/simulate"
+                    defaultBody={`{
   "wallet": "0x1234567890abcdef1234567890abcdef12345678",
   "revokeAll": true
 }`}
-              />
-            </ApiEndpoint>
-          </div>
+                  />
+                </ApiEndpoint>
+              </div>
+            </section>
 
-          {/* Quick Start */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ink mb-4">Quick Start</h2>
-            <p className="text-ink-soft mb-4">
-              Scan a wallet and retrieve its risk profile in three API calls:
-            </p>
-            <CodeExample
-              tabs={[
-                {
-                  language: 'javascript',
-                  label: 'JavaScript',
-                  code: `const API_KEY = 'ag_live_your_key_here';
+            {/* Quick start */}
+            <section className="space-y-6">
+              <h2 id="quick-start" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Quick start.
+              </h2>
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Scan a wallet and retrieve its risk profile in three API calls.
+              </p>
+              <CodeExample
+                tabs={[
+                  {
+                    language: 'javascript',
+                    label: 'JavaScript',
+                    code: `const API_KEY = 'ag_live_your_key_here';
 const BASE = 'https://www.allowanceguard.com/api/v1';
 const headers = { 'Authorization': \`Bearer \${API_KEY}\` };
 
@@ -483,11 +490,11 @@ const risk = await fetch(
 ).then(r => r.json());
 
 console.log(\`Risk: \${risk.data.riskScore}/100 (\${risk.data.riskLevel})\`);`,
-                },
-                {
-                  language: 'python',
-                  label: 'Python',
-                  code: `import requests, time
+                  },
+                  {
+                    language: 'python',
+                    label: 'Python',
+                    code: `import requests, time
 
 API_KEY = 'ag_live_your_key_here'
 BASE = 'https://www.allowanceguard.com/api/v1'
@@ -515,12 +522,12 @@ risk = requests.get(
     params={'wallet': '0x1234...abcd'}
 ).json()
 
-print(f"Risk: {risk['data']['riskScore']}/100 ({risk['data']['riskLevel']}")`,
-                },
-                {
-                  language: 'bash',
-                  label: 'cURL',
-                  code: `# 1. Trigger a scan
+print(f"Risk: {risk['data']['riskScore']}/100 ({risk['data']['riskLevel']})")`,
+                  },
+                  {
+                    language: 'bash',
+                    label: 'cURL',
+                    code: `# 1. Trigger a scan
 curl -X POST https://www.allowanceguard.com/api/v1/scan \\
   -H "Authorization: Bearer ag_live_your_key_here" \\
   -H "Content-Type: application/json" \\
@@ -533,67 +540,47 @@ curl https://www.allowanceguard.com/api/v1/scan/12345 \\
 # 3. Get risk score
 curl "https://www.allowanceguard.com/api/v1/risk-score?wallet=0x1234...abcd" \\
   -H "Authorization: Bearer ag_live_your_key_here"`,
-                },
-              ]}
-            />
-          </div>
+                  },
+                ]}
+              />
+            </section>
 
-          {/* Error Codes */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-ink mb-4">Error Codes</h2>
-            <div className="border border-ink-rule  overflow-hidden">
-              <table className="w-full text-sm">
+            {/* Error codes */}
+            <section className="space-y-6">
+              <h2 id="error-codes" className="font-display-tight text-ink tracking-tight text-3xl sm:text-4xl">
+                Error codes.
+              </h2>
+              <table className="w-full text-sm border-t border-b border-ink-rule">
                 <thead>
-                  <tr className="bg-paper-sub border border-ink-rule text-left">
-                    <th className="px-4 py-3 font-medium text-ink-soft">HTTP</th>
-                    <th className="px-4 py-3 font-medium text-ink-soft">Code</th>
-                    <th className="px-4 py-3 font-medium text-ink-soft">Description</th>
+                  <tr className="border-b border-ink-rule">
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">HTTP</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Code</th>
+                    <th className="px-4 py-3 text-left font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Description</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {[
-                    ['400', 'BAD_REQUEST', 'Invalid request parameters or body'],
-                    ['401', 'MISSING_AUTH', 'No Authorization header provided'],
-                    ['401', 'INVALID_API_KEY', 'API key is invalid, expired, or revoked'],
-                    ['403', 'FORBIDDEN', 'Insufficient plan permissions'],
-                    ['404', 'NOT_FOUND', 'Resource does not exist'],
-                    ['429', 'RATE_LIMIT_EXCEEDED', 'Daily rate limit exceeded'],
-                    ['429', 'BURST_RATE_LIMIT_EXCEEDED', 'Per-minute burst limit exceeded'],
-                    ['500', 'INTERNAL_ERROR', 'Unexpected server error'],
-                  ].map(([http, code, desc]) => (
-                    <tr key={code} className="border-t border-ink-rule">
-                      <td className="px-4 py-2 font-mono text-xs text-ink-soft">{http}</td>
-                      <td className="px-4 py-2 font-mono text-xs text-ink">{code}</td>
-                      <td className="px-4 py-2 text-xs text-ink-soft">{desc}</td>
+                <tbody className="divide-y divide-ink-rule">
+                  {errorCodes.map(([http, code, desc]) => (
+                    <tr key={code}>
+                      <td className="px-4 py-3 font-mono text-xs text-ink-muted">{http}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-amber-deep">{code}</td>
+                      <td className="px-4 py-3 font-plex text-sm text-ink-muted">{desc}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
+            </section>
 
-          {/* CTA */}
-          <div className="text-center p-8 bg-paper-sub border border-ink-rule border-2 border-ink-rule ">
-            <h3 className="text-xl font-bold text-ink mb-2">Ready to integrate?</h3>
-            <p className="text-ink-soft mb-4">
-              Get your API key from the Account dashboard and start building.
-            </p>
-            <div className="flex justify-center gap-4">
-              <a
-                href="/account/keys"
-                className="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-ink rounded font-medium transition-colors"
-              >
-                Get API Key
-              </a>
-              <a
-                href="/pricing"
-                className="px-6 py-2 bg-paper border border-ink-rule text-ink rounded font-medium hover:bg-paper-sub dark:hover:bg-paper-sub transition-colors"
-              >
-                View Plans
-              </a>
-            </div>
+            {/* Closing line — no CTA buttons, just two inline links */}
+            <section className="pt-8 border-t border-ink-rule">
+              <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                Ready to integrate? Grab a key from{' '}
+                <Link href="/account/keys" className="text-amber-deep hover:underline underline-offset-2 font-medium">the account dashboard</Link>, or{' '}
+                <Link href="/pricing" className="text-amber-deep hover:underline underline-offset-2 font-medium">review the plans</Link>{' '}
+                first.
+              </p>
+            </section>
+
           </div>
-        </div>
         </Container>
       </Section>
     </div>
