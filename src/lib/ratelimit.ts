@@ -1,6 +1,14 @@
 // lib/ratelimit.ts
 import { createClient } from 'redis'
 
+// Rate limiter is OPT-IN: it's only active when Redis connection details are
+// configured. In environments that don't provision Redis (local dev, Vercel
+// preview without infra) we fail OPEN so form submissions aren't silently
+// rejected with a misleading "too many requests" message. In production and
+// anywhere REDIS_URL / REDIS_HOST is set, we keep the fail-CLOSED security
+// posture so a Redis outage can't be used to bypass bot/abuse protection.
+const REDIS_CONFIGURED = Boolean(process.env.REDIS_URL || process.env.REDIS_HOST)
+
 const client = createClient({
   url: process.env.REDIS_URL || undefined,
   socket: process.env.REDIS_HOST ? { host: process.env.REDIS_HOST, port: Number(process.env.REDIS_PORT || 6379) } : undefined,
@@ -9,12 +17,20 @@ const client = createClient({
 })
 client.on('error', () => {}) // avoid crash on cold starts
 let ready = false
-client.connect().then(()=>{ ready = true }).catch(()=>{})
+if (REDIS_CONFIGURED) {
+  client.connect().then(()=>{ ready = true }).catch(()=>{})
+}
 
 export async function limitHit(key: string, windowSec: number, max: number) {
+  // Rate limiter not configured for this environment — allow.
+  if (!REDIS_CONFIGURED) {
+    return { allowed: true, remaining: max, ttl: windowSec }
+  }
   if (!ready) {
-    // Fail CLOSED: deny requests when rate limiter is unavailable
-    console.warn('[ratelimit] Redis unavailable — failing closed')
+    // Redis is configured but unreachable — fail CLOSED. This is a
+    // security-significant event: we don't want bot floods to succeed just
+    // because the limiter backend blipped.
+    console.warn('[ratelimit] Redis configured but unreachable — failing closed')
     return { allowed: false, remaining: 0, ttl: windowSec }
   }
   const now = Math.floor(Date.now()/1000)

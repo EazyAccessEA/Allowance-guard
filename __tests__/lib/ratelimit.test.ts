@@ -1,8 +1,16 @@
 /**
  * Unit tests for src/lib/ratelimit.ts
  *
- * Covers: limitHit, limitOrThrow, RATE_LIMITS coverage, Redis unavailable (fail-closed)
+ * Covers: limitHit, limitOrThrow, RATE_LIMITS coverage,
+ *   Redis configured + ready,
+ *   Redis configured but unreachable (fail-closed),
+ *   Redis unconfigured (fail-open — intentional per-env opt-in).
+ *
+ * REDIS_URL is set before any import because the module evaluates
+ * REDIS_CONFIGURED at load time.
  */
+
+process.env.REDIS_URL = 'redis://localhost:6379'
 
 // ---------------------------------------------------------------------------
 // Mocks — must be declared before imports
@@ -161,6 +169,42 @@ describe('ratelimit', () => {
       expect(result.allowed).toBe(false)
       expect(result.remaining).toBe(0)
       expect(result.ttl).toBe(60)
+    })
+  })
+
+  // -----------------------------------------------------------------------
+  // Tests where Redis is NOT configured (fail-open — per-env opt-in)
+  // -----------------------------------------------------------------------
+
+  describe('with Redis unconfigured (fail-open)', () => {
+    it('returns allowed: true without contacting Redis', async () => {
+      const prevUrl = process.env.REDIS_URL
+      const prevHost = process.env.REDIS_HOST
+      delete process.env.REDIS_URL
+      delete process.env.REDIS_HOST
+
+      let limitHitFresh: typeof import('@/lib/ratelimit').limitHit
+      mockConnect.mockClear()
+      mockIncr.mockClear()
+
+      jest.isolateModules(() => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const mod = require('@/lib/ratelimit')
+        limitHitFresh = mod.limitHit
+      })
+
+      const result = await limitHitFresh!('unconfigured-key', 60, 10)
+
+      expect(result.allowed).toBe(true)
+      expect(result.remaining).toBe(10)
+      expect(result.ttl).toBe(60)
+      // Crucially, we never even tried to connect or hit Redis.
+      expect(mockConnect).not.toHaveBeenCalled()
+      expect(mockIncr).not.toHaveBeenCalled()
+
+      // Restore for any subsequent tests that might import the module fresh.
+      if (prevUrl !== undefined) process.env.REDIS_URL = prevUrl
+      if (prevHost !== undefined) process.env.REDIS_HOST = prevHost
     })
   })
 })
