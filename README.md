@@ -241,14 +241,14 @@ Secret keys (`ag_live_*`) live in your server env and never touch the browser.
       │  labels, spender reputation) │
       └──────┬──────────────┬────────┘
              │              │
-      ┌──────▼────┐   ┌─────▼─────┐
-      │  Postgres │   │   Redis   │
-      │  (Neon)   │   │ (Upstash) │
-      └───────────┘   └───────────┘
+      ┌──────▼────┐   ┌──────▼──────┐
+      │  Postgres │   │   Upstash   │
+      │   (Neon)  │   │ (Serverless)│
+      └───────────┘   └─────────────┘
 ```
 
 - **Auth.** Consumer UI uses 30-day cookie sessions (`ag_sess`). B2B API uses bearer tokens (`ag_live_*` or `ag_pub_*`).
-- **Caching.** Hot reads hit Redis; fallback DB cache.
+- **Caching.** Hot reads hit Upstash; fallback to the Postgres `cache` table if Upstash is unreachable or unconfigured.
 - **Billing.** Stripe (cards) + Coinbase Commerce (crypto).
 - **Monitoring.** Rollbar for errors, Slack webhooks for ops, custom audit log for institutional tier.
 
@@ -297,7 +297,7 @@ Top-level `CLAUDE.md` documents the Standing Council operating rules, messaging 
 | Language | TypeScript 5, React 19 |
 | Styling | Tailwind CSS 3.4 + CSS custom properties |
 | Database | PostgreSQL (Neon) via Drizzle ORM |
-| Cache | Redis (Upstash) + DB-backed fallback |
+| Cache | Upstash Serverless Redis (primary) + PostgreSQL `cache` table (fallback) |
 | Payments | Stripe (cards) + Coinbase Commerce (crypto) |
 | Auth | Cookie sessions (consumer) + bearer API keys (B2B) |
 | Email | Postmark / SMTP (Nodemailer) |
@@ -317,9 +317,8 @@ Top-level `CLAUDE.md` documents the Standing Council operating rules, messaging 
 - **Node.js 18+** (20 recommended)
 - **pnpm 9+**
 - **PostgreSQL** (Neon is the easy path)
-- **Redis** (Upstash is the easy path)
 - A **WalletConnect / Reown** project ID
-- Optional: Stripe test keys, Postmark token, Rollbar token
+- Optional: Upstash Serverless Redis (rate-limit + cache — the app runs without it in dev; submissions are not rate-limited), Stripe test keys, Postmark token, Rollbar token
 
 ### Setup
 
@@ -330,8 +329,10 @@ cd Allowance-guard
 pnpm install
 
 cp production.env.example .env.local
-# Fill in .env.local — at minimum DATABASE_URL, REDIS_URL,
-# NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, NEXT_PUBLIC_APP_URL
+# Fill in .env.local — at minimum DATABASE_URL,
+# NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, NEXT_PUBLIC_APP_URL.
+# Upstash (UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN) is
+# optional in dev; rate limiting disables itself when unset.
 
 pnpm run migrate    # Apply SQL migrations
 pnpm dev            # Start Next.js (Turbopack)
@@ -348,7 +349,8 @@ Required for a working local stack:
 | Variable | Required | Description |
 |---|---|---|
 | `DATABASE_URL` | Yes | Postgres connection string (Neon or self-hosted) |
-| `REDIS_URL` | Yes | Redis URL (or `REDIS_HOST`/`PORT`/`PASSWORD` trio) |
+| `UPSTASH_REDIS_REST_URL` | No | Upstash Serverless Redis REST URL. Pairs with `UPSTASH_REDIS_REST_TOKEN`. When both are unset, rate limiting is disabled and the cache layer uses the Postgres `cache` table. |
+| `UPSTASH_REDIS_REST_TOKEN` | No | Upstash REST token (see above). |
 | `NEXT_PUBLIC_APP_URL` | Yes | Public origin (e.g. `http://localhost:3000`) |
 | `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | Yes | Reown / WalletConnect project ID |
 | `STRIPE_SECRET_KEY` | For billing | Stripe API key |
@@ -445,7 +447,7 @@ AllowanceGuard is **non-custodial by design**:
 ### Platform hardening
 
 - Zod input validation on every API boundary.
-- Redis-backed rate limiting (daily quota + burst per-minute).
+- Upstash-backed rate limiting (daily quota + burst per-minute) with a Postgres fallback path for caching.
 - CSRF protection (`x-csrf-token` / `ag_csrf` cookie) on state-changing consumer requests.
 - Strict Content-Security-Policy (no `unsafe-eval`), HSTS, `X-Frame-Options: DENY`, `frame-ancestors 'none'`.
 - Stripe + Coinbase webhook signature verification + idempotency guards.

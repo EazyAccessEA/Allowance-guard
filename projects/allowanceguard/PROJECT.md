@@ -17,7 +17,7 @@ AllowanceGuard is a **Web3 wallet security platform** that helps users monitor, 
 | Language | TypeScript 5.0, React 19 |
 | Styling | Tailwind CSS 3.4 + CSS custom properties |
 | Database | PostgreSQL (Neon serverless) via Drizzle ORM |
-| Cache | Redis (Upstash) + DB-backed cache |
+| Cache | Upstash Serverless Redis (primary) + PostgreSQL `cache` table (fallback) |
 | Payments | Stripe (checkout + billing) + Coinbase Commerce |
 | Auth | SIWE (EIP-4361) → Cookie-based sessions (30-day, `ag_sess`). Magic-link deprecated. |
 | Email | Postmark / SMTP (Nodemailer) |
@@ -39,7 +39,8 @@ Required for development:
 ```
 # Core
 DATABASE_URL                          # Neon PostgreSQL connection string
-REDIS_URL                             # Upstash Redis (or REDIS_HOST/PORT/PASSWORD)
+UPSTASH_REDIS_REST_URL                # Upstash Serverless Redis (REST)
+UPSTASH_REDIS_REST_TOKEN              # Upstash REST token
 NEXT_PUBLIC_APP_URL                   # App URL (https://www.allowanceguard.com)
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID  # WalletConnect
 

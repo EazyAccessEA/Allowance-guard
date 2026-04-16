@@ -5,12 +5,11 @@ const envSchema = z.object({
   // Database
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
 
-  // Redis (optional — rate limiter fails closed when unavailable)
-  REDIS_URL: z.string().optional(),
-  REDIS_HOST: z.string().optional(),
-  REDIS_PORT: z.string().optional(),
-  REDIS_PASSWORD: z.string().optional(),
-  REDIS_DB: z.string().optional(),
+  // Upstash Serverless Redis (optional — rate limiter fails open when unset,
+  // fails closed when set but unreachable). Used by src/lib/ratelimit.ts,
+  // src/lib/metrics.ts, and src/lib/cache.ts (which has a PG fallback).
+  UPSTASH_REDIS_REST_URL: z.string().optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
 
   // Stripe
   STRIPE_SECRET_KEY: z.string().min(1, 'STRIPE_SECRET_KEY is required'),

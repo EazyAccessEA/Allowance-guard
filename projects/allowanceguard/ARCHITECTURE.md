@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-Next.js 15 App Router. pnpm workspace. PostgreSQL (Neon serverless) via Drizzle. Redis (Upstash) for caching and rate limits. 27 EVM chains. B2B API under `/api/v1`, consumer routes under `/api`.
+Next.js 15 App Router. pnpm workspace. PostgreSQL (Neon serverless) via Drizzle. Upstash Serverless Redis for caching and rate limits (with a Postgres `cache` table as fallback). 27 EVM chains. B2B API under `/api/v1`, consumer routes under `/api`.
 
 ## Directory Structure
 
@@ -70,8 +70,10 @@ src/
 │   ├── api-keys.ts         # API key management
 │   ├── billing.ts          # Stripe billing helpers
 │   ├── auth.ts             # Session management
-│   ├── cache.ts            # DB-backed cache
-│   ├── ratelimit.ts        # Redis rate limiting
+│   ├── cache.ts            # Upstash primary, Postgres `cache` table fallback
+│   ├── upstash.ts          # Shared Upstash Redis client
+│   ├── ratelimit.ts        # Rate limiting on Upstash
+│   ├── metrics.ts          # Operational counters on Upstash
 │   ├── audit.ts            # Audit logging
 │   └── utils.ts            # General utilities (cn helper)
 ├── context/                # React context providers

@@ -32,17 +32,17 @@ export async function GET() {
     services.database = { status: 'unavailable', details: 'DATABASE_URL not configured' }
   }
 
-  // Redis check — lazy import
+  // Upstash (Redis-protocol cache backend) check — lazy import.
   try {
-    const { redisHealthCheck } = await import('@/lib/redis')
-    const redis = await redisHealthCheck()
-    services.redis = {
-      status: redis.ok ? 'ok' : 'degraded',
-      latency_ms: redis.latencyMs,
-      ...(redis.ok ? {} : { details: redis.message }),
+    const { upstashHealthCheck } = await import('@/lib/upstash')
+    const upstash = await upstashHealthCheck()
+    services.upstash = {
+      status: upstash.ok ? 'ok' : 'degraded',
+      latency_ms: upstash.latencyMs,
+      ...(upstash.ok ? {} : { details: upstash.message }),
     }
   } catch {
-    services.redis = { status: 'unavailable', details: 'Redis not configured' }
+    services.upstash = { status: 'unavailable', details: 'Upstash not configured' }
   }
 
   // Cache check — lazy import
