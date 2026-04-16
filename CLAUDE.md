@@ -57,6 +57,14 @@ Index: `memory/README.md`. Maintenance rules (replace-over-accumulate) also live
 | "Why is it this way?" | `decisions/` (ADRs) |
 | Phase status / what's shipped | `STATUS.md` |
 
+### Marketing managed-agent system — `memory/marketing/` + `.claude/skills/`
+
+| When working on... | Read |
+|--------------------|------|
+| Marketing, content, growth, outreach, imagery | `memory/marketing/MEMORY.md` + `docs/marketing-agents.md` |
+
+Skills live under `.claude/skills/` (market-research, positioning, content-strategy, writer, seo, social, outreach, conversion, analytics, campaign-manager, image-direction, web-implementation). Autonomy level 2 — user approves every publish, send, and `src/` edit.
+
 ## The four workflow rules (full text in `memory/PROCESS.md`)
 
 1. **Plan first.** Outline files, approach, steps before writing code.
