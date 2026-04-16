@@ -1,4 +1,5 @@
-import { Globe } from 'lucide-react'
+import { Globe, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { supportedNetworks } from './docs-data'
 
 interface Props { section: string; onNavigate?: (section: string) => void }
@@ -8,106 +9,138 @@ export default function DocsContentPrimary({ section, onNavigate }: Props) {
  switch (section) {
  case 'overview':
  return (
- <div className="space-y-10">
- <div>
- <h2 id="overview" className="text-3xl font-bold text-ink mb-4 tracking-tight">
- AllowanceGuard Documentation
+ <div className="space-y-16">
+ {/* Intro — one decisive H2, one teaching paragraph, two inline CTAs. */}
+ <section className="space-y-5">
+ <h2 id="overview" className="font-display-tight text-ink tracking-tight leading-[1.0] text-4xl sm:text-5xl">
+ Start here.
  </h2>
- <p className="text-lg text-ink-soft leading-relaxed">
- Find and revoke risky token approvals across 27 EVM chains &mdash; through the dashboard, the browser extension, or the public API. These docs cover all three.
+ <p className="font-plex text-lg text-ink-muted leading-[1.6]">
+ AllowanceGuard is an open-source wallet security scanner. It finds every{' '}
+ <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">approve()</code>,{' '}
+ <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">setApprovalForAll()</code>, and Permit2 grant your wallet has ever signed, scores each one against transparent risk heuristics, and lets you revoke them &mdash; one at a time or in a batch. Fully non-custodial: we never receive your keys, signatures, or seed phrases. The system has no ability to move your funds.
  </p>
+ <div className="flex flex-wrap gap-x-8 gap-y-3 pt-2">
+ <button
+ onClick={() => onNavigate?.('getting-started')}
+ className="group inline-flex items-center gap-1.5 font-plex text-amber-deep hover:text-ink transition-colors"
+ >
+ Read the security primer
+ <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+ </button>
+ <Link
+ href="/docs/api-reference"
+ className="group inline-flex items-center gap-1.5 font-plex text-amber-deep hover:text-ink transition-colors"
+ >
+ Jump to the API reference
+ <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+ </Link>
  </div>
+ </section>
 
- <div>
- <h3 id="what-is-allowanceguard" className="text-xl font-semibold text-ink mb-3">
- What it is
- </h3>
- <p className="text-base text-ink-soft leading-relaxed mb-4">
- AllowanceGuard is an open-source wallet security scanner. It finds every <code className="rounded bg-paper-sub px-1.5 py-0.5 text-xs text-amber-deep font-mono">approve()</code>, <code className="rounded bg-paper-sub px-1.5 py-0.5 text-xs text-amber-deep font-mono">setApprovalForAll()</code>, and Permit2 grant your wallet has ever signed, scores each one against a set of risk heuristics, and lets you revoke them &mdash; one at a time or in a batch.
- </p>
- <p className="text-base text-ink-soft leading-relaxed">
- It is fully non-custodial. We never receive your private keys, signatures, or seed phrases, so we cannot move your funds &mdash; that capability does not exist in the system.
- </p>
- </div>
-
- <div>
- <h3 id="key-features" className="text-xl font-semibold text-ink mb-4">
+ {/* What it does — feature grid kept because it teaches. Frames removed; the content carries itself. */}
+ <section className="space-y-7">
+ <h3 id="what-it-does" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
  What it does
  </h3>
- <div className="grid sm:grid-cols-2 gap-4">
- <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
- <h4 className="font-semibold text-ink mb-2 text-sm">27 EVM chains</h4>
- <p className="text-sm text-ink-soft leading-relaxed">
- Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, BNB Chain, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, and Celo.
+ <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">27 EVM chains</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, BNB Chain, Fantom, zkSync Era, Polygon zkEVM, Mantle, Gnosis, Linea, Scroll, and Celo &mdash; and twelve more.
  </p>
  </div>
- <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
- <h4 className="font-semibold text-ink mb-2 text-sm">Every approval primitive</h4>
- <p className="text-sm text-ink-soft leading-relaxed">
- ERC-20 <code className="text-xs text-amber-deep">approve()</code>, ERC-721 / ERC-1155 <code className="text-xs text-amber-deep">setApprovalForAll()</code>, and Permit2 off-chain signed allowances.
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Every approval primitive</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ ERC-20 <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">approve()</code>, ERC-721 / ERC-1155{' '}
+ <code className="bg-paper-sub px-1.5 py-0.5 text-[0.85em] text-amber-deep font-mono">setApprovalForAll()</code>, and Permit2 off-chain signed allowances.
  </p>
  </div>
- <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
- <h4 className="font-semibold text-ink mb-2 text-sm">Risk heuristics, not scoring theatre</h4>
- <p className="text-sm text-ink-soft leading-relaxed">
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Risk heuristics, not scoring theatre</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
  Each approval is graded on unlimited amounts, contract age, verification status, spender concentration, and known exploit signatures.
  </p>
  </div>
- <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
- <h4 className="font-semibold text-ink mb-2 text-sm">Batch revocation</h4>
- <p className="text-sm text-ink-soft leading-relaxed">
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Batch revocation</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
  Revoke many approvals in a single transaction. Lower gas than sequential revokes, especially on L1.
  </p>
  </div>
- <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
- <h4 className="font-semibold text-ink mb-2 text-sm">Continuous monitoring</h4>
- <p className="text-sm text-ink-soft leading-relaxed">
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Continuous monitoring</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
  Pro and Sentinel wallets are rescanned on a schedule. New high-risk approvals trigger email, Telegram, or webhook alerts.
  </p>
  </div>
- <div className="rounded-xl border border-ink-rule bg-paper-sub p-5">
- <h4 className="font-semibold text-ink mb-2 text-sm">Public REST API</h4>
- <p className="text-sm text-ink-soft leading-relaxed">
- Programmatic access to scanning, allowances, risk scores, and simulation. See <a href="/docs/api-reference" className="text-amber-deep hover:underline">API Reference</a>.
+ <div>
+ <h4 className="font-plex font-semibold text-ink text-base mb-2">Public REST API</h4>
+ <p className="font-plex text-base text-ink-muted leading-[1.6]">
+ Programmatic access to scanning, allowances, risk scores, and simulation.{' '}
+ <Link href="/docs/api-reference" className="text-amber-deep hover:underline underline-offset-2">See the reference</Link>.
  </p>
  </div>
  </div>
- </div>
+ </section>
 
- <div>
- <h3 id="how-it-works" className="text-xl font-semibold text-ink mb-4">
+ {/* How it works — numbered list with editorial mono numerals. Amber circle pills retired. */}
+ <section className="space-y-6">
+ <h3 id="how-it-works" className="font-display-tight text-ink tracking-tight text-2xl sm:text-3xl">
  How it works
  </h3>
- <ol className="space-y-3 text-base text-ink-soft">
- <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">1</span>
- <span><strong className="text-ink">Connect or paste.</strong> Connect a wallet, or paste any address. Read-only by default.</span>
+ <ol className="space-y-5">
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">01</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Connect or paste.</strong> Connect a wallet, or paste any address. Read-only by default.
+ </p>
  </li>
- <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">2</span>
- <span><strong className="text-ink">Scan.</strong> We index every approval the address has ever granted, across all 27 supported chains, in one pass.</span>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">02</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Scan.</strong> We index every approval the address has ever granted, across all 27 supported chains, in one pass.
+ </p>
  </li>
- <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">3</span>
- <span><strong className="text-ink">Score.</strong> Each approval is graded against the risk heuristics and ranked by what can hurt you most.</span>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">03</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Score.</strong> Each approval is graded against the risk heuristics and ranked by what can hurt you most.
+ </p>
  </li>
- <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">4</span>
- <span><strong className="text-ink">Revoke.</strong> Click revoke. We construct the transaction; you sign it in your wallet. Your keys never leave your device.</span>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">04</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Revoke.</strong> Click revoke. We construct the transaction; you sign it in your wallet. Your keys never leave your device.
+ </p>
  </li>
- <li className="flex gap-3">
- <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-400/15 text-amber-deep text-xs font-semibold flex items-center justify-center mt-0.5">5</span>
- <span><strong className="text-ink">Monitor.</strong> Optional. Set the wallet to rescan on a schedule and alert you when something new and risky appears.</span>
+ <li className="flex gap-5">
+ <span className="flex-shrink-0 font-mono text-xs text-ink-whisper font-semibold pt-1.5 w-6 tabular-nums" aria-hidden="true">05</span>
+ <p className="font-plex text-base text-ink-muted leading-[1.6] flex-1 m-0">
+ <strong className="text-ink font-semibold">Monitor.</strong> Optional. Set the wallet to rescan on a schedule and alert you when something new and risky appears.
+ </p>
  </li>
  </ol>
- </div>
+ </section>
 
- <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.04] p-5">
- <h4 className="font-semibold text-ink text-sm mb-2">New here? Start with two pages</h4>
- <p className="text-sm text-ink-soft leading-relaxed">
- Read <button onClick={() => onNavigate?.('getting-started')} className="text-amber-deep hover:underline font-medium">What Are Token Allowances?</button> in <em>Getting Started</em> for the security primer, then jump to <a href="/docs/api-reference" className="text-amber-deep hover:underline font-medium">API Reference</a> if you&rsquo;re building an integration.
+ {/* Closing note — amber-tinted card demoted to a quiet paragraph above a hairline. */}
+ <section className="pt-8 border-t border-ink-rule">
+ <p className="font-plex text-sm text-ink-muted leading-[1.6]">
+ New here? Start with{' '}
+ <button
+ onClick={() => onNavigate?.('getting-started')}
+ className="text-amber-deep hover:underline underline-offset-2 font-medium"
+ >
+ What are token allowances?
+ </button>{' '}
+ for the security primer, then jump to the{' '}
+ <Link href="/docs/api-reference" className="text-amber-deep hover:underline underline-offset-2 font-medium">
+ API reference
+ </Link>{' '}
+ if you&rsquo;re building an integration.
  </p>
- </div>
+ </section>
  </div>
  )
 

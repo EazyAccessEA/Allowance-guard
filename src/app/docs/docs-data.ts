@@ -83,10 +83,9 @@ export const faqItems = [
 
 export const headingsMap: Record<string, Heading[]> = {
   overview: [
-    { level: 2, text: 'Overview', id: 'overview' },
-    { level: 3, text: 'What is AllowanceGuard?', id: 'what-is-allowanceguard' },
-    { level: 3, text: 'Key Features', id: 'key-features' },
-    { level: 3, text: 'How It Works', id: 'how-it-works' },
+    { level: 2, text: 'Start here', id: 'overview' },
+    { level: 3, text: 'What it does', id: 'what-it-does' },
+    { level: 3, text: 'How it works', id: 'how-it-works' },
   ],
   'getting-started': [
     { level: 2, text: 'Quick Start', id: 'getting-started' },
