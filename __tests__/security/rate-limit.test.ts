@@ -1,25 +1,25 @@
 /**
- * Rate Limiting Tests
+ * Rate Limiting Tests — Upstash backend.
  *
- * Verify that rate limiting works correctly: allows requests under
- * the limit, blocks at the limit, and fails closed when Redis is
- * unavailable.
+ * Verifies that rate limiting works correctly: allows requests under the
+ * limit, blocks at the limit, and fails closed when Upstash is configured
+ * but unreachable.
  */
+
+process.env.UPSTASH_REDIS_REST_URL = 'https://fake.upstash.io'
+process.env.UPSTASH_REDIS_REST_TOKEN = 'fake-token'
 
 const mockIncr = jest.fn()
 const mockExpire = jest.fn()
 const mockTtl = jest.fn()
-const mockConnect = jest.fn().mockResolvedValue(undefined)
-const mockOn = jest.fn()
 
-jest.mock('redis', () => ({
-  createClient: () => ({
-    connect: mockConnect,
-    on: mockOn,
+jest.mock('@upstash/redis', () => ({
+  Redis: jest.fn().mockImplementation(() => ({
     incr: mockIncr,
     expire: mockExpire,
     ttl: mockTtl,
-  }),
+    ping: jest.fn(),
+  })),
 }))
 
 // Need to import after mocks are set up
@@ -27,12 +27,9 @@ let limitHit: typeof import('@/lib/ratelimit').limitHit
 let limitOrThrow: typeof import('@/lib/ratelimit').limitOrThrow
 
 beforeAll(async () => {
-  // The module connects on import; we need to wait for the mock connect to resolve
   const mod = await import('@/lib/ratelimit')
   limitHit = mod.limitHit
   limitOrThrow = mod.limitOrThrow
-  // Give the connect promise time to resolve and set ready = true
-  await new Promise(resolve => setTimeout(resolve, 50))
 })
 
 beforeEach(() => {
@@ -134,8 +131,6 @@ describe('All known endpoints have rate limits', () => {
 
   for (const endpoint of requiredEndpoints) {
     test(`${endpoint} has a configured rate limit`, async () => {
-      // If there is no config, limitOrThrow returns undefined immediately
-      // If there IS config, it will call limitHit and either return a result or throw
       mockIncr.mockResolvedValue(1)
       mockExpire.mockResolvedValue(true)
       mockTtl.mockResolvedValue(60)
@@ -148,30 +143,13 @@ describe('All known endpoints have rate limits', () => {
 })
 
 describe('Fail-closed behavior', () => {
-  test('fails closed when Redis is unavailable', async () => {
-    // Use isolateModules to get a fresh copy of ratelimit with a failing Redis
-    await new Promise<void>((resolve) => {
-      jest.isolateModules(() => {
-        jest.mock('redis', () => ({
-          createClient: () => ({
-            connect: jest.fn().mockRejectedValue(new Error('Connection refused')),
-            on: jest.fn(),
-            incr: jest.fn(),
-            expire: jest.fn(),
-            ttl: jest.fn(),
-          }),
-        }))
-        const { limitHit: isolatedLimitHit } = require('@/lib/ratelimit')
+  test('fails closed when Upstash INCR throws', async () => {
+    mockIncr.mockRejectedValue(new Error('Connection refused'))
+    mockTtl.mockReset()
 
-        // Since connect fails, ready stays false, so limitHit should deny
-        isolatedLimitHit('test:key', 60, 10).then(
-          (result: { allowed: boolean; remaining: number; ttl: number }) => {
-            expect(result.allowed).toBe(false)
-            expect(result.remaining).toBe(0)
-            resolve()
-          },
-        )
-      })
-    })
+    const result = await limitHit('test:key', 60, 10)
+    expect(result.allowed).toBe(false)
+    expect(result.remaining).toBe(0)
+    expect(result.ttl).toBe(60)
   })
 })

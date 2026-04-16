@@ -2,15 +2,17 @@
  * Unit tests for src/lib/ratelimit.ts
  *
  * Covers: limitHit, limitOrThrow, RATE_LIMITS coverage,
- *   Redis configured + ready,
- *   Redis configured but unreachable (fail-closed),
- *   Redis unconfigured (fail-open — intentional per-env opt-in).
+ *   Upstash configured + reachable,
+ *   Upstash configured but unreachable (fail-closed),
+ *   Upstash unconfigured (fail-open — intentional per-env opt-in).
  *
- * REDIS_URL is set before any import because the module evaluates
- * REDIS_CONFIGURED at load time.
+ * UPSTASH_REDIS_REST_URL / TOKEN are set before any import because the
+ * Upstash factory at src/lib/upstash.ts evaluates its configured flag at
+ * first call and caches the client.
  */
 
-process.env.REDIS_URL = 'redis://localhost:6379'
+process.env.UPSTASH_REDIS_REST_URL = 'https://fake.upstash.io'
+process.env.UPSTASH_REDIS_REST_TOKEN = 'fake-token'
 
 // ---------------------------------------------------------------------------
 // Mocks — must be declared before imports
@@ -19,16 +21,14 @@ process.env.REDIS_URL = 'redis://localhost:6379'
 const mockIncr = jest.fn()
 const mockExpire = jest.fn()
 const mockTtl = jest.fn()
-const mockConnect = jest.fn()
-const mockOn = jest.fn()
+const mockPing = jest.fn()
 
-jest.mock('redis', () => ({
-  createClient: jest.fn(() => ({
-    connect: mockConnect,
-    on: mockOn,
+jest.mock('@upstash/redis', () => ({
+  Redis: jest.fn().mockImplementation(() => ({
     incr: mockIncr,
     expire: mockExpire,
     ttl: mockTtl,
+    ping: mockPing,
   })),
 }))
 
@@ -38,24 +38,17 @@ jest.mock('redis', () => ({
 
 describe('ratelimit', () => {
   // -----------------------------------------------------------------------
-  // Tests where Redis is ready (connect resolves before import)
+  // Tests where Upstash is configured and reachable
   // -----------------------------------------------------------------------
 
-  describe('with Redis ready', () => {
+  describe('with Upstash ready', () => {
     let limitHit: typeof import('@/lib/ratelimit').limitHit
     let limitOrThrow: typeof import('@/lib/ratelimit').limitOrThrow
 
     beforeAll(async () => {
-      // Make connect resolve so `ready = true`
-      mockConnect.mockResolvedValue(undefined)
-
-      // Import the module — this triggers client.connect().then(() => ready = true)
       const mod = await import('@/lib/ratelimit')
       limitHit = mod.limitHit
       limitOrThrow = mod.limitOrThrow
-
-      // Allow microtask to run (the .then() that sets ready = true)
-      await new Promise((r) => setTimeout(r, 10))
     })
 
     beforeEach(() => {
@@ -119,6 +112,16 @@ describe('ratelimit', () => {
       expect(result.remaining).toBe(0) // max(0, 10 - 15) = 0
     })
 
+    it('normalises ttl of -1 (no TTL set) to the window size', async () => {
+      // Upstash returns -1 when a key has no TTL. Callers rely on a positive
+      // ttl for retry-after headers, so we normalise.
+      mockIncr.mockResolvedValue(3)
+      mockTtl.mockResolvedValue(-1)
+
+      const result = await limitHit('no-ttl-key', 60, 10)
+      expect(result.ttl).toBe(60)
+    })
+
     // ----- limitOrThrow -----
 
     it('returns undefined for unknown endpoint (no limit configured)', async () => {
@@ -145,25 +148,21 @@ describe('ratelimit', () => {
   })
 
   // -----------------------------------------------------------------------
-  // Tests where Redis is NOT ready (fail-closed)
+  // Tests where Upstash is configured but unreachable (fail-closed)
   // -----------------------------------------------------------------------
 
-  describe('with Redis unavailable (fail-closed)', () => {
-    it('returns allowed: false when Redis connect fails', async () => {
-      // Use isolateModules to get a fresh module with connect rejecting
+  describe('with Upstash unreachable (fail-closed)', () => {
+    it('returns allowed: false when INCR throws', async () => {
       let limitHitFresh: typeof import('@/lib/ratelimit').limitHit
 
       jest.isolateModules(() => {
-        // Override mockConnect to reject for this isolated import
-        mockConnect.mockRejectedValue(new Error('ECONNREFUSED'))
-
         // eslint-disable-next-line @typescript-eslint/no-require-imports
         const mod = require('@/lib/ratelimit')
         limitHitFresh = mod.limitHit
       })
 
-      // Give the .catch() microtask time to run
-      await new Promise((r) => setTimeout(r, 10))
+      mockIncr.mockRejectedValue(new Error('ECONNREFUSED'))
+      mockTtl.mockReset()
 
       const result = await limitHitFresh!('key', 60, 10)
       expect(result.allowed).toBe(false)
@@ -173,19 +172,19 @@ describe('ratelimit', () => {
   })
 
   // -----------------------------------------------------------------------
-  // Tests where Redis is NOT configured (fail-open — per-env opt-in)
+  // Tests where Upstash is NOT configured (fail-open — per-env opt-in)
   // -----------------------------------------------------------------------
 
-  describe('with Redis unconfigured (fail-open)', () => {
-    it('returns allowed: true without contacting Redis', async () => {
-      const prevUrl = process.env.REDIS_URL
-      const prevHost = process.env.REDIS_HOST
-      delete process.env.REDIS_URL
-      delete process.env.REDIS_HOST
+  describe('with Upstash unconfigured (fail-open)', () => {
+    it('returns allowed: true without contacting Upstash', async () => {
+      const prevUrl = process.env.UPSTASH_REDIS_REST_URL
+      const prevToken = process.env.UPSTASH_REDIS_REST_TOKEN
+      delete process.env.UPSTASH_REDIS_REST_URL
+      delete process.env.UPSTASH_REDIS_REST_TOKEN
 
       let limitHitFresh: typeof import('@/lib/ratelimit').limitHit
-      mockConnect.mockClear()
       mockIncr.mockClear()
+      mockExpire.mockClear()
 
       jest.isolateModules(() => {
         // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -198,13 +197,13 @@ describe('ratelimit', () => {
       expect(result.allowed).toBe(true)
       expect(result.remaining).toBe(10)
       expect(result.ttl).toBe(60)
-      // Crucially, we never even tried to connect or hit Redis.
-      expect(mockConnect).not.toHaveBeenCalled()
+      // Crucially, we never contacted Upstash.
       expect(mockIncr).not.toHaveBeenCalled()
+      expect(mockExpire).not.toHaveBeenCalled()
 
       // Restore for any subsequent tests that might import the module fresh.
-      if (prevUrl !== undefined) process.env.REDIS_URL = prevUrl
-      if (prevHost !== undefined) process.env.REDIS_HOST = prevHost
+      if (prevUrl !== undefined) process.env.UPSTASH_REDIS_REST_URL = prevUrl
+      if (prevToken !== undefined) process.env.UPSTASH_REDIS_REST_TOKEN = prevToken
     })
   })
 })

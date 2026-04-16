@@ -31,8 +31,12 @@ NODE_ENV=production
 # ——— Database (Neon) ———
 DATABASE_URL=postgresql://<user>:<password>@<host>/<db>?sslmode=require
 
-# ——— Redis (optional but recommended) ———
-REDIS_URL=redis://default:<password>@<host>:<port>
+# ——— Upstash Serverless Redis (optional but recommended) ———
+# Create a database at https://console.upstash.com/ and paste both REST values.
+# When both are unset, rate limiting disables itself and the cache layer
+# falls back to the Postgres `cache` table.
+UPSTASH_REDIS_REST_URL=<upstash-rest-url>
+UPSTASH_REDIS_REST_TOKEN=<upstash-rest-token>
 
 # ——— Email (choose ONE: Postmark OR Amazon SES) ———
 # Postmark (recommended for ease)
@@ -82,7 +86,8 @@ NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN=<client_access_token>
 # Add each variable to Vercel production environment
 vercel env add NEXT_PUBLIC_APP_URL production
 vercel env add DATABASE_URL production
-vercel env add REDIS_URL production
+vercel env add UPSTASH_REDIS_REST_URL production
+vercel env add UPSTASH_REDIS_REST_TOKEN production
 vercel env add POSTMARK_SERVER_TOKEN production
 vercel env add MAIL_FROM production
 vercel env add STRIPE_SECRET_KEY production

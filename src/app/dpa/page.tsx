@@ -145,7 +145,7 @@ export default function DPAPage() {
                   </div>
                   <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Infrastructure</h3>
-                    <p className="text-stone text-xs">Hosted on Vercel (SOC 2). Database on Neon (encrypted, isolated). Optional Redis cache via REDIS_URL (encrypted in transit).</p>
+                    <p className="text-stone text-xs">Hosted on Vercel (SOC 2). Database on Neon (encrypted, isolated). Optional managed cache on Upstash Serverless Redis via UPSTASH_REDIS_REST_URL (TLS in transit).</p>
                   </div>
                   <div className="bg-paper-sub p-4">
                     <h3 className="font-medium mb-2 text-sm">Incident Response</h3>

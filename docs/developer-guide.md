@@ -12,7 +12,7 @@ This comprehensive developer guide provides detailed technical information for c
 │   (Next.js)     │    │   (API Routes)  │    │   Services      │
 ├─────────────────┤    ├─────────────────┤    ├─────────────────┤
 │ • React 19      │    │ • Serverless    │    │ • PostgreSQL    │
-│ • Wagmi v2      │    │ • Drizzle ORM   │    │ • Redis         │
+│ • Wagmi v2      │    │ • Drizzle ORM   │    │ • Upstash       │
 │ • Reown AppKit  │    │ • Audit Logging │    │ • RPC Providers │
 │ • Tailwind CSS  │    │ • Rate Limiting │    │ • Email Service │
 │ • TypeScript    │    │ • Error Handling│    │ • Rollbar       │
@@ -82,15 +82,15 @@ docker run --name allowance-guard-db \
 # Get connection string from https://neon.tech
 ```
 
-#### 2. Redis Setup (Optional)
-```bash
-# Using Docker
-docker run --name allowance-guard-redis \
-  -p 6379:6379 \
-  -d redis:7-alpine
+#### 2. Upstash Serverless Redis Setup (Optional)
+Used for rate limiting, operational metrics, and the primary cache. The app
+runs without it in dev — rate limiting disables itself and the cache layer
+falls back to the Postgres `cache` table.
 
-# Or use Upstash (cloud Redis)
-# Get connection string from https://upstash.com
+```bash
+# 1. Create a free database at https://console.upstash.com/
+# 2. Copy the REST URL and REST token from the dashboard
+# 3. Set both in .env.local (see below)
 ```
 
 #### 3. Environment Configuration
@@ -100,9 +100,12 @@ cp production.env.example .env.local
 
 # Required for development
 DATABASE_URL=postgresql://postgres:password@localhost:5432/allowance_guard
-REDIS_URL=redis://localhost:6379
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
+
+# Optional: Upstash (leave blank to disable rate limiting locally)
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
 
 # Optional for development
 ROLLBAR_ACCESS_TOKEN=your_token
@@ -315,37 +318,39 @@ export async function POST(request: NextRequest) {
 
 ### Rate Limiting
 
-#### Implementation
+The rate limiter lives in `src/lib/ratelimit.ts`. It's backed by Upstash
+Serverless Redis via `@upstash/redis` and preserves a narrow public API:
+
 ```typescript
-// lib/rate-limit.ts
-import { Ratelimit } from '@upstash/ratelimit'
-import { Redis } from '@upstash/redis'
+// src/lib/ratelimit.ts (usage)
+import { limitOrThrow } from '@/lib/ratelimit'
 
-const redis = new Redis({
-  url: process.env.REDIS_URL!,
-  token: process.env.REDIS_TOKEN!,
-})
+export async function POST(req: Request) {
+  const h = await nextHeaders()
+  const ip = h.get('x-forwarded-for')?.split(',')[0] || 'unknown'
 
-export const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, '1 m'), // 10 requests per minute
-})
-
-// Usage in API routes
-export async function POST(request: NextRequest) {
-  const ip = request.ip ?? '127.0.0.1'
-  const { success } = await ratelimit.limit(ip)
-  
-  if (!success) {
+  try {
+    await limitOrThrow(ip, 'subscribe') // bucket is looked up in RATE_LIMITS
+  } catch {
     return NextResponse.json(
-      { error: 'Rate limit exceeded' },
-      { status: 429 }
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429 },
     )
   }
-  
-  // Process request
+
+  // ... handle request
 }
 ```
+
+Bucket definitions (window + max) live centrally in `RATE_LIMITS` inside
+`src/lib/ratelimit.ts`. The module reads `UPSTASH_REDIS_REST_URL` and
+`UPSTASH_REDIS_REST_TOKEN` at module load:
+
+- **Both unset** → the limiter is disabled for this environment and every
+  call returns `{ allowed: true }`. No network calls, no noisy logs. This
+  keeps local development unblocked.
+- **Set but unreachable** → fails closed. Returns `{ allowed: false }` so
+  a transient Upstash outage can't be used to bypass the limiter.
 
 ### Audit Logging
 
@@ -469,7 +474,8 @@ CREATE INDEX idx_allowances_risk_flags_gin ON allowances USING GIN (risk_flags);
 # Production environment variables
 NEXT_PUBLIC_APP_URL=https://www.allowanceguard.com
 DATABASE_URL=postgresql://...
-REDIS_URL=redis://...
+UPSTASH_REDIS_REST_URL=https://<name>.upstash.io
+UPSTASH_REDIS_REST_TOKEN=...
 ROLLBAR_ACCESS_TOKEN=...
 NEXT_PUBLIC_ROLLBAR_ACCESS_TOKEN=...
 SLACK_WEBHOOK_URL=...
@@ -484,7 +490,7 @@ OPS_ALERT_EMAIL=...
 export async function GET() {
   const checks = {
     db: await checkDatabase(),
-    cache: await checkRedis(),
+    cache: await checkUpstash(),
     rpc: await checkRpcEndpoints(),
     chains: await checkChainHealth()
   }
