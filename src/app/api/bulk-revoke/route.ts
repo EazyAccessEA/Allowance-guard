@@ -2,12 +2,30 @@ import { NextRequest, NextResponse } from 'next/server'
 import { auditUserAction } from '@/lib/audit-enhanced'
 import { secureLogger } from '@/lib/secure-logger'
 import { getSession } from '@/lib/auth'
+import { checkFeature } from '@/lib/feature-gate'
 import { trackEvent } from '@/lib/analytics'
 
 export async function POST(req: NextRequest) {
   const session = await getSession()
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // Pricing claim: "Batch revoke" requires the Pro plan or above.
+  // Previously auth-gated only — Free users could call this and bulk-
+  // revoke. P0 fix.
+  const access = await checkFeature(Number(session.user_id), 'batchRevoke')
+  if (!access.allowed) {
+    return NextResponse.json(
+      {
+        error: 'Batch revoke requires the Pro plan or above',
+        code: 'PLAN_LIMIT_EXCEEDED',
+        plan: access.plan,
+        requiredPlan: access.requiredPlan,
+        upgradeUrl: '/pricing',
+      },
+      { status: 403 },
+    )
   }
 
   try {
