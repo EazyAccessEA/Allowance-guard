@@ -124,24 +124,17 @@ describe('billing', () => {
       )
     })
 
-    it('includes trial_period_days when provided', async () => {
-      mockCheckoutCreate.mockResolvedValue({ id: 'cs_2', url: 'https://checkout.stripe.com/trial' })
+    // The `trialDays` option was removed from CreateSubscriptionOptions
+    // (commit deleted dead code per BUSINESS.md "no trials from code").
+    // Trials are now configured on the Stripe Price in the Dashboard,
+    // not from this code path. The two earlier tests for trial behaviour
+    // are intentionally absent — there is nothing in this code path to
+    // test for trials any more.
 
-      await createCheckoutSession({ ...baseOpts, trialDays: 14 })
-
-      expect(mockCheckoutCreate).toHaveBeenCalledWith(
-        expect.objectContaining({
-          subscription_data: expect.objectContaining({
-            trial_period_days: 14,
-          }),
-        }),
-      )
-    })
-
-    it('omits trial when trialDays is 0', async () => {
+    it('does not set trial_period_days from code', async () => {
       mockCheckoutCreate.mockResolvedValue({ id: 'cs_3', url: 'https://checkout.stripe.com/no-trial' })
 
-      await createCheckoutSession({ ...baseOpts, trialDays: 0 })
+      await createCheckoutSession(baseOpts)
 
       const callArg = mockCheckoutCreate.mock.calls[0][0]
       expect(callArg.subscription_data.trial_period_days).toBeUndefined()

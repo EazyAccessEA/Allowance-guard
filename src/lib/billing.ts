@@ -78,7 +78,6 @@ export interface CreateSubscriptionOptions {
   plan: ConsumerPlan | string
   successUrl: string
   cancelUrl: string
-  trialDays?: number
 }
 
 /**
@@ -117,9 +116,10 @@ export async function createCheckoutSession(opts: CreateSubscriptionOptions): Pr
     // the customer level (invoice_settings) or in the Stripe Dashboard.
   }
 
-  if (opts.trialDays && opts.trialDays > 0) {
-    sessionParams.subscription_data!.trial_period_days = opts.trialDays
-  }
+  // Trials are configured on the Stripe Price (not from code) per
+  // BUSINESS.md. Historical note: a silent 7-day trial was previously
+  // hardcoded for Pro and removed in commit 1742615. The trialDays
+  // option was dead code; deleted here per "cleanup always".
 
   const session = await stripe.checkout.sessions.create(sessionParams)
 

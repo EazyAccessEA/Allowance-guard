@@ -1,9 +1,11 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import { headers as nextHeaders } from 'next/headers'
 import { z } from 'zod'
 import { requireUser } from '@/lib/auth'
 import { createCheckoutSession } from '@/lib/billing'
 import { CONSUMER_PRICES, API_PRICES, type ConsumerPlan, type ApiPlan } from '@/lib/plans'
 import { validateRequest } from '@/middleware/validation'
+import { limitOrThrow } from '@/lib/ratelimit'
 import { withReq } from '@/lib/logger'
 
 export const runtime = 'nodejs'
@@ -24,6 +26,22 @@ export async function POST(req: Request) {
   const L = withReq(req)
 
   try {
+    // Rate-limit per IP — 'stripe-checkout' = 10 requests per 60s
+    // (defined in lib/ratelimit.ts RATE_LIMITS). Auth-gated below, but
+    // an authenticated user could still hammer this endpoint without
+    // a per-IP limit. Cheap defence; existing config was wired but
+    // the call site was missing.
+    const h = await nextHeaders()
+    const ip = h.get('x-forwarded-for')?.split(',')[0]?.trim() || h.get('x-real-ip') || 'unknown'
+    try {
+      await limitOrThrow(ip, 'stripe-checkout')
+    } catch {
+      return NextResponse.json(
+        { error: 'Too many checkout attempts. Please wait a moment and try again.' },
+        { status: 429 },
+      )
+    }
+
     const session = await requireUser()
 
     const validation = await validateRequest(subscribeSchema)(req as NextRequest)
@@ -57,8 +75,25 @@ export async function POST(req: Request) {
     }
 
     if (!priceId) {
-      L.error('billing.subscribe.missing_price_id', { plan, interval })
-      return NextResponse.json({ error: 'Stripe price not configured' }, { status: 500 })
+      // The Stripe price env var for this plan + interval combination
+      // isn't set in production. Log loud (operator needs to know) and
+      // return a user-friendly message — checkout was initiated but the
+      // backend can't complete it.
+      L.error('billing.subscribe.missing_price_id', {
+        plan,
+        interval,
+        envVarHint: isApiPlan(plan)
+          ? interval === 'yearly'
+            ? `STRIPE_PRICE_${plan.toUpperCase()}_YEARLY`
+            : `STRIPE_PRICE_${plan.toUpperCase()}`
+          : interval === 'yearly'
+            ? `STRIPE_PRICE_${plan.toUpperCase()}_YEARLY`
+            : `STRIPE_PRICE_${plan.toUpperCase()}_MONTHLY`,
+      })
+      return NextResponse.json(
+        { error: 'This plan is temporarily unavailable. Please try again in a few minutes or contact support@allowanceguard.com.' },
+        { status: 503 },
+      )
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://www.allowanceguard.com'
