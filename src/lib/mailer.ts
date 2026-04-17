@@ -265,8 +265,8 @@ export async function sendReEngagementEmail(to: string, plan: string) {
         <li>Compliance-ready audit logs</li>
         <li>Webhook integrations and priority support</li>`
             : `<li>Unlimited wallet scanning across all 27 chains</li>
-        <li>Continuous monitoring with real-time email alerts</li>
-        <li>Batch revocation with gas savings</li>
+        <li>Twice-daily monitoring with risk alerts</li>
+        <li>Batch revoke (multiple approvals from one click)</li>
         <li>Historical risk timeline for your approvals</li>
         <li>Export audit reports (PDF / CSV)</li>`
         }

@@ -16,17 +16,9 @@ interface FeatureRow {
 
 const FEATURE_ROWS: FeatureRow[] = [
   {
-    label: 'Wallets',
+    label: 'Chains supported',
     values: {
-      free: `${CONSUMER_PLAN_LIMITS.free.maxWallets}`,
-      pro: 'Unlimited',
-      sentinel: 'Unlimited',
-    },
-  },
-  {
-    label: 'Chains',
-    values: {
-      free: '1',
+      free: '27',
       pro: '27',
       sentinel: '27',
     },
@@ -48,7 +40,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Email alerts',
+    label: 'Risk email alerts',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.alerts,
       pro: CONSUMER_PLAN_LIMITS.pro.alerts,
@@ -56,7 +48,7 @@ const FEATURE_ROWS: FeatureRow[] = [
     },
   },
   {
-    label: 'Continuous monitoring',
+    label: 'Twice-daily monitoring (12h cadence)',
     values: {
       free: CONSUMER_PLAN_LIMITS.free.monitoring,
       pro: `${CONSUMER_PLAN_LIMITS.pro.maxMonitoredWallets} wallets`,

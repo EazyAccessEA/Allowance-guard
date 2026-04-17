@@ -35,18 +35,18 @@ interface FeatureItem {
 function getPlanFeatures(plan: ConsumerPlan): FeatureItem[] {
   const limits = CONSUMER_PLAN_LIMITS[plan]
   return [
-    {
-      label: limits.maxWallets === -1 ? 'Unlimited wallets' : `${limits.maxWallets} wallets`,
-      included: true,
-    },
-    {
-      label: limits.maxChains === 1 ? '1 chain' : `${limits.maxChains} chains`,
-      included: true,
-    },
+    { label: 'All 27 chains', included: true },
     { label: 'Batch revoke', included: limits.batchRevoke },
     { label: 'Export (CSV/PDF)', included: limits.export },
-    { label: 'Email alerts', included: limits.alerts },
-    { label: 'Continuous monitoring', included: limits.monitoring },
+    { label: 'Risk email alerts', included: limits.alerts },
+    {
+      // "Continuous" overstated the implementation (default 12h cadence).
+      // Honest framing: "Twice-daily monitoring".
+      label: limits.maxMonitoredWallets > 0
+        ? `Twice-daily monitoring (${limits.maxMonitoredWallets} wallets)`
+        : 'Twice-daily monitoring',
+      included: limits.monitoring,
+    },
     { label: 'Time Machine', included: limits.timeMachine },
     { label: 'Team dashboard', included: limits.teams },
     { label: 'Automated rules', included: limits.automatedRules },

@@ -71,8 +71,13 @@ export interface PlanLimits {
 
 export const CONSUMER_PLAN_LIMITS: Record<ConsumerPlan, PlanLimits> = {
   free: {
+    // maxWallets reserved for the save-wallet feature (not yet shipped;
+    // see follow-up). The homepage scanner is anonymous and stateless.
     maxWallets: 3,
-    maxChains: 1,
+    // All chains available on every tier; the homepage scanner reaches
+    // all 27. The "1 chain" cap was a planning placeholder that didn't
+    // match reality and was removed from the pricing surface.
+    maxChains: 27,
     maxApiCallsPerDay: 50,
     monitoring: false,
     batchRevoke: false,
