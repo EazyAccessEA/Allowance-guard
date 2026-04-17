@@ -90,7 +90,9 @@ export async function POST(req: Request) {
           .where(eq(waitlistSubscribers.id, row.id))
 
         // Send welcome email again
-        sendWaitlistWelcomeEmail(email, interest, row.id).catch(() => {})
+        sendWaitlistWelcomeEmail(email, interest, row.id).catch((err) => {
+          console.error('[subscribe] welcome email failed (resubscribe)', err)
+        })
 
         return NextResponse.json({ ok: true, resubscribed: true })
       }

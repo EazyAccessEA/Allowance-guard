@@ -188,8 +188,11 @@ export function getTransport() {
   }
   
   if (!host || !user || !pass) {
-    emailLogger.warn('SMTP configuration missing, using log-only transport')
-    // Dev fallback: log-only transport
+    if (process.env.NODE_ENV === 'production') {
+      emailLogger.error('No email provider configured (RESEND_API_KEY, POSTMARK_SERVER_TOKEN, or SMTP creds required in production)')
+      throw new Error('Email service not configured')
+    }
+    emailLogger.warn('SMTP configuration missing, using log-only transport (dev fallback)')
     return nodemailer.createTransport({ jsonTransport: true }) as nodemailer.Transporter
   }
   
