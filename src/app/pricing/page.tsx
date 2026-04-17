@@ -79,16 +79,13 @@ function BillingToggle({
         type="button"
         onClick={() => onChange('yearly')}
         className={cn(
-          'px-4 py-2 text-sm font-medium font-plex transition-all duration-150 flex items-center gap-2',
+          'px-4 py-2 text-sm font-medium font-plex transition-all duration-150',
           billingPeriod === 'yearly'
             ? 'bg-ink text-paper'
             : 'text-ink-muted hover:text-ink'
         )}
       >
         Yearly
-        <span className="bg-paper-sub border border-ink-rule px-2 py-0.5 text-xs font-bold font-mono text-emerald-800">
-          Save 34%
-        </span>
       </button>
     </div>
   )
@@ -225,7 +222,7 @@ export default function PricingPage() {
           <CascadingScrollAnimation direction="up" distance={40} delay={100}>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               <ApiPricingCard plan="api_free" billingPeriod={billingPeriod} />
-              <ApiPricingCard plan="api_developer" billingPeriod={billingPeriod} highlighted />
+              <ApiPricingCard plan="api_developer" billingPeriod={billingPeriod} />
               <ApiPricingCard plan="api_growth" billingPeriod={billingPeriod} />
               <ApiPricingCard plan="api_enterprise" billingPeriod={billingPeriod} />
             </div>
@@ -246,7 +243,7 @@ export default function PricingPage() {
                   <tr className="border-b border-ink-rule">
                     <th className="py-4 px-4 font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Feature</th>
                     <th className="px-4 py-4 text-center font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Free</th>
-                    <th className="px-4 py-4 text-center font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-amber-deep">Developer</th>
+                    <th className="px-4 py-4 text-center font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Developer</th>
                     <th className="px-4 py-4 text-center font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Growth</th>
                     <th className="px-4 py-4 text-center font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Enterprise</th>
                   </tr>
@@ -276,7 +273,7 @@ export default function PricingPage() {
                         <td key={i} className="px-4 py-3.5 text-center text-sm">
                           {typeof val === 'boolean' ? (
                             val ? (
-                              <Check className="mx-auto h-5 w-5 text-emerald-800" aria-label="Included" />
+                              <Check className="mx-auto h-5 w-5 text-amber-deep" aria-label="Included" />
                             ) : (
                               <X className="mx-auto h-5 w-5 text-ink-whisper" aria-label="Not included" />
                             )

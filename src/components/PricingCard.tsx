@@ -160,19 +160,19 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
   return (
     <div
       className={cn(
-        'group relative flex flex-col  p-7 lg:p-8 transition-all duration-300',
+        'group relative flex flex-col p-7 lg:p-8 transition-all duration-300',
         highlighted
-          ? 'bg-paper-sub ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/5 md:-mt-4 md:mb-4'
-          : 'bg-paper-sub ring-1 ring-ink-rule hover:ring-ink-rule hover:bg-paper-sub'
+          ? 'bg-paper-sub ring-2 ring-amber-deep/40 md:-mt-4 md:mb-4'
+          : 'bg-paper-sub ring-1 ring-ink-rule'
       )}
     >
-      {/* Highlighted glow */}
+      {/* Highlighted glow — amber-deep at low opacity, on-canon */}
       {highlighted && (
         <div
-          className="absolute inset-0  pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
           style={{
-            background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%)',
+            background: 'radial-gradient(ellipse at 50% 0%, rgba(133,79,8,0.06) 0%, transparent 60%)',
           }}
         />
       )}
@@ -180,7 +180,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
       {/* Badge */}
       {highlighted && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center  bg-amber-500 px-3.5 py-1 text-xs font-semibold text-ink shadow-md shadow-amber-500/20">
+          <span className="inline-flex items-center bg-amber-deep px-3.5 py-1 text-xs font-semibold text-cream">
             Most Popular
           </span>
         </div>
@@ -210,7 +210,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           <p className="mt-1 text-sm text-ink-whisper">Free and open source</p>
         )}
         {isPaid && billingPeriod === 'yearly' && savingsPercent > 0 && (
-          <p className="mt-1.5 text-sm font-medium text-emerald-800">
+          <p className="mt-1.5 text-sm font-medium text-amber-deep">
             Save {savingsPercent}% vs monthly
           </p>
         )}
@@ -224,9 +224,9 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
               onClick={handleUpgrade}
               disabled={loading || isSigningIn}
               className={cn(
-                'w-full px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed',
+                'w-full px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed',
                 highlighted
-                  ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20 active:bg-amber-600'
+                  ? 'bg-oxblood text-cream hover:bg-oxblood/90 active:bg-oxblood/80'
                   : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule active:bg-paper-sub',
               )}
             >
@@ -256,7 +256,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
         ) : (
           <Link
             href="/#scan"
-            className="block w-full  px-5 py-3 text-sm font-semibold text-center text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
+            className="block w-full px-5 py-3 text-sm font-semibold text-center text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep"
           >
             {ctaText}
           </Link>
@@ -272,7 +272,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           <li key={feature.label} className="flex items-start gap-2.5 text-sm">
             {feature.included ? (
               <Check
-                className="mt-0.5 h-4 w-4 shrink-0 text-emerald-800"
+                className="mt-0.5 h-4 w-4 shrink-0 text-amber-deep"
                 aria-hidden="true"
               />
             ) : (

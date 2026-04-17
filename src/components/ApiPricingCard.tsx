@@ -148,29 +148,21 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
   return (
     <div
       className={cn(
-        'group relative flex flex-col  p-6 lg:p-7 transition-all duration-300',
+        'group relative flex flex-col p-6 lg:p-7 transition-all duration-300',
         highlighted
-          ? 'bg-paper-sub ring-2 ring-amber-500/50 shadow-lg shadow-amber-500/5'
-          : 'bg-paper-sub ring-1 ring-ink-rule hover:ring-ink-rule hover:bg-paper-sub'
+          ? 'bg-paper-sub ring-2 ring-amber-deep/40'
+          : 'bg-paper-sub ring-1 ring-ink-rule'
       )}
     >
-      {/* Highlighted glow */}
+      {/* Highlighted glow — amber-deep at low opacity, on-canon */}
       {highlighted && (
         <div
-          className="absolute inset-0  pointer-events-none"
+          className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
           style={{
-            background: 'radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.08) 0%, transparent 60%)',
+            background: 'radial-gradient(ellipse at 50% 0%, rgba(133,79,8,0.06) 0%, transparent 60%)',
           }}
         />
-      )}
-
-      {highlighted && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-          <span className="inline-flex items-center  bg-amber-500 px-3 py-0.5 text-xs font-semibold text-ink shadow-md shadow-amber-500/20">
-            Most Popular
-          </span>
-        </div>
       )}
 
       <div className="mb-5">
@@ -192,7 +184,7 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
           )}
         </div>
         {savingsPercent > 0 && (
-          <p className="mt-1.5 text-xs font-medium text-emerald-800">
+          <p className="mt-1.5 text-xs font-medium text-amber-deep">
             Save {savingsPercent}% vs monthly
           </p>
         )}
@@ -203,10 +195,10 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
         {isEnterprise ? (
           <a
             href="mailto:sales@allowanceguard.com?subject=Enterprise API Inquiry"
-            className="flex items-center justify-center w-full  px-4 py-2.5 text-sm font-semibold text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200"
+            className="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200"
           >
             <Mail className="mr-2 h-4 w-4" />
-            Contact Sales
+            Contact sales
           </a>
         ) : isPaid ? (
           <>
@@ -214,9 +206,9 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
               onClick={handleUpgrade}
               disabled={loading || isSigningIn}
               className={cn(
-                'w-full px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 disabled:opacity-60 disabled:cursor-not-allowed',
+                'w-full px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep disabled:opacity-60 disabled:cursor-not-allowed',
                 highlighted
-                  ? 'bg-amber-500 text-ink hover:bg-amber-400 shadow-md shadow-amber-500/20'
+                  ? 'bg-oxblood text-cream hover:bg-oxblood/90'
                   : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule',
               )}
             >
@@ -246,9 +238,9 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
         ) : (
           <a
             href="/account/api-keys"
-            className="block w-full  px-4 py-2.5 text-sm font-semibold text-center text-ink-soft bg-paper-sub hover:bg-paper-sub ring-1 ring-ink-rule transition-all duration-200"
+            className="block w-full px-4 py-2.5 text-sm font-semibold text-center text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200"
           >
-            Get Free API Key
+            Get free API key
           </a>
         )}
       </div>
@@ -263,7 +255,7 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
             <Check
               className={cn(
                 'mt-0.5 h-4 w-4 shrink-0',
-                feature.included ? 'text-emerald-800' : 'text-ink-whisper'
+                feature.included ? 'text-amber-deep' : 'text-ink-whisper'
               )}
               aria-hidden="true"
             />

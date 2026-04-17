@@ -110,7 +110,7 @@ function CellValue({ value }: { value: string | boolean }) {
     return <span className="text-sm font-medium text-ink">{value}</span>
   }
   if (value) {
-    return <Check className="mx-auto h-5 w-5 text-emerald-800" aria-label="Included" />
+    return <Check className="mx-auto h-5 w-5 text-amber-deep" aria-label="Included" />
   }
   return <X className="mx-auto h-5 w-5 text-ink-whisper" aria-label="Not included" />
 }
