@@ -23,6 +23,7 @@ import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 import PricingCard from '@/components/PricingCard'
 import PricingTable from '@/components/PricingTable'
 import ApiPricingCard from '@/components/ApiPricingCard'
+import { API_PRICES, formatPrice } from '@/lib/plans'
 
 type BillingPeriod = 'monthly' | 'yearly'
 
@@ -257,8 +258,18 @@ export default function PricingPage() {
                     {
                       label: 'Price',
                       values: billingPeriod === 'yearly'
-                        ? ['Free', '$374/yr', '$1,490/yr', 'Custom']
-                        : ['Free', '$39/mo', '$149/mo', 'Custom'],
+                        ? [
+                            'Free',
+                            `${formatPrice(API_PRICES.api_developer.yearlyPence)}/yr`,
+                            `${formatPrice(API_PRICES.api_growth.yearlyPence)}/yr`,
+                            'Custom',
+                          ]
+                        : [
+                            'Free',
+                            `${formatPrice(API_PRICES.api_developer.monthlyPence)}/mo`,
+                            `${formatPrice(API_PRICES.api_growth.monthlyPence)}/mo`,
+                            'Custom',
+                          ],
                     },
                   ].map((row, idx) => (
                     <tr

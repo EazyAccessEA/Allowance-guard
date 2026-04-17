@@ -1,9 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Check, Mail, Loader2 } from 'lucide-react'
-import { useAccount } from 'wagmi'
-import { useAppKit } from '@reown/appkit/react'
 import { cn } from '@/lib/utils'
 import {
   type ApiPlan,
@@ -12,8 +10,7 @@ import {
   getPlanDisplayName,
   formatPrice,
 } from '@/lib/plans'
-import { trackClientEvent } from '@/lib/analytics'
-import { useSiweSignIn, SiweCancelledError } from '@/hooks/useSiweSignIn'
+import { useUpgradeFlow } from '@/hooks/useUpgradeFlow'
 
 type ApiPaidPlan = 'api_developer' | 'api_growth'
 type ApiCardPlan = 'api_free' | ApiPaidPlan | 'api_enterprise'
@@ -83,67 +80,11 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
     ? getApiYearlySavingsPercent(plan as ApiPaidPlan)
     : 0
 
-  const { isConnected } = useAccount()
-  const { open } = useAppKit()
-  const { signIn, isSigningIn } = useSiweSignIn({
-    statement: `Sign in to subscribe to AllowanceGuard ${displayName}.`,
+  const { upgrade, loading, isSigningIn, error, isConnected } = useUpgradeFlow({
+    plan,
+    billingPeriod,
+    displayName,
   })
-
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  async function postCheckout(): Promise<{ ok: boolean; url?: string; error?: string; status: number }> {
-    const res = await fetch('/api/billing/create-subscription', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan, interval: billingPeriod }),
-    })
-    const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string }
-    return { ok: res.ok, url: data.url, error: data.error, status: res.status }
-  }
-
-  async function handleUpgrade() {
-    if (loading || isSigningIn) return
-    setError(null)
-
-    if (!isConnected) {
-      trackClientEvent('upgrade_clicked', { plan, billingPeriod, stage: 'connect_wallet' })
-      try { await open() } catch { /* user closed the modal */ }
-      return
-    }
-
-    setLoading(true)
-    trackClientEvent('upgrade_clicked', { plan, billingPeriod })
-
-    try {
-      let result = await postCheckout()
-
-      if (result.status === 401) {
-        try {
-          await signIn()
-        } catch (signErr) {
-          if (signErr instanceof SiweCancelledError) {
-            setError('Signature cancelled. Try again when ready.')
-          } else {
-            setError(signErr instanceof Error ? signErr.message : 'Sign-in failed.')
-          }
-          setLoading(false)
-          return
-        }
-        result = await postCheckout()
-      }
-
-      if (result.ok && result.url) {
-        window.location.href = result.url
-        return
-      }
-      setError(result.error ?? 'Could not start checkout. Please try again.')
-      setLoading(false)
-    } catch {
-      setError('Network error. Please try again.')
-      setLoading(false)
-    }
-  }
 
   return (
     <div
@@ -203,7 +144,7 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
         ) : isPaid ? (
           <>
             <button
-              onClick={handleUpgrade}
+              onClick={upgrade}
               disabled={loading || isSigningIn}
               className={cn(
                 'w-full px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep disabled:opacity-60 disabled:cursor-not-allowed',
