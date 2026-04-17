@@ -46,7 +46,7 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
   {
     question: 'Do you accept cryptocurrency?',
     answer:
-      'Crypto payments are coming soon. We\u2019re integrating stablecoin (USDC) payments and will announce when they\u2019re available. Currently, all subscriptions are processed securely via Stripe (cards).',
+      'Not currently. All subscriptions are processed via Stripe (cards). Stablecoin payments are under evaluation; we\u2019ll add them when there\u2019s clear demand from paying customers, and we\u2019ll be honest about when (or whether) that ships.',
   },
   {
     question: 'Do you offer refunds?',

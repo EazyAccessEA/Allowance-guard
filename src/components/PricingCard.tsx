@@ -22,9 +22,9 @@ interface PricingCardProps {
 type PaidPlan = Exclude<ConsumerPlan, 'free'>
 
 const PLAN_DESCRIPTIONS: Record<ConsumerPlan, string> = {
-  free: 'Scan, score, and revoke — open source, no account required.',
-  pro: 'Unlimited wallets, continuous monitoring, and batch revoke.',
-  sentinel: 'Team dashboards, automated rules, and compliance audit logs.',
+  free: 'The open-source scanner. Up to 3 wallets, no account.',
+  pro: 'For active DeFi users tracking everything they sign.',
+  sentinel: 'For teams treating wallet security as compliance.',
 }
 
 interface FeatureItem {

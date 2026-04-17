@@ -163,7 +163,7 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
                   <Loader2 className="w-4 h-4 animate-spin" />
                   Redirecting…
                 </span>
-              ) : !isConnected ? `Connect wallet to subscribe` : `Get ${displayName}`}
+              ) : !isConnected ? `Connect wallet to subscribe` : `Upgrade to ${displayName}`}
             </button>
             {isConnected && (
               <p className="mt-2 text-[11px] text-ink-whisper text-center">
