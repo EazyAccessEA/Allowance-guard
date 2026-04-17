@@ -63,12 +63,17 @@ function BillingToggle({
   onChange: (period: BillingPeriod) => void
 }) {
   return (
-    <div className="inline-flex items-center gap-1 bg-paper-sub border border-ink-rule p-1">
+    <div
+      role="group"
+      aria-label="Billing period"
+      className="inline-flex items-center gap-1 bg-paper-sub border border-ink-rule p-1"
+    >
       <button
         type="button"
         onClick={() => onChange('monthly')}
+        aria-pressed={billingPeriod === 'monthly'}
         className={cn(
-          'px-4 py-2 text-sm font-medium font-plex transition-all duration-150',
+          'px-4 py-2 text-sm font-medium font-plex transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink',
           billingPeriod === 'monthly'
             ? 'bg-ink text-paper'
             : 'text-ink-muted hover:text-ink'
@@ -79,8 +84,9 @@ function BillingToggle({
       <button
         type="button"
         onClick={() => onChange('yearly')}
+        aria-pressed={billingPeriod === 'yearly'}
         className={cn(
-          'px-4 py-2 text-sm font-medium font-plex transition-all duration-150',
+          'px-4 py-2 text-sm font-medium font-plex transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink',
           billingPeriod === 'yearly'
             ? 'bg-ink text-paper'
             : 'text-ink-muted hover:text-ink'
@@ -239,7 +245,8 @@ export default function PricingPage() {
               API feature comparison.
             </h2>
             <div className="w-full overflow-x-auto bg-paper-sub border border-ink-rule p-1">
-              <table className="w-full min-w-[600px] border-collapse text-left">
+              <table className="w-full min-w-[600px] border-collapse text-left" aria-label="API plan feature comparison">
+                <caption className="sr-only">Comparison of API plan features and prices across Free, Developer, Growth, and Enterprise tiers.</caption>
                 <thead>
                   <tr className="border-b border-ink-rule">
                     <th className="py-4 px-4 font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Feature</th>
