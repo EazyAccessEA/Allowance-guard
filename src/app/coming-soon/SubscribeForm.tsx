@@ -25,13 +25,30 @@ const INTERESTS = [
 ] as const
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
+type SuccessKind = 'new' | 'resubscribed' | 'already_subscribed'
 
 const TURNSTILE_ENABLED = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
+
+const SUCCESS_COPY: Record<SuccessKind, { title: string; body: string }> = {
+  new: {
+    title: "You're on the list.",
+    body: "Check your inbox for a welcome email. We'll be in touch when there's news worth sharing.",
+  },
+  resubscribed: {
+    title: 'Welcome back.',
+    body: "You're back on the list. Check your inbox for a welcome email.",
+  },
+  already_subscribed: {
+    title: "You're already on the list.",
+    body: "No need to sign up again. Didn't get the welcome email? Check your spam folder, or email support@allowanceguard.com.",
+  },
+}
 
 export default function SubscribeForm() {
   const [email, setEmail] = useState('')
   const [interest, setInterest] = useState('general')
   const [status, setStatus] = useState<Status>('idle')
+  const [successKind, setSuccessKind] = useState<SuccessKind>('new')
   const [errorMsg, setErrorMsg] = useState('')
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -78,6 +95,8 @@ export default function SubscribeForm() {
         throw new Error(data.error || `Error ${res.status}`)
       }
 
+      const data = (await res.json().catch(() => ({}))) as { status?: SuccessKind }
+      setSuccessKind(data.status ?? 'new')
       setStatus('success')
       setEmail('')
     } catch (err) {
@@ -87,6 +106,7 @@ export default function SubscribeForm() {
   }
 
   if (status === 'success') {
+    const copy = SUCCESS_COPY[successKind]
     return (
       <div
         className="paper-card p-8 sm:p-10 text-center"
@@ -99,10 +119,8 @@ export default function SubscribeForm() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="font-display-tight text-ink text-xl mb-2">You&apos;re on the list.</h3>
-        <p className="font-plex text-ink-muted leading-relaxed">
-          Check your inbox for a welcome email. We&apos;ll be in touch when there&apos;s news worth sharing.
-        </p>
+        <h3 className="font-display-tight text-ink text-xl mb-2">{copy.title}</h3>
+        <p className="font-plex text-ink-muted leading-relaxed">{copy.body}</p>
       </div>
     )
   }

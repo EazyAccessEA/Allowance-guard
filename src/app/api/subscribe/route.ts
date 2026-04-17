@@ -61,9 +61,9 @@ export async function POST(req: Request) {
       )
     }
 
-    // Honeypot tripped — silently accept
+    // Honeypot tripped — silently accept, mimic new-signup response shape
     if (parsed.data.website && parsed.data.website.length > 0) {
-      return NextResponse.json({ ok: true })
+      return NextResponse.json({ ok: true, status: 'new' as const })
     }
 
     const { email, interest, referrer } = parsed.data
@@ -94,10 +94,12 @@ export async function POST(req: Request) {
           console.error('[subscribe] welcome email failed (resubscribe)', err)
         })
 
-        return NextResponse.json({ ok: true, resubscribed: true })
+        return NextResponse.json({ ok: true, status: 'resubscribed' as const })
       }
-      // Already subscribed — respond success (don't leak info)
-      return NextResponse.json({ ok: true })
+      // Already subscribed — tell the user honestly. A marketing waitlist
+      // is not an authentication surface; the "don't leak info" pattern
+      // belongs on login / password-reset endpoints, not here.
+      return NextResponse.json({ ok: true, status: 'already_subscribed' as const })
     }
 
     // Insert new subscriber
@@ -111,7 +113,7 @@ export async function POST(req: Request) {
       console.error('[subscribe] welcome email failed', err)
     })
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, status: 'new' as const })
   } catch (err) {
     console.error('[subscribe] failed', err)
     return NextResponse.json(
