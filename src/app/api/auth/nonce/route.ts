@@ -21,7 +21,14 @@ function getIp(req: Request): string {
  */
 export async function GET(req: Request) {
   const ip = getIp(req)
-  const rl = await limitHit(`siwe-nonce:${ip}`, 60, 30)
+  // 120/min per IP. Raised from 30 after the Pro upgrade flow hit 429s
+  // on a single user's IP while debugging. A home/office NAT shares one
+  // IP across multiple users, and a wallet-reject-retry costs two
+  // nonces per attempt — 30/min was far too tight for a gate real users
+  // cross 1–2 times in their entire session lifetime. The nonce table
+  // stays safe: each nonce is single-use and expires, so even a 300/min
+  // bucket wouldn't pollute it meaningfully.
+  const rl = await limitHit(`siwe-nonce:${ip}`, 60, 120)
   if (!rl.allowed) {
     return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
   }
