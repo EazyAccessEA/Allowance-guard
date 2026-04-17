@@ -5,6 +5,7 @@ import Section from '@/components/ui/Section'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import SaveWalletButton from '@/components/SaveWalletButton'
 import dynamic from 'next/dynamic'
 import { 
   DashboardSkeleton, 
@@ -153,7 +154,13 @@ export default function AppArea({
               </div>
               <p className="mobbin-body text-ink-muted">Monitor and manage your wallet&apos;s token approvals</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2 items-start">
+              {currentWallet && (
+                <SaveWalletButton
+                  walletAddress={currentWallet}
+                  variant="subtle"
+                />
+              )}
               <Button
                 onClick={onRefresh}
                 variant="secondary"
