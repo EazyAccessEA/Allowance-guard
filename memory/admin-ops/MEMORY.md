@@ -12,6 +12,7 @@ Scoped memory for the Allowance Guard Admin / Operations managed-agent system. L
 | `vendor-register.md` | Every paid vendor — plan, monthly cost, lock-in, alternatives |
 | `finance-baseline.md` | Current cash + burn + runway formula + grant pipeline source |
 | `ops-calendar.md` | Recurring deadlines — grant rounds, vendor renewals, audit dates, regulatory filings |
+| `billing-sops.md` | Operator playbooks: refunds, Stripe portal config, plan-change cleanup verification |
 
 Incident post-mortems append to `memory/product-engineering/incident-history.md` (existing file owned by engineering).
 
