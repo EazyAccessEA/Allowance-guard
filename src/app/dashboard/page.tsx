@@ -51,12 +51,9 @@ export default function DashboardPage() {
           <p className="text-ink-muted mb-6">
             {error.message}
           </p>
-          <button
-            onClick={resetError}
-            className="bg-primary-700 text-ink px-6 py-2 rounded-lg hover:bg-primary-800 transition-colors"
-          >
+          <Button onClick={resetError} variant="primary">
             Try Again
-          </button>
+          </Button>
         </div>
       </div>
     )
@@ -65,7 +62,7 @@ export default function DashboardPage() {
   // Not connected — prompt to connect
   if (isHydrated && !isConnected) {
     return (
-      <div className="min-h-screen bg-paper dark:bg-paper">
+      <div className="min-h-screen bg-paper">
         <Section className="py-24">
           <Container>
             <div className="max-w-lg mx-auto text-center">
@@ -92,7 +89,7 @@ export default function DashboardPage() {
   // Connected but no wallet selected yet (brief loading state)
   if (!isHydrated || !selectedWallet) {
     return (
-      <div className="min-h-screen bg-paper dark:bg-paper flex items-center justify-center">
+      <div className="min-h-screen bg-paper flex items-center justify-center">
         <div className="animate-pulse text-ink-muted">
           Loading dashboard…
         </div>
@@ -101,9 +98,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-paper dark:bg-paper">
+    <div className="min-h-screen bg-paper">
       {/* Scan bar */}
-      <Section className="py-6 bg-paper-sub dark:bg-paper-deep border-b border-ink-rule">
+      <Section className="py-6 bg-paper-sub border-b border-ink-rule">
         <Container>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>

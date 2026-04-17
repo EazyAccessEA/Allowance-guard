@@ -43,8 +43,8 @@ export default function EmptyState({
         className={cn(
           'flex h-16 w-16 items-center justify-center rounded-2xl mb-5',
           positive
-            ? 'bg-semantic-success-50 dark:bg-semantic-success-900/20 text-semantic-success-700'
-            : 'bg-paper-sub text-neutral-400 dark:text-ink-whisper',
+            ? 'bg-paper-sub border border-semantic-success-600/40 text-semantic-success-700'
+            : 'bg-paper-sub border border-ink-rule text-ink-whisper',
         )}
       >
         {icon}
@@ -54,7 +54,7 @@ export default function EmptyState({
         className={cn(
           'text-lg font-semibold mb-2',
           positive
-            ? 'text-semantic-success-700 dark:text-semantic-success-300'
+            ? 'text-semantic-success-700'
             : 'text-ink',
         )}
       >
@@ -69,7 +69,7 @@ export default function EmptyState({
         action.href ? (
           <Link
             href={action.href}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-ink shadow-sm hover:bg-primary-800 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-amber-deep px-4 py-2 text-sm font-medium text-paper shadow-sm hover:bg-amber-deep/90 transition-colors"
           >
             {action.label}
             <ArrowRight className="h-3.5 w-3.5" />
@@ -84,7 +84,7 @@ export default function EmptyState({
       {upgradePlan && (
         <Link
           href="/pricing"
-          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-amber-deep dark:text-amber-deep hover:text-primary-800 transition-colors"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-amber-deep hover:underline transition-colors"
         >
           Upgrade to {upgradePlan === 'sentinel' ? 'Sentinel' : 'Pro'} to unlock
           <ArrowRight className="h-3.5 w-3.5" />

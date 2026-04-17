@@ -47,7 +47,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       }
 
       return (
-        <Card className="border-semantic-error-200 dark:border-semantic-error-800">
+        <Card className="border-crimson-paper/40">
           <CardContent className="py-8 text-center">
             <AlertTriangle className="h-10 w-10 text-semantic-error-700 mx-auto mb-4" />
             <h3 className="font-semibold text-ink mb-2">
@@ -58,7 +58,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                 'An unexpected error occurred. Please try again or refresh the page.'}
             </p>
             {this.state.error && (
-              <p className="text-xs font-mono text-ink-muted dark:text-ink-whisper mb-4 max-w-md mx-auto break-all">
+              <p className="text-xs font-mono text-ink-whisper mb-4 max-w-md mx-auto break-all">
                 {this.state.error.message}
               </p>
             )}

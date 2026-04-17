@@ -92,10 +92,10 @@ export default function AllowanceTable({
   if (!data?.length) {
     return (
       <div className="text-center py-12" role="region" aria-label="No allowances found">
-        <div className="w-16 h-16 bg-semantic-success-50 dark:bg-semantic-success-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4" aria-hidden="true">
+        <div className="w-16 h-16 bg-paper-sub border border-semantic-success-600/40 rounded-2xl flex items-center justify-center mx-auto mb-4" aria-hidden="true">
           <ShieldCheck className="w-8 h-8 text-semantic-success-700" />
         </div>
-        <h3 className="mobbin-heading-3 text-semantic-success-700 dark:text-semantic-success-300 mb-2">No active approvals</h3>
+        <h3 className="mobbin-heading-3 text-semantic-success-700 mb-2">No active approvals</h3>
         <p className="mobbin-body text-ink-muted mb-6 max-w-md mx-auto">
           Great news — your wallet has no token approvals. You&apos;re safe! Run a scan to double-check across all supported chains.
         </p>
@@ -175,7 +175,7 @@ export default function AllowanceTable({
             key={i}
             className={`rounded-xl border p-4 transition-colors duration-100 ${
               sel[keyOf(r)]
-                ? 'border-primary-300 bg-primary-50/50 dark:border-primary-700 dark:bg-primary-900/10'
+                ? 'border-amber-deep bg-paper-sub'
                 : 'border-ink-rule bg-paper-deep/60'
             }`}
           >
@@ -185,7 +185,7 @@ export default function AllowanceTable({
                   type="checkbox"
                   checked={!!sel[keyOf(r)]}
                   onChange={() => toggle(r)}
-                  className="rounded border-ink-rule dark:border-secondary-600 text-amber-deep dark:text-amber-deep focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-paper-sub min-w-[18px] min-h-[18px]"
+                  className="rounded border-ink-rule text-amber-deep focus:ring-amber-deep min-w-[18px] min-h-[18px]"
                   aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval`}
                 />
                 <div>
@@ -254,11 +254,11 @@ export default function AllowanceTable({
       </div>
 
       {/* Desktop Table Layout */}
-      <div className="hidden md:block border border-ink-rule rounded-xl overflow-hidden bg-paper-deep/60 backdrop-blur-xs shadow-subtle dark:shadow-dark-subtle">
+      <div className="hidden md:block border border-ink-rule rounded-xl overflow-hidden bg-paper-deep/60 shadow-subtle">
         <div className="overflow-x-auto">
           <table className="w-full text-sm" role="table" aria-label="Token allowances">
             <caption className="sr-only">Token approval allowances with risk assessment and management options</caption>
-            <thead className="bg-paper-sub/80 dark:bg-paper-sub/80 border-b border-ink-rule">
+            <thead className="bg-paper-sub border-b border-ink-rule">
               <tr>
                 <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted w-10">
                   <span className="sr-only">Select for bulk action</span>
@@ -271,14 +271,14 @@ export default function AllowanceTable({
                 <th scope="col" className="px-4 py-3.5 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Risk</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border-primary dark:divide-secondary-800">
+            <tbody className="divide-y divide-ink-rule">
               {data.map((r, i) => (
                 <tr
                   key={i}
                   className={`transition-colors duration-100
                     ${sel[keyOf(r)]
-                      ? 'bg-primary-50/50 dark:bg-primary-900/10'
-                      : 'hover:bg-paper-sub dark:hover:bg-paper-sub'
+                      ? 'bg-paper-sub'
+                      : 'hover:bg-paper-sub'
                     }`}
                 >
                   <td className="px-4 py-3.5">
@@ -286,7 +286,7 @@ export default function AllowanceTable({
                       type="checkbox"
                       checked={!!sel[keyOf(r)]}
                       onChange={() => toggle(r)}
-                      className="rounded border-ink-rule dark:border-secondary-600 text-amber-deep dark:text-amber-deep focus:ring-primary-700 dark:focus:ring-primary-500 dark:bg-paper-sub"
+                      className="rounded border-ink-rule text-amber-deep focus:ring-amber-deep"
                       aria-label={`Select ${r.token_symbol || r.token_name || 'Unknown'} token approval for ${r.spender_label || 'Unknown Contract'}`}
                     />
                   </td>

@@ -1,9 +1,10 @@
 'use client'
 
+/**
+ * API Dashboard — unified Ledger canon (ADR 0007).
+ */
+
 import React, { useCallback, useEffect, useState } from 'react'
-import Section from '@/components/ui/Section'
-import Container from '@/components/ui/Container'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import PlanBadge from '@/components/PlanBadge'
@@ -46,13 +47,40 @@ function CopyButton({ text }: { text: string }) {
   }
   return (
     <button
+      type="button"
       onClick={copy}
-      className="inline-flex items-center gap-1 text-xs text-ink-muted hover:text-amber-deep transition-colors"
+      className="inline-flex items-center gap-1 font-plex text-xs text-ink-muted hover:text-amber-deep transition-colors"
       title="Copy to clipboard"
     >
       {copied ? <Check className="h-3.5 w-3.5 text-semantic-success-700" /> : <Copy className="h-3.5 w-3.5" />}
       {copied ? 'Copied!' : 'Copy'}
     </button>
+  )
+}
+
+function UsageStatCard({
+  label,
+  children,
+  loading,
+}: {
+  label: string
+  children: React.ReactNode
+  loading: boolean
+}) {
+  return (
+    <div className="paper-card p-5">
+      {loading ? (
+        <div className="animate-pulse space-y-2">
+          <div className="h-4 bg-paper-deep w-1/2" />
+          <div className="h-8 bg-paper-deep w-2/3" />
+        </div>
+      ) : (
+        <>
+          <p className="font-plex text-xs text-ink-muted">{label}</p>
+          {children}
+        </>
+      )}
+    </div>
   )
 }
 
@@ -155,13 +183,13 @@ export default function ApiDashboardPage() {
     : 0
 
   return (
-    <Section size="sm" background="muted">
-      <Container size="lg">
+    <main className="min-h-screen paper grain">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="space-y-8">
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-amber-deep transition-colors"
+            className="inline-flex items-center gap-1.5 font-plex text-sm text-ink-muted hover:text-amber-deep transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -170,8 +198,8 @@ export default function ApiDashboardPage() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-ink">API Dashboard</h1>
-              <p className="text-sm text-ink-muted mt-1">
+              <h1 className="font-display-tight text-2xl text-ink">API Dashboard</h1>
+              <p className="font-plex text-sm text-ink-muted mt-1">
                 Manage your API keys and monitor usage.
               </p>
             </div>
@@ -179,212 +207,185 @@ export default function ApiDashboardPage() {
           </div>
 
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20 px-4 py-3 text-sm text-red-700 dark:text-red-800">
+            <div className="border border-crimson-paper/40 bg-paper-sub px-4 py-3 font-plex text-sm text-crimson-paper">
               {error}
-              <button onClick={() => setError(null)} className="ml-2 underline">Dismiss</button>
+              <button
+                type="button"
+                onClick={() => setError(null)}
+                className="ml-2 underline hover:text-ink transition-colors"
+              >
+                Dismiss
+              </button>
             </div>
           )}
 
           {/* New key secret display */}
           {newKeySecret && (
-            <Card className="border-semantic-success-300 bg-semantic-success-50 dark:bg-semantic-success-900/20">
-              <CardContent className="py-4">
-                <p className="text-sm font-semibold text-semantic-success-700 dark:text-semantic-success-300 mb-2">
-                  API Key Created! Copy it now — it won&apos;t be shown again.
-                </p>
-                <div className="flex items-center gap-3 bg-paper-sub rounded-md px-3 py-2 border">
-                  <code className="flex-1 text-sm font-mono text-ink break-all">
-                    {newKeySecret}
-                  </code>
-                  <CopyButton text={newKeySecret} />
-                </div>
-                <button
-                  onClick={() => setNewKeySecret(null)}
-                  className="mt-2 text-xs text-ink-muted underline"
-                >
-                  Dismiss
-                </button>
-              </CardContent>
-            </Card>
+            <div className="paper-card border-l-2 border-amber-deep p-4">
+              <p className="font-plex text-sm font-semibold text-ink mb-2">
+                API Key Created — copy it now, it won&apos;t be shown again.
+              </p>
+              <div className="flex items-center gap-3 bg-paper border border-ink-rule px-3 py-2">
+                <code className="flex-1 font-mono text-sm text-ink break-all">
+                  {newKeySecret}
+                </code>
+                <CopyButton text={newKeySecret} />
+              </div>
+              <button
+                type="button"
+                onClick={() => setNewKeySecret(null)}
+                className="mt-2 font-plex text-xs text-ink-muted underline hover:text-ink transition-colors"
+              >
+                Dismiss
+              </button>
+            </div>
           )}
 
           {/* Usage Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="py-5">
-                {loadingUsage ? (
-                  <div className="animate-pulse space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-1/2" />
-                    <div className="h-8 bg-gray-200 rounded w-2/3" />
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-xs text-ink-muted">Calls Today</p>
-                    <p className="text-2xl font-bold text-ink mt-1">
-                      {usage?.apiCallsToday.toLocaleString() ?? 0}
-                      <span className="text-sm font-normal text-ink-muted ml-1">
-                        / {usage?.apiCallsLimit === -1 ? '∞' : usage?.apiCallsLimit.toLocaleString()}
-                      </span>
-                    </p>
-                    {usage && usage.apiCallsLimit > 0 && (
-                      <div className="mt-2 h-1.5 w-full rounded-full bg-gray-100 overflow-hidden">
-                        <div
-                          className={cn(
-                            'h-full rounded-full transition-all',
-                            todayPct > 85 ? 'bg-semantic-error-500' : todayPct > 60 ? 'bg-semantic-warning-500' : 'bg-semantic-success-500'
-                          )}
-                          style={{ width: `${Math.min(todayPct, 100)}%` }}
-                        />
-                      </div>
+            <UsageStatCard label="Calls Today" loading={loadingUsage}>
+              <p className="font-display-tight text-2xl text-ink mt-1">
+                {usage?.apiCallsToday.toLocaleString() ?? 0}
+                <span className="font-plex text-sm font-normal text-ink-muted ml-1">
+                  / {usage?.apiCallsLimit === -1 ? '∞' : usage?.apiCallsLimit.toLocaleString()}
+                </span>
+              </p>
+              {usage && usage.apiCallsLimit > 0 && (
+                <div className="mt-2 h-1.5 w-full overflow-hidden bg-paper-deep border border-ink-rule">
+                  <div
+                    className={cn(
+                      'h-full transition-all',
+                      todayPct > 85
+                        ? 'bg-semantic-error-500'
+                        : todayPct > 60
+                          ? 'bg-semantic-warning-500'
+                          : 'bg-semantic-success-600',
                     )}
-                  </>
-                )}
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="py-5">
-                {loadingUsage ? (
-                  <div className="animate-pulse space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-1/2" />
-                    <div className="h-8 bg-gray-200 rounded w-2/3" />
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-xs text-ink-muted">Calls This Month</p>
-                    <p className="text-2xl font-bold text-ink mt-1">
-                      {usage?.apiCallsThisMonth.toLocaleString() ?? 0}
-                    </p>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="py-5">
-                {loadingUsage ? (
-                  <div className="animate-pulse space-y-2">
-                    <div className="h-4 bg-gray-200 rounded w-1/2" />
-                    <div className="h-8 bg-gray-200 rounded w-2/3" />
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-xs text-ink-muted">Rate Limit</p>
-                    <p className="text-2xl font-bold text-ink mt-1">
-                      {usage?.rateLimitPerMinute === -1
-                        ? 'Unlimited'
-                        : `${usage?.rateLimitPerMinute ?? 10}/min`}
-                    </p>
-                  </>
-                )}
-              </CardContent>
-            </Card>
+                    style={{ width: `${Math.min(todayPct, 100)}%` }}
+                  />
+                </div>
+              )}
+            </UsageStatCard>
+            <UsageStatCard label="Calls This Month" loading={loadingUsage}>
+              <p className="font-display-tight text-2xl text-ink mt-1">
+                {usage?.apiCallsThisMonth.toLocaleString() ?? 0}
+              </p>
+            </UsageStatCard>
+            <UsageStatCard label="Rate Limit" loading={loadingUsage}>
+              <p className="font-display-tight text-2xl text-ink mt-1">
+                {usage?.rateLimitPerMinute === -1
+                  ? 'Unlimited'
+                  : `${usage?.rateLimitPerMinute ?? 10}/min`}
+              </p>
+            </UsageStatCard>
           </div>
 
           {/* API Keys */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <Key className="h-5 w-5" />
-                  API Keys
-                </CardTitle>
-                <Button onClick={() => setShowCreate(true)} variant="primary" size="sm" className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
-                  Create Key
-                </Button>
+          <div className="paper-card p-6 sm:p-7">
+            <div className="mb-5 flex items-center justify-between">
+              <h2 className="inline-flex items-center gap-2 font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
+                <Key className="h-4 w-4" />
+                API Keys
+              </h2>
+              <Button
+                onClick={() => setShowCreate(true)}
+                variant="primary"
+                size="sm"
+                leftIcon={<Plus className="h-4 w-4" />}
+              >
+                Create Key
+              </Button>
+            </div>
+
+            {showCreate && (
+              <div className="mb-6 p-4 border border-ink-rule bg-paper-sub space-y-3">
+                <Input
+                  label="Key Name"
+                  value={newKeyName}
+                  onChange={(e) => setNewKeyName(e.target.value)}
+                  placeholder="e.g., Production, Staging"
+                />
+                <div className="flex gap-2">
+                  <Button onClick={handleCreate} variant="primary" size="sm" loading={creating}>
+                    Create
+                  </Button>
+                  <Button onClick={() => setShowCreate(false)} variant="ghost" size="sm">
+                    Cancel
+                  </Button>
+                </div>
               </div>
-            </CardHeader>
-            <CardContent>
-              {showCreate && (
-                <div className="mb-6 p-4 border border-ink-rule rounded-lg space-y-3">
-                  <Input
-                    label="Key Name"
-                    value={newKeyName}
-                    onChange={(e) => setNewKeyName(e.target.value)}
-                    placeholder="e.g., Production, Staging"
-                  />
-                  <div className="flex gap-2">
-                    <Button onClick={handleCreate} variant="primary" size="sm" loading={creating}>
-                      Create
-                    </Button>
-                    <Button onClick={() => setShowCreate(false)} variant="ghost" size="sm">
-                      Cancel
+            )}
+
+            {loadingKeys ? (
+              <div className="flex justify-center py-8">
+                <Loader2 className="h-5 w-5 animate-spin text-amber-deep" />
+              </div>
+            ) : keys.length === 0 ? (
+              <div className="text-center py-8">
+                <Key className="h-10 w-10 text-ink-whisper mx-auto mb-3" />
+                <p className="font-plex text-sm text-ink-muted mb-2">No API keys yet.</p>
+                <p className="font-plex text-xs text-ink-whisper">
+                  Create a key to start using the AllowanceGuard API.
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-ink-rule">
+                {keys.map((key) => (
+                  <div key={key.id} className="flex items-center justify-between py-4 first:pt-0 last:pb-0">
+                    <div>
+                      <p className="font-plex text-sm font-medium text-ink">{key.name}</p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <code className="font-mono text-xs text-ink-muted">
+                          {key.prefix}...
+                        </code>
+                        <CopyButton text={key.prefix} />
+                        <span className="font-plex text-xs text-ink-whisper">
+                          Created {new Date(key.createdAt).toLocaleDateString()}
+                        </span>
+                        {key.lastUsedAt && (
+                          <span className="font-plex text-xs text-ink-whisper">
+                            Last used {new Date(key.lastUsedAt).toLocaleDateString()}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <Button
+                      onClick={() => handleRevoke(key.id)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-ink-muted hover:text-crimson-paper"
+                      ariaLabel={`Revoke key ${key.name}`}
+                    >
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
-                </div>
-              )}
-
-              {loadingKeys ? (
-                <div className="flex justify-center py-8">
-                  <Loader2 className="h-5 w-5 animate-spin text-amber-deep" />
-                </div>
-              ) : keys.length === 0 ? (
-                <div className="text-center py-8">
-                  <Key className="h-10 w-10 text-neutral-300 dark:text-secondary-600 mx-auto mb-3" />
-                  <p className="text-sm text-ink-muted mb-2">No API keys yet.</p>
-                  <p className="text-xs text-ink-muted">
-                    Create a key to start using the AllowanceGuard API.
-                  </p>
-                </div>
-              ) : (
-                <div className="divide-y divide-border-primary">
-                  {keys.map((key) => (
-                    <div key={key.id} className="flex items-center justify-between py-4">
-                      <div>
-                        <p className="text-sm font-medium text-ink">{key.name}</p>
-                        <div className="flex items-center gap-3 mt-1">
-                          <code className="text-xs font-mono text-ink-muted">
-                            {key.prefix}...
-                          </code>
-                          <CopyButton text={key.prefix} />
-                          <span className="text-xs text-ink-muted">
-                            Created {new Date(key.createdAt).toLocaleDateString()}
-                          </span>
-                          {key.lastUsedAt && (
-                            <span className="text-xs text-ink-muted">
-                              Last used {new Date(key.lastUsedAt).toLocaleDateString()}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <Button
-                        onClick={() => handleRevoke(key.id)}
-                        variant="ghost"
-                        size="sm"
-                        className="text-red-800 hover:text-red-700 hover:bg-red-50"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Upgrade path */}
           {usage && usage.plan !== 'sentinel' && (
-            <Card className="border-primary-200 dark:border-primary-800">
-              <CardContent className="py-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div>
-                    <h3 className="font-semibold text-ink">Need more API calls?</h3>
-                    <p className="text-sm text-ink-muted mt-1">
-                      Upgrade your plan for higher rate limits and more features.
-                    </p>
-                  </div>
-                  <a
-                    href="/pricing"
-                    className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-ink shadow-sm hover:bg-primary-800 transition-colors"
-                  >
-                    View Plans
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
+            <div className="paper-card border-l-2 border-amber-deep p-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="font-display-tight text-lg text-ink">Need more API calls?</h3>
+                  <p className="font-plex text-sm text-ink-muted mt-1">
+                    Upgrade your plan for higher rate limits and more features.
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+                <a
+                  href="/pricing"
+                  className="inline-flex items-center gap-2 bg-oxblood px-4 py-2 font-plex text-sm font-semibold text-cream hover:bg-oxblood/90 transition-colors"
+                >
+                  View Plans
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
           )}
         </div>
-      </Container>
-    </Section>
+      </div>
+    </main>
   )
 }

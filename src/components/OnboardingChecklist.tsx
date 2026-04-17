@@ -103,7 +103,7 @@ export default function OnboardingChecklist() {
       step: 4,
       icon: Shield,
       description:
-        'Remove unlimited or stale approvals. Batch revoke to save gas.',
+        'Remove unlimited or stale approvals. On wallets that support EIP-5792, batch revoke combines them into one transaction.',
     },
   ]
 

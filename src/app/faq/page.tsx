@@ -131,7 +131,7 @@ export default function FAQPage() {
                 <div className="p-8">
                   <h3 className="mobbin-heading-3 text-ink mb-6">Why do I pay gas to revoke?</h3>
                   <p className="mobbin-body-large text-ink-muted leading-relaxed">
-                    Revoking is an on-chain transaction. Gas goes to network validators, not to us. We show a gas estimate before you confirm, and our batch revoke contract minimises the cost when revoking multiple approvals at once.
+                    Revoking is an on-chain transaction. Gas goes to network validators, not to us — we show a gas estimate before you confirm. On wallets that support EIP-5792 (Coinbase Smart Wallet, Base Smart Wallet, and some recent MetaMask builds), batch revoke bundles multiple approvals into a single transaction — one base fee, one signature. On other wallets it falls back to sequential signing.
                   </p>
                 </div>
               </div>

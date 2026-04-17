@@ -69,6 +69,7 @@ export const apiEndpoints = [
   { endpoint: '/api/v1/scan', method: 'POST', description: 'Trigger a wallet scan. Returns scanId + statusUrl.' },
   { endpoint: '/api/v1/scan/{id}', method: 'GET', description: 'Poll scan job status. Ownership-enforced.' },
   { endpoint: '/api/v1/simulate', method: 'POST', description: 'Time-machine: simulate revoking approvals.' },
+  { endpoint: '/api/v1/batch-savings', method: 'GET', description: 'Gas savings estimate for batched revocation on EIP-5792 wallets.' },
 ]
 
 export const faqItems = [

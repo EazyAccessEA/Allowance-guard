@@ -43,9 +43,9 @@ const FEATURES: Feature[] = [
     diagram: <RiskDiagram />,
   },
   {
-    title: 'Batch revoke. Less gas.',
+    title: 'Batch revoke.',
     description:
-      'Revoke dozens of approvals in a single transaction. Optimised contracts keep gas costs low so security stays affordable.',
+      'On wallets that support EIP-5792 (Coinbase Smart Wallet, Base Smart Wallet), batch revoke bundles multiple approvals into one transaction — one fee, one signature. Elsewhere it signs each revoke in turn. You keep custody either way.',
     eyebrow: 'Efficiency',
     diagram: <BatchDiagram />,
   },

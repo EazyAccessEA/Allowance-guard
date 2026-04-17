@@ -4,28 +4,26 @@ import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-// Mobbin-Inspired Card Variants with Glassmorphism
+// Card primitive — unified Ledger canon (ADR 0007).
+// Glass / glass-accent variants retired. `dark:` branches stripped —
+// AllowanceGuard is a single-theme product. Semantic tints calibrated
+// for paper (semantic-*-600/700 text; -50 paper-sub-tinted backgrounds).
 const cardVariants = cva(
-  // Base styles with dark mode support
-  'rounded-base border bg-paper-deep text-ink shadow-sm dark:shadow-dark-subtle transition-all duration-150',
+  'border bg-paper-deep text-ink shadow-sm transition-all duration-150',
   {
     variants: {
       variant: {
-        // Default: Clean card with dark mode
-        default: 'border-ink-rule hover:border-ink-rule dark:hover:border-secondary-600',
-        elevated: 'shadow-md dark:shadow-dark-medium hover:shadow-lg dark:hover:shadow-dark-large active:shadow-md',
-        outlined: 'border-2 border-ink-rule dark:border-secondary-600 shadow-none hover:border-ink-rule dark:hover:border-secondary-500',
-        ghost: 'border-none shadow-none bg-transparent hover:bg-paper-sub dark:hover:bg-paper-sub',
-        // Semantic variants with dark mode
-        success: 'border-semantic-success-200 dark:border-semantic-success-800 bg-semantic-success-50 dark:bg-semantic-success-900/30 hover:border-semantic-success-300 dark:hover:border-semantic-success-700',
-        warning: 'border-semantic-warning-200 dark:border-semantic-warning-800 bg-semantic-warning-50 dark:bg-semantic-warning-900/30 hover:border-semantic-warning-300 dark:hover:border-semantic-warning-700',
-        danger: 'border-semantic-error-200 dark:border-semantic-error-800 bg-semantic-error-50 dark:bg-semantic-error-900/30 hover:border-semantic-error-300 dark:hover:border-semantic-error-700',
-        info: 'border-semantic-info-200 dark:border-semantic-info-800 bg-semantic-info-50 dark:bg-semantic-info-900/30 hover:border-semantic-info-300 dark:hover:border-semantic-info-700',
-        subtle: 'border-neutral-200 dark:border-ink-rule bg-paper-sub hover:border-neutral-300 dark:hover:border-secondary-600',
-        accent: 'border-primary-200 dark:border-primary-800 bg-primary-50 dark:bg-primary-900/20 hover:border-primary-300 dark:hover:border-primary-700',
-        // Glassmorphism variants
-        glass: 'bg-paper-deep/60 backdrop-blur-glass border-secondary-600/30 shadow-glass dark:shadow-dark-medium hover:bg-paper-sub/70',
-        'glass-accent': 'bg-primary-50/50 dark:bg-primary-900/20 backdrop-blur-glass border-primary-200/40 dark:border-primary-700/30 shadow-glass hover:bg-primary-50/70 dark:hover:bg-primary-900/30',
+        default: 'border-ink-rule hover:border-amber-deep/40',
+        elevated: 'shadow-md hover:shadow-lg active:shadow-md border-ink-rule',
+        outlined: 'border-2 border-ink-rule shadow-none hover:border-amber-deep/60',
+        ghost: 'border-none shadow-none bg-transparent hover:bg-paper-sub',
+        // Semantic tints — paper-sub-tinted backgrounds, semantic-600/700 hairlines.
+        success: 'border-semantic-success-600/40 bg-paper-sub hover:border-semantic-success-700/60',
+        warning: 'border-semantic-warning-600/40 bg-paper-sub hover:border-semantic-warning-700/60',
+        danger: 'border-crimson-paper/40 bg-paper-sub hover:border-crimson-paper/60',
+        info: 'border-ink-blue/30 bg-paper-sub hover:border-ink-blue/50',
+        subtle: 'border-ink-rule bg-paper-sub hover:border-ink-rule/80',
+        accent: 'border-amber-deep/40 bg-paper-sub hover:border-amber-deep/60',
       },
       size: {
         xs: 'p-3',
@@ -37,7 +35,7 @@ const cardVariants = cva(
         '3xl': 'p-16',
       },
       interactive: {
-        true: 'cursor-pointer hover:shadow-md dark:hover:shadow-dark-medium hover:border-primary-300 dark:hover:border-primary-600 active:shadow-sm active:scale-98 transition-all duration-150',
+        true: 'cursor-pointer hover:shadow-md hover:border-amber-deep/40 active:shadow-sm transition-all duration-150',
         false: '',
       },
     },
@@ -46,7 +44,7 @@ const cardVariants = cva(
       size: 'default',
       interactive: false,
     },
-  }
+  },
 )
 
 export interface CardProps
@@ -99,7 +97,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         
         {/* Footer Section */}
         {footer && (
-          <div className="mt-4 pt-4 border-t border-border-default dark:border-ink-rule">
+          <div className="mt-4 pt-4 border-t border-ink-rule">
             {footer}
           </div>
         )}
@@ -161,7 +159,7 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center pt-4 mt-4 border-t border-border-default dark:border-ink-rule", className)}
+    className={cn("flex items-center pt-4 mt-4 border-t border-ink-rule", className)}
     {...props}
   />
 ))

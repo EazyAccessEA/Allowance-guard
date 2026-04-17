@@ -5,27 +5,27 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { getAccessibilityClasses, ariaHelpers } from '@/lib/accessibility'
 
-// Enhanced alert variants following Sketch-inspired design system
+// Alert — unified Ledger canon (ADR 0007). Paper-sub backgrounds with
+// hairline semantic borders; text picks the darker ramp value so it
+// holds AA on paper.
 const alertVariants = cva(
-  // Base styles - Sketch-inspired interactions and states
-  'relative w-full rounded-base border px-4 py-3 text-sm transition-all duration-150 hover:transition-all hover:duration-150 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground',
+  'relative w-full rounded-base border px-4 py-3 font-plex text-sm transition-all duration-150 [&>svg~*]:pl-7 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4',
   {
     variants: {
       variant: {
-        default: 'bg-paper-sub border-border-default text-ink hover:border-neutral-300',
-        success: 'bg-semantic-success-light border-semantic-success/20 text-semantic-success hover:border-semantic-success/40 hover:bg-semantic-success-light/80',
-        danger: 'bg-semantic-danger-light border-semantic-danger/20 text-semantic-danger hover:border-semantic-danger/40 hover:bg-semantic-danger-light/80',
-        warning: 'bg-semantic-warning-light border-semantic-warning/20 text-semantic-warning hover:border-semantic-warning/40 hover:bg-semantic-warning-light/80',
-        info: 'bg-semantic-info-light border-semantic-info/20 text-semantic-info hover:border-semantic-info/40 hover:bg-semantic-info-light/80',
-        // Sketch-inspired additional variants
-        subtle: 'bg-neutral-50 border-neutral-200 text-ink-soft hover:border-neutral-300 hover:bg-neutral-100',
-        accent: 'bg-primary/5 border-primary/20 text-primary hover:border-primary/40 hover:bg-primary/10',
+        default: 'bg-paper-sub border-ink-rule text-ink hover:border-ink-rule/80',
+        success: 'bg-paper-sub border-semantic-success-600/40 text-semantic-success-700 hover:border-semantic-success-700/60',
+        danger: 'bg-paper-sub border-crimson-paper/40 text-crimson-paper hover:border-crimson-paper/60',
+        warning: 'bg-paper-sub border-semantic-warning-600/40 text-semantic-warning-700 hover:border-semantic-warning-700/60',
+        info: 'bg-paper-sub border-ink-blue/30 text-ink-blue hover:border-ink-blue/50',
+        subtle: 'bg-paper-sub border-ink-rule text-ink-soft hover:border-ink-rule/80',
+        accent: 'bg-paper-sub border-amber-deep/40 text-amber-deep hover:border-amber-deep/60',
       },
     },
     defaultVariants: {
       variant: 'default',
     },
-  }
+  },
 )
 
 export interface AlertProps

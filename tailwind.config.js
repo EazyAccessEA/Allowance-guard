@@ -395,6 +395,68 @@ module.exports = {
       aria: {
         'current': 'current',
       },
+      // Ledger prose theme. Activates `className="prose prose-ink"` on
+      // marketing/blog article bodies so dangerouslySetInnerHTML content
+      // inherits the canon (ink on paper, IBM Plex Sans body, amber-deep
+      // links and bullets) instead of Tailwind Typography's default
+      // neutral-gray theme. Referenced from `src/app/blog/[slug]/page.tsx`.
+      typography: {
+        ink: {
+          css: {
+            '--tw-prose-body': '#2A2D33',              // ink-soft body
+            '--tw-prose-headings': '#0F1115',          // ink
+            '--tw-prose-lead': '#2A2D33',              // ink-soft
+            '--tw-prose-links': '#854F08',             // amber-deep
+            '--tw-prose-bold': '#0F1115',              // ink
+            '--tw-prose-counters': '#4A4D54',          // ink-muted
+            '--tw-prose-bullets': '#854F08',           // amber-deep (signature)
+            '--tw-prose-hr': 'rgba(15,17,21,0.14)',    // ink-rule
+            '--tw-prose-quotes': '#2A2D33',            // ink-soft
+            '--tw-prose-quote-borders': '#854F08',     // amber-deep
+            '--tw-prose-captions': '#585C64',          // ink-whisper
+            '--tw-prose-code': '#854F08',              // amber-deep inline
+            '--tw-prose-pre-code': '#F7F5F0',          // cream on dark pre
+            '--tw-prose-pre-bg': '#0F1115',            // ink for pre blocks
+            '--tw-prose-th-borders': '#0F1115',        // ink
+            '--tw-prose-td-borders': 'rgba(15,17,21,0.14)',
+            // Type mapping: headings + body both use Plex. Ledger
+            // reserves Fraunces italic for the signature move (page-level
+            // display), not inline prose headings — those stay on Plex
+            // so the reader's focus is the sentence, not the face.
+            'h1, h2, h3, h4': {
+              fontFamily: 'var(--font-plex), ui-sans-serif, system-ui, sans-serif',
+              fontWeight: '700',
+              letterSpacing: '-0.02em',
+            },
+            p: {
+              fontFamily: 'var(--font-plex), ui-sans-serif, system-ui, sans-serif',
+            },
+            'code, pre': {
+              fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+            },
+            // Inline code: amber-deep on paper-deep background. Default
+            // Tailwind Typography wraps inline code with backticks via
+            // pseudo-elements — suppress so the rendering is clean.
+            'code::before': { content: '""' },
+            'code::after': { content: '""' },
+            code: {
+              backgroundColor: '#E6E2D5',
+              padding: '0.15em 0.4em',
+              borderRadius: '0.25rem',
+              fontWeight: '500',
+            },
+            a: {
+              textDecoration: 'underline',
+              textDecorationColor: 'rgba(133,79,8,0.35)',
+              textUnderlineOffset: '3px',
+              fontWeight: '500',
+            },
+            'a:hover': {
+              textDecorationColor: '#854F08',
+            },
+          },
+        },
+      },
     },
   },
   plugins: [

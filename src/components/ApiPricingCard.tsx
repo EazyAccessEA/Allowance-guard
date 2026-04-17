@@ -171,7 +171,7 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
               </p>
             )}
             {error && (
-              <p className="mt-2 text-xs text-red-800 text-center" role="alert">
+              <p className="mt-2 text-xs text-crimson-paper text-center" role="alert">
                 {error}
               </p>
             )}

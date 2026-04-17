@@ -36,7 +36,6 @@ describe('AllowanceGuardClient constructor', () => {
   it('accepts a secret key in server context', () => {
     // Ensure no `window` exists for this test.
     const hadWindow = 'window' in globalThis
-    // @ts-expect-error — deleting optional global
     if (hadWindow) delete (globalThis as { window?: unknown }).window
 
     const client = new AllowanceGuardClient({

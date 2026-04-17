@@ -91,7 +91,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-primary-accent" />
+            <ShieldAlert className="w-5 h-5 text-amber-deep" />
             Permit2 Approvals
           </CardTitle>
           <Button
@@ -159,7 +159,7 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm" role="table" aria-label="Permit2 allowances">
                   <caption className="sr-only">Permit2 token approval allowances</caption>
-                  <thead className="bg-paper-sub/80 dark:bg-paper-sub/80 border-b border-ink-rule">
+                  <thead className="bg-paper-sub border-b border-ink-rule">
                     <tr>
                       <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Chain</th>
                       <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Token</th>
@@ -169,11 +169,11 @@ export default function Permit2Panel({ walletAddress }: Permit2PanelProps) {
                       <th scope="col" className="px-4 py-3 text-left font-medium text-ink-muted text-xs uppercase tracking-wider">Risk</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-border-primary dark:divide-secondary-800">
+                  <tbody className="divide-y divide-ink-rule">
                     {data.permit2Allowances.map((a, i) => (
                       <tr
                         key={`${a.chainId}-${a.token}-${a.spender}-${i}`}
-                        className={`transition-colors duration-100 hover:bg-paper-sub dark:hover:bg-paper-sub ${
+                        className={`transition-colors duration-100 hover:bg-paper-sub ${
                           a.isExpired ? 'opacity-50' : ''
                         }`}
                       >

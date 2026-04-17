@@ -49,6 +49,11 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
       'Not currently. All subscriptions are processed via Stripe (cards). Stablecoin payments are under evaluation; we\u2019ll add them when there\u2019s clear demand from paying customers, and we\u2019ll be honest about when (or whether) that ships.',
   },
   {
+    question: 'Can I call the API from a browser?',
+    answer:
+      'Yes. Every account can issue read-only public keys (prefixed ag_pub_*) alongside server-side ag_live_* keys — capped at 500 calls/day and origin-lockable, designed for dApp frontends and the @allowance-guard/react SDK. A paid API plan isn\u2019t required to issue them; paid plans cover higher-volume server-side use.',
+  },
+  {
     question: 'Do you offer refunds?',
     answer:
       'Full refund within 14 days of your first payment. After that, cancel any time \u2014 your access continues through the billing period, but partial refunds are not issued.',

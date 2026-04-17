@@ -121,11 +121,11 @@ export default function ThankYouPage() {
             )}
 
             {status === 'failed' && error && (
-              <div className="bg-red-50 border border-red-200 p-6 mb-8">
-                <p className="text-lg font-semibold text-red-800">
+              <div className="bg-paper-sub border border-crimson-paper/40 p-6 mb-8">
+                <p className="text-lg font-semibold text-crimson-paper">
                   Verification Failed
                 </p>
-                <p className="text-sm text-red-700 mt-1">
+                <p className="text-sm text-crimson-paper/90 mt-1">
                   {error}
                 </p>
               </div>

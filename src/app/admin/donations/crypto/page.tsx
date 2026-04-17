@@ -28,7 +28,7 @@ export default async function AdminCryptoDonationsPage() {
 
       <section className="overflow-x-auto rounded-xl border">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-50 text-left">
+          <thead className="bg-paper-sub text-left">
             <tr>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Charge</th>
@@ -42,7 +42,7 @@ export default async function AdminCryptoDonationsPage() {
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-6 text-center text-gray-500">
+                <td colSpan={7} className="px-4 py-6 text-center text-ink-whisper">
                   No crypto contributions yet.
                 </td>
               </tr>
@@ -57,7 +57,7 @@ export default async function AdminCryptoDonationsPage() {
                   <td className="px-4 py-3">{r.email ?? '—'}</td>
                   <td className="px-4 py-3">
                     {r.hostedUrl ? (
-                      <a className="text-blue-600 underline" href={r.hostedUrl} target="_blank" rel="noreferrer">
+                      <a className="text-amber-deep underline" href={r.hostedUrl} target="_blank" rel="noreferrer">
                         open
                       </a>
                     ) : (

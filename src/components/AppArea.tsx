@@ -175,7 +175,7 @@ export default function AppArea({
                 variant="ghost"
                 size="sm"
                 loading={isDisconnecting}
-                className="flex items-center gap-2 text-red-800 hover:text-red-700 hover:bg-red-50 w-full sm:w-auto"
+                className="flex items-center gap-2 text-crimson-paper hover:text-crimson-paper hover:bg-paper-sub w-full sm:w-auto"
               >
                 <LogOut className="w-4 h-4" />
                 {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
@@ -188,25 +188,25 @@ export default function AppArea({
             <StatsCard
               title="Total Allowances"
               value={total}
-              icon={<Shield className="w-5 h-5 text-primary-accent" />}
+              icon={<Shield className="w-5 h-5 text-amber-deep" />}
               loading={loading}
             />
             <StatsCard
               title="High Risk"
               value={riskyCount}
-              icon={<AlertTriangle className="w-5 h-5 text-semantic-danger" />}
+              icon={<AlertTriangle className="w-5 h-5 text-crimson-paper" />}
               loading={loading}
             />
             <StatsCard
               title="Unlimited"
               value={unlimitedCount}
-              icon={<AlertTriangle className="w-5 h-5 text-semantic-warning" />}
+              icon={<AlertTriangle className="w-5 h-5 text-semantic-warning-700" />}
               loading={loading}
             />
             <StatsCard
               title="Safe"
               value={total - riskyCount}
-              icon={<CheckCircle className="w-5 h-5 text-semantic-success" />}
+              icon={<CheckCircle className="w-5 h-5 text-semantic-success-700" />}
               loading={loading}
             />
           </div>
@@ -249,7 +249,7 @@ export default function AppArea({
                     type="checkbox" 
                     checked={!!monitorOn} 
                     onChange={e=>setMonitorOn(e.target.checked)} 
-                    className="rounded border-border-default text-primary-accent focus:ring-primary-accent"
+                    className="rounded border-ink-rule text-amber-deep focus:ring-amber-deep"
                   />
                   <label className="mobbin-body-small font-medium text-ink">
                     Enable auto-rescan & drift alerts

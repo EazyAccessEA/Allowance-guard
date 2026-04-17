@@ -19,12 +19,12 @@ const planConfig = {
   pro: {
     label: 'Pro',
     icon: Sparkles,
-    classes: 'border-amber-500/30 bg-amber-500/10 text-amber-deep',
+    classes: 'border-amber-deep/40 bg-paper-sub text-amber-deep',
   },
   sentinel: {
     label: 'Sentinel',
     icon: Crown,
-    classes: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
+    classes: 'border-ink-blue/30 bg-paper-sub text-ink-blue',
   },
 } as const
 

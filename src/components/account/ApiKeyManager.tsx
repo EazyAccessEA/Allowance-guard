@@ -1,7 +1,13 @@
 'use client'
 
+/**
+ * ApiKeyManager — unified Ledger canon (ADR 0007).
+ *
+ * Bypasses `ui/Card` while the primitive's Glass variants are being
+ * stripped. Once Card is Ledger-clean this can migrate back to `<Card>`.
+ */
+
 import React, { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
 import {
@@ -86,30 +92,31 @@ export default function ApiKeyManager({
   const atLimit = keys.length >= maxKeys
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>API Keys</CardTitle>
-          {!showCreate && (
-            <Button
-              variant="secondary"
-              size="sm"
-              leftIcon={<Plus className="h-4 w-4" />}
-              disabled={atLimit}
-              onClick={() => setShowCreate(true)}
-              ariaLabel="Create new API key"
-            >
-              Create New Key
-            </Button>
-          )}
-        </div>
-        {atLimit && (
-          <p className="text-xs text-ink-muted mt-1">
-            Maximum of {maxKeys} keys reached.
-          </p>
+    <div className="paper-card p-6 sm:p-7">
+      <div className="mb-5 flex items-center justify-between">
+        <h2 className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
+          Secret API Keys
+        </h2>
+        {!showCreate && (
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<Plus className="h-4 w-4" />}
+            disabled={atLimit}
+            onClick={() => setShowCreate(true)}
+            ariaLabel="Create new API key"
+          >
+            Create New Key
+          </Button>
         )}
-      </CardHeader>
-      <CardContent className="space-y-4">
+      </div>
+      {atLimit && (
+        <p className="font-plex text-xs text-ink-muted mt-1 mb-4">
+          Maximum of {maxKeys} keys reached.
+        </p>
+      )}
+
+      <div className="space-y-4">
         {/* One-time plaintext disclosure after key creation.
             This is the only chance to copy the key — it is never stored. */}
         {justCreatedKey && (
@@ -117,16 +124,16 @@ export default function ApiKeyManager({
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-amber-deep flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-semibold text-ink">
+                <p className="font-plex text-sm font-semibold text-ink">
                   Your new API key — copy it now
                 </p>
-                <p className="text-xs text-ink-muted mt-1">
+                <p className="font-plex text-xs text-ink-muted mt-1">
                   This is the only time you&rsquo;ll see the full key. Store it securely.
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <code className="flex-1 text-xs font-mono text-ink bg-paper border border-ink-rule px-3 py-2 break-all">
+              <code className="flex-1 font-mono text-xs text-ink bg-paper border border-ink-rule px-3 py-2 break-all">
                 {justCreatedKey}
               </code>
               <Button
@@ -150,10 +157,10 @@ export default function ApiKeyManager({
 
         {/* Create form */}
         {showCreate && (
-          <div className="rounded-lg border border-ink-rule p-4 space-y-3">
+          <div className="border border-ink-rule bg-paper-sub p-4 space-y-3">
             <label
               htmlFor="api-key-name"
-              className="block text-sm font-medium text-ink"
+              className="block font-plex text-sm font-medium text-ink"
             >
               Key Name
             </label>
@@ -164,9 +171,9 @@ export default function ApiKeyManager({
               onChange={(e) => setNewKeyName(e.target.value)}
               placeholder="e.g. Production, Staging..."
               className={cn(
-                'w-full rounded-md border border-ink-rule bg-paper px-3 py-2 text-sm',
-                'text-ink placeholder:text-ink-muted',
-                'focus:outline-none focus:ring-2 focus:ring-primary-700 focus:ring-offset-2'
+                'w-full border border-ink-rule bg-paper px-3 py-2 font-plex text-sm',
+                'text-ink placeholder:text-ink-whisper',
+                'focus:outline-none focus:ring-2 focus:ring-amber-deep focus:border-amber-deep',
               )}
               maxLength={64}
               onKeyDown={(e) => {
@@ -200,11 +207,11 @@ export default function ApiKeyManager({
         {/* Empty state */}
         {keys.length === 0 && !showCreate && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
-            <Key className="h-10 w-10 text-ink-muted mb-3" />
-            <p className="text-sm font-medium text-ink">
+            <Key className="h-10 w-10 text-ink-whisper mb-3" />
+            <p className="font-plex text-sm font-medium text-ink">
               No API keys yet
             </p>
-            <p className="text-xs text-ink-muted mt-1">
+            <p className="font-plex text-xs text-ink-muted mt-1">
               Create a key to start using the AllowanceGuard API.
             </p>
           </div>
@@ -212,7 +219,7 @@ export default function ApiKeyManager({
 
         {/* Key list */}
         {keys.length > 0 && (
-          <ul className="divide-y divide-border-primary" role="list">
+          <ul className="divide-y divide-ink-rule" role="list">
             {keys.map((key) => (
               <li
                 key={key.id}
@@ -220,24 +227,25 @@ export default function ApiKeyManager({
               >
                 <div className="space-y-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <Key className="h-4 w-4 text-ink-muted flex-shrink-0" />
-                    <span className="text-sm font-medium text-ink truncate">
+                    <Key className="h-4 w-4 text-ink-whisper flex-shrink-0" />
+                    <span className="font-plex text-sm font-medium text-ink truncate">
                       {key.name}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <code className="text-xs font-mono text-ink-muted bg-neutral-100 px-1.5 py-0.5 rounded">
+                    <code className="font-mono text-xs text-ink-muted bg-paper-sub border border-ink-rule px-1.5 py-0.5">
                       {key.prefix}{'****'}
                     </code>
                     <button
-                      className="text-ink-muted hover:text-ink"
+                      type="button"
+                      className="text-ink-whisper hover:text-ink transition-colors"
                       onClick={() => navigator.clipboard.writeText(key.prefix)}
                       aria-label={`Copy prefix for ${key.name}`}
                     >
                       <Copy className="h-3 w-3" />
                     </button>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-ink-muted">
+                  <div className="flex items-center gap-3 font-plex text-xs text-ink-whisper">
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       Created {formatDate(key.createdAt)}
@@ -252,7 +260,7 @@ export default function ApiKeyManager({
                 <div className="flex-shrink-0">
                   {revokeConfirmId === key.id ? (
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-semantic-error-700 flex items-center gap-1">
+                      <span className="font-plex text-xs text-crimson-paper flex items-center gap-1">
                         <AlertTriangle className="h-3 w-3" />
                         Revoke?
                       </span>
@@ -279,7 +287,7 @@ export default function ApiKeyManager({
                       leftIcon={<Trash2 className="h-4 w-4" />}
                       onClick={() => setRevokeConfirmId(key.id)}
                       ariaLabel={`Revoke key ${key.name}`}
-                      className="text-ink-muted hover:text-semantic-error-700"
+                      className="text-ink-muted hover:text-crimson-paper"
                     >
                       Revoke
                     </Button>
@@ -289,7 +297,7 @@ export default function ApiKeyManager({
             ))}
           </ul>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

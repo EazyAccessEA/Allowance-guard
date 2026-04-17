@@ -1,26 +1,22 @@
 # AllowanceGuard Design System
 
-> **Source of truth**: `docs/design-tokens-handbook.md`
-> **Homepage palette**: Ledger aesthetic — warm bone paper, ink body, single oxblood beat (handbook §11)
-> **Dashboard / docs / account palette**: Midnight Amber — deep navy canvas, amber = scanning, red = danger (handbook §2)
-> Old systems (PuredgeOS, Serum Teal, Crimson Signal, Monochrome Pro) are deprecated.
+> **Source of truth**: `docs/design-tokens-handbook.md` §11 (Ledger, canonical)
+> **Canon decision**: `projects/allowanceguard/decisions/0007-unified-ledger-canon.md`
+> **Canon spec**: `projects/allowanceguard/DESIGN.md`
 
-AllowanceGuard runs **two active palettes** in parallel:
+AllowanceGuard runs **one canon: Ledger**. Warm bone paper, ink body, single oxblood beat per purpose. Fraunces italic display + IBM Plex Sans body + JetBrains Mono metadata. Applies to every surface — homepage, blog, pricing, docs, dashboard, account, auth, modals.
 
-1. **Ledger aesthetic (homepage)** — light-first editorial publication. Paper / ink / oxblood. Fraunces italic display + IBM Plex Sans body + JetBrains Mono metadata. Ships in `Hero`, `HowItWorks`, `StatisticsSection`, `FeaturesPreview`, `CTABand`, `Testimonials`, `ChainLogoCarousel`.
-2. **Midnight Amber (app surfaces)** — deep navy dashboard. Amber CTAs, sky-blue safe/links, red danger. Ships in `AppArea`, `AllowanceTable`, docs pages, account/billing pages.
+The Midnight Amber / Glass canon that previously covered dashboard + docs + account was retired on 2026-04-17 (ADR 0007). `src/design/tokens.ts` — the Midnight Amber token source — has been deleted. `.glass-*` utilities have been removed from `src/app/globals.css`. Legacy `primary-*` / `secondary-*` / `neutral-*` / `background-*` scales in `tailwind.config.js` are being retired after consumer migration (ADR 0007 Phase E).
 
-The two palettes share a handful of primitives (crimson for destructive, amber hairlines as accent, `prefers-reduced-motion` respect) but are otherwise independent. Do not mix them on a single page.
-
-## Brand Principles (apply to both palettes)
+## Brand Principles
 
 1. **Controlled Aggression** — Bold type scale, confident whitespace, accent colour earns its place.
 2. **Earned Trust** — Open-source, on-chain metrics, no fabricated testimonials.
-3. **Relentless Clarity** — Dense data, clear hierarchy. Amber = scanning, Red = danger only.
-4. **Tactile Precision** — On dark: depth, grain, engineered layering. On paper: letterpress shadows, editorial rules, print textures.
+3. **Relentless Clarity** — Dense data, clear hierarchy. Amber = emphasis, crimson = protected destructive moment, oxblood = inverse punctuation.
+4. **Tactile Precision** — Letterpress shadows, editorial rules, print textures. Paper feels crafted, not flat.
 5. **Zero Compromise** — WCAG AA+, Core Web Vitals, keyboard-first.
 
-## Ledger Aesthetic (homepage) — quick reference
+## Ledger — quick reference
 
 | Role           | Token                 | Hex                   | Contrast       |
 |----------------|-----------------------|-----------------------|----------------|
@@ -37,59 +33,48 @@ The two palettes share a handful of primitives (crimson for destructive, amber h
 | CTABand bg     | `oxblood`             | `#2D0A0A`             | —              |
 | Type on oxblood| `cream`               | `#F7F5F0`             | 12.4:1 AAA     |
 
-**Utilities**: `.paper`, `.paper-sub`, `.paper-deep`, `.paper-card`, `.paper-card-raised`, `.paper-pill`, `.paper-button`, `.grain`, `.ledger-rule`, `.dotted-leader`, `.deckle-top`, `.font-display-tight`, `.rule-amber-vert`.
+**Utilities**: `.paper`, `.paper-sub`, `.paper-deep`, `.paper-card`, `.paper-card-raised`, `.paper-pill`, `.paper-button`, `.grain`, `.ledger-rule`, `.dotted-leader`, `.deckle-top`, `.font-display-tight`, `.rule-amber-vert`. Prose content uses `className="prose prose-ink"` (theme wired in `tailwind.config.js` §`theme.extend.typography.ink`).
 
-**Fonts**: Fraunces (display, italic), IBM Plex Sans (body), JetBrains Mono (metadata).
+**Fonts**: Fraunces (display, italic), IBM Plex Sans (body + UI chrome), JetBrains Mono (metadata + code).
 
-## Midnight Amber (dashboard/docs/account) — quick reference
-
-| Role           | Token                  | Hex       | Contrast on Navy |
-|----------------|------------------------|-----------|------------------|
-| Background     | `--surface-base`       | `#0F172A` | —                |
-| Primary Action | `--primary`            | `#F59E0B` | 6.4:1 AA         |
-| Safe/Links     | `--accent`             | `#38BDF8` | 7.2:1 AA         |
-| Danger         | `--destructive`        | `#EF4444` | 4.6:1 AA (large) |
-| Headings       | white                  | `#FFFFFF` | 17:1 AAA         |
-| Body text      | `--muted-foreground`   | `#CBD5E1` | 10.6:1 AAA       |
-| Muted          | `--muted`              | `#94A3B8` | 6.4:1 AA         |
-
-**Utilities (legacy glass canon)**: `.glass-card`, `.glass-pill`, `.glass-button`, `.glass-drift`. Still in `src/app/globals.css` for use on dashboard/docs surfaces only.
-
-**Fonts**: Space Grotesk (display), Inter (body), JetBrains Mono (mono).
+**State ramps** (canon-agnostic utility palettes, not a second surface system): `semantic-success-*`, `semantic-warning-*`, `semantic-error-*`, `semantic-info-*`, `crimson-*`, `amber-*`, `sky-*`. Use `-600`/`-700` tints for text on paper; `-50`/`-100` for paper-sub-tinted backgrounds.
 
 ## Usage
 
 ```tsx
-// Homepage (Ledger) — use Tailwind tokens directly
+// Every surface (homepage + app alike) — Tailwind Ledger tokens
 <section className="paper grain">
-  <h1 className="font-plex text-ink font-bold">Headline</h1>
-  <div className="paper-card p-8">…</div>
+  <h1 className="font-display-tight text-ink font-bold">Headline</h1>
+  <div className="paper-card p-8">
+    <p className="font-plex text-ink-muted">…</p>
+  </div>
 </section>
 
-// Dashboard / docs (Midnight Amber) — use tokens + legacy glass
-import { colors, typography, spacing } from '@/design/tokens'
-
-<div className="bg-surface-base">
-  <div className="glass-card p-6">…</div>
-</div>
+// Destructive / inverse moment — oxblood punctuation
+<button className="bg-oxblood text-cream font-plex font-semibold px-4 py-2">
+  Revoke
+</button>
 ```
 
-See the full handbook at `docs/design-tokens-handbook.md`.
+See `projects/allowanceguard/DESIGN.md` for the full canon spec and rule set.
 
 ## Component Library
 
 Located in `src/components/ui/`:
-- `Button.tsx` — CVA variants: primary, secondary, ghost, destructive, outline. Paper-theme variants for Ledger surfaces.
-- `Card.tsx` — Legacy dashboard card (glass canon)
-- `Input.tsx` — Labels, error states, focus ring
-- `Badge.tsx` — StatusBadge, RiskBadge, ChainBadge (icon + label always)
-- `Modal.tsx` — Focus trap, bottom sheet on mobile
-- `Alert.tsx` — Semantic alerts + auto-dismiss toasts
-- `SectionHeader.tsx` — Ledger section header with numeral + eyebrow + Fraunces italic title
+- `Button.tsx` — CVA variants: primary, secondary, ghost, destructive, outline. Ledger-tuned.
+- `Card.tsx` — Default paper-deep card; semantic tints via `variant` (success/warning/danger/info/subtle/accent/ghost/elevated/outlined).
+- `Input.tsx` — Labels, error states, focus ring on amber-deep.
+- `Badge.tsx` — `StatusBadge`, `RiskBadge`, `ChainBadge` — icon + label always.
+- `Modal.tsx` — Focus trap; Ledger paper panel on a paper-deep scrim.
+- `Alert.tsx` — Semantic alerts + auto-dismiss toasts.
+- `SectionHeader.tsx` — Ledger section header with numeral + eyebrow + Fraunces italic title.
 
-## Rules (both palettes)
+## Rules
 
-- **Colour never sole indicator** — always icon + label alongside
-- **`prefers-reduced-motion`** — all motion must respect this
-- **Light-first on homepage, dark-first on app** — do not mix surface treatments within a single page
-- **Protected crimson accent** — one word per headline may be `text-crimson-paper` (Ledger) or `text-crimson-500` (Midnight Amber). Never more than one.
+- **One canon** — Ledger covers every AllowanceGuard surface.
+- **No `dark:` variants** — single-theme product.
+- **No retired tokens** — don't reintroduce `.glass-*`, `primary-*`/`secondary-*`/`neutral-*`/`background-*`/`text-*`/`surface-*` legacy scales, `bg-gray-*`, `bg-slate-*`, `bg-neutral-*`, `bg-white` on any surface.
+- **Colour never sole indicator** — always icon + label alongside.
+- **`prefers-reduced-motion`** — all motion must respect this.
+- **Inverse moments are purpose-scoped** — the homepage CTABand uses oxblood; authenticated surfaces may use oxblood for destructive confirms and critical errors. One per purpose.
+- **Protected crimson accent** — one word per headline may be `text-crimson-paper`. Never more than one.

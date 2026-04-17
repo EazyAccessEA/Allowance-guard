@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer'
+import { createTransport, type Transporter } from 'nodemailer'
 import { emailLogger } from './logger'
 import { incrEmail } from '@/lib/metrics'
 import { createEmailHTML, type EmailKind } from './email-templates'
@@ -20,10 +20,10 @@ export { createEmailHTML } from './email-templates'
 export function getTransport() {
   if (postmarkToken) {
     emailLogger.info('Using Postmark email service')
-    return nodemailer.createTransport({
+    return createTransport({
       service: 'postmark',
       auth: { user: postmarkToken, pass: postmarkToken },
-    }) as nodemailer.Transporter
+    }) as Transporter
   }
 
   if (!host || !user || !pass) {
@@ -34,10 +34,10 @@ export function getTransport() {
       throw new Error('Email service not configured')
     }
     emailLogger.warn('SMTP configuration missing, using log-only transport (dev fallback)')
-    return nodemailer.createTransport({ jsonTransport: true }) as nodemailer.Transporter
+    return createTransport({ jsonTransport: true }) as Transporter
   }
 
-  return nodemailer.createTransport({
+  return createTransport({
     host,
     port,
     secure: false,
@@ -49,7 +49,7 @@ export function getTransport() {
     connectionTimeout: 60000,
     greetingTimeout: 30000,
     socketTimeout: 60000,
-  }) as nodemailer.Transporter
+  }) as Transporter
 }
 
 export interface SendMailOptions {
@@ -266,7 +266,7 @@ export async function sendReEngagementEmail(to: string, plan: string) {
         <li>Webhook integrations and priority support</li>`
             : `<li>Unlimited wallet scanning across all 27 chains</li>
         <li>Twice-daily monitoring with risk alerts</li>
-        <li>Batch revoke (multiple approvals from one click)</li>
+        <li>Batch revoke (one transaction on wallets that support EIP-5792)</li>
         <li>Historical risk timeline for your approvals</li>
         <li>Export audit reports (PDF / CSV)</li>`
         }

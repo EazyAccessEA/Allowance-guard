@@ -11,6 +11,13 @@
  * first call and caches the client.
  */
 
+// Mark this file as a module so top-level const declarations don't
+// collide with the identically-named mocks in security/rate-limit.test.ts
+// (without this, TypeScript treats both files as scripts sharing one
+// global scope and flags `mockIncr`/`mockExpire`/`mockTtl` as
+// redeclarations).
+export {}
+
 process.env.UPSTASH_REDIS_REST_URL = 'https://fake.upstash.io'
 process.env.UPSTASH_REDIS_REST_TOKEN = 'fake-token'
 

@@ -1,11 +1,12 @@
 'use client'
 
+/**
+ * API Keys — unified Ledger canon (ADR 0007).
+ */
+
 import React, { useCallback, useEffect, useState } from 'react'
-import Section from '@/components/ui/Section'
-import Container from '@/components/ui/Container'
 import ApiKeyManager from '@/components/account/ApiKeyManager'
 import PublicApiKeyCreator from '@/components/account/PublicApiKeyCreator'
-import { cn } from '@/lib/utils'
 import { ArrowLeft } from 'lucide-react'
 
 interface ApiKey {
@@ -73,13 +74,13 @@ export default function KeysPage() {
   )
 
   return (
-    <Section size="sm" background="muted">
-      <Container size="lg">
+    <main className="min-h-screen paper grain">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="space-y-8">
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-amber-deep transition-colors"
+            className="inline-flex items-center gap-1.5 font-plex text-sm text-ink-muted hover:text-amber-deep transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -87,26 +88,22 @@ export default function KeysPage() {
 
           {/* Header */}
           <div>
-            <h1 className="text-2xl font-bold text-ink">API Keys</h1>
-            <p className="text-sm text-ink-muted mt-1">
+            <h1 className="font-display-tight text-2xl text-ink">API Keys</h1>
+            <p className="font-plex text-sm text-ink-muted mt-1">
               Create and manage API keys for the AllowanceGuard API.
             </p>
           </div>
 
           {/* Key manager */}
           {loading ? (
-            <div
-              className={cn(
-                'rounded-lg border border-ink-rule bg-paper p-12',
-                'flex items-center justify-center'
-              )}
-            >
-              <div className="flex items-center gap-3 text-sm text-ink-muted">
+            <div className="paper-card p-12 flex items-center justify-center">
+              <div className="flex items-center gap-3 font-plex text-sm text-ink-muted">
                 <svg
-                  className="h-5 w-5 animate-spin"
+                  className="h-5 w-5 animate-spin text-amber-deep"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <circle
                     className="opacity-25"
@@ -122,7 +119,7 @@ export default function KeysPage() {
                     d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                Loading keys...
+                Loading keys…
               </div>
             </div>
           ) : (
@@ -136,7 +133,7 @@ export default function KeysPage() {
           {/* Public (browser-safe) keys — for @allowance-guard/react */}
           <PublicApiKeyCreator />
         </div>
-      </Container>
-    </Section>
+      </div>
+    </main>
   )
 }

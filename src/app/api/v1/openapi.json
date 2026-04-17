@@ -27,7 +27,8 @@
     { "name": "allowances", "description": "Token approvals" },
     { "name": "risk", "description": "Risk scoring and assessment" },
     { "name": "scan", "description": "Wallet scanning" },
-    { "name": "simulate", "description": "Time-machine simulations" }
+    { "name": "simulate", "description": "Time-machine simulations" },
+    { "name": "savings", "description": "Gas savings estimates for batched operations" }
   ],
   "paths": {
     "/health": {
@@ -298,6 +299,48 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/SimulateResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/batch-savings": {
+      "get": {
+        "tags": ["savings"],
+        "summary": "Estimate gas savings for batched revocation",
+        "description": "Returns sequential vs EIP-5792-batched gas quotes for revoking N approvals on a given chain. Savings are labelled `approximate` — they are only realised on wallets that support `wallet_sendCalls` (Coinbase Smart Wallet, Base Smart Wallet, and some recent MetaMask builds). Batched path requires approvalCount ≥ 2; single-approval requests return `batched: null, savings: null`.",
+        "parameters": [
+          {
+            "name": "chainId",
+            "in": "query",
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/ChainId" }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "required": true,
+            "description": "Number of approvals that would be revoked in the batch (1–200).",
+            "schema": { "type": "integer", "minimum": 1, "maximum": 200 }
+          },
+          {
+            "name": "gasPriceGwei",
+            "in": "query",
+            "required": false,
+            "description": "Override the per-chain default gas price. Positive number, in gwei.",
+            "schema": { "type": "number", "minimum": 0, "exclusiveMinimum": true }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Savings estimate",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/BatchSavingsResponse" }
               }
             }
           },
@@ -692,6 +735,49 @@
           "unlimitedAllowances": { "type": "integer" },
           "highRisk": { "type": "integer" },
           "mediumRisk": { "type": "integer" }
+        }
+      },
+      "SavingsQuote": {
+        "type": "object",
+        "required": ["gasUnits", "feeWei", "feeEther"],
+        "properties": {
+          "gasUnits": { "type": "integer", "description": "Total gas units for the quoted path." },
+          "feeWei": { "type": "string", "description": "Fee in wei as a decimal string (BigInt over JSON)." },
+          "feeEther": { "type": "number", "description": "Fee in ether, rounded to 6dp." }
+        }
+      },
+      "BatchSavingsResponse": {
+        "type": "object",
+        "required": ["chainId", "approvalCount", "gasPriceGwei", "sequential", "batched", "savings", "confidence", "assumptions"],
+        "properties": {
+          "chainId": { "$ref": "#/components/schemas/ChainId" },
+          "approvalCount": { "type": "integer", "minimum": 1 },
+          "gasPriceGwei": { "type": "number", "minimum": 0, "exclusiveMinimum": true },
+          "sequential": { "$ref": "#/components/schemas/SavingsQuote" },
+          "batched": {
+            "oneOf": [
+              { "$ref": "#/components/schemas/SavingsQuote" },
+              { "type": "null" }
+            ],
+            "description": "Null when approvalCount < 2 — batching is not advantageous for a single call."
+          },
+          "savings": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": ["gasUnits", "feeWei", "feeEther", "fraction"],
+                "properties": {
+                  "gasUnits": { "type": "integer" },
+                  "feeWei": { "type": "string" },
+                  "feeEther": { "type": "number" },
+                  "fraction": { "type": "number", "minimum": 0, "maximum": 1 }
+                }
+              },
+              { "type": "null" }
+            ]
+          },
+          "confidence": { "type": "string", "const": "approximate" },
+          "assumptions": { "type": "array", "items": { "type": "string" } }
         }
       }
     }

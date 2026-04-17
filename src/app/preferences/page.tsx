@@ -94,7 +94,7 @@ export default function PreferencesPage() {
           {/* Email Settings */}
           <div className="bg-paper-deep border border-ink-rule rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Mail className="w-5 h-5 text-blue-600 dark:text-blue-800 mr-2" />
+              <Mail className="w-5 h-5 text-ink-blue mr-2" />
               <h2 className="text-xl font-semibold text-ink">Email Settings</h2>
             </div>
 
@@ -108,7 +108,7 @@ export default function PreferencesPage() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 min-h-[44px] border border-ink-rule dark:border-secondary-600 rounded-lg bg-paper-sub text-ink focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-4 py-3 min-h-[44px] border border-ink-rule rounded-lg bg-paper-sub text-ink focus:ring-2 focus:ring-amber-deep focus:border-transparent"
                   placeholder="Enter your email address"
                   required
                 />
@@ -122,7 +122,7 @@ export default function PreferencesPage() {
           {/* Alert Preferences */}
           <div className="bg-paper-deep border border-ink-rule rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Bell className="w-5 h-5 text-green-800 dark:text-green-800 mr-2" />
+              <Bell className="w-5 h-5 text-semantic-success-700 mr-2" />
               <h2 className="text-xl font-semibold text-ink">Alert Preferences</h2>
             </div>
 
@@ -139,7 +139,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('emailAlerts', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-deep/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-deep"></div>
                 </label>
               </div>
 
@@ -155,7 +155,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('riskOnly', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-deep/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-deep"></div>
                 </label>
               </div>
 
@@ -171,7 +171,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('dailyDigest', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-deep/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-deep"></div>
                 </label>
               </div>
 
@@ -187,7 +187,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('weeklySummary', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-deep/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-deep"></div>
                 </label>
               </div>
             </div>
@@ -196,7 +196,7 @@ export default function PreferencesPage() {
           {/* Slack Integration */}
           <div className="bg-paper-deep border border-ink-rule rounded-lg p-6">
             <div className="flex items-center mb-4">
-              <Settings className="w-5 h-5 text-purple-600 dark:text-purple-400 mr-2" />
+              <Settings className="w-5 h-5 text-amber-deep mr-2" />
               <h2 className="text-xl font-semibold text-ink">Slack Integration</h2>
             </div>
 
@@ -213,7 +213,7 @@ export default function PreferencesPage() {
                     onChange={(e) => handlePreferenceChange('slackAlerts', e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule dark:after:border-secondary-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-700 dark:peer-checked:bg-primary-600"></div>
+                  <div className="w-11 h-6 bg-paper-sub peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-deep/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1/2 after:-translate-y-1/2 after:left-[2px] after:bg-white after:border-ink-rule after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-deep"></div>
                 </label>
               </div>
 
@@ -227,11 +227,11 @@ export default function PreferencesPage() {
                     id="webhook"
                     value={preferences.webhookUrl}
                     onChange={(e) => handlePreferenceChange('webhookUrl', e.target.value)}
-                    className="w-full px-4 py-3 min-h-[44px] border border-ink-rule dark:border-secondary-600 rounded-lg bg-paper-sub text-ink focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 min-h-[44px] border border-ink-rule rounded-lg bg-paper-sub text-ink focus:ring-2 focus:ring-amber-deep focus:border-transparent"
                     placeholder="https://hooks.slack.com/services/..."
                   />
                   <p className="text-sm text-ink-whisper mt-1">
-                    <a href="/docs" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300">
+                    <a href="/docs" className="text-amber-deep hover:underline">
                       Learn how to set up Slack webhooks
                     </a>
                   </p>
@@ -244,8 +244,8 @@ export default function PreferencesPage() {
           {message && (
             <div className={`p-4 rounded-lg flex items-center ${
               status === 'success'
-                ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-800 dark:text-green-800'
-                : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-800'
+                ? 'bg-paper-sub border border-semantic-success-600/40 text-semantic-success-700'
+                : 'bg-paper-sub border border-crimson-paper/40 text-crimson-paper'
             }`}>
               {status === 'success' ? (
                 <CheckCircle className="w-5 h-5 mr-2" />
@@ -261,7 +261,7 @@ export default function PreferencesPage() {
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="px-6 py-3 min-h-[44px] bg-amber-500 hover:bg-amber-600 dark:hover:bg-primary-500 disabled:opacity-50 text-ink font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 flex items-center disabled:cursor-not-allowed"
+              className="px-6 py-3 min-h-[44px] bg-amber-deep hover:bg-amber-deep/90 disabled:opacity-50 text-paper font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-deep focus:ring-offset-2 focus:ring-offset-paper flex items-center disabled:cursor-not-allowed"
             >
               {status === 'loading' ? (
                 <>
@@ -287,15 +287,15 @@ export default function PreferencesPage() {
             If you have questions about your notification preferences or need assistance, we&apos;re here to help.
           </p>
           <div className="space-y-2">
-            <a href="/contact" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">
+            <a href="/contact" className="text-amber-deep hover:underline text-sm">
               Contact Support
             </a>
             <span className="text-ink-whisper mx-2">•</span>
-            <a href="/faq" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">
+            <a href="/faq" className="text-amber-deep hover:underline text-sm">
               FAQ
             </a>
             <span className="text-ink-whisper mx-2">•</span>
-            <a href="/docs" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">
+            <a href="/docs" className="text-amber-deep hover:underline text-sm">
               Documentation
             </a>
           </div>
@@ -310,9 +310,9 @@ export default function PreferencesPage() {
               © {new Date().getFullYear()} Allowance Guard. All rights reserved.
             </p>
             <div className="mt-4 space-x-6">
-              <a href="/terms" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">Terms of Service</a>
-              <a href="/privacy" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">Privacy Policy</a>
-              <a href="/cookies" className="text-amber-deep dark:text-amber-deep hover:text-primary-800 dark:hover:text-primary-300 text-sm">Cookie Policy</a>
+              <a href="/terms" className="text-amber-deep hover:underline text-sm">Terms of Service</a>
+              <a href="/privacy" className="text-amber-deep hover:underline text-sm">Privacy Policy</a>
+              <a href="/cookies" className="text-amber-deep hover:underline text-sm">Cookie Policy</a>
             </div>
           </div>
         </div>

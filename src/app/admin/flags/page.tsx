@@ -107,7 +107,7 @@ export default function AdminFlagsPage() {
       </p>
 
       {error && (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+        <div className="rounded-lg border border-crimson-paper/40 bg-paper-sub p-3 text-sm text-crimson-paper">
           {error}
           <button onClick={() => setError(null)} className="ml-2 underline">
             dismiss
@@ -148,7 +148,7 @@ export default function AdminFlagsPage() {
           <button
             type="submit"
             disabled={creating || !newName}
-            className="rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-ink hover:bg-primary-800 disabled:opacity-50"
+            className="rounded-lg bg-amber-deep px-4 py-2 text-sm font-medium text-paper hover:bg-amber-deep/90 disabled:opacity-50"
           >
             {creating ? 'Creating...' : 'Create'}
           </button>
@@ -177,9 +177,9 @@ export default function AdminFlagsPage() {
                   <p className="mt-1 text-xs text-ink-muted">
                     Rollout: {flag.rollout_percentage}% &middot;{' '}
                     {flag.enabled ? (
-                      <span className="text-green-800">Enabled</span>
+                      <span className="text-semantic-success-700">Enabled</span>
                     ) : (
-                      <span className="text-red-800">Disabled</span>
+                      <span className="text-crimson-paper">Disabled</span>
                     )}
                   </p>
                 </div>
@@ -192,7 +192,7 @@ export default function AdminFlagsPage() {
                   </button>
                   <button
                     onClick={() => deleteFlag(flag.id)}
-                    className="rounded-lg border border-red-200 px-3 py-1 text-xs font-medium text-red-800 hover:bg-red-50"
+                    className="rounded-lg border border-crimson-paper/40 px-3 py-1 text-xs font-medium text-crimson-paper hover:bg-paper-sub"
                   >
                     Delete
                   </button>

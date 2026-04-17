@@ -4,21 +4,24 @@ import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-// Badge variants with dark mode and dot indicators
+// Badge — unified Ledger canon (ADR 0007). `dark:` branches stripped;
+// off-canon `primary-*` / `green-*` / `red-*` / `slate-*` / `border-default`
+// replaced with Ledger tokens and AA-tuned semantic ramps.
+// `rounded-full` is permitted on small badges per DESIGN.md — the ban is on
+// rounded-full on large *containers*.
 const badgeVariants = cva(
-  // Base styles with dark mode
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 dark:focus:ring-offset-secondary-900',
+  'inline-flex items-center rounded-full border px-2.5 py-0.5 font-plex text-xs font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-amber-deep focus:ring-offset-2 focus:ring-offset-paper',
   {
     variants: {
       variant: {
-        default: 'border-border-default dark:border-secondary-600 bg-paper-sub text-ink',
-        primary: 'border-primary/20 dark:border-primary-700 bg-primary/10 dark:bg-primary-900/30 text-primary dark:text-primary-300',
-        success: 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-800',
-        danger: 'border-semantic-danger/20 dark:border-red-800 bg-semanticBg-danger dark:bg-red-900/30 text-semantic-danger dark:text-red-800',
-        warning: 'border-semantic-warning/20 dark:border-amber-800 bg-semanticBg-warning dark:bg-paper-sub text-semantic-warning dark:text-amber-deep',
-        info: 'border-semantic-info/20 dark:border-sky-800 bg-semanticBg-info dark:bg-sky-900/30 text-semantic-info dark:text-sky-800',
-        outline: 'border-border-default dark:border-secondary-600 text-ink bg-transparent',
-        secondary: 'border-slate-200 dark:border-secondary-600 bg-slate-100 dark:bg-paper-sub text-ink-soft dark:text-ink-soft',
+        default: 'border-ink-rule bg-paper-sub text-ink',
+        primary: 'border-amber-deep/40 bg-paper-sub text-amber-deep',
+        success: 'border-semantic-success-600/40 bg-paper-sub text-semantic-success-700',
+        danger: 'border-crimson-paper/40 bg-paper-sub text-crimson-paper',
+        warning: 'border-semantic-warning-600/40 bg-paper-sub text-semantic-warning-700',
+        info: 'border-ink-blue/30 bg-paper-sub text-ink-blue',
+        outline: 'border-ink-rule text-ink bg-transparent',
+        secondary: 'border-ink-rule bg-paper-sub text-ink-soft',
       },
       size: {
         sm: 'px-2 py-0.5 text-xs',
@@ -100,10 +103,10 @@ export const StatusBadge: React.FC<{
   className?: string
 }> = ({ status, className }) => {
   const variants = {
-    safe: { variant: 'success' as const, text: 'Safe', dot: 'bg-green-500' },
-    risky: { variant: 'danger' as const, text: 'Risky', dot: 'bg-red-500' },
-    unknown: { variant: 'warning' as const, text: 'Unknown', dot: 'bg-amber-500' },
-    revoked: { variant: 'secondary' as const, text: 'Revoked', dot: 'bg-slate-400' },
+    safe: { variant: 'success' as const, text: 'Safe', dot: 'bg-semantic-success-600' },
+    risky: { variant: 'danger' as const, text: 'Risky', dot: 'bg-crimson-paper' },
+    unknown: { variant: 'warning' as const, text: 'Unknown', dot: 'bg-amber-deep' },
+    revoked: { variant: 'secondary' as const, text: 'Revoked', dot: 'bg-ink-whisper' },
   }
 
   const config = variants[status]
@@ -121,10 +124,10 @@ export const RiskBadge: React.FC<{
   className?: string
 }> = ({ risk, className }) => {
   const variants = {
-    low: { variant: 'success' as const, text: 'Low Risk', dot: 'bg-green-500' },
-    medium: { variant: 'warning' as const, text: 'Medium Risk', dot: 'bg-amber-500' },
-    high: { variant: 'danger' as const, text: 'High Risk', dot: 'bg-red-500' },
-    critical: { variant: 'danger' as const, text: 'Critical Risk', dot: 'bg-red-600 animate-pulse' },
+    low: { variant: 'success' as const, text: 'Low Risk', dot: 'bg-semantic-success-600' },
+    medium: { variant: 'warning' as const, text: 'Medium Risk', dot: 'bg-semantic-warning-600' },
+    high: { variant: 'danger' as const, text: 'High Risk', dot: 'bg-crimson-paper' },
+    critical: { variant: 'danger' as const, text: 'Critical Risk', dot: 'bg-crimson-paper animate-pulse' },
   }
 
   const config = variants[risk]

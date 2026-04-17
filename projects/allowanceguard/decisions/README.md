@@ -32,5 +32,6 @@ Briefly — what else was on the table and why we rejected it.
 | 0002 | SIWE over magic-link auth | Accepted (magic-link deprecated) |
 | 0003 | Vercel Cron over external scheduler | Accepted |
 | 0004 | Neon serverless strict casting rules | Accepted |
-| 0005 | Ledger aesthetic on homepage | Accepted |
+| 0005 | Ledger aesthetic on homepage | Superseded by 0007 |
 | 0006 | One Stripe account serves AllowanceGuard and PagePerfect Studio | Accepted |
+| 0007 | Unified Ledger canon; retire Glass | Accepted |

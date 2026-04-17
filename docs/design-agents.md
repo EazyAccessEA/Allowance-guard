@@ -41,6 +41,42 @@ Guardrails:
 - `animate` / `overdrive` are advisory only — AG's motion anti-patterns (no WebGL, no Vanta, no scroll-jacking) override the companion's recommendations.
 - All design skills are **read-only on `src/`**. Lands via engineering (`build-feature`) for app surfaces, or `web-implementation` for marketing surfaces.
 
+## External skill sources
+
+AG pulls design-adjacent companion skills from two external repositories. They are installed into `.agents/skills/` (Taste Skill) and `.claude/skills/` (Impeccable) and tracked in `skills-lock.json`. **Not bound** — reach for them when the lens fits; never let them override AG's canons.
+
+### Impeccable — `pbakaus/impeccable`
+
+The source of the verb-family companions already listed above: `adapt`, `animate`, `arrange`, `audit`, `bolder`, `clarify`, `colorize`, `critique`, `delight`, `distill`, `extract`, `harden`, `normalize`, `onboard`, `optimize`, `overdrive`, `polish`, `typeset`. Plus the one-time `teach-impeccable` setup skill.
+
+Use pattern: drop a companion into the middle of a design skill run for a targeted quality pass (e.g. `polish` at the tail of a `design-glass-surface` spec, `typeset` during `design-token` for a type-scale proposal).
+
+### Taste Skill — `Leonxlnx/taste-skill`
+
+Eight opinionated aesthetic skills for creative exploration. Each is a fully-formed design language — use them to **stretch a concept**, not to set the canon.
+
+| Taste skill | Aesthetic | Best fit on AG |
+|---|---|---|
+| `design-taste-frontend` | React/Next "high-agency" frontend with metric baselines (variance, motion, density) | `design-glass-surface`, `design-component` — component architecture reference for app surfaces |
+| `high-end-visual-design` | Agency-tier cinematic depth, Geist / Clash Display, obsessive micro-interactions | `design-glass-surface` only — too dark/cinematic for Ledger |
+| `minimalist-ui` | Editorial monochrome, flat bento, muted pastels, bans `rounded-full` on large containers | `design-ledger-surface` — closest aesthetic cousin to the paper canon |
+| `industrial-brutalist-ui` | Swiss brutalist + tactical/CRT aesthetic | Exploration only — not production on either AG canon |
+| `gpt-taste` | GSAP motion + AIDA structure + seeded layout randomization | **Caution** — mandates GSAP ScrollTrigger; AG's Thane budget overrides; borrow the anti-pattern list, ignore the motion prescription |
+| `redesign-existing-projects` | Audit + upgrade framework for existing codebases | `design-system-audit` — adjunct lens on anti-patterns |
+| `full-output-enforcement` | Bans `// TODO`, `// rest of code`, etc. in generated output | Canon-neutral — useful for any design skill drafting a long spec |
+| `stitch-design-taste` | Generates `DESIGN.md` for Google Stitch screen generation | Not applicable to AG (we don't use Stitch) — skip |
+
+### Hard override (Taste-Skill-specific guardrails)
+
+Taste skills are opinionated in ways that may conflict with AG's canons. Where they conflict, **AG's canon wins**:
+
+- **Fonts**: Taste bans Inter / Roboto and prescribes Geist / Clash Display / Satoshi. AG uses Fraunces (display italic) + IBM Plex Sans + JetBrains Mono. Do not swap fonts to follow Taste.
+- **Motion**: `gpt-taste` and `high-end-visual-design` prescribe GSAP ScrollTrigger pinning / scrubbing. AG's Thane budget + motion memory ban scroll-jacking and WebGL. Borrow the choreography *ideas*, not the library.
+- **Dark-OLED backgrounds**: Taste's default `#0e1011` canvas is a third canvas — neither Ledger paper nor Midnight Amber. Never apply to AG without a canon decision.
+- **Protected moments**: Taste skills don't know about the "approved." crimson word or the oxblood CTABand. Critique lenses from Taste must not propose editing these.
+
+Resolution: surface the Taste skill's insight through the primary AG design skill (e.g. `design-ledger-surface` with a `minimalist-ui` adjunct), then the Design Council decides whether the insight survives the canon.
+
 ## Typical flows (operator prompts)
 
 ### New marketing surface

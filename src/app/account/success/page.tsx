@@ -1,10 +1,11 @@
 'use client'
 
+/**
+ * Checkout success — unified Ledger canon (ADR 0007).
+ */
+
 import React, { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Section from '@/components/ui/Section'
-import Container from '@/components/ui/Container'
-import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import PlanBadge from '@/components/PlanBadge'
 import { useUserPlan } from '@/hooks/useUserPlan'
@@ -55,7 +56,7 @@ function CheckoutSuccessInner() {
   }, [ready])
 
   return (
-    <Section size="sm" background="muted">
+    <main className="min-h-screen paper grain">
       <Toast
         isVisible={showToast}
         onDismiss={() => setShowToast(false)}
@@ -66,57 +67,55 @@ function CheckoutSuccessInner() {
       >
         Your features are now unlocked.
       </Toast>
-      <Container size="sm">
-        <Card className="text-center">
-          <CardContent className="py-12 space-y-6">
-            {!ready ? (
-              <>
-                <Loader2 className="h-12 w-12 text-amber-deep animate-spin mx-auto" />
-                <h1 className="text-2xl font-bold text-ink">
-                  Setting up your subscription...
+      <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="paper-card-raised p-8 sm:p-10 text-center space-y-6">
+          {!ready ? (
+            <>
+              <Loader2 className="h-12 w-12 text-amber-deep animate-spin mx-auto" />
+              <h1 className="font-display-tight text-2xl text-ink">
+                Setting up your subscription...
+              </h1>
+              <p className="font-plex text-sm text-ink-muted">
+                {provider === 'coinbase'
+                  ? 'Waiting for on-chain confirmation. This can take a few minutes for crypto payments.'
+                  : "This usually takes just a moment. Please don't close this page."}
+              </p>
+            </>
+          ) : (
+            <>
+              <CheckCircle className="h-16 w-16 text-semantic-success-700 mx-auto" />
+              <div className="space-y-2">
+                <h1 className="font-display-tight text-2xl text-ink">
+                  Welcome to AllowanceGuard{' '}
+                  {plan !== 'free' && <PlanBadge plan={plan as ConsumerPlan} />}
                 </h1>
-                <p className="text-sm text-ink-muted">
-                  {provider === 'coinbase'
-                    ? 'Waiting for on-chain confirmation. This can take a few minutes for crypto payments.'
-                    : "This usually takes just a moment. Please don't close this page."}
+                <p className="font-plex text-sm text-ink-muted">
+                  {plan !== 'free'
+                    ? 'Your subscription is active. All premium features are now unlocked.'
+                    : 'Your payment is being processed. Features will unlock shortly.'}
                 </p>
-              </>
-            ) : (
-              <>
-                <CheckCircle className="h-16 w-16 text-semantic-success-700 mx-auto" />
-                <div className="space-y-2">
-                  <h1 className="text-2xl font-bold text-ink">
-                    Welcome to AllowanceGuard{' '}
-                    {plan !== 'free' && <PlanBadge plan={plan as ConsumerPlan} />}
-                  </h1>
-                  <p className="text-sm text-ink-muted">
-                    {plan !== 'free'
-                      ? 'Your subscription is active. All premium features are now unlocked.'
-                      : 'Your payment is being processed. Features will unlock shortly.'}
+                {plan === 'free' && pollCount >= 15 && (
+                  <p className="font-plex text-xs text-semantic-warning-700 mt-2">
+                    If your plan isn&apos;t updating, please contact support or try refreshing.
                   </p>
-                  {plan === 'free' && pollCount >= 15 && (
-                    <p className="text-xs text-semantic-warning-600 mt-2">
-                      If your plan isn&apos;t updating, please contact support or try refreshing.
-                    </p>
-                  )}
-                </div>
-                <div className="pt-4">
-                  <Button
-                    variant="primary"
-                    onClick={() => (window.location.href = '/account')}
-                  >
-                    Go to Dashboard
-                  </Button>
-                </div>
-                <p className="text-xs text-ink-muted">
-                  Redirecting in 5 seconds...
-                </p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-      </Container>
-    </Section>
+                )}
+              </div>
+              <div className="pt-4">
+                <Button
+                  variant="primary"
+                  onClick={() => (window.location.href = '/account')}
+                >
+                  Go to Dashboard
+                </Button>
+              </div>
+              <p className="font-mono text-[10px] tracking-[0.18em] uppercase text-ink-whisper">
+                Redirecting in 5 seconds…
+              </p>
+            </>
+          )}
+        </div>
+      </div>
+    </main>
   )
 }
 

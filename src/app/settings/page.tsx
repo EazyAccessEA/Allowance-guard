@@ -180,7 +180,7 @@ export default function SettingsPage() {
 
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-sub">
                   <h3 className="text-lg font-semibold text-ink mb-3">Email Alerts</h3>
                   <p className="text-sm text-ink-muted mb-3">
                     Get notified when new approvals are detected on your wallets via Microsoft SMTP.
@@ -192,7 +192,7 @@ export default function SettingsPage() {
                   </ul>
                 </div>
 
-                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-sub">
                   <h3 className="text-lg font-semibold text-ink mb-3">Risk Policy Configuration</h3>
                   <p className="text-sm text-ink-muted mb-3">
                     Configure what counts as alert-worthy for your specific needs.
@@ -204,7 +204,7 @@ export default function SettingsPage() {
                   </ul>
                 </div>
 
-                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-sub">
                   <h3 className="text-lg font-semibold text-ink mb-3">Slack Integration</h3>
                   <p className="text-sm text-ink-muted mb-3">
                     Get daily digests directly in your Slack workspace.
@@ -216,7 +216,7 @@ export default function SettingsPage() {
                   </ul>
                 </div>
 
-                <div className="border border-ink-rule rounded-md p-6 bg-paper-deep dark:bg-paper-sub">
+                <div className="border border-ink-rule rounded-md p-6 bg-paper-sub">
                   <h3 className="text-lg font-semibold text-ink mb-3">Public Share Links</h3>
                   <p className="text-sm text-ink-muted mb-3">
                     Generate read-only links to share your wallet&apos;s approval status.
@@ -229,7 +229,7 @@ export default function SettingsPage() {
                 </div>
               </div>
 
-              <div className="bg-text-primary dark:bg-paper-sub text-ink rounded-md p-6">
+              <div className="bg-paper-deep text-ink rounded-md p-6">
                 <h3 className="text-lg font-semibold mb-2">Ready to get started?</h3>
                 <p className="text-sm opacity-90 mb-4">
                   Connect your wallet to access these settings and start monitoring your token approvals with custom alerts and policies.
@@ -278,7 +278,7 @@ export default function SettingsPage() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-3 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                   />
                 </div>
 
@@ -288,7 +288,7 @@ export default function SettingsPage() {
                     id="riskOnly"
                     checked={riskOnly}
                     onChange={(e) => setRiskOnly(e.target.checked)}
-                    className="mr-3 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="mr-3 focus:outline-none focus:ring-2 focus:ring-amber-deep"
                   />
                   <label htmlFor="riskOnly" className="text-base text-ink-muted">
                     Only alert for high-risk approvals
@@ -297,7 +297,7 @@ export default function SettingsPage() {
 
                 <button
                   onClick={subscribe}
-                  className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="bg-amber-deep text-paper px-6 py-3 rounded-lg font-medium hover:bg-amber-deep/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-deep"
                 >
                   Subscribe to Alerts
                 </button>
@@ -317,10 +317,10 @@ export default function SettingsPage() {
 
               {policyLoading && !policy && (
                 <div className="animate-pulse space-y-4 max-w-2xl">
-                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-1/3"></div>
-                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-1/4"></div>
-                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-full"></div>
-                  <div className="h-10 bg-gray-200 dark:bg-paper-sub rounded w-full"></div>
+                  <div className="h-10 bg-paper-deep rounded w-1/3"></div>
+                  <div className="h-10 bg-paper-deep rounded w-1/4"></div>
+                  <div className="h-10 bg-paper-deep rounded w-full"></div>
+                  <div className="h-10 bg-paper-deep rounded w-full"></div>
                 </div>
               )}
               {policyError && <InlineError message={policyError} onRetry={loadPolicy} />}
@@ -329,7 +329,7 @@ export default function SettingsPage() {
                   <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
                     <label className="text-base text-ink-muted font-medium w-32">Min risk score</label>
                     <input
-                      className="w-24 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-24 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                       type="number"
                       value={policy?.min_risk_score || 0}
                       onChange={e=>policy && setPolicy({...policy, min_risk_score: Number(e.target.value)})}
@@ -341,7 +341,7 @@ export default function SettingsPage() {
                       type="checkbox"
                       checked={policy?.unlimited_only || false}
                       onChange={e=>policy && setPolicy({...policy, unlimited_only: e.target.checked})}
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-amber-deep"
                     />
                     <span className="text-base text-ink-muted">Only alert on UNLIMITED approvals</span>
                   </label>
@@ -350,7 +350,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-ink-muted font-medium mb-2">Include spenders (comma-separated)</div>
                       <input
-                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                         value={(policy?.include_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -358,7 +358,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-ink-muted font-medium mb-2">Ignore spenders</div>
                       <input
-                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                         value={(policy?.ignore_spenders||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_spenders: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -366,7 +366,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-ink-muted font-medium mb-2">Include tokens</div>
                       <input
-                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                         value={(policy?.include_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, include_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -374,7 +374,7 @@ export default function SettingsPage() {
                     <div>
                       <div className="text-base text-ink-muted font-medium mb-2">Ignore tokens</div>
                       <input
-                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="w-full px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                         value={(policy?.ignore_tokens||[]).join(',')}
                         onChange={e=>policy && setPolicy({...policy, ignore_tokens: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})}
                       />
@@ -383,7 +383,7 @@ export default function SettingsPage() {
 
                   <button
                     onClick={savePolicy}
-                    className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-amber-deep text-paper px-6 py-3 rounded-lg font-medium hover:bg-amber-deep/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-deep"
                   >
                     Save Policy
                   </button>
@@ -405,7 +405,7 @@ export default function SettingsPage() {
                     Slack webhook URL:
                   </label>
                   <input
-                    className="w-full px-4 py-3 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-4 py-3 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                     placeholder="https://hooks.slack.com/services/..."
                     value={webhook}
                     onChange={e=>setWebhook(e.target.value)}
@@ -414,7 +414,7 @@ export default function SettingsPage() {
 
                 <button
                   onClick={addSlack}
-                  className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="bg-amber-deep text-paper px-6 py-3 rounded-lg font-medium hover:bg-amber-deep/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-deep"
                 >
                   Add Webhook
                 </button>
@@ -424,9 +424,9 @@ export default function SettingsPage() {
                   </span>
                 )}
 
-                <div className="bg-paper-deep dark:bg-paper-sub border border-ink-rule rounded-md p-4">
+                <div className="bg-paper-sub border border-ink-rule rounded-md p-4">
                   <p className="text-sm text-ink-muted">
-                    <strong>Tip:</strong> Create a webhook at <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink dark:hover:text-ink">api.slack.com/apps</a> &rarr; Create New App &rarr; Enable Incoming Webhooks &rarr; Add to channel
+                    <strong>Tip:</strong> Create a webhook at <a href="https://api.slack.com/apps" target="_blank" rel="noopener noreferrer" className="underline hover:text-ink hover:text-ink">api.slack.com/apps</a> &rarr; Create New App &rarr; Enable Incoming Webhooks &rarr; Add to channel
                   </p>
                 </div>
               </div>
@@ -446,7 +446,7 @@ export default function SettingsPage() {
                       type="checkbox"
                       checked={censorAddr}
                       onChange={e => setCensorAddr(e.target.checked)}
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-amber-deep"
                     />
                     <span className="text-base text-ink-muted">Censor addresses (0x1234…abcd)</span>
                   </label>
@@ -455,7 +455,7 @@ export default function SettingsPage() {
                       type="checkbox"
                       checked={censorAmt}
                       onChange={e => setCensorAmt(e.target.checked)}
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-amber-deep"
                     />
                     <span className="text-base text-ink-muted">Hide amounts</span>
                   </label>
@@ -464,14 +464,14 @@ export default function SettingsPage() {
                       type="checkbox"
                       checked={riskOnlyShare}
                       onChange={e => setRiskOnlyShare(e.target.checked)}
-                      className="rounded focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="rounded focus:outline-none focus:ring-2 focus:ring-amber-deep"
                     />
                     <span className="text-base text-ink-muted">Risky only (UNLIMITED / STALE / risk&gt;0)</span>
                   </label>
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <span className="text-base text-ink-muted w-32">Expire after (days)</span>
                     <input
-                      className="w-20 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-20 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep"
                       type="number"
                       value={expireDays}
                       onChange={e => setExpireDays(e.target.value ? Number(e.target.value) : '')}
@@ -483,13 +483,13 @@ export default function SettingsPage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={generateShare}
-                    className="bg-amber-500 text-ink px-6 py-3 rounded-lg font-medium hover:bg-amber-600 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-amber-deep text-paper px-6 py-3 rounded-lg font-medium hover:bg-amber-deep/90 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-deep"
                   >
                     Generate / Rotate
                   </button>
                   <button
                     onClick={expireShareLink}
-                    className="bg-paper-sub text-ink border border-ink-rule px-6 py-3 rounded-lg font-medium hover:bg-paper-deep dark:hover:bg-paper-sub transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="bg-paper-sub text-ink border border-ink-rule px-6 py-3 rounded-lg font-medium hover:bg-paper-deep transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-deep"
                   >
                     Expire Link
                   </button>
@@ -507,7 +507,7 @@ export default function SettingsPage() {
                     </label>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <input
-                        className="flex-1 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="flex-1 px-3 py-2 border border-ink-rule rounded-md bg-paper-sub text-ink font-mono text-sm focus:outline-none focus:ring-2 focus:ring-amber-deep"
                         readOnly
                         value={shareUrl ?? ''}
                       />
@@ -516,7 +516,7 @@ export default function SettingsPage() {
                           await navigator.clipboard.writeText(shareUrl || '')
                           setShareMsg('URL copied to clipboard!')
                         }}
-                        className="bg-text-primary dark:bg-paper-sub text-ink px-4 py-2 rounded-md font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-primary-500"
+                        className="bg-paper-deep text-ink px-4 py-2 rounded-md font-medium hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-amber-deep"
                       >
                         Copy
                       </button>
@@ -524,7 +524,7 @@ export default function SettingsPage() {
                   </div>
                 )}
 
-                <div className="bg-paper-deep dark:bg-paper-sub border border-ink-rule rounded-md p-4">
+                <div className="bg-paper-sub border border-ink-rule rounded-md p-4">
                   <p className="text-sm text-ink-muted">
                     <strong>Privacy:</strong> Share links are read-only and can be expired at any time.
                     Addresses and amounts can be censored for privacy.

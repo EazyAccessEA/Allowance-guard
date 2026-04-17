@@ -40,7 +40,7 @@ export default function SharePage({ params }: { params: Promise<{ token: string 
       </Head>
 
       <h1 className="text-2xl font-semibold text-ink">Allowance Guard — Shared Report</h1>
-      {error && <div className="mt-4 rounded bg-red-50 dark:bg-red-900/20 px-3 py-2 text-sm text-red-700 dark:text-red-800">{error}</div>}
+      {error && <div className="mt-4 rounded border border-crimson-paper/40 bg-paper-sub px-3 py-2 text-sm text-crimson-paper">{error}</div>}
       {!data && !error && <div className="mt-4 text-sm text-ink-muted">Loading…</div>}
 
       {data && (

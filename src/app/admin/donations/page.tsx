@@ -69,14 +69,14 @@ export default async function AdminDonationsPage({
       <header className="mb-8 flex items-end justify-between gap-4">
         <div>
                 <h1 className="text-2xl font-semibold">Contributions</h1>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-ink-muted">
             Recent contributions with simple analytics. This page is dynamic and queries Neon directly.
           </p>
         </div>
         <div className="flex items-center gap-3">
           <a
             href="/api/donations/export"
-            className="rounded-md border px-3 py-2 hover:bg-gray-50"
+            className="rounded-md border px-3 py-2 hover:bg-paper-sub"
           >
             Download CSV
           </a>
@@ -91,11 +91,11 @@ export default async function AdminDonationsPage({
 
       <section className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-4">
         <div className="rounded-xl border p-4">
-          <div className="text-xs text-gray-500">Total count</div>
+          <div className="text-xs text-ink-whisper">Total count</div>
           <div className="mt-1 text-2xl font-semibold">{agg.count_all}</div>
         </div>
         <div className="rounded-xl border p-4">
-          <div className="text-xs text-gray-500">Sum last 7 days</div>
+          <div className="text-xs text-ink-whisper">Sum last 7 days</div>
           <div className="mt-1 text-2xl font-semibold">
             {byCurrency.length === 1
               ? formatMoney(agg.sum_7d, byCurrency[0].currency)
@@ -103,7 +103,7 @@ export default async function AdminDonationsPage({
           </div>
         </div>
         <div className="rounded-xl border p-4">
-                 <div className="text-xs text-gray-500">Average contribution</div>
+                 <div className="text-xs text-ink-whisper">Average contribution</div>
           <div className="mt-1 text-2xl font-semibold">
             {byCurrency.length === 1
               ? formatMoney(Number(agg.avg_all), byCurrency[0].currency)
@@ -111,7 +111,7 @@ export default async function AdminDonationsPage({
           </div>
         </div>
         <div className="rounded-xl border p-4">
-          <div className="text-xs text-gray-500">Currencies</div>
+          <div className="text-xs text-ink-whisper">Currencies</div>
           <div className="mt-1 text-sm">
             {byCurrency.length === 0
               ? '—'
@@ -122,7 +122,7 @@ export default async function AdminDonationsPage({
 
       <section className="overflow-x-auto rounded-xl border">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-50 text-left">
+          <thead className="bg-paper-sub text-left">
             <tr>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Amount</th>
@@ -136,7 +136,7 @@ export default async function AdminDonationsPage({
           <tbody>
             {!rows.rows || rows.rows.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-6 text-center text-gray-500">
+                <td colSpan={7} className="px-4 py-6 text-center text-ink-whisper">
                          No contributions yet.
                 </td>
               </tr>
@@ -158,20 +158,20 @@ export default async function AdminDonationsPage({
       </section>
 
       <nav className="mt-6 flex items-center justify-between">
-        <div className="text-xs text-gray-600">
+        <div className="text-xs text-ink-muted">
           Page {page} of {totalPages} • {total} total
         </div>
         <div className="flex items-center gap-2">
           <Link
             href={`/admin/donations?page=${Math.max(page - 1, 1)}&per=${per}`}
-            className="rounded-md border px-3 py-2 hover:bg-gray-50"
+            className="rounded-md border px-3 py-2 hover:bg-paper-sub"
             aria-disabled={page <= 1}
           >
             Previous
           </Link>
           <Link
             href={`/admin/donations?page=${Math.min(page + 1, totalPages)}&per=${per}`}
-            className="rounded-md border px-3 py-2 hover:bg-gray-50"
+            className="rounded-md border px-3 py-2 hover:bg-paper-sub"
             aria-disabled={page >= totalPages}
           >
             Next

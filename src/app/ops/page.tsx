@@ -42,17 +42,17 @@ export default function OpsPage() {
       <div className="mt-3 flex gap-2">
         <input className="rounded border px-2 py-1 text-sm w-80" placeholder="OPS_DASH_TOKEN"
                value={token} onChange={e=>setToken(e.target.value)} />
-        <button onClick={()=>{ localStorage.setItem('ops_token', token); load() }} className="rounded border border-black bg-ink text-paper px-3 py-1 text-sm hover:bg-gray-800">Load</button>
+        <button onClick={()=>{ localStorage.setItem('ops_token', token); load() }} className="rounded border border-ink bg-ink text-paper px-3 py-1 text-sm hover:bg-ink/90">Load</button>
       </div>
 
       <section className="mt-6">
         <h2 className="font-semibold">Health</h2>
-        <pre className="mt-2 rounded border bg-gray-50 p-3 text-xs overflow-auto">{JSON.stringify(health || {}, null, 2)}</pre>
+        <pre className="mt-2 rounded border border-ink-rule bg-paper-sub p-3 text-xs overflow-auto text-ink">{JSON.stringify(health || {}, null, 2)}</pre>
       </section>
 
       <section className="mt-6">
         <h2 className="font-semibold">Metrics</h2>
-        <pre className="mt-2 rounded border bg-gray-50 p-3 text-xs overflow-auto">{JSON.stringify(data || {}, null, 2)}</pre>
+        <pre className="mt-2 rounded border border-ink-rule bg-paper-sub p-3 text-xs overflow-auto text-ink">{JSON.stringify(data || {}, null, 2)}</pre>
       </section>
     </main>
   )

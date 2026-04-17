@@ -182,7 +182,7 @@ export default function TeamDashboardPage({
         <Card>
           <CardContent className="pt-4">
             <div className="flex items-center gap-2">
-              <Shield className="w-5 h-5 text-green-800" />
+              <Shield className="w-5 h-5 text-semantic-success-700" />
               <div>
                 <div className="text-2xl font-bold">Sentinel</div>
                 <div className="text-xs text-ink-muted">Plan</div>
@@ -287,8 +287,8 @@ export default function TeamDashboardPage({
                     className="flex items-center justify-between p-3 rounded-lg border border-ink-rule"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
-                        <span className="text-sm font-medium text-primary-accent">
+                      <div className="w-8 h-8 rounded-full bg-paper-sub border border-ink-rule flex items-center justify-center">
+                        <span className="text-sm font-medium text-amber-deep">
                           {(m.name ?? m.email)?.[0]?.toUpperCase() ?? '?'}
                         </span>
                       </div>
@@ -329,12 +329,12 @@ export default function TeamDashboardPage({
                   placeholder="0x... Safe address"
                   value={safeAddress}
                   onChange={(e) => setSafeAddress(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-ink-rule rounded-lg bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="flex-1 px-4 py-2 border border-ink-rule rounded-lg bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-amber-deep"
                 />
                 <select
                   value={safeChainId}
                   onChange={(e) => setSafeChainId(Number(e.target.value))}
-                  className="px-4 py-2 border border-ink-rule rounded-lg bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  className="px-4 py-2 border border-ink-rule rounded-lg bg-paper text-ink text-sm focus:outline-none focus:ring-2 focus:ring-amber-deep"
                 >
                   <option value={1}>Ethereum</option>
                   <option value={42161}>Arbitrum</option>

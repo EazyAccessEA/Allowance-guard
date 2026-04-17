@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * PublicApiKeyCreator
+ * PublicApiKeyCreator — unified Ledger canon (ADR 0007).
  *
  * Issues browser-safe public API keys (`ag_pub_*`) for use with
  * `@allowance-guard/react` or any other client-side integration.
@@ -12,7 +12,6 @@
  */
 
 import React, { useCallback, useEffect, useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
 import { Globe, Plus, Copy, Check, AlertTriangle, Trash2 } from 'lucide-react'
@@ -116,48 +115,44 @@ export default function PublicApiKeyCreator() {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>
-            <span className="inline-flex items-center gap-2">
-              <Globe className="h-4 w-4" />
-              Public API keys
-            </span>
-          </CardTitle>
-          {!showCreate && !justCreated && (
-            <Button
-              variant="secondary"
-              size="sm"
-              leftIcon={<Plus className="h-4 w-4" />}
-              onClick={() => setShowCreate(true)}
-              ariaLabel="Create new public API key"
-            >
-              Create public key
-            </Button>
-          )}
-        </div>
-        <p className="text-xs text-ink-muted mt-2">
-          Browser-safe, read-only keys (<code className="text-[10px]">ag_pub_*</code>). Use these
-          with <code className="text-[10px]">@allowance-guard/react</code> or any client-side
-          integration. 500 calls/day, 30/min burst, GET requests only.
-        </p>
-      </CardHeader>
+    <div className="paper-card p-6 sm:p-7">
+      <div className="mb-2 flex items-center justify-between">
+        <h2 className="inline-flex items-center gap-2 font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
+          <Globe className="h-4 w-4" />
+          Public API keys
+        </h2>
+        {!showCreate && !justCreated && (
+          <Button
+            variant="secondary"
+            size="sm"
+            leftIcon={<Plus className="h-4 w-4" />}
+            onClick={() => setShowCreate(true)}
+            ariaLabel="Create new public API key"
+          >
+            Create public key
+          </Button>
+        )}
+      </div>
+      <p className="font-plex text-xs text-ink-muted mt-2 mb-5">
+        Browser-safe, read-only keys (<code className="font-mono text-[10px] text-amber-deep">ag_pub_*</code>). Use
+        these with <code className="font-mono text-[10px] text-amber-deep">@allowance-guard/react</code> or any
+        client-side integration. 500 calls/day, 30/min burst, GET requests only.
+      </p>
 
-      <CardContent className="space-y-4">
+      <div className="space-y-4">
         {/* One-time plaintext disclosure */}
         {justCreated && (
-          <div className="rounded-lg border border-amber-500/40 bg-amber-50/5 p-4 space-y-3">
+          <div className="border-l-2 border-amber-deep bg-paper-sub p-4 space-y-3">
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-amber-deep flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-ink">
+              <div className="font-plex text-sm text-ink">
                 <strong>Save this key now.</strong> It will not be shown again. Store it in your
-                <code className="text-[10px] mx-1">.env.local</code> as
-                <code className="text-[10px] mx-1">NEXT_PUBLIC_ALLOWANCE_GUARD_KEY</code>.
+                <code className="font-mono text-[10px] mx-1 text-amber-deep">.env.local</code> as
+                <code className="font-mono text-[10px] mx-1 text-amber-deep">NEXT_PUBLIC_ALLOWANCE_GUARD_KEY</code>.
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <code className="flex-1 text-xs font-mono break-all bg-paper px-3 py-2 rounded border border-ink-rule">
+              <code className="flex-1 font-mono text-xs break-all bg-paper text-ink px-3 py-2 border border-ink-rule">
                 {justCreated.key}
               </code>
               <Button
@@ -177,10 +172,10 @@ export default function PublicApiKeyCreator() {
 
         {/* Create form */}
         {showCreate && !justCreated && (
-          <div className="rounded-lg border border-ink-rule p-4 space-y-3">
+          <div className="border border-ink-rule bg-paper-sub p-4 space-y-3">
             <label
               htmlFor="public-key-name"
-              className="block text-sm font-medium text-ink"
+              className="block font-plex text-sm font-medium text-ink"
             >
               Key name
             </label>
@@ -192,18 +187,18 @@ export default function PublicApiKeyCreator() {
               placeholder="e.g. example.com (production)"
               maxLength={100}
               className={cn(
-                'w-full rounded-md border border-ink-rule bg-paper px-3 py-2 text-sm',
-                'text-ink placeholder:text-ink-muted',
-                'focus:outline-none focus:ring-2 focus:ring-primary-700 focus:ring-offset-2',
+                'w-full border border-ink-rule bg-paper px-3 py-2 font-plex text-sm',
+                'text-ink placeholder:text-ink-whisper',
+                'focus:outline-none focus:ring-2 focus:ring-amber-deep focus:border-amber-deep',
               )}
             />
 
             <label
               htmlFor="public-key-origins"
-              className="block text-sm font-medium text-ink"
+              className="block font-plex text-sm font-medium text-ink"
             >
               Allowed origins{' '}
-              <span className="text-xs text-ink-muted font-normal">
+              <span className="font-plex text-xs text-ink-muted font-normal">
                 (optional, one per line)
               </span>
             </label>
@@ -214,18 +209,18 @@ export default function PublicApiKeyCreator() {
               placeholder={'https://app.example.com\nhttps://staging.example.com'}
               rows={3}
               className={cn(
-                'w-full rounded-md border border-ink-rule bg-paper px-3 py-2 text-sm font-mono',
-                'text-ink placeholder:text-ink-muted',
-                'focus:outline-none focus:ring-2 focus:ring-primary-700 focus:ring-offset-2',
+                'w-full border border-ink-rule bg-paper px-3 py-2 font-mono text-sm',
+                'text-ink placeholder:text-ink-whisper',
+                'focus:outline-none focus:ring-2 focus:ring-amber-deep focus:border-amber-deep',
               )}
             />
-            <p className="text-xs text-ink-muted">
+            <p className="font-plex text-xs text-ink-muted">
               Leave blank to allow any origin. Adding origins locks the key to those domains —
               browsers from other origins will get a 403.
             </p>
 
             {createError && (
-              <p className="text-xs text-semantic-error-700 flex items-center gap-1">
+              <p className="font-plex text-xs text-crimson-paper flex items-center gap-1">
                 <AlertTriangle className="h-3 w-3" />
                 {createError}
               </p>
@@ -252,28 +247,28 @@ export default function PublicApiKeyCreator() {
         {/* List */}
         {!loading && keys.length === 0 && !showCreate && !justCreated && (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <Globe className="h-8 w-8 text-ink-muted mb-2" />
-            <p className="text-sm font-medium text-ink">No public keys yet</p>
-            <p className="text-xs text-ink-muted mt-1">
+            <Globe className="h-8 w-8 text-ink-whisper mb-2" />
+            <p className="font-plex text-sm font-medium text-ink">No public keys yet</p>
+            <p className="font-plex text-xs text-ink-muted mt-1">
               Create one to embed AllowanceGuard in your dApp.
             </p>
           </div>
         )}
 
         {keys.length > 0 && (
-          <ul className="divide-y divide-border-primary" role="list">
+          <ul className="divide-y divide-ink-rule" role="list">
             {keys.map((k) => (
               <li
                 key={k.id}
                 className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"
               >
                 <div className="space-y-1 min-w-0">
-                  <div className="text-sm font-medium text-ink truncate">{k.name}</div>
-                  <code className="text-xs font-mono text-ink-muted bg-neutral-100 px-1.5 py-0.5 rounded">
+                  <div className="font-plex text-sm font-medium text-ink truncate">{k.name}</div>
+                  <code className="font-mono text-xs text-ink-muted bg-paper-sub border border-ink-rule px-1.5 py-0.5">
                     {k.prefix}****
                   </code>
                   {k.allowedOrigins && k.allowedOrigins.length > 0 && (
-                    <div className="text-xs text-ink-muted">
+                    <div className="font-plex text-xs text-ink-whisper">
                       Origins: {k.allowedOrigins.join(', ')}
                     </div>
                   )}
@@ -284,7 +279,7 @@ export default function PublicApiKeyCreator() {
                   leftIcon={<Trash2 className="h-4 w-4" />}
                   loading={revokingId === k.id}
                   onClick={() => handleRevoke(k.id)}
-                  className="text-ink-muted hover:text-semantic-error-700"
+                  className="text-ink-muted hover:text-crimson-paper"
                   ariaLabel={`Revoke key ${k.name}`}
                 >
                   Revoke
@@ -293,7 +288,7 @@ export default function PublicApiKeyCreator() {
             ))}
           </ul>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

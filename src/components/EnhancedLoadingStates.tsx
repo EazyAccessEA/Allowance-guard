@@ -236,10 +236,10 @@ export function StatsCard({
       <Card className={className}>
         <CardContent className="p-4">
           <div className="animate-pulse flex items-center gap-3">
-            <div className="w-10 h-10 bg-neutral-borders/20 rounded-lg" />
+            <div className="w-10 h-10 bg-paper-deep rounded-lg" />
             <div className="flex-1">
-              <div className="h-3 bg-neutral-borders/20 rounded w-16 mb-2" />
-              <div className="h-6 bg-neutral-borders/30 rounded w-12" />
+              <div className="h-3 bg-paper-deep rounded w-16 mb-2" />
+              <div className="h-6 bg-paper-deep rounded w-12" />
             </div>
           </div>
         </CardContent>
@@ -248,21 +248,20 @@ export function StatsCard({
   }
 
   return (
-    <Card className={`mobbin-card hover:shadow-md transition-all duration-200 ${className}`}>
+    <Card className={`paper-card hover:shadow-md transition-all duration-200 ${className}`}>
       <CardContent className="p-6">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center border border-primary-200">
+          <div className="w-12 h-12 bg-paper-sub rounded-lg flex items-center justify-center border border-ink-rule">
             {icon}
           </div>
           <div className="flex-1">
-            <p className="mobbin-caption text-ink-whisper mb-1">{title}</p>
+            <p className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-1">{title}</p>
             <div className="flex items-center gap-3">
-              <p className="mobbin-heading-2 text-ink">{value}</p>
+              <p className="font-display-tight text-2xl text-ink">{value}</p>
               {trend && trendValue && (
-                <Badge 
+                <Badge
                   variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'secondary'}
                   size="sm"
-                  className="mobbin-caption"
                 >
                   {trend === 'up' ? '↗' : trend === 'down' ? '↘' : '→'} {trendValue}
                 </Badge>

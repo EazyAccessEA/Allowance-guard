@@ -5,40 +5,46 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { getAccessibilityClasses, keyboardNavigation } from '@/lib/accessibility'
 
-// Ledger Button Variants — paper theme, WCAG-verified contrast pairs
-// Primary = Amber + ink (8.9:1). Secondary = Ink border + ink text.
-// Destructive = Crimson-paper + cream (6.4:1).
+// Button — unified Ledger canon (ADR 0007). WCAG-verified contrast pairs
+// against paper. The previous `primary` variant used the vivid
+// Midnight-Amber yellow (bg-amber-500) which fails AA on paper
+// (2.5:1 against #F7F5F0 and only ~4.3:1 between amber-500 and ink) —
+// now replaced with bg-amber-deep + paper-coloured text (7.1:1 AA).
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-base font-button transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-paper disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-base font-plex transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:ring-offset-2 focus-visible:ring-offset-paper disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        // Primary — Amber gradient, ink text (8.9:1 AAA verified)
-        primary: 'bg-gradient-to-r from-amber-500 to-amber-600 text-ink font-semibold hover:from-amber-400 hover:to-amber-500 active:from-amber-600 active:to-amber-700 shadow-sm',
+        // Primary — amber-deep on paper-coloured text (Ledger accent on paper).
+        primary: 'bg-amber-deep text-paper font-semibold hover:bg-amber-deep/90 active:bg-amber-deep/80 shadow-sm',
 
-        // Secondary — 2px ink border for strong button affordance on paper
-        // (replaces the old 1px ink-rule at 0.14 opacity which was invisible)
+        // Secondary — 2px ink border for strong button affordance on paper.
         secondary: 'border-2 border-ink bg-transparent text-ink font-medium hover:bg-ink hover:text-paper',
 
-        // Ghost — no border, subtle hover
+        // Ghost — no border, subtle hover.
         ghost: 'text-ink-muted hover:bg-paper-sub hover:text-ink active:bg-paper-sub',
 
-        // Destructive — deep crimson + cream (6.4:1 AA verified)
-        // Was bg-crimson-500 text-ink = 4.4:1, FAILED AA-normal
+        // Destructive — deep crimson + cream (6.4:1 AA). Reserved for
+        // destructive confirms (revoke, delete, cancel).
         destructive: 'bg-crimson-paper text-cream font-semibold hover:opacity-90 active:opacity-80 shadow-sm',
 
-        // Outline — same as secondary (strong ink border)
+        // Outline — same as secondary (strong ink border).
         outline: 'border-2 border-ink bg-transparent text-ink font-medium hover:bg-ink hover:text-paper',
 
-        // Link — amber-deep (text-grade amber, AA on paper)
+        // Link — amber-deep typographic accent.
         link: 'text-amber-deep underline-offset-4 hover:underline font-medium',
 
-        // Semantic variants — cream text on dark backgrounds for AA
+        // Semantic state variants — paper-calibrated. Text ramp is
+        // `-700` for AA; background `-500/600` holds contrast with cream.
         success: 'bg-semantic-success-700 text-cream hover:bg-semantic-success-800 active:bg-semantic-success-900 font-semibold shadow-sm',
-        warning: 'bg-amber-500 text-ink hover:bg-amber-600 active:bg-amber-700 font-semibold shadow-sm',
+        warning: 'bg-semantic-warning-700 text-cream hover:bg-semantic-warning-800 active:bg-semantic-warning-900 font-semibold shadow-sm',
         info: 'bg-ink-blue text-cream hover:opacity-90 active:opacity-80 font-semibold shadow-sm',
 
-        // Subtle — paper-sub chip
+        // Purpose inverse moment — oxblood. Use where the surface calls
+        // for a dark punctuation (homepage CTABand, destructive confirms).
+        inverse: 'bg-oxblood text-cream font-semibold hover:bg-oxblood/90 active:bg-oxblood/80 shadow-sm',
+
+        // Subtle — paper-sub chip.
         subtle: 'bg-paper-sub text-ink-soft hover:bg-paper-deep hover:text-ink',
         accent: 'bg-paper-sub text-amber-deep hover:bg-paper-deep font-medium',
       },

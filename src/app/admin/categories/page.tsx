@@ -48,10 +48,10 @@ export default function CategoriesAdminPage() {
               <span className="text-lg">{c.icon ?? '🏷️'}</span>
               <div>
                 <div className="font-medium">{c.name}</div>
-                <div className="text-sm text-gray-500">{c.tokenCount} tokens</div>
+                <div className="text-sm text-ink-whisper">{c.tokenCount} tokens</div>
               </div>
             </div>
-            <button onClick={() => del(c.id)} className="text-red-800">Delete</button>
+            <button onClick={() => del(c.id)} className="text-crimson-paper hover:underline">Delete</button>
           </li>
         ))}
       </ul>

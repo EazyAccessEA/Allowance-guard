@@ -57,10 +57,10 @@ export default function AdminDashboard() {
 
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case 'scan': return <Activity className="w-4 h-4 text-primary-accent" />
+      case 'scan': return <Activity className="w-4 h-4 text-amber-deep" />
       case 'revoke': return <Shield className="w-4 h-4 text-semantic-success" />
       case 'alert': return <AlertTriangle className="w-4 h-4 text-semantic-danger" />
-      default: return <Activity className="w-4 h-4 text-neutral-text" />
+      default: return <Activity className="w-4 h-4 text-ink" />
     }
   }
 
@@ -72,19 +72,19 @@ export default function AdminDashboard() {
         <Container>
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-neutral-text mb-2">Admin Dashboard</h1>
-            <p className="text-neutral-text">Monitor system performance, security, and user activity</p>
+            <h1 className="text-3xl font-bold text-ink mb-2">Admin Dashboard</h1>
+            <p className="text-ink">Monitor system performance, security, and user activity</p>
           </div>
 
           {/* Tab Navigation */}
           <div className="mb-8">
-            <nav className="flex space-x-1 bg-paper-sub p-1 rounded-lg border border-neutral-borders">
+            <nav className="flex space-x-1 bg-paper-sub p-1 rounded-lg border border-ink-rule">
               <button
                 onClick={() => setActiveTab('overview')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'overview'
-                    ? 'bg-paper-sub text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper dark:hover:bg-paper-sub'
+                    ? 'bg-paper text-amber-deep shadow-sm border border-ink-rule'
+                    : 'text-ink-muted hover:text-ink hover:bg-paper'
                 }`}
               >
                 Overview
@@ -93,8 +93,8 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab('audit')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'audit'
-                    ? 'bg-paper-sub text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper dark:hover:bg-paper-sub'
+                    ? 'bg-paper text-amber-deep shadow-sm border border-ink-rule'
+                    : 'text-ink-muted hover:text-ink hover:bg-paper'
                 }`}
               >
                 Audit Logs
@@ -103,8 +103,8 @@ export default function AdminDashboard() {
                 onClick={() => setActiveTab('performance')}
                 className={`flex-1 py-2 px-4 text-sm font-medium rounded-md transition-all duration-150 ${
                   activeTab === 'performance'
-                    ? 'bg-paper-sub text-primary-accent shadow-sm'
-                    : 'text-neutral-text hover:text-neutral-text hover:bg-paper dark:hover:bg-paper-sub'
+                    ? 'bg-paper text-amber-deep shadow-sm border border-ink-rule'
+                    : 'text-ink-muted hover:text-ink hover:bg-paper'
                 }`}
               >
                 Performance
@@ -120,12 +120,12 @@ export default function AdminDashboard() {
                 <Card>
                   <CardContent className="p-6">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-primary-accent/10 rounded-lg flex items-center justify-center">
-                        <Users className="w-6 h-6 text-primary-accent" />
+                      <div className="w-12 h-12 bg-paper-sub border border-ink-rule rounded-lg flex items-center justify-center">
+                        <Users className="w-6 h-6 text-amber-deep" />
                       </div>
                       <div>
-                        <p className="text-sm text-neutral-text">Total Users</p>
-                        <p className="text-2xl font-bold text-neutral-text">{stats.totalUsers.toLocaleString()}</p>
+                        <p className="text-sm text-ink">Total Users</p>
+                        <p className="text-2xl font-bold text-ink">{stats.totalUsers.toLocaleString()}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -138,7 +138,7 @@ export default function AdminDashboard() {
                         <Activity className="w-6 h-6 text-semantic-success" />
                       </div>
                       <div>
-                        <p className="text-sm text-neutral-text">Active Users</p>
+                        <p className="text-sm text-ink">Active Users</p>
                         <p className="text-2xl font-bold text-semantic-success">{stats.activeUsers.toLocaleString()}</p>
                       </div>
                     </div>
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
                         <BarChart3 className="w-6 h-6 text-semantic-info" />
                       </div>
                       <div>
-                        <p className="text-sm text-neutral-text">Total Scans</p>
+                        <p className="text-sm text-ink">Total Scans</p>
                         <p className="text-2xl font-bold text-semantic-info">{stats.totalScans.toLocaleString()}</p>
                       </div>
                     </div>
@@ -166,7 +166,7 @@ export default function AdminDashboard() {
                         <Shield className="w-6 h-6 text-semantic-warning" />
                       </div>
                       <div>
-                        <p className="text-sm text-neutral-text">Revocations</p>
+                        <p className="text-sm text-ink">Revocations</p>
                         <p className="text-2xl font-bold text-semantic-warning">{stats.totalRevocations.toLocaleString()}</p>
                       </div>
                     </div>
@@ -187,20 +187,20 @@ export default function AdminDashboard() {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-neutral-text">Overall Status</span>
+                        <span className="text-sm text-ink">Overall Status</span>
                         <Badge variant="success">Healthy</Badge>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-neutral-text">Database</span>
+                        <span className="text-sm text-ink">Database</span>
                         <Badge variant="success">Online</Badge>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-neutral-text">RPC Endpoints</span>
+                        <span className="text-sm text-ink">RPC Endpoints</span>
                         <Badge variant="success">3/3 Active</Badge>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-neutral-text">Last Incident</span>
-                        <span className="text-sm text-neutral-text">
+                        <span className="text-sm text-ink">Last Incident</span>
+                        <span className="text-sm text-ink">
                           {new Date(stats.lastIncident).toLocaleDateString()}
                         </span>
                       </div>
@@ -212,7 +212,7 @@ export default function AdminDashboard() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-primary-accent" />
+                      <Clock className="w-5 h-5 text-amber-deep" />
                       Recent Activity
                     </CardTitle>
                   </CardHeader>
@@ -222,10 +222,10 @@ export default function AdminDashboard() {
                         <div key={activity.id} className="flex items-center gap-3 p-3 rounded-lg bg-paper-sub">
                           {getActivityIcon(activity.type)}
                           <div className="flex-1">
-                            <p className="text-sm font-medium text-neutral-text">{activity.details}</p>
-                            <p className="text-xs text-neutral-text">{activity.user}</p>
+                            <p className="text-sm font-medium text-ink">{activity.details}</p>
+                            <p className="text-xs text-ink">{activity.user}</p>
                           </div>
-                          <span className="text-xs text-neutral-text">
+                          <span className="text-xs text-ink">
                             {new Date(activity.timestamp).toLocaleTimeString()}
                           </span>
                         </div>
@@ -246,16 +246,16 @@ export default function AdminDashboard() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5 text-primary-accent" />
+                    <BarChart3 className="w-5 h-5 text-amber-deep" />
                     Performance Metrics
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-neutral-text mb-4">
+                  <p className="text-ink mb-4">
                     Real-time performance monitoring and Core Web Vitals tracking.
                   </p>
                   <div className="bg-paper-sub p-4 rounded-lg">
-                    <p className="text-sm text-neutral-text">
+                    <p className="text-sm text-ink">
                       Performance dashboard is available as a floating widget in the bottom-right corner.
                       Click the performance icon to view detailed metrics.
                     </p>

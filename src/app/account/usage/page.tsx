@@ -1,9 +1,10 @@
 'use client'
 
+/**
+ * Usage — unified Ledger canon (ADR 0007).
+ */
+
 import React, { useEffect, useState } from 'react'
-import Section from '@/components/ui/Section'
-import Container from '@/components/ui/Container'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import PlanBadge from '@/components/PlanBadge'
 import { cn } from '@/lib/utils'
 import {
@@ -53,39 +54,37 @@ function UsageStat({
   const percentage = isUnlimited ? 0 : limit > 0 ? Math.round((used / limit) * 100) : 0
 
   return (
-    <Card>
-      <CardContent className="py-5">
-        <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-amber-deep flex-shrink-0">
-            {icon}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm text-ink-muted">{label}</p>
-            <p className="text-2xl font-bold text-ink mt-1">
-              {used.toLocaleString()}
-              <span className="text-sm font-normal text-ink-muted ml-1">
-                / {isUnlimited ? 'Unlimited' : limit.toLocaleString()}
-              </span>
-            </p>
-            {!isUnlimited && limit > 0 && (
-              <div className="mt-2 h-2 w-full rounded-full bg-gray-100 dark:bg-paper-sub overflow-hidden">
-                <div
-                  className={cn(
-                    'h-full rounded-full transition-all',
-                    percentage > 85
-                      ? 'bg-semantic-error-500'
-                      : percentage > 60
-                        ? 'bg-semantic-warning-500'
-                        : 'bg-semantic-success-500'
-                  )}
-                  style={{ width: `${Math.max(percentage, 2)}%` }}
-                />
-              </div>
-            )}
-          </div>
+    <div className="paper-card p-5">
+      <div className="flex items-start gap-4">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-paper-sub border border-ink-rule text-amber-deep flex-shrink-0">
+          {icon}
         </div>
-      </CardContent>
-    </Card>
+        <div className="flex-1 min-w-0">
+          <p className="font-plex text-sm text-ink-muted">{label}</p>
+          <p className="font-display-tight text-2xl text-ink mt-1">
+            {used.toLocaleString()}
+            <span className="font-plex text-sm font-normal text-ink-muted ml-1">
+              / {isUnlimited ? 'Unlimited' : limit.toLocaleString()}
+            </span>
+          </p>
+          {!isUnlimited && limit > 0 && (
+            <div className="mt-2 h-2 w-full overflow-hidden bg-paper-deep border border-ink-rule">
+              <div
+                className={cn(
+                  'h-full transition-all',
+                  percentage > 85
+                    ? 'bg-semantic-error-500'
+                    : percentage > 60
+                      ? 'bg-semantic-warning-500'
+                      : 'bg-semantic-success-600',
+                )}
+                style={{ width: `${Math.max(percentage, 2)}%` }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -93,8 +92,8 @@ function DailyChart({ data, limit }: { data: DailyCall[]; limit: number }) {
   if (data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <BarChart3 className="h-8 w-8 text-ink-muted mb-2" />
-        <p className="text-sm text-ink-muted">No API usage data yet.</p>
+        <BarChart3 className="h-8 w-8 text-ink-whisper mb-2" />
+        <p className="font-plex text-sm text-ink-muted">No API usage data yet.</p>
       </div>
     )
   }
@@ -104,7 +103,7 @@ function DailyChart({ data, limit }: { data: DailyCall[]; limit: number }) {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between text-xs text-ink-muted">
+      <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] uppercase text-ink-whisper">
         <span>Last 30 days</span>
         {limit > 0 && (
           <span>Daily limit: {limit.toLocaleString()}</span>
@@ -123,9 +122,9 @@ function DailyChart({ data, limit }: { data: DailyCall[]; limit: number }) {
             >
               <div
                 className={cn(
-                  'w-full rounded-t transition-all',
-                  overLimit ? 'bg-semantic-error-400' : 'bg-primary-400',
-                  'group-hover:bg-primary-600'
+                  'w-full transition-all',
+                  overLimit ? 'bg-semantic-error-500' : 'bg-amber-deep/80',
+                  'group-hover:bg-amber-deep',
                 )}
                 style={{ height: `${Math.max(height, 2)}%` }}
               />
@@ -170,13 +169,13 @@ export default function UsagePage() {
   }, [])
 
   return (
-    <Section size="sm" background="muted">
-      <Container size="lg">
+    <main className="min-h-screen paper grain">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="space-y-8">
           {/* Back link */}
           <a
             href="/account"
-            className="inline-flex items-center gap-1.5 text-sm text-ink-muted hover:text-amber-deep transition-colors"
+            className="inline-flex items-center gap-1.5 font-plex text-sm text-ink-muted hover:text-amber-deep transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Account
@@ -185,8 +184,8 @@ export default function UsagePage() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-ink">Usage</h1>
-              <p className="text-sm text-ink-muted mt-1">
+              <h1 className="font-display-tight text-2xl text-ink">Usage</h1>
+              <p className="font-plex text-sm text-ink-muted mt-1">
                 Monitor your resource usage across wallets, API calls, and more.
               </p>
             </div>
@@ -196,24 +195,20 @@ export default function UsagePage() {
           {loading && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {Array.from({ length: 4 }).map((_, i) => (
-                <Card key={i}>
-                  <CardContent className="py-5">
-                    <div className="animate-pulse space-y-3">
-                      <div className="h-4 bg-paper-sub rounded w-1/2" />
-                      <div className="h-8 bg-paper-sub rounded w-3/4" />
-                    </div>
-                  </CardContent>
-                </Card>
+                <div key={i} className="paper-card p-5">
+                  <div className="animate-pulse space-y-3">
+                    <div className="h-4 bg-paper-deep w-1/2" />
+                    <div className="h-8 bg-paper-deep w-3/4" />
+                  </div>
+                </div>
               ))}
             </div>
           )}
 
           {error && (
-            <Card>
-              <CardContent className="py-8 text-center">
-                <p className="text-sm text-semantic-error-600">{error}</p>
-              </CardContent>
-            </Card>
+            <div className="paper-card py-8 text-center border-l-2 border-crimson-paper">
+              <p className="font-plex text-sm text-crimson-paper">{error}</p>
+            </div>
           )}
 
           {data && (
@@ -247,24 +242,20 @@ export default function UsagePage() {
               </div>
 
               {/* Daily API calls chart */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5" />
-                    Daily API Calls
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <DailyChart
-                    data={data.dailyApiCalls}
-                    limit={data.limits.maxApiCallsPerDay}
-                  />
-                </CardContent>
-              </Card>
+              <div className="paper-card p-6 sm:p-7">
+                <h2 className="mb-4 flex items-center gap-2 font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
+                  <BarChart3 className="h-4 w-4" />
+                  Daily API Calls
+                </h2>
+                <DailyChart
+                  data={data.dailyApiCalls}
+                  limit={data.limits.maxApiCallsPerDay}
+                />
+              </div>
             </>
           )}
         </div>
-      </Container>
-    </Section>
+      </div>
+    </main>
   )
 }

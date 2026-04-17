@@ -127,6 +127,7 @@ See `decisions/0004-neon-serverless-rules.md` for background.
 - Never expose premium data in free-tier API responses.
 - Show blurred previews with upgrade prompts for locked features in the UI.
 - Free tier limits: 3 wallets, no batch revoke, no export, no alerts, no teams.
+- **Batch revoke transport.** `src/hooks/useBulkRevokeEnhanced.ts` detects EIP-5792 capability per chain via wagmi's `useCapabilities`. When the connected wallet advertises `atomic.status === 'supported'` (or the legacy `atomicBatch.supported === true`) AND the chain group has ≥2 rows, revokes are bundled into a single `wallet_sendCalls` batch; receipts are resolved via `waitForCallsStatus`. On a failure (user rejects the batch, wallet downgrades mid-flight) the hook falls back to the sequential per-row path. Any user-facing copy about "batch revoke" must reflect this split — see `memory/VOICE.md` honest-claims rule.
 
 See `BUSINESS.md` for the full tier definitions.
 

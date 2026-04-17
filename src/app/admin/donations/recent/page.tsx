@@ -31,7 +31,7 @@ export default async function Recent() {
       <h1 className="text-2xl font-semibold mb-6">Recent Donations (Unified)</h1>
       <div className="overflow-x-auto rounded-xl border">
         <table className="min-w-full text-sm">
-          <thead className="bg-gray-50 text-left">
+          <thead className="bg-paper-sub text-left">
             <tr>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Amount</th>
@@ -44,7 +44,7 @@ export default async function Recent() {
           </thead>
           <tbody>
             {rows.length === 0 ? (
-              <tr><td colSpan={7} className="px-4 py-6 text-center text-gray-500">No donations yet.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-6 text-center text-ink-whisper">No donations yet.</td></tr>
             ) : rows.map((r: unknown, i: number) => {
               const row = r as { created_at: string; amount_minor: number; currency: string; source: string; ref: string; status: string; email: string | null }
               return (

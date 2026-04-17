@@ -1,6 +1,6 @@
 # 0005 — Ledger aesthetic on homepage
 
-**Status:** Accepted. Shipped in Phase 6.
+**Status:** Superseded by ADR 0007 (2026-04-17). Ledger is no longer the marketing-only canon — it is the unified canon across the product.
 **Date:** 2026-04-14 (ADR written during refactor; aesthetic itself shipped earlier)
 **Council:** Design Council (Maren, Idris, Sable, Kael, Noor with veto, Thane), #20 Brand copywriter, #17 Performance engineer
 

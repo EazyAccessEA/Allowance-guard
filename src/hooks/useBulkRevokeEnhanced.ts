@@ -1,6 +1,16 @@
 'use client'
 import { useState, useCallback } from 'react'
+import {
+  useAccount,
+  useCapabilities,
+  useConfig,
+  useSendCalls,
+  useSwitchChain,
+} from 'wagmi'
+import { waitForCallsStatus } from '@wagmi/core'
+import { encodeFunctionData } from 'viem'
 import { useRevoke } from './useRevoke'
+import { ERC20_ABI, ERC721_ABI } from '@/lib/abi'
 // Audit logging will be handled server-side via API calls
 
 type AllowanceRow = {
@@ -28,6 +38,53 @@ export interface BulkRevokeResult {
   }>
   totalGasUsed: bigint
   totalTransactions: number
+  /** Chain ids whose revokes were bundled via EIP-5792 `wallet_sendCalls`. */
+  batchedChains: number[]
+  /** EIP-5792 batch ids, one per batched chain, in `batchedChains` order. */
+  batchIds: string[]
+}
+
+// EIP-5792 capability key. Modern wallets expose `atomic.status`; some
+// earlier revisions used `atomicBatch.supported`. Treat either as support.
+function chainSupportsAtomicBatch(
+  capabilities: Record<string | number, unknown> | undefined,
+  chainId: number,
+): boolean {
+  if (!capabilities) return false
+  const hex = '0x' + chainId.toString(16)
+  const forChain = capabilities[chainId] ?? capabilities[hex]
+  if (!forChain || typeof forChain !== 'object') return false
+  const rec = forChain as Record<string, unknown>
+  const atomic = rec['atomic'] as { status?: string } | undefined
+  if (atomic?.status === 'supported' || atomic?.status === 'ready') return true
+  const atomicBatch = rec['atomicBatch'] as { supported?: boolean } | undefined
+  if (atomicBatch?.supported) return true
+  return false
+}
+
+function encodeRevokeCall(row: AllowanceRow): { to: `0x${string}`; data: `0x${string}` } {
+  const to = row.token_address as `0x${string}`
+  if (row.standard === 'ERC20') {
+    return {
+      to,
+      data: encodeFunctionData({
+        abi: ERC20_ABI,
+        functionName: 'approve',
+        args: [row.spender_address as `0x${string}`, BigInt(0)],
+      }),
+    }
+  }
+  if (row.standard === 'ERC721' || row.standard === 'ERC1155') {
+    return {
+      to,
+      data: encodeFunctionData({
+        abi: ERC721_ABI,
+        functionName: 'setApprovalForAll',
+        args: [row.spender_address as `0x${string}`, false],
+      }),
+    }
+  }
+  throw new Error(`Unsupported standard: ${row.standard}`)
 }
 
 export interface BulkRevokeProgress {
@@ -40,12 +97,17 @@ export interface BulkRevokeProgress {
 
 export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
   const { revoke } = useRevoke(selectedWallet)
+  const { address } = useAccount()
+  const { switchChainAsync } = useSwitchChain()
+  const { sendCallsAsync } = useSendCalls()
+  const { data: capabilities } = useCapabilities()
+  const wagmiConfig = useConfig()
   const [isRevoking, setIsRevoking] = useState(false)
   const [progress, setProgress] = useState<BulkRevokeProgress | null>(null)
   const [result, setResult] = useState<BulkRevokeResult | null>(null)
 
   const revokeMany = useCallback(async (
-    rows: AllowanceRow[], 
+    rows: AllowanceRow[],
     onProgress?: (progress: BulkRevokeProgress) => void
   ): Promise<BulkRevokeResult> => {
     if (!selectedWallet) {
@@ -58,6 +120,8 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
 
     const startTime = Date.now()
     const errors: BulkRevokeResult['errors'] = []
+    const batchedChains: number[] = []
+    const batchIds: string[] = []
     let success = 0
     let failed = 0
     const totalGasUsed = BigInt(0)
@@ -79,7 +143,7 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
       // Process each chain
       for (const [chainId, chainRows] of Object.entries(groupedByChain)) {
         const chainIdNum = parseInt(chainId)
-        
+
         // Update progress
         const currentProgress: BulkRevokeProgress = {
           current: processedRows,
@@ -89,6 +153,137 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
         }
         setProgress(currentProgress)
         onProgress?.(currentProgress)
+
+        // EIP-5792 fast path. If the connected wallet supports atomic
+        // batching on this chain and we have ≥2 rows to revoke, send all
+        // revokes as a single `wallet_sendCalls` batch. User signs once;
+        // one base-tx fee is amortised across N approvals.
+        const canBatch =
+          chainRows.length >= 2 &&
+          chainSupportsAtomicBatch(
+            capabilities as Record<string | number, unknown> | undefined,
+            chainIdNum,
+          )
+
+        if (canBatch && address) {
+          try {
+            setProgress({
+              current: processedRows,
+              total: totalRows,
+              currentAction: `Batching ${chainRows.length} revokes into one transaction...`,
+              estimatedTimeRemaining: calculateEstimatedTime(processedRows, totalRows, startTime),
+            })
+            onProgress?.({
+              current: processedRows,
+              total: totalRows,
+              currentAction: `Batching ${chainRows.length} revokes into one transaction...`,
+            })
+
+            const calls = chainRows.map(encodeRevokeCall)
+            const { id: batchId } = await sendCallsAsync({
+              calls,
+              chainId: chainIdNum,
+              account: address as `0x${string}`,
+            })
+
+            // Wait for the batch to land. waitForCallsStatus polls until
+            // the wallet reports a terminal state and returns per-call
+            // receipts with transactionHash values.
+            const status = await waitForCallsStatus(wagmiConfig, {
+              id: batchId,
+              timeout: 120_000,
+            })
+
+            const receipts = (status.receipts ?? []) as Array<{
+              transactionHash?: `0x${string}`
+              status?: 'success' | 'reverted' | number
+            }>
+
+            // Pair each row with the corresponding receipt. EIP-5792
+            // wallets return receipts in the same order as the calls
+            // array we submitted. Some wallets return one combined receipt
+            // for the whole batch — handle both by falling back to the
+            // first receipt's hash for every row.
+            const fallbackHash = receipts[0]?.transactionHash ?? (batchId as `0x${string}`)
+            await Promise.all(
+              chainRows.map(async (row, idx) => {
+                const rec = receipts[idx] ?? receipts[0]
+                const txHash = rec?.transactionHash ?? fallbackHash
+                const succeeded = rec?.status === 'success' || rec?.status === 1 || !rec?.status
+                try {
+                  await fetch('/api/receipts', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json' },
+                    body: JSON.stringify({
+                      wallet: selectedWallet,
+                      chainId: row.chain_id,
+                      token: row.token_address,
+                      spender: row.spender_address,
+                      standard: row.standard,
+                      allowanceType: row.allowance_type,
+                      preAmount: row.amount || '0',
+                      txHash,
+                      batched: true,
+                      batchId,
+                    }),
+                  })
+                } catch (e) {
+                  console.warn('Failed to create receipt for batched revoke:', e)
+                }
+                if (succeeded) {
+                  success++
+                } else {
+                  failed++
+                  errors.push({ row, error: 'reverted in batch' })
+                }
+              }),
+            )
+
+            totalTransactions += 1
+            batchedChains.push(chainIdNum)
+            batchIds.push(batchId)
+
+            // Single audit event for the whole batch.
+            try {
+              await fetch('/api/audit/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  action: 'bulk_revoke_batched',
+                  actorType: 'user',
+                  actorId: selectedWallet,
+                  subject: `batch:${batchId}`,
+                  category: 'data_modification',
+                  severity: 'low',
+                  meta: {
+                    chainId: chainIdNum,
+                    batchId,
+                    approvalCount: chainRows.length,
+                    transport: 'eip-5792',
+                  },
+                }),
+              })
+            } catch (auditError) {
+              console.warn('Failed to log batch audit event:', auditError)
+            }
+
+            processedRows += chainRows.length
+            continue
+          } catch (batchErr) {
+            // Batched path failed — log once and fall through to the
+            // sequential loop. Do NOT throw: sequential is the honest
+            // fallback on wallets that advertise support but reject the
+            // call (e.g., a downgrade in-flight).
+            console.warn('EIP-5792 batch failed; falling back to sequential', batchErr)
+            // Re-affirm the chain so the sequential writeContract calls
+            // below land on the right network.
+            try {
+              await switchChainAsync({ chainId: chainIdNum })
+            } catch {
+              /* non-fatal; useRevoke performs its own chain check */
+            }
+          }
+        }
 
         // Process rows in batches of 5 to avoid overwhelming the network
         const batchSize = 5
@@ -245,7 +440,9 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
         failed,
         errors,
         totalGasUsed,
-        totalTransactions
+        totalTransactions,
+        batchedChains,
+        batchIds,
       }
 
       setResult(finalResult)
@@ -282,7 +479,7 @@ export function useBulkRevokeEnhanced(selectedWallet?: string | null) {
       setIsRevoking(false)
       setProgress(null)
     }
-  }, [revoke, selectedWallet])
+  }, [revoke, selectedWallet, address, capabilities, sendCallsAsync, switchChainAsync, wagmiConfig])
 
   const revokeByChain = useCallback(async (
     rows: AllowanceRow[],

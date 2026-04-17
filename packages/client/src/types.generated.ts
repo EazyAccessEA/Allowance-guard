@@ -322,6 +322,60 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/scan/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get scan job status
+         * @description Returns the current status of a previously-submitted scan. Ownership is enforced — a scan can only be read by the user (or, for legacy scans, the API key) that created it. Returns 404 (not 403) on ownership mismatch to avoid leaking job existence.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Scan ID returned by `POST /scan` */
+                    id: number;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Scan status */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ScanStatusResponse"];
+                    };
+                };
+                400: components["responses"]["BadRequest"];
+                401: components["responses"]["Unauthorized"];
+                /** @description Scan not found, or not owned by the authenticated key */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["Error"];
+                    };
+                };
+                429: components["responses"]["RateLimited"];
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/simulate": {
         parameters: {
             query?: never;
@@ -362,6 +416,54 @@ export interface paths {
                 429: components["responses"]["RateLimited"];
             };
         };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/batch-savings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Estimate gas savings for batched revocation
+         * @description Returns sequential vs EIP-5792-batched gas quotes for revoking N approvals on a given chain. Savings are labelled `approximate` — they are only realised on wallets that support `wallet_sendCalls` (Coinbase Smart Wallet, Base Smart Wallet, and some recent MetaMask builds). Batched path requires approvalCount ≥ 2; single-approval requests return `batched: null, savings: null`.
+         */
+        get: {
+            parameters: {
+                query: {
+                    chainId: components["schemas"]["ChainId"];
+                    /** @description Number of approvals that would be revoked in the batch (1–200). */
+                    count: number;
+                    /** @description Override the per-chain default gas price. Positive number, in gwei. */
+                    gasPriceGwei?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Savings estimate */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["BatchSavingsResponse"];
+                    };
+                };
+                400: components["responses"]["BadRequest"];
+                401: components["responses"]["Unauthorized"];
+                429: components["responses"]["RateLimited"];
+            };
+        };
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -543,6 +645,21 @@ export interface components {
             status: "pending" | "running" | "complete" | "failed";
             statusUrl: string;
         };
+        ScanStatusResponse: {
+            scanId: number;
+            /** @enum {string} */
+            status: "pending" | "running" | "complete" | "failed";
+            wallet: components["schemas"]["Address"] | null;
+            chains: components["schemas"]["ChainId"][];
+            attempts?: number;
+            error?: string | null;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            startedAt?: string | null;
+            /** Format: date-time */
+            completedAt?: string | null;
+        };
         SimulateRequest: {
             wallet: components["schemas"]["Address"];
             chainId?: components["schemas"]["ChainId"];
@@ -569,6 +686,31 @@ export interface components {
             unlimitedAllowances?: number;
             highRisk?: number;
             mediumRisk?: number;
+        };
+        SavingsQuote: {
+            /** @description Total gas units for the quoted path. */
+            gasUnits: number;
+            /** @description Fee in wei as a decimal string (BigInt over JSON). */
+            feeWei: string;
+            /** @description Fee in ether, rounded to 6dp. */
+            feeEther: number;
+        };
+        BatchSavingsResponse: {
+            chainId: components["schemas"]["ChainId"];
+            approvalCount: number;
+            gasPriceGwei: number;
+            sequential: components["schemas"]["SavingsQuote"];
+            /** @description Null when approvalCount < 2 — batching is not advantageous for a single call. */
+            batched: components["schemas"]["SavingsQuote"] | null;
+            savings: {
+                gasUnits: number;
+                feeWei: string;
+                feeEther: number;
+                fraction: number;
+            } | null;
+            /** @constant */
+            confidence: "approximate";
+            assumptions: string[];
         };
     };
     responses: {

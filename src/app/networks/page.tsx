@@ -78,11 +78,11 @@ export default function NetworksPage() {
         <Container>
           <Section className="py-16">
             <div className="text-center">
-              <H1 className="text-red-800 mb-4">Error Loading Networks</H1>
+              <H1 className="text-crimson-paper mb-4">Error Loading Networks</H1>
               <p className="text-ink-muted mb-6">{error || 'Failed to load networks data'}</p>
               <button
                 onClick={retryFetch}
-                className="px-6 py-3 bg-primary-600 text-ink font-medium hover:bg-primary-700 transition-colors"
+                className="px-6 py-3 bg-amber-deep text-paper font-medium hover:bg-amber-deep/90 transition-colors"
               >
                 Try Again
               </button>
@@ -238,7 +238,7 @@ export default function NetworksPage() {
           {/* Live Networks */}
           <div className="mb-16">
             <div className="flex items-center space-x-3 mb-8">
-              <CheckCircle className="text-green-800" size={24} />
+              <CheckCircle className="text-semantic-success-700" size={24} />
               <H2 className="text-2xl font-bold text-ink">Live Networks</H2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -264,7 +264,7 @@ export default function NetworksPage() {
           {/* Changelog */}
           <div className="mb-16">
             <div className="flex items-center space-x-3 mb-8">
-              <Calendar className="text-blue-600" size={24} />
+              <Calendar className="text-ink-blue" size={24} />
               <H2 className="text-2xl font-bold text-ink">Recent Updates</H2>
             </div>
             <div className="bg-paper-deep border border-ink-rule p-6">
@@ -277,20 +277,20 @@ export default function NetworksPage() {
           </div>
 
           {/* Metadata */}
-          <div className="bg-blue-50 border border-blue-200 p-6">
+          <div className="bg-paper-sub border border-ink-blue/30 p-6">
             <div className="flex items-start space-x-3">
-              <Info className="text-blue-600 mt-1" size={20} />
+              <Info className="text-ink-blue mt-1" size={20} />
               <div>
-                <H3 className="text-lg font-semibold text-blue-900 mb-2">
+                <H3 className="text-lg font-semibold text-ink-blue mb-2">
                   Data Freshness
                 </H3>
-                <p className="text-blue-800 mb-2">
+                <p className="text-ink-soft mb-2">
                   Last updated: {data.metadata.lastUpdated}
                 </p>
-                <p className="text-blue-800 mb-2">
+                <p className="text-ink-blue mb-2">
                   Next review: {data.metadata.nextReview}
                 </p>
-                <p className="text-blue-800">
+                <p className="text-ink-blue">
                   Version: {data.metadata.version}
                 </p>
               </div>

@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * /account/wallets — saved-wallet address book.
+ * /account/wallets — saved-wallet address book. Unified Ledger canon.
  *
  * Authenticated. Lists, edits, and removes the user's saved wallets.
  * Manual add form for power users; the canonical add path is the
@@ -10,22 +10,13 @@
  * Quota indicator surfaces "X of Y used" plus an upgrade link when
  * Free hits the cap. Pro/Sentinel show "X of unlimited".
  *
- * Council:
- *   #7 Visual designer: Glass canon (matches /account, /account/keys);
- *     no marketing-Ledger drift on app surfaces
- *   Noor (Accessibility VETO): aria-live status messages; semantic
- *     form; focus rings; copy-to-clipboard with sr-only feedback
- *   #13 UX writer: empty-state copy points to the homepage scanner
- *     as the natural way to find wallets to save; quota copy honest
- *     ("Free includes 3 wallets. Upgrade to Pro for unlimited.")
- *   #4 Security: page never displays another user's data — server
- *     queries scoped by session.user_id (CRUD enforced in C2)
+ * Canon: Ledger (ADR 0007). Post-audit structural fixes preserved —
+ * no `primary-*` scale, no raw greys, header avatar `rounded-lg` not
+ * `rounded-full`.
  */
 
 import React, { useCallback, useEffect, useState, type FormEvent } from 'react'
 import Link from 'next/link'
-import Section from '@/components/ui/Section'
-import Container from '@/components/ui/Container'
 import { Wallet, Plus, Trash2, Pencil, Check, X, Copy } from 'lucide-react'
 
 interface SavedWallet {
@@ -170,17 +161,17 @@ export default function WalletsPage() {
   const atCap = quota && !isUnlimited && quota.used >= quota.limit
 
   return (
-    <Section size="sm" background="muted">
-      <Container size="lg">
+    <main className="min-h-screen paper grain">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="space-y-8">
           {/* Header */}
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-100">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-paper-sub border border-ink-rule">
               <Wallet className="h-5 w-5 text-amber-deep" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-ink">Saved wallets</h1>
-              <p className="text-sm text-ink-muted">
+              <h1 className="font-display-tight text-2xl text-ink">Saved wallets</h1>
+              <p className="font-plex text-sm text-ink-muted">
                 Your address book. Saved wallets show up in your dashboard for one-click scans.
               </p>
             </div>
@@ -188,9 +179,9 @@ export default function WalletsPage() {
 
           {/* Quota indicator */}
           {quota && (
-            <div className="rounded-md border border-ink-rule bg-paper-sub px-5 py-4 flex items-center justify-between">
+            <div className="paper-card px-5 py-4 flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-ink">
+                <p className="font-plex text-sm font-medium text-ink">
                   {isUnlimited ? (
                     <>
                       {quota.used} saved <span className="text-ink-muted">— unlimited on {quota.plan === 'sentinel' ? 'Sentinel' : 'Pro'}</span>
@@ -202,7 +193,7 @@ export default function WalletsPage() {
                   )}
                 </p>
                 {atCap && (
-                  <p className="mt-1 text-xs text-amber-deep">
+                  <p className="mt-1 font-plex text-xs text-amber-deep">
                     You&apos;ve reached the Free wallet limit.
                   </p>
                 )}
@@ -210,7 +201,7 @@ export default function WalletsPage() {
               {!isUnlimited && (
                 <a
                   href="/pricing"
-                  className="text-sm font-medium text-amber-deep hover:underline whitespace-nowrap"
+                  className="font-plex text-sm font-medium text-amber-deep hover:underline whitespace-nowrap"
                 >
                   Upgrade to Pro →
                 </a>
@@ -221,10 +212,10 @@ export default function WalletsPage() {
           {/* Add form */}
           <form
             onSubmit={handleAdd}
-            className="rounded-md border border-ink-rule bg-paper p-5 space-y-3"
+            className="paper-card p-5 space-y-3"
             noValidate
           >
-            <h2 className="text-sm font-semibold text-ink">Add a wallet</h2>
+            <h2 className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Add a wallet</h2>
             <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3">
               <input
                 type="text"
@@ -234,7 +225,7 @@ export default function WalletsPage() {
                 placeholder="0x… (40-hex-char Ethereum address)"
                 pattern="0x[a-fA-F0-9]{40}"
                 disabled={adding || atCap === true}
-                className="w-full px-3 py-2 border border-ink-rule bg-paper-sub text-ink text-sm font-mono placeholder:text-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-deep disabled:opacity-50"
+                className="w-full px-3 py-2 border border-ink-rule bg-paper font-mono text-sm text-ink placeholder:text-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-deep focus:border-amber-deep disabled:opacity-50"
                 aria-label="Wallet address"
               />
               <input
@@ -244,14 +235,14 @@ export default function WalletsPage() {
                 placeholder="Label (optional)"
                 maxLength={80}
                 disabled={adding || atCap === true}
-                className="w-full sm:w-48 px-3 py-2 border border-ink-rule bg-paper-sub text-ink text-sm placeholder:text-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-deep disabled:opacity-50"
+                className="w-full sm:w-48 px-3 py-2 border border-ink-rule bg-paper font-plex text-sm text-ink placeholder:text-ink-whisper focus:outline-none focus:ring-2 focus:ring-amber-deep focus:border-amber-deep disabled:opacity-50"
                 aria-label="Wallet label"
               />
             </div>
             <button
               type="submit"
               disabled={adding || atCap === true || !newAddress.trim()}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-oxblood text-cream text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-oxblood/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-oxblood text-cream font-plex text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-oxblood/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-2 focus-visible:ring-offset-paper transition-colors"
             >
               <Plus className="h-4 w-4" />
               {adding ? 'Saving…' : 'Save wallet'}
@@ -260,26 +251,26 @@ export default function WalletsPage() {
 
           {/* Error */}
           {error && (
-            <div role="alert" className="rounded-md border border-crimson-paper/40 bg-paper-sub px-4 py-3 text-sm text-crimson-paper">
+            <div role="alert" className="border border-crimson-paper/40 bg-paper-sub px-4 py-3 font-plex text-sm text-crimson-paper">
               {error}
             </div>
           )}
 
           {/* List */}
-          <div className="space-y-2">
-            <h2 className="text-sm font-semibold text-ink">Your wallets</h2>
+          <div className="space-y-3">
+            <h2 className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">Your wallets</h2>
             {wallets === null ? (
-              <p className="text-sm text-ink-muted">Loading…</p>
+              <p className="font-plex text-sm text-ink-muted">Loading…</p>
             ) : wallets.length === 0 ? (
-              <div className="rounded-md border border-dashed border-ink-rule bg-paper-sub p-8 text-center">
+              <div className="border border-dashed border-ink-rule bg-paper-sub p-8 text-center">
                 <Wallet className="mx-auto h-8 w-8 text-ink-whisper" aria-hidden="true" />
-                <p className="mt-3 text-sm text-ink-soft">No saved wallets yet.</p>
-                <p className="mt-1 text-xs text-ink-muted">
+                <p className="mt-3 font-plex text-sm text-ink">No saved wallets yet.</p>
+                <p className="mt-1 font-plex text-xs text-ink-muted">
                   Scan a wallet from the <Link href="/#scan" className="text-amber-deep hover:underline">homepage scanner</Link> to save it, or add one above.
                 </p>
               </div>
             ) : (
-              <ul role="list" className="divide-y divide-ink-rule rounded-md border border-ink-rule bg-paper">
+              <ul role="list" className="divide-y divide-ink-rule paper-card p-0">
                 {wallets.map((w) => (
                   <li key={w.id} className="px-5 py-4 flex items-center gap-4">
                     <div className="flex-1 min-w-0">
@@ -292,13 +283,13 @@ export default function WalletsPage() {
                             placeholder="Label"
                             maxLength={80}
                             autoFocus
-                            className="flex-1 px-2 py-1 border border-ink-rule bg-paper-sub text-ink text-sm focus:outline-none focus:ring-2 focus:ring-amber-deep"
+                            className="flex-1 px-2 py-1 border border-ink-rule bg-paper-sub font-plex text-sm text-ink focus:outline-none focus:ring-2 focus:ring-amber-deep focus:border-amber-deep"
                             aria-label="New label"
                           />
                           <button
                             type="button"
                             onClick={() => handleSaveLabel(w.id)}
-                            className="p-1 text-amber-deep hover:bg-paper-sub rounded"
+                            className="p-1 text-amber-deep hover:bg-paper-sub rounded transition-colors"
                             aria-label="Save label"
                           >
                             <Check className="h-4 w-4" />
@@ -306,7 +297,7 @@ export default function WalletsPage() {
                           <button
                             type="button"
                             onClick={() => { setEditingId(null); setEditLabel('') }}
-                            className="p-1 text-ink-muted hover:bg-paper-sub rounded"
+                            className="p-1 text-ink-muted hover:bg-paper-sub rounded transition-colors"
                             aria-label="Cancel"
                           >
                             <X className="h-4 w-4" />
@@ -314,7 +305,7 @@ export default function WalletsPage() {
                         </div>
                       ) : (
                         <>
-                          <p className="text-sm font-medium text-ink truncate">
+                          <p className="font-plex text-sm font-medium text-ink truncate">
                             {w.label || <span className="italic text-ink-muted">no label</span>}
                           </p>
                           <div className="mt-1 flex items-center gap-2 text-xs">
@@ -322,7 +313,7 @@ export default function WalletsPage() {
                             <button
                               type="button"
                               onClick={() => handleCopy(w.walletAddress, w.id)}
-                              className="p-0.5 text-ink-whisper hover:text-ink rounded"
+                              className="p-0.5 text-ink-whisper hover:text-ink rounded transition-colors"
                               aria-label="Copy address"
                             >
                               {copiedId === w.id ? (
@@ -332,7 +323,7 @@ export default function WalletsPage() {
                               )}
                             </button>
                             <span className="text-ink-whisper" aria-hidden="true">·</span>
-                            <span className="text-ink-whisper">saved {new Date(w.createdAt).toLocaleDateString()}</span>
+                            <span className="font-plex text-ink-whisper">saved {new Date(w.createdAt).toLocaleDateString()}</span>
                           </div>
                         </>
                       )}
@@ -342,7 +333,7 @@ export default function WalletsPage() {
                         <button
                           type="button"
                           onClick={() => { setEditingId(w.id); setEditLabel(w.label ?? '') }}
-                          className="p-2 text-ink-muted hover:text-ink hover:bg-paper-sub rounded"
+                          className="p-2 text-ink-muted hover:text-ink hover:bg-paper-sub rounded transition-colors"
                           aria-label={`Edit label for ${w.walletAddress}`}
                         >
                           <Pencil className="h-4 w-4" />
@@ -350,7 +341,7 @@ export default function WalletsPage() {
                         <button
                           type="button"
                           onClick={() => handleDelete(w.id)}
-                          className="p-2 text-ink-muted hover:text-crimson-paper hover:bg-paper-sub rounded"
+                          className="p-2 text-ink-muted hover:text-crimson-paper hover:bg-paper-sub rounded transition-colors"
                           aria-label={`Remove ${w.walletAddress}`}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -363,7 +354,7 @@ export default function WalletsPage() {
             )}
           </div>
         </div>
-      </Container>
-    </Section>
+      </div>
+    </main>
   )
 }

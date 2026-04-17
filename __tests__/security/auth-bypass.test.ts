@@ -42,6 +42,10 @@ jest.mock('@/lib/secure-logger', () => ({
 }))
 jest.mock('next/headers', () => ({
   cookies: jest.fn(() => Promise.resolve({ get: jest.fn(), set: jest.fn() })),
+  // `headers()` is used by create-subscription for per-IP rate limiting
+  // (`x-forwarded-for` / `x-real-ip`). Without this stub, calling it in
+  // the handler throws a TypeError that masks the intended 401 with 500.
+  headers: jest.fn(() => Promise.resolve({ get: jest.fn(() => null) })),
 }))
 jest.mock('@/middleware/validation', () => ({
   validateRequest: jest.fn(() => jest.fn().mockResolvedValue({ success: true, data: { plan: 'pro', interval: 'monthly' } })),
@@ -60,7 +64,15 @@ const mockGetSession = getSession as jest.Mock
 const mockRequireUser = requireUser as jest.Mock
 
 function makeRequest(method: string, url: string, body?: object): NextRequest {
-  const init: RequestInit = { method, headers: { 'content-type': 'application/json' } }
+  // Inline shape rather than `RequestInit` — lib.dom's `RequestInit.signal`
+  // allows `null`, but Next's server `RequestInit` does not, so passing a
+  // lib.dom-typed init to `new NextRequest(...)` is rejected. Keeping the
+  // literal untyped lets TS infer against Next's expected shape at the
+  // call site.
+  const init: { method: string; headers: Record<string, string>; body?: string } = {
+    method,
+    headers: { 'content-type': 'application/json' },
+  }
   if (body) init.body = JSON.stringify(body)
   return new NextRequest(new URL(url, 'http://localhost:3000'), init)
 }

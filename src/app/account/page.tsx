@@ -1,8 +1,21 @@
 'use client'
 
+/**
+ * Account landing page — unified Ledger canon.
+ *
+ * Canon: `projects/allowanceguard/DESIGN.md` + ADR 0007
+ * (`projects/allowanceguard/decisions/0007-unified-ledger-canon.md`).
+ * Glass / Midnight Amber is retired; this page runs on paper + ink +
+ * amber-deep accent like every other AllowanceGuard surface.
+ *
+ * Audit structural fixes preserved from `context/design/audits/2026-04-17-account-surface.md`:
+ *   - No `primary-*` / `secondary-*` / `neutral-*` legacy scales
+ *   - No `bg-gray-*` / `bg-neutral-*` raw greys
+ *   - No `dark:` branches
+ *   - Header avatar uses `rounded-lg` not `rounded-full`
+ */
+
 import React, { useEffect, useState } from 'react'
-import Section from '@/components/ui/Section'
-import Container from '@/components/ui/Container'
 import PlanCard from '@/components/account/PlanCard'
 import UsageChart from '@/components/account/UsageChart'
 import PortfolioRiskScore from '@/components/PortfolioRiskScore'
@@ -89,19 +102,19 @@ export default function AccountPage() {
   ]
 
   return (
-    <Section size="sm" background="muted">
-      <Container size="lg">
+    <main className="min-h-screen paper grain">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="space-y-8">
           {/* Header */}
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-100">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-paper-sub border border-ink-rule">
               <User className="h-5 w-5 text-amber-deep" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-ink">
+              <h1 className="font-display-tight text-2xl text-ink">
                 Account
               </h1>
-              <p className="text-sm text-ink-muted">
+              <p className="font-plex text-sm text-ink-muted">
                 Manage your plan, usage, and settings.
               </p>
             </div>
@@ -137,18 +150,18 @@ export default function AccountPage() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  'group flex items-center gap-4 rounded-lg border border-ink-rule bg-paper p-5',
-                  'transition-all duration-150 hover:border-primary-300 hover:shadow-md'
+                  'group paper-card flex items-center gap-4 p-5',
+                  'transition-all duration-150 hover:border-amber-deep/40',
                 )}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50 text-amber-deep group-hover:bg-primary-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-paper-sub border border-ink-rule text-amber-deep transition-colors group-hover:bg-paper-deep">
                   <link.icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-ink">
+                  <p className="font-plex text-sm font-semibold text-ink">
                     {link.label}
                   </p>
-                  <p className="text-xs text-ink-muted">
+                  <p className="font-plex text-xs text-ink-muted">
                     {link.description}
                   </p>
                 </div>
@@ -157,7 +170,7 @@ export default function AccountPage() {
             ))}
           </div>
         </div>
-      </Container>
-    </Section>
+      </div>
+    </main>
   )
 }

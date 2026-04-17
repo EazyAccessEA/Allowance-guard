@@ -100,30 +100,30 @@ function GasCostEstimator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
   }, {} as Record<number, { count: number; gas: number }>)
 
   return (
-    <div className="border-t border-neutral-borders pt-4 mb-4">
-      <div className="p-4 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg space-y-3">
+    <div className="border-t border-ink-rule pt-4 mb-4">
+      <div className="p-4 bg-paper-sub border border-ink-blue/30 rounded-lg space-y-3">
         <div className="flex items-center gap-2">
-          <Fuel className="w-5 h-5 text-blue-600 dark:text-blue-800" />
-          <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-800">Gas Cost Estimate</h4>
+          <Fuel className="w-5 h-5 text-ink-blue" />
+          <h4 className="text-sm font-semibold text-ink-blue">Gas Cost Estimate</h4>
         </div>
 
         {/* Total cost */}
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
-            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Transactions</div>
-            <div className="text-sm font-bold text-blue-900 dark:text-blue-100">
+            <div className="text-xs text-ink-blue mb-1">Transactions</div>
+            <div className="text-sm font-bold text-ink-blue">
               {selectedRows.length}
             </div>
           </div>
           <div>
-            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Total Gas</div>
-            <div className="text-sm font-bold text-blue-900 dark:text-blue-100">
+            <div className="text-xs text-ink-blue mb-1">Total Gas</div>
+            <div className="text-sm font-bold text-ink-blue">
               {(totalGas / 1000).toFixed(0)}k
             </div>
           </div>
           <div>
-            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Est. Cost</div>
-            <div className="text-sm font-bold text-blue-900 dark:text-blue-100 flex items-center justify-center gap-0.5">
+            <div className="text-xs text-ink-blue mb-1">Est. Cost</div>
+            <div className="text-sm font-bold text-ink-blue flex items-center justify-center gap-0.5">
               <DollarSign className="w-3 h-3" />
               {totalCostUsd.toFixed(2)}
             </div>
@@ -132,11 +132,11 @@ function GasCostEstimator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
 
         {/* Per-chain breakdown */}
         {Object.keys(byChain).length > 1 && (
-          <div className="border-t border-blue-200 dark:border-blue-800 pt-2">
-            <div className="text-xs text-blue-600 dark:text-blue-800 mb-1">Per-chain breakdown</div>
+          <div className="border-t border-ink-blue/30 pt-2">
+            <div className="text-xs text-ink-blue mb-1">Per-chain breakdown</div>
             <div className="flex flex-wrap gap-2">
               {Object.entries(byChain).map(([chainId, { count, gas }]) => (
-                <span key={chainId} className="text-xs text-blue-700 dark:text-blue-800 bg-blue-100 dark:bg-blue-900/50 rounded px-2 py-0.5">
+                <span key={chainId} className="text-xs text-ink-blue bg-paper-sub border border-ink-blue/20 rounded px-2 py-0.5">
                   Chain {chainId}: {count} txs &bull; {(gas / 1000).toFixed(0)}k gas
                 </span>
               ))}
@@ -145,7 +145,7 @@ function GasCostEstimator({ selectedRows }: { selectedRows: AllowanceRow[] }) {
         )}
 
         {/* Gas price info */}
-        <div className="text-[10px] text-blue-800 dark:text-blue-800 flex items-center gap-2">
+        <div className="text-[10px] text-ink-blue flex items-center gap-2">
           <span>Gas: {currentGasPrice} gwei</span>
           <span>&bull;</span>
           <span>ETH: ${currentEthPrice.toLocaleString()}</span>
@@ -272,7 +272,7 @@ export default function BulkRevokePanel({
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <Zap className="w-5 h-5 text-primary-accent" />
+            <Zap className="w-5 h-5 text-amber-deep" />
             Bulk Revoke
           </CardTitle>
           <div className="flex items-center gap-2">
@@ -343,12 +343,12 @@ export default function BulkRevokePanel({
 
         {/* Advanced Options */}
         {showAdvanced && (
-          <div className="border-t border-neutral-borders pt-4 mb-4">
-            <h4 className="text-sm font-medium text-neutral-text mb-3">Advanced Selection</h4>
+          <div className="border-t border-ink-rule pt-4 mb-4">
+            <h4 className="text-sm font-medium text-ink-muted mb-3">Advanced Selection</h4>
             
             {/* By Chain */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-neutral-text mb-2">By Chain</label>
+              <label className="block text-sm font-medium text-ink-muted mb-2">By Chain</label>
               <div className="flex flex-wrap gap-2">
                 {Object.entries(analysis.byChain).map(([chainId, count]) => (
                   <Button
@@ -366,7 +366,7 @@ export default function BulkRevokePanel({
 
             {/* By Spender */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-neutral-text mb-2">By Spender</label>
+              <label className="block text-sm font-medium text-ink-muted mb-2">By Spender</label>
               <div className="flex flex-wrap gap-2">
                 {analysis.topSpenders.map(({ address, count, label }) => (
                   <Button
@@ -387,20 +387,20 @@ export default function BulkRevokePanel({
 
         {/* Progress */}
         {progress && (
-          <div className="border-t border-neutral-borders pt-4 mb-4">
+          <div className="border-t border-ink-rule pt-4 mb-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-neutral-text">Progress</span>
-              <span className="text-sm text-neutral-text">
+              <span className="text-sm font-medium text-ink-muted">Progress</span>
+              <span className="text-sm text-ink-muted">
                 {progress.current} / {progress.total}
               </span>
             </div>
-            <div className="w-full bg-neutral-borders rounded-full h-2 mb-2">
+            <div className="w-full bg-paper-deep rounded-full h-2 mb-2">
               <div
-                className="bg-primary-accent h-2 rounded-full transition-all duration-300"
+                className="bg-amber-deep h-2 rounded-full transition-all duration-300"
                 style={{ width: `${(progress.current / progress.total) * 100}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-sm text-neutral-text">
+            <div className="flex items-center justify-between text-sm text-ink-muted">
               <span>{progress.currentAction}</span>
               {progress.estimatedTimeRemaining && progress.estimatedTimeRemaining > 0 && (
                 <span className="flex items-center gap-1">
@@ -414,9 +414,9 @@ export default function BulkRevokePanel({
 
         {/* Results */}
         {result && showResults && (
-          <div className="border-t border-neutral-borders pt-4">
+          <div className="border-t border-ink-rule pt-4">
             <div className="flex items-center justify-between mb-3">
-              <h4 className="text-sm font-medium text-neutral-text">Results</h4>
+              <h4 className="text-sm font-medium text-ink-muted">Results</h4>
               <Button
                 onClick={() => setShowResults(false)}
                 size="sm"
@@ -429,21 +429,27 @@ export default function BulkRevokePanel({
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-semantic-success">{result.success}</div>
-                <div className="text-sm text-neutral-text">Successful</div>
+                <div className="text-sm text-ink-muted">Successful</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-semantic-danger">{result.failed}</div>
-                <div className="text-sm text-neutral-text">Failed</div>
+                <div className="text-sm text-ink-muted">Failed</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary-accent">{result.totalTransactions}</div>
-                <div className="text-sm text-neutral-text">Transactions</div>
+                <div className="text-2xl font-bold text-amber-deep">{result.totalTransactions}</div>
+                <div className="text-sm text-ink-muted">Transactions</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-semantic-info">{formatGas(result.totalGasUsed)}</div>
-                <div className="text-sm text-neutral-text">Gas Used</div>
+                <div className="text-sm text-ink-muted">Gas Used</div>
               </div>
             </div>
+
+            {result.batchedChains.length > 0 && (
+              <div className="mb-4 text-sm text-ink-muted">
+                Bundled {result.batchedChains.length === 1 ? 'one chain' : `${result.batchedChains.length} chains`} into a single transaction via EIP-5792.
+              </div>
+            )}
 
             {result.errors.length > 0 && (
               <Alert variant="danger" icon={<AlertTriangle className="h-4 w-4" />}>
@@ -470,11 +476,11 @@ export default function BulkRevokePanel({
 
         {/* Warnings */}
         {selectedRows.length > 0 && (
-          <div className="border-t border-neutral-borders pt-4">
+          <div className="border-t border-ink-rule pt-4">
             <Alert variant="info" icon={<AlertTriangle className="h-4 w-4" />}>
               <div className="font-medium mb-2">Important</div>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>Each revocation requires a separate transaction and gas fee</li>
+                <li>On wallets that support EIP-5792 (Coinbase Smart Wallet, Base Smart Wallet), revocations are bundled into one transaction. Other wallets sign each revoke separately.</li>
                 <li>Estimated time: ~{formatTime(estimateTime(selectedRows))}</li>
                 <li>Make sure you have enough ETH for gas fees</li>
                 <li>Revocations cannot be undone</li>

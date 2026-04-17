@@ -44,58 +44,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================================
-   GLASSMORPHISM LAYER — Council-approved utilities
-   See: docs/design-tokens-handbook.md §10 Glassmorphism
-   ============================================================ */
-@layer components {
-  .glass-card {
-    position: relative;
-    background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.025) 100%), rgba(15,23,42,0.55);
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 1rem;
-    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.08), 0 20px 60px -20px rgba(0,0,0,0.6);
-    transition: border-color 0.3s ease, background 0.3s ease, transform 0.4s ease;
-  }
-  .glass-card:hover {
-    border-color: rgba(255,255,255,0.18);
-    background: linear-gradient(180deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.04) 100%), rgba(15,23,42,0.6);
-  }
-  .glass-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.85rem;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(12px) saturate(140%);
-    -webkit-backdrop-filter: blur(12px) saturate(140%);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 9999px;
-    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.08);
-  }
-  .glass-button {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.10);
-    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-  }
-  .glass-button:hover {
-    background: rgba(255,255,255,0.14);
-    border-color: rgba(255,255,255,0.28);
-  }
-}
-@keyframes glass-drift {
-  0%, 100% { transform: translateY(0); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.08), 0 20px 60px -20px rgba(0,0,0,0.6); }
-  50%      { transform: translateY(-4px); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.14), 0 30px 80px -20px rgba(0,0,0,0.7); }
-}
-.glass-drift { animation: glass-drift 6s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .glass-drift { animation: none; }
-}
+/* Glassmorphism layer retired per ADR 0007 (2026-04-17). .glass-card /
+   .glass-pill / .glass-button / .glass-drift + their reduced-motion
+   branch + the @keyframes glass-drift have all been removed. The
+   unified Ledger canon uses .paper-card / .paper-pill / .paper-button
+   (defined below). If you are reading this comment because a search
+   for .glass-* failed — that's intentional. See
+   projects/allowanceguard/decisions/0007-unified-ledger-canon.md. */
 
 /* Predictive Loading Animations */
 @keyframes fade-in {
@@ -355,53 +310,11 @@ w3m-modal w3m-close-button:hover {
   --charcoal-hover: var(--color-neutral-600);
 }
 
-/* Dark mode — same as default (Midnight Amber is dark-first) */
-.dark {
-  --surface-base: #0F172A;
-  --surface-raised: #1E293B;
-  --surface-overlay: #334155;
-  --surface-elevated: #475569;
-
-  --background: var(--surface-base);
-  --foreground: #FFFFFF;
-  --muted: var(--color-neutral-400);
-  --muted-foreground: var(--color-neutral-300);
-  --border: var(--color-neutral-800);
-  --input: var(--color-neutral-800);
-  --primary: var(--color-amber);
-  --primary-foreground: var(--color-neutral-900);
-  --secondary: var(--color-neutral-700);
-  --secondary-foreground: var(--color-neutral-300);
-  --accent: var(--color-sky);
-  --accent-foreground: var(--color-neutral-900);
-  --destructive: var(--color-danger);
-  --destructive-foreground: #FFFFFF;
-  --success: #22C55E;
-  --warning: #F59E0B;
-  --ring: var(--color-amber);
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
-  --shadow-focus: 0 0 0 3px rgba(245, 158, 11, 0.3);
-  --shadow-subtle: var(--shadow-sm);
-  --shadow-medium: var(--shadow-md);
-  --shadow-large: var(--shadow-lg);
-
-  /* Glass */
-  --glass-bg: rgba(30, 41, 59, 0.80);
-  --glass-border: rgba(71, 85, 105, 0.3);
-  --glass-hover: rgba(51, 65, 85, 0.8);
-
-  /* Legacy aliases */
-  --obsidian: #FFFFFF;
-  --platinum: var(--surface-base);
-  --charcoal: var(--color-neutral-400);
-  --warm-gray: var(--color-neutral-800);
-  --cobalt: var(--color-sky);
-  --teal: var(--color-sky);
-  --navy: var(--surface-base);
-}
+/* Dark-mode override retired per ADR 0007 (2026-04-17). AllowanceGuard
+   is single-theme Ledger. The previous `.dark { }` block inverted
+   --platinum and --surface-base to navy, which is what produced the
+   dark stat tiles on /home when the user's OS reported
+   prefers-color-scheme: dark. Removed. */
 
 * {
   box-sizing: border-box;
@@ -496,10 +409,7 @@ button, input, select, textarea {
   color: var(--primary-foreground);
 }
 
-/* Theme switching transitions applied via class to avoid hydration mismatch */
-.dark * {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
+/* Theme-switch transition rule retired — single-theme product (ADR 0007). */
 
 /* Hide scrollbar but keep functionality */
 .scrollbar-hide {
@@ -1637,62 +1547,8 @@ header {
   }
 }
 
-/* Dark mode support for gradient background */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: linear-gradient(135deg, 
-      #0F172A 0%,     /* secondary-900 */
-      #1E293B 25%,    /* secondary-800 */
-      #334155 50%,    /* secondary-700 */
-      #1E293B 75%,    /* secondary-800 */
-      #0F172A 100%    /* secondary-900 */
-    );
-    background-attachment: fixed;
-    background-size: 400% 400%;
-    animation: gradientShiftDark 20s ease infinite;
-    color: #F8FAFC;
-  }
-}
-
-@keyframes gradientShiftDark {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Mobile dark mode optimizations */
-@media (prefers-color-scheme: dark) and (max-width: 640px) {
-  body {
-    background: linear-gradient(180deg, 
-      #0F172A 0%,     /* secondary-900 */
-      #1E293B 30%,    /* secondary-800 */
-      #334155 60%,    /* secondary-700 */
-      #1E293B 85%,    /* secondary-800 */
-      #0F172A 100%    /* secondary-900 */
-    );
-    background-attachment: scroll;
-    background-size: 200% 200%;
-    animation: gradientShiftMobileDark 25s ease infinite;
-  }
-}
-
-@keyframes gradientShiftMobileDark {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
+/* prefers-color-scheme: dark body-gradient overrides retired per ADR 0007.
+   AllowanceGuard paints paper on every canvas regardless of OS theme. */
 
 /* AppKit Button Styling - Fix dark on dark issue */
 appkit-button {
@@ -3548,6 +3404,40 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   color: #0F1115 !important; /* ink */
 }
 
+.prose blockquote {
+  border-left: 3px solid #854F08 !important; /* amber-deep — signature */
+  padding: 0.25rem 0 0.25rem 1.25rem !important;
+  margin: 1.75rem 0 !important;
+  font-style: italic !important;
+  color: #2A2D33 !important; /* ink-soft */
+  background: transparent !important;
+}
+
+.prose pre {
+  background: #0F1115 !important; /* ink — editorial print codeblock */
+  color: #F7F5F0 !important;      /* cream on ink */
+  padding: 1.25rem 1.5rem !important;
+  margin: 1.75rem 0 !important;
+  overflow-x: auto !important;
+  border: none !important;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.6 !important;
+}
+
+.prose pre code {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-size: inherit !important;
+}
+
+.prose ul li::marker,
+.prose ol li::marker {
+  color: #854F08; /* amber-deep — signature move for list bullets */
+}
+
 /* Mobile table improvements - Card-based layout */
 .mobile-table-cards {
   display: none;
@@ -3614,65 +3504,6 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   }
 }
 
-.prose tbody tr:nth-child(even) {
-  background-color: #F8FAFC !important;
-}
-
-.prose tbody tr:hover {
-  background-color: #F1F5F9 !important;
-}
-
-.prose a {
-  color: #2563EB !important;
-  text-decoration: underline !important;
-  text-decoration-color: #93C5FD !important;
-  text-underline-offset: 2px !important;
-  transition: all 0.2s ease !important;
-}
-
-.prose a:hover {
-  color: #1D4ED8 !important;
-  text-decoration-color: #2563EB !important;
-}
-
-.prose blockquote {
-  border-left: 4px solid #00C2B3 !important;
-  background-color: #F0FDFA !important;
-  padding: 1rem 1.5rem !important;
-  margin: 2rem 0 !important;
-  font-style: italic !important;
-  color: #0F172A !important;
-}
-
-.prose code {
-  background-color: #F1F5F9 !important;
-  color: #DC2626 !important;
-  padding: 0.125rem 0.375rem !important;
-  border-radius: 0.25rem !important;
-  font-size: 0.875rem !important;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace !important;
-}
-
-.prose pre {
-  background-color: #1E293B !important;
-  color: #F8FAFC !important;
-  padding: 1.5rem !important;
-  border-radius: 0.5rem !important;
-  overflow-x: auto !important;
-  margin: 2rem 0 !important;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Monaco, Consolas, monospace !important;
-  font-size: 0.875rem !important;
-  line-height: 1.5 !important;
-}
-
-.prose pre code {
-  background-color: transparent !important;
-  color: inherit !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  font-size: inherit !important;
-}
-
 /* Mobile optimizations for blog typography */
 @media (max-width: 768px) {
   .prose {
@@ -3711,61 +3542,6 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   .prose td {
     padding: 0.5rem 0.75rem !important;
   }
-}
-
-/* Blog Post Visual Enhancements */
-.prose h2 {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 1rem 1.5rem;
-  border-radius: 0.5rem;
-  border-left: 4px solid #10b981;
-  margin: 2rem 0 1rem 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.prose h3 {
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-  padding: 0.75rem 1rem;
-  border-radius: 0.375rem;
-  border-left: 3px solid #3b82f6;
-  margin: 1.5rem 0 0.75rem 0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.prose blockquote {
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-  border-left: 4px solid #f59e0b;
-  padding: 1rem 1.5rem;
-  border-radius: 0.5rem;
-  margin: 1.5rem 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.prose code {
-  background: #f1f5f9;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.875rem;
-  border: 1px solid #e2e8f0;
-}
-
-.prose pre {
-  background: #1e293b;
-  color: #e2e8f0;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #334155;
-}
-
-.prose ul li::marker,
-.prose ol li::marker {
-  color: #10b981;
-}
-
-.prose strong {
-  color: #1e293b;
-  font-weight: 600;
 }
 
 /* Blog Page Enhancements */
@@ -3980,14 +3756,15 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
 }
 
 /* =============================================================================
- * LEDGER — Light-first editorial aesthetic for the homepage
+ * LEDGER — The unified AllowanceGuard canon (ADR 0007, 2026-04-17).
  *
- * Palette, utilities, and materials that live alongside (not replacing) the
- * existing dark glass canon. Dark pages continue to use .glass-card etc.;
- * the homepage uses these paper utilities instead.
+ * One palette, one token ladder, one set of utilities. Applies to every
+ * surface: homepage, blog, pricing, docs, dashboard, account, auth, modals.
+ * The previous dark Glass / Midnight Amber canon has been retired — see
+ * projects/allowanceguard/decisions/0007-unified-ledger-canon.md.
  *
  * Design Council approval: Maren (visual), Noor (a11y veto: AAA checked),
- * Kael (systems: bounded new utilities), Thane (perf: no new deps).
+ * Kael (systems: bounded utilities), Thane (perf: no new deps).
  * ============================================================================= */
 
 :root {

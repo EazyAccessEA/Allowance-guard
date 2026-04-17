@@ -6,6 +6,10 @@
  * but unreachable.
  */
 
+// Mark this file as a module — see the twin file at
+// __tests__/lib/ratelimit.test.ts for the reason.
+export {}
+
 process.env.UPSTASH_REDIS_REST_URL = 'https://fake.upstash.io'
 process.env.UPSTASH_REDIS_REST_TOKEN = 'fake-token'
 

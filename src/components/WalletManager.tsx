@@ -49,15 +49,23 @@ export default function WalletManager({
       <h2 className="text-base font-semibold">Wallets</h2>
 
       <div className="flex gap-2">
-        <input className="flex-1 px-3 py-2 bg-input border-2 border-border text-text font-mono placeholder-muted-foreground focus:border-primary focus:outline-none rounded-full"
-               placeholder="0x... address" value={addr} onChange={e => setAddr(e.target.value)} />
-        <input className="flex-1 px-3 py-2 bg-input border-2 border-border text-text placeholder-muted-foreground focus:border-primary focus:outline-none rounded-full"
-               placeholder="Label (optional)" value={label} onChange={e => setLabel(e.target.value)} />
+        <input
+          className="flex-1 px-3 py-2 bg-paper border border-ink-rule text-ink font-mono placeholder:text-ink-whisper focus:border-amber-deep focus:outline-none focus:ring-2 focus:ring-amber-deep"
+          placeholder="0x... address"
+          value={addr}
+          onChange={e => setAddr(e.target.value)}
+        />
+        <input
+          className="flex-1 px-3 py-2 bg-paper border border-ink-rule text-ink placeholder:text-ink-whisper focus:border-amber-deep focus:outline-none focus:ring-2 focus:ring-amber-deep"
+          placeholder="Label (optional)"
+          value={label}
+          onChange={e => setLabel(e.target.value)}
+        />
         <HexButton onClick={add}>Save</HexButton>
       </div>
 
       {validationError && (
-        <p className="text-sm text-red-800" role="alert">{validationError}</p>
+        <p className="text-sm text-crimson-paper" role="alert">{validationError}</p>
       )}
 
       {saved.length === 0 && (
@@ -71,7 +79,7 @@ export default function WalletManager({
       {saved.length > 0 && (
         <div className="flex items-center gap-2">
           <select
-            className="px-3 py-2 bg-input border-2 border-border text-text font-mono focus:border-primary focus:outline-none rounded-full"
+            className="px-3 py-2 bg-paper border border-ink-rule text-ink font-mono focus:border-amber-deep focus:outline-none focus:ring-2 focus:ring-amber-deep"
             value={selected ?? ''}
             onChange={(e) => onSelect(e.target.value)}
           >
