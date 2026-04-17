@@ -4,6 +4,7 @@ import { checkFeature } from '@/lib/feature-gate'
 import { pool } from '@/lib/db'
 import { getWebhookDeliveries } from '@/lib/webhook-dispatcher'
 import { secureLogger } from '@/lib/secure-logger'
+import { validateWebhookUrl } from '@/lib/safe-webhook-url'
 
 /**
  * GET /api/webhooks/[id]
@@ -83,13 +84,12 @@ export async function PUT(
     paramIdx++
   }
   if (url !== undefined) {
-    try {
-      const parsed = new URL(url)
-      if (!['https:', 'http:'].includes(parsed.protocol)) {
-        return NextResponse.json({ error: 'URL must use HTTP or HTTPS' }, { status: 400 })
-      }
-    } catch {
-      return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 })
+    // SSRF-safe URL validation (matches the POST in /api/webhooks).
+    // Closes the second-write window where a customer could create a
+    // safe webhook then PUT-update to an unsafe URL.
+    const urlCheck = validateWebhookUrl(url, { requireHttps: true })
+    if (!urlCheck.ok) {
+      return NextResponse.json({ error: urlCheck.reason ?? 'Invalid URL' }, { status: 400 })
     }
     updates.push(`url = $${paramIdx}`)
     values.push(url)

@@ -76,8 +76,10 @@ export async function POST(req: NextRequest) {
 
   // SSRF-safe URL validation. Rejects loopback, RFC1918 private,
   // link-local (incl. cloud-metadata 169.254.169.254), IPv6 loopback,
-  // .localhost suffix, etc. See lib/safe-webhook-url.ts.
-  const urlCheck = validateWebhookUrl(url)
+  // .localhost suffix, etc. requireHttps: customer webhooks must be
+  // encrypted in transit — no eavesdropping on event payloads, no
+  // plaintext traversal. See lib/safe-webhook-url.ts.
+  const urlCheck = validateWebhookUrl(url, { requireHttps: true })
   if (!urlCheck.ok) {
     return NextResponse.json({ error: urlCheck.reason ?? 'Invalid URL' }, { status: 400 })
   }
