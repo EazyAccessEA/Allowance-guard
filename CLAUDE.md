@@ -97,6 +97,14 @@ Skills live under `.claude/skills/` (claim-review, legal-page-draft, policy-alig
 
 Skills live under `.claude/skills/` (grant-application, integration-proposal, listing-submission, partnership-brief, sponsorship-brief, open-source-program-run). Autonomy level 2 across the board — skills draft, propose, brief, triage; the user submits / sends / commits funds / merges PRs. Growth Council (#12 Ecosystem lead, #2 Open source maintainer, #6 B2B/API) + #5 + #11 + #9 + #23 convenes on every skill run. `claim-review` is **MANDATORY** before any grant / integration / listing ships public; `policy-alignment` is **MANDATORY** for platform-policy-sensitive submissions.
 
+### Data & Intelligence managed-agent system — `memory/data-intelligence/` + `.claude/skills/`
+
+| When working on... | Read |
+|--------------------|------|
+| KPI definitions, weekly metrics briefs, experiments (design + readout), funnel analyses, cohort retention | `memory/data-intelligence/MEMORY.md` + `docs/data-intelligence-agents.md` |
+
+Skills live under `.claude/skills/` (define-metric, weekly-metrics-brief, experiment-design, experiment-readout, funnel-analysis, cohort-retention). Autonomy level 2 across the board — read-only against local exports; briefs / specs / readouts only. Engineering instruments via `build-feature`. Data Council (#35 Product analyst lead, #19 Privacy, #24 Data protection **VETO**) + surface owners (#5 / #6 / #7 / #4) + #11 + #15 + #18 + #34 convenes on every skill run. `claim-review` is **MANDATORY** before any external publication; `security-claim-audit` is **MANDATORY** for any new security-related metric. Distinct from marketing's `analytics` (per-surface specialist) — this dept is product-wide.
+
 ## The four workflow rules (full text in `memory/PROCESS.md`)
 
 1. **Plan first.** Outline files, approach, steps before writing code.
@@ -117,3 +125,4 @@ Skills live under `.claude/skills/` (grant-application, integration-proposal, li
 - 2026-04-16: Added Design managed-agent system (pilot 2). 7 project-scoped skills (Ledger + Glass surfaces, component / token / motion proposals, drift audit, per-surface critique) + 6 scoped memory files + runbook. Design Council leads; Noor holds VETO on accessibility.
 - 2026-04-17: Added Compliance & Risk managed-agent system (pilot 3). 5 skills (claim-review, legal-page-draft L1, policy-alignment, security-claim-audit, regulatory-change-response) + 6 scoped memory files (claims-register, platform-rules, regulatory-matrix, jurisdictions, incident-disclosure) + runbook. Legal Council leads; #24 holds VETO on privacy / consent / data-handling copy.
 - 2026-04-17: Added Growth & Distribution managed-agent system (pilot 4). 6 skills (grant-application, integration-proposal, listing-submission, partnership-brief, sponsorship-brief, open-source-program-run) + 7 scoped memory files (targets, ecosystems, integrations, grants-history, partnerships-history, open-source-program) + runbook. Growth Council leads (#12 Ecosystem, #2 OSS maintainer, #6 B2B/API). Separate from Marketing by design — channels and relationships, not content and messaging.
+- 2026-04-17: Added Data & Intelligence managed-agent system (pilot 5). 6 skills (define-metric, weekly-metrics-brief, experiment-design, experiment-readout, funnel-analysis, cohort-retention) + 6 scoped memory files (kpi-tree, metric-catalog, experiment-log, data-sources, data-handling-rules) + runbook. Data Council leads (#35 Product analyst, #19 Privacy, #24 DP-VETO). Read-only against local exports; engineering instruments via `build-feature`. Distinct from marketing's `analytics` — product-wide vs per-surface.
