@@ -31,7 +31,7 @@ export async function alertEmail(subject: string, html: string) {
   }
   
   try {
-    await sendMail(to, subject, html)
+    await sendMail(to, subject, html, undefined, { kind: 'alert' })
   } catch (error) {
     console.error('Email alert failed:', error instanceof Error ? error.message : 'Unknown error')
   }

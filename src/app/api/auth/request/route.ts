@@ -63,7 +63,9 @@ export async function POST(req: Request) {
     if (process.env.E2E_FAKE_EMAIL === 'true') {
       apiLogger.info('auth.magic_link.fake_email', { email, link })
     } else {
-      await sendMail(email, 'Sign in to AllowanceGuard', html)
+      await sendMail(email, 'Sign in to AllowanceGuard', html, undefined, {
+        kind: 'operational',
+      })
     }
   } catch (e) {
     apiLogger.error('auth.magic_link.send_failed', {

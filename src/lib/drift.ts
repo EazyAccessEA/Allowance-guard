@@ -142,7 +142,7 @@ export async function driftCheckAndNotify(wallet: string) {
   const emailSubs = emailsQ.rows as Array<{email: string, risk_only: boolean}>
   for (const s of emailSubs) {
     if (s.risk_only && drifts.length === 0) continue
-    await sendMail(s.email, 'Allowance Guard — Drift detected', html)
+    await sendMail(s.email, 'AllowanceGuard — drift detected', html, undefined, { kind: 'alert' })
   }
 
   // Slack

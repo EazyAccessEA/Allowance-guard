@@ -1,12 +1,12 @@
 import nodemailer from 'nodemailer'
 import { emailLogger } from './logger'
 import { incrEmail } from '@/lib/metrics'
-// Email service configuration - supports Postmark or SMTP
+import { createEmailHTML, type EmailKind } from './email-templates'
+
+// Email provider configuration. Resend (HTTP API) is preferred. Postmark
+// and Microsoft SMTP remain as fallbacks. In production, refusing the
+// log-only transport is a safety guarantee — see getTransport().
 const postmarkToken = process.env.POSTMARK_SERVER_TOKEN
-
-
-
-// Microsoft SMTP Configuration from .env.local
 const host = process.env.SMTP_HOST || 'smtp-mail.outlook.com'
 const port = Number(process.env.SMTP_PORT || 587)
 const user = process.env.SMTP_USER
@@ -14,219 +14,72 @@ const pass = process.env.SMTP_PASS
 const fromEmail = process.env.ALERTS_FROM_EMAIL || 'no_reply@allowanceguard.com'
 const fromName = process.env.ALERTS_FROM_NAME || 'Allowance Guard'
 
-// Legal footer template for all emails
-const LEGAL_FOOTER = `
-<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #6b7280; line-height: 1.5;">
-  <p><strong>Legal Disclaimer:</strong> This email is for informational purposes only. Allowance Guard does not provide financial, legal, or investment advice. Always conduct your own research and consult with qualified professionals before making financial decisions.</p>
-  
-  <p><strong>Risk Warning:</strong> Cryptocurrency and DeFi activities involve substantial risk of loss. Past performance does not guarantee future results. You should carefully consider whether trading cryptocurrencies is suitable for you in light of your circumstances, knowledge, and financial resources.</p>
-  
-  <p><strong>Privacy Policy:</strong> We respect your privacy. Read our full privacy policy at <a href="https://allowanceguard.com/privacy" style="color: #3b82f6;">https://allowanceguard.com/privacy</a></p>
-  
-  <p><strong>Terms of Service:</strong> By using Allowance Guard, you agree to our terms of service at <a href="https://allowanceguard.com/terms" style="color: #3b82f6;">https://allowanceguard.com/terms</a></p>
-  
-  <p style="margin-top: 15px;">
-    <a href="https://allowanceguard.com/unsubscribe?email={{EMAIL}}" style="color: #ef4444; text-decoration: underline;">Unsubscribe from these alerts</a> | 
-    <a href="https://allowanceguard.com/preferences?email={{EMAIL}}" style="color: #3b82f6; text-decoration: underline;">Manage Email Preferences</a>
-  </p>
-  
-  <p style="margin-top: 10px;">
-    © ${new Date().getFullYear()} Allowance Guard. All rights reserved.<br>
-    This email was sent from a no-reply address. Please do not reply to this email.
-  </p>
-</div>
-`
-
-// Generate complete email HTML with legal footer
-export function createEmailHTML(content: string, recipientEmail: string): string {
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Allowance Guard Alert</title>
-  <style>
-    body { 
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-      line-height: 1.6; 
-      color: #1E1F23; 
-      margin: 0; 
-      padding: 0; 
-      background-color: #ffffff;
-    }
-    .container { 
-      max-width: 600px; 
-      margin: 0 auto; 
-      background-color: #ffffff; 
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-    .top-border { 
-      height: 4px; 
-      background-color: #2563EB; 
-      width: 100%; 
-    }
-    .bottom-border { 
-      height: 4px; 
-      background-color: #2563EB; 
-      width: 100%; 
-    }
-    .header { 
-      background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%); 
-      color: white; 
-      padding: 40px 20px; 
-      text-align: center; 
-    }
-    .content { 
-      padding: 40px 30px; 
-      background-color: #ffffff;
-    }
-    .footer { 
-      background-color: #F8FAFC; 
-      padding: 30px; 
-      border-top: 1px solid #E2E8F0;
-    }
-    h1 { 
-      margin: 0; 
-      font-size: 28px; 
-      font-weight: 700; 
-      color: #ffffff;
-      letter-spacing: -0.025em;
-    }
-    h2 { 
-      color: #2563EB; 
-      font-size: 22px; 
-      margin-top: 30px; 
-      margin-bottom: 15px; 
-      font-weight: 600;
-    }
-    p { 
-      margin-bottom: 16px; 
-      color: #374151;
-      font-size: 16px;
-    }
-    .alert-box { 
-      background-color: #FEF3C7; 
-      border: 1px solid #F59E0B; 
-      border-radius: 12px; 
-      padding: 20px; 
-      margin: 24px 0; 
-    }
-    .success-box { 
-      background-color: #D1FAE5; 
-      border: 1px solid #10B981; 
-      border-radius: 12px; 
-      padding: 20px; 
-      margin: 24px 0; 
-    }
-    .button { 
-      display: inline-block; 
-      background-color: #2563EB; 
-      color: white; 
-      padding: 14px 28px; 
-      text-decoration: none; 
-      border-radius: 8px; 
-      font-weight: 600; 
-      margin: 16px 0; 
-      transition: background-color 0.2s ease;
-    }
-    .button:hover { 
-      background-color: #1D4ED8; 
-    }
-    .button-danger { 
-      background-color: #DC2626; 
-    }
-    .button-danger:hover { 
-      background-color: #B91C1C; 
-    }
-    .address { 
-      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace; 
-      background-color: #F1F5F9; 
-      padding: 12px; 
-      border-radius: 8px; 
-      word-break: break-all; 
-      font-size: 14px;
-      border: 1px solid #E2E8F0;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="top-border"></div>
-    <div class="header">
-      <img src="https://www.allowanceguard.com/images/branding/ag-logo-white.png" alt="Allowance Guard" style="width: 80px; height: 80px; margin: 0 auto 20px auto; display: block;">
-      <h1>Allowance Guard</h1>
-      <p style="margin: 10px 0 0 0; opacity: 0.9;">Security alerts for your token approvals</p>
-    </div>
-    
-    <div class="content">
-      ${content}
-    </div>
-    
-    <div class="footer">
-      ${LEGAL_FOOTER.replace(/\{\{EMAIL\}\}/g, recipientEmail)}
-    </div>
-    <div class="bottom-border"></div>
-  </div>
-</body>
-</html>
-  `.trim()
-}
+export type { EmailKind } from './email-templates'
+export { createEmailHTML } from './email-templates'
 
 export function getTransport() {
-  // Priority: Postmark > SMTP > Log-only fallback
-  
   if (postmarkToken) {
     emailLogger.info('Using Postmark email service')
     return nodemailer.createTransport({
       service: 'postmark',
-      auth: {
-        user: postmarkToken,
-        pass: postmarkToken
-      }
+      auth: { user: postmarkToken, pass: postmarkToken },
     }) as nodemailer.Transporter
   }
-  
+
   if (!host || !user || !pass) {
     if (process.env.NODE_ENV === 'production') {
-      emailLogger.error('No email provider configured (RESEND_API_KEY, POSTMARK_SERVER_TOKEN, or SMTP creds required in production)')
+      emailLogger.error(
+        'No email provider configured (RESEND_API_KEY, POSTMARK_SERVER_TOKEN, or SMTP creds required in production)',
+      )
       throw new Error('Email service not configured')
     }
     emailLogger.warn('SMTP configuration missing, using log-only transport (dev fallback)')
     return nodemailer.createTransport({ jsonTransport: true }) as nodemailer.Transporter
   }
-  
-  // Microsoft SMTP optimized configuration
+
   return nodemailer.createTransport({
-    host, 
-    port, 
-    secure: false, // Microsoft uses STARTTLS, not SSL
-    auth: { 
-      user, 
-      pass 
-    },
+    host,
+    port,
+    secure: false,
+    auth: { user, pass },
     tls: {
       ciphers: 'SSLv3',
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
     },
-    // Additional Microsoft-specific options
-    connectionTimeout: 60000, // 60 seconds
-    greetingTimeout: 30000,   // 30 seconds
-    socketTimeout: 60000,     // 60 seconds
+    connectionTimeout: 60000,
+    greetingTimeout: 30000,
+    socketTimeout: 60000,
   }) as nodemailer.Transporter
 }
 
-export async function sendMail(to: string, subject: string, html: string, text?: string) {
-  // E2E fake email mode
+export interface SendMailOptions {
+  /**
+   * Visual + footer kind. Defaults to 'operational' — the safest neutral
+   * choice for any caller that doesn't explicitly think about kind. New
+   * callers should pass an explicit kind.
+   */
+  kind?: EmailKind
+}
+
+export async function sendMail(
+  to: string,
+  subject: string,
+  html: string,
+  text?: string,
+  options: SendMailOptions = {},
+) {
+  const kind = options.kind ?? 'operational'
+
+  // E2E fake email mode — short-circuits before any provider call.
   if (process.env.E2E_FAKE_EMAIL === '1' || process.env.E2E_FAKE_EMAIL === 'true') {
-    console.log('[E2E_FAKE_EMAIL]', { to, subject })
+    console.log('[E2E_FAKE_EMAIL]', { to, subject, kind })
     return { ok: true, id: 'fake' }
   }
 
-  // Preferred provider: Resend (HTTP API, no nodemailer dependency needed)
+  // Preferred provider: Resend (HTTP API).
   const resendKey = process.env.RESEND_API_KEY
   if (resendKey) {
-    const fullHTML = createEmailHTML(html, to)
+    const fullHTML = createEmailHTML(html, to, kind)
     try {
       const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
@@ -244,16 +97,23 @@ export async function sendMail(to: string, subject: string, html: string, text?:
       })
       if (!res.ok) {
         const errText = await res.text().catch(() => '')
-        emailLogger.error('Resend send failed', { status: res.status, body: errText.slice(0, 500) })
+        emailLogger.error('Resend send failed', {
+          status: res.status,
+          body: errText.slice(0, 500),
+          kind,
+          to,
+          subject,
+        })
         throw new Error(`Resend send failed: ${res.status}`)
       }
       const data = (await res.json()) as { id?: string }
-      emailLogger.info('Email sent successfully (resend)', { messageId: data.id, to, subject, from: fromEmail })
+      emailLogger.info('Email sent (resend)', { messageId: data.id, kind, to, subject, from: fromEmail })
       await incrEmail()
       return { messageId: data.id ?? '', accepted: [to] }
     } catch (error) {
-      emailLogger.error('Resend email error', {
+      emailLogger.error('Resend send error', {
         error: error instanceof Error ? error.message : 'Unknown error',
+        kind,
         to,
         subject,
       })
@@ -262,200 +122,90 @@ export async function sendMail(to: string, subject: string, html: string, text?:
   }
 
   const transporter = getTransport()
-  
+
   try {
-    // Verify connection before sending
     await transporter.verify()
-    
-    // Use the createEmailHTML function to wrap content with legal footer
-    const fullHTML = createEmailHTML(html, to)
-    
+
+    const fullHTML = createEmailHTML(html, to, kind)
+
     const info = await transporter.sendMail({
       from: `"${fromName}" <${fromEmail}>`,
-      to, 
-      subject, 
+      to,
+      subject,
       html: fullHTML,
-      text: text || fullHTML.replace(/<[^>]*>/g, '') // Auto-generate text from HTML if not provided
+      text: text || fullHTML.replace(/<[^>]*>/g, ''),
     })
-    
-    emailLogger.info('Email sent successfully', {
+
+    emailLogger.info('Email sent', {
       messageId: info.messageId,
-      to: to,
-      subject: subject,
-      from: fromEmail
+      kind,
+      to,
+      subject,
+      from: fromEmail,
     })
-    
-    // Increment email counter
+
     await incrEmail()
-    
+
     return info
   } catch (error) {
     emailLogger.error('Email send failed', {
       error: error instanceof Error ? error.message : 'Unknown error',
-      to: to,
-      subject: subject,
-      from: fromEmail
+      kind,
+      to,
+      subject,
+      from: fromEmail,
     })
     throw error
   }
 }
 
-// Convenience function for sending alert emails
+// ---------------------------------------------------------------------------
+// Helper functions per email type. Each passes an explicit `kind`.
+// ---------------------------------------------------------------------------
+
+/** Generic alert wrapper. Used by `alertEmail` in `ops_alert.ts`. */
 export async function sendAlertEmail(to: string, subject: string, content: string) {
-  return sendMail(to, subject, content)
+  return sendMail(to, subject, content, undefined, { kind: 'alert' })
 }
 
-// Convenience function for sending welcome emails
-export async function sendWelcomeEmail(to: string, walletAddress?: string) {
-  const content = `
-    <h2>Welcome to Allowance Guard! 🎉</h2>
-    <p>Thank you for subscribing to our security alerts. We'll help you monitor and manage your token approvals across multiple blockchain networks.</p>
-    
-    ${walletAddress ? `
-    <div class="success-box">
-      <strong>Wallet Connected:</strong><br>
-      <span class="address">${walletAddress}</span>
-    </div>
-    ` : ''}
-    
-    <h2>What happens next?</h2>
-    <ul>
-      <li>We'll scan your wallet for existing token approvals</li>
-      <li>You'll receive alerts about risky or unlimited approvals</li>
-      <li>Get daily summaries of your approval status</li>
-      <li>Access one-click revocation tools</li>
-    </ul>
-    
-    <p><a href="https://allowanceguard.com" class="button">Visit Allowance Guard</a></p>
-    
-    <p>If you have any questions, please visit our <a href="https://allowanceguard.com/docs">documentation</a> or contact our support team.</p>
-  `
-  
-  return sendMail(to, 'Welcome to Allowance Guard - Your Security Journey Begins', content)
-}
-
-// Convenience function for sending risk alerts
-export async function sendRiskAlert(to: string, walletAddress: string, riskData: {
-  token?: string
-  spender?: string
-  amount?: string
-  riskLevel?: string
-}) {
+/**
+ * Risk-approval alert. Sent when a wallet has a high-risk approval that
+ * warrants user attention. Subject is plain text per VOICE.md (no emoji).
+ */
+export async function sendRiskAlert(
+  to: string,
+  walletAddress: string,
+  riskData: { token?: string; spender?: string; amount?: string; riskLevel?: string },
+) {
   const content = `
     <div class="alert-box">
-      <h2>⚠️ High Risk Approval Detected</h2>
-      <p>We've detected a potentially risky token approval in your wallet that requires immediate attention.</p>
+      <h2 style="margin-top: 0;">High-risk approval detected</h2>
+      <p style="margin-bottom: 0;">A token approval on your wallet warrants immediate attention.</p>
     </div>
-    
-    <h2>Wallet Address</h2>
+
+    <h2>Wallet</h2>
     <span class="address">${walletAddress}</span>
-    
-    <h2>Risk Details</h2>
+
+    <h2>Risk details</h2>
     <ul>
       <li><strong>Token:</strong> ${riskData.token || 'Unknown'}</li>
-      <li><strong>Spender:</strong> <span class="address">${riskData.spender || 'Unknown'}</span></li>
+      <li><strong>Spender:</strong> <span class="address" style="display:inline;padding:2px 6px;">${riskData.spender || 'Unknown'}</span></li>
       <li><strong>Amount:</strong> ${riskData.amount || 'Unlimited'}</li>
-      <li><strong>Risk Level:</strong> ${riskData.riskLevel || 'High'}</li>
+      <li><strong>Risk level:</strong> ${riskData.riskLevel || 'High'}</li>
     </ul>
-    
-    <p><a href="https://allowanceguard.com/revoke" class="button button-danger">Revoke This Approval</a></p>
-    
-    <p><strong>Recommended Action:</strong> Review this approval immediately and revoke it if you don't recognize the spender or if the amount seems excessive.</p>
-  `
-  
-  return sendMail(to, '🚨 High Risk Token Approval Alert', content)
-}
 
-// Convenience function for sending thank you emails for donations
-export async function sendThankYouEmail({
-  to,
-  donorName,
-  amount,
-  currency
-}: {
-  to: string
-  donorName: string
-  amount: string
-  currency: string
-}) {
-  const content = `
-    <h2>Thank You, ${donorName}! 💝</h2>
-    <p>Your generous donation of <strong>$${amount} ${currency}</strong> helps us keep Allowance Guard free and secure for everyone.</p>
-    
-    <div class="success-box">
-      <h3>How Your Support Helps:</h3>
-      <ul>
-        <li>Keep Allowance Guard free for all users</li>
-        <li>Add support for more blockchain networks</li>
-        <li>Improve security features and monitoring</li>
-        <li>Provide better user experience</li>
-      </ul>
-    </div>
-    
-    <h2>Receipt Details</h2>
-    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-      <p><strong>Donation Amount:</strong> $${amount} ${currency}</p>
-      <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-      <p><strong>Transaction ID:</strong> Available in your Coinbase Commerce dashboard</p>
-    </div>
-    
-    <p>Thank you for supporting the future of DeFi security! Your contribution makes a real difference in keeping the crypto ecosystem safe.</p>
-    
-    <p><a href="https://allowanceguard.com" class="button">Continue Using Allowance Guard</a></p>
-  `
-  
-  return sendMail(to, 'Thank you for supporting Allowance Guard! 💝', content)
-}
+    <p><a href="https://allowanceguard.com/revoke" class="button button-danger">Revoke this approval</a></p>
 
-// Re-engagement email for cancelled users (sent ~7 days after cancellation)
-export async function sendReEngagementEmail(to: string, plan: string) {
-  const planLabel = plan.includes('sentinel') ? 'Sentinel' : 'Pro'
-
-  const content = `
-    <h2>We Miss You!</h2>
-    <p>We noticed you recently cancelled your <strong>${planLabel}</strong> subscription. We're sorry to see you go, and we wanted to check in.</p>
-
-    <div class="alert-box">
-      <h3 style="margin-top: 0;">Here's what you're missing:</h3>
-      <ul style="margin-bottom: 0;">
-        ${planLabel === 'Sentinel' ? `
-        <li>Monitoring up to 50 wallets across 27 chains</li>
-        <li>Automated revocation rules protecting your assets 24/7</li>
-        <li>Team dashboard with role-based access</li>
-        <li>Compliance-ready audit logs</li>
-        <li>Webhook integrations and priority support</li>
-        ` : `
-        <li>Unlimited wallet scanning across all 27 chains</li>
-        <li>Continuous monitoring with real-time email alerts</li>
-        <li>Batch revocation with gas savings</li>
-        <li>Historical risk timeline for your approvals</li>
-        <li>Export audit reports (PDF/CSV)</li>
-        `}
-      </ul>
-    </div>
-
-    <div class="success-box">
-      <h3 style="margin-top: 0;">Come back and save 20%</h3>
-      <p style="margin-bottom: 0;">
-        We'd love to have you back. Use code <strong>COMEBACK20</strong> at checkout to get 20% off your next 3 months.
-      </p>
-    </div>
-
-    <p style="text-align: center;">
-      <a href="https://allowanceguard.com/pricing?reactivate=true&code=COMEBACK20" class="button">Reactivate My ${planLabel} Plan</a>
-    </p>
-
-    <p style="color: #6b7280; font-size: 14px;">
-      Your free account is still active — you can continue scanning up to 3 wallets at any time.
-      If you have feedback on how we can improve, we'd genuinely love to hear it at
-      <a href="mailto:support@allowanceguard.com" style="color: #3b82f6;">support@allowanceguard.com</a>.
-    </p>
+    <p><strong>Recommended action.</strong> Review this approval and revoke it if you don't recognise the spender or the amount looks excessive.</p>
   `
 
-  return sendMail(to, `We miss you! Come back to Allowance Guard ${planLabel}`, content)
+  return sendMail(to, 'Risk detected on your wallet', content, undefined, { kind: 'alert' })
 }
 
-// Failed payment notification (called from billing webhook)
+/**
+ * Failed-payment notification. Operational, not marketing — the user has
+ * an active subscription and needs to act on it.
+ */
 export async function sendFailedPaymentEmail(to: string, plan: string, attemptCount: number) {
   const planLabel = plan.includes('sentinel')
     ? 'Sentinel'
@@ -469,39 +219,79 @@ export async function sendFailedPaymentEmail(to: string, plan: string, attemptCo
 
   const content = `
     <div class="alert-box">
-      <h2 style="margin-top: 0;">Payment Failed</h2>
-      <p style="margin-bottom: 0;">We were unable to process your payment for your <strong>${planLabel}</strong> subscription.</p>
+      <h2 style="margin-top: 0;">Payment failed</h2>
+      <p style="margin-bottom: 0;">We were unable to process your payment for <strong>${planLabel}</strong>.</p>
     </div>
 
-    ${isLastAttempt ? `
-    <p><strong>This was our final attempt.</strong> Your subscription will be cancelled unless you update your payment method now.</p>
-    ` : `
-    <p>We'll try again in a few days, but we recommend updating your payment method now to avoid any interruption to your service.</p>
-    `}
+    ${
+      isLastAttempt
+        ? `<p><strong>This was our final attempt.</strong> Your subscription will be cancelled unless you update your payment method now.</p>`
+        : `<p>We'll try again in a few days. Update your payment method now to avoid any interruption.</p>`
+    }
 
-    <p style="text-align: center;">
-      <a href="https://allowanceguard.com/account/billing" class="button">
-        Update Payment Method
-      </a>
-    </p>
-
-    <p style="color: #6b7280; font-size: 14px;">
-      If you believe this is an error, please contact us at
-      <a href="mailto:support@allowanceguard.com" style="color: #3b82f6;">support@allowanceguard.com</a>.
-    </p>
+    <p><a href="https://allowanceguard.com/account/billing" class="button">Update payment method</a></p>
   `
 
   return sendMail(
     to,
     isLastAttempt
-      ? 'Action Required: Your payment failed — subscription at risk'
+      ? 'Action required: payment failed — subscription at risk'
       : 'Payment failed — please update your payment method',
     content,
+    undefined,
+    { kind: 'operational' },
   )
 }
 
-// Waitlist welcome email — sent immediately on subscribe
-export async function sendWaitlistWelcomeEmail(to: string, interest: string, unsubId: string) {
+/**
+ * Re-engagement email for cancelled customers (sent ~7 days after
+ * cancellation by the email/cron job). Marketing tone.
+ */
+export async function sendReEngagementEmail(to: string, plan: string) {
+  const planLabel = plan.includes('sentinel') ? 'Sentinel' : 'Pro'
+
+  const content = `
+    <h1>We miss you.</h1>
+    <p>You recently cancelled your <strong>${planLabel}</strong> subscription. We wanted to check in.</p>
+
+    <div class="alert-box">
+      <h3>Here's what you're missing</h3>
+      <ul style="margin-bottom: 0;">
+        ${
+          planLabel === 'Sentinel'
+            ? `<li>Monitoring up to 50 wallets across 27 chains</li>
+        <li>Automated revocation rules protecting your assets 24/7</li>
+        <li>Team dashboard with role-based access</li>
+        <li>Compliance-ready audit logs</li>
+        <li>Webhook integrations and priority support</li>`
+            : `<li>Unlimited wallet scanning across all 27 chains</li>
+        <li>Continuous monitoring with real-time email alerts</li>
+        <li>Batch revocation with gas savings</li>
+        <li>Historical risk timeline for your approvals</li>
+        <li>Export audit reports (PDF / CSV)</li>`
+        }
+      </ul>
+    </div>
+
+    <div class="success-box">
+      <h3>Come back and save 20%</h3>
+      <p style="margin-bottom: 0;">Use code <strong>COMEBACK20</strong> at checkout for 20% off your next 3 months.</p>
+    </div>
+
+    <p><a href="https://allowanceguard.com/pricing?reactivate=true&amp;code=COMEBACK20" class="button">Reactivate ${planLabel}</a></p>
+
+    <p>Your free account is still active — you can keep scanning up to 3 wallets at any time. If you have feedback on what we could improve, we'd genuinely love to hear it at <a href="mailto:support@allowanceguard.com">support@allowanceguard.com</a>.</p>
+  `
+
+  return sendMail(to, `Come back to AllowanceGuard ${planLabel}`, content, undefined, {
+    kind: 'marketing',
+  })
+}
+
+/**
+ * Waitlist welcome — sent immediately on subscribe (and re-subscribe).
+ */
+export async function sendWaitlistWelcomeEmail(to: string, interest: string, _unsubId: string) {
   const interestLabels: Record<string, string> = {
     general: 'AllowanceGuard updates',
     mobile: 'the mobile app',
@@ -510,35 +300,32 @@ export async function sendWaitlistWelcomeEmail(to: string, interest: string, uns
     chains: 'new chain support',
   }
   const interestLabel = interestLabels[interest] || 'AllowanceGuard updates'
-  const unsubUrl = `https://www.allowanceguard.com/api/unsubscribe/waitlist?id=${encodeURIComponent(unsubId)}`
 
   const content = `
-    <h2 style="color:#0F1115;font-size:22px;margin-top:0;">You're on the list.</h2>
+    <h1>You're on the list.</h1>
 
     <p>Thanks for signing up — we'll keep you posted on <strong>${interestLabel}</strong>.</p>
 
     <div class="success-box">
-      <h3 style="margin-top:0;">What to expect</h3>
+      <h3>What to expect</h3>
       <ul style="margin-bottom:0;">
         <li>Early access when we launch new features</li>
-        <li>Occasional updates — no spam, ever</li>
+        <li>Occasional updates — never spam</li>
         <li>A heads-up before public announcements</li>
       </ul>
     </div>
-
-    <p style="color:#6b7280;font-size:13px;margin-top:24px;">
-      Changed your mind? <a href="${unsubUrl}" style="color:#3b82f6;">Unsubscribe</a> at any time.
-    </p>
   `
 
   return sendMail(
     to,
     `You're on the AllowanceGuard waitlist — ${interestLabel}`,
     content,
+    undefined,
+    { kind: 'marketing' },
   )
 }
 
-// Test function for SMTP configuration
+/** Diagnostic helper retained for the SMTP test endpoint. */
 export async function testSMTPConnection() {
   try {
     const transporter = getTransport()
@@ -546,7 +333,9 @@ export async function testSMTPConnection() {
     emailLogger.info('SMTP connection successful')
     return true
   } catch (error) {
-    emailLogger.error('SMTP connection failed', { error: error instanceof Error ? error.message : 'Unknown error' })
+    emailLogger.error('SMTP connection failed', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+    })
     return false
   }
 }

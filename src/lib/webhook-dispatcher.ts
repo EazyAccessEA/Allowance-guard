@@ -208,7 +208,7 @@ async function notifyWebhookDisabled(webhookId: string): Promise<void> {
     </div>
   `
 
-  await sendMail(webhook.email, subject, html)
+  await sendMail(webhook.email, subject, html, undefined, { kind: 'alert' })
   secureLogger.info('Webhook disable notification sent', { webhookId, to: webhook.email })
 }
 

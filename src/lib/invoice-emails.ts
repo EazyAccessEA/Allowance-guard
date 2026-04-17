@@ -79,7 +79,9 @@ export async function sendPaymentReceiptEmail(to: string, data: PaymentReceiptDa
     </p>
   `
 
-  return sendMail(to, `Payment Receipt — ${data.invoiceNumber}`, content)
+  return sendMail(to, `Payment receipt — ${data.invoiceNumber}`, content, undefined, {
+    kind: 'operational',
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -141,7 +143,13 @@ export async function sendPaymentFailedEmail(to: string, data: PaymentFailedData
     </p>
   `
 
-  return sendMail(to, `Action Required: Payment Failed — ${data.invoiceNumber}`, content)
+  return sendMail(
+    to,
+    `Action required: payment failed — ${data.invoiceNumber}`,
+    content,
+    undefined,
+    { kind: 'operational' },
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -178,7 +186,9 @@ export async function sendTrialEndingEmail(to: string, data: TrialEndingData) {
     </p>
   `
 
-  return sendMail(to, `Your ${planLabel} Trial Ends ${data.trialEnd}`, content)
+  return sendMail(to, `Your ${planLabel} trial ends ${data.trialEnd}`, content, undefined, {
+    kind: 'operational',
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -233,5 +243,11 @@ export async function sendExpiringCardEmail(to: string, data: ExpiringCardData) 
     </p>
   `
 
-  return sendMail(to, `Action Required: Your ${data.cardBrand} •••• ${data.cardLast4} is expiring`, content)
+  return sendMail(
+    to,
+    `Action required: your ${data.cardBrand} •••• ${data.cardLast4} is expiring`,
+    content,
+    undefined,
+    { kind: 'operational' },
+  )
 }

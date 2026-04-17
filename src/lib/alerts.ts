@@ -142,7 +142,7 @@ export async function sendDailyDigests() {
         ? `Allowance Guard — ${risky.length} risky approval${risky.length > 1 ? 's' : ''} detected`
         : `Allowance Guard — Daily summary (all clear)`
       
-      await sendMail(s.email, subject, html)
+      await sendMail(s.email, subject, html, undefined, { kind: 'alert' })
       
       // Log the send
       await pool.query(
