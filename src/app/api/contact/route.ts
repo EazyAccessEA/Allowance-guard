@@ -1,38 +1,41 @@
 // src/app/api/contact/route.ts
 //
 // Public contact endpoint. Accepts a structured message from the
-// /contact form, validates it, rate-limits per IP, and routes the
-// email to the right inbox via Resend.
+// /contact form, validates it, rate-limits per IP, and:
+//   1. Routes the message to the right operator inbox via mailer.sendMail
+//      with kind: 'operator'.
+//   2. Sends a confirmation email back to the submitter via mailer.sendMail
+//      with kind: 'marketing' so the user has a record they wrote in.
 //
-// Required env:
-//   RESEND_API_KEY        — Resend API key (re_…)
-//   CONTACT_FROM_EMAIL    — verified sender (e.g. "AllowanceGuard <noreply@allowanceguard.com>")
-//
-// Topics:
+// Topic routing:
 //   - support       -> support@allowanceguard.com
 //   - security      -> security@allowanceguard.com
 //   - partnerships  -> support@allowanceguard.com   (subject prefixed)
 //   - press         -> support@allowanceguard.com   (subject prefixed)
 //   - funding       -> support@allowanceguard.com   (subject prefixed)
 //   - other         -> support@allowanceguard.com
+//
+// Both sends go through `mailer.sendMail`. The previous inline
+// `sendViaResend` duplication has been removed.
 
 import { NextResponse } from 'next/server'
 import { headers as nextHeaders } from 'next/headers'
 import { z } from 'zod'
 import { limitOrThrow } from '@/lib/ratelimit'
+import { sendMail } from '@/lib/mailer'
 
 export const runtime = 'nodejs'
 
 const TOPIC_ROUTING: Record<
   string,
-  { to: string; label: string }
+  { to: string; label: string; ackWindow: string }
 > = {
-  support:      { to: 'support@allowanceguard.com',  label: 'Support'      },
-  security:     { to: 'security@allowanceguard.com', label: 'Security'     },
-  partnerships: { to: 'support@allowanceguard.com',  label: 'Partnerships' },
-  press:        { to: 'support@allowanceguard.com',  label: 'Press'        },
-  funding:      { to: 'support@allowanceguard.com',  label: 'Funding'      },
-  other:        { to: 'support@allowanceguard.com',  label: 'General'      },
+  support:      { to: 'support@allowanceguard.com',  label: 'Support',      ackWindow: 'one business day' },
+  security:     { to: 'security@allowanceguard.com', label: 'Security',     ackWindow: 'two hours' },
+  partnerships: { to: 'support@allowanceguard.com',  label: 'Partnerships', ackWindow: 'one business day' },
+  press:        { to: 'support@allowanceguard.com',  label: 'Press',        ackWindow: 'one business day' },
+  funding:      { to: 'support@allowanceguard.com',  label: 'Funding',      ackWindow: 'one business day' },
+  other:        { to: 'support@allowanceguard.com',  label: 'General',      ackWindow: 'one business day' },
 }
 
 const ContactSchema = z.object({
@@ -52,41 +55,6 @@ function escape(s: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
-}
-
-async function sendViaResend(opts: {
-  to: string
-  replyTo: string
-  subject: string
-  html: string
-  text: string
-}): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.CONTACT_FROM_EMAIL || 'AllowanceGuard <noreply@allowanceguard.com>'
-  if (!apiKey) {
-    throw new Error('RESEND_API_KEY is not configured')
-  }
-
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      from,
-      to: [opts.to],
-      reply_to: opts.replyTo,
-      subject: opts.subject,
-      html: opts.html,
-      text: opts.text,
-    }),
-  })
-
-  if (!res.ok) {
-    const body = await res.text().catch(() => '')
-    throw new Error(`Resend API error ${res.status}: ${body}`)
-  }
 }
 
 export async function POST(req: Request) {
@@ -126,37 +94,55 @@ export async function POST(req: Request) {
     const route = TOPIC_ROUTING[topic]
 
     const subject = `[${route.label}] ${name} via allowanceguard.com`
-
     const safeName    = escape(name)
     const safeEmail   = escape(email)
     const safeWallet  = wallet ? escape(wallet) : null
     const safeMessage = escape(message).replace(/\n/g, '<br/>')
     const safeIp      = escape(ip)
 
-    const html = `<!doctype html>
-<html><body style="margin:0;padding:24px;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
-  <div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:32px">
-    <h2 style="margin:0 0 16px;font-size:18px;color:#0f172a">New ${escape(route.label)} message</h2>
-    <table style="width:100%;border-collapse:collapse;font-size:14px;color:#1e293b;margin-bottom:20px">
-      <tr><td style="padding:6px 0;width:120px;color:#64748b">From</td><td style="padding:6px 0"><strong>${safeName}</strong></td></tr>
-      <tr><td style="padding:6px 0;color:#64748b">Email</td><td style="padding:6px 0"><a href="mailto:${safeEmail}" style="color:#f59e0b;text-decoration:none">${safeEmail}</a></td></tr>
-      <tr><td style="padding:6px 0;color:#64748b">Topic</td><td style="padding:6px 0">${escape(route.label)}</td></tr>
-      ${safeWallet ? `<tr><td style="padding:6px 0;color:#64748b">Wallet</td><td style="padding:6px 0;font-family:monospace;font-size:12px">${safeWallet}</td></tr>` : ''}
-      <tr><td style="padding:6px 0;color:#64748b">IP</td><td style="padding:6px 0;font-family:monospace;font-size:12px">${safeIp}</td></tr>
-    </table>
-    <div style="padding:16px;background:#f8fafc;border-left:3px solid #f59e0b;border-radius:4px;font-size:14px;line-height:1.6;color:#0f172a;white-space:pre-wrap">${safeMessage}</div>
-    <p style="margin-top:20px;font-size:12px;color:#94a3b8">Reply directly to this email to respond to ${safeName}.</p>
-  </div>
-</body></html>`
+    // -------- Operator-inbox email (kind: 'operator') --------
+    const operatorContent = `
+      <h1>New ${escape(route.label)} message</h1>
+      <table>
+        <tr><td class="label">From</td><td><strong>${safeName}</strong></td></tr>
+        <tr><td class="label">Email</td><td><a href="mailto:${safeEmail}">${safeEmail}</a></td></tr>
+        <tr><td class="label">Topic</td><td>${escape(route.label)}</td></tr>
+        ${safeWallet ? `<tr><td class="label">Wallet</td><td class="mono">${safeWallet}</td></tr>` : ''}
+        <tr><td class="label">IP</td><td class="mono">${safeIp}</td></tr>
+      </table>
 
-    const text = `New ${route.label} message from ${name} <${email}>${wallet ? `\nWallet: ${wallet}` : ''}\n\n${message}\n\n---\nIP: ${ip}`
+      <h2>Message</h2>
+      <div class="quote">${safeMessage}</div>
 
-    await sendViaResend({
-      to: route.to,
-      replyTo: email,
-      subject,
-      html,
-      text,
+      <p class="reply-hint">Reply directly to this email to respond to ${safeName}.</p>
+    `
+
+    await sendMail(route.to, subject, operatorContent, undefined, { kind: 'operator' })
+
+    // -------- User confirmation email (kind: 'marketing') --------
+    // Fire-and-forget — operator notification is the load-bearing send;
+    // a confirmation failure shouldn't break the form. Logged for triage.
+    const userContent = `
+      <h1>Message received.</h1>
+      <p>Thanks for reaching out, ${escape(name)}. We'll respond within <strong>${escape(route.ackWindow)}</strong>.</p>
+
+      <div class="success-box">
+        <h3>What you sent</h3>
+        <p style="margin-bottom: 6px;"><strong>Topic:</strong> ${escape(route.label)}</p>
+        <div style="font-size: 14px; color: inherit; white-space: pre-wrap;">${safeMessage}</div>
+      </div>
+
+      <p>If you need to add anything, just reply to this email — it goes to the same inbox.</p>
+    `
+
+    sendMail(
+      email,
+      `We got your ${route.label.toLowerCase()} message — AllowanceGuard`,
+      userContent,
+      undefined,
+      { kind: 'marketing' },
+    ).catch((err) => {
+      console.error('[contact] confirmation email failed', err)
     })
 
     return NextResponse.json({ ok: true })

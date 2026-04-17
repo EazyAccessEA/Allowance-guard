@@ -106,7 +106,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="text-lg font-semibold text-ink mb-2">Message received.</h3>
                       <p className="text-sm text-ink-soft leading-relaxed">
-                        Thanks &mdash; we&rsquo;ll be in touch shortly. If your inquiry is urgent and security-related, we&rsquo;ll acknowledge within two hours. Everything else within one business day.
+                        Thanks &mdash; we&rsquo;ll be in touch shortly. A confirmation copy is on its way to your inbox. If your inquiry is urgent and security-related, we&rsquo;ll acknowledge within two hours; everything else within one business day.
                       </p>
                       <button
                         type="button"
