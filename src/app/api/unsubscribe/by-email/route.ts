@@ -17,6 +17,7 @@ import { headers as nextHeaders } from 'next/headers'
 import { z } from 'zod'
 import { db } from '@/db'
 import { waitlistSubscribers } from '@/db/schema'
+import { pool } from '@/lib/db'
 import { eq, sql } from 'drizzle-orm'
 import { limitHit } from '@/lib/ratelimit'
 
@@ -47,18 +48,33 @@ export async function POST(req: Request) {
     const parsed = Schema.parse(body)
     const { email } = parsed
 
-    // Mark every matching row as unsubscribed. Lowercase compare so
-    // capitalisation differences don't leak rows back into the marketing
-    // sends.
-    const updated = await db
+    // Stop ALL email categories the user can opt out of:
+    //   - waitlist_subscribers (marketing waitlist)
+    //   - alert_subscriptions (per-wallet risk alerts + daily digests)
+    //
+    // Transactional emails (receipts, magic-link, team invites) remain;
+    // those are tied to active account actions and required by terms.
+    //
+    // Lowercase compare on both so capitalisation differences don't leak
+    // rows back into the send loops.
+    const waitlistUpdated = await db
       .update(waitlistSubscribers)
       .set({ unsubscribed: true, updatedAt: new Date() })
       .where(eq(sql`lower(${waitlistSubscribers.email})`, email))
       .returning({ id: waitlistSubscribers.id })
 
+    const alertsUpdated = await pool.query(
+      `UPDATE alert_subscriptions
+         SET is_active = FALSE, updated_at = NOW()
+       WHERE lower(email) = $1
+       RETURNING id`,
+      [email],
+    )
+
     console.info('[unsub-by-email] processed', {
       email,
-      rowsUpdated: updated.length,
+      waitlistRows: waitlistUpdated.length,
+      alertRows: alertsUpdated.rowCount ?? 0,
     })
 
     return NextResponse.json({ ok: true })

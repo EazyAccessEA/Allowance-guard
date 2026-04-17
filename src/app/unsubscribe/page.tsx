@@ -76,9 +76,10 @@ export default function UnsubscribePage() {
           </span>
           <H1 className="mb-6 text-ink">Stop receiving emails.</H1>
           <p className="text-base text-ink-soft mb-10 leading-relaxed">
-            Confirm the email address below to remove yourself from the AllowanceGuard
-            waitlist and future marketing emails. This won&rsquo;t affect transactional
-            emails tied to a paid subscription, if you have one.
+            Confirm the email address below to stop all AllowanceGuard marketing
+            emails — the waitlist, risk alerts, and daily digests.
+            Transactional emails tied to an active account (receipts, sign-in
+            links) will keep working.
           </p>
 
           {status === 'success' ? (

@@ -133,7 +133,7 @@ export async function driftCheckAndNotify(wallet: string) {
 
   // Destinations
   const [emailsQ, hooksQ] = await Promise.all([
-    pool.query(`SELECT email, risk_only FROM alert_subscriptions WHERE wallet_address=$1`, [wallet]),
+    pool.query(`SELECT email, risk_only FROM alert_subscriptions WHERE wallet_address=$1 AND is_active = TRUE`, [wallet]),
     pool.query(`SELECT webhook_url, risk_only FROM slack_subscriptions WHERE wallet_address=$1`, [wallet])
   ])
 

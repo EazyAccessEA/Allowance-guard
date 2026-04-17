@@ -123,7 +123,7 @@ function renderHtml(wallet: string, rows: AllowRow[]) {
 
 export async function sendDailyDigests() {
   const subs = await pool.query(
-    `SELECT email, wallet_address, risk_only FROM alert_subscriptions`
+    `SELECT email, wallet_address, risk_only FROM alert_subscriptions WHERE is_active = TRUE`
   )
   
   let total = 0
