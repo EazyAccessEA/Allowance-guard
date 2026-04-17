@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { stripe, syncSubscription, upsertInvoice, getUserEmailById } from '@/lib/billing'
+import { stripe, syncSubscription, upsertInvoice, getUserEmailById, cleanupAfterPlanChange } from '@/lib/billing'
+import type { ConsumerPlan } from '@/lib/plans'
 import { sendPaymentReceiptEmail, sendPaymentFailedEmail, sendTrialEndingEmail, sendExpiringCardEmail } from '@/lib/invoice-emails'
 import { upgradeApiKeyPlan, downgradeApiKeysToFree } from '@/lib/api-keys'
 import { alreadyProcessed, markProcessed, auditWebhook } from '@/lib/webhook_guard'
@@ -114,6 +115,31 @@ export async function POST(req: Request) {
           } else if (subscription.status === 'canceled') {
             await downgradeApiKeysToFree(subUserId)
             L.info('billing.webhook.api_keys_downgraded', { userId: subUserId })
+          }
+        }
+
+        // Reconcile consumer-feature rows against the new plan limits.
+        // Disables orphaned monitors / webhooks / rules / alert subs
+        // when a downgrade or cancellation drops a feature out of the
+        // plan. Idempotent and safe on upgrades (no-op when limits
+        // grow). API plans don't touch consumer features.
+        if (subUserId && (subPlan === 'pro' || subPlan === 'sentinel' || subPlan === 'free' || subPlan === '')) {
+          const effectivePlan: ConsumerPlan =
+            subscription.status === 'canceled'
+              ? 'free'
+              : subPlan === 'pro' || subPlan === 'sentinel'
+                ? subPlan
+                : 'free'
+          try {
+            await cleanupAfterPlanChange(subUserId, effectivePlan)
+          } catch (cleanupErr) {
+            L.error('billing.webhook.cleanup_failed', {
+              userId: subUserId,
+              effectivePlan,
+              error: cleanupErr instanceof Error ? cleanupErr.message : 'Unknown',
+            })
+            // Don't fail the webhook — the syncSubscription succeeded;
+            // a follow-up admin-ops job can re-run cleanup.
           }
         }
 

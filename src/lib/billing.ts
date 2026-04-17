@@ -1,7 +1,7 @@
 import Stripe from 'stripe'
 import { pool } from '@/lib/db'
 import { apiLogger } from '@/lib/logger'
-import type { ConsumerPlan } from '@/lib/plans'
+import { CONSUMER_PLAN_LIMITS, isUnlimited, type ConsumerPlan } from '@/lib/plans'
 
 // ---------------------------------------------------------------------------
 // Stripe client
@@ -440,4 +440,136 @@ export async function getUserSubscription(userId: number): Promise<UserSubscript
     currentPeriodEnd: rows[0].current_period_end ? new Date(rows[0].current_period_end as string) : null,
     cancelAtPeriodEnd: rows[0].cancel_at_period_end as boolean,
   }
+}
+
+// ---------------------------------------------------------------------------
+// Plan-change cleanup
+// ---------------------------------------------------------------------------
+
+/**
+ * After a consumer plan changes (downgrade, cancel, upgrade), reconcile
+ * the user's per-feature rows against the new plan's limits:
+ *
+ *   - If the new plan doesn't include `monitoring`, disable all enabled
+ *     wallet_monitors. If it does include monitoring but with a quota,
+ *     disable monitors beyond the quota (oldest-updated kept).
+ *   - If the new plan doesn't include `webhooks`, disable all enabled
+ *     webhooks rows.
+ *   - If the new plan doesn't include `automatedRules`, disable all
+ *     enabled revocation_rules rows.
+ *   - If the new plan doesn't include `alerts`, deactivate the user's
+ *     alert_subscriptions rows (matched by their account email).
+ *
+ * No data is deleted — rows are soft-disabled so the user retains
+ * their configuration if they re-upgrade later. Idempotent: running
+ * twice produces the same result. Safe on upgrades: when the new plan
+ * grants more, every condition above is false, so the function is
+ * a no-op.
+ *
+ * Called from the billing webhook on customer.subscription.updated
+ * and customer.subscription.deleted (with newPlan='free' for the
+ * deleted case).
+ */
+export async function cleanupAfterPlanChange(
+  userId: number,
+  newPlan: ConsumerPlan,
+): Promise<void> {
+  const limits = CONSUMER_PLAN_LIMITS[newPlan]
+  if (!limits) {
+    apiLogger.warn('billing.cleanup.unknown_plan', { userId, newPlan })
+    return
+  }
+
+  const ops: Promise<unknown>[] = []
+  const summary: Record<string, number> = {}
+
+  // Monitors
+  if (!limits.monitoring) {
+    ops.push(
+      pool
+        .query(
+          `UPDATE wallet_monitors SET enabled = FALSE, updated_at = NOW()
+           WHERE user_id = $1 AND enabled = TRUE
+           RETURNING id`,
+          [userId],
+        )
+        .then((r) => {
+          summary.monitorsDisabled = r.rowCount ?? 0
+        }),
+    )
+  } else if (!isUnlimited(limits.maxMonitoredWallets)) {
+    // Quota reduction — keep the most-recently-updated N enabled.
+    ops.push(
+      pool
+        .query(
+          `UPDATE wallet_monitors SET enabled = FALSE, updated_at = NOW()
+           WHERE id IN (
+             SELECT id FROM wallet_monitors
+             WHERE user_id = $1 AND enabled = TRUE
+             ORDER BY updated_at DESC
+             OFFSET $2
+           )
+           RETURNING id`,
+          [userId, limits.maxMonitoredWallets],
+        )
+        .then((r) => {
+          summary.monitorsCapped = r.rowCount ?? 0
+        }),
+    )
+  }
+
+  // Webhooks
+  if (!limits.webhooks) {
+    ops.push(
+      pool
+        .query(
+          `UPDATE webhooks SET enabled = FALSE, updated_at = NOW()
+           WHERE user_id = $1 AND enabled = TRUE
+           RETURNING id`,
+          [userId],
+        )
+        .then((r) => {
+          summary.webhooksDisabled = r.rowCount ?? 0
+        }),
+    )
+  }
+
+  // Revocation rules
+  if (!limits.automatedRules) {
+    ops.push(
+      pool
+        .query(
+          `UPDATE revocation_rules SET enabled = FALSE, updated_at = NOW()
+           WHERE user_id = $1 AND enabled = TRUE
+           RETURNING id`,
+          [userId],
+        )
+        .then((r) => {
+          summary.rulesDisabled = r.rowCount ?? 0
+        }),
+    )
+  }
+
+  // Alert subscriptions (keyed by email, not user_id)
+  if (!limits.alerts) {
+    const email = await getUserEmailById(userId)
+    if (email) {
+      ops.push(
+        pool
+          .query(
+            `UPDATE alert_subscriptions SET is_active = FALSE, updated_at = NOW()
+             WHERE lower(email) = lower($1) AND is_active = TRUE
+             RETURNING id`,
+            [email],
+          )
+          .then((r) => {
+            summary.alertSubscriptionsDeactivated = r.rowCount ?? 0
+          }),
+      )
+    }
+  }
+
+  await Promise.all(ops)
+
+  apiLogger.info('billing.plan_change.cleanup', { userId, newPlan, ...summary })
 }
