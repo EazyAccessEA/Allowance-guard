@@ -398,13 +398,28 @@ export interface UserSubscription {
 
 /**
  * Get the active subscription for a user.
+ *
  * Returns the free plan if no active subscription exists.
+ *
+ * Honours the FAQ claim "Premium features stay active until the end of
+ * the current billing period" by also returning the paid plan for
+ * subscriptions whose status has flipped to 'canceled' but whose
+ * current_period_end is still in the future. Stripe's default cancel-
+ * at-period-end behaviour normally handles this (the 'deleted' webhook
+ * doesn't fire until period end), but this resilience covers the case
+ * where someone (operator, Stripe portal mis-config, future migration)
+ * cancels immediately — the customer keeps access through the period
+ * they paid for.
  */
 export async function getUserSubscription(userId: number): Promise<UserSubscription> {
   const { rows } = await pool.query(
     `SELECT plan, status, current_period_end, cancel_at_period_end
      FROM subscriptions
-     WHERE user_id = $1 AND status IN ('active', 'trialing', 'past_due')
+     WHERE user_id = $1
+       AND (
+         status IN ('active', 'trialing', 'past_due')
+         OR (status = 'canceled' AND current_period_end > NOW())
+       )
      ORDER BY created_at DESC
      LIMIT 1`,
     [userId],
