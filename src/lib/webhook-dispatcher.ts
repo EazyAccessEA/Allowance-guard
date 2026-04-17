@@ -8,6 +8,7 @@ import { createHmac, randomUUID } from 'crypto'
 import { pool } from '@/lib/db'
 import { secureLogger } from '@/lib/secure-logger'
 import { sendMail } from '@/lib/mailer'
+import { safeFetch } from '@/lib/safe-fetch'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -76,7 +77,12 @@ async function deliverToWebhook(
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS)
 
-    const res = await fetch(webhook.url, {
+    // SSRF-safe delivery: safeFetch pre-resolves DNS and rejects if
+    // the hostname resolves to a private/loopback/metadata address.
+    // Also disables redirect-following — a 30x response is returned
+    // to the caller (counted as failure below) instead of being
+    // followed into a potentially private target.
+    const result = await safeFetch(webhook.url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,6 +96,21 @@ async function deliverToWebhook(
 
     clearTimeout(timeout)
 
+    if (!result.ok) {
+      // SSRF guard rejection — log and treat as delivery failure.
+      // The customer's webhook should never resolve to a private
+      // address; if it does, either a misconfiguration or an attempt
+      // at SSRF.
+      secureLogger.warn('webhook.delivery.ssrf_reject', {
+        webhookId: webhook.id,
+        url: webhook.url,
+        reason: result.reason,
+        resolved: result.resolved,
+      })
+      return { success: false, responseBody: `SSRF guard: ${result.reason}` }
+    }
+
+    const res = result.response
     const responseBody = await res.text().catch(() => '')
     const success = res.status >= 200 && res.status < 300
 

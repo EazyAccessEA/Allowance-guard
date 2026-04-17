@@ -38,7 +38,7 @@ const PRIVATE_IPV4_RANGES: Array<[number, number, number, number]> = [
   // — covered explicitly below
 ]
 
-function isPrivateIpv4(ip: string): boolean {
+export function isPrivateIpv4(ip: string): boolean {
   const parts = ip.split('.').map(Number)
   if (parts.length !== 4 || parts.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) {
     return false // not a valid IPv4; let URL parsing reject elsewhere
@@ -67,7 +67,17 @@ function isPrivateIpv4(ip: string): boolean {
   return false
 }
 
-function isPrivateIpv6(host: string): boolean {
+/**
+ * Combined IPv4/IPv6 check. Used by safe-fetch.ts after DNS resolution
+ * to assert the resolved IP isn't private before opening the connection.
+ */
+export function isPrivateIp(ip: string): boolean {
+  if (/^\d+\.\d+\.\d+\.\d+$/.test(ip)) return isPrivateIpv4(ip)
+  if (ip.includes(':')) return isPrivateIpv6(ip)
+  return false // not a recognisable IP literal
+}
+
+export function isPrivateIpv6(host: string): boolean {
   // Strip brackets, normalise.
   const bare = host.startsWith('[') && host.endsWith(']') ? host.slice(1, -1).toLowerCase() : host.toLowerCase()
   // Loopback
