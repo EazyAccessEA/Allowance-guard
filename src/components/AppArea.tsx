@@ -8,45 +8,45 @@ import { Input } from '@/components/ui/Input'
 import SaveWalletButton from '@/components/SaveWalletButton'
 import dynamic from 'next/dynamic'
 import { 
-  DashboardSkeleton, 
-  StatsCard
+ DashboardSkeleton, 
+ StatsCard
 } from '@/components/EnhancedLoadingStates'
 
 // Dynamic imports for heavy components
 const WalletManager = dynamic(() => import('@/components/WalletManager'), {
-  loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
+ loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
 })
 
 const AllowanceTable = dynamic(() => import('@/components/AllowanceTable'), {
-  loading: () => <div className="animate-pulse bg-paper-sub rounded h-64 w-full" />
+ loading: () => <div className="animate-pulse bg-paper-sub rounded h-64 w-full" />
 })
 
 const WalletSecurity = dynamic(() => import('@/components/WalletSecurity'), {
-  loading: () => <div className="animate-pulse bg-paper-sub rounded h-48 w-full" />
+ loading: () => <div className="animate-pulse bg-paper-sub rounded h-48 w-full" />
 })
 
 const BulkRevokePanel = dynamic(() => import('@/components/BulkRevokePanel'), {
-  loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
+ loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
 })
 
 const Permit2Panel = dynamic(() => import('@/components/Permit2Panel'), {
-  loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
+ loading: () => <div className="animate-pulse bg-paper-sub rounded h-32 w-full" />
 })
 
 const DataVisualizationDashboard = dynamic(() => import('@/components/DataVisualizationDashboard').then(mod => ({ default: mod.DataVisualizationDashboard })), {
-  loading: () => <div className="animate-pulse bg-paper-sub rounded h-96 w-full" />
+ loading: () => <div className="animate-pulse bg-paper-sub rounded h-96 w-full" />
 })
 import { useState, useEffect, useCallback } from 'react'
 import {
-  Shield,
-  Eye,
-  Download,
-  FileText,
-  Settings,
-  AlertTriangle,
-  CheckCircle,
-  RefreshCw,
-  LogOut
+ Shield,
+ Eye,
+ Download,
+ FileText,
+ Settings,
+ AlertTriangle,
+ CheckCircle,
+ RefreshCw,
+ LogOut
 } from 'lucide-react'
 import { useDisconnect } from 'wagmi'
 import PlanBadge from '@/components/PlanBadge'
@@ -55,469 +55,469 @@ import UpgradeModal from '@/components/UpgradeModal'
 import { useUserPlan } from '@/hooks/useUserPlan'
 
 interface AppAreaProps {
-  isConnected: boolean
-  selectedWallet: string | null
-  setSelectedWallet: (wallet: string | null) => void
-  rows: {
-    chain_id: number
-    token_address: string
-    spender_address: string
-    standard: string
-    allowance_type: string
-    amount: string
-    is_unlimited: boolean
-    last_seen_block: string
-    risk_score: number
-    risk_flags: string[]
-  }[]
-  total: number
-  page: number
-  pageSize: number
-  onPage: (page: number) => void
-  onPageSize: (pageSize: number) => void
-  onRefresh: () => Promise<void>
-  connectedAddress: string | undefined
-  canRevoke?: boolean
-  loading?: boolean
+ isConnected: boolean
+ selectedWallet: string | null
+ setSelectedWallet: (wallet: string | null) => void
+ rows: {
+ chain_id: number
+ token_address: string
+ spender_address: string
+ standard: string
+ allowance_type: string
+ amount: string
+ is_unlimited: boolean
+ last_seen_block: string
+ risk_score: number
+ risk_flags: string[]
+ }[]
+ total: number
+ page: number
+ pageSize: number
+ onPage: (page: number) => void
+ onPageSize: (pageSize: number) => void
+ onRefresh: () => Promise<void>
+ connectedAddress: string | undefined
+ canRevoke?: boolean
+ loading?: boolean
 }
 
 export default function AppArea({
-  isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress, canRevoke = true, loading = false
+ isConnected, selectedWallet, setSelectedWallet, rows, total, page, pageSize, onPage, onPageSize, onRefresh, connectedAddress, canRevoke = true, loading = false
 }: AppAreaProps) {
-  const { disconnect } = useDisconnect()
-  const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
-  const [monitorFreq, setMonitorFreq] = useState(720)
-  const [activeTab, setActiveTab] = useState<'allowances' | 'security' | 'analytics'>('allowances')
-  const [selectedRows, setSelectedRows] = useState<typeof rows>([])
-  const [isDisconnecting, setIsDisconnecting] = useState(false)
-  const { plan: userPlan } = useUserPlan()
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+ const { disconnect } = useDisconnect()
+ const [monitorOn, setMonitorOn] = useState<boolean | null>(null)
+ const [monitorFreq, setMonitorFreq] = useState(720)
+ const [activeTab, setActiveTab] = useState<'allowances' | 'security' | 'analytics'>('allowances')
+ const [selectedRows, setSelectedRows] = useState<typeof rows>([])
+ const [isDisconnecting, setIsDisconnecting] = useState(false)
+ const { plan: userPlan } = useUserPlan()
+ const [showUpgradeModal, setShowUpgradeModal] = useState(false)
 
-  const loadMonitor = useCallback(async () => {
-    const target = selectedWallet || connectedAddress
-    if (!target) return
-    const r = await fetch(`/api/monitor?wallet=${target}`)
-    const j = await r.json()
-    if (j.monitor) { setMonitorOn(j.monitor.enabled); setMonitorFreq(j.monitor.freq_minutes) }
-  }, [selectedWallet, connectedAddress])
-  
-  useEffect(() => { loadMonitor() }, [loadMonitor])
+ const loadMonitor = useCallback(async () => {
+ const target = selectedWallet || connectedAddress
+ if (!target) return
+ const r = await fetch(`/api/monitor?wallet=${target}`)
+ const j = await r.json()
+ if (j.monitor) { setMonitorOn(j.monitor.enabled); setMonitorFreq(j.monitor.freq_minutes) }
+ }, [selectedWallet, connectedAddress])
+ 
+ useEffect(() => { loadMonitor() }, [loadMonitor])
 
-  const handleDisconnect = async () => {
-    try {
-      setIsDisconnecting(true)
-      await disconnect()
-      setSelectedWallet(null) // Clear selected wallet
-    } catch (error) {
-      console.warn('Disconnect failed:', error)
-    } finally {
-      setIsDisconnecting(false)
-    }
-  }
+ const handleDisconnect = async () => {
+ try {
+ setIsDisconnecting(true)
+ await disconnect()
+ setSelectedWallet(null) // Clear selected wallet
+ } catch (error) {
+ console.warn('Disconnect failed:', error)
+ } finally {
+ setIsDisconnecting(false)
+ }
+ }
 
-  async function saveMonitor() {
-    const target = selectedWallet || connectedAddress
-    if (!target) return alert('Select or connect a wallet first')
-    await fetch('/api/monitor', {
-      method:'POST', headers:{'content-type':'application/json'},
-      body: JSON.stringify({ wallet: target, enabled: monitorOn ?? true, freq_minutes: monitorFreq })
-    })
-  }
+ async function saveMonitor() {
+ const target = selectedWallet || connectedAddress
+ if (!target) return alert('Select or connect a wallet first')
+ await fetch('/api/monitor', {
+ method:'POST', headers:{'content-type':'application/json'},
+ body: JSON.stringify({ wallet: target, enabled: monitorOn ?? true, freq_minutes: monitorFreq })
+ })
+ }
 
-  if (!isConnected) return null
+ if (!isConnected) return null
 
-  const currentWallet = selectedWallet || connectedAddress
-  const riskyCount = rows.filter(r => r.is_unlimited || (r.risk_flags||[]).includes('STALE')).length
-  const unlimitedCount = rows.filter(r => r.is_unlimited).length
+ const currentWallet = selectedWallet || connectedAddress
+ const riskyCount = rows.filter(r => r.is_unlimited || (r.risk_flags||[]).includes('STALE')).length
+ const unlimitedCount = rows.filter(r => r.is_unlimited).length
 
-  // Show loading state
-  if (loading) {
-    return (
-      <Section className="bg-paper-sub">
-        <Container>
-          <DashboardSkeleton />
-        </Container>
-      </Section>
-    )
-  }
+ // Show loading state
+ if (loading) {
+ return (
+ <Section className="bg-paper-sub">
+ <Container>
+ <DashboardSkeleton />
+ </Container>
+ </Section>
+ )
+ }
 
-  return (
-    <Section className="bg-paper-sub">
-      <Container>
-        {/* Dashboard Header */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-            <div>
-              <div className="flex items-center gap-3">
-                <h2 className="mobbin-heading-1 text-ink mb-2">Security Dashboard</h2>
-                <PlanBadge plan={userPlan} size="sm" />
-              </div>
-              <p className="mobbin-body text-ink-muted">Monitor and manage your wallet&apos;s token approvals</p>
-            </div>
-            <div className="flex flex-wrap gap-2 items-start">
-              {currentWallet && (
-                <SaveWalletButton
-                  walletAddress={currentWallet}
-                  variant="subtle"
-                />
-              )}
-              <Button
-                onClick={onRefresh}
-                variant="secondary"
-                size="sm"
-                className="flex items-center gap-2 w-full sm:w-auto"
-              >
-                <RefreshCw className="w-4 h-4" />
-                Refresh
-              </Button>
-              <Button
-                onClick={handleDisconnect}
-                variant="ghost"
-                size="sm"
-                loading={isDisconnecting}
-                className="flex items-center gap-2 text-crimson-paper hover:text-crimson-paper hover:bg-paper-sub w-full sm:w-auto"
-              >
-                <LogOut className="w-4 h-4" />
-                {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
-              </Button>
-            </div>
-          </div>
+ return (
+ <Section className="bg-paper-sub">
+ <Container>
+ {/* Dashboard Header */}
+ <div className="mb-8">
+ <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+ <div>
+ <div className="flex items-center gap-3">
+ <h2 className="mobbin-heading-1 text-ink mb-2">Security Dashboard</h2>
+ <PlanBadge plan={userPlan} size="sm" />
+ </div>
+ <p className="mobbin-body text-ink-muted">Monitor and manage your wallet&apos;s token approvals</p>
+ </div>
+ <div className="flex flex-wrap gap-2 items-start">
+ {currentWallet && (
+ <SaveWalletButton
+ walletAddress={currentWallet}
+ variant="subtle"
+ />
+ )}
+ <Button
+ onClick={onRefresh}
+ variant="secondary"
+ size="sm"
+ className="flex items-center gap-2 w-full sm:w-auto"
+ >
+ <RefreshCw className="w-4 h-4" />
+ Refresh
+ </Button>
+ <Button
+ onClick={handleDisconnect}
+ variant="ghost"
+ size="sm"
+ loading={isDisconnecting}
+ className="flex items-center gap-2 text-crimson-paper hover:text-crimson-paper hover:bg-paper-sub w-full sm:w-auto"
+ >
+ <LogOut className="w-4 h-4" />
+ {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
+ </Button>
+ </div>
+ </div>
 
-          {/* Quick Stats - Mobile Optimized */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-            <StatsCard
-              title="Total Allowances"
-              value={total}
-              icon={<Shield className="w-5 h-5 text-amber-deep" />}
-              loading={loading}
-            />
-            <StatsCard
-              title="High Risk"
-              value={riskyCount}
-              icon={<AlertTriangle className="w-5 h-5 text-crimson-paper" />}
-              loading={loading}
-            />
-            <StatsCard
-              title="Unlimited"
-              value={unlimitedCount}
-              icon={<AlertTriangle className="w-5 h-5 text-semantic-warning-700" />}
-              loading={loading}
-            />
-            <StatsCard
-              title="Safe"
-              value={total - riskyCount}
-              icon={<CheckCircle className="w-5 h-5 text-semantic-success-700" />}
-              loading={loading}
-            />
-          </div>
-        </div>
+ {/* Quick Stats - Mobile Optimized */}
+ <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+ <StatsCard
+ title="Total Allowances"
+ value={total}
+ icon={<Shield className="w-5 h-5 text-amber-deep" />}
+ loading={loading}
+ />
+ <StatsCard
+ title="High Risk"
+ value={riskyCount}
+ icon={<AlertTriangle className="w-5 h-5 text-crimson-paper" />}
+ loading={loading}
+ />
+ <StatsCard
+ title="Unlimited"
+ value={unlimitedCount}
+ icon={<AlertTriangle className="w-5 h-5 text-semantic-warning-700" />}
+ loading={loading}
+ />
+ <StatsCard
+ title="Safe"
+ value={total - riskyCount}
+ icon={<CheckCircle className="w-5 h-5 text-semantic-success-700" />}
+ loading={loading}
+ />
+ </div>
+ </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Sidebar */}
-          <aside className="lg:col-span-4 space-y-6">
-            {/* Wallet Manager */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 mobbin-heading-4">
-                  <Settings className="w-5 h-5" />
-                  Wallet Management
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="mobbin-body-small text-ink-muted mb-4">
-                  Manage addresses you want to scan and monitor.
-                </p>
-                <WalletManager
-                  selected={selectedWallet}
-                  onSelect={setSelectedWallet}
-                  onSavedChange={() => {}}
-                />
-              </CardContent>
-            </Card>
+ <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+ {/* Sidebar */}
+ <aside className="lg:col-span-4 space-y-6">
+ {/* Wallet Manager */}
+ <Card>
+ <CardHeader>
+ <CardTitle className="flex items-center gap-2 mobbin-heading-4">
+ <Settings className="w-5 h-5" />
+ Wallet Management
+ </CardTitle>
+ </CardHeader>
+ <CardContent>
+ <p className="mobbin-body-small text-ink-muted mb-4">
+ Manage addresses you want to scan and monitor.
+ </p>
+ <WalletManager
+ selected={selectedWallet}
+ onSelect={setSelectedWallet}
+ onSavedChange={() => {}}
+ />
+ </CardContent>
+ </Card>
 
-            {/* Monitoring Settings */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 mobbin-heading-4">
-                  <Eye className="w-5 h-5" />
-                  Monitoring
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <input 
-                    type="checkbox" 
-                    checked={!!monitorOn} 
-                    onChange={e=>setMonitorOn(e.target.checked)} 
-                    className="rounded border-ink-rule text-amber-deep focus:ring-amber-deep"
-                  />
-                  <label className="mobbin-body-small font-medium text-ink">
-                    Enable auto-rescan & drift alerts
-                  </label>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <span className="mobbin-body-small text-ink-muted">Every</span>
-                  <Input
-                    type="number"
-                    value={monitorFreq}
-                    onChange={e => setMonitorFreq(Number(e.target.value) || 720)}
-                    className="w-20 h-8"
-                    inputSize="sm"
-                  />
-                  <span className="mobbin-body-small text-ink-muted">minutes</span>
-                </div>
-                
-                <Button 
-                  onClick={saveMonitor}
-                  variant="secondary"
-                  size="sm"
-                  className="w-full"
-                >
-                  Save Settings
-                </Button>
-              </CardContent>
-            </Card>
+ {/* Monitoring Settings */}
+ <Card>
+ <CardHeader>
+ <CardTitle className="flex items-center gap-2 mobbin-heading-4">
+ <Eye className="w-5 h-5" />
+ Monitoring
+ </CardTitle>
+ </CardHeader>
+ <CardContent className="space-y-4">
+ <div className="flex items-center gap-3">
+ <input 
+ type="checkbox" 
+ checked={!!monitorOn} 
+ onChange={e=>setMonitorOn(e.target.checked)} 
+ className="rounded border-ink-rule text-amber-deep focus:ring-amber-deep"
+ />
+ <label className="mobbin-body-small font-medium text-ink">
+ Enable auto-rescan & drift alerts
+ </label>
+ </div>
+ 
+ <div className="flex items-center gap-2">
+ <span className="mobbin-body-small text-ink-muted">Every</span>
+ <Input
+ type="number"
+ value={monitorFreq}
+ onChange={e => setMonitorFreq(Number(e.target.value) || 720)}
+ className="w-20 h-8"
+ inputSize="sm"
+ />
+ <span className="mobbin-body-small text-ink-muted">minutes</span>
+ </div>
+ 
+ <Button 
+ onClick={saveMonitor}
+ variant="secondary"
+ size="sm"
+ className="w-full"
+ >
+ Save Settings
+ </Button>
+ </CardContent>
+ </Card>
 
-            {/* Pro Nudge for free users */}
-            {userPlan === 'free' && (
-              <ProNudge variant="monitoring" />
-            )}
+ {/* Pro Nudge for free users */}
+ {userPlan === 'free' && (
+ <ProNudge variant="monitoring" />
+ )}
 
-            {/* Security Tips */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 mobbin-heading-4">
-                  <Shield className="w-5 h-5" />
-                  Security Tips
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-semantic-error-500 rounded-full mt-2 flex-shrink-0" />
-                    <p className="mobbin-body-small text-ink-muted">
-                      <strong>Unlimited approvals</strong> are the #1 drain vector. Revoke them first.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-semantic-warning-500 rounded-full mt-2 flex-shrink-0" />
-                    <p className="mobbin-body-small text-ink-muted">
-                      <strong>Stale approvals</strong> to inactive contracts should be cleaned up.
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-semantic-info-500 rounded-full mt-2 flex-shrink-0" />
-                    <p className="mobbin-body-small text-ink-muted">
-                      <strong>Regular monitoring</strong> helps catch new approvals quickly.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </aside>
+ {/* Security Tips */}
+ <Card>
+ <CardHeader>
+ <CardTitle className="flex items-center gap-2 mobbin-heading-4">
+ <Shield className="w-5 h-5" />
+ Security Tips
+ </CardTitle>
+ </CardHeader>
+ <CardContent>
+ <div className="space-y-4">
+ <div className="flex items-start gap-3">
+ <div className="w-2 h-2 bg-semantic-error-500 rounded-full mt-2 flex-shrink-0" />
+ <p className="mobbin-body-small text-ink-muted">
+ <strong>Unlimited approvals</strong> are the #1 drain vector. Revoke them first.
+ </p>
+ </div>
+ <div className="flex items-start gap-3">
+ <div className="w-2 h-2 bg-semantic-warning-500 rounded-full mt-2 flex-shrink-0" />
+ <p className="mobbin-body-small text-ink-muted">
+ <strong>Stale approvals</strong> to inactive contracts should be cleaned up.
+ </p>
+ </div>
+ <div className="flex items-start gap-3">
+ <div className="w-2 h-2 bg-semantic-info-500 rounded-full mt-2 flex-shrink-0" />
+ <p className="mobbin-body-small text-ink-muted">
+ <strong>Regular monitoring</strong> helps catch new approvals quickly.
+ </p>
+ </div>
+ </div>
+ </CardContent>
+ </Card>
+ </aside>
 
-          {/* Main Content */}
-          <main className="lg:col-span-8">
-            {/* Tab Navigation */}
-            <div className="mb-8">
-              <nav className="flex space-x-1 bg-paper-sub p-1 rounded-lg border border-ink-rule overflow-x-auto">
-                <button
-                  onClick={() => setActiveTab('allowances')}
-                  className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
-                    activeTab === 'allowances'
-                      ? 'bg-paper text-amber-deep shadow-sm border border-primary-200'
-                      : 'text-ink-muted hover:text-ink hover:bg-paper'
-                  }`}
-                >
-                  <span className="hidden sm:inline">Token </span>Allowances
-                </button>
-                <button
-                  onClick={() => setActiveTab('security')}
-                  className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
-                    activeTab === 'security'
-                      ? 'bg-paper text-amber-deep shadow-sm border border-primary-200'
-                      : 'text-ink-muted hover:text-ink hover:bg-paper'
-                  }`}
-                >
-                  Security
-                </button>
-                <button
-                  onClick={() => setActiveTab('analytics')}
-                  className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
-                    activeTab === 'analytics'
-                      ? 'bg-paper text-amber-deep shadow-sm border border-primary-200'
-                      : 'text-ink-muted hover:text-ink hover:bg-paper'
-                  }`}
-                >
-                  Analytics
-                </button>
-              </nav>
-            </div>
+ {/* Main Content */}
+ <main className="lg:col-span-8">
+ {/* Tab Navigation */}
+ <div className="mb-8">
+ <nav className="flex space-x-1 bg-paper-sub p-1 rounded-lg border border-ink-rule overflow-x-auto">
+ <button
+ onClick={() => setActiveTab('allowances')}
+ className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
+ activeTab === 'allowances'
+ ? 'bg-paper text-amber-deep shadow-sm border border-amber-deep/40'
+ : 'text-ink-muted hover:text-ink hover:bg-paper'
+ }`}
+ >
+ <span className="hidden sm:inline">Token </span>Allowances
+ </button>
+ <button
+ onClick={() => setActiveTab('security')}
+ className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
+ activeTab === 'security'
+ ? 'bg-paper text-amber-deep shadow-sm border border-amber-deep/40'
+ : 'text-ink-muted hover:text-ink hover:bg-paper'
+ }`}
+ >
+ Security
+ </button>
+ <button
+ onClick={() => setActiveTab('analytics')}
+ className={`flex-1 min-w-0 py-3 px-3 sm:px-4 mobbin-body-small font-medium rounded-md transition-all duration-150 whitespace-nowrap min-h-[44px] ${
+ activeTab === 'analytics'
+ ? 'bg-paper text-amber-deep shadow-sm border border-amber-deep/40'
+ : 'text-ink-muted hover:text-ink hover:bg-paper'
+ }`}
+ >
+ Analytics
+ </button>
+ </nav>
+ </div>
 
-            {/* Tab Content */}
-            {activeTab === 'allowances' && (
-              <div className="space-y-6">
-                {/* Bulk Revoke Panel */}
-                <BulkRevokePanel
-                  data={rows}
-                  selectedRows={selectedRows}
-                  onSelectionChange={setSelectedRows}
-                  onRefresh={onRefresh}
-                  selectedWallet={selectedWallet}
-                  connectedAddress={connectedAddress}
-                  canRevoke={canRevoke}
-                />
+ {/* Tab Content */}
+ {activeTab === 'allowances' && (
+ <div className="space-y-6">
+ {/* Bulk Revoke Panel */}
+ <BulkRevokePanel
+ data={rows}
+ selectedRows={selectedRows}
+ onSelectionChange={setSelectedRows}
+ onRefresh={onRefresh}
+ selectedWallet={selectedWallet}
+ connectedAddress={connectedAddress}
+ canRevoke={canRevoke}
+ />
 
-                {/* Permit2 Approvals Scanner */}
-                <Permit2Panel
-                  walletAddress={selectedWallet}
-                  connectedAddress={connectedAddress}
-                />
+ {/* Permit2 Approvals Scanner */}
+ <Permit2Panel
+ walletAddress={selectedWallet}
+ connectedAddress={connectedAddress}
+ />
 
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="mobbin-heading-3">Token Approvals</CardTitle>
-                        <p className="mobbin-body-small text-ink-muted mt-2">
-                          Review and manage your token allowances across all chains.
-                        </p>
-                      </div>
-                      {currentWallet && (
-                        userPlan === 'free' ? (
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              className="flex items-center gap-2"
-                              onClick={() => setShowUpgradeModal(true)}
-                            >
-                              <Download className="w-4 h-4" />
-                              CSV
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              className="flex items-center gap-2"
-                              onClick={() => setShowUpgradeModal(true)}
-                            >
-                              <FileText className="w-4 h-4" />
-                              PDF
-                            </Button>
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              className="flex items-center gap-2"
-                              onClick={() => window.open(`/api/export/csv?wallet=${currentWallet}&riskOnly=true`, '_blank')}
-                            >
-                              <Download className="w-4 h-4" />
-                              CSV
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              className="flex items-center gap-2"
-                              onClick={() => window.open(`/api/export/pdf?wallet=${currentWallet}&riskOnly=true`, '_blank')}
-                            >
-                              <FileText className="w-4 h-4" />
-                              PDF
-                            </Button>
-                            <Button
-                              variant="secondary"
-                              size="sm"
-                              className="flex items-center gap-2"
-                              onClick={() => window.open(`/report/${currentWallet}`, '_blank')}
-                            >
-                              <Eye className="w-4 h-4" />
-                              Report
-                            </Button>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <AllowanceTable
-                      data={rows}
-                      selectedWallet={selectedWallet}
-                      connectedAddress={connectedAddress}
-                      onRefresh={onRefresh}
-                      canRevoke={canRevoke}
-                    />
-                  
-                  {/* Pagination */}
-                  {total > 0 && (
-                    <div className="mt-8 pt-6 border-t border-ink-rule flex items-center justify-between">
-                      <div className="mobbin-body-small text-ink-muted">
-                        Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Button
-                          onClick={() => onPage(page - 1)}
-                          disabled={page <= 1}
-                          variant="ghost"
-                          size="sm"
-                        >
-                          Previous
-                        </Button>
-                        <Button
-                          onClick={() => onPage(page + 1)}
-                          disabled={page >= Math.ceil(total / pageSize)}
-                          variant="ghost"
-                          size="sm"
-                        >
-                          Next
-                        </Button>
-                        <select
-                          value={pageSize}
-                          onChange={(e) => onPageSize(Number(e.target.value))}
-                          className="border border-ink-rule rounded-md px-3 py-1 mobbin-body-small focus:outline-none focus:ring-2 focus:ring-primary-500/20"
-                        >
-                          {[10,25,50,100].map(n => <option key={n} value={n}>{n}/page</option>)}
-                        </select>
-                      </div>
-                    </div>
-                  )}
-                  </CardContent>
-                </Card>
-              </div>
-            )}
+ <Card>
+ <CardHeader>
+ <div className="flex items-center justify-between">
+ <div>
+ <CardTitle className="mobbin-heading-3">Token Approvals</CardTitle>
+ <p className="mobbin-body-small text-ink-muted mt-2">
+ Review and manage your token allowances across all chains.
+ </p>
+ </div>
+ {currentWallet && (
+ userPlan === 'free' ? (
+ <div className="flex items-center gap-2">
+ <Button
+ variant="secondary"
+ size="sm"
+ className="flex items-center gap-2"
+ onClick={() => setShowUpgradeModal(true)}
+ >
+ <Download className="w-4 h-4" />
+ CSV
+ </Button>
+ <Button
+ variant="secondary"
+ size="sm"
+ className="flex items-center gap-2"
+ onClick={() => setShowUpgradeModal(true)}
+ >
+ <FileText className="w-4 h-4" />
+ PDF
+ </Button>
+ </div>
+ ) : (
+ <div className="flex items-center gap-2">
+ <Button
+ variant="secondary"
+ size="sm"
+ className="flex items-center gap-2"
+ onClick={() => window.open(`/api/export/csv?wallet=${currentWallet}&riskOnly=true`, '_blank')}
+ >
+ <Download className="w-4 h-4" />
+ CSV
+ </Button>
+ <Button
+ variant="secondary"
+ size="sm"
+ className="flex items-center gap-2"
+ onClick={() => window.open(`/api/export/pdf?wallet=${currentWallet}&riskOnly=true`, '_blank')}
+ >
+ <FileText className="w-4 h-4" />
+ PDF
+ </Button>
+ <Button
+ variant="secondary"
+ size="sm"
+ className="flex items-center gap-2"
+ onClick={() => window.open(`/report/${currentWallet}`, '_blank')}
+ >
+ <Eye className="w-4 h-4" />
+ Report
+ </Button>
+ </div>
+ )
+ )}
+ </div>
+ </CardHeader>
+ <CardContent>
+ <AllowanceTable
+ data={rows}
+ selectedWallet={selectedWallet}
+ connectedAddress={connectedAddress}
+ onRefresh={onRefresh}
+ canRevoke={canRevoke}
+ />
+ 
+ {/* Pagination */}
+ {total > 0 && (
+ <div className="mt-8 pt-6 border-t border-ink-rule flex items-center justify-between">
+ <div className="mobbin-body-small text-ink-muted">
+ Page {page} of {Math.max(1, Math.ceil(total / pageSize))}
+ </div>
+ <div className="flex items-center gap-3">
+ <Button
+ onClick={() => onPage(page - 1)}
+ disabled={page <= 1}
+ variant="ghost"
+ size="sm"
+ >
+ Previous
+ </Button>
+ <Button
+ onClick={() => onPage(page + 1)}
+ disabled={page >= Math.ceil(total / pageSize)}
+ variant="ghost"
+ size="sm"
+ >
+ Next
+ </Button>
+ <select
+ value={pageSize}
+ onChange={(e) => onPageSize(Number(e.target.value))}
+ className="border border-ink-rule rounded-md px-3 py-1 mobbin-body-small focus:outline-none focus:ring-2 focus:ring-amber-deep0/20"
+ >
+ {[10,25,50,100].map(n => <option key={n} value={n}>{n}/page</option>)}
+ </select>
+ </div>
+ </div>
+ )}
+ </CardContent>
+ </Card>
+ </div>
+ )}
 
-            {activeTab === 'security' && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="mobbin-heading-3">Security Dashboard</CardTitle>
-                  <p className="mobbin-body-small text-ink-muted mt-2">
-                    Comprehensive security analysis and monitoring for your wallet.
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <WalletSecurity />
-                </CardContent>
-              </Card>
-            )}
+ {activeTab === 'security' && (
+ <Card>
+ <CardHeader>
+ <CardTitle className="mobbin-heading-3">Security Dashboard</CardTitle>
+ <p className="mobbin-body-small text-ink-muted mt-2">
+ Comprehensive security analysis and monitoring for your wallet.
+ </p>
+ </CardHeader>
+ <CardContent>
+ <WalletSecurity />
+ </CardContent>
+ </Card>
+ )}
 
-            {activeTab === 'analytics' && (
-              <DataVisualizationDashboard 
-                data={rows}
-                loading={loading}
-                onRefresh={onRefresh}
-              />
-            )}
-          </main>
-        </div>
-      </Container>
+ {activeTab === 'analytics' && (
+ <DataVisualizationDashboard 
+ data={rows}
+ loading={loading}
+ onRefresh={onRefresh}
+ />
+ )}
+ </main>
+ </div>
+ </Container>
 
-      <UpgradeModal
-        isOpen={showUpgradeModal}
-        onClose={() => setShowUpgradeModal(false)}
-        feature="PDF & CSV Export"
-        requiredPlan="Pro"
-      />
-    </Section>
-  )
+ <UpgradeModal
+ isOpen={showUpgradeModal}
+ onClose={() => setShowUpgradeModal(false)}
+ feature="PDF & CSV Export"
+ requiredPlan="Pro"
+ />
+ </Section>
+ )
 }

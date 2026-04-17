@@ -41,14 +41,14 @@ export function DashboardSkeleton() {
             <Card key={i}>
               <CardHeader>
                 <div className="animate-pulse">
-                  <div className="h-5 bg-neutral-borders/30 rounded w-32" />
+                  <div className="h-5 bg-paper-deep rounded w-32" />
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="animate-pulse space-y-3">
-                  <div className="h-4 bg-neutral-borders/20 rounded w-full" />
-                  <div className="h-4 bg-neutral-borders/20 rounded w-3/4" />
-                  <div className="h-4 bg-neutral-borders/20 rounded w-1/2" />
+                  <div className="h-4 bg-paper-deep rounded w-full" />
+                  <div className="h-4 bg-paper-deep rounded w-3/4" />
+                  <div className="h-4 bg-paper-deep rounded w-1/2" />
                 </div>
               </CardContent>
             </Card>
@@ -60,16 +60,16 @@ export function DashboardSkeleton() {
           <Card>
             <CardHeader>
               <div className="animate-pulse">
-                <div className="h-6 bg-neutral-borders/30 rounded w-48 mb-2" />
-                <div className="h-4 bg-neutral-borders/20 rounded w-64" />
+                <div className="h-6 bg-paper-deep rounded w-48 mb-2" />
+                <div className="h-4 bg-paper-deep rounded w-64" />
               </div>
             </CardHeader>
             <CardContent>
               <div className="animate-pulse">
-                <div className="h-10 bg-neutral-borders/20 rounded-lg mb-4" />
+                <div className="h-10 bg-paper-deep rounded-lg mb-4" />
                 <div className="space-y-3">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <div key={i} className="h-16 bg-neutral-borders/20 rounded-lg" />
+                    <div key={i} className="h-16 bg-paper-deep rounded-lg" />
                   ))}
                 </div>
               </div>
@@ -90,22 +90,22 @@ export function MobileTableSkeleton({ rows = 5 }: { rows?: number }) {
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-neutral-borders/20 rounded-full" />
+                <div className="w-8 h-8 bg-paper-deep rounded-full" />
                 <div>
-                  <div className="h-4 bg-neutral-borders/30 rounded w-20 mb-1" />
-                  <div className="h-3 bg-neutral-borders/20 rounded w-16" />
+                  <div className="h-4 bg-paper-deep rounded w-20 mb-1" />
+                  <div className="h-3 bg-paper-deep rounded w-16" />
                 </div>
               </div>
-              <div className="h-6 bg-neutral-borders/20 rounded w-16" />
+              <div className="h-6 bg-paper-deep rounded w-16" />
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <div className="h-3 bg-neutral-borders/20 rounded w-12 mb-1" />
-                <div className="h-4 bg-neutral-borders/30 rounded w-24" />
+                <div className="h-3 bg-paper-deep rounded w-12 mb-1" />
+                <div className="h-4 bg-paper-deep rounded w-24" />
               </div>
               <div>
-                <div className="h-3 bg-neutral-borders/20 rounded w-16 mb-1" />
-                <div className="h-4 bg-neutral-borders/30 rounded w-20" />
+                <div className="h-3 bg-paper-deep rounded w-16 mb-1" />
+                <div className="h-4 bg-paper-deep rounded w-20" />
               </div>
             </div>
           </CardContent>
@@ -140,20 +140,20 @@ export function EnhancedLoadingOverlay({
       {children}
       <div className="absolute inset-0 bg-paper/90 backdrop-blur-sm flex items-center justify-center z-50">
         <div className="bg-paper-sub border border-secondary-borders rounded-lg p-6 shadow-large text-center max-w-sm mx-4">
-          <div className="w-12 h-12 bg-primary-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-12 h-12 bg-paper-sub border border-ink-rule rounded-full flex items-center justify-center mx-auto mb-4">
             <LoadingSpinner size="lg" color="cobalt" variant="hex" />
           </div>
-          <p className="text-neutral-text font-medium mb-2">{message}</p>
+          <p className="text-ink-muted font-medium mb-2">{message}</p>
           {showProgress && progress !== undefined && (
-            <div className="w-full bg-neutral-borders/20 rounded-full h-2 mb-2">
+            <div className="w-full bg-paper-deep rounded-full h-2 mb-2">
               <div 
-                className="bg-primary-accent h-2 rounded-full transition-all duration-300"
+                className="bg-amber-deep h-2 rounded-full transition-all duration-300"
                 style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
               />
             </div>
           )}
           {showProgress && progress !== undefined && (
-            <p className="text-sm text-neutral-text">{Math.round(progress)}%</p>
+            <p className="text-sm text-ink-muted">{Math.round(progress)}%</p>
           )}
         </div>
       </div>
@@ -191,9 +191,9 @@ export function LoadingButton({
         inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium
         transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
         disabled:pointer-events-none disabled:opacity-50
-        ${variant === 'primary' ? 'bg-primary-accent text-ink hover:bg-primary-accent/90' : ''}
-        ${variant === 'secondary' ? 'bg-paper-sub text-neutral-text border border-border-default hover:bg-paper-sub/80' : ''}
-        ${variant === 'ghost' ? 'hover:bg-paper-sub hover:text-neutral-text' : ''}
+        ${variant === 'primary' ? 'bg-amber-deep text-paper hover:bg-amber-deep/90' : ''}
+        ${variant === 'secondary' ? 'bg-paper-sub text-ink-muted border border-ink-rule hover:bg-paper-sub/80' : ''}
+        ${variant === 'ghost' ? 'hover:bg-paper-sub hover:text-ink-muted' : ''}
         ${size === 'sm' ? 'h-9 px-3' : size === 'lg' ? 'h-11 px-8' : 'h-10 px-4 py-2'}
         ${className}
       `}
@@ -280,7 +280,7 @@ export function ActionButtonsSkeleton() {
     <div className="flex flex-wrap gap-2">
       {Array.from({ length: 3 }).map((_, i) => (
         <div key={i} className="animate-pulse">
-          <div className="h-9 bg-neutral-borders/20 rounded-md w-20" />
+          <div className="h-9 bg-paper-deep rounded-md w-20" />
         </div>
       ))}
     </div>
@@ -292,17 +292,17 @@ export function PaginationSkeleton() {
   return (
     <div className="flex items-center justify-between">
       <div className="animate-pulse">
-        <div className="h-4 bg-neutral-borders/20 rounded w-24" />
+        <div className="h-4 bg-paper-deep rounded w-24" />
       </div>
       <div className="flex items-center gap-3">
         <div className="animate-pulse">
-          <div className="h-9 bg-neutral-borders/20 rounded-md w-16" />
+          <div className="h-9 bg-paper-deep rounded-md w-16" />
         </div>
         <div className="animate-pulse">
-          <div className="h-9 bg-neutral-borders/20 rounded-md w-16" />
+          <div className="h-9 bg-paper-deep rounded-md w-16" />
         </div>
         <div className="animate-pulse">
-          <div className="h-9 bg-neutral-borders/20 rounded-md w-20" />
+          <div className="h-9 bg-paper-deep rounded-md w-20" />
         </div>
       </div>
     </div>

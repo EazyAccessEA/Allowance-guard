@@ -84,24 +84,24 @@ export default function AuditDashboard() {
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'text-red-800 bg-red-50 dark:text-red-800 dark:bg-red-900/20'
-      case 'high': return 'text-orange-600 bg-orange-50 dark:text-orange-800 dark:bg-orange-900/20'
-      case 'medium': return 'text-yellow-600 bg-yellow-50 dark:text-yellow-800 dark:bg-yellow-900/20'
-      case 'low': return 'text-green-800 bg-green-50 dark:text-green-800 dark:bg-green-900/20'
-      default: return 'text-ink-muted bg-neutral-50 dark:text-ink-muted dark:bg-paper-sub'
+      case 'critical': return 'text-crimson-paper bg-paper-sub border border-crimson-paper/40'
+      case 'high': return 'text-semantic-warning-700 bg-paper-sub border border-semantic-warning-600/40'
+      case 'medium': return 'text-semantic-warning-700 bg-paper-sub border border-semantic-warning-600/30'
+      case 'low': return 'text-semantic-success-700 bg-paper-sub border border-semantic-success-600/40'
+      default: return 'text-ink-muted bg-paper-sub border border-ink-rule'
     }
   }
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'security': return 'text-red-800'
-      case 'authentication': return 'text-blue-600'
-      case 'authorization': return 'text-purple-600'
-      case 'data_access': return 'text-green-800'
-      case 'data_modification': return 'text-orange-600'
-      case 'system': return 'text-ink-muted dark:text-ink-muted'
-      case 'compliance': return 'text-indigo-600'
-      default: return 'text-ink-muted dark:text-ink-muted'
+      case 'security': return 'text-crimson-paper'
+      case 'authentication': return 'text-ink-blue'
+      case 'authorization': return 'text-amber-deep'
+      case 'data_access': return 'text-semantic-success-700'
+      case 'data_modification': return 'text-semantic-warning-700'
+      case 'system': return 'text-ink-muted'
+      case 'compliance': return 'text-ink-blue'
+      default: return 'text-ink-muted'
     }
   }
 
@@ -144,15 +144,15 @@ export default function AuditDashboard() {
             <div className="text-sm text-ink-muted">Total Events</div>
           </div>
           <div className="bg-paper-sub p-4 rounded-lg border border-ink-rule">
-            <div className="text-2xl font-bold text-red-800">{stats.eventsBySeverity.critical || 0}</div>
+            <div className="text-2xl font-bold text-crimson-paper">{stats.eventsBySeverity.critical || 0}</div>
             <div className="text-sm text-ink-muted">Critical Events</div>
           </div>
           <div className="bg-paper-sub p-4 rounded-lg border border-ink-rule">
-            <div className="text-2xl font-bold text-orange-600">{stats.eventsBySeverity.high || 0}</div>
+            <div className="text-2xl font-bold text-semantic-warning-700">{stats.eventsBySeverity.high || 0}</div>
             <div className="text-sm text-ink-muted">High Severity</div>
           </div>
           <div className="bg-paper-sub p-4 rounded-lg border border-ink-rule">
-            <div className="text-2xl font-bold text-blue-600">{stats.eventsByActorType.user || 0}</div>
+            <div className="text-2xl font-bold text-ink-blue">{stats.eventsByActorType.user || 0}</div>
             <div className="text-sm text-ink-muted">User Actions</div>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function AuditDashboard() {
             <select
               value={filters.actorType}
               onChange={(e) => setFilters({ ...filters, actorType: e.target.value })}
-              className="w-full border border-ink-rule dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-ink-rule rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="user">User</option>
@@ -180,7 +180,7 @@ export default function AuditDashboard() {
             <select
               value={filters.category}
               onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-              className="w-full border border-ink-rule dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-ink-rule rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="security">Security</option>
@@ -197,7 +197,7 @@ export default function AuditDashboard() {
             <select
               value={filters.severity}
               onChange={(e) => setFilters({ ...filters, severity: e.target.value })}
-              className="w-full border border-ink-rule dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-ink-rule rounded-md px-3 py-2 text-sm"
             >
               <option value="">All</option>
               <option value="critical">Critical</option>
@@ -213,7 +213,7 @@ export default function AuditDashboard() {
               value={filters.action}
               onChange={(e) => setFilters({ ...filters, action: e.target.value })}
               placeholder="Search actions..."
-              className="w-full border border-ink-rule dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-ink-rule rounded-md px-3 py-2 text-sm"
             />
           </div>
           <div>
@@ -221,7 +221,7 @@ export default function AuditDashboard() {
             <select
               value={filters.limit}
               onChange={(e) => setFilters({ ...filters, limit: parseInt(e.target.value) })}
-              className="w-full border border-ink-rule dark:border-secondary-600 rounded-md px-3 py-2 text-sm"
+              className="w-full border border-ink-rule rounded-md px-3 py-2 text-sm"
             >
               <option value={25}>25</option>
               <option value={50}>50</option>
@@ -238,8 +238,8 @@ export default function AuditDashboard() {
           <h2 className="text-lg font-medium text-ink">Recent Audit Logs</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-neutral-200 dark:divide-secondary-700">
-            <thead className="bg-neutral-50 dark:bg-paper-sub">
+          <table className="min-w-full divide-y divide-ink-rule">
+            <thead className="bg-paper-sub">
               <tr>
                 <th className="px-4 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">Time</th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">Actor</th>
@@ -250,9 +250,9 @@ export default function AuditDashboard() {
                 <th className="px-4 py-3 text-left text-xs font-medium text-ink-muted uppercase tracking-wider">Path</th>
               </tr>
             </thead>
-            <tbody className="bg-paper-sub divide-y divide-neutral-200 dark:divide-secondary-700">
+            <tbody className="bg-paper-sub divide-y divide-ink-rule">
               {logs.map((log) => (
-                <tr key={log.id} className="hover:bg-paper-sub dark:hover:bg-paper-sub">
+                <tr key={log.id} className="hover:bg-paper-sub">
                   <td className="px-4 py-3 text-sm text-ink">
                     {new Date(log.createdAt).toLocaleString()}
                   </td>
@@ -313,14 +313,14 @@ export default function AuditDashboard() {
           <button
             onClick={() => setFilters({ ...filters, offset: Math.max(0, filters.offset - filters.limit) })}
             disabled={filters.offset === 0}
-            className="px-3 py-1 text-sm border border-ink-rule dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 text-sm border border-ink-rule rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
           <button
             onClick={() => setFilters({ ...filters, offset: filters.offset + filters.limit })}
             disabled={logs.length < filters.limit}
-            className="px-3 py-1 text-sm border border-ink-rule dark:border-secondary-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-3 py-1 text-sm border border-ink-rule rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>

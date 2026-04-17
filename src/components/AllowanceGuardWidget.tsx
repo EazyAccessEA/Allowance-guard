@@ -60,38 +60,41 @@ export default function AllowanceGuardWidget({
   const displayedAllowances = showAll ? allowances : allowances.slice(0, maxItems)
   const hasMore = allowances.length > maxItems
 
+  // Semantic state ramp — AA on both paper-sub (light) and ink (dark)
+  // via the -600/700 steps. The widget is embedded in third-party apps
+  // so this is the one AG surface that legitimately supports two themes.
   const getRiskIcon = (riskLevel: number) => {
     switch (riskLevel) {
       case 1:
-        return <CheckCircle className="text-green-800" size={16} />
+        return <CheckCircle className="text-semantic-success-700" size={16} />
       case 2:
-        return <AlertTriangle className="text-yellow-800" size={16} />
+        return <AlertTriangle className="text-semantic-warning-700" size={16} />
       case 3:
-        return <AlertTriangle className="text-orange-800" size={16} />
+        return <AlertTriangle className="text-semantic-warning-700" size={16} />
       case 4:
-        return <Shield className="text-red-800" size={16} />
+        return <Shield className="text-crimson-paper" size={16} />
       default:
-        return <AlertTriangle className="text-gray-500" size={16} />
+        return <AlertTriangle className="text-ink-whisper" size={16} />
     }
   }
 
   const getRiskColor = (riskLevel: number) => {
     switch (riskLevel) {
       case 1:
-        return 'bg-green-100 text-green-800 border-green-200'
+        return 'bg-paper-sub text-semantic-success-700 border-semantic-success-600/40'
       case 2:
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200'
+        return 'bg-paper-sub text-semantic-warning-700 border-semantic-warning-600/40'
       case 3:
-        return 'bg-orange-100 text-orange-800 border-orange-200'
+        return 'bg-paper-sub text-semantic-warning-700 border-semantic-warning-600/40'
       case 4:
-        return 'bg-red-100 text-red-800 border-red-200'
+        return 'bg-paper-sub text-crimson-paper border-crimson-paper/40'
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200'
+        return 'bg-paper-sub text-ink-muted border-ink-rule'
     }
   }
 
-  const themeClasses = currentTheme === 'dark' 
-    ? 'bg-gray-900 text-ink border-gray-700' 
+  const themeClasses = currentTheme === 'dark'
+    ? 'bg-ink text-paper border-ink/60'
     : 'bg-paper-sub text-ink border-ink-rule'
 
   if (error) {
@@ -99,16 +102,16 @@ export default function AllowanceGuardWidget({
       <div className={`${themeClasses} border rounded-lg p-4 ${className}`}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <Shield className="text-red-800" size={20} />
+            <Shield className="text-crimson-paper" size={20} />
             <h3 className="font-semibold">AllowanceGuard</h3>
           </div>
         </div>
-        <div className="text-red-800 text-sm">
+        <div className="text-crimson-paper text-sm">
           Error loading allowances: {error}
         </div>
         <button
           onClick={refetch}
-          className="mt-3 px-3 py-1 bg-blue-500 text-ink rounded text-sm hover:bg-blue-600 transition-colors"
+          className="mt-3 px-3 py-1 bg-amber-deep text-paper rounded text-sm hover:bg-amber-deep/90 transition-colors"
         >
           Retry
         </button>
@@ -121,13 +124,15 @@ export default function AllowanceGuardWidget({
       {showHeader && (
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <Shield className="text-blue-800" size={20} />
+            <Shield className="text-amber-deep" size={20} />
             <h3 className="font-semibold">AllowanceGuard</h3>
-            {loading && <RefreshCw className="animate-spin text-gray-500" size={16} />}
+            {loading && <RefreshCw className="animate-spin text-ink-whisper" size={16} />}
           </div>
           <button
             onClick={refetch}
-            className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+            className={`p-1 rounded transition-colors ${
+              currentTheme === 'dark' ? 'hover:bg-paper/10' : 'hover:bg-paper-deep'
+            }`}
             title="Refresh"
           >
             <RefreshCw size={16} />
@@ -140,12 +145,12 @@ export default function AllowanceGuardWidget({
           {[...Array(3)].map((_, i) => (
             <div key={i} className="animate-pulse">
               <div className="flex items-center space-x-3">
-                <div className="w-4 h-4 bg-gray-300 rounded"></div>
+                <div className="w-4 h-4 bg-paper-deep rounded"></div>
                 <div className="flex-1">
-                  <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-                  <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                  <div className="h-4 bg-paper-deep rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-paper-deep rounded w-1/2"></div>
                 </div>
-                <div className="w-16 h-6 bg-gray-300 rounded"></div>
+                <div className="w-16 h-6 bg-paper-deep rounded"></div>
               </div>
             </div>
           ))}
@@ -154,8 +159,8 @@ export default function AllowanceGuardWidget({
         <>
           {displayedAllowances.length === 0 ? (
             <div className="text-center py-6">
-              <Shield className="mx-auto text-gray-400 mb-2" size={32} />
-              <p className="text-gray-500 text-sm">
+              <Shield className="mx-auto text-ink-whisper mb-2" size={32} />
+              <p className="text-ink-muted text-sm">
                 {showRiskOnly ? 'No risky allowances found' : 'No allowances found'}
               </p>
             </div>
@@ -163,17 +168,19 @@ export default function AllowanceGuardWidget({
             <div className="space-y-3">
               {displayedAllowances.map((allowance, index) => {
                 // Get risk info without using hook inside callback
-                const riskInfo = allowance.riskLevel >= 7 
-                  ? { color: 'text-red-800', bgColor: 'bg-red-50', label: 'High Risk' }
+                const riskInfo = allowance.riskLevel >= 7
+                  ? { label: 'High Risk' }
                   : allowance.riskLevel >= 4
-                  ? { color: 'text-yellow-600', bgColor: 'bg-yellow-50', label: 'Medium Risk' }
-                  : { color: 'text-green-800', bgColor: 'bg-green-50', label: 'Low Risk' }
-                
+                  ? { label: 'Medium Risk' }
+                  : { label: 'Low Risk' }
+
                 return (
                   <div
                     key={allowance.id || index}
                     className={`p-3 rounded-lg border cursor-pointer hover:shadow-sm transition-all ${
-                      currentTheme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-50 border-gray-200'
+                      currentTheme === 'dark'
+                        ? 'bg-paper/5 border-paper/10'
+                        : 'bg-paper border-ink-rule'
                     }`}
                     onClick={() => onAllowanceClick?.(allowance)}
                   >
@@ -185,10 +192,10 @@ export default function AllowanceGuardWidget({
                             {allowance.tokenName || allowance.tokenSymbol}
                           </span>
                         </div>
-                        <p className="text-xs text-gray-500 truncate">
+                        <p className="text-xs text-ink-muted truncate">
                           Spender: {allowance.spenderName || allowance.spenderAddress}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-ink-muted">
                           Amount: {formatAllowance(allowance.allowance)}
                         </p>
                       </div>
@@ -202,7 +209,7 @@ export default function AllowanceGuardWidget({
                               e.stopPropagation()
                               window.open('https://www.allowanceguard.com', '_blank')
                             }}
-                            className="flex items-center space-x-1 text-xs text-blue-800 hover:text-blue-600"
+                            className="flex items-center space-x-1 text-xs text-amber-deep hover:underline"
                           >
                             <span>Revoke</span>
                             <ExternalLink size={12} />
@@ -220,7 +227,7 @@ export default function AllowanceGuardWidget({
             <div className="mt-4 text-center">
               <button
                 onClick={() => setShowAll(!showAll)}
-                className="flex items-center space-x-1 text-sm text-blue-800 hover:text-blue-600 mx-auto"
+                className="flex items-center space-x-1 text-sm text-amber-deep hover:underline mx-auto"
               >
                 {showAll ? <EyeOff size={16} /> : <Eye size={16} />}
                 <span>{showAll ? 'Show Less' : `Show All (${allowances.length})`}</span>
@@ -229,10 +236,10 @@ export default function AllowanceGuardWidget({
           )}
 
           {allowances.length > 0 && (
-            <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+            <div className={`mt-4 pt-3 border-t ${currentTheme === 'dark' ? 'border-paper/10' : 'border-ink-rule'}`}>
               <button
                 onClick={() => window.open('https://www.allowanceguard.com', '_blank')}
-                className="w-full flex items-center justify-center space-x-2 text-sm text-blue-800 hover:text-blue-600"
+                className="w-full flex items-center justify-center space-x-2 text-sm text-amber-deep hover:underline"
               >
                 <span>View Full Report</span>
                 <ExternalLink size={14} />

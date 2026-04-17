@@ -3,73 +3,73 @@ import Section from '@/components/ui/Section'
 import CascadingScrollAnimation, { FadeInScale } from '@/components/CascadingScrollAnimation'
 
 export default function TrustStats() {
-  return (
-    <CascadingScrollAnimation direction="up" distance={60} delay={200}>
-      <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light dark:from-secondary-900 dark:to-paper">
-        <Container>
-          <div className="max-w-6xl mx-auto">
-            <FadeInScale delay={100}>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl sm:text-4xl font-bold text-ink mb-4">
-                  Trusted by Security-Conscious Users
-                </h2>
-                <p className="text-xl text-ink-muted">
-                  Protecting digital assets across the Web3 ecosystem
-                </p>
-              </div>
-            </FadeInScale>
+ return (
+ <CascadingScrollAnimation direction="up" distance={60} delay={200}>
+ <Section className="py-16 bg-gradient-to-br from-primary-50 to-background-light">
+ <Container>
+ <div className="max-w-6xl mx-auto">
+ <FadeInScale delay={100}>
+ <div className="text-center mb-12">
+ <h2 className="text-3xl sm:text-4xl font-bold text-ink mb-4">
+ Trusted by Security-Conscious Users
+ </h2>
+ <p className="text-xl text-ink-muted">
+ Protecting digital assets across the Web3 ecosystem
+ </p>
+ </div>
+ </FadeInScale>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-              <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-amber-deep mb-2">
-                  50,000+
-                </div>
-                <div className="text-lg font-semibold text-ink mb-1">
-                  Wallets Secured
-                </div>
-                <div className="text-ink-muted">
-                  Monthly active users protecting their assets
-                </div>
-              </div>
+ <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+ <div className="text-center">
+ <div className="text-4xl sm:text-5xl font-bold text-amber-deep mb-2">
+ 50,000+
+ </div>
+ <div className="text-lg font-semibold text-ink mb-1">
+ Wallets Secured
+ </div>
+ <div className="text-ink-muted">
+ Monthly active users protecting their assets
+ </div>
+ </div>
 
-              <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-amber-deep mb-2">
-                  2M+
-                </div>
-                <div className="text-lg font-semibold text-ink mb-1">
-                  Allowances Analyzed
-                </div>
-                <div className="text-ink-muted">
-                  Token approvals scanned and risk-assessed
-                </div>
-              </div>
+ <div className="text-center">
+ <div className="text-4xl sm:text-5xl font-bold text-amber-deep mb-2">
+ 2M+
+ </div>
+ <div className="text-lg font-semibold text-ink mb-1">
+ Allowances Analyzed
+ </div>
+ <div className="text-ink-muted">
+ Token approvals scanned and risk-assessed
+ </div>
+ </div>
 
-              <div className="text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-primary-accent dark:text-amber-deep mb-2">
-                  24/7
-                </div>
-                <div className="text-lg font-semibold text-ink mb-1">
-                  Security Monitoring
-                </div>
-                <div className="text-ink-muted">
-                  Real-time threat detection and alerts
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </Section>
+ <div className="text-center">
+ <div className="text-4xl sm:text-5xl font-bold text-amber-deep mb-2">
+ 24/7
+ </div>
+ <div className="text-lg font-semibold text-ink mb-1">
+ Security Monitoring
+ </div>
+ <div className="text-ink-muted">
+ Real-time threat detection and alerts
+ </div>
+ </div>
+ </div>
+ </div>
+ </Container>
+ </Section>
 
-      {/* Trust Indicators */}
-      <Section className="py-8 bg-paper">
-        <Container>
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-ink-muted font-medium">
-              No private keys required • Read-only access • Free core • Open source
-            </p>
-          </div>
-        </Container>
-      </Section>
-    </CascadingScrollAnimation>
-  )
+ {/* Trust Indicators */}
+ <Section className="py-8 bg-paper">
+ <Container>
+ <div className="max-w-4xl mx-auto text-center">
+ <p className="text-lg text-ink-muted font-medium">
+ No private keys required • Read-only access • Free core • Open source
+ </p>
+ </div>
+ </Container>
+ </Section>
+ </CascadingScrollAnimation>
+ )
 }

@@ -3,43 +3,43 @@
 import React, { Suspense, lazy, ComponentType } from 'react'
 
 interface LazyWrapperProps {
-  children: React.ReactNode
-  fallback?: React.ReactNode
-  threshold?: number
-  rootMargin?: string
+ children: React.ReactNode
+ fallback?: React.ReactNode
+ threshold?: number
+ rootMargin?: string
 }
 
 // Default loading fallback
 const DefaultFallback = () => (
-  <div className="flex items-center justify-center p-8">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-  </div>
+ <div className="flex items-center justify-center p-8">
+ <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-deep/40"></div>
+ </div>
 )
 
 // Lazy wrapper with intersection observer
 export default function LazyWrapper({ 
-  children, 
-  fallback = <DefaultFallback />
+ children, 
+ fallback = <DefaultFallback />
 }: LazyWrapperProps) {
-  return (
-    <Suspense fallback={fallback}>
-      {children}
-    </Suspense>
-  )
+ return (
+ <Suspense fallback={fallback}>
+ {children}
+ </Suspense>
+ )
 }
 
 // Higher-order component for lazy loading
 export function withLazyLoading<T extends object>(
-  Component: ComponentType<T>,
-  fallback?: React.ReactNode
+ Component: ComponentType<T>,
+ fallback?: React.ReactNode
 ) {
-  return function LazyComponent(props: T) {
-    return (
-      <LazyWrapper fallback={fallback}>
-        <Component {...props} />
-      </LazyWrapper>
-    )
-  }
+ return function LazyComponent(props: T) {
+ return (
+ <LazyWrapper fallback={fallback}>
+ <Component {...props} />
+ </LazyWrapper>
+ )
+ }
 }
 
 // Lazy load components that are not critical for initial render
@@ -51,32 +51,32 @@ export const LazyFooter = lazy(() => import('@/components/Footer'))
 
 // Intersection observer hook for lazy loading
 export function useIntersectionObserver(
-  elementRef: React.RefObject<HTMLElement>,
-  options: IntersectionObserverInit = {}
+ elementRef: React.RefObject<HTMLElement>,
+ options: IntersectionObserverInit = {}
 ) {
-  const [isIntersecting, setIsIntersecting] = React.useState(false)
+ const [isIntersecting, setIsIntersecting] = React.useState(false)
 
-  React.useEffect(() => {
-    const element = elementRef.current
-    if (!element) return
+ React.useEffect(() => {
+ const element = elementRef.current
+ if (!element) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsIntersecting(entry.isIntersecting)
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '50px',
-        ...options
-      }
-    )
+ const observer = new IntersectionObserver(
+ ([entry]) => {
+ setIsIntersecting(entry.isIntersecting)
+ },
+ {
+ threshold: 0.1,
+ rootMargin: '50px',
+ ...options
+ }
+ )
 
-    observer.observe(element)
+ observer.observe(element)
 
-    return () => {
-      observer.unobserve(element)
-    }
-  }, [elementRef, options])
+ return () => {
+ observer.unobserve(element)
+ }
+ }, [elementRef, options])
 
-  return isIntersecting
+ return isIntersecting
 }
