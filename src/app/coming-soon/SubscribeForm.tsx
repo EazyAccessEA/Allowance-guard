@@ -26,6 +26,7 @@ const INTERESTS = [
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 type SuccessKind = 'new' | 'resubscribed' | 'already_subscribed'
+type ResendStatus = 'idle' | 'sending' | 'sent'
 
 const TURNSTILE_ENABLED = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY)
 
@@ -40,7 +41,7 @@ const SUCCESS_COPY: Record<SuccessKind, { title: string; body: string }> = {
   },
   already_subscribed: {
     title: "You're already on the list.",
-    body: "No need to sign up again. Didn't get the welcome email? Check your spam folder, or email support@allowanceguard.com.",
+    body: "No need to sign up again. Didn't get the welcome email? Check your spam folder, or resend it below.",
   },
 }
 
@@ -49,6 +50,8 @@ export default function SubscribeForm() {
   const [interest, setInterest] = useState('general')
   const [status, setStatus] = useState<Status>('idle')
   const [successKind, setSuccessKind] = useState<SuccessKind>('new')
+  const [submittedEmail, setSubmittedEmail] = useState('')
+  const [resendStatus, setResendStatus] = useState<ResendStatus>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -97,6 +100,8 @@ export default function SubscribeForm() {
 
       const data = (await res.json().catch(() => ({}))) as { status?: SuccessKind }
       setSuccessKind(data.status ?? 'new')
+      setSubmittedEmail(email.trim())
+      setResendStatus('idle')
       setStatus('success')
       setEmail('')
     } catch (err) {
@@ -107,6 +112,27 @@ export default function SubscribeForm() {
 
   if (status === 'success') {
     const copy = SUCCESS_COPY[successKind]
+    const showResend = successKind === 'already_subscribed' && submittedEmail.length > 0
+
+    async function handleResend() {
+      if (resendStatus !== 'idle') return
+      setResendStatus('sending')
+      try {
+        await fetch('/api/subscribe/resend-welcome', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: submittedEmail }),
+        })
+        // The endpoint always returns 200 (don't-leak posture). We surface
+        // a uniform "sent" state to the user; rate-limited / not-found cases
+        // are silently no-ops server-side.
+        setResendStatus('sent')
+      } catch {
+        // Network error — surface as a neutral message, leave button enabled.
+        setResendStatus('idle')
+      }
+    }
+
     return (
       <div
         className="paper-card p-8 sm:p-10 text-center"
@@ -121,6 +147,31 @@ export default function SubscribeForm() {
         </div>
         <h3 className="font-display-tight text-ink text-xl mb-2">{copy.title}</h3>
         <p className="font-plex text-ink-muted leading-relaxed">{copy.body}</p>
+
+        {showResend && (
+          <div className="mt-6">
+            {resendStatus === 'sent' ? (
+              <p className="font-plex text-sm text-ink-soft">
+                Sent. Check your inbox in a minute (and your spam folder).
+              </p>
+            ) : (
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={resendStatus === 'sending'}
+                className={[
+                  'inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium font-plex',
+                  'bg-paper-deep text-ink border border-ink-rule',
+                  'hover:bg-paper-sub disabled:opacity-50 disabled:cursor-not-allowed',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper',
+                  'transition-colors duration-150',
+                ].join(' ')}
+              >
+                {resendStatus === 'sending' ? 'Sending…' : 'Resend welcome email'}
+              </button>
+            )}
+          </div>
+        )}
       </div>
     )
   }
