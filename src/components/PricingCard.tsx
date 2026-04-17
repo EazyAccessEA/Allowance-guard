@@ -95,7 +95,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   // CTA reflects what the next click will actually do
   const ctaText = (() => {
-    if (plan === 'free') return 'Join the waitlist'
+    if (plan === 'free') return 'Open the scanner'
     if (!isConnected) return `Connect wallet to subscribe`
     return `Upgrade to ${displayName}`
   })()
@@ -255,7 +255,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           </>
         ) : (
           <Link
-            href="/"
+            href="/#scan"
             className="block w-full  px-5 py-3 text-sm font-semibold text-center text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
           >
             {ctaText}

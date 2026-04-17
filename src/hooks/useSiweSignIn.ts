@@ -107,7 +107,12 @@ export function useSiweSignIn(options: UseSiweSignInOptions = {}): UseSiweSignIn
     try {
       // 1. Nonce
       const nonceRes = await fetch('/api/auth/nonce')
-      if (!nonceRes.ok) throw new Error('Could not request a nonce')
+      if (!nonceRes.ok) {
+        if (nonceRes.status === 429) {
+          throw new Error('Too many sign-in attempts. Please wait a moment and try again.')
+        }
+        throw new Error('Sign-in is temporarily unavailable. Please try again in a few seconds.')
+      }
       const { nonce } = (await nonceRes.json()) as { nonce: string }
 
       // 2. Canonical SIWE message
