@@ -30,9 +30,33 @@ export async function GET(req: Request) {
   // bucket wouldn't pollute it meaningfully.
   const rl = await limitHit(`siwe-nonce:${ip}`, 60, 120)
   if (!rl.allowed) {
-    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+    return NextResponse.json(
+      { error: 'Too many requests' },
+      {
+        status: 429,
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+          Pragma: 'no-cache',
+          Expires: '0',
+        },
+      },
+    )
   }
 
   const nonce = await issueNonce()
-  return NextResponse.json({ nonce })
+  // Hard no-store: a previous service worker cached a 429 response with
+  // `max-age=31536000, immutable`, locking users out of the sign-in
+  // flow until they manually cleared site data. These headers prevent
+  // any intermediary (service worker, browser disk cache, CDN, shared
+  // proxy) from caching this response going forward.
+  return NextResponse.json(
+    { nonce },
+    {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      },
+    },
+  )
 }
