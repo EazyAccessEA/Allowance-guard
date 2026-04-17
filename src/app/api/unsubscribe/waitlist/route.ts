@@ -44,6 +44,9 @@ export async function GET(req: Request) {
 }
 
 function unsubPage(message: string, success: boolean): string {
+  // Inline-styled HTML response (no React render — this endpoint serves
+  // direct GET hits from email links). Ledger canon: paper bg, ink text,
+  // hairline rule, sharp corners, single oxblood beat.
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,19 +54,20 @@ function unsubPage(message: string, success: boolean): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${success ? 'Unsubscribed' : 'Error'} — AllowanceGuard</title>
   <style>
-    body { font-family: 'IBM Plex Sans', -apple-system, sans-serif; background: #F7F5F0; color: #0F1115; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-    .card { background: #fff; border: 1px solid rgba(15,17,21,0.14); border-radius: 12px; padding: 48px 40px; max-width: 440px; text-align: center; box-shadow: 0 1px 3px rgba(15,17,21,0.06); }
-    h1 { font-size: 24px; margin: 0 0 12px; }
-    p { color: #4A4D54; line-height: 1.6; margin: 0 0 24px; }
-    a { display: inline-block; background: #0F1115; color: #F7F5F0; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 500; }
-    a:hover { background: #2A2D33; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F7F5F0; color: #0F1115; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 24px; }
+    .card { background: #F7F5F0; border-left: 3px solid #2D0A0A; padding: 40px 36px; max-width: 460px; text-align: left; }
+    .wordmark { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 18px; color: #0F1115; margin: 0 0 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(15,17,21,0.14); }
+    h1 { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-weight: normal; font-size: 26px; color: #0F1115; margin: 0 0 12px; letter-spacing: -0.015em; }
+    p { color: #2A2D33; line-height: 1.6; margin: 0 0 24px; font-size: 15px; }
+    a.button { display: inline-block; background: #2D0A0A; color: #F7F5F0; padding: 12px 24px; text-decoration: none; font-weight: 600; font-size: 14px; }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>${success ? 'Done' : 'Oops'}</h1>
+    <p class="wordmark">AllowanceGuard</p>
+    <h1>${success ? "Done. You're unsubscribed." : 'Something went wrong.'}</h1>
     <p>${message}</p>
-    <a href="https://www.allowanceguard.com">Back to AllowanceGuard</a>
+    <a class="button" href="https://www.allowanceguard.com">Back to AllowanceGuard</a>
   </div>
 </body>
 </html>`
