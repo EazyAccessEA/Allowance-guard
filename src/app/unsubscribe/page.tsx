@@ -22,6 +22,7 @@
  */
 
 import { useEffect, useState, type FormEvent } from 'react'
+import Link from 'next/link'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
@@ -95,12 +96,12 @@ export default function UnsubscribePage() {
                 If you change your mind, you can re-subscribe at any time on the
                 waitlist page.
               </p>
-              <a
+              <Link
                 href="/"
                 className="inline-flex items-center px-5 py-2.5 text-sm font-medium font-plex bg-paper-deep text-ink border border-ink-rule hover:bg-paper-sub transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
               >
                 Back to AllowanceGuard
-              </a>
+              </Link>
             </div>
           ) : (
             <form onSubmit={onSubmit} noValidate className="paper-card p-8 sm:p-10">

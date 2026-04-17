@@ -13,7 +13,6 @@ import { withTimeout } from '@/lib/retry'
 import { refreshRiskForWallet } from '@/lib/risk'
 import { enrichWallet } from '@/lib/enrich'
 import { cacheDel } from '@/lib/cache'
-import { pool } from '@/lib/db'
 
 export const runtime = 'nodejs'
 
