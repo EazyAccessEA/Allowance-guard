@@ -109,9 +109,19 @@ export async function PUT(req: NextRequest) {
 
   updates.push(`updated_at = NOW()`)
   params.push(teamId)
+  params.push(s.user_id)
 
+  // Defence-in-depth IDOR check. The role check at L77-84 verifies the
+  // caller as owner/admin of this team, but the SQL itself didn't bind
+  // the UPDATE to the caller. If the JS check is ever refactored away,
+  // the SQL stays correct: only updates if the caller is owner/admin.
   await pool.query(
-    `UPDATE teams SET ${updates.join(', ')} WHERE id = $${paramIdx}`,
+    `UPDATE teams SET ${updates.join(', ')}
+     WHERE id = $${paramIdx}
+       AND id IN (
+         SELECT team_id FROM team_members
+         WHERE user_id = $${paramIdx + 1} AND role IN ('owner', 'admin')
+       )`,
     params,
   )
 

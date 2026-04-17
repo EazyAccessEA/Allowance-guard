@@ -3,6 +3,7 @@ import { pool } from '@/lib/db'
 import { apiLogger, logEmailOperation } from '@/lib/logger'
 import { getSession } from '@/lib/auth'
 import { checkFeature } from '@/lib/feature-gate'
+import { redactEmail } from '@/lib/pii-redact'
 
 /**
  * POST /api/alerts/subscribe — subscribe an authenticated user's email
@@ -52,12 +53,12 @@ export async function POST(req: Request) {
     )
 
     logEmailOperation('Subscription created', email, true)
-    apiLogger.info('Email subscription created', { email, wallet, riskOnly, userId: session.user_id })
+    apiLogger.info('Email subscription created', { email: redactEmail(email), wallet, riskOnly, userId: session.user_id })
 
     return NextResponse.json({ ok: true })
   } catch (error) {
     logEmailOperation('Subscription failed', email, false, error instanceof Error ? error.message : 'Unknown error')
-    apiLogger.error('Subscription error', { error: error instanceof Error ? error.message : 'Unknown error', email, wallet })
+    apiLogger.error('Subscription error', { error: error instanceof Error ? error.message : 'Unknown error', email: redactEmail(email), wallet })
     return NextResponse.json({ error: 'Subscription failed' }, { status: 500 })
   }
 }
@@ -81,12 +82,12 @@ export async function DELETE(req: Request) {
     )
 
     logEmailOperation('Unsubscription completed', email, true)
-    apiLogger.info('Email unsubscription completed', { email, wallet, userId: session.user_id })
+    apiLogger.info('Email unsubscription completed', { email: redactEmail(email), wallet, userId: session.user_id })
 
     return NextResponse.json({ ok: true })
   } catch (error) {
     logEmailOperation('Unsubscription failed', email, false, error instanceof Error ? error.message : 'Unknown error')
-    apiLogger.error('Unsubscription error', { error: error instanceof Error ? error.message : 'Unknown error', email, wallet })
+    apiLogger.error('Unsubscription error', { error: error instanceof Error ? error.message : 'Unknown error', email: redactEmail(email), wallet })
     return NextResponse.json({ error: 'Unsubscription failed' }, { status: 500 })
   }
 }

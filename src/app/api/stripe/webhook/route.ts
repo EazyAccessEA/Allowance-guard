@@ -9,6 +9,7 @@ import { reportError } from '@/lib/rollbar'
 import { withReq } from '@/lib/logger'
 import { trackEvent } from '@/lib/analytics'
 import { stripe } from '@/lib/billing'
+import { redactEmail } from '@/lib/pii-redact'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -67,7 +68,13 @@ export async function POST(req: Request) {
         metadata: { amount, currency, email, stripeSessionId: session.id },
       })
 
-      console.log('Donation recorded:', { session_id: session.id, event_id: event.id, amount, currency, email })
+      console.log('Donation recorded:', {
+        session_id: session.id,
+        event_id: event.id,
+        amount,
+        currency,
+        email: redactEmail(email),
+      })
     } else {
       console.log(`ℹ️ Unhandled event: ${event.type}`)
     }

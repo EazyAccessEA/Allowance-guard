@@ -4,6 +4,7 @@ import { checkFeature } from '@/lib/feature-gate'
 import { pool } from '@/lib/db'
 import { randomBytes, createHash } from 'crypto'
 import { secureLogger } from '@/lib/secure-logger'
+import { validateWebhookUrl } from '@/lib/safe-webhook-url'
 import type { WebhookEventType } from '@/lib/webhook-dispatcher'
 
 const VALID_EVENTS: WebhookEventType[] = [
@@ -73,14 +74,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Webhook URL is required' }, { status: 400 })
   }
 
-  // Validate URL format
-  try {
-    const parsed = new URL(url)
-    if (!['https:', 'http:'].includes(parsed.protocol)) {
-      return NextResponse.json({ error: 'URL must use HTTP or HTTPS' }, { status: 400 })
-    }
-  } catch {
-    return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 })
+  // SSRF-safe URL validation. Rejects loopback, RFC1918 private,
+  // link-local (incl. cloud-metadata 169.254.169.254), IPv6 loopback,
+  // .localhost suffix, etc. See lib/safe-webhook-url.ts.
+  const urlCheck = validateWebhookUrl(url)
+  if (!urlCheck.ok) {
+    return NextResponse.json({ error: urlCheck.reason ?? 'Invalid URL' }, { status: 400 })
   }
 
   // Validate events
