@@ -21,6 +21,7 @@ import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Highlight from '@/components/ui/Highlight'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
+import MarketingWatermark from '@/components/MarketingWatermark'
 import SubscribeForm from '@/app/coming-soon/SubscribeForm'
 
 const UPCOMING = [
@@ -50,6 +51,7 @@ const UPCOMING = [
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-paper">
+      <MarketingWatermark />
       {/* ── Hero ── */}
       <section className="paper grain relative min-h-[70svh] flex items-center overflow-hidden">
         {/* Warm gradient wash */}

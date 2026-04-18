@@ -3992,3 +3992,42 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   }
 }
 
+
+/* ----------------------------------------------------------------------- */
+/* MarketingWatermark — oversized AG logo behind marketing surfaces.       */
+/* Component at src/components/MarketingWatermark.tsx renders the PNG at   */
+/* public/images/branding/ag-logo-ink.png via next/image, centred, faint.  */
+/*                                                                         */
+/* Noor (a11y) VETO: base opacity 4% sits below anything that would        */
+/* interfere with body-copy legibility. Shimmer honours                    */
+/* prefers-reduced-motion.                                                 */
+/* Thane (perf): composited layer via will-change + translateZ(0);         */
+/* animation targets opacity + filter only — no repaints, no layout        */
+/* thrash. The logo PNG is 4KB and lazy by default.                        */
+/* ----------------------------------------------------------------------- */
+.ag-watermark-mark {
+  opacity: 0.04;                      /* ink at 4%, faint enough to recede */
+  transform: translateZ(0);
+  will-change: opacity, filter;
+  transition: opacity 2.4s ease-out, filter 2.4s ease-out;
+}
+
+.ag-watermark-shimmer {
+  animation: ag-watermark-sweep 4s ease-in-out forwards;
+}
+
+@keyframes ag-watermark-sweep {
+  0%   { opacity: 0.04; filter: none; }
+  45%  { opacity: 0.085; filter: sepia(0.85) saturate(1.3) hue-rotate(-15deg); }
+  100% { opacity: 0.04; filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-watermark-mark,
+  .ag-watermark-shimmer {
+    animation: none !important;
+    transition: none !important;
+    opacity: 0.04 !important;
+    filter: none !important;
+  }
+}
