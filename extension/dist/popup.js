@@ -104,11 +104,11 @@ class AllowanceGuardPopup {
 
     if (enabled) {
       indicator.className = 'status-indicator active';
-      text.textContent = 'Protection Active';
+      text.textContent = 'Warnings Active';
       toggle.classList.add('active');
     } else {
       indicator.className = 'status-indicator inactive';
-      text.textContent = 'Protection Disabled';
+      text.textContent = 'Warnings Disabled';
       toggle.classList.remove('active');
     }
   }
@@ -122,9 +122,12 @@ class AllowanceGuardPopup {
     badge.className = `tier-badge tier-${tier || 'free'}`;
 
     if (tier === 'free') {
+      // Link to the paid plans. Copy deliberately soft-sells — Pro's
+      // actual value is batch monitoring + email alerts + export on
+      // the web dashboard, not a different in-browser detection engine.
       upgradeWrap.innerHTML = `
         <a href="https://www.allowanceguard.com/pricing" target="_blank" class="btn btn-upgrade">
-          Upgrade for Enhanced Protection
+          See Pro plans on the dashboard
         </a>
       `;
     } else {

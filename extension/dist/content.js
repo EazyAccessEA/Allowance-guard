@@ -387,19 +387,32 @@ class AllowanceGuardExtension {
             : '#22C55E';
 
     const riskText = riskData.riskLevelText || this.getRiskLevelText(riskData.riskLevel);
-    const isPro = this.userTier === 'pro' || this.userTier === 'sentinel';
 
+    // Overlay restructured for v2.0.3 per Mozilla Acceptable Use review:
+    // only surface findings, never reassurance. An absent row means "no
+    // signal," not "cleared safe." The earlier design rendered green
+    // checkmarks ("No exploit match", "No scam patterns") on every
+    // transaction — implying verification we had not performed. Now
+    // checkmarks only appear when the backend returned a positive
+    // signal about that specific field.
+    //
+    // Pro/Sentinel upsell removed from the warning entirely. Mixing a
+    // revenue CTA into a safety screen was the other half of the
+    // deception concern, and practically the detections don't differ
+    // between tiers — Pro's actual delta is email alerts + batch
+    // monitoring on the web dashboard, not a different risk engine.
+    //
     // riskColor is produced from hex literals above — safe to interpolate
-    // raw. Everything that traces back to API / wallet input goes through
-    // escapeHtml() so a malicious token name or issue text cannot break
-    // out of the string and execute script.
+    // raw. Everything that traces back to API / wallet input goes
+    // through escapeHtml() so a malicious token name or issue text
+    // cannot break out of the string and execute script.
     overlay.innerHTML = `
       <div class="ag-warning-overlay">
         <div class="ag-warning-modal">
           <div class="ag-warning-header" style="border-left: 4px solid ${riskColor};">
             <div class="ag-warning-icon">${riskData.riskLevel >= 3 ? '\u26A0\uFE0F' : '\u2139\uFE0F'}</div>
             <div>
-              <h3>${riskData.riskLevel >= 3 ? 'Risky Approval Detected' : 'Approval Risk Assessment'}</h3>
+              <h3>${riskData.riskLevel >= 3 ? 'Risky Approval Detected' : 'Approval Review'}</h3>
               <span class="ag-risk-badge" style="background: ${riskColor}20; color: ${riskColor}; border: 1px solid ${riskColor}40;">
                 ${escapeHtml(riskText)} Risk
               </span>
@@ -408,6 +421,8 @@ class AllowanceGuardExtension {
           </div>
 
           <div class="ag-warning-content">
+            <p class="ag-advisory">This is a warning, not a block. Your wallet remains in control — proceed or reject in your wallet as usual.</p>
+
             <div class="ag-info-grid">
               <div class="ag-info-row">
                 <span class="ag-label">Token</span>
@@ -421,21 +436,26 @@ class AllowanceGuardExtension {
                 <span class="ag-label">Type</span>
                 <span class="ag-value">${escapeHtml(this.getFunctionLabel(txInfo.functionSignature))}</span>
               </div>
-              ${riskData.affectedWallets > 0 ? `
-              <div class="ag-info-row">
-                <span class="ag-label">Wallets using spender</span>
-                <span class="ag-value">${Number(riskData.affectedWallets)}</span>
-              </div>` : ''}
               ${riskData.spenderTrusted ? `
               <div class="ag-info-row">
-                <span class="ag-label">Trusted</span>
-                <span class="ag-value ag-trusted">\u2705 Verified</span>
+                <span class="ag-label">Our spender label</span>
+                <span class="ag-value ag-trusted">Listed as trusted in our curated index</span>
+              </div>` : ''}
+              ${riskData.issueDetails?.some(i => i.code === 'KNOWN_EXPLOIT') ? `
+              <div class="ag-info-row ag-row-critical">
+                <span class="ag-label">Known-exploit list</span>
+                <span class="ag-value">Match found in our curated list of ~30 high-profile exploit addresses</span>
+              </div>` : ''}
+              ${riskData.issueDetails?.some(i => i.code === 'RISKY_HISTORY') ? `
+              <div class="ag-info-row ag-row-critical">
+                <span class="ag-label">Flagged across other wallets</span>
+                <span class="ag-value">This spender has been risk-scored on ${Number(riskData.affectedWallets) || 'multiple'} other wallets in our database</span>
               </div>` : ''}
             </div>
 
             ${riskData.issues && riskData.issues.length > 0 ? `
             <div class="ag-issues">
-              <h4>Issues Found</h4>
+              <h4>Signals</h4>
               <ul>
                 ${riskData.issues.map(issue => `<li>${escapeHtml(issue)}</li>`).join('')}
               </ul>
@@ -452,27 +472,8 @@ class AllowanceGuardExtension {
               <p class="ag-hint">Note: Amount modification requires re-initiating the transaction in the dApp.</p>
             </div>` : ''}
 
-            ${isPro ? `
-            <div class="ag-pro-section">
-              <h4>\u2728 Enhanced Analysis (${this.userTier === 'sentinel' ? 'Sentinel' : 'Pro'})</h4>
-              <div class="ag-info-row">
-                <span class="ag-label">Contract Audit</span>
-                <span class="ag-value">${riskData.spenderTrusted ? 'Audited / Verified' : 'Not audited'}</span>
-              </div>
-              <div class="ag-info-row">
-                <span class="ag-label">Exploit DB Match</span>
-                <span class="ag-value">${riskData.issueDetails?.some(i => i.code === 'KNOWN_EXPLOIT') ? '\u274C Match found' : '\u2705 No match'}</span>
-              </div>
-              <div class="ag-info-row">
-                <span class="ag-label">Similar Scam Patterns</span>
-                <span class="ag-value">${riskData.issueDetails?.some(i => i.code === 'RISKY_HISTORY') ? '\u26A0\uFE0F Detected' : '\u2705 None detected'}</span>
-              </div>
-            </div>` : `
-            <div class="ag-upgrade-prompt">
-              <p>\u2728 <strong>Upgrade to Pro</strong> for enhanced analysis: exploit database, contract audit status, and scam pattern detection.</p>
-            </div>`}
-
             <p class="ag-recommendation"><strong>Recommendation:</strong> ${escapeHtml(riskData.recommendation)}</p>
+            <p class="ag-disclaimer">AllowanceGuard checks patterns we know about. It cannot detect every attack vector and does not guarantee transaction safety. Always read your wallet's confirmation screen.</p>
           </div>
 
           <div class="ag-warning-actions">
