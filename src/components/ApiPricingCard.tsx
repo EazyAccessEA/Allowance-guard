@@ -11,6 +11,7 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { useUpgradeFlow } from '@/hooks/useUpgradeFlow'
+import OtpUpgradeModal from '@/components/OtpUpgradeModal'
 
 type ApiPaidPlan = 'api_developer' | 'api_growth'
 type ApiCardPlan = 'api_free' | ApiPaidPlan | 'api_enterprise'
@@ -80,7 +81,15 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
     ? getApiYearlySavingsPercent(plan as ApiPaidPlan)
     : 0
 
-  const { upgrade, loading, isSigningIn, error, isConnected } = useUpgradeFlow({
+  const {
+    upgrade,
+    loading,
+    isAuthenticating,
+    error,
+    otpModalOpen,
+    closeOtpModal,
+    onAuthenticated,
+  } = useUpgradeFlow({
     plan,
     billingPeriod,
     displayName,
@@ -145,7 +154,7 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
           <>
             <button
               onClick={upgrade}
-              disabled={loading || isSigningIn}
+              disabled={loading}
               className={cn(
                 'w-full px-4 py-2.5 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep disabled:opacity-60 disabled:cursor-not-allowed',
                 highlighted
@@ -153,28 +162,32 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
                   : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule',
               )}
             >
-              {isSigningIn ? (
+              {isAuthenticating ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Waiting for signature…
+                  Signing you in…
                 </span>
               ) : loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   Redirecting…
                 </span>
-              ) : !isConnected ? `Connect wallet to subscribe` : `Upgrade to ${displayName}`}
+              ) : `Upgrade to ${displayName}`}
             </button>
-            {isConnected && (
-              <p className="mt-2 text-[11px] text-ink-whisper text-center">
-                One wallet signature, then secure checkout via Stripe.
-              </p>
-            )}
+            <p className="mt-2 text-[11px] text-ink-whisper text-center">
+              Email sign-in, then secure checkout via Stripe.
+            </p>
             {error && (
               <p className="mt-2 text-xs text-crimson-paper text-center" role="alert">
                 {error}
               </p>
             )}
+            <OtpUpgradeModal
+              isOpen={otpModalOpen}
+              onClose={closeOtpModal}
+              onAuthenticated={onAuthenticated}
+              displayName={displayName}
+            />
           </>
         ) : (
           <a

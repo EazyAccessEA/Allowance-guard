@@ -12,6 +12,7 @@ import {
   formatPrice,
 } from '@/lib/plans'
 import { useUpgradeFlow } from '@/hooks/useUpgradeFlow'
+import OtpUpgradeModal from '@/components/OtpUpgradeModal'
 
 interface PricingCardProps {
   plan: 'free' | 'pro' | 'sentinel'
@@ -81,18 +82,21 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
 
   const savingsPercent = isPaid ? getYearlySavingsPercent(plan as PaidPlan) : 0
 
-  const { upgrade, loading, isSigningIn, error, isConnected } = useUpgradeFlow({
+  const {
+    upgrade,
+    loading,
+    isAuthenticating,
+    error,
+    otpModalOpen,
+    closeOtpModal,
+    onAuthenticated,
+  } = useUpgradeFlow({
     plan,
     billingPeriod,
     displayName,
   })
 
-  // CTA reflects what the next click will actually do
-  const ctaText = (() => {
-    if (plan === 'free') return 'Open the scanner'
-    if (!isConnected) return `Connect wallet to subscribe`
-    return `Upgrade to ${displayName}`
-  })()
+  const ctaText = plan === 'free' ? 'Open the scanner' : `Upgrade to ${displayName}`
 
   return (
     <div
@@ -159,7 +163,7 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
           <>
             <button
               onClick={upgrade}
-              disabled={loading || isSigningIn}
+              disabled={loading}
               className={cn(
                 'w-full px-5 py-3 text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed',
                 highlighted
@@ -167,10 +171,10 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
                   : 'bg-paper-sub text-ink hover:bg-paper-deep ring-1 ring-ink-rule active:bg-paper-sub',
               )}
             >
-              {isSigningIn ? (
+              {isAuthenticating ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Waiting for signature…
+                  Signing you in…
                 </span>
               ) : loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -179,16 +183,20 @@ export default function PricingCard({ plan, billingPeriod, highlighted = false }
                 </span>
               ) : ctaText}
             </button>
-            {isConnected && (
-              <p className="mt-2 text-[11px] text-ink-whisper text-center">
-                One wallet signature, then secure checkout via Stripe.
-              </p>
-            )}
+            <p className="mt-2 text-[11px] text-ink-whisper text-center">
+              Email sign-in, then secure checkout via Stripe.
+            </p>
             {error && (
               <p className="mt-2 text-xs text-crimson-paper text-center" role="alert">
                 {error}
               </p>
             )}
+            <OtpUpgradeModal
+              isOpen={otpModalOpen}
+              onClose={closeOtpModal}
+              onAuthenticated={onAuthenticated}
+              displayName={displayName}
+            />
           </>
         ) : (
           <Link
