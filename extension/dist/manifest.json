@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
   "name": "AllowanceGuard — Wallet Protection",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Pre-transaction protection: detect risky approve(), permit(), and setApprovalForAll() calls before you sign",
   "browser_specific_settings": {
     "gecko": {
       "id": "allowanceguard@allowanceguard.com",
-      "strict_min_version": "140.0",
+      "strict_min_version": "142.0",
       "data_collection_permissions": {
         "required": [
           "websiteContent",

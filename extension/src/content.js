@@ -10,6 +10,22 @@
  * 6. Pro/Sentinel users get enhanced analysis
  */
 
+// Defence against XSS in the warning overlay. The dynamic values
+// rendered via innerHTML come from our own API (token_name, spender
+// label, issue descriptions) but a future DB poisoning or a compromised
+// upstream metadata feed must not become a scripted injection on every
+// user's page. Firefox's addons-linter also fails v2.0.0's
+// UNSAFE_VAR_ASSIGNMENT check without this escape.
+function escapeHtml(value) {
+  if (value == null) return ''
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 class AllowanceGuardExtension {
   constructor() {
     this.isEnabled = true;
@@ -373,6 +389,10 @@ class AllowanceGuardExtension {
     const riskText = riskData.riskLevelText || this.getRiskLevelText(riskData.riskLevel);
     const isPro = this.userTier === 'pro' || this.userTier === 'sentinel';
 
+    // riskColor is produced from hex literals above — safe to interpolate
+    // raw. Everything that traces back to API / wallet input goes through
+    // escapeHtml() so a malicious token name or issue text cannot break
+    // out of the string and execute script.
     overlay.innerHTML = `
       <div class="ag-warning-overlay">
         <div class="ag-warning-modal">
@@ -381,7 +401,7 @@ class AllowanceGuardExtension {
             <div>
               <h3>${riskData.riskLevel >= 3 ? 'Risky Approval Detected' : 'Approval Risk Assessment'}</h3>
               <span class="ag-risk-badge" style="background: ${riskColor}20; color: ${riskColor}; border: 1px solid ${riskColor}40;">
-                ${riskText} Risk
+                ${escapeHtml(riskText)} Risk
               </span>
             </div>
             <button class="ag-warning-close" id="ag-close-btn">\u00D7</button>
@@ -391,20 +411,20 @@ class AllowanceGuardExtension {
             <div class="ag-info-grid">
               <div class="ag-info-row">
                 <span class="ag-label">Token</span>
-                <span class="ag-value">${riskData.tokenName || 'Unknown'}${riskData.tokenSymbol ? ` (${riskData.tokenSymbol})` : ''}</span>
+                <span class="ag-value">${escapeHtml(riskData.tokenName || 'Unknown')}${riskData.tokenSymbol ? ` (${escapeHtml(riskData.tokenSymbol)})` : ''}</span>
               </div>
               <div class="ag-info-row">
                 <span class="ag-label">Spender</span>
-                <span class="ag-value">${riskData.spenderName || this.truncateAddress(txInfo.spenderAddress)}</span>
+                <span class="ag-value">${escapeHtml(riskData.spenderName || this.truncateAddress(txInfo.spenderAddress))}</span>
               </div>
               <div class="ag-info-row">
                 <span class="ag-label">Type</span>
-                <span class="ag-value">${this.getFunctionLabel(txInfo.functionSignature)}</span>
+                <span class="ag-value">${escapeHtml(this.getFunctionLabel(txInfo.functionSignature))}</span>
               </div>
               ${riskData.affectedWallets > 0 ? `
               <div class="ag-info-row">
                 <span class="ag-label">Wallets using spender</span>
-                <span class="ag-value">${riskData.affectedWallets}</span>
+                <span class="ag-value">${Number(riskData.affectedWallets)}</span>
               </div>` : ''}
               ${riskData.spenderTrusted ? `
               <div class="ag-info-row">
@@ -417,7 +437,7 @@ class AllowanceGuardExtension {
             <div class="ag-issues">
               <h4>Issues Found</h4>
               <ul>
-                ${riskData.issues.map(issue => `<li>${issue}</li>`).join('')}
+                ${riskData.issues.map(issue => `<li>${escapeHtml(issue)}</li>`).join('')}
               </ul>
             </div>` : ''}
 
@@ -452,7 +472,7 @@ class AllowanceGuardExtension {
               <p>\u2728 <strong>Upgrade to Pro</strong> for enhanced analysis: exploit database, contract audit status, and scam pattern detection.</p>
             </div>`}
 
-            <p class="ag-recommendation"><strong>Recommendation:</strong> ${riskData.recommendation}</p>
+            <p class="ag-recommendation"><strong>Recommendation:</strong> ${escapeHtml(riskData.recommendation)}</p>
           </div>
 
           <div class="ag-warning-actions">
