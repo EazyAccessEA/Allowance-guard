@@ -19,7 +19,6 @@ import React, { useEffect, useState } from 'react'
 import PlanCard from '@/components/account/PlanCard'
 import UsageChart from '@/components/account/UsageChart'
 import PortfolioRiskScore from '@/components/PortfolioRiskScore'
-import InsuranceIntegration from '@/components/InsuranceIntegration'
 import SignOutButton from '@/components/SignOutButton'
 import { cn } from '@/lib/utils'
 import {
@@ -140,9 +139,6 @@ export default function AccountPage() {
 
  {/* Portfolio Risk Score */}
  <PortfolioRiskScore />
-
- {/* Insurance Integration */}
- <InsuranceIntegration userTier={data.plan} />
 
  {/* Quick links */}
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
