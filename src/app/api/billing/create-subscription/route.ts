@@ -11,6 +11,16 @@ import { withReq } from '@/lib/logger'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
+// Error responses must never be cached by any intermediary. Next.js's
+// default on error responses has been observed as `public, must-revalidate`,
+// which lets service workers and CDNs cache a 401 and lock users out of
+// the upgrade flow. Explicit no-store on every error path.
+const NO_STORE_HEADERS = {
+  'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+  Pragma: 'no-cache',
+  Expires: '0',
+} as const
+
 const ALL_PAID_PLANS = ['pro', 'sentinel', 'api_developer', 'api_growth'] as const
 
 const subscribeSchema = z.object({
@@ -38,7 +48,7 @@ export async function POST(req: Request) {
     } catch {
       return NextResponse.json(
         { error: 'Too many checkout attempts. Please wait a moment and try again.' },
-        { status: 429 },
+        { status: 429, headers: NO_STORE_HEADERS },
       )
     }
 
@@ -48,7 +58,7 @@ export async function POST(req: Request) {
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error, details: validation.details },
-        { status: 400 },
+        { status: 400, headers: NO_STORE_HEADERS },
       )
     }
 
@@ -59,7 +69,7 @@ export async function POST(req: Request) {
     if (isApiPlan(plan)) {
       const apiPrices = API_PRICES[plan as Exclude<ApiPlan, 'api_free' | 'api_enterprise' | 'api_public'>]
       if (!apiPrices) {
-        return NextResponse.json({ error: 'Invalid API plan' }, { status: 400 })
+        return NextResponse.json({ error: 'Invalid API plan' }, { status: 400, headers: NO_STORE_HEADERS })
       }
       priceId = interval === 'yearly'
         ? apiPrices.stripePriceIdYearly
@@ -67,7 +77,7 @@ export async function POST(req: Request) {
     } else {
       const consumerPrices = CONSUMER_PRICES[plan as Exclude<ConsumerPlan, 'free'>]
       if (!consumerPrices) {
-        return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
+        return NextResponse.json({ error: 'Invalid plan' }, { status: 400, headers: NO_STORE_HEADERS })
       }
       priceId = interval === 'yearly'
         ? consumerPrices.stripePriceIdYearly
@@ -92,7 +102,7 @@ export async function POST(req: Request) {
       })
       return NextResponse.json(
         { error: 'This plan is temporarily unavailable. Please try again in a few minutes or contact support@allowanceguard.com.' },
-        { status: 503 },
+        { status: 503, headers: NO_STORE_HEADERS },
       )
     }
 
@@ -115,14 +125,20 @@ export async function POST(req: Request) {
       interval,
     })
 
-    return NextResponse.json({ ok: true, url: checkoutUrl })
+    return NextResponse.json({ ok: true, url: checkoutUrl }, { headers: NO_STORE_HEADERS })
   } catch (error) {
     if (error instanceof Error && error.message === 'UNAUTHENTICATED') {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401, headers: NO_STORE_HEADERS },
+      )
     }
     L.error('billing.subscribe.failed', {
       error: error instanceof Error ? error.message : 'Unknown error',
     })
-    return NextResponse.json({ error: 'Failed to create subscription' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to create subscription' },
+      { status: 500, headers: NO_STORE_HEADERS },
+    )
   }
 }

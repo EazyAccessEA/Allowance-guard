@@ -261,6 +261,21 @@ export async function middleware(req: NextRequest) {
   let botInfo: ReturnType<typeof isBot> = { isBot: false, category: 'unknown', priority: 'low' }
 
   try {
+    // Canonicalise apex -> www for page navigation. SIWE domain binding
+    // and session cookies stay on one host. /api/* is exempted so webhooks
+    // configured at apex keep working; SIWE itself handles both hosts
+    // via the Host header in its domain check.
+    if (
+      req.headers.get('host') === 'allowanceguard.com' &&
+      !req.nextUrl.pathname.startsWith('/api/')
+    ) {
+      const redirectUrl = new URL(
+        req.nextUrl.pathname + req.nextUrl.search,
+        'https://www.allowanceguard.com',
+      )
+      return NextResponse.redirect(redirectUrl, 308)
+    }
+
     // 0. Skip middleware for health checks to prevent 403 errors
     if (req.nextUrl.pathname === '/api/healthz') {
       const response = NextResponse.next()

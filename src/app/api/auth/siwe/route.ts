@@ -42,14 +42,18 @@ const ALLOWED_CHAIN_IDS = [
 ]
 
 function expectedDomainFromRequest(req: Request): string {
-  // Prefer the configured public URL (canonical host), fall back to
-  // the request's own host header for local dev.
+  // SIWE binds the message to the user-visible domain. window.location.host
+  // on the client matches the Host header on the server for same-origin
+  // POSTs — using it here means apex and www both verify correctly even
+  // before the apex->www redirect in middleware canonicalises them.
+  // Env var is fallback for environments where Host is missing.
+  const host = req.headers.get('host')
+  if (host) return host
   const appUrl = process.env.NEXT_PUBLIC_APP_URL
   if (appUrl) {
     try { return new URL(appUrl).host } catch {}
   }
-  const host = req.headers.get('host')
-  return host ?? 'localhost'
+  return 'localhost'
 }
 
 /**
