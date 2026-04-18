@@ -58,6 +58,74 @@ Format:
 - Decision informed: hero copy + CTA placement; Turnstile friction
 - Target: ≥35% (baseline tuned per kpi-tree)
 - PII risk: low — verify aggregation by route, not by wallet
+
+### upgrade_flow_completion_rate
+- Definition: Fraction of upgrade clicks that reach Stripe Checkout.
+- Formula: count(`upgrade_clicked` events where stripe redirect followed within 10 min) / count(`upgrade_clicked` events), weekly.
+- Source: Vercel Analytics `upgrade_clicked` event (client), `stripe.checkout.created` server log.
+- Refresh cadence: weekly
+- Owner: #35 + conversion + #30
+- Decision informed: health of the OTP-based upgrade funnel that replaced SIWE on 2026-04-18. A drop is the canary for regressions in the OTP path (rate-limit misconfig, email deliverability, Stripe customer_update) or the Stripe call (price-id mismatch, webhook route).
+- Target: baseline week-1 post-launch; +5pp quarterly after.
+- PII risk: none (event counts only; no wallet or email).
+- Defined: 2026-04-18
+- Last reviewed: 2026-04-18
+
+### otp_verification_rate
+- Definition: Fraction of OTP codes sent that are successfully verified.
+- Formula: count(`otp.verify.ok` log events) / count(`otp.request.ok` events), same-day pairing window 15 minutes.
+- Source: `apiLogger` structured logs (stdout / log aggregator).
+- Refresh cadence: daily.
+- Owner: #35 + #5
+- Decision informed: email deliverability (if verify rate drops, codes are not arriving — SPF / DKIM / Postmark / Resend issue), code-entry UX friction (6-digit-code modal), or abuse (many requests, few verifies).
+- Target: ≥70% on first launch; investigate below 60%.
+- PII risk: low — aggregate counts only, no email addresses. Do not join to user identity.
+- Defined: 2026-04-18
+
+### post_otp_checkout_reach
+- Definition: Fraction of successful OTP verifications that are followed by a Stripe Checkout Session creation.
+- Formula: count(`stripe.checkout.created` events) / count(`otp.verify.ok` events), same-session pairing.
+- Source: structured logs.
+- Refresh cadence: daily.
+- Owner: #35 + #30
+- Decision informed: detect silent failure between OTP success and the Stripe call. A gap here means the retry `POST /api/billing/create-subscription` is failing server-side (price ID missing, Stripe customer_update misconfigured, rate limit), which users experience as "I signed in but nothing happened."
+- Target: ≥90%; a drop is P1.
+- PII risk: none.
+- Defined: 2026-04-18
+
+### extension_tier_sync_lag
+- Definition: Time between a web-app Pro tier change and the extension popup reflecting that tier.
+- Formula: Median and p95 of (extension `popup_opened` event timestamp where `userTier` matches current web state − most recent `subscription.updated` webhook timestamp), rolling 7 days.
+- Source: extension popup event (client-reported to `/api/analytics` — not yet wired), subscription webhook log.
+- Refresh cadence: weekly.
+- Owner: #35 + #34
+- Decision informed: health of the 5-minute extension tier cache + cookie-scoping on allowanceguard.com. Regressions here typically trace to cookie-domain changes, extension host-permissions drift, or the `/api/user/plan` endpoint returning stale data.
+- Target: median ≤5 min; p95 ≤10 min.
+- PII risk: none if aggregated; avoid per-user join.
+- Defined: 2026-04-18
+- Note: depends on a lightweight `extension_popup_opened` event being sent by the extension. Not yet wired — instrument in a follow-up.
+
+### extension_install_active_rate
+- Definition: Fraction of weekly extension installs whose user opens the popup at least once within 7 days.
+- Formula: count(users with `popup_opened` within 7 days of install) / count(installs that week).
+- Source: Chrome Web Store installs + Firefox AMO installs (both available in each dashboard), extension `popup_opened` event.
+- Refresh cadence: weekly.
+- Owner: #35 + #5
+- Decision informed: first-run onboarding quality; discovery of the extension's value post-install.
+- Target: ≥40% after a steady state (first 4 weeks will undershoot).
+- PII risk: none.
+- Defined: 2026-04-18
+
+### upstash_commands_mtd
+- Definition: Running total of Upstash Redis commands executed month-to-date.
+- Formula: Upstash dashboard command count, current billing period.
+- Source: Upstash console.
+- Refresh cadence: on-demand (weekly brief; operator-pulled).
+- Owner: #35 + #10
+- Decision informed: catch runaway Redis usage before it hits a quota ceiling. After the 2026-04-18 quota-exhaustion incident (500k free-tier cap hit on a ~24h-old DB because `cacheHealthCheck` did SET+GET on every healthz probe), this metric exists so we see the climb coming.
+- Target / threshold: alert if >60% of current plan by day 15 of the billing period.
+- PII risk: none.
+- Defined: 2026-04-18
 - Defined: 2026-04-17
 
 ### connect_rate_weekly

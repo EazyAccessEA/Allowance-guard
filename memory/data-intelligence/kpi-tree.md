@@ -42,6 +42,9 @@ North-star
 | Pro signup rate (Pro signups / pricing page views, weekly) | Pricing page persuasion | #35 + conversion + #5 |
 | Sentinel signups (count, weekly) | Sentinel page persuasion + sales pipeline | #35 + conversion + #5 |
 | API tier signups (Developer + Growth, monthly) | API tier positioning + developer funnel | #35 + #6 |
+| **Upgrade-flow completion rate** (pricing click → Stripe redirect) | OTP / payment funnel health; regression canary for the 2026-04-18 SIWE-replacement path | #35 + conversion + #30 |
+| **OTP verification rate** (otp-verify 200 / otp-request 200, weekly) | Email deliverability + code-entry friction; sub-metric of the upgrade flow | #35 + #5 |
+| **Post-OTP checkout reach** (stripe-checkout redirected / otp-verify 200, weekly) | Detect silent failure between OTP success and Stripe call | #35 + #30 |
 
 ### Retention
 | Metric | Decision it informs | Owner |
@@ -73,6 +76,19 @@ North-star
 | Grant pipeline value (open applications × amount × estimated probability) | Growth focus + cashflow planning | #35 + #12 |
 | Listing-driven sessions per listing (28-day post-listing) | Listing-submission ROI by directory | #35 + #12 |
 | Partnership-attributed scans (where partner integration drives traffic) | Integration-proposal prioritisation | #35 + #12 + #6 |
+| **Extension tier-sync lag** (time from web Pro upgrade → extension popup reflects Pro, median + p95) | Extension popup ÷ `/api/user/plan` freshness; catches cache-TTL or cookie-scoping regressions early | #35 + #34 |
+| **Chrome / Firefox store install→active rate** (first-open-within-7-days ÷ installs, weekly) | Extension onboarding quality + first-run UX | #35 + #5 |
+
+## Platform-compliance health (red-line, not goals)
+
+Added 2026-04-18 after the Mozilla AMO disable. These are signals that a platform (store, ad network, payment provider) may be at-risk for a policy action against us. They are monitoring-only — never targets.
+
+| Metric | What it tells us | Owner |
+|---|---|---|
+| Mozilla AMO listing status (Active / Disabled / In appeal) | Whether Firefox distribution is live | #35 + #9 + operator |
+| Chrome Web Store listing status | Whether Chrome distribution is live | same |
+| Stripe account risk flag (none / informational / action-required) | Whether payments are at-risk of a restricted-business review | #35 + #30 |
+| Last `claim-review` sweep date across user-facing surfaces | Compliance hygiene freshness — red if >35 days | #35 + #9 |
 
 ## Health checks (red lines, not goals)
 

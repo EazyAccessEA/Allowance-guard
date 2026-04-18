@@ -111,6 +111,52 @@ Format:
 - Lawful basis: internal records; B2B contact information governed by separate B2B outreach lawful-basis chain
 - PII present: B2B contact names + emails — **never quoted in a public brief**
 
+## Structured application logs (OTP + Stripe funnel events)
+
+- Owner (operational): operator
+- Owner (council): #35 + #30 + #34
+- Access pattern: operator pulls from Vercel log drain / Rollbar / any future log aggregator into `context/data-intelligence/logs/<YYYY-MM-DD>-<surface>.ndjson`, filtered to the event names below, dropping request IDs and IP addresses before drop-off.
+- Export cadence: weekly (for the Monday brief); on-demand during incidents.
+- Retention (in source): Rollbar / Vercel per their terms (typically 30-90 days)
+- Retention (in `context/`): 14 days; aggregates only after that.
+- Lawful basis: legitimate interest for service monitoring + quality.
+- PII present in raw: email addresses appear in `otp.request.fake_email` (dev only) and as Stripe customer email. **Strip before export.**
+- Aggregation required before analysis: yes, counts only. Never join an email to any downstream metric.
+
+Registered events:
+
+| Event name | Source route | Feeds metric |
+|---|---|---|
+| `otp.request.ok` | `src/app/api/auth/otp-request/route.ts` (apiLogger.info) | `otp_verification_rate` denominator |
+| `otp.verify.ok` | `src/app/api/auth/otp-verify/route.ts` | `otp_verification_rate` numerator + `post_otp_checkout_reach` denominator |
+| `otp.verify.failed` | same | abuse / deliverability signal |
+| `stripe.checkout.created` | `src/app/api/billing/create-subscription/route.ts` | `post_otp_checkout_reach` numerator + `upgrade_flow_completion_rate` numerator |
+| `upgrade_clicked` | client-side, `src/hooks/useUpgradeFlow.ts` → Vercel Analytics | `upgrade_flow_completion_rate` denominator |
+| `siwe.verify.ok` | `src/app/api/auth/siwe/route.ts` | residual wallet-first sign-ins (secondary funnel) |
+
+## Upstash Redis dashboard
+
+- Owner (operational): operator
+- Owner (council): #35 + #10
+- Access pattern: operator screenshots the Upstash console's Commands / Bandwidth / Storage counters into `context/data-intelligence/upstash/<YYYY-MM-DD>.png` or pastes the numbers into `context/data-intelligence/upstash/<YYYY-MM-DD>.md`.
+- Export cadence: weekly; on-demand during capacity incidents.
+- Retention (in `context/`): 30 days.
+- Lawful basis: internal operational; no user data.
+- PII present: none (aggregate command counts only).
+- Feeds metric: `upstash_commands_mtd` in `metric-catalog.md`. Added after the 2026-04-18 quota-exhaustion incident so future capacity pressure is visible before it 429s every paying user.
+
+## Chrome Web Store + Firefox AMO dashboards
+
+- Owner (operational): operator
+- Owner (council): #35 + #5 + #9 (legal for any policy-status field)
+- Access pattern: operator pulls weekly installs / uninstalls / active users / rating from each developer console into `context/data-intelligence/extension/<YYYY-MM-DD>-{chrome,firefox}.md`.
+- Export cadence: weekly.
+- Retention (in source): each store retains per their TOS.
+- Retention (in `context/`): 90 days; aggregate to monthly after.
+- Lawful basis: platform publisher data; no per-user identifiers surfaced.
+- PII present: no (installs / ratings aggregated by store).
+- Feeds metrics: `extension_install_active_rate`, and the platform-compliance health signals on the listing status (Active / Disabled / In appeal). Added 2026-04-18 — Firefox listing was disabled same day and status now needs weekly monitoring through the 6-month appeal window.
+
 ---
 
 ## Banned sources
