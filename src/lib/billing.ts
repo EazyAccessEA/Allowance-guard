@@ -105,10 +105,18 @@ export async function createCheckoutSession(opts: CreateSubscriptionOptions): Pr
       ag_user_id: String(opts.userId),
       ag_plan: opts.plan,
     },
-    // B2B API plans: enable automatic tax for invoices
+    // B2B API plans: enable automatic tax for invoices. Stripe needs a
+    // billing address to compute tax; email-only customers (the OTP
+    // sign-in path) don't have one yet, so we ask Checkout to collect
+    // it and update the customer record during the session. Without
+    // these two flags the session-create call 500s with
+    // "customer does not have an address" on first-time customers.
     ...(isApiPlan && {
       automatic_tax: { enabled: true },
       allow_promotion_codes: true,
+      billing_address_collection: 'required' as const,
+      customer_update: { address: 'auto' as const, name: 'auto' as const },
+      tax_id_collection: { enabled: true },
     }),
     // Note: invoice_creation is NOT supported on subscription-mode checkout.
     // Stripe automatically creates invoices for subscription payments.
