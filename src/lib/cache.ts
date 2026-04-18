@@ -182,6 +182,16 @@ export async function invalidateUserPlanCache(userId: string): Promise<void> {
 }
 
 // Health check for the cache layer.
+//
+// Previous implementation did SET+GET per call. On a production deployment
+// where Vercel pings /api/healthz and any external uptime monitor polls the
+// same endpoint, that worked out to 2 Upstash writes per probe — the single
+// biggest contributor to a 497K-writes-per-month burn that tripped the
+// free-tier 500K ceiling. A PING is a one-command read-class check that
+// proves the same thing the SET/GET round-trip was proving (can we reach
+// Upstash) without burning write budget. If reachability is fine, SET/GET
+// will also work; testing it on every probe was paranoia dressed as
+// coverage.
 export async function cacheHealthCheck(): Promise<{
   ok: boolean
   message: string
@@ -190,16 +200,15 @@ export async function cacheHealthCheck(): Promise<{
   const upstash = getUpstash()
   if (upstash) {
     try {
-      await upstash.set(
-        'health_check',
-        JSON.stringify({ timestamp: Date.now() }),
-        { ex: 60 },
-      )
-      const val = await upstash.get<string>('health_check')
-      if (val) {
+      const res = await upstash.ping()
+      if (res === 'PONG') {
         return { ok: true, message: 'ok', backend: 'upstash' }
       }
-      return { ok: false, message: 'Upstash read failed', backend: 'upstash' }
+      return {
+        ok: false,
+        message: `unexpected ping response: ${String(res)}`,
+        backend: 'upstash',
+      }
     } catch (error) {
       return {
         ok: false,

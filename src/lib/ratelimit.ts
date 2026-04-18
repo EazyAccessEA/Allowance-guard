@@ -4,15 +4,24 @@
 //   limitHit(key, windowSec, max)        → { allowed, remaining, ttl }
 //   limitOrThrow(ip, endpoint)           → throws 'Rate limit exceeded' if over
 //
-// Backing store changed from a self-hosted TCP redis client to Upstash REST.
-// All eight call sites stay as-is — no imports or arguments change.
-//
-// Failure policy (unchanged semantics — matches commit 5b4303d):
+// Failure policy:
 //   - Upstash NOT configured (env vars absent) → fail OPEN. Rate limiter is
 //     intentionally disabled for this environment. No network calls, no logs.
-//   - Upstash configured but unreachable → fail CLOSED. Security-significant;
-//     a transient outage must not become a bot free-for-all.
+//   - Upstash configured but unreachable or quota-exhausted → fail OPEN with
+//     a loud error log. Previous behaviour was fail-closed; this was reverted
+//     after an Upstash free-tier 500K/month quota hit (Apr 2026) turned every
+//     rate-limit check into a 429 and locked out 100% of paying users on the
+//     OTP + checkout funnels. The security trade-off: an attacker who times
+//     their abuse to a provider outage now has a few minutes of unrestricted
+//     traffic. That is a vanishingly small window compared to the revenue
+//     cost of blocking every legit request every time a vendor hiccups.
+//     Matches Vercel / Cloudflare rate-limit defaults.
+//
+// Operator signal: every fail-open is logged at error level with a stable
+// prefix so it surfaces in Rollbar / log search without code changes.
 import { getUpstash, isUpstashConfigured } from './upstash'
+
+const FAIL_OPEN_LOG = '[ratelimit] failing OPEN due to Upstash error —'
 
 export async function limitHit(key: string, windowSec: number, max: number) {
   // Not configured — rate limiter intentionally disabled for this environment.
@@ -22,10 +31,12 @@ export async function limitHit(key: string, windowSec: number, max: number) {
 
   const client = getUpstash()
   if (!client) {
-    // isUpstashConfigured was true but the factory still returned null — treat
-    // as unreachable and fail closed.
-    console.warn('[ratelimit] Upstash client unavailable — failing closed')
-    return { allowed: false, remaining: 0, ttl: windowSec }
+    // isUpstashConfigured was true but the factory still returned null.
+    // Fail open, log loudly so the operator notices the mismatch.
+    console.error(
+      `${FAIL_OPEN_LOG} client unavailable (key=${key})`,
+    )
+    return { allowed: true, remaining: max, ttl: windowSec }
   }
 
   const now = Math.floor(Date.now() / 1000)
@@ -50,12 +61,10 @@ export async function limitHit(key: string, windowSec: number, max: number) {
       ttl: ttl > 0 ? ttl : windowSec,
     }
   } catch (err) {
-    // Upstash configured but network/API call failed — security-significant.
-    console.warn(
-      '[ratelimit] Upstash call failed — failing closed:',
-      err instanceof Error ? err.message : 'Unknown error',
+    console.error(
+      `${FAIL_OPEN_LOG} ${err instanceof Error ? err.message : 'Unknown error'} (key=${key})`,
     )
-    return { allowed: false, remaining: 0, ttl: windowSec }
+    return { allowed: true, remaining: max, ttl: windowSec }
   }
 }
 

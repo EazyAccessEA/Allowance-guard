@@ -155,11 +155,16 @@ describe('ratelimit', () => {
   })
 
   // -----------------------------------------------------------------------
-  // Tests where Upstash is configured but unreachable (fail-closed)
+  // Tests where Upstash is configured but unreachable (fail-open).
+  //
+  // Previously this path failed closed. Changed to fail-open after an
+  // Upstash quota-exhaustion incident turned every rate-limited endpoint
+  // into a 429 and locked out the entire OTP + checkout funnels. The
+  // security trade is documented in src/lib/ratelimit.ts.
   // -----------------------------------------------------------------------
 
-  describe('with Upstash unreachable (fail-closed)', () => {
-    it('returns allowed: false when INCR throws', async () => {
+  describe('with Upstash unreachable (fail-open)', () => {
+    it('returns allowed: true and logs at error level when INCR throws', async () => {
       let limitHitFresh: typeof import('@/lib/ratelimit').limitHit
 
       jest.isolateModules(() => {
@@ -170,11 +175,17 @@ describe('ratelimit', () => {
 
       mockIncr.mockRejectedValue(new Error('ECONNREFUSED'))
       mockTtl.mockReset()
+      const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
       const result = await limitHitFresh!('key', 60, 10)
-      expect(result.allowed).toBe(false)
-      expect(result.remaining).toBe(0)
+      expect(result.allowed).toBe(true)
+      expect(result.remaining).toBe(10)
       expect(result.ttl).toBe(60)
+      expect(errSpy).toHaveBeenCalledWith(
+        expect.stringContaining('[ratelimit] failing OPEN'),
+      )
+
+      errSpy.mockRestore()
     })
   })
 
