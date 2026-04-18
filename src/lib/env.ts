@@ -27,6 +27,11 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_URL: z.string().url('NEXT_PUBLIC_APP_URL must be a valid URL'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 
+  // OTP email sign-in. Secret is the HMAC key used to hash 6-digit
+  // codes before persisting them. Required so a DB leak does not
+  // reveal codes; must be >= 32 chars of entropy.
+  OTP_SECRET: z.string().min(32, 'OTP_SECRET must be at least 32 chars').optional(),
+
   // Email (optional — email features disabled when absent)
   // Preferred: Resend. Fallbacks: Postmark, then SMTP.
   RESEND_API_KEY: z.string().optional(),
