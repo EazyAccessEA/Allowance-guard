@@ -27,6 +27,7 @@ const config: Config = {
     '/.next/',
     '/dist/',
     '/tests/', // Exclude Playwright tests
+    '/packages/', // packages/* use vitest, not jest — run via `pnpm -F <pkg> test`
   ],
 };
 
