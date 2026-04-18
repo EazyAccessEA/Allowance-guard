@@ -95,6 +95,18 @@ BLOG_IMAGES = [
         "filename": "why-most-wallet-security-tools-fail.webp",
         "prompt": "A broken magnifying glass lying next to an intact one on a cream surface, warm studio lighting, editorial still life, shallow depth of field",
     },
+    {
+        "filename": "eight-approval-exploits-one-pattern.webp",
+        "prompt": "Continuous single-line ink drawing of a trail of footprints leading away from an open vault door, one footprint rendered in warm amber, minimalist editorial illustration",
+    },
+    {
+        "filename": "every-approval-you-sign-decoded.webp",
+        "prompt": "Continuous single-line ink drawing of a cipher wheel with rotating inner and outer rings on cream paper, one cipher notch rendered in warm amber, minimalist editorial illustration",
+    },
+    {
+        "filename": "ten-minute-wallet-audit.webp",
+        "prompt": "Continuous single-line ink drawing of ten empty checkboxes in a column on cream paper, the top three boxes ticked with amber marks, minimalist editorial illustration",
+    },
 ]
 
 

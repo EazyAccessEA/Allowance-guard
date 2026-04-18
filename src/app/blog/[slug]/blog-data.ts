@@ -2636,5 +2636,128 @@ export const blogPosts: BlogPost[] = [
     category: 'Security',
     featured: false,
     tags: ['incident-response', 'scams', 'recovery', 'playbook', 'security'],
+  },
+  {
+    slug: 'eight-approval-exploits-one-pattern',
+    title: 'Eight Approval Exploits, One Pattern',
+    subtitle: 'What three years of on-chain post-mortems teach us about token permissions',
+    content: `
+      <p>Between early 2022 and early 2024, roughly $2.3 billion moved out of DeFi protocol treasuries, bridge custody contracts, and user wallets through incidents that share more than the headlines suggest. We work on wallet-security tooling, so we maintain a curated list of roughly thirty contract addresses associated with well-documented exploits. When a user is about to approve a spender, we check their transaction against that list and surface a warning if there's a match.</p>
+
+      <p>That list is public. It lives at <code>src/lib/risk-factors.ts</code> in our open-source repository. This post walks through eight of the largest incidents in it, what each one actually was on-chain, and whether a token-approval review — the kind our tooling provides — would have interrupted the attack. The honest answer is: some yes, some no. Knowing which is which is the difference between security theatre and useful tooling.</p>
+
+      <h2>What a "known-exploit" warning actually means</h2>
+
+      <p>When our extension or scanner flags a spender address, it's saying: "this contract has been named in a documented, publicly-reported security incident." It is not saying: "your wallet is definitely going to be drained if you sign this." Some of the addresses on our list belong to long-defunct exploit contracts that no one is actively using. Some belong to contracts that still hold stolen funds but can no longer attack anyone. A few belong to addresses the attackers themselves used to sweep proceeds, which your wallet may still route tokens to if a multi-step scam has you interacting with an intermediate step.</p>
+
+      <p>The warning exists to give you a moment of friction — a pause before you sign — in the narrow case where a user-facing scam has led you to interact with a contract we've already catalogued. It cannot flag a brand-new drainer deployed ten minutes ago. It cannot audit a legitimate-looking protocol's smart contracts for logic flaws. It is advisory information, not protection. Holding that distinction in mind, let's look at the eight.</p>
+
+      <h2>1. Ronin Bridge — March 2022, $624M</h2>
+
+      <p>Ronin was the worst of them by value, and it has nothing to do with token approvals. Attackers compromised five of the nine validator keys that signed off on bridge withdrawals — four through an Axie Infinity team member's machine, one through a stale Sky Mavis validator that had been granted permission to approve transactions and never revoked. They drained the bridge's custody contract directly by forging validator signatures.</p>
+
+      <p>No user on the Ethereum side signed an <code>approve()</code> that handed attackers access to their tokens. This was a private-key / signature-scheme compromise at the operator level. The Ronin bridge address sits on our list because the aftermath contracts and attacker sweep addresses are on-chain evidence; future wallets shouldn't interact with them. But if you're asking "would an approval-review tool have stopped this," the answer is no. The attack was upstream of user approvals entirely.</p>
+
+      <p><strong>What this incident teaches:</strong> some categories of crypto loss — validator key compromise, signature-scheme weakness, operator insider risk — are outside the scope of what any wallet-side tool can address. Approval hygiene protects against user-facing token-approval abuse. It does not protect against a protocol operator being hacked.</p>
+
+      <h2>2. Wormhole — February 2022, $320M</h2>
+
+      <p>Wormhole was a smart-contract logic bug in the bridge's Solana-side verification code. The attacker submitted a forged "message" that the bridge's verifier contract failed to reject, causing it to mint 120,000 wrapped ETH on Solana without any actual ETH being locked on Ethereum. The Ethereum side was never touched; the exploit happened entirely on the Solana contract's <code>verify_signatures</code> function.</p>
+
+      <p>Again, no user signed a malicious approval. The bridge's guardian signature check had a flaw that let the attacker claim the guardians had approved something they had not. Jump Crypto replaced the stolen ETH within days, which is why the headlines moved on — but the on-chain evidence remains.</p>
+
+      <p><strong>What this incident teaches:</strong> smart-contract audit failures are distinct from approval-abuse attacks. A user who has zero approvals to malicious contracts can still lose funds if a legitimate protocol they use has a logic bug. The mitigation for this is contract auditing (not the user's job) and diversification of counterparty risk (partially the user's job).</p>
+
+      <h2>3. Nomad Bridge — August 2022, $190M</h2>
+
+      <p>Nomad's "initialize" function had a configuration error in an upgrade that let any message pass verification. Within hours, dozens of users — some originally legitimate observers, some copycats — were draining the bridge by replaying the exploit with their own addresses substituted in. The on-chain picture was chaotic because it wasn't one attacker; it was a swarm.</p>
+
+      <p>Like Wormhole, this was a smart-contract initialization flaw on the bridge itself. Users weren't tricked into approvals. The bridge's token custody contract leaked funds to whoever copied the exploit template.</p>
+
+      <p><strong>What this incident teaches:</strong> once an exploit becomes copy-pasteable on a public blockchain, the attacker class expands enormously within hours. A tool that catalogues one attacker address will be outdated by lunchtime. The approach has to be either (a) flag the exploited contract itself, which we do, so a user later interacting with the remains gets a warning; or (b) flag the token contract whose supply is now suspect. Both are downstream of the event, not preventive.</p>
+
+      <h2>4. Euler Finance — March 2023, $197M</h2>
+
+      <p>Euler was a donateToReserves + liquidation logic bug. The attacker used a flash loan to deposit tokens, called Euler's <code>donateToReserves</code> in a state that made their debt position liquidatable, then self-liquidated at a bonus, extracting more than they had put in. They repeated this across asset pools until they had drained nearly $200M.</p>
+
+      <p>The attacker was later convinced to return most of the funds. But the on-chain pattern is instructive: the exploit used the victim protocol's own functions in an unexpected sequence. A user with Euler approvals granted from weeks earlier did nothing wrong — their approvals were not abused directly. The attacker didn't need user approvals because the protocol itself was the vector.</p>
+
+      <p><strong>What this incident teaches:</strong> a significant class of DeFi loss happens to users who signed approvals that were, at the time, to well-audited, legitimate contracts. The contracts themselves later failed. No approval-hygiene practice distinguishes "legitimate protocol today, compromised protocol tomorrow." Diversifying value across protocols helps; zero approvals helps only in the sense that having no funds in DeFi means no DeFi risk.</p>
+
+      <h2>5. Curve Finance (Vyper reentrancy) — July 2023, $62M</h2>
+
+      <p>Curve's loss originated upstream: the Vyper compiler, in several versions, had a reentrancy-lock bug that left specific Curve pools exposed. The attacker(s) used reentrancy attacks on crvUSD pairs — msETH/ETH, alETH/ETH, pETH/ETH — to repeatedly withdraw more than they had deposited. It was a compiler-level bug that none of the pool audits could have caught, because the audits ran against the intended Vyper semantics.</p>
+
+      <p>The attacker was a whitehat adjacent to the MEV community; significant portions of the stolen funds were returned. Again, user approvals to Curve were not the vector; the bug lived in the compiled bytecode's reentrancy guard.</p>
+
+      <p><strong>What this incident teaches:</strong> the toolchain below the contract is part of the trusted computing base. "This protocol is audited" doesn't mean "the language this protocol compiled from was also correct at this version." There's no user action that mitigates this class of risk. The on-chain data is in our list; the lesson is epistemic.</p>
+
+      <h2>6. Atomic Wallet — June 2023, $100M+</h2>
+
+      <p>Atomic Wallet was a wallet-level compromise, not a DeFi exploit. Investigations attribute the incident to the Lazarus Group and suggest the attack vector was either a compromised Atomic Wallet update pipeline or targeted malware that extracted seed phrases and private keys from users' devices. Once the attackers had the seed, everything the wallet held — including tokens across many chains — was theirs.</p>
+
+      <p>This is private-key theft, which sits entirely outside the approval-hygiene conversation. The tokens in those wallets were transferred away via direct signed transactions from the victims' own keys. No spender approval was needed because the attacker had the keys themselves.</p>
+
+      <p><strong>What this incident teaches:</strong> approval hygiene is a layer in a stack. It protects against a specific class of attack: malicious or compromised spenders abusing approvals you've granted. It does nothing against a wallet whose seed has been stolen. Hardware wallets, air-gapped signing, and operational security habits (do not paste your seed into a browser extension you can't inspect) are the layers for that class of attack.</p>
+
+      <h2>7. KyberSwap Elastic — November 2023, $48M</h2>
+
+      <p>KyberSwap's loss was a rounding-related exploit in their concentrated liquidity pool math. The attacker exploited a specific path through KyberSwap Elastic's pricing logic to drain LP positions. The event is reasonably detailed in the KyberSwap team's own post-mortem and in independent on-chain analyses from Meta Seluth and others.</p>
+
+      <p>Again: protocol logic bug, not user approval abuse. But an interesting twist — some of the stolen value had to pass through attacker-controlled contracts and wrapping steps, and those downstream addresses are on our list. A user who, months later, interacts with a token whose liquidity path routes through one of those addresses would get a warning. That warning is a useful signal but not a guarantee of safety.</p>
+
+      <p><strong>What this incident teaches:</strong> our catalogue is most useful for flagging aftermath contracts — addresses that attackers still use or that hold stolen value — rather than predicting future exploits. Treat a warning as "pause and look more carefully," never as "definitely unsafe" or "definitely safe if absent."</p>
+
+      <h2>8. Socket Bridge — January 2024, $3.3M</h2>
+
+      <p>Socket's January 2024 incident sits uncomfortably close to the approval-abuse pattern our tooling is designed to surface, which is exactly why it's worth ending here. Socket's bridging contracts had a vulnerability where an attacker could supply arbitrary call data that caused the contract to transfer tokens from any address that had granted Socket a non-zero ERC-20 approval. The only users affected were those with leftover Socket approvals that had never been revoked.</p>
+
+      <p>That is the rare case where the exact hygiene practice our tool promotes would have closed the attack surface. Users who had done a periodic approval review in 2023 and revoked their Socket allowances — because they weren't bridging that week — would have lost nothing. Users who left the approvals open on the theory that "Socket is legitimate and I might bridge again soon" were exposed to whatever Socket's contracts could do later, which included being compromised.</p>
+
+      <p>Total loss was contained at $3.3M because Socket paused their contracts within roughly 90 minutes. The community recovered most of the funds. But the event is the clearest case in three years of DeFi hacks where "revoke when you're not using it" literally was the preventive action.</p>
+
+      <p><strong>What this incident teaches:</strong> a standing approval to a legitimate protocol is a standing trust in that protocol's future, including its future security posture. The right default is to revoke approvals you're not currently using, not because the protocol is untrustworthy today, but because today's trust doesn't bind tomorrow.</p>
+
+      <h2>The pattern that runs through all eight</h2>
+
+      <p>Six of the eight were protocol or infrastructure failures unrelated to user approvals. Two (Atomic, arguably Socket) involved compromise paths downstream or adjacent to the approval layer. The hack that best matches the classic "malicious contract abuses your approval" pattern is Socket, and it was also by far the smallest of the eight.</p>
+
+      <p>This is worth internalising. The DeFi security commentary that frames "revoke your approvals" as the single most important thing a user can do overstates the case. The biggest losses by value in recent years have not been approval-abuse events; they have been validator compromises, bridge logic bugs, compiler bugs, and private-key theft. Revoking approvals does not help against those classes of attack.</p>
+
+      <p>What approval hygiene does do — consistently, measurably — is close a specific small-to-medium surface: the window during which a legitimate protocol you've granted standing permission to can be compromised and have that permission turned against you. Socket is the archetype. Several Inferno Drainer campaigns targeted at specific protocol users in 2024 used the same shape of attack. It's a real surface, just not the biggest one.</p>
+
+      <h2>What our list is useful for, and what it is not</h2>
+
+      <p>When you scan a wallet on <a href="/#scan">allowanceguard.com</a>, any spender address that matches our curated list gets flagged. That match is evidence the address has appeared in a documented security incident. Depending on which incident, it's either a direct signal ("this is an attacker-controlled contract, do not approve") or an aftermath signal ("this address is associated with stolen funds; its further activity is suspicious").</p>
+
+      <p>What our list <em>cannot</em> do:</p>
+      <ul>
+        <li>Tell you whether a brand-new contract deployed this morning is a drainer.</li>
+        <li>Audit a legitimate protocol's code for Euler-style logic bugs.</li>
+        <li>Prevent private-key theft or seed-phrase compromise.</li>
+        <li>Identify compiler-toolchain vulnerabilities like the Curve/Vyper case.</li>
+        <li>Stop you from signing a transaction against a protocol that gets hacked next week.</li>
+      </ul>
+
+      <p>What it <em>can</em> do:</p>
+      <ul>
+        <li>Flag a match when a user has been led via phishing to interact with a contract we've catalogued from a prior incident.</li>
+        <li>Give a moment of friction on approval transactions so the user re-reads the spender address.</li>
+        <li>Surface standing approvals to protocols that have since been compromised (the Socket pattern), so the user can revoke before they become a victim of the aftermath.</li>
+      </ul>
+
+      <p>That's a useful tool. It is not protection, and it is not a substitute for the harder work of contract audits, diversification, and operational security. Treat our list as one layer in a stack, and the biggest layer you control yourself is the habit of periodically looking at what you've approved and revoking what you don't actively need.</p>
+
+      <h2>If you want to check your own wallet</h2>
+
+      <p>The free scanner at <a href="/#scan">allowanceguard.com/#scan</a> reads any EVM wallet's approvals across 27 chains, flags matches against the list discussed above, and lets you revoke directly. No account needed for up to three wallets. The source of the list — and every other part of the scoring logic — is public at <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer">github.com/EazyAccessEA/Allowance-guard</a>.</p>
+
+      <p>The best time to revoke a standing approval you're not currently using is before you need to wish you had.</p>
+    `,
+    publishedAt: '2026-04-18',
+    readTime: '10 min read',
+    category: 'Security',
+    featured: true,
+    tags: ['exploits', 'post-mortem', 'approvals', 'known-exploits', 'security', 'research'],
   }
 ]

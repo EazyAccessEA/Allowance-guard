@@ -37,6 +37,17 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'eight-approval-exploits-one-pattern',
+    title: 'Eight Approval Exploits, One Pattern',
+    subtitle: 'What three years of on-chain post-mortems teach us about token permissions',
+    excerpt: 'Six of the eight largest DeFi hacks between 2022 and 2024 had nothing to do with user token approvals. The seventh and eighth tell us where approval hygiene actually matters — and where it cannot help.',
+    publishedAt: '2026-04-18',
+    readTime: '10 min read',
+    category: 'Security',
+    featured: true,
+    image: '/images/blog/eight-approval-exploits-one-pattern.webp',
+  },
+  {
     slug: 'open-source-stronger-our-license-update',
     title: 'Open Source, Stronger: Our License Update to AGPL-3.0',
     subtitle: 'Why We Switched Licenses and What It Means for You',
