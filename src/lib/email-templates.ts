@@ -65,6 +65,48 @@ const TERMS_URL = 'https://allowanceguard.com/terms'
 const UNSUB_URL = (email: string) =>
   `https://allowanceguard.com/unsubscribe?email=${encodeURIComponent(email)}`
 
+// Asset served from the marketing site so Gmail, Outlook, and Apple Mail
+// can proxy-cache it without mixed-content warnings. Purpose-built PNG at
+// /public/images/branding/ag-logo-email.png — high-contrast ink silhouette
+// that reads on light and dark email client themes.
+const LOGO_URL = 'https://www.allowanceguard.com/images/branding/ag-logo-email.png'
+
+/**
+ * Logo + wordmark row. Table-based because Outlook ignores flex/grid
+ * and because explicit cell alignment is the only reliable way to
+ * vertically centre an <img> next to text across all email clients.
+ * Pass a `suffix` for sub-kinds (e.g. "alert" or "operator inbox")
+ * and a `variant` to pick a display-italic (marketing/operational)
+ * or uppercase-plex (alert/operator) treatment.
+ */
+function wordmarkRow(opts: {
+  suffix?: string
+  variant: 'display' | 'meta'
+  borderColor?: string
+}): string {
+  const { suffix, variant, borderColor = TOKENS.inkRule } = opts
+  const textStyle =
+    variant === 'display'
+      ? `font-family: ${FONT_DISPLAY}; font-style: italic; font-size: 20px; font-weight: normal; color: ${TOKENS.ink}; letter-spacing: -0.01em;`
+      : `font-family: ${FONT_BODY}; font-size: 12px; font-weight: 600; color: ${TOKENS.ink}; letter-spacing: 0.02em;`
+  const suffixStyle = `font-family: ${FONT_BODY}; font-size: 11px; font-weight: 500; color: ${TOKENS.inkMuted}; letter-spacing: 0.08em; text-transform: uppercase;`
+  return `
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin: 0 0 28px; padding-bottom: 20px; border-bottom: 1px solid ${borderColor};">
+      <tr>
+        <td style="width: 40px; vertical-align: middle;">
+          <img src="${LOGO_URL}" alt="AllowanceGuard" width="32" height="32" style="display: block; border: 0; outline: none; text-decoration: none; width: 32px; height: 32px;" />
+        </td>
+        <td style="vertical-align: middle; padding-left: 12px;">
+          <span style="${textStyle}">AllowanceGuard</span>${
+    suffix
+      ? ` <span style="${suffixStyle}">&nbsp;·&nbsp; ${suffix}</span>`
+      : ''
+  }
+        </td>
+      </tr>
+    </table>`.trim()
+}
+
 /**
  * Public dispatcher. Default `operational` is the safest neutral choice
  * for any new caller that doesn't think about kind.
@@ -101,7 +143,6 @@ function marketingTemplate(content: string, recipientEmail: string): string {
   <style>
     body { margin: 0; padding: 0; background-color: ${TOKENS.paper}; color: ${TOKENS.ink}; font-family: ${FONT_BODY}; line-height: 1.55; -webkit-font-smoothing: antialiased; }
     .container { max-width: 560px; margin: 0 auto; padding: 40px 32px 48px; background-color: ${TOKENS.paper}; }
-    .wordmark { margin: 0 0 32px; padding-bottom: 28px; border-bottom: 1px solid ${TOKENS.inkRule}; font-family: ${FONT_DISPLAY}; font-style: italic; font-size: 22px; font-weight: normal; color: ${TOKENS.ink}; letter-spacing: -0.01em; }
     h1, h2 { font-family: ${FONT_DISPLAY}; font-style: italic; font-weight: normal; color: ${TOKENS.ink}; letter-spacing: -0.015em; line-height: 1.2; }
     h1 { font-size: 28px; margin: 0 0 16px; }
     h2 { font-size: 22px; margin: 32px 0 12px; }
@@ -121,7 +162,7 @@ function marketingTemplate(content: string, recipientEmail: string): string {
 </head>
 <body style="margin:0;padding:0;background-color:${TOKENS.paper};">
   <div class="container">
-    <p class="wordmark">AllowanceGuard</p>
+    ${wordmarkRow({ variant: 'display' })}
     ${content}
     <div class="footer">
       <p>You're receiving this because you opted in to AllowanceGuard updates.</p>
@@ -150,8 +191,6 @@ function alertTemplate(content: string, recipientEmail: string): string {
   <style>
     body { margin: 0; padding: 0; background-color: ${TOKENS.paperDeep}; color: ${TOKENS.ink}; font-family: ${FONT_BODY}; line-height: 1.55; -webkit-font-smoothing: antialiased; }
     .container { max-width: 600px; margin: 0 auto; padding: 32px 28px 40px; background-color: ${TOKENS.paper}; border-top: 4px solid ${TOKENS.oxblood}; }
-    .wordmark-row { margin: 0 0 24px; padding-bottom: 20px; border-bottom: 1px solid ${TOKENS.inkRule}; font-size: 12px; color: ${TOKENS.inkMuted}; letter-spacing: 0.08em; text-transform: uppercase; }
-    .wordmark-row strong { font-family: ${FONT_DISPLAY}; font-style: italic; font-size: 18px; font-weight: normal; text-transform: none; letter-spacing: -0.01em; color: ${TOKENS.ink}; }
     h1, h2 { font-family: ${FONT_DISPLAY}; font-style: italic; font-weight: normal; color: ${TOKENS.ink}; line-height: 1.2; letter-spacing: -0.015em; }
     h1 { font-size: 26px; margin: 0 0 14px; }
     h2 { font-size: 20px; margin: 28px 0 10px; }
@@ -173,7 +212,7 @@ function alertTemplate(content: string, recipientEmail: string): string {
 </head>
 <body style="margin:0;padding:0;background-color:${TOKENS.paperDeep};">
   <div class="container">
-    <p class="wordmark-row"><strong>AllowanceGuard</strong> &nbsp;·&nbsp; alert</p>
+    ${wordmarkRow({ variant: 'meta', suffix: 'alert' })}
     ${content}
     <div class="footer">
       <p><strong style="color:${TOKENS.inkMuted};">Risk warning.</strong> Cryptocurrency and DeFi activities involve substantial risk of loss. Allowance Guard provides visibility and tooling; you remain responsible for your own wallet decisions.</p>
@@ -204,7 +243,6 @@ function operationalTemplate(content: string, recipientEmail: string): string {
   <style>
     body { margin: 0; padding: 0; background-color: ${TOKENS.paper}; color: ${TOKENS.ink}; font-family: ${FONT_BODY}; line-height: 1.55; -webkit-font-smoothing: antialiased; }
     .container { max-width: 600px; margin: 0 auto; padding: 36px 28px 40px; background-color: ${TOKENS.paper}; }
-    .wordmark { margin: 0 0 28px; padding-bottom: 20px; border-bottom: 1px solid ${TOKENS.inkRule}; font-family: ${FONT_DISPLAY}; font-style: italic; font-size: 20px; font-weight: normal; color: ${TOKENS.ink}; letter-spacing: -0.01em; }
     h1, h2 { font-family: ${FONT_DISPLAY}; font-style: italic; font-weight: normal; color: ${TOKENS.ink}; line-height: 1.2; letter-spacing: -0.015em; }
     h1 { font-size: 26px; margin: 0 0 14px; }
     h2 { font-size: 20px; margin: 28px 0 10px; }
@@ -226,7 +264,7 @@ function operationalTemplate(content: string, recipientEmail: string): string {
 </head>
 <body style="margin:0;padding:0;background-color:${TOKENS.paper};">
   <div class="container">
-    <p class="wordmark">AllowanceGuard</p>
+    ${wordmarkRow({ variant: 'display' })}
     ${content}
     <div class="footer">
       <p>Need help? Reply to this email or contact <a href="mailto:support@allowanceguard.com">support@allowanceguard.com</a>.</p>
@@ -257,7 +295,6 @@ function operatorTemplate(content: string): string {
   <style>
     body { margin: 0; padding: 0; background-color: ${TOKENS.paperSub}; color: ${TOKENS.ink}; font-family: ${FONT_BODY}; line-height: 1.55; }
     .container { max-width: 640px; margin: 0 auto; padding: 24px 24px 32px; background-color: ${TOKENS.paper}; border-left: 3px solid ${TOKENS.oxblood}; }
-    .meta { margin: 0 0 20px; padding-bottom: 14px; border-bottom: 1px solid ${TOKENS.inkRule}; font-size: 11px; color: ${TOKENS.inkMuted}; letter-spacing: 0.08em; text-transform: uppercase; }
     h1, h2 { font-family: ${FONT_DISPLAY}; font-style: italic; font-weight: normal; color: ${TOKENS.ink}; line-height: 1.2; }
     h1 { font-size: 22px; margin: 0 0 12px; }
     h2 { font-size: 18px; margin: 24px 0 8px; }
@@ -274,7 +311,7 @@ function operatorTemplate(content: string): string {
 </head>
 <body style="margin:0;padding:0;background-color:${TOKENS.paperSub};">
   <div class="container">
-    <p class="meta">AllowanceGuard &nbsp;·&nbsp; operator inbox</p>
+    ${wordmarkRow({ variant: 'meta', suffix: 'operator inbox' })}
     ${content}
   </div>
 </body>
