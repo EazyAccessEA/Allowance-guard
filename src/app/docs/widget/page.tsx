@@ -126,7 +126,7 @@ export default function WidgetPage() {
  A drop-in security component you can paste into any website. Configure it below, copy the snippet, and your users get an approval scanner without leaving your page.
  </p>
  <p className="font-plex text-sm text-ink-muted leading-[1.6] pt-3 border-t border-ink-rule max-w-2xl">
- <strong className="text-ink font-semibold">Pending store approval.</strong> The extension is submitted to the Chrome Web Store and Firefox Add-ons and awaiting reviewer approval. The configuration playground below works today; install snippets go live the moment the extension lands in each store.
+ <strong className="text-ink font-semibold">Live.</strong> The extension is approved on the Chrome Web Store and Firefox Add-ons. Configure the widget below and paste the snippet into any page.
  </p>
  </header>
 
@@ -288,7 +288,7 @@ export default function WidgetPage() {
  <li className="flex items-baseline gap-3">
  <span className="font-mono text-xs text-ink-whisper font-semibold shrink-0" aria-hidden="true">—</span>
  <span className="flex-1">Clone the Node.js SDK from{' '}
- <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2"><code className="font-mono text-[0.9em]">/sdk</code></Link>.
+ <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/packages/client" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2"><code className="font-mono text-[0.9em]">packages/client</code></Link>.
  </span>
  </li>
  <li className="flex items-baseline gap-3">

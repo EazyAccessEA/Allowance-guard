@@ -2,8 +2,10 @@
  * Rate Limiting Tests — Upstash backend.
  *
  * Verifies that rate limiting works correctly: allows requests under the
- * limit, blocks at the limit, and fails closed when Upstash is configured
- * but unreachable.
+ * limit, blocks at the limit, and fails OPEN (with an error log) when
+ * Upstash is configured but unreachable. Fail-open was adopted after
+ * an Upstash free-tier quota hit (Apr 2026) locked out every paying
+ * user on the OTP + checkout funnels; see src/lib/ratelimit.ts.
  */
 
 // Mark this file as a module — see the twin file at
@@ -146,14 +148,20 @@ describe('All known endpoints have rate limits', () => {
   }
 })
 
-describe('Fail-closed behavior', () => {
-  test('fails closed when Upstash INCR throws', async () => {
+describe('Fail-open behavior on Upstash error', () => {
+  test('fails OPEN with an error log when Upstash INCR throws', async () => {
     mockIncr.mockRejectedValue(new Error('Connection refused'))
     mockTtl.mockReset()
+    const errSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
 
     const result = await limitHit('test:key', 60, 10)
-    expect(result.allowed).toBe(false)
-    expect(result.remaining).toBe(0)
+    expect(result.allowed).toBe(true)
+    expect(result.remaining).toBe(10)
     expect(result.ttl).toBe(60)
+    expect(errSpy).toHaveBeenCalledWith(
+      expect.stringContaining('[ratelimit] failing OPEN'),
+    )
+
+    errSpy.mockRestore()
   })
 })

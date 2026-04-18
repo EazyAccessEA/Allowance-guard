@@ -178,7 +178,7 @@ export default function OtpUpgradeModal({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
-              className="w-full h-10 pl-9 pr-3 rounded-base border border-ink-rule bg-paper text-sm text-ink placeholder:text-ink-whisper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:border-amber-deep"
+              className="w-full h-10 pl-9 pr-3 border border-ink-rule bg-paper text-sm text-ink placeholder:text-ink-whisper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:border-amber-deep"
             />
           </div>
 

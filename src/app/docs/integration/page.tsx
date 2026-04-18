@@ -216,21 +216,23 @@ export default function IntegrationPage() {
                 <div className="flex flex-col sm:flex-row sm:gap-8 py-4">
                   <dt className="font-plex font-semibold text-ink text-base sm:w-48 shrink-0">Browser extension</dt>
                   <dd className="font-plex text-base text-ink-muted leading-[1.65] flex-1 m-0">
-                    <span className="text-amber-deep font-semibold">Submitted.</span> Awaiting Chrome Web Store and Firefox Add-ons review.
+                    <span className="text-ink font-semibold">Live.</span> Approved on the Chrome Web Store and Firefox Add-ons.
                   </dd>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:gap-8 py-4">
                   <dt className="font-plex font-semibold text-ink text-base sm:w-48 shrink-0">Node.js SDK</dt>
                   <dd className="font-plex text-base text-ink-muted leading-[1.65] flex-1 m-0">
                     <span className="text-amber-deep font-semibold">Source available.</span> Code in{' '}
-                    <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" className="text-amber-deep hover:underline underline-offset-2" target="_blank" rel="noopener noreferrer"><code className="font-mono text-[0.85em]">/sdk</code></Link>{' '}
-                    on GitHub. npm publish pending.
+                    <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/packages/client" className="text-amber-deep hover:underline underline-offset-2" target="_blank" rel="noopener noreferrer"><code className="font-mono text-[0.85em]">packages/client</code></Link>{' '}
+                    on GitHub as <code className="font-mono text-[0.85em]">@allowance-guard/client</code>. npm publish in progress.
                   </dd>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:gap-8 py-4">
                   <dt className="font-plex font-semibold text-ink text-base sm:w-48 shrink-0">React hooks</dt>
                   <dd className="font-plex text-base text-ink-muted leading-[1.65] flex-1 m-0">
-                    <span className="text-ink-whisper font-semibold">On the roadmap.</span> Not started.
+                    <span className="text-amber-deep font-semibold">Source available.</span> Code in{' '}
+                    <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/packages/react" className="text-amber-deep hover:underline underline-offset-2" target="_blank" rel="noopener noreferrer"><code className="font-mono text-[0.85em]">packages/react</code></Link>{' '}
+                    on GitHub as <code className="font-mono text-[0.85em]">@allowance-guard/react</code>. npm publish in progress.
                   </dd>
                 </div>
               </dl>
@@ -257,16 +259,18 @@ export default function IntegrationPage() {
                 <div>
                   <h3 className="font-plex font-semibold text-ink text-base mb-2">React hooks</h3>
                   <p className="font-plex text-base text-ink-muted leading-[1.6] mb-3">
-                    TypeScript-first hooks for reading allowances and risk scores. Automatic caching, error handling, and real-time updates when shipped.
+                    TypeScript-first hooks for reading allowances and risk scores. Automatic caching, error handling, and real-time updates.
                   </p>
-                  <span className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-ink-whisper">Roadmap</span>
+                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/packages/react" target="_blank" rel="noopener noreferrer" className="font-plex text-sm text-amber-deep hover:underline underline-offset-2">
+                    Source on GitHub &rarr;
+                  </Link>
                 </div>
                 <div>
                   <h3 className="font-plex font-semibold text-ink text-base mb-2">Node.js SDK</h3>
                   <p className="font-plex text-base text-ink-muted leading-[1.6] mb-3">
                     Server-side scanning, monitoring, and automated revocation. Complete v1 coverage, retries, rate-limit handling, AGPL-3.0 (commercial licence available).
                   </p>
-                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" target="_blank" rel="noopener noreferrer" className="font-plex text-sm text-amber-deep hover:underline underline-offset-2">
+                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/packages/client" target="_blank" rel="noopener noreferrer" className="font-plex text-sm text-amber-deep hover:underline underline-offset-2">
                     Source on GitHub &rarr;
                   </Link>
                 </div>
@@ -374,9 +378,9 @@ export default function IntegrationPage() {
               </div>
 
               <div className="space-y-4">
-                <h3 className="font-display-tight text-ink tracking-tight text-2xl">Browser extension. <span className="font-plex text-xs tracking-[0.15em] uppercase text-amber-deep align-middle ml-2">Pending</span></h3>
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">Browser extension. <span className="font-plex text-xs tracking-[0.15em] uppercase text-ink align-middle ml-2">Live</span></h3>
                 <p className="font-plex text-base text-ink-muted leading-[1.65]">
-                  Submitted to the Chrome Web Store and Firefox Add-ons. Once approved, install with a single click &mdash; no developer setup required. We&rsquo;ll announce on GitHub and X when the listings are live.
+                  Approved on the Chrome Web Store and Firefox Add-ons. Install with a single click &mdash; no developer setup required.
                 </p>
               </div>
 
@@ -384,15 +388,20 @@ export default function IntegrationPage() {
                 <h3 className="font-display-tight text-ink tracking-tight text-2xl">Node.js SDK. <span className="font-plex text-xs tracking-[0.15em] uppercase text-amber-deep align-middle ml-2">Source on GitHub</span></h3>
                 <p className="font-plex text-base text-ink-muted leading-[1.65]">
                   Source lives in{' '}
-                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/sdk" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2"><code className="font-mono text-[0.9em]">/sdk</code></Link>. npm publish pending.
+                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/packages/client" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2"><code className="font-mono text-[0.9em]">packages/client</code></Link>{' '}
+                  as <code className="font-mono text-[0.9em]">@allowance-guard/client</code>. npm publish in progress.
                 </p>
-                <pre className="bg-ink text-paper p-5 font-mono text-sm overflow-x-auto">git clone https://github.com/{'\n'}  EazyAccessEA/Allowance-guard.git{'\n'}cd Allowance-guard/sdk &amp;&amp; npm i</pre>
+                <pre className="bg-ink text-paper p-5 font-mono text-sm overflow-x-auto">git clone https://github.com/{'\n'}  EazyAccessEA/Allowance-guard.git{'\n'}cd Allowance-guard/packages/client &amp;&amp; pnpm i</pre>
               </div>
 
-              <p className="font-plex text-sm text-ink-muted pt-6 border-t border-ink-rule">
-                Looking for React hooks? On the roadmap &mdash; track progress in{' '}
-                <Link href="https://github.com/EazyAccessEA/Allowance-guard/issues" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2">GitHub Issues</Link>.
-              </p>
+              <div className="space-y-4 pt-6 border-t border-ink-rule">
+                <h3 className="font-display-tight text-ink tracking-tight text-2xl">React hooks. <span className="font-plex text-xs tracking-[0.15em] uppercase text-amber-deep align-middle ml-2">Source on GitHub</span></h3>
+                <p className="font-plex text-base text-ink-muted leading-[1.65]">
+                  Source lives in{' '}
+                  <Link href="https://github.com/EazyAccessEA/Allowance-guard/tree/main/packages/react" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline underline-offset-2"><code className="font-mono text-[0.9em]">packages/react</code></Link>{' '}
+                  as <code className="font-mono text-[0.9em]">@allowance-guard/react</code>. npm publish in progress.
+                </p>
+              </div>
             </section>
 
             {/* Best practices */}
