@@ -35,8 +35,12 @@ function getIp(req: Request): string {
 export async function POST(req: Request) {
   const ip = getIp(req)
 
-  // Per-IP cap: 5 per 15 min. Catches a single host spraying many emails.
-  const ipRl = await limitHit(`otp-request:ip:${ip}`, 900, 5)
+  // Per-IP cap: 20 per 10 min. Generous enough for legit multi-user NATs
+  // and for operator smoke testing; the per-email bucket below is the
+  // real anti-abuse defence. Upstash failures fail closed (see
+  // lib/ratelimit.ts) — if every request 429s, suspect Upstash before
+  // blaming the cap.
+  const ipRl = await limitHit(`otp-request:ip:${ip}`, 600, 20)
   if (!ipRl.allowed) {
     return NextResponse.json(
       { error: 'Too many requests' },
@@ -63,9 +67,10 @@ export async function POST(req: Request) {
 
   const email = parsed.data.email.toLowerCase()
 
-  // Per-email cap: 3 per 15 min. Stops an attacker spamming one inbox.
+  // Per-email cap: 5 per 15 min. Primary anti-abuse defence (stops
+  // attacker spamming one inbox) with headroom for legit typo-retries.
   // Response shape mirrors success so this isn't an enumeration oracle.
-  const emailRl = await limitHit(`otp-request:email:${email}`, 900, 3)
+  const emailRl = await limitHit(`otp-request:email:${email}`, 900, 5)
   if (!emailRl.allowed) {
     apiLogger.warn('otp.request.email_rate_limited', { email })
     return NextResponse.json({ ok: true }, { headers: NO_STORE })
