@@ -17,6 +17,8 @@ External platform policy constraints. These rules are not ours; they belong to t
 | **Neon** | Database | Data residency; backup retention |
 | **GitHub** | Code hosting + CI | Community guidelines; export control |
 | **Apple / Google Play** | Future mobile | (Currently N/A — note if we go mobile) |
+| **Firefox Add-ons (AMO)** | Distribution of the browser extension | Acceptable Use policy — "Deceptive or misleading" applied proactively by Mozilla's review team against crypto-adjacent extensions |
+| **Chrome Web Store** | Distribution of the browser extension | Developer Program Policies — deceptive behaviour, misleading functionality; same triggers as AMO typically apply |
 
 ## Known constraint patterns
 
@@ -53,6 +55,42 @@ External platform policy constraints. These rules are not ours; they belong to t
     - Apple: cryptocurrency app policy, in-app purchase rules, "financial services" categorisation.
     - Google Play: similar plus geo-restriction handling.
 - Record the review outcome in this file before any mobile launch.
+
+### Firefox Add-ons (AMO) — Acceptable Use: Deceptive or misleading
+
+Mozilla's review team actively audits crypto-adjacent extensions on their own initiative, not only in response to user reports. They permanently disable on a single finding of "deceptive or misleading" content. Reinstatement is via a 6-month appeal window; there is no informal reviewer dialogue.
+
+**Triggers we confirmed on 2026-04-18 when AllowanceGuard was disabled** (reference: `context/compliance/2026-04-18-mozilla-amo-appeal.md`):
+
+1. **Absolute "protection" framing on a non-blocking tool.** The manifest `name` was "AllowanceGuard — Wallet Protection" and the description said "protects your crypto wallet" / "alerts you before you sign anything risky." Mozilla reads *protect* as prevention. An advisory tool that only warns must never use *protect / protection / secure / defend* as first-line framing. Honest replacements: *warn, alert, screen, flag, surface*.
+
+2. **Reassurance UI on every transaction.** The overlay rendered green checkmarks next to *"Exploit DB Match: No match"* and *"Similar Scam Patterns: None detected"* for every approval. Mozilla treats a cleared-safe-looking row as a verification claim, even when the code was checking a small curated list. **Rule: absence of a positive finding must be rendered as absence of a row, not a cleared-safe stamp.** Only surface findings, never reassurance.
+
+3. **Differentiated paid-tier detection claims without the code to back them.** The free → Pro step promised *"Enhanced Analysis: exploit database, contract audit status, scam pattern detection"* in the warning overlay. The backend's detection is identical for every tier; paid differs on dashboard features (email alerts, batch, exports), not on-page detection. **Rule: never advertise tier-differentiated risk analysis unless the code computes meaningfully different output for paid users.**
+
+4. **Revenue CTA on a safety surface.** An *"Upgrade to Pro"* card inside the warning overlay. **Rule: do not render upgrade prompts on any screen whose primary purpose is a safety alert.** Upsells belong on the pricing page.
+
+5. **Manifest `data_collection_permissions` mismatch with description.** The manifest declared `financialAndPaymentInfo` as required collected data; the description said we collect "no personal data." Reviewers diff these two. **Rule: the manifest permission list is a truth source for the listing copy. If the description says "we don't collect X" and the manifest declares X, the listing is deceptive by definition.**
+
+6. **Dead support / website URLs on the listing.** Listing showed `support@allowancegurad.com` / `www.allowancegurad.com` (typos: missing the `a`). A reviewer who Googles the listed domain and finds nothing treats the listing as fraudulent on its face. **Rule: every URL and email on a store listing is a live audit target. Verify before submission.**
+
+**What the reinstatement path looks like:**
+
+- AMO's appeal URL is issued per-incident in Mozilla's decision email.
+- The appeal form accepts a written statement; it does not let you upload a new version while the listing is disabled.
+- Evidence that actually moves Mozilla: public commit SHA on an open-source repo showing specific fixes, paired with the proposed new listing copy inline in the appeal letter.
+- Typical turnaround: 5–10 business days on first-round appeal. A second tier ("Independent Review" by a third-party neutral arbiter) is available if the first response is negative.
+
+**Fallback if reinstatement fails:** signed unlisted XPI distribution from `allowanceguard.com`. Not auto-updating, louder install prompt, but possible. Treat as Plan C.
+
+### Chrome Web Store
+
+Chrome hasn't actioned AllowanceGuard at the time of writing, but their Developer Program Policies overlap AMO's on the same axes (deceptive functionality, overclaimed security, misleading screenshots). Treat Chrome as a parallel risk: every listing fix for AMO ships to Chrome at the same time to prevent the second disable.
+
+**Chrome-specific constraints we hit on 2026-04-18:**
+
+- Manifest `description` field: **132-character hard limit** (AMO allows longer). The upload dialog rejects over-long descriptions with "The description field in manifest is too long." Plan around this.
+- Manifest `name` field drives the Chrome store title on upload; you can override in the listing UI but changing `name` is the cleanest channel.
 
 ## How this file is maintained
 

@@ -15,7 +15,7 @@ Scoped memory for the Allowance Guard Compliance & Risk managed-agent system. Lo
 
 ## Six standing rules
 
-1. **Never claim absolute security.** Language is "reduces risk", "lowers exposure", "flags", "surfaces" — never "protects", "guarantees", "secures". AG is non-custodial; users sign every transaction.
+1. **Never claim absolute security.** Language is "reduces risk", "lowers exposure", "flags", "surfaces", "warns" — never "protects", "guarantees", "secures", "prevents", "blocks". AG is non-custodial; the extension is advisory. Enforcement reference: the AllowanceGuard Firefox listing was permanently disabled on 2026-04-18 for using "Wallet Protection" / "protects" framing on a non-blocking tool. See `platform-rules.md` (Firefox Add-ons section) and `claims-register.md` (retired claims, 2026-04-18) for the canonical case.
 2. **Never promise regulatory compliance.** "Designed to comply with UK GDPR" — not "GDPR compliant." Compliance is a state at a point in time; claims in copy outlive that state.
 3. **#24 Data protection holds a VETO.** Every privacy / consent / data-handling sentence gets #24 sign-off before ship. No exceptions for time pressure.
 4. **Platform rules evolve faster than code.** Re-verify Google Ads / Meta Ads / Stripe acceptable-use policies before any campaign push. Old clearance does not equal current clearance.
