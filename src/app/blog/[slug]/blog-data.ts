@@ -2885,5 +2885,115 @@ export const blogPosts: BlogPost[] = [
     category: 'Education',
     featured: true,
     tags: ['approvals', 'erc20', 'permit2', 'setApprovalForAll', 'eip-2612', 'education', 'reference'],
+  },
+  {
+    slug: 'ten-minute-wallet-audit-no-install',
+    title: 'Ten-Minute Wallet Audit, No Install',
+    subtitle: 'A walk-through of the free scanner from first click to cleaner wallet',
+    content: `
+      <p>Most users who meant to audit their wallet approvals six months ago still haven't. The reason isn't laziness; it's friction. Installing a new app, creating another account, granting yet another browser extension permission to read every page — the friction adds up even for a task you genuinely intended to do.</p>
+
+      <p>This post is a ten-minute walk-through of an audit that requires none of those. No install, no account, no extension, no signed message until you want to revoke something. The tool is the free scanner at <a href="/#scan">allowanceguard.com</a>, and the goal is a realistic list of what your wallet has authorised, with enough context to decide what to clean up.</p>
+
+      <p>What this will give you: an honest read of every active token approval across 27 chains, risk-scored, with a one-click revoke path for any approval you don't want any more. What this will not give you: a guarantee that your wallet is safe. Nothing does that, ours included. We'll set expectations honestly as we go.</p>
+
+      <h2>Step 1 — Paste your address (60 seconds)</h2>
+
+      <p>Open <a href="/#scan">allowanceguard.com</a> in a normal browser window. Scroll to the scanner, paste a wallet address, press scan. No account, no login, no wallet connection needed for the scan itself — reading approvals is public on-chain data, so the scanner only needs your address.</p>
+
+      <p>You can paste an address you own, an address belonging to someone who asked you to audit their wallet, or — if you're curious — the address of a public figure's wallet to see what their approval hygiene looks like. The scanner doesn't know or care who owns the address; it just reads the approval state from the chain.</p>
+
+      <p>The scan runs in two phases. The first phase scans the six busiest chains inline and returns results in roughly fifteen to twenty seconds. The remaining chains process in the background and populate as you browse. If you're on a wallet that has never interacted with niche L2s, the background phase finishes fast. If you're on a wallet that has dabbled across everything, it takes a minute.</p>
+
+      <p>While it runs, you'll see a row per active approval as they come in. Each row names the token, the spender, the chain, the amount, and a risk score. The visual hierarchy is designed so the riskiest rows rise to the top.</p>
+
+      <h2>Step 2 — Read the table (2 minutes)</h2>
+
+      <p>Here is what each column means. Read this once; it will save you re-interpreting the table later.</p>
+
+      <ul>
+        <li><strong>Token.</strong> The ERC-20, ERC-721, or ERC-1155 that the approval grants access to. "USDC on Ethereum" is scoped just to your USDC on Ethereum; a malicious spender here cannot touch your ETH or your NFTs. The approval's scope is one token contract.</li>
+        <li><strong>Spender.</strong> The contract you granted access to. This is who you are trusting. If the name resolves to something familiar (Uniswap Universal Router, Aave v3 Pool), that's a known protocol; if it resolves to an unnamed address, treat it with more care.</li>
+        <li><strong>Standard.</strong> ERC-20 (fungible tokens), ERC-721 (individual NFTs), or ERC-1155 (multi-token NFT standard). The abuse scope differs: an ERC-20 approval grants access to up to the amount; an NFT <code>setApprovalForAll</code> grants access to <em>every</em> token in the collection.</li>
+        <li><strong>Amount / Unlimited flag.</strong> For ERC-20, the cap on what the spender can move. "Unlimited" means the approval was set to the 2^256 − 1 maximum, which exceeds any real token supply. For NFTs, "all tokens" means <code>setApprovalForAll</code> is active.</li>
+        <li><strong>Risk score / flags.</strong> Our scoring surfaces: unlimited approvals, approvals to unknown spenders (spenders not in our curated known-safe list), approvals to addresses flagged in our known-exploit list, and stale approvals (no recent interaction). Higher score = louder signal to review.</li>
+      </ul>
+
+      <h2>Step 3 — Decide what to keep (3 minutes)</h2>
+
+      <p>Go through the rows top-down. For each, apply a simple decision framework:</p>
+
+      <ol>
+        <li><strong>Do I actively use this protocol this month?</strong> If yes, and the spender is a recognisable protocol (Uniswap, Aave, 1inch, OpenSea, whoever), the approval is probably fine to keep. That's the cost of using the protocol.</li>
+        <li><strong>Have I used this protocol in the last six months?</strong> If not, revoke. There is no benefit to holding standing permission on a contract you aren't using, and some downside: if the protocol is later compromised, that standing permission becomes the attacker's path in. (This is the Socket Bridge pattern from January 2024.)</li>
+        <li><strong>Do I recognise this spender at all?</strong> If not, look it up on Etherscan. Some unknown spenders turn out to be perfectly legitimate — small protocols we haven't catalogued, integrations from dApps you forgot you used. Others turn out to be drainer contracts from a phishing site you interacted with eight months ago. The Etherscan check takes ninety seconds; the cost of skipping it is much higher if the address is the second kind.</li>
+        <li><strong>Is the risk flag telling me something I didn't know?</strong> "Unlimited" on a protocol you actively use is probably fine. "Unlimited" on a spender you don't recognise is a combination you should investigate or revoke on general principles.</li>
+      </ol>
+
+      <p>Most wallets, audited this way, produce a manageable list of revocations. Twenty approvals, maybe five you actually use, three you're unsure about, twelve you can safely revoke. That is normal. Active DeFi users accumulate approvals; cleaning up periodically is part of the routine.</p>
+
+      <h2>Step 4 — Connect your wallet to revoke (2 minutes)</h2>
+
+      <p>Up to this point, nothing has touched your wallet. The scan is public-chain-data only. Revoking is different — it is an on-chain transaction and has to come from your wallet, because only you can change your own approvals.</p>
+
+      <p>Click "connect wallet" at the top right. Your wallet (MetaMask, Rabby, Coinbase Wallet, whatever you use) will prompt for a connection. Approve the connection. Nothing has been signed yet; connection is just the wallet telling the page your address.</p>
+
+      <p>Then, for each approval you want to revoke, click the revoke button on its row. What happens next depends on the chain.</p>
+
+      <ul>
+        <li><strong>On chains supporting EIP-5792 (Base, Arbitrum, others — wallet-dependent):</strong> you can batch-revoke multiple approvals in a single signed transaction. Your wallet will show you one confirmation listing all the approvals you've selected. One signature, one gas fee, many revokes.</li>
+        <li><strong>On chains without EIP-5792 support:</strong> each revoke is its own transaction and its own confirmation. Your wallet prompts per revoke. Gas per revoke is usually small (the revocation transaction only clears one allowance), but you'll see the prompt more often.</li>
+      </ul>
+
+      <p>Either way, the revocation transaction is a call to the token contract's <code>approve</code> function with the same spender and an amount of zero. When it confirms on-chain, the allowance is cleared. The same UI shows the updated state within a few seconds of confirmation.</p>
+
+      <h2>Step 5 — Verify (1 minute)</h2>
+
+      <p>After your revocations confirm, re-scan the same address. The rows you revoked should now be gone (or, for any you left alone, still there). If a revoke transaction didn't actually confirm — usually because of insufficient gas or a chain congestion issue — the approval is still on the list and you can try again.</p>
+
+      <p>The reason to verify is that "I clicked revoke" is not the same as "it landed on-chain." Wallet UI is optimistic in a lot of cases; the only confirmation that matters is the post-revocation chain state. Re-scanning is the cheapest way to confirm, and because it re-reads the chain, it shows truth regardless of what any interface tried to promise.</p>
+
+      <h2>What this audit will not show you</h2>
+
+      <p>Calibration, as always. A scanner like ours gives you <em>approval state</em>. That is a specific slice of what matters for wallet safety. Things it does not show:</p>
+
+      <ul>
+        <li><strong>Off-chain signatures you have already given.</strong> If you signed an EIP-2612 <code>permit</code> last week naming a malicious spender, that signature can be submitted to the chain by the attacker at any time before the deadline. The approval hasn't been created on-chain yet, so the scanner doesn't see it. Mitigation: wallets with typed-data transparency (Rabby is good at this) show you permit signatures as they're requested.</li>
+        <li><strong>Private-key exposure.</strong> If your seed phrase has been compromised through malware, a fake wallet app, or a leaked backup, the attacker doesn't need approvals. They have your keys. No approval audit detects this.</li>
+        <li><strong>Contract logic risk on protocols you trust.</strong> Even after a clean audit, a protocol you use could have a bug that gets exploited next week. Euler's users in 2023 had done nothing wrong; the protocol's own code was the vector.</li>
+        <li><strong>Brand-new drainer contracts.</strong> If you interact with a contract deployed ten minutes ago, our catalogue hasn't seen it yet. First-contact defence is your job — not clicking on suspicious links, verifying the URL, using a hardware wallet for large amounts.</li>
+      </ul>
+
+      <p>The audit closes one specific surface: the window where standing permissions to legitimate-at-the-time protocols outlive your active use of them, and become liability without benefit.</p>
+
+      <h2>How often to do this</h2>
+
+      <p>For a hot wallet you use often: quarterly. More than that is obsessive; less than that lets stale approvals accumulate to the point where the audit becomes a big task rather than a small one.</p>
+
+      <p>For a cold wallet you rarely use: annually is probably enough, and the right default on a cold wallet is to have very few approvals in the first place.</p>
+
+      <p>For a wallet that has just interacted with a protocol that was later flagged — compromised bridge, rug-pulled dApp, suspected drainer campaign: do it immediately. That's the Socket pattern of standing allowance becoming an active risk; the faster you revoke, the smaller the window.</p>
+
+      <p>There is no achievement unlocked for zero standing approvals. A working wallet is one with a controlled set of approvals that match the protocols you actively use. The audit is not a purity exercise; it is maintenance.</p>
+
+      <h2>If you want to run this on multiple wallets</h2>
+
+      <p>The free tier covers up to three wallets at a time. For more — or for continuous monitoring (we scan on your behalf twice a day and alert you by email if something new appears) — the Pro plan at <a href="/pricing">allowanceguard.com/pricing</a> covers that. The core scanner is always free and will stay free; paid tiers extend volume and automation.</p>
+
+      <p>For developers wanting to run the same scan programmatically: the REST API at <a href="/docs/api-reference">allowanceguard.com/docs/api-reference</a> exposes the same allowance + risk-scoring engine. There's a framework-agnostic TypeScript client in <code>@allowance-guard/client</code> and React hooks in <code>@allowance-guard/react</code>, both open source.</p>
+
+      <h2>Now do it</h2>
+
+      <p>The audit takes ten minutes. Most of the approvals you will revoke are from protocols you haven't used in a year. The time cost to you is small, the residual risk of standing permissions to compromised protocols is non-zero, and the Socket case showed that the gap between "I granted this approval for good reasons" and "this protocol just got hacked and my approval is the attack vector" can be measured in hours.</p>
+
+      <p>Open the scanner, paste your address, and go. If the result is boring — a handful of familiar protocols, clean flags — you have confirmed your wallet is in good shape and spent ten minutes well. If the result is alarming, you've caught the problem ten minutes earlier than the alternative.</p>
+
+      <p>The best time to do this was when you signed the last approval. The next best time is now.</p>
+    `,
+    publishedAt: '2026-04-18',
+    readTime: '10 min read',
+    category: 'Tutorial',
+    featured: false,
+    tags: ['audit', 'tutorial', 'scanner', 'approvals', 'revoke', 'how-to'],
   }
 ]

@@ -37,6 +37,17 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'ten-minute-wallet-audit-no-install',
+    title: 'Ten-Minute Wallet Audit, No Install',
+    subtitle: 'A walk-through of the free scanner from first click to cleaner wallet',
+    excerpt: 'A no-install, no-account audit of every active token approval on your wallet across 27 chains. Five steps, ten minutes, one-click revoke for anything you do not want any more.',
+    publishedAt: '2026-04-18',
+    readTime: '10 min read',
+    category: 'Tutorial',
+    featured: false,
+    image: '/images/blog/ten-minute-wallet-audit.webp',
+  },
+  {
     slug: 'every-approval-you-sign-decoded',
     title: 'Every Approval You Sign, Decoded',
     subtitle: 'A field guide to approve, permit, permit2, and setApprovalForAll',
