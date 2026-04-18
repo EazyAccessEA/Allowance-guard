@@ -37,6 +37,17 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    slug: 'every-approval-you-sign-decoded',
+    title: 'Every Approval You Sign, Decoded',
+    subtitle: 'A field guide to approve, permit, permit2, and setApprovalForAll',
+    excerpt: 'Four approval shapes, each looking almost identical in the wallet modal, each with its own trust implications. A reference for reading what you are actually signing before you sign it.',
+    publishedAt: '2026-04-18',
+    readTime: '11 min read',
+    category: 'Education',
+    featured: true,
+    image: '/images/blog/every-approval-you-sign-decoded.webp',
+  },
+  {
     slug: 'eight-approval-exploits-one-pattern',
     title: 'Eight Approval Exploits, One Pattern',
     subtitle: 'What three years of on-chain post-mortems teach us about token permissions',

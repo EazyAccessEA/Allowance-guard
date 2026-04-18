@@ -2759,5 +2759,131 @@ export const blogPosts: BlogPost[] = [
     category: 'Security',
     featured: true,
     tags: ['exploits', 'post-mortem', 'approvals', 'known-exploits', 'security', 'research'],
+  },
+  {
+    slug: 'every-approval-you-sign-decoded',
+    title: 'Every Approval You Sign, Decoded',
+    subtitle: 'A field guide to approve, permit, permit2, and setApprovalForAll',
+    content: `
+      <p>When a decentralised application asks your wallet to sign a token approval, most users see a modal, click confirm, and move on. The modal is trying to summarise something that has four functionally distinct shapes, each with its own trust implications, each looking almost identical at the wallet layer. This post is a reference for what you are actually signing when you see those four shapes, rendered in plain language with the relevant specification notes for anyone who wants to dig deeper.</p>
+
+      <p>This is not a post arguing you should panic about approvals or never grant them. It is a post making sure that when you do grant one, you know what you have agreed to.</p>
+
+      <h2>The short version</h2>
+
+      <p>Four approval shapes, in rough order of how much trust you are extending:</p>
+
+      <ul>
+        <li><code>approve(spender, amount)</code> — the classic ERC-20 approval. You permit <code>spender</code> to move up to <code>amount</code> of one specific token from your wallet. You send a transaction and pay gas.</li>
+        <li><code>permit(spender, value, deadline, v, r, s)</code> — EIP-2612. Same outcome as <code>approve</code>, but you sign an off-chain message instead of paying gas. Anyone holding the signature can submit it to the chain before the deadline.</li>
+        <li><code>setApprovalForAll(operator, true)</code> — ERC-721/ERC-1155. You permit <code>operator</code> to move <em>every</em> token in a specific NFT collection you own — current and future — until you revoke it.</li>
+        <li>Permit2 (Uniswap) — a two-step pattern. You grant one standing approval to a Permit2 router contract, then sign cheap off-chain messages to authorise individual dApps that delegate through Permit2.</li>
+      </ul>
+
+      <p>Each has a legitimate use case. Each has a different abuse path. The honest-reviewer heuristic is: the <em>scope</em> of what can happen if the spender turns out to be untrustworthy is different in each case, and your comfort with that scope should depend on how much you trust the contract and how much value the approval governs.</p>
+
+      <h2>1. <code>approve(spender, amount)</code> — the original</h2>
+
+      <p>This is the ERC-20 function from Ethereum Improvement Proposal 20, which every fungible token on Ethereum and its forks implements. The signature is simple: a four-byte selector (<code>0x095ea7b3</code>) followed by two thirty-two-byte arguments: the spender's address and the amount in the token's smallest unit.</p>
+
+      <p>What actually changes on-chain: the token's internal <code>allowance[owner][spender]</code> mapping gets updated. Once set, the spender can call <code>transferFrom(owner, recipient, value)</code> at any future point — in any transaction, from any caller — and the token contract will move up to <code>amount</code> of the owner's balance to <code>recipient</code>, as long as the allowance still has sufficient room and the owner's balance still has the tokens.</p>
+
+      <p>Three things to look at when your wallet shows you an approve modal:</p>
+
+      <ul>
+        <li><strong>The spender address.</strong> This is who you are trusting. If it's the Uniswap Universal Router, that's a well-known contract; if it's an address you've never seen on a site you don't recognise, pause.</li>
+        <li><strong>The amount.</strong> Wallets typically default to the maximum 256-bit integer (<code>2^256 - 1</code>, or in hex <code>0xffff...ffff</code> — sixty-four f characters). That number is so large it covers any practical token supply. The practical effect is unlimited.</li>
+        <li><strong>The token contract.</strong> The approval is scoped to <em>this</em> token — not every token in your wallet. But if the token is a stablecoin like USDC and the spender is malicious, the full balance of that stablecoin is reachable.</li>
+      </ul>
+
+      <h3>Why do wallets default to unlimited?</h3>
+
+      <p>Because the alternative is worse for the user experience of most dApps. A Uniswap swap that only approves the exact input amount forces the user to sign another approve transaction next time they swap, paying gas twice per swap instead of once. A perpetual-DEX interaction that only approves the opening margin cannot deposit more collateral later without another approval. The unlimited-approval default trades the long-tail safety of "I can never over-pay" for the everyday convenience of "this protocol works in one transaction per swap instead of two."</p>
+
+      <p>This is a defensible trade for a protocol you use often and trust highly. It is a bad trade for a one-off interaction with a contract you will not use again. Your wallet does not know which case applies; you do.</p>
+
+      <h2>2. <code>permit(...)</code> — approval via signature</h2>
+
+      <p>EIP-2612 (<a href="https://eips.ethereum.org/EIPS/eip-2612" target="_blank" rel="noopener noreferrer">eips.ethereum.org/EIPS/eip-2612</a>) added the <code>permit</code> function to ERC-20 tokens that opt in. It does the same thing <code>approve</code> does — setting <code>allowance[owner][spender]</code> — but the authorisation arrives as an EIP-712 typed-data signature rather than an on-chain transaction sent by the owner.</p>
+
+      <p>Mechanically: the owner signs a structured message containing <code>{owner, spender, value, nonce, deadline}</code>. Any party can then submit that signature to the token's <code>permit</code> function, along with the parameters. The token contract verifies the signature, increments the nonce (preventing replay), and updates the allowance. The spender then calls <code>transferFrom</code> as usual.</p>
+
+      <p>The practical UX benefit: the user doesn't pay gas for the approval — only for the subsequent action (the swap, the deposit) — and often those two can be bundled into a single user-submitted transaction that the dApp's smart contract composes. Less friction, less gas.</p>
+
+      <p>The practical risk: signatures in MetaMask and other wallets are shown as a typed-data screen that many users have learned to click through without reading. A permit signature looks deceptively similar to a harmless "sign in to this website" signature, but it is <em>not</em> harmless — if you sign a permit with yourself as owner, a malicious address as spender, and a future deadline, the malicious spender can submit it whenever it wants, without you paying gas, without you seeing a transaction confirmation.</p>
+
+      <p>The field to read in the wallet's typed-data screen: look for the word <code>Permit</code> as the message type. Look at the <code>spender</code> field. If the spender is not the contract you think you are interacting with, stop.</p>
+
+      <h2>3. <code>setApprovalForAll(operator, true)</code> — NFTs</h2>
+
+      <p>ERC-721 and ERC-1155 use a different approval model than ERC-20. You can approve a specific token ID (<code>approve(to, tokenId)</code>) to a specific operator, but the far more common call from NFT marketplaces is <code>setApprovalForAll(operator, true)</code>.</p>
+
+      <p>When you sign that, you are authorising the operator to move <em>any</em> token you own in that collection — including tokens you don't own yet, if you acquire them later — until you call <code>setApprovalForAll(operator, false)</code> to revoke.</p>
+
+      <p>This is the scope that makes NFT drainers particularly effective. If you signed <code>setApprovalForAll</code> to a marketplace that later turned out to be compromised — as happened in several 2022–2023 incidents — the operator could sweep every NFT in that collection from your wallet in one call. The approval does not expire; it does not cap the number of NFTs; it is live until you manually revoke it.</p>
+
+      <p>The honest rule: for NFT collections you genuinely trade, <code>setApprovalForAll</code> to the marketplace you use is standard practice. When you stop using that marketplace — or when you've finished an intensive trading period — revoke. Don't leave dozens of collection-level "all-token" approvals standing across wallets and marketplaces you haven't touched in months.</p>
+
+      <h2>4. Permit2 — the two-step pattern</h2>
+
+      <p>Uniswap's Permit2 (<a href="https://github.com/Uniswap/permit2" target="_blank" rel="noopener noreferrer">github.com/Uniswap/permit2</a>) was introduced in 2023 as a way to give many dApps a consistent, signature-based approval experience without each dApp needing to request its own standing token allowance. Permit2 has been adopted across the Uniswap ecosystem and is starting to appear in other DEX aggregators.</p>
+
+      <p>The mechanism is two layers:</p>
+
+      <ol>
+        <li><strong>Layer 1:</strong> you make one standing <code>approve(permit2, max)</code> on each ERC-20 you want to use with Permit2. This is an on-chain transaction; you pay gas. After this, the Permit2 contract has an unlimited allowance to move that token on your behalf.</li>
+        <li><strong>Layer 2:</strong> every time a Uniswap-Permit2-aware dApp wants to spend some of that token, you sign an off-chain EIP-712 message naming <em>that</em> dApp as authorised for <em>this</em> amount for <em>this</em> deadline. The dApp presents the signature to Permit2, Permit2 presents <code>transferFrom</code> to the token, and the tokens move.</li>
+      </ol>
+
+      <p>The UX is better than raw <code>approve</code> because you only ever do layer 1 once per token, and layer 2 is a gas-free signature. The trust shape is different: instead of trusting every individual dApp with a standing allowance, you are trusting Permit2 itself with a standing allowance and relying on per-use signatures to compartmentalise further trust.</p>
+
+      <p>Two things this means in practice:</p>
+
+      <ul>
+        <li>Permit2's own contract security matters a lot. If Permit2 were ever compromised, the standing allowances from every user who opted in would be at risk. The Permit2 contract has been heavily audited and the Uniswap team carries meaningful reputation on it, but this is the trust concentration you are accepting.</li>
+        <li>The per-use signatures are still the thing to read carefully. A Permit2 signature names a <em>specific</em> spender (the dApp you are using right now). If the modal shows a different spender than the site you are on, treat that as an alarm.</li>
+      </ul>
+
+      <h2>What the wallet shows versus what the contract sees</h2>
+
+      <p>A recurring gap in every approval shape is that the wallet's modal is a summary of something more complex than it presents. MetaMask's latest approval UI does a reasonable job of surfacing the token, spender, and amount. Rabby's presents a clearer risk snapshot including whether the spender is known-safe. Others vary.</p>
+
+      <p>But no wallet can surface the <em>intent</em> of the contract behind the spender address. The spender is just a twenty-byte Ethereum address. Whether that address is a Uniswap router, an Aave v3 pool, a Socket bridge, or a freshly deployed drainer from an hour ago — that's context you bring, not context the wallet shows. Copying the spender address into Etherscan and looking at its activity is the most reliable sanity check when you are not sure.</p>
+
+      <h2>The unlimited number, in hex</h2>
+
+      <p>When a wallet displays an approval as "Unlimited" or shows <code>0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</code> — that is 2^256 − 1. Written out, it's roughly 1.15 × 10^77. For context: the total supply of USDC is about 3 × 10^16 raw units (six decimals). The supply of DAI is about 4 × 10^27 raw units (eighteen decimals). Even Bitcoin's total supply is 2.1 × 10^15 satoshis. The unlimited approval number exceeds every real token supply by such a margin that the practical effect is no cap.</p>
+
+      <p>This matters because some tooling (including ours, in the warning overlay) flags unlimited approvals specifically. The flag is not a claim that the approval is malicious. It is a claim that the approval has no natural ceiling — if the spender ever becomes untrustworthy, the cap won't stop them. For a highly-used DEX you interact with daily, that risk may be acceptable. For a random contract from a link in a Discord DM, it is not.</p>
+
+      <h2>A practical checklist when you sign</h2>
+
+      <p>Before pressing confirm on any of the four shapes:</p>
+
+      <ul>
+        <li><strong>Read the spender address.</strong> Not just the wallet's name-resolved display — copy the address and recognise it. Save recurring ones (Uniswap router, Aave pool) to a notes file you trust.</li>
+        <li><strong>Ask whether the amount needs to be unlimited.</strong> If the dApp supports a bounded approval, the inconvenience of a second transaction in six months is cheaper than the risk of a compromised spender.</li>
+        <li><strong>If it's a <code>setApprovalForAll</code>, think about how often you trade this NFT collection.</strong> Never? Decline. Occasionally? Accept and revoke when the session ends. Every day? Accept and monitor.</li>
+        <li><strong>If it's a <code>permit</code> or Permit2 signature, read the typed-data message.</strong> The spender and deadline fields are the most important. A deadline years in the future is a minor red flag; an unknown spender is a major one.</li>
+        <li><strong>Revoke the ones you have forgotten.</strong> Every wallet has old approvals no one is using. The free scanner at <a href="/#scan">allowanceguard.com</a> shows them across 27 chains in about a minute.</li>
+      </ul>
+
+      <h2>The tools landscape</h2>
+
+      <p>Wallet-side tools that help with this include: Rabby (shows spender reputation inline), MetaMask's transaction insights (partial), Revoke.cash (the longest-running dedicated allowance manager), and ourselves. They are complementary, not exclusive — different tools catch different attacker patterns, and running a periodic sweep through more than one is not wasted effort.</p>
+
+      <p>What no tool can do is make the decision for you on whether a specific spender is worth the approval. The decision is always yours. The tool's job is to surface the information clearly enough that the decision is possible.</p>
+
+      <h2>A final note on the trend</h2>
+
+      <p>Newer approval patterns are moving toward <em>shorter-scope</em> delegations: permit with tight deadlines, Permit2 with per-use signatures, EIP-7702 proposals that let an externally-owned account delegate narrowly-defined behaviour to a smart contract for a single transaction. The direction of travel is away from "grant a standing allowance and hope nothing breaks for the next eighteen months" toward "authorise this specific thing right now and don't leave state behind."</p>
+
+      <p>That is a better default. We're not there yet; most dApps still default to <code>approve(max)</code> for compatibility. In the meantime, the best you can do is read what you're signing, keep unlimited standing approvals to a short list of protocols you actively use, and clean up periodically. Everything else — including us — is a helper on top of that discipline.</p>
+    `,
+    publishedAt: '2026-04-18',
+    readTime: '11 min read',
+    category: 'Education',
+    featured: true,
+    tags: ['approvals', 'erc20', 'permit2', 'setApprovalForAll', 'eip-2612', 'education', 'reference'],
   }
 ]
