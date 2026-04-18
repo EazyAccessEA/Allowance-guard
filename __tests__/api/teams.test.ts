@@ -148,16 +148,12 @@ describe('POST /api/teams', () => {
     mockRequireUser.mockResolvedValue({ user_id: 1, email: 'test@example.com' })
     mockCheckFeature.mockResolvedValue({ allowed: true })
 
-    const mockClient = {
-      query: jest.fn()
-        .mockResolvedValueOnce(undefined) // BEGIN
-        .mockResolvedValueOnce({ rows: [{ id: 10, name: 'My Team', description: 'A team' }] }) // INSERT team
-        .mockResolvedValueOnce(undefined) // INSERT member
-        .mockResolvedValueOnce(undefined) // INSERT activity
-        .mockResolvedValueOnce(undefined), // COMMIT
-      release: jest.fn(),
-    }
-    mockPool.connect.mockResolvedValue(mockClient)
+    // Route uses pool.query directly (3 sequential calls: INSERT team,
+    // INSERT member, INSERT activity) — no client transaction any more.
+    mockPool.query
+      .mockResolvedValueOnce({ rows: [{ id: 10, name: 'My Team', description: 'A team' }] })
+      .mockResolvedValueOnce({ rows: [] })
+      .mockResolvedValueOnce({ rows: [] })
 
     const { POST } = await import('@/app/api/teams/route')
     const req = createRequest('POST', 'http://localhost:3000/api/teams', {

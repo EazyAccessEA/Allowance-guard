@@ -20,6 +20,33 @@ jest.mock('@/lib/jobs', () => ({
   enqueueScan: jest.fn(),
 }))
 
+// The scan route now does an inline "fast-chain" scan before queuing
+// any background work. Stub the heavy deps so the test can exercise
+// the route end-to-end without touching RPC / DB.
+jest.mock('@/lib/scanner', () => ({
+  scanWalletOnChain: jest.fn().mockResolvedValue(undefined),
+}))
+
+jest.mock('@/lib/retry', () => ({
+  withTimeout: jest.fn(<T>(p: Promise<T>) => p),
+}))
+
+jest.mock('@/lib/risk', () => ({
+  refreshRiskForWallet: jest.fn().mockResolvedValue(undefined),
+}))
+
+jest.mock('@/lib/enrich', () => ({
+  enrichWallet: jest.fn().mockResolvedValue(undefined),
+}))
+
+jest.mock('@/lib/cache', () => ({
+  cacheDel: jest.fn().mockResolvedValue(undefined),
+}))
+
+jest.mock('@/lib/analytics', () => ({
+  trackEvent: jest.fn(),
+}))
+
 jest.mock('@/lib/logger', () => ({
   withReq: jest.fn(() => ({ info: jest.fn(), warn: jest.fn(), error: jest.fn() })),
   apiLogger: { info: jest.fn(), warn: jest.fn(), error: jest.fn() },
@@ -77,7 +104,7 @@ beforeEach(() => {
 })
 
 describe('POST /api/scan', () => {
-  test('returns 200 with jobId for valid wallet address', async () => {
+  test('returns 200 with scan summary + backgroundJobId for valid wallet address', async () => {
     const wallet = '0x1234567890abcdef1234567890abcdef12345678'
     mockValidateRequest.mockReturnValue(() =>
       Promise.resolve({
@@ -85,6 +112,8 @@ describe('POST /api/scan', () => {
         data: { walletAddress: wallet, chains: [] },
       }),
     )
+    // Only slow chains hit enqueueScan. With the default chain set
+    // (6 fast + 21 slow) it runs exactly once and returns the job id.
     mockEnqueueScan.mockResolvedValue(42)
 
     const { POST } = await import('@/app/api/scan/route')
@@ -94,7 +123,15 @@ describe('POST /api/scan', () => {
 
     expect(res.status).toBe(200)
     expect(json.ok).toBe(true)
-    expect(json.jobId).toBe(42)
+    // The route now returns the two-phase summary, not a single jobId.
+    expect(json).toMatchObject({
+      ok: true,
+      scanned: expect.any(Number),
+      failed: expect.any(Number),
+      backgroundJobId: 42,
+      backgroundChains: expect.any(Number),
+      message: expect.stringContaining('Scanned'),
+    })
   })
 
   test('returns 400 for invalid wallet address', async () => {
@@ -130,7 +167,7 @@ describe('POST /api/scan', () => {
     expect(res.status).toBe(429)
   })
 
-  test('handles duplicate scan gracefully', async () => {
+  test('handles duplicate background-queue attempt gracefully', async () => {
     const wallet = '0x1234567890abcdef1234567890abcdef12345678'
     mockValidateRequest.mockReturnValue(() =>
       Promise.resolve({
@@ -138,6 +175,8 @@ describe('POST /api/scan', () => {
         data: { walletAddress: wallet, chains: [] },
       }),
     )
+    // enqueueScan throws the DB unique-constraint error; the route
+    // swallows it because another scan already covers the slow chains.
     mockEnqueueScan.mockRejectedValue(new Error('uniq_jobs_active_wallet'))
 
     const { POST } = await import('@/app/api/scan/route')
@@ -147,6 +186,8 @@ describe('POST /api/scan', () => {
 
     expect(res.status).toBe(200)
     expect(json.ok).toBe(true)
-    expect(json.message).toContain('already in progress')
+    // Duplicate -> backgroundJobId stays null; fast-scan summary still lands.
+    expect(json.backgroundJobId).toBeNull()
+    expect(json.message).toContain('Scanned')
   })
 })

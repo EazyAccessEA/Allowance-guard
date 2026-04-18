@@ -133,6 +133,10 @@ describe('validateApiKey', () => {
       rateLimit: 10_000,
       prefix: 'ag_live_aaaaaaaa',
       name: 'Test Key',
+      // key_type + allowed_origins added when public keys (ag_pub_*) were
+      // introduced; default secret-key rows carry 'secret' + null.
+      keyType: 'secret',
+      allowedOrigins: null,
     })
   })
 
@@ -198,6 +202,9 @@ describe('listApiKeys', () => {
       rateLimit: 100,
       lastUsedAt: now.toISOString(),
       createdAt: now.toISOString(),
+      // Public-key fields surface on every row post-ag_pub_ rollout.
+      keyType: 'secret',
+      allowedOrigins: null,
     })
     expect(result[1].lastUsedAt).toBeNull()
   })

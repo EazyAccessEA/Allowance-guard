@@ -14,6 +14,9 @@ class AllowanceGuardPopup {
     await this.loadSettings();
     await this.loadStats();
     this.setupEventListeners();
+    // Fetch latest tier after the cached render so the badge updates
+    // without blocking the popup's first paint.
+    void this.syncTierFromWeb();
   }
 
   async loadSettings() {
@@ -23,6 +26,42 @@ class AllowanceGuardPopup {
       this.updateTierBadge(settings.userTier || 'free');
     } catch (error) {
       console.error('Error loading settings:', error);
+    }
+  }
+
+  /**
+   * Ask allowanceguard.com what tier the signed-in user is on.
+   *
+   * host_permissions in manifest.json lets this fetch ride the user's
+   * ag_sess cookie, so a user who paid for Pro on the web sees the Pro
+   * badge in the extension with no extra linking step. A 5-minute local
+   * cache keeps this off the critical path of every popup open.
+   */
+  async syncTierFromWeb() {
+    try {
+      const cache = await this.getSettings();
+      const now = Date.now();
+      const TTL = 5 * 60 * 1000;
+      if (cache.userTierFetchedAt && now - cache.userTierFetchedAt < TTL) {
+        return;
+      }
+
+      const res = await fetch('https://www.allowanceguard.com/api/user/plan', {
+        credentials: 'include',
+        cache: 'no-store',
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      // /api/user/plan returns plans like 'free' | 'pro' | 'sentinel'
+      // (and API-plan slugs for API users). Only map consumer tiers onto
+      // the extension badge; leave API-only users on their prior value.
+      const tier = data.plan;
+      if (!['free', 'pro', 'sentinel'].includes(tier)) return;
+
+      await this.updateSettings({ userTier: tier, userTierFetchedAt: now });
+      this.updateTierBadge(tier);
+    } catch {
+      // Offline or not signed in — keep the cached tier and move on.
     }
   }
 

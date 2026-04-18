@@ -164,10 +164,20 @@ describe('feature-gate', () => {
       expect(result.allowed).toBe(true)
     })
 
-    it('denies free user requesting 2 chains', async () => {
+    // Free tier now carries maxChains: 27 (all supported chains) so the
+    // open scanner stays honestly open; chain count is no longer the
+    // paid-gate axis. Wallet count and feature flags are.
+    it('allows free user requesting all 27 chains (open scanner)', async () => {
       mockGetSub.mockResolvedValue(subOf('free'))
 
-      const result = await checkChainAccess(1, 2)
+      const result = await checkChainAccess(1, 27)
+      expect(result.allowed).toBe(true)
+    })
+
+    it('denies free user requesting 28 chains (over the ceiling)', async () => {
+      mockGetSub.mockResolvedValue(subOf('free'))
+
+      const result = await checkChainAccess(1, 28)
       expect(result.allowed).toBe(false)
       expect(result.requiredPlan).toBe('pro')
     })

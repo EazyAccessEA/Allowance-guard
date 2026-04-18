@@ -75,8 +75,15 @@ function createRequest(
   })
 }
 
+import { checkFeature } from '@/lib/feature-gate'
+const mockCheckFeature = checkFeature as jest.Mock
+
 beforeEach(() => {
   jest.clearAllMocks()
+  // Default: authenticated session with batchRevoke access. Individual
+  // 401 / 403 tests override via mockGetSession.mockResolvedValue(null)
+  // or mockCheckFeature.mockResolvedValue({ allowed: false, requiredPlan: 'pro' }).
+  mockCheckFeature.mockResolvedValue({ allowed: true })
 })
 
 describe('POST /api/bulk-revoke', () => {

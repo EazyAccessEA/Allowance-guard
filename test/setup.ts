@@ -10,6 +10,10 @@ process.env.STRIPE_WEBHOOK_SECRET ??= 'whsec_fake_for_jest';
 process.env.NEXT_PUBLIC_APP_URL ??= 'https://www.allowanceguard.com';
 process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ??= 'test_project_id';
 process.env.OTP_SECRET ??= 'test_otp_secret_at_least_32_chars_long_for_jest_envs';
+// Upstash configured-and-working state; the global @upstash/redis mock
+// below returns canned responses so no real HTTP call is made.
+process.env.UPSTASH_REDIS_REST_URL ??= 'https://fake.upstash.io';
+process.env.UPSTASH_REDIS_REST_TOKEN ??= 'fake_upstash_token_for_jest';
 
 // Global stub for @upstash/redis. The package ships ESM syntax that
 // ts-jest fails to parse at module load, so every test that imports

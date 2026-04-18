@@ -21,6 +21,28 @@ jest.mock('@/lib/logger', () => ({
   apiLogger: { info: jest.fn(), warn: jest.fn(), error: jest.fn() },
 }))
 
+// Monitor is a Pro+ feature; grant access so tests exercise the real
+// POST path rather than stopping at the 403 gate.
+jest.mock('@/lib/feature-gate', () => ({
+  checkFeature: jest.fn().mockResolvedValue({ allowed: true }),
+  checkWalletQuota: jest.fn().mockResolvedValue({ allowed: true }),
+  isFeatureAllowed: jest.fn().mockResolvedValue(true),
+  getUserPlanLimits: jest.fn().mockResolvedValue({
+    maxWallets: -1,
+    maxChains: 27,
+    maxMonitoredWallets: -1,
+    monitoring: true,
+    batchRevoke: true,
+    export: true,
+    alerts: true,
+    teams: false,
+    timeMachine: true,
+    automatedRules: false,
+    prioritySupport: false,
+    webhooks: false,
+  }),
+}))
+
 jest.mock('next/headers', () => ({
   cookies: jest.fn(() => Promise.resolve({ get: jest.fn(), set: jest.fn() })),
   headers: jest.fn(() => Promise.resolve(new Map())),

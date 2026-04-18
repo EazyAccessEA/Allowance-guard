@@ -1,3 +1,13 @@
+// These tests target the PostgreSQL fallback path of the cache layer
+// (initCache / cacheSet-via-INSERT / cacheGet-via-SELECT / cleanupCache).
+// The global Upstash mock in test/setup.ts would otherwise intercept
+// every call before PG ever runs. Clearing the env vars before the
+// module loads flips src/lib/upstash.ts into the "not configured"
+// branch, and each cache.ts operation falls straight through to PG —
+// exactly what these assertions exercise.
+delete process.env.UPSTASH_REDIS_REST_URL
+delete process.env.UPSTASH_REDIS_REST_TOKEN
+
 const mockQuery = jest.fn()
 
 jest.mock('@/lib/db', () => ({
@@ -5,6 +15,11 @@ jest.mock('@/lib/db', () => ({
 }))
 
 import { initCache, cacheSet, cacheGet, cacheDel, cleanupCache, cacheHealthCheck } from '@/lib/cache'
+import { __resetUpstashForTests } from '@/lib/upstash'
+
+// Reset the cached Upstash singleton once the env has been stripped
+// so subsequent getUpstash() calls return null.
+__resetUpstashForTests()
 
 describe('cache', () => {
   beforeEach(() => {
@@ -108,26 +123,24 @@ describe('cache', () => {
     })
   })
 
-  describe('cacheHealthCheck', () => {
-    it('returns ok: true on success', async () => {
-      // initCache (2 calls) + cacheSet (1 call) + cacheGet (1 call)
+  describe('cacheHealthCheck (DB fallback path)', () => {
+    it('returns ok: true via the database backend on success', async () => {
+      // initCache (CREATE TABLE, CREATE INDEX), cacheSet (INSERT),
+      // cacheGet (SELECT returning the written row).
       mockQuery
-        .mockResolvedValueOnce({ rows: [] }) // CREATE TABLE
-        .mockResolvedValueOnce({ rows: [] }) // CREATE INDEX
-        .mockResolvedValueOnce({ rows: [] }) // INSERT (cacheSet)
-        .mockResolvedValueOnce({ rows: [{ value: JSON.stringify({ timestamp: Date.now() }) }] }) // SELECT (cacheGet)
+        .mockResolvedValueOnce({ rows: [] })
+        .mockResolvedValueOnce({ rows: [] })
+        .mockResolvedValueOnce({ rows: [] })
+        .mockResolvedValueOnce({ rows: [{ value: JSON.stringify({ timestamp: Date.now() }) }] })
 
       const result = await cacheHealthCheck()
-
-      expect(result).toEqual({ ok: true, message: 'ok' })
+      expect(result).toEqual({ ok: true, message: 'ok', backend: 'database' })
     })
 
-    it('returns ok: false with message on error', async () => {
+    it('returns ok: false with message when the database path throws', async () => {
       mockQuery.mockRejectedValueOnce(new Error('Connection refused'))
-
       const result = await cacheHealthCheck()
-
-      expect(result).toEqual({ ok: false, message: 'Connection refused' })
+      expect(result).toEqual({ ok: false, message: 'Connection refused', backend: 'database' })
     })
   })
 })

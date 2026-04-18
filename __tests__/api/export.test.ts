@@ -21,8 +21,25 @@ jest.mock('@/lib/db', () => {
 })
 
 jest.mock('@/lib/auth', () => ({
-  getSession: jest.fn(),
-  requireUser: jest.fn(),
+  getSession: jest.fn().mockResolvedValue({
+    user_id: 1,
+    email: 'test@example.com',
+    session_id: 'test-session',
+  }),
+  requireUser: jest.fn().mockResolvedValue({
+    user_id: 1,
+    email: 'test@example.com',
+    session_id: 'test-session',
+  }),
+}))
+
+// Export requires Pro+ via checkFeature. Grant access so we can
+// exercise the actual export paths rather than the 403 guard.
+jest.mock('@/lib/feature-gate', () => ({
+  checkFeature: jest.fn().mockResolvedValue({ allowed: true }),
+  checkWalletQuota: jest.fn().mockResolvedValue({ allowed: true }),
+  isFeatureAllowed: jest.fn().mockResolvedValue(true),
+  checkChainAccess: jest.fn().mockResolvedValue({ allowed: true }),
 }))
 
 jest.mock('@/lib/logger', () => ({
@@ -80,6 +97,20 @@ jest.mock('pdfkit', () => {
     doc.strokeColor = jest.fn().mockReturnValue(doc)
     doc.stroke = jest.fn().mockReturnValue(doc)
     doc.addPage = jest.fn().mockReturnValue(doc)
+    doc.image = jest.fn().mockReturnValue(doc)
+    doc.rect = jest.fn().mockReturnValue(doc)
+    doc.fill = jest.fn().mockReturnValue(doc)
+    doc.save = jest.fn().mockReturnValue(doc)
+    doc.restore = jest.fn().mockReturnValue(doc)
+    doc.pipe = jest.fn().mockReturnValue(doc)
+    doc.lineWidth = jest.fn().mockReturnValue(doc)
+    doc.circle = jest.fn().mockReturnValue(doc)
+    doc.polygon = jest.fn().mockReturnValue(doc)
+    doc.path = jest.fn().mockReturnValue(doc)
+    doc.opacity = jest.fn().mockReturnValue(doc)
+    doc.rotate = jest.fn().mockReturnValue(doc)
+    doc.translate = jest.fn().mockReturnValue(doc)
+    doc.scale = jest.fn().mockReturnValue(doc)
     doc.x = 40
     doc.y = 100
     doc.end = jest.fn(() => {
@@ -106,10 +137,12 @@ beforeEach(() => {
 
 describe('GET /api/export/csv', () => {
   test('returns CSV content-type with valid wallet', async () => {
-    // The mock client's query method returns the QueryStream mock
+    // The current CSV route fetches all rows via pool.query (not the
+    // streamed pg-query-stream path), then serialises in memory.
+    mockPool.query.mockResolvedValue({ rows: [] })
+
     const mockClient = {
       query: jest.fn().mockReturnValue(
-        // Returns the mocked QueryStream (Readable)
         new (require('pg-query-stream'))(),
       ),
       release: jest.fn(),

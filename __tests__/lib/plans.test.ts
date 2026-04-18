@@ -29,10 +29,10 @@ describe('plans', () => {
   // -----------------------------------------------------------------------
 
   describe('CONSUMER_PLAN_LIMITS', () => {
-    it('free plan has maxWallets: 3, maxChains: 1, all boolean features false', () => {
+    it('free plan has maxWallets: 3, maxChains: 27 (all chains, open scanner), all boolean features false', () => {
       const free = CONSUMER_PLAN_LIMITS.free
       expect(free.maxWallets).toBe(3)
-      expect(free.maxChains).toBe(1)
+      expect(free.maxChains).toBe(27)
       expect(free.monitoring).toBe(false)
       expect(free.batchRevoke).toBe(false)
       expect(free.export).toBe(false)

@@ -19,7 +19,8 @@ describe('auditUser', () => {
     const [sql, params] = mockQuery.mock.calls[0]
     expect(sql).toContain('INSERT INTO audit_logs')
     expect(sql).toContain("'user'")
-    expect(params).toEqual(['user-123', 'login', 'session', { browser: 'chrome' }, '1.2.3.4', '/api/auth'])
+    // meta is JSON.stringified before hitting the DB (src/lib/audit.ts)
+    expect(params).toEqual(['user-123', 'login', 'session', JSON.stringify({ browser: 'chrome' }), '1.2.3.4', '/api/auth'])
   })
 
   it('converts numeric actorId to string', async () => {
@@ -44,12 +45,12 @@ describe('auditUser', () => {
     expect(params[5]).toBeNull() // path
   })
 
-  it('passes meta object directly', async () => {
+  it('passes meta as a JSON string', async () => {
     const meta = { key: 'value', nested: { a: 1 } }
     await auditUser('action', 'user-1', 'subject', meta)
 
     const [, params] = mockQuery.mock.calls[0]
-    expect(params[3]).toBe(meta)
+    expect(params[3]).toBe(JSON.stringify(meta))
   })
 
   it("uses 'user' as actor_type always", async () => {
@@ -60,10 +61,10 @@ describe('auditUser', () => {
     expect(sql).toContain('actor_type')
   })
 
-  it('defaults meta to empty object', async () => {
+  it('defaults meta to empty object (JSON-stringified)', async () => {
     await auditUser('action', 'user-1', 'subject')
 
     const [, params] = mockQuery.mock.calls[0]
-    expect(params[3]).toEqual({})
+    expect(params[3]).toEqual(JSON.stringify({}))
   })
 })
