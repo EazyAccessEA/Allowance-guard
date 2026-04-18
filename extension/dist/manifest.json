@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "AllowanceGuard — Token Approval Warnings",
-  "version": "2.0.3",
-  "description": "Warns before you sign risky token-approval transactions (approve, permit, setApprovalForAll). Advisory only; does not block transactions.",
+  "version": "2.0.4",
+  "description": "Warns before you sign approve(), permit(), or setApprovalForAll(). Advisory only - does not block transactions.",
   "browser_specific_settings": {
     "gecko": {
       "id": "allowanceguard@allowanceguard.com",
