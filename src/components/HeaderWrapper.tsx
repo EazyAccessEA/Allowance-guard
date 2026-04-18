@@ -2,9 +2,11 @@
 
 import { useAccount } from 'wagmi'
 import Header from './Header'
+import { useAuthSession } from '@/hooks/useAuthSession'
 
 export default function HeaderWrapper() {
   const { isConnected } = useAccount()
-  
-  return <Header isConnected={isConnected} />
+  const { isAuthenticated } = useAuthSession()
+
+  return <Header isConnected={isConnected} isAuthenticated={isAuthenticated} />
 }

@@ -22,9 +22,11 @@ import { Badge } from '@/components/ui/Badge'
 import ClientConnectButton from '@/components/ClientConnectButton'
 import MobileNavigation from '@/components/MobileNavigation'
 import PlanBadge from '@/components/PlanBadge'
+import SignOutButton from '@/components/SignOutButton'
 
 interface HeaderProps {
   isConnected: boolean
+  isAuthenticated?: boolean
 }
 
 const NAV_ITEMS = [
@@ -59,7 +61,7 @@ function NavLink({
   )
 }
 
-export default function Header({ isConnected }: HeaderProps) {
+export default function Header({ isConnected, isAuthenticated = false }: HeaderProps) {
   const pathname = usePathname()
 
   const isActive = (href: string) => {
@@ -105,7 +107,7 @@ export default function Header({ isConnected }: HeaderProps) {
 
             {/* Desktop actions */}
             <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
-              {isConnected ? (
+              {isConnected || isAuthenticated ? (
                 <>
                   <PlanBadge plan="free" size="sm" />
                   <Link
@@ -114,9 +116,12 @@ export default function Header({ isConnected }: HeaderProps) {
                   >
                     Account
                   </Link>
-                  <Badge variant="success" size="sm">
-                    Connected
-                  </Badge>
+                  {isAuthenticated && <SignOutButton variant="nav" />}
+                  {isConnected && (
+                    <Badge variant="success" size="sm">
+                      Connected
+                    </Badge>
+                  )}
                 </>
               ) : (
                 <>

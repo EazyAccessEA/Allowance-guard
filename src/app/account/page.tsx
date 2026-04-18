@@ -20,6 +20,7 @@ import PlanCard from '@/components/account/PlanCard'
 import UsageChart from '@/components/account/UsageChart'
 import PortfolioRiskScore from '@/components/PortfolioRiskScore'
 import InsuranceIntegration from '@/components/InsuranceIntegration'
+import SignOutButton from '@/components/SignOutButton'
 import { cn } from '@/lib/utils'
 import {
  CreditCard,
@@ -168,6 +169,17 @@ export default function AccountPage() {
  <ArrowRight className="h-4 w-4 text-ink-muted group-hover:text-amber-deep transition-colors" />
  </a>
  ))}
+ </div>
+
+ {/* Sign out — end of page, deliberately understated */}
+ <div className="pt-6 border-t border-ink-rule flex items-center justify-between gap-4">
+ <div>
+ <p className="font-plex text-sm font-medium text-ink">Sign out</p>
+ <p className="font-plex text-xs text-ink-muted mt-0.5">
+ Ends your session on this device. You can sign back in any time.
+ </p>
+ </div>
+ <SignOutButton variant="panel" />
  </div>
  </div>
  </div>
