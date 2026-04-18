@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Container from '@/components/ui/Container'
 import Section from '@/components/ui/Section'
 import { H1 } from '@/components/ui/Heading'
@@ -15,19 +16,27 @@ import {
  AlertCircle,
 } from 'lucide-react'
 
-type Topic = 'support' | 'security' | 'partnerships' | 'press' | 'funding' | 'other'
+type Topic = 'support' | 'security' | 'partnerships' | 'enterprise' | 'press' | 'funding' | 'other'
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 const TOPICS: { value: Topic; label: string; hint: string }[] = [
  { value: 'support', label: 'Product support', hint: 'Bug, billing, or how-to' },
  { value: 'security', label: 'Security disclosure', hint: 'Encrypted via PGP' },
  { value: 'partnerships', label: 'Partnerships', hint: 'Integrations &amp; co-marketing' },
+ { value: 'enterprise', label: 'API Enterprise', hint: 'Custom limits, SLA, dedicated support' },
  { value: 'press', label: 'Press', hint: 'Interviews &amp; quotes' },
  { value: 'funding', label: 'Funding &amp; grants', hint: 'VC, foundations, ecosystem grants' },
  { value: 'other', label: 'Something else', hint: 'When in doubt' },
 ]
 
+const VALID_TOPICS = new Set(TOPICS.map((t) => t.value))
+
+function isTopic(value: string | null): value is Topic {
+ return value !== null && VALID_TOPICS.has(value as Topic)
+}
+
 export default function ContactPage() {
+ const searchParams = useSearchParams()
  const [status, setStatus] = useState<Status>('idle')
  const [error, setError] = useState<string | null>(null)
  const [form, setForm] = useState({
@@ -38,6 +47,16 @@ export default function ContactPage() {
  message: '',
  company: '', // honeypot
  })
+
+ // Preselect topic from ?topic=... so the pricing page's Enterprise CTA
+ // and any future deep links land on the right category without the
+ // user having to re-click.
+ useEffect(() => {
+ const queryTopic = searchParams?.get('topic')
+ if (isTopic(queryTopic)) {
+ setForm((prev) => (prev.topic === queryTopic ? prev : { ...prev, topic: queryTopic }))
+ }
+ }, [searchParams])
 
  const update = <K extends keyof typeof form>(key: K, value: (typeof form)[K]) => {
  setForm((prev) => ({ ...prev, [key]: value }))

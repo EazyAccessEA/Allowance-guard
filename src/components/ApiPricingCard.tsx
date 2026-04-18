@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { Check, Mail, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
@@ -143,13 +144,13 @@ export default function ApiPricingCard({ plan, billingPeriod = 'monthly', highli
       {/* CTA */}
       <div className="mb-6">
         {isEnterprise ? (
-          <a
-            href="mailto:sales@allowanceguard.com?subject=Enterprise API Inquiry"
-            className="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200"
+          <Link
+            href="/contact?topic=enterprise"
+            className="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold text-ink bg-paper-sub hover:bg-paper-deep ring-1 ring-ink-rule transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep"
           >
             <Mail className="mr-2 h-4 w-4" />
             Contact sales
-          </a>
+          </Link>
         ) : isPaid ? (
           <>
             <button

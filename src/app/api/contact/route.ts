@@ -33,6 +33,7 @@ const TOPIC_ROUTING: Record<
   support:      { to: 'support@allowanceguard.com',  label: 'Support',      ackWindow: 'one business day' },
   security:     { to: 'security@allowanceguard.com', label: 'Security',     ackWindow: 'two hours' },
   partnerships: { to: 'support@allowanceguard.com',  label: 'Partnerships', ackWindow: 'one business day' },
+  enterprise:   { to: 'sales@allowanceguard.com',    label: 'Enterprise',   ackWindow: 'one business day' },
   press:        { to: 'support@allowanceguard.com',  label: 'Press',        ackWindow: 'one business day' },
   funding:      { to: 'support@allowanceguard.com',  label: 'Funding',      ackWindow: 'one business day' },
   other:        { to: 'support@allowanceguard.com',  label: 'General',      ackWindow: 'one business day' },
@@ -41,7 +42,7 @@ const TOPIC_ROUTING: Record<
 const ContactSchema = z.object({
   name:    z.string().trim().min(1, 'Name is required').max(120),
   email:   z.string().trim().email('Valid email is required').max(254),
-  topic:   z.enum(['support', 'security', 'partnerships', 'press', 'funding', 'other']),
+  topic:   z.enum(['support', 'security', 'partnerships', 'enterprise', 'press', 'funding', 'other']),
   wallet:  z.string().trim().max(64).optional().or(z.literal('')),
   message: z.string().trim().min(10, 'Message must be at least 10 characters').max(5000),
   // Honeypot — real users leave this blank, bots fill it in.
