@@ -4031,3 +4031,40 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
     filter: none !important;
   }
 }
+
+/* ----------------------------------------------------------------------- */
+/* Blog view transitions — named elements on /blog cards morph into the   */
+/* corresponding positions on /blog/<slug>. Next.js 15's experimental      */
+/* viewTransition flag (see next.config.ts) wires the browser-native       */
+/* startViewTransition() into route changes. These rules tune the timing  */
+/* so the morph is editorial rather than flashy.                           */
+/*                                                                         */
+/* Scoped to view-transition pseudo-elements — the rules apply only on    */
+/* browsers that support the API. Older browsers ignore the selectors     */
+/* entirely and fall back to a plain navigation. Zero fallback JS needed. */
+/*                                                                         */
+/* Noor: prefers-reduced-motion short-circuits to a 0s duration so the    */
+/* morph collapses to a snap. Motion safety preserved.                    */
+/* ----------------------------------------------------------------------- */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 260ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-group([class*="blog-hero-"]),
+::view-transition-group([class*="blog-title-"]) {
+  animation-duration: 360ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group([class*="blog-hero-"]),
+  ::view-transition-group([class*="blog-title-"]) {
+    animation-duration: 0.01ms !important;
+    animation-timing-function: linear !important;
+  }
+}

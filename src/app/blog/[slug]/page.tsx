@@ -16,11 +16,13 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import Container from '@/components/ui/Container'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import MobileTableConverter from '@/components/MobileTableConverter'
 import { blogPosts } from './blog-data'
+import { blogPosts as blogIndex } from '../blog-index'
 
 interface BlogPostPageProps {
  params: Promise<{ slug: string }>
@@ -39,6 +41,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
  const currentIndex = blogPosts.findIndex(p => p.slug === slug)
  const prevPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null
  const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null
+
+ // Pull the hero image from the card-level index (it is not duplicated
+ // in blog-data.ts — the content file carries text, the index file
+ // carries card-level metadata). Match by slug; if missing, fall back
+ // to null and skip the inline hero render so the post still reads.
+ const heroImage = blogIndex.find(p => p.slug === slug)?.image ?? null
 
  const formattedDate = new Date(post.publishedAt).toLocaleDateString('en-US', {
  year: 'numeric',
@@ -85,7 +93,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
  </span>
  </div>
 
- <h1 className="font-display-tight text-ink leading-[0.98] text-4xl sm:text-5xl lg:text-6xl mb-5">
+ <h1
+ className="font-display-tight text-ink leading-[0.98] text-4xl sm:text-5xl lg:text-6xl mb-5"
+ style={{ viewTransitionName: `blog-title-${post.slug}` }}
+ >
  {post.title}
  </h1>
 
@@ -128,6 +139,30 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
  <section className="paper-sub grain py-16 sm:py-20">
  <Container>
  <div className="max-w-3xl mx-auto">
+
+ {/* Inline hero — renders the line-art illustration as part of the
+   article, not just a list-page thumbnail. The view-transition
+   name matches the card that was clicked on /blog so the image
+   morphs into position on navigation (browsers that support the
+   View Transitions API; graceful on those that don't). */}
+ {heroImage && (
+ <CascadingScrollAnimation direction="up" distance={30} delay={0}>
+ <div
+ className="relative aspect-[16/9] w-full overflow-hidden bg-paper border border-ink-rule mb-12"
+ style={{ viewTransitionName: `blog-hero-${post.slug}` }}
+ >
+ <Image
+ src={heroImage}
+ alt=""
+ fill
+ priority
+ className="object-contain"
+ sizes="(max-width: 768px) 100vw, 768px"
+ />
+ </div>
+ </CascadingScrollAnimation>
+ )}
+
  <article
  className="prose prose-ink max-w-none font-plex mb-16"
  dangerouslySetInnerHTML={{ __html: post.content }}
