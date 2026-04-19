@@ -1,77 +1,90 @@
 """
-Generate blog featured images via Runware API — v3 (Nano Banana 2).
+Generate blog featured images via Runware API — v4 (Imagen 4.0 Preview).
 
-Model: google:2@1 (Nano Banana 2).
-Dimensions: 1408x768.
+Model: google:4@1 (Imagen 4.0 Preview).
+Dimensions: 1344x768 (closest 16:9 Imagen 4 supports; allowed set is
+  1024x1024, 1248x832, 1184x864, 896x1152, 1344x768, 1536x672, etc.).
 
 =====================================================================
 STYLE RULE — DO NOT DRIFT. Read before editing anything below.
 =====================================================================
 
 Every AllowanceGuard blog hero renders as editorial line-art on a
-plain near-white field with one element in warm amber. This is the
-house style and must stay cohesive across the catalogue.
+plain near-white field with one element in warm amber. The whole
+existing catalogue on disk (padlock, chess knights, gears, broken
+chain, bridge, clipboard, dominoes, keys, stopwatch, flag, paper
+airplane, etc.) shares this aesthetic.
 
-TWO PATHS exist to this line-art aesthetic; historically the catalogue
-has used both:
+HOW IT ACTUALLY WORKS — investigated and verified 2026-04-19
+---------------------------------------------------------------------
+The Runware Usage dashboard at runware.ai/usage shows the true
+history: all 154 successful generations on 2026-04-13 that produced
+the shipped catalogue used model "Imagen 4.0 Preview" (google:4@1).
+Not FLUX 1.1 Pro, not Nano Banana 2 — both of which earlier versions
+of this script were mis-configured for. Commits claiming those
+models never actually produced shipped images.
 
-  (A) FLUX 1.1 Pro (runware:5@1) + product-shot prose prompts.
-      FLUX has a strong editorial-illustration prior. Given prompts
-      like "brushed gold padlock on cream surface, product
-      photography", FLUX draws rather than photographs. The older
-      ~19 images on disk (padlock, chess knights, gears, broken
-      chain, bridge, clipboard, etc.) were generated this way.
-
-  (B) Nano Banana 2 (google:2@1) + explicit line-art recipe.
-      Nano Banana 2 has no such prior — product-shot prompts produce
-      literal 3D photorealism. To get line-art from Nano Banana 2,
-      the prompt MUST include the explicit recipe prefix:
-      "minimal line art illustration, single continuous thin black
-      ink stroke on plain white background, no shading, no fill,
-      [SUBJECT with amber element], centered, simple elegant,
-      editorial spot illustration". The 5 most recent line-art images
-      (dominoes, four keys, stopwatch, flag, paper airplane) use
-      path B.
-
-We use PATH B going forward:
-  - Nano Banana 2 is currently healthier on Runware than FLUX (which
-    has been returning 504 Gateway Timeouts on FLUX inference).
-  - The explicit recipe gives us deterministic control — new entries
-    don't depend on a model-specific prior staying the same over
-    future Runware updates.
-  - Mixing paths is fine for the existing catalogue (the two paths
-    produce visually-cohesive output), but new entries should pick
-    one and stick to it. Path B is that one.
-
-ALWAYS use this prompt shape (Council #25 + #27 + #28 + #29):
+The prompt shape that Imagen 4 requires for line-art output is the
+EXPLICIT RECIPE:
 
   "minimal line art illustration, single continuous thin black ink
    stroke on plain white background, no shading, no fill, [SUBJECT
    with one element in warm amber], centered, simple elegant,
    editorial spot illustration"
 
+The recipe is not redundant window-dressing. It is a direct lookup
+into the region of Imagen 4's training corpus tagged with editorial-
+illustration / vector-spot-art examples. Drop the recipe and Imagen
+4 returns photorealism. Council breakdown of why each clause earns
+its place:
+
+  #25 AI image director
+    Model: google:4@1 at 1344x768. Imagen 4 Preview has a heavy
+    concentration of editorial-illustration training data indexed
+    under these exact phrases; the recipe is a latent-space
+    coordinate, not decoration.
+
+  #27 Senior prompt engineer (concrete subject, composition)
+    [SUBJECT] must be ONE concrete noun plus ONE amber element.
+    8-12 words max. "a key splitting into four keys, one in amber"
+    parses. "an ancient chest of varied keys, one gold" does not —
+    scene-building produces cluttered output.
+
+  #28 Senior prompt engineer (brand systems, colour consistency)
+    "warm amber" is the locked colour phrase. "golden", "orange",
+    "bronze" drift the hue away from the brand. "no shading, no
+    fill" disables Imagen's default mid-grey fills — dropping those
+    negations muddies the amber accent.
+
+  #29 Art Director (series cohesion)
+    "editorial spot illustration" is the cue that produces the
+    standalone-editorial-mark composition with the horizontal anchor
+    line at the base. Drop "spot illustration" and you get composed
+    scenes; keep it and you get the editorial marks that read as a
+    set across the catalogue.
+
 Rules for the [SUBJECT]:
-  - One subject. Concrete noun. Distinct from existing catalogue
-    (avoid second gear / second chain / second padlock).
+  - One subject. Concrete noun. Visually distinct from existing
+    catalogue (avoid second gear / second chain / second padlock).
   - Embed the amber accent INSIDE the subject:
     "a domino tipping, rendered in warm amber" >
     "a domino tipping with amber accent".
-  - Keep the subject short — a clause, not a paragraph. The recipe
-    prefix is doing the heavy lifting; the subject just names the
-    thing.
+  - Keep it short — a clause, not a paragraph. The recipe prefix
+    does the heavy lifting; the subject just names the thing.
 
-DO NOT drop the recipe prefix when using Nano Banana 2. Doing so
-produces photorealism, which breaks the catalogue cohesion.
+DO NOT drop the recipe prefix. The prompts in this script WITHOUT
+the recipe produced photoreal 3D on both Nano Banana 2 and Imagen 4
+in 2026-04-19 testing.
 
 DO NOT switch the model without regenerating the entire catalogue
-and verifying visual cohesion end-to-end.
+and verifying visual cohesion end-to-end. Previous model switches
+(to FLUX, to Nano Banana 2) were logged in commits but never
+actually reflected in shipped imagery, because regeneration was
+either skipped or silently failed.
 
-Council sign-off (advisory, convene mentally before adding prompts):
-  #25 AI image director   — prompt engineering, model selection
-  #27 Senior prompt eng   — concrete subject, composition
-  #28 Senior prompt eng   — brand-colour consistency across series
-  #29 Art Director        — series cohesion, rejects anything that
-                            breaks the set
+Runware 504 watch: FLUX 1.1 Pro (runware:5@1) has been returning
+504 Gateway Timeouts on Runware inference as of 2026-04-19. Do not
+fall back to FLUX without confirming it's healthy.
 
 Drift means re-roll; Runware quota is finite. Get the prompt right
 on paper first.
@@ -213,8 +226,8 @@ async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Sem
                 "taskType": "imageInference",
                 "taskUUID": str(uuid.uuid4()),
                 "positivePrompt": item["prompt"],
-                "model": "google:2@1",
-                "width": 1408,
+                "model": "google:4@1",
+                "width": 1344,
                 "height": 768,
                 "numberResults": 1,
                 "outputFormat": "WEBP",
