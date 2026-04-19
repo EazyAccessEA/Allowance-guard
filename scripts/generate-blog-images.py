@@ -107,6 +107,14 @@ BLOG_IMAGES = [
         "filename": "ten-minute-wallet-audit.webp",
         "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a simple stopwatch with the minute hand drawn in warm amber, centered, simple elegant, editorial spot illustration",
     },
+    {
+        "filename": "report-a-risky-contract.webp",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a small flag planted on a hill with the flag itself in warm amber, centered, simple elegant, editorial spot illustration",
+    },
+    {
+        "filename": "the-quiet-death-of-approve.webp",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a paper airplane in flight with a dotted trail behind it, the airplane rendered in warm amber, centered, simple elegant, editorial spot illustration",
+    },
 ]
 
 

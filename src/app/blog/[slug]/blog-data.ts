@@ -2995,5 +2995,199 @@ export const blogPosts: BlogPost[] = [
     category: 'Tutorial',
     featured: false,
     tags: ['audit', 'tutorial', 'scanner', 'approvals', 'revoke', 'how-to'],
+  },
+  {
+    slug: 'report-a-risky-contract-community-signal',
+    title: 'Report a Risky Contract: How Ninety Seconds of Your Time Makes Every Wallet Safer',
+    subtitle: 'The catalogue gets better because people tell us what they saw',
+    content: `
+      <p>AllowanceGuard flags contracts as risky for one reason above any other: somebody, somewhere, saw the contract do something harmful, and told us. The catalogue is not downloaded from a vendor. It is not the output of a model trained on Twitter. It is a list assembled from post-mortems, incident threads, community reports, and our own on-chain observations — and the reports are the part that grows fastest.</p>
+
+      <p>This piece is a quiet pitch: if you have ninety seconds and you saw something that felt off, the scanner gets measurably better when you submit it. Not because your single report is the full story — it rarely is — but because reports cluster, and a cluster is a signal. The first person to flag Socket's bridge contract in late 2023 did not have the full exploit in hand. They had a vague "my wallet is being drained and the only approval I had was to this bridge." That sentence, arriving once, is a lead. Arriving four times in two hours, from unconnected wallets, is an alert.</p>
+
+      <p>If you want to skip the essay and go straight to it: <a href="/tokens">allowanceguard.com/tokens</a> has a form. You do not need an account. You do not need to be technical. The form asks for a contract address, the chain, and a sentence about what you observed. That is the whole ask.</p>
+
+      <h2>What actually counts as a risky contract</h2>
+
+      <p>The catalogue is not a list of "contracts I do not like." The threshold for a useful report is narrower and more grounded. A contract worth flagging usually matches one of these shapes:</p>
+
+      <ul>
+        <li><strong>It drained a wallet.</strong> Funds left the wallet after the user interacted with the contract — granted an approval, signed a permit, paid gas into a function call — and the funds did not come back. This is the clearest signal and the easiest one for the next person to recognise.</li>
+        <li><strong>It impersonates a real protocol.</strong> The contract's name, website, or deployer address is close enough to a legitimate project that a user searching for Uniswap or Aave might land on it by mistake. Phishing contracts live here. If the UI they're paired with looks like a real dApp but the contract on-chain is new and deployed by an unfamiliar address, that is worth a report.</li>
+        <li><strong>It has a "free airdrop" or "claim" trap.</strong> A site or tweet directs you to a contract that asks for token approvals before any airdrop lands. The approval is the attack. The airdrop, if it exists at all, is smaller than what the approval allows the contract to remove.</li>
+        <li><strong>It is a bridge or aggregator whose approvals were exploited.</strong> The honest kind of risk: a legitimate protocol whose contracts had a bug, got compromised, and could withdraw from anyone who had granted a non-zero approval. Socket's January 2024 incident was this pattern. Reports saying "I had an approval to this address, the approval was used unexpectedly" are the first draft of an incident thread.</li>
+        <li><strong>It is downstream of a known exploit.</strong> Stolen funds pass through address chains. Addresses that receive funds from a known drainer, or that hold value from a known rug-pull, are worth flagging so users who later encounter them get a warning. This is the most technical category and we do a lot of this work ourselves, but user reports help.</li>
+      </ul>
+
+      <p>What does <em>not</em> count as a useful report:</p>
+
+      <ul>
+        <li><strong>"I don't like this protocol."</strong> Dislike is not a security signal. Unless the contract did something harmful, we can't flag it.</li>
+        <li><strong>"This protocol was audited and I'm not sure I trust the auditor."</strong> Audit quality is a real conversation but it is not per-contract. Those conversations live on Twitter and in the auditor's own response to criticism.</li>
+        <li><strong>"This contract is new." </strong> New is not inherently risky. Many legitimate protocols are new. Absence of warning is the correct default for a new contract that has not yet exhibited harmful behaviour.</li>
+        <li><strong>"Someone told me to avoid this contract."</strong> We need your observation, not a forwarded claim. If someone told you, ask them what they saw, and if the answer is specific, let them submit the report themselves.</li>
+      </ul>
+
+      <p>The test, in practice, is: could a stranger look at what you saw and conclude the contract did something harmful? If yes, the report is worth making. If the answer requires belief in a prior claim — "I heard this contract is a scam" — the report does not stand on its own.</p>
+
+      <h2>How to submit a report</h2>
+
+      <p>Go to <a href="/tokens">allowanceguard.com/tokens</a> and use the submission form. The fields are:</p>
+
+      <ol>
+        <li><strong>Contract address.</strong> The 0x-prefixed address of the contract you are reporting. If you signed an approval, this is the <em>spender</em> address that appeared in the approval panel — not the address of the token you approved. Two very different things, and one of the most common reporting confusions.</li>
+        <li><strong>Chain.</strong> Ethereum, Base, Arbitrum, Polygon, or one of the 23 other chains the scanner covers. If you are not sure which chain, the transaction hash of the interaction will tell you — it only exists on one chain.</li>
+        <li><strong>Observation.</strong> A short sentence about what happened. "Approved this to a site pretending to be Uniswap; funds drained within 30 seconds." Or: "I had an open approval to this bridge; funds moved without my signature after the contract was paused." Specificity is what makes a report useful.</li>
+        <li><strong>Evidence (optional but helpful).</strong> A transaction hash, a link to a tweet or Discord post describing the incident, a link to the dApp URL that pointed to the contract. You do not need all of these. One is often enough.</li>
+      </ol>
+
+      <p>The form is deliberately short. We ran a longer version for two months and got fewer reports; people tapped the button, saw six fields, and closed the tab. Three fields and a free-text box gets the report.</p>
+
+      <p>You do not need to include your wallet address. You do not need to include the amount lost. Both are private; neither is a required input to the question "is this contract risky?" — which is the only question the form answers.</p>
+
+      <h2>What happens to a report after you submit it</h2>
+
+      <p>A submitted report is not auto-published as a catalogue entry. If it were, anyone could pollute the catalogue by reporting their competitor's contract ten times from ten wallets. The flow from report to catalogue looks roughly like this:</p>
+
+      <ol>
+        <li><strong>Intake.</strong> Your report lands in our review queue with a timestamp and the fields you submitted. Nothing happens yet.</li>
+        <li><strong>Triage.</strong> A reviewer — someone on the team, or an approved community reviewer — reads the report and looks at the on-chain behaviour of the contract. Was the approval used in the window you described? Did funds leave the victim address to the spender? Is the contract freshly deployed, or is it a legitimate protocol whose security posture recently changed?</li>
+        <li><strong>Corroboration.</strong> If the report is the first one for this contract, the reviewer often waits to see if others arrive. A single report for a contract with no other on-chain evidence is a lead, not a verdict.</li>
+        <li><strong>Catalogue action.</strong> If the evidence is sufficient, the contract gets a risk flag in the catalogue — the same flag that appears in the scanner when any user scans a wallet with an approval to that contract. Severity is calibrated; not every flagged contract is marked critical.</li>
+        <li><strong>Public note.</strong> For contracts flagged as critical, we publish a short note in the monthly roundup — what the contract was, what it did, who reported it (anonymously by default), and what users should do. The note is how the catalogue earns the reader's trust: decisions are legible.</li>
+      </ol>
+
+      <p>We also feed confirmed reports back into our own scanning infrastructure — the scanner's daily sweep picks up downstream addresses from a flagged contract, so a fresh-deployed address receiving funds from a known drainer is flagged within hours, not months. That downstream propagation is one of the practical benefits of maintaining our own catalogue rather than consuming someone else's: user reports have observable effects, not just on the one contract they reported but on the network of addresses connected to it.</p>
+
+      <h2>Why the community angle is the point, not a marketing line</h2>
+
+      <p>"Community-powered" is a phrase that has been thoroughly drained of meaning by product copy. A lot of products use it to describe a Discord server with two users and an unmoderated suggestions channel. We are aware of the risk of the phrase sounding like one more of those.</p>
+
+      <p>The reason we keep using it is that the security model of an approval scanner genuinely requires external input. The scanner looks at on-chain state. On-chain state tells you what permissions exist; it does not tell you which permissions were intended. Distinguishing "this user granted Uniswap an approval to swap tokens for them, as they intended" from "this user granted a phishing contract disguised as Uniswap an approval to drain them, which they did not intend" is not something the chain reveals directly. It requires the counterfactual: what the user thought they were doing.</p>
+
+      <p>That information only comes from the user. The scanner cannot infer it. We cannot infer it by reading the bytecode. We infer it by collecting what users tell us, corroborating it, and publishing the result. That is what a community catalogue is, in the strict sense: a list of contracts that some number of users have collectively testified about.</p>
+
+      <p>It is also the reason we open-source most of the tooling. If the catalogue were a proprietary database, the community reporting against it would be unpaid labour for our business. By publishing the flag data via a public API and keeping the client-side and widget code open-source (see <a href="/contribute">/contribute</a> for how to work with the codebase), the catalogue becomes infrastructure — other wallets and tools can consume it, and the reports benefit the ecosystem rather than a single company. The incentive for a user to report something is clearer when the report benefits any wallet they or their friends use next, not just ours.</p>
+
+      <h2>What a good report actually reads like</h2>
+
+      <p>An example of a useful observation field, pulled from a real recent report (address and chain changed to preserve the reporter's reference):</p>
+
+      <blockquote><p>"Signed what I thought was a Uniswap approval after clicking a Telegram ad. Contract wasn't Uniswap. Amount approved was unlimited. Within 2 minutes my USDC was gone. Tx hash <code>0xabc...</code> shows the Transfer out of my wallet to the spender. Deployer is new, deployed the contract 3 days ago."</p></blockquote>
+
+      <p>That is ninety seconds of typing. It contains: what the user thought was happening (Uniswap approval), what actually happened (non-Uniswap contract, unlimited approval, funds drained), the evidence (tx hash), and a forensic note (new deployer). A triaging reviewer can verify every claim in under five minutes and flag the contract with confidence.</p>
+
+      <p>Compare to a report that reads: "This contract is sketchy, please block it." There is nothing a reviewer can do with that. It might be right; it might be wrong; either way, without observation, the catalogue cannot learn.</p>
+
+      <h2>If you do not have a report to make right now</h2>
+
+      <p>Bookmark the page. The next time you sign an approval that immediately drained your wallet, the next time a friend describes the same pattern to you, the next time you see a Discord thread of four different users saying the same contract ripped them off — that is when the form becomes useful. Ninety seconds of your time, one contract's reputation updated, every future user's scanner slightly more informative.</p>
+
+      <p>The alternative is what this space had for its first decade: each user rediscovering the same scam contract independently, often after losing funds, without a durable record that the next user could consult. A catalogue that grows from reports is the only version of this that scales.</p>
+
+      <h2>A note on reviewer time</h2>
+
+      <p>We do triage reports as fast as we can, which is usually within 48 hours for a single report and faster if the report is corroborated. We do not send a reply to every submitter; we would spend all our time on replies. What we do promise is that a well-formed report is read by a human and, if the evidence holds, the catalogue is updated within a week. Sooner, for anything actively draining wallets.</p>
+
+      <p>If you want to be more involved — if you have a security background and are willing to help review incoming reports — <a href="mailto:community@allowanceguard.com">community@allowanceguard.com</a> is the channel. We have a small rotation of reviewers and a clear induction. The work is light, the effect is real, and the catalogue is better for it.</p>
+
+      <p>That is the whole ask. Ninety seconds, one contract, the next wallet warned. If that is a worthwhile trade, the form is at <a href="/tokens">allowanceguard.com/tokens</a>.</p>
+    `,
+    publishedAt: '2026-04-19',
+    readTime: '9 min read',
+    category: 'Community',
+    featured: false,
+    tags: ['community', 'reporting', 'catalogue', 'risky-contracts', 'open-source'],
+  },
+  {
+    slug: 'the-quiet-death-of-approve',
+    title: 'The Quiet Death of approve(): Four Changes Coming to Wallet Permissions',
+    subtitle: 'Permit2, account abstraction, session keys, and intents are restructuring what consent means',
+    content: `
+      <p>For roughly a decade, <code>approve()</code> was the canonical way a wallet gave a contract the right to move a token on its behalf. The ERC-20 standard named it, every DeFi protocol consumed it, and every wallet modal presented it as its own kind of ritual — click, pay gas, wait for confirmation. Most of what an approval scanner like ours does is read the trail of on-chain allowances those calls left behind.</p>
+
+      <p>That model is ending. Not in a single event — there is no ERC that deprecates it — but in the way older protocols fade: newer patterns route around it, and over time the old path becomes a minority of new permission-grants while still living indefinitely as a legacy layer. The direction is already visible on mainnet today. This piece walks through the four changes doing the routing around, what each one is, what it buys the user, and what it costs the tooling that tries to keep users safe.</p>
+
+      <p>None of the four are pure wins. Each solves a problem that <code>approve()</code> had and introduces problems <code>approve()</code> did not. The interesting analysis is in the tradeoffs, not the headline that one replaces the other.</p>
+
+      <h2>1. Permit and Permit2 — signed approvals that live off-chain until used</h2>
+
+      <p>The first and most-established displacement is the signature-based approval: EIP-2612's <code>permit</code> for compliant tokens, and Uniswap's Permit2 for the much larger population of tokens that never implemented <code>permit</code> themselves.</p>
+
+      <p>The shape. Instead of a user submitting an on-chain <code>approve()</code> transaction and paying gas for it, the user signs a piece of typed data (EIP-712) in their wallet. The signature encodes: which spender is allowed, which token, which amount, and until when. The signature sits off-chain. When the spender wants to use the approval, it submits the signature plus the relevant call (a swap, a deposit) in a single on-chain transaction, which the contract verifies, applies the allowance, and consumes in one step.</p>
+
+      <p>The upside. The user pays gas only at the moment of the actual interaction, not for a separate approval step. The UX is visibly simpler: one signature, one prompt, a swap that starts and finishes inside the user's flow. For new protocols, Permit2 also re-centralises approvals: instead of granting 40 approvals to 40 protocols, the user grants one canonical approval to Permit2 itself and downstream protocols consume signed sub-permits.</p>
+
+      <p>The shift in trust. Off-chain signatures have a different security shape than on-chain approvals. A signed Permit with an unlimited amount and a two-year deadline can sit in an attacker's inbox for two years and be submitted at any moment. It does not appear on-chain until submitted. Approval scanners like ours, which read on-chain state, cannot show signed-but-unsubmitted permits. A user who signed something yesterday to a phishing contract may not know until the permit is submitted and their tokens move.</p>
+
+      <p>The mitigation on the user side is wallet-level. Rabby, Frame, and the forthcoming generations of MetaMask show the decoded contents of typed-data signatures — amount, spender, deadline — rather than the opaque hash. Users who sign <code>permit</code> prompts without reading the decoded fields are substituting signature-prompt fatigue for transaction-prompt fatigue. The off-chain nature of the grant does not change the fact that it is a grant; it only changes when it becomes visible.</p>
+
+      <p>What this means for scanners. An on-chain scanner has an inherent blindspot with signature-based approvals: they are invisible until activated. The compensation is wallet-side decoding and permission-level review (are the spenders in the Permit2 ecosystem reputable? How many sub-permits has this user signed?). We cover the on-chain side; wallet vendors cover the signing side. The division of labour is real and the user needs both.</p>
+
+      <h2>2. Account abstraction and session keys — time-bounded, scoped delegations</h2>
+
+      <p>ERC-4337 made programmable accounts viable on mainnet in 2023. Rather than the user's key signing every transaction directly, a smart contract wallet holds the user's assets, and the user authenticates to it through whatever mechanism the wallet chooses — an EOA signature, a passkey, a social-login recovery scheme, or a delegated session key.</p>
+
+      <p>The interesting primitive for this essay is the <strong>session key</strong>: a secondary key, held by the wallet or the application, that has permission to perform a narrow set of actions for a bounded period. For example, a game might hold a session key that can move up to 100 USDC per day within the game's contracts, valid for 30 days. The user signs one master transaction enabling the session; the game then transacts without prompting the user each time.</p>
+
+      <p>The upside. For the class of applications where <code>approve()</code> was a fatigue solution rather than a security primitive — interactive games, high-frequency DeFi strategies, dollar-cost-averaging bots — session keys turn the rhythm of approvals into a single opt-in moment. No more signing every buy. No more approving every swap.</p>
+
+      <p>The shift in trust. A session key is a live, narrow-scope key sitting on an application server (or on the user's device, depending on the wallet). The scope is typed: contract, function selectors, amount caps, time window. A compromised session key cannot exceed its scope. But a compromised session key with "move up to 100 USDC per day for 30 days" still costs the user up to 3000 USDC before the session expires. That is a smaller surface than an unlimited <code>approve()</code>, but a larger surface than no permission at all — the user has traded breadth of grant for a persistent presence.</p>
+
+      <p>The governance question session keys raise is who gets to set the scope. If the wallet lets the application prompt its own scope ("can this app approve session: move any token, unlimited, for 90 days?"), the user is back to granting broad permissions without understanding them. The good implementations (Argent, Safe with 4337 bundlers, Biconomy Smart Accounts) default to narrow scopes and force the user to explicitly widen them; the less-good ones are still shipping.</p>
+
+      <p>What this means for scanners. Session keys live inside the wallet's state, not the token contract's state. A scanner reading token allowances does not see them directly. The future of a good risk tool covers three layers: ERC-20 allowances (what we do now), Permit2 state (already partially covered), and smart-account session keys (early — no mature scanner for these yet). Users of 4337 wallets will need wallet-level dashboards showing their active session keys and scopes; token-allowance scanners are a partial view.</p>
+
+      <h2>3. EIP-7702 — EOAs that can temporarily behave like contracts</h2>
+
+      <p>EIP-7702 is a Pectra-era Ethereum change that lets a regular EOA (externally-owned account) delegate its execution, within a single transaction, to the code at another address. Informally: an EOA can sign a transaction saying "for this one call, treat me as though I were a smart contract at address X," and the chain will execute X's bytecode in the EOA's context.</p>
+
+      <p>The practical effect is that the enormous installed base of EOA wallets (every MetaMask, every hardware wallet, every mobile wallet) gets access to smart-contract features — batched calls, session keys, sponsored gas — without migrating funds to a new smart-account address. The user keeps their address; the EOA temporarily wears a smart-account hat when it wants to.</p>
+
+      <p>The upside. The transition to smart accounts has been bottlenecked on the fact that users don't want to move funds. 7702 removes the bottleneck. A user can, in a single signed transaction, approve ten things + swap + deposit + re-stake, all batched, with a session key handed to their preferred app for recurring actions, without having to tell their recipients "I'm changing my address."</p>
+
+      <p>The shift in trust. 7702 is also where the most novel failure modes sit. An EOA signing an authorization to "delegate my execution to address X" is signing, in effect, a blank cheque for whatever X's code does. If X is an attacker's contract, X can do anything a smart account can do — drain every token balance, re-delegate to more hostile code, set up session keys the user cannot see.</p>
+
+      <p>This is the new phishing front. Instead of asking you for an unlimited <code>approve()</code> (which scanners catch), an attacker convinces you to sign a 7702 authorization to a wrapper contract they control. The authorization itself looks innocuous in an unaware wallet UI — it is a signed bit of typed data, not an obvious approval. Wallet teams are scrambling to render 7702 authorizations with the same prominence they give unlimited approvals. The first six months of 7702 adoption will tell us how well that rendering lands.</p>
+
+      <p>What this means for scanners. A scanner that only reads <code>allowance()</code> calls is blind to 7702 authorizations — they do not appear in the token contract's state. Detection requires reading the EOA's authorization list directly, which is a new scan dimension. This is active work; it is not yet a standard feature of most tooling. Expect the catalogue equivalent of "risky smart-account-delegate addresses" to become a thing within 12 months.</p>
+
+      <h2>4. Intents — signing an outcome, not a transaction</h2>
+
+      <p>The fourth and youngest change is intent-based execution. Rather than the user constructing a specific transaction — "swap 1 ETH for USDC on Uniswap V3 at pool address Y" — the user signs an <strong>intent</strong>: "I want at least 3200 USDC for 1 ETH, any venue, any path, within 60 seconds." A solver (a specialised off-chain actor) reads the intent, competes with other solvers, and executes whatever combination of on-chain calls produces the requested outcome. The user pays for the result and signs at the outcome level.</p>
+
+      <p>UniswapX, CoW Protocol, Across, 1inch Fusion, and a growing roster of builders operate this way. The approval model beneath them is interesting: users typically grant a single approval to a router or settlement contract, and solvers consume that approval per intent, with the settlement contract enforcing the intent's constraints. The user's day-to-day signatures are at the intent level (EIP-712 again), not the transaction level.</p>
+
+      <p>The upside. Users stop needing to understand Uniswap's V3 tick math, Balancer's weighted pool formula, or the fourteen-DEX-aggregator mesh across L2s. They say what outcome they want. Solvers race. The winning solver gets paid a small margin for the execution. The user gets the quoted outcome or the transaction reverts. For users whose time is worth more than the solver fee, this is a massive win in both cognitive load and execution quality.</p>
+
+      <p>The shift in trust. Intents push trust to the solver layer. The user trusts the settlement contract (which enforces the intent's bounds) and implicitly trusts that the solver mesh is competitive enough that the winning quote is close to optimal. A solver that wins but executes suboptimally — takes a routable path that could have been better and pockets the difference — is a quiet cost to the user that is hard to audit without comparing to theoretical optima.</p>
+
+      <p>Approval-wise, the scanner's job is still to read the one approval the user granted to the settlement contract and surface whether that contract has a clean track record. The approval is narrow (the settlement contract can only do what its code permits it to do on the user's signed intent). The risk is mostly upstream of the approval — it lives in whether the intent you signed specified the constraints you meant.</p>
+
+      <p>What this means for scanners. The on-chain scanner's work on intents is cleaner than on 7702 or session keys: intents ultimately settle as on-chain calls through a known settlement contract, so the approvals granted are visible, finite, and scoped. Our work is to keep the settlement-contract catalogue current and well-labelled, and to flag approvals granted to settlement contracts with known issues (not all are equal; some solver networks have had MEV or rebate-extraction scandals).</p>
+
+      <h2>What this adds up to for the next few years</h2>
+
+      <p>Four distinct shapes of permission, live or near-live on mainnet today. None of them delete <code>approve()</code>. The legacy call will be with us for a decade more, carrying the long tail of protocols that will never upgrade. What changes is the share of new grants by type: five years from now, a typical wallet's "permissions" will be some mix of direct ERC-20 allowances, Permit2 signatures, smart-account session keys, 7702 delegates, and intent-level approvals to settlement contracts. A safety tool that only covers the first of those five is a partial view of the user's exposure.</p>
+
+      <p>The scanner's roadmap, in rough priority order:</p>
+
+      <ol>
+        <li><strong>Direct allowances</strong> — the thing we cover today. Stable; continues to be the bulk of active permissions for the near term.</li>
+        <li><strong>Permit2</strong> — partial coverage via the Permit2 contract itself, since its sub-permit state is partially visible on-chain. The off-chain signed-but-unsubmitted portion remains a wallet-side concern.</li>
+        <li><strong>Smart-account session keys</strong> — requires per-wallet integration; starts with the top three or four 4337 wallets and expands.</li>
+        <li><strong>7702 authorizations</strong> — requires reading authorization lists in EOA state; a new scan category.</li>
+        <li><strong>Intent settlement-contract catalogue</strong> — already partially in our address catalogue; needs richer labelling to distinguish "UniswapX settlement" from "unknown settlement contract."</li>
+      </ol>
+
+      <p>The honest summary: approvals are becoming <em>more</em> varied, not less. The simple world where "allowance = moving tokens" held for a decade. The world we're moving into has five permission primitives that all do something allowance-like but with different scopes, different surfaces, and different failure modes. An approval scanner worth using in 2028 will cover all five. The scanner worth using today covers the one that still accounts for most of the risk.</p>
+
+      <p>If you are curious about which of the five your own wallet currently has state in, a scan at <a href="/">allowanceguard.com</a> covers the first two. A scan of your 4337 account (if you use one) at your wallet's own dashboard covers the third. 7702 and intent scanning are tracked in our roadmap and will be announced as they ship. The broader point, though, is not any single feature: it is that the model of "one standing approval" is giving way to a fabric of permissions with different shapes, and understanding your exposure means reading all of them.</p>
+    `,
+    publishedAt: '2026-04-19',
+    readTime: '12 min read',
+    category: 'Innovation',
+    featured: false,
+    tags: ['innovation', 'permit2', 'account-abstraction', 'session-keys', 'eip-7702', 'intents', 'approvals'],
   }
 ]

@@ -22,6 +22,28 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'the-quiet-death-of-approve',
+    title: 'The Quiet Death of approve(): Four Changes Coming to Wallet Permissions',
+    subtitle: 'Permit2, account abstraction, session keys, and intents are restructuring what consent means',
+    excerpt: 'For a decade, approve() was the only way a wallet granted a contract the right to move a token. That model is quietly ending. Four distinct replacements are already live or near-live, each with its own security shape. A field guide to what is coming and what it changes.',
+    publishedAt: '2026-04-19',
+    readTime: '12 min read',
+    category: 'Innovation',
+    featured: false,
+    image: '/images/blog/the-quiet-death-of-approve.webp',
+  },
+  {
+    slug: 'report-a-risky-contract-community-signal',
+    title: 'Report a Risky Contract: How Ninety Seconds of Your Time Makes Every Wallet Safer',
+    subtitle: 'The catalogue gets better because people tell us what they saw',
+    excerpt: 'AllowanceGuard flags risky contracts because someone, somewhere, saw one first and said so. A walk-through of what counts as a report worth making, what happens after you submit it, and why the community angle is the point — not a marketing line.',
+    publishedAt: '2026-04-19',
+    readTime: '9 min read',
+    category: 'Community',
+    featured: false,
+    image: '/images/blog/report-a-risky-contract.webp',
+  },
+  {
     slug: 'ten-minute-wallet-audit-no-install',
     title: 'Ten-Minute Wallet Audit, No Install',
     subtitle: 'A walk-through of the free scanner from first click to cleaner wallet',
