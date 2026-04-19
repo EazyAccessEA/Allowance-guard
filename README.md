@@ -132,10 +132,10 @@ Built on Ethereum, Next.js, Vercel, Neon, Upstash, Stripe, Reown, wagmi, viem, T
 
 ## Contact
 
-- General: `hello@allowanceguard.com`
+- General: `support@allowanceguard.com`
 - Security: `security@allowanceguard.com`
-- Legal: `legal@allowanceguard.com`
-- Sales / Enterprise: `sales@allowanceguard.com`
+- Legal: `legal.support@allowanceguard.com`
+- Sales / Enterprise: `support@allowanceguard.com`
 - Issues & feature requests: [github.com/EazyAccessEA/Allowance-guard/issues](https://github.com/EazyAccessEA/Allowance-guard/issues)
 
 ---
