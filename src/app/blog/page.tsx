@@ -17,367 +17,13 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import SectionHeader from '@/components/ui/SectionHeader'
 import Highlight from '@/components/ui/Highlight'
 import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
+import { blogPosts, type BlogPost } from './blog-index'
 
-interface BlogPost {
-  slug: string
-  title: string
-  subtitle: string
-  excerpt: string
-  publishedAt: string
-  readTime: string
-  category: string
-  featured: boolean
-  image?: string
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    slug: 'ten-minute-wallet-audit-no-install',
-    title: 'Ten-Minute Wallet Audit, No Install',
-    subtitle: 'A walk-through of the free scanner from first click to cleaner wallet',
-    excerpt: 'A no-install, no-account audit of every active token approval on your wallet across 27 chains. Five steps, ten minutes, one-click revoke for anything you do not want any more.',
-    publishedAt: '2026-04-18',
-    readTime: '10 min read',
-    category: 'Tutorial',
-    featured: false,
-    image: '/images/blog/ten-minute-wallet-audit.webp',
-  },
-  {
-    slug: 'every-approval-you-sign-decoded',
-    title: 'Every Approval You Sign, Decoded',
-    subtitle: 'A field guide to approve, permit, permit2, and setApprovalForAll',
-    excerpt: 'Four approval shapes, each looking almost identical in the wallet modal, each with its own trust implications. A reference for reading what you are actually signing before you sign it.',
-    publishedAt: '2026-04-18',
-    readTime: '11 min read',
-    category: 'Education',
-    featured: true,
-    image: '/images/blog/every-approval-you-sign-decoded.webp',
-  },
-  {
-    slug: 'eight-approval-exploits-one-pattern',
-    title: 'Eight Approval Exploits, One Pattern',
-    subtitle: 'What three years of on-chain post-mortems teach us about token permissions',
-    excerpt: 'Six of the eight largest DeFi hacks between 2022 and 2024 had nothing to do with user token approvals. The seventh and eighth tell us where approval hygiene actually matters — and where it cannot help.',
-    publishedAt: '2026-04-18',
-    readTime: '10 min read',
-    category: 'Security',
-    featured: true,
-    image: '/images/blog/eight-approval-exploits-one-pattern.webp',
-  },
-  {
-    slug: 'open-source-stronger-our-license-update',
-    title: 'Open Source, Stronger: Our License Update to AGPL-3.0',
-    subtitle: 'Why We Switched Licenses and What It Means for You',
-    excerpt: 'AllowanceGuard is moving from GPL-3.0 to AGPL-3.0 with a commercial dual-license option. The core tool stays free and open source — this change protects the community and sustains the project for the long run.',
-    publishedAt: '2026-04-02',
-    readTime: '5 min read',
-    category: 'Community',
-    featured: false,
-    image: '/images/blog/open-source-stronger-our-license-update.webp',
-  },
-  {
-    slug: 'hardware-wallets-and-multisigs-elevating-your-security',
-    title: 'Hardware Wallets and Multisigs: Elevating Your Security',
-    subtitle: 'From Digital Convenience to Physical Security',
-    excerpt: 'True digital sovereignty requires a shift from digital convenience to physical security. Hardware wallets and multisigs create layers of defence that are nearly impossible for remote attackers to penetrate.',
-    publishedAt: '2024-12-19',
-    readTime: '12 min read',
-    category: 'Security',
-    featured: true,
-    image: '/images/blog/hardware-wallets-and-multisigs.webp',
-  },
-  {
-    slug: 'understanding-smart-contract-risk-beyond-allowances',
-    title: 'Understanding Smart Contract Risk Beyond Allowances',
-    subtitle: 'The Hidden Dangers in the Code You Trust',
-    excerpt: 'Managing token allowances is like locking doors and windows. But what if the building itself has a cracked foundation? Smart contract risk goes beyond permissions.',
-    publishedAt: '2024-12-19',
-    readTime: '10 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/understanding-smart-contract-risk.webp',
-  },
-  {
-    slug: 'building-your-personal-web3-security-routine',
-    title: 'Building Your Personal Web3 Security Routine',
-    subtitle: 'Transform Security from Emergency Response to Daily Habit',
-    excerpt: 'The most effective defence is not heroic effort — it\u2019s a quiet, consistent routine. Like fire drills, you practise so your response is automatic when it matters.',
-    publishedAt: '2024-12-19',
-    readTime: '8 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/building-your-personal-web3-security-routine.webp',
-  },
-  {
-    slug: 'gas-fees-and-revocations-making-security-cost-effective',
-    title: 'Gas, Fees, and Revocations: Making Security Cost-Effective',
-    subtitle: 'Transforming Security from Expensive Chore to Low-Cost Habit',
-    excerpt: 'Security is like insurance — everyone understands its importance, but paying the premium can feel like a burden. What if you could lower the cost?',
-    publishedAt: '2025-08-19',
-    readTime: '8 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/gas-fees-and-revocations.webp',
-  },
-  {
-    slug: 'understanding-layer-2-networks-how-they-work',
-    title: 'Understanding Layer 2 Networks: How They Work',
-    subtitle: 'A Deeper Dive into Scalable Ethereum',
-    excerpt: 'To understand Layer 2 solutions, we first need to understand the Blockchain Trilemma. Layer 2 networks are the key to unlocking Ethereum\u2019s scalability.',
-    publishedAt: '2025-06-19',
-    readTime: '12 min read',
-    category: 'Education',
-    featured: false,
-    image: '/images/blog/understanding-layer-2-networks.webp',
-  },
-  {
-    slug: 'red-team-yourself-simulating-an-attack-on-your-wallet',
-    title: 'Red Team Yourself: Simulating an Attack on Your Wallet',
-    subtitle: 'Your Personal Flight Simulator for Web3 Security',
-    excerpt: 'Commercial pilots spend hundreds of hours in flight simulators. Why should we treat our digital wealth with any less seriousness?',
-    publishedAt: '2024-12-19',
-    readTime: '10 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/red-team-yourself.webp',
-  },
-  {
-    slug: 'programmable-safety-future-allowance-security',
-    title: 'Programmable Safety: The Future of Allowance Security',
-    subtitle: 'From Static Risk to Dynamic, Self-Managing Guardrails',
-    excerpt: 'When you give a house key to a contractor, you don\u2019t expect them to keep it forever. Yet in Web3, we routinely give smart contracts permanent, unlimited access.',
-    publishedAt: '2024-12-19',
-    readTime: '9 min read',
-    category: 'Innovation',
-    featured: false,
-    image: '/images/blog/programmable-safety.webp',
-  },
-  {
-    slug: 'staying-safe-with-defi-dapps',
-    title: 'Staying Safe With DeFi Dapps',
-    subtitle: 'The Hidden Risks Behind the "Connect Wallet" Button',
-    excerpt: 'Every DeFi experience begins with a click: "Connect Wallet." Behind that click sits a world of permissions, smart contracts, and potential traps.',
-    publishedAt: '2024-12-19',
-    readTime: '7 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/staying-safe-with-defi-dapps.webp',
-  },
-  {
-    slug: 'how-to-self-audit-your-wallet',
-    title: 'How to Self-Audit Your Wallet',
-    subtitle: 'Take Control of Your Own Security',
-    excerpt: 'Web3 gives you total custody of your assets — but it also makes you your own security officer. The good news: auditing your wallet is easier than you think.',
-    publishedAt: '2024-12-19',
-    readTime: '6 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/how-to-self-audit-your-wallet.webp',
-  },
-  {
-    slug: 'what-are-token-allowances',
-    title: 'What Are Token Allowances and Why They Matter',
-    subtitle: 'The Silent Permission You\u2019re Probably Giving Away',
-    excerpt: 'Every time you connect a wallet to a DeFi app, you approve something. Most people click without thinking. That click gives the app a standing permission to move your assets.',
-    publishedAt: '2024-12-18',
-    readTime: '8 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/what-are-token-allowances.webp',
-  },
-  {
-    slug: 'from-dapp-user-to-security-advocate-building-community-trust',
-    title: 'From Dapp User to Security Advocate: Building Community Trust',
-    subtitle: 'How to Become a Force Multiplier for Web3 Security',
-    excerpt: 'For too long, we\u2019ve treated security as a purely personal problem. To build a truly resilient ecosystem, we must become security advocates.',
-    publishedAt: '2024-12-19',
-    readTime: '12 min read',
-    category: 'Community',
-    featured: false,
-    image: '/images/blog/from-dapp-user-to-security-advocate.webp',
-  },
-  {
-    slug: 'permit2-and-eip-2612-the-new-approval-frontier',
-    title: 'Permit2 and EIP-2612: The New Approval Frontier',
-    subtitle: 'The approval mechanism is evolving. Here\u2019s what you need to know.',
-    excerpt: 'Modern DEXs use off-chain signatures instead of on-chain approvals. Better UX, but new phishing risks. Understand Permit2 before you sign.',
-    publishedAt: '2026-04-13',
-    readTime: '7 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/permit2-and-eip-2612.webp',
-  },
-  {
-    slug: 'anatomy-of-an-approval-exploit',
-    title: 'The Anatomy of an Approval Exploit',
-    subtitle: 'How a forgotten allowance becomes a seven-figure loss.',
-    excerpt: 'A trader lost $1.4M in 90 seconds through a forgotten approval. Every approval exploit follows the same pattern. Here\u2019s the kill chain \u2014 and how to break it.',
-    publishedAt: '2026-04-13',
-    readTime: '8 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/anatomy-of-an-approval-exploit.webp',
-  },
-  {
-    slug: 'cross-chain-security-bridging-without-getting-burned',
-    title: 'Cross-Chain Security: Bridging Without Getting Burned',
-    subtitle: 'Bridge exploits are the largest category of DeFi loss.',
-    excerpt: 'Over $2 billion lost to bridge hacks in a single year. If you use multiple chains, you\u2019re using bridges. Understanding their risks is essential.',
-    publishedAt: '2026-04-13',
-    readTime: '8 min read',
-    category: 'Education',
-    featured: false,
-    image: '/images/blog/cross-chain-security-bridging.webp',
-  },
-  {
-    slug: 'why-we-open-sourced-our-security-scanner',
-    title: 'Why We Open-Sourced Our Security Scanner',
-    subtitle: 'The story behind AllowanceGuard and the decision to build in the open.',
-    excerpt: 'AllowanceGuard started with a spreadsheet and a hundred forgotten approvals. Here\u2019s why we built it \u2014 and why we open-sourced it.',
-    publishedAt: '2026-04-13',
-    readTime: '6 min read',
-    category: 'Community',
-    featured: false,
-    image: '/images/blog/why-we-open-sourced.webp',
-  },
-  {
-    slug: 'a-non-technical-guide-to-reading-token-approvals',
-    title: 'A Non-Technical Guide to Reading Token Approvals',
-    subtitle: 'What every column, number, and label on your dashboard means.',
-    excerpt: 'You\u2019ve scanned your wallet. Now you\u2019re looking at a table of addresses, amounts, and risk labels. Here\u2019s what it all means \u2014 no jargon.',
-    publishedAt: '2026-04-13',
-    readTime: '7 min read',
-    category: 'Education',
-    featured: false,
-    image: '/images/blog/non-technical-guide-to-approvals.webp',
-  },
-  {
-    slug: 'account-abstraction-future-of-wallet-approvals',
-    title: 'Account Abstraction and the Future of Wallet Approvals',
-    subtitle: 'Smart accounts change everything about how permissions work.',
-    excerpt: 'ERC-4337 smart accounts replace blanket approvals with session keys, batched transactions, and wallet-level spending limits. Here\u2019s what changes.',
-    publishedAt: '2026-04-13',
-    readTime: '8 min read',
-    category: 'Education',
-    featured: false,
-    image: '/images/blog/account-abstraction-future-of-approvals.webp',
-  },
-  {
-    slug: 'why-most-wallet-security-tools-fail',
-    title: 'Why Most Wallet Security Tools Fail',
-    subtitle: 'The five blind spots that leave users exposed.',
-    excerpt: 'Single-chain blindness, lists without scores, no monitoring, one-at-a-time revocation, custody requirements. If your tool has any of these, it\u2019s not enough.',
-    publishedAt: '2026-04-13',
-    readTime: '7 min read',
-    category: 'Innovation',
-    featured: false,
-    image: '/images/blog/why-most-wallet-security-tools-fail.webp',
-  },
-  {
-    slug: 'what-happens-when-a-protocol-gets-hacked',
-    title: 'What Happens When a Protocol Gets Hacked',
-    subtitle: 'A step-by-step playbook for the first hour after an exploit.',
-    excerpt: 'Confirm, revoke, move, assess. The order matters. Here\u2019s what to do in the first 60 minutes.',
-    publishedAt: '2026-04-13',
-    readTime: '6 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/what-happens-when-a-protocol-gets-hacked.webp',
-  },
-  {
-    slug: 'allowanceguard-vs-manual-security',
-    title: 'AllowanceGuard vs Manual Security: A Comparison',
-    subtitle: 'What you gain when you stop doing it by hand.',
-    excerpt: 'Manual approval management works for one wallet on one chain. For everything else, you need tooling.',
-    publishedAt: '2026-04-13',
-    readTime: '6 min read',
-    category: 'Innovation',
-    featured: false,
-    image: '/images/blog/allowanceguard-vs-manual-security.webp',
-  },
-  {
-    slug: 'the-web3-security-glossary',
-    title: 'The Web3 Security Glossary',
-    subtitle: 'Every term you need to know, defined plainly.',
-    excerpt: 'Approval, allowance, spender, permit, session key, revoke \u2014 every Web3 security term defined in one place.',
-    publishedAt: '2026-04-13',
-    readTime: '6 min read',
-    category: 'Education',
-    featured: false,
-    image: '/images/blog/the-web3-security-glossary.webp',
-  },
-  {
-    slug: 'multi-chain-security-one-wallet-27-attack-surfaces',
-    title: 'Multi-Chain Security: One Wallet, 27 Attack Surfaces',
-    subtitle: 'Every chain you touch is another set of permissions to manage.',
-    excerpt: 'Your wallet address is the same on every EVM chain. Your approvals are not. One wallet, 27 potential attack surfaces.',
-    publishedAt: '2026-04-13',
-    readTime: '7 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/multi-chain-security-one-wallet-27-attack-surfaces.webp',
-  },
-  {
-    slug: 'the-principles-behind-allowanceguard',
-    title: 'The Principles Behind AllowanceGuard',
-    subtitle: 'What we believe and why it shapes what we build.',
-    excerpt: 'Non-custodial by architecture. Open source core. No data selling. Free where it counts. Built to last.',
-    publishedAt: '2026-04-13',
-    readTime: '5 min read',
-    category: 'Community',
-    featured: false,
-    image: '/images/blog/the-principles-behind-allowanceguard.webp',
-  },
-  {
-    slug: 'five-minutes-to-a-safer-wallet',
-    title: 'Five Minutes to a Safer Wallet',
-    subtitle: 'The fastest path from zero to audited.',
-    excerpt: 'Scan, read, revoke, set a reminder. Five minutes is all it takes to go from exposed to audited.',
-    publishedAt: '2026-04-13',
-    readTime: '4 min read',
-    category: 'Education',
-    featured: false,
-    image: '/images/blog/five-minutes-to-a-safer-wallet.webp',
-  },
-  {
-    slug: 'nft-approvals-setapprovalforall-trap',
-    title: 'NFT Approvals: The setApprovalForAll Trap',
-    subtitle: 'The one function that can drain your entire collection.',
-    excerpt: 'When you list an NFT on a marketplace, you sign something called setApprovalForAll. It gives a contract permission to transfer every NFT you own in that collection. Most holders click through it without thinking.',
-    publishedAt: '2026-04-14',
-    readTime: '6 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/nft-approvals-setapprovalforall-trap.webp',
-  },
-  {
-    slug: 'new-generation-signature-phishing',
-    title: 'The New Generation of Signature Phishing Attacks',
-    subtitle: 'Signature phishing has evolved. Here\u2019s what you\u2019re now up against.',
-    excerpt: 'Blind signing, Permit2 signature trees, intent swapping, gasless off-chain signatures. Four attack vectors your wallet UI cannot fully protect you from.',
-    publishedAt: '2026-04-14',
-    readTime: '7 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/new-generation-signature-phishing.webp',
-  },
-  {
-    slug: 'i-think-ive-been-scammed-now-what',
-    title: 'I Think I\u2019ve Been Scammed — Now What?',
-    subtitle: 'A step-by-step playbook for the first hour after a wallet compromise.',
-    excerpt: 'Assess, revoke, move, document, report. The order matters. Here\u2019s what to do in the first hour after you realise you\u2019ve been scammed.',
-    publishedAt: '2026-04-14',
-    readTime: '8 min read',
-    category: 'Security',
-    featured: false,
-    image: '/images/blog/i-think-ive-been-scammed-now-what.webp',
-  },
-]
+const GRID_PAGE_SIZE = 9
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -387,24 +33,39 @@ function formatDateShort(date: string) {
   return new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
-const CATEGORIES = ['All', 'Security', 'Education', 'Community', 'Innovation'] as const
+const CATEGORIES = ['All', 'Security', 'Education', 'Tutorial', 'Community', 'Innovation'] as const
+
+function byDateDesc(a: BlogPost, b: BlogPost) {
+  return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+}
 
 export default function BlogPage() {
-  const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState<string>('All')
+  const [visibleCount, setVisibleCount] = useState(GRID_PAGE_SIZE)
 
-  const featuredPost = blogPosts.find(post => post.featured)
+  // Filter applies to everything — hero, secondary featured row, grid — so
+  // a "Security" reader doesn't scroll past Community featured posts to get
+  // to the grid that actually matches their filter.
+  const filteredByCategory = useMemo(() => {
+    return blogPosts
+      .filter(post => activeCategory === 'All' || post.category === activeCategory)
+      .sort(byDateDesc)
+  }, [activeCategory])
 
-  const filteredPosts = useMemo(() => {
-    const nonFeatured = blogPosts.filter(post => !post.featured)
-    return nonFeatured.filter(post => {
-      const matchesCategory = activeCategory === 'All' || post.category === activeCategory
-      const matchesSearch = !searchQuery ||
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
-      return matchesCategory && matchesSearch
-    })
-  }, [searchQuery, activeCategory])
+  const featured = useMemo(() => filteredByCategory.filter(p => p.featured), [filteredByCategory])
+  const heroPost = featured[0] ?? null
+  const secondaryFeatured = featured.slice(1, 3)
+
+  const gridPosts = useMemo(() => {
+    // Anything not already rendered as hero or secondary-featured
+    const topLevelSlugs = new Set<string>()
+    if (heroPost) topLevelSlugs.add(heroPost.slug)
+    for (const p of secondaryFeatured) topLevelSlugs.add(p.slug)
+    return filteredByCategory.filter(p => !topLevelSlugs.has(p.slug))
+  }, [filteredByCategory, heroPost, secondaryFeatured])
+
+  const visibleGridPosts = gridPosts.slice(0, visibleCount)
+  const hasMore = gridPosts.length > visibleCount
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: blogPosts.length }
@@ -413,6 +74,13 @@ export default function BlogPage() {
     }
     return counts
   }, [])
+
+  // Reset the grid page size when the category changes so the user always
+  // starts at page 1 of the new filter instead of landing mid-scroll.
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat)
+    setVisibleCount(GRID_PAGE_SIZE)
+  }
 
   return (
     <div className="min-h-screen bg-paper">
@@ -438,17 +106,22 @@ export default function BlogPage() {
         </Container>
       </section>
 
-      {/* ── Featured article ── */}
-      {featuredPost && (
+      {/* ── Featured row ── hero + 2 medium cards ── */}
+      {heroPost && (
         <section className="paper-sub grain py-20 sm:py-28 overflow-hidden">
           <Container>
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-5xl mx-auto space-y-10">
+
+              {/* Hero (largest) */}
               <CascadingScrollAnimation direction="up" distance={40} delay={0}>
                 <article className="paper-card-raised overflow-hidden">
                   <div className="grid lg:grid-cols-2">
-                    {featuredPost.image && (
-                      <div className="relative h-56 lg:h-auto min-h-[240px] overflow-hidden bg-paper-sub">
-                        <Image src={featuredPost.image} alt={featuredPost.title} fill className="object-cover" />
+                    {heroPost.image && (
+                      <div
+                        className="relative h-64 lg:h-auto min-h-[320px] overflow-hidden bg-paper-sub"
+                        style={{ viewTransitionName: `blog-hero-${heroPost.slug}` }}
+                      >
+                        <Image src={heroPost.image} alt={heroPost.title} fill className="object-cover" priority />
                       </div>
                     )}
                     <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
@@ -458,28 +131,25 @@ export default function BlogPage() {
                         </span>
                         <span className="h-px w-8 bg-ink-rule" aria-hidden="true" />
                         <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper">
-                          {featuredPost.category}
+                          {heroPost.category}
                         </span>
                       </div>
-
-                      <h2 className="font-display-tight text-ink leading-[1.05] text-3xl sm:text-4xl mb-4">
-                        <Link href={`/blog/${featuredPost.slug}`} className="hover:text-amber-deep transition-colors duration-200">
-                          {featuredPost.title}
+                      <h2
+                        className="font-display-tight text-ink leading-[1.05] text-3xl sm:text-4xl mb-4"
+                        style={{ viewTransitionName: `blog-title-${heroPost.slug}` }}
+                      >
+                        <Link href={`/blog/${heroPost.slug}`} className="hover:text-amber-deep transition-colors duration-200">
+                          {heroPost.title}
                         </Link>
                       </h2>
-
                       <p className="font-plex text-ink-soft text-[15px] leading-relaxed mb-6">
-                        {featuredPost.excerpt}
+                        {heroPost.excerpt}
                       </p>
-
                       <div className="flex items-center justify-between mt-auto">
                         <div className="font-mono text-xs text-ink-whisper tracking-wide">
-                          {formatDate(featuredPost.publishedAt)} &middot; {featuredPost.readTime}
+                          {formatDate(heroPost.publishedAt)} &middot; {heroPost.readTime}
                         </div>
-                        <Link
-                          href={`/blog/${featuredPost.slug}`}
-                          className="paper-button text-sm"
-                        >
+                        <Link href={`/blog/${heroPost.slug}`} className="paper-button text-sm">
                           Read article
                         </Link>
                       </div>
@@ -487,107 +157,146 @@ export default function BlogPage() {
                   </div>
                 </article>
               </CascadingScrollAnimation>
+
+              {/* Secondary featured — up to two medium cards */}
+              {secondaryFeatured.length > 0 && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  {secondaryFeatured.map((post, i) => (
+                    <CascadingScrollAnimation key={post.slug} direction="up" distance={30} delay={(i + 1) * 80}>
+                      <article className="paper-card overflow-hidden h-full flex flex-col group">
+                        {post.image && (
+                          <div
+                            className="relative h-52 overflow-hidden bg-paper-sub border-b border-ink-rule"
+                            style={{ viewTransitionName: `blog-hero-${post.slug}` }}
+                          >
+                            <Image src={post.image} alt={post.title} fill className="object-cover" />
+                          </div>
+                        )}
+                        <div className="p-6 sm:p-7 flex flex-col flex-1">
+                          <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-3">
+                            {post.category}
+                          </span>
+                          <h3
+                            className="font-display-tight text-ink leading-[1.1] text-xl mb-3 group-hover:text-amber-deep transition-colors duration-200"
+                            style={{ viewTransitionName: `blog-title-${post.slug}` }}
+                          >
+                            <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                          </h3>
+                          <p className="font-plex text-ink-muted text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+                            {post.excerpt}
+                          </p>
+                          <div className="flex items-center justify-between mt-auto pt-4 border-t border-ink-rule">
+                            <span className="font-mono text-[10px] text-ink-whisper tracking-wide">
+                              {formatDateShort(post.publishedAt)} &middot; {post.readTime}
+                            </span>
+                            <Link href={`/blog/${post.slug}`} className="font-plex text-sm font-medium text-amber-deep hover:underline">
+                              Read
+                            </Link>
+                          </div>
+                        </div>
+                      </article>
+                    </CascadingScrollAnimation>
+                  ))}
+                </div>
+              )}
             </div>
           </Container>
         </section>
       )}
 
-      {/* ── All articles ── */}
+      {/* ── All articles ── filter + grid + view more ── */}
       <section className="paper grain py-20 sm:py-28 overflow-hidden">
         <Container>
           <div className="max-w-5xl mx-auto">
-            <div className="mb-16">
-              <SectionHeader
-                number="01"
-                eyebrow="Archive"
-                title="All articles."
-              />
+            <div className="mb-12">
+              <SectionHeader number="01" eyebrow="Archive" title="All articles." />
             </div>
 
-            {/* Search + category filter */}
-            <div className="mb-10 space-y-4">
-              {/* Search */}
-              <div className="relative max-w-md">
-                <label htmlFor="blog-search" className="sr-only">Search articles</label>
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-whisper" aria-hidden="true" />
-                <input
-                  id="blog-search"
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-paper border border-ink-rule text-sm font-plex text-ink placeholder:text-ink-whisper focus:outline-none focus:ring-2 focus:ring-ink focus:border-transparent transition-shadow"
-                />
-              </div>
-
-              {/* Category pills */}
-              <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    aria-pressed={activeCategory === cat}
-                    className={[
-                      'px-3 py-1.5 font-mono text-[10px] font-bold tracking-[0.22em] uppercase border border-ink-rule transition-colors duration-150',
-                      activeCategory === cat
-                        ? 'bg-ink text-paper'
-                        : 'bg-paper text-ink-muted hover:text-ink hover:bg-paper-sub',
-                    ].join(' ')}
-                  >
-                    {cat} ({categoryCounts[cat] || 0})
-                  </button>
-                ))}
-              </div>
-
-              {/* Result count */}
-              {(searchQuery || activeCategory !== 'All') && (
-                <p className="font-plex text-sm text-ink-whisper" aria-live="polite">
-                  Showing {filteredPosts.length} of {blogPosts.length - 1} articles
-                </p>
-              )}
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPosts.map((post, i) => (
-                <CascadingScrollAnimation key={post.slug} direction="up" distance={30} delay={(i % 3) * 80}>
-                  <article className="paper-card overflow-hidden h-full flex flex-col group">
-                    {post.image && (
-                      <div className="relative h-44 overflow-hidden bg-paper-sub border-b border-ink-rule">
-                        <Image src={post.image} alt={post.title} fill className="object-cover" />
-                      </div>
-                    )}
-                    <div className="p-6 flex flex-col flex-1">
-                      {/* Category mono label */}
-                      <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-3">
-                        {post.category}
-                      </span>
-
-                      <h3 className="font-display-tight text-ink leading-[1.1] text-lg mb-3 group-hover:text-amber-deep transition-colors duration-200">
-                        <Link href={`/blog/${post.slug}`}>
-                          {post.title}
-                        </Link>
-                      </h3>
-
-                      <p className="font-plex text-ink-muted text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
-                        {post.excerpt}
-                      </p>
-
-                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-ink-rule">
-                        <span className="font-mono text-[10px] text-ink-whisper tracking-wide">
-                          {formatDateShort(post.publishedAt)} &middot; {post.readTime}
-                        </span>
-                        <Link
-                          href={`/blog/${post.slug}`}
-                          className="font-plex text-sm font-medium text-amber-deep hover:underline"
-                        >
-                          Read
-                        </Link>
-                      </div>
-                    </div>
-                  </article>
-                </CascadingScrollAnimation>
+            {/* Category filter pills — covers hero, featured, and grid together */}
+            <div
+              className="mb-10 flex flex-wrap gap-2"
+              role="group"
+              aria-label="Filter articles by category"
+            >
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryChange(cat)}
+                  aria-pressed={activeCategory === cat}
+                  className={[
+                    'px-3 py-1.5 font-mono text-[10px] font-bold tracking-[0.22em] uppercase border border-ink-rule transition-colors duration-150',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:ring-offset-2 focus-visible:ring-offset-paper',
+                    activeCategory === cat
+                      ? 'bg-ink text-paper'
+                      : 'bg-paper text-ink-muted hover:text-ink hover:bg-paper-sub',
+                  ].join(' ')}
+                >
+                  {cat} ({categoryCounts[cat] || 0})
+                </button>
               ))}
             </div>
+
+            {activeCategory !== 'All' && (
+              <p className="font-plex text-sm text-ink-whisper mb-6" aria-live="polite">
+                Showing {filteredByCategory.length} article{filteredByCategory.length === 1 ? '' : 's'} in {activeCategory}.
+              </p>
+            )}
+
+            {visibleGridPosts.length === 0 ? (
+              <p className="font-plex text-base text-ink-muted">
+                No articles in this category yet.
+              </p>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {visibleGridPosts.map((post, i) => (
+                  <CascadingScrollAnimation key={post.slug} direction="up" distance={30} delay={(i % 3) * 80}>
+                    <article className="paper-card overflow-hidden h-full flex flex-col group">
+                      {post.image && (
+                        <div
+                          className="relative h-44 overflow-hidden bg-paper-sub border-b border-ink-rule"
+                          style={{ viewTransitionName: `blog-hero-${post.slug}` }}
+                        >
+                          <Image src={post.image} alt={post.title} fill className="object-cover" loading="lazy" />
+                        </div>
+                      )}
+                      <div className="p-6 flex flex-col flex-1">
+                        <span className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-3">
+                          {post.category}
+                        </span>
+                        <h3
+                          className="font-display-tight text-ink leading-[1.1] text-lg mb-3 group-hover:text-amber-deep transition-colors duration-200"
+                          style={{ viewTransitionName: `blog-title-${post.slug}` }}
+                        >
+                          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                        </h3>
+                        <p className="font-plex text-ink-muted text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+                          {post.excerpt}
+                        </p>
+                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-ink-rule">
+                          <span className="font-mono text-[10px] text-ink-whisper tracking-wide">
+                            {formatDateShort(post.publishedAt)} &middot; {post.readTime}
+                          </span>
+                          <Link href={`/blog/${post.slug}`} className="font-plex text-sm font-medium text-amber-deep hover:underline">
+                            Read
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  </CascadingScrollAnimation>
+                ))}
+              </div>
+            )}
+
+            {hasMore && (
+              <div className="mt-12 flex justify-center">
+                <button
+                  onClick={() => setVisibleCount(c => c + GRID_PAGE_SIZE)}
+                  className="paper-button text-sm"
+                >
+                  View more ({gridPosts.length - visibleCount} left)
+                </button>
+              </div>
+            )}
           </div>
         </Container>
       </section>
