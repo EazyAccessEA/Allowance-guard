@@ -309,7 +309,7 @@ export default function ContactPage() {
  icon={<MessageCircle className="w-5 h-5" />}
  title="Discord"
  description="Real-time community help and product discussion."
- href="https://discord.gg/DsJ4Pa94"
+ href="https://discord.gg/gyhfjRgW"
  cta="Join the server"
  meta="Active community + core team"
  external

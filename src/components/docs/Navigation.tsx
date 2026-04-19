@@ -54,7 +54,7 @@ export function Navigation({ activeSection, onSectionChange }: NavigationProps) 
  GitHub Repository
  </a>
  <a
- href="https://discord.gg/allowanceguard"
+ href="https://discord.gg/gyhfjRgW"
  target="_blank"
  rel="noopener noreferrer"
  className="block px-3 py-2 text-sm text-ink-muted hover:text-ink hover:bg-paper-sub transition-colors"

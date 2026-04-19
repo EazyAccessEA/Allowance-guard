@@ -117,7 +117,7 @@ export default function Footer() {
                 <FooterLink href="https://github.com/EazyAccessEA/Allowance-guard" external>
                   GitHub
                 </FooterLink>
-                <FooterLink href="https://discord.gg/DsJ4Pa94" external>
+                <FooterLink href="https://discord.gg/gyhfjRgW" external>
                   Discord
                 </FooterLink>
                 <FooterLink href="/blog">Blog</FooterLink>
@@ -165,7 +165,7 @@ export default function Footer() {
               <SocialLink href="https://github.com/EazyAccessEA/Allowance-guard" label="GitHub">
                 <Github className="w-[14px] h-[14px]" />
               </SocialLink>
-              <SocialLink href="https://discord.gg/DsJ4Pa94" label="Discord">
+              <SocialLink href="https://discord.gg/gyhfjRgW" label="Discord">
                 <MessageCircle className="w-[14px] h-[14px]" />
               </SocialLink>
               <SocialLink href="https://twitter.com/allowanceguard" label="Twitter">
