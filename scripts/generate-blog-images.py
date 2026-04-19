@@ -122,7 +122,7 @@ BLOG_IMAGES = [
     },
     {
         "filename": "understanding-layer-2-networks.webp",
-        "prompt": "Three thin glass layers stacked with slight offset, amber light passing through them, clean white background, minimal, architectural",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, three parallel horizontal layers stacked with a slight offset on a baseline, the middle layer drawn in warm amber ink, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "red-team-yourself.webp",
@@ -182,7 +182,7 @@ BLOG_IMAGES = [
     },
     {
         "filename": "every-approval-you-sign-decoded.webp",
-        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a key splitting into four differently shaped keys, one key in warm amber, centered, simple elegant, editorial spot illustration",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, four different keys lying horizontally in a row on a baseline, the second key drawn in warm amber ink, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "ten-minute-wallet-audit.webp",
@@ -194,11 +194,11 @@ BLOG_IMAGES = [
     },
     {
         "filename": "the-quiet-death-of-approve.webp",
-        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a paper airplane in flight with a dotted trail behind it, the airplane rendered in warm amber, centered, simple elegant, editorial spot illustration",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a paper airplane flying left to right above a continuous horizontal trail line, one wing drawn in warm amber ink, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "four-lenses-on-an-unknown-contract.webp",
-        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a magnifying glass with four overlapping concentric lens rings, the innermost lens rendered in warm amber, centered, simple elegant, editorial spot illustration",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, four interlocking magnifying lens rings of decreasing size arranged on a baseline, the innermost ring drawn in warm amber ink, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "how-to-revoke-a-permit2-approval.webp",
