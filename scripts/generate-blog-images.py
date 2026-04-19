@@ -150,7 +150,7 @@ BLOG_IMAGES = [
     },
     {
         "filename": "permit2-and-eip-2612.webp",
-        "prompt": "A fountain pen signing a glowing digital document floating above a desk, warm amber light, cream background, editorial",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a fountain pen signing a paper document on a baseline, the signature stroke drawn in warm amber ink, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "anatomy-of-an-approval-exploit.webp",
