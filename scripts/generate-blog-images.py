@@ -97,11 +97,11 @@ BLOG_IMAGES = [
     },
     {
         "filename": "eight-approval-exploits-one-pattern.webp",
-        "prompt": "Continuous single-line ink drawing of a trail of footprints leading away from an open vault door, one footprint rendered in warm amber, minimalist editorial illustration",
+        "prompt": "Continuous single-line ink drawing of eight standing dominoes arranged in a straight row on cream paper, the first domino tipped and rendered in warm amber, minimalist editorial illustration, no gears, no wheels",
     },
     {
         "filename": "every-approval-you-sign-decoded.webp",
-        "prompt": "Continuous single-line ink drawing of a cipher wheel with rotating inner and outer rings on cream paper, one cipher notch rendered in warm amber, minimalist editorial illustration",
+        "prompt": "Continuous single-line ink drawing of four different ornate keys laid side by side on cream paper, the second key rendered in warm amber, minimalist editorial illustration, no gears, no wheels",
     },
     {
         "filename": "ten-minute-wallet-audit.webp",
