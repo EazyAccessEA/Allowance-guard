@@ -114,9 +114,23 @@ const nextConfig = {
   
   // Compression
   compress: true,
-  
+
   // Output file tracing for better performance
   outputFileTracingRoot: process.cwd(),
+
+  // Permanent redirects. /home was the scanner homepage before 2026-04-19;
+  // on that date the scanner was promoted to /. Any inbound link to /home
+  // should 301 to / so Google and existing bookmarks preserve link equity.
+  async redirects() {
+    return [
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
+
   // Security headers
   async headers() {
     return [
