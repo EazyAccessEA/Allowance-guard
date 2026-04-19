@@ -1,50 +1,70 @@
- """
+"""
 Generate blog featured images via Runware API — v3 (Nano Banana 2).
 
-Model: google:2@1 (Nano Banana 2) — Google's high-quality model.
-No steps param, no negativePrompt — model handles these internally.
-Dimensions: 1408x768 (closest 16:9-ish ratio supported).
+Model: google:2@1 (Nano Banana 2).
+Dimensions: 1408x768.
 
 =====================================================================
-STYLE RULE — DO NOT DRIFT. Read before editing prompts.
+STYLE RULE — DO NOT DRIFT. Read before editing anything below.
 =====================================================================
 
 Every AllowanceGuard blog hero renders as editorial line-art on a
-plain, near-white field with one element in warm amber. That is the
-house style and has been since the Ledger redesign.
+plain near-white field with one element in warm amber. This is the
+house style and must stay cohesive across the catalogue.
 
-The line-art aesthetic comes from the MODEL'S PRIOR, not from the
-prompt. Do NOT write prompts that explicitly ask for "line art",
-"single continuous ink stroke", "no shading, no fill", "vector
-illustration" etc. — those recipes over-specify and flatten the
-composition. Nano Banana 2 renders product-photography prose as
-line-art by default; the model will draw when asked to photograph.
+TWO PATHS exist to this line-art aesthetic; historically the catalogue
+has used both:
+
+  (A) FLUX 1.1 Pro (runware:5@1) + product-shot prose prompts.
+      FLUX has a strong editorial-illustration prior. Given prompts
+      like "brushed gold padlock on cream surface, product
+      photography", FLUX draws rather than photographs. The older
+      ~19 images on disk (padlock, chess knights, gears, broken
+      chain, bridge, clipboard, etc.) were generated this way.
+
+  (B) Nano Banana 2 (google:2@1) + explicit line-art recipe.
+      Nano Banana 2 has no such prior — product-shot prompts produce
+      literal 3D photorealism. To get line-art from Nano Banana 2,
+      the prompt MUST include the explicit recipe prefix:
+      "minimal line art illustration, single continuous thin black
+      ink stroke on plain white background, no shading, no fill,
+      [SUBJECT with amber element], centered, simple elegant,
+      editorial spot illustration". The 5 most recent line-art images
+      (dominoes, four keys, stopwatch, flag, paper airplane) use
+      path B.
+
+We use PATH B going forward:
+  - Nano Banana 2 is currently healthier on Runware than FLUX (which
+    has been returning 504 Gateway Timeouts on FLUX inference).
+  - The explicit recipe gives us deterministic control — new entries
+    don't depend on a model-specific prior staying the same over
+    future Runware updates.
+  - Mixing paths is fine for the existing catalogue (the two paths
+    produce visually-cohesive output), but new entries should pick
+    one and stick to it. Path B is that one.
 
 ALWAYS use this prompt shape (Council #25 + #27 + #28 + #29):
 
-  "[SUBJECT with MATERIAL] [on SURFACE/SETTING], [the specific detail
-   rendered in warm amber], [LIGHTING], [editorial modifier]"
+  "minimal line art illustration, single continuous thin black ink
+   stroke on plain white background, no shading, no fill, [SUBJECT
+   with one element in warm amber], centered, simple elegant,
+   editorial spot illustration"
 
-Rules:
-  - One subject. Name the material. Name the lighting. Name the
-    background. Keep it 20-30 words.
-  - Embed the amber accent INSIDE the subject, not as a separate
-    instruction. "the minute hand rendered in warm amber" >
-    "with amber accent".
-  - Editorial / product-photography adjectives only:
-    "editorial still life", "shallow depth of field", "soft studio
-    lighting", "cream surface", "overhead natural light", "product
-    photography". These read to the model as "polished editorial
-    reference" and the shortest path for the model is line-art.
-  - Banned in prompts: "line art", "ink stroke", "vector", "minimalist
-    illustration", "no fill", "no shading", "continuous stroke",
-    "black ink on white", "spot illustration". The model handles the
-    medium; you handle the subject.
-  - Aim for visual distinctness from the existing catalogue — no two
-    subjects should collapse into the same motif (e.g. avoid a second
-    gear / second chain / second padlock).
-  - Amber accent colour only. No other colours beyond black ink and
-    amber.
+Rules for the [SUBJECT]:
+  - One subject. Concrete noun. Distinct from existing catalogue
+    (avoid second gear / second chain / second padlock).
+  - Embed the amber accent INSIDE the subject:
+    "a domino tipping, rendered in warm amber" >
+    "a domino tipping with amber accent".
+  - Keep the subject short — a clause, not a paragraph. The recipe
+    prefix is doing the heavy lifting; the subject just names the
+    thing.
+
+DO NOT drop the recipe prefix when using Nano Banana 2. Doing so
+produces photorealism, which breaks the catalogue cohesion.
+
+DO NOT switch the model without regenerating the entire catalogue
+and verifying visual cohesion end-to-end.
 
 Council sign-off (advisory, convene mentally before adding prompts):
   #25 AI image director   — prompt engineering, model selection
@@ -53,8 +73,8 @@ Council sign-off (advisory, convene mentally before adding prompts):
   #29 Art Director        — series cohesion, rejects anything that
                             breaks the set
 
-Drift from this rule means the image has to be re-rolled; Runware
-quota is finite, so get the prompt right on paper first.
+Drift means re-roll; Runware quota is finite. Get the prompt right
+on paper first.
 =====================================================================
 """
 
@@ -145,23 +165,35 @@ BLOG_IMAGES = [
     },
     {
         "filename": "eight-approval-exploits-one-pattern.webp",
-        "prompt": "A row of ivory dominoes arranged in a line on a cream surface, the first domino tipping forward and rendered in warm amber, soft overhead lighting, editorial still life",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, row of dominoes tipping in sequence, first domino in warm amber, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "every-approval-you-sign-decoded.webp",
-        "prompt": "Four antique brass keys fanning out from a single ring on cream paper, the central key rendered in warm amber, soft overhead studio lighting, editorial product shot",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a key splitting into four differently shaped keys, one key in warm amber, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "ten-minute-wallet-audit.webp",
-        "prompt": "A vintage silver pocket stopwatch sitting on cream paper, the minute hand rendered in warm amber, soft natural light from the left, editorial still life, shallow depth of field",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a simple stopwatch with the minute hand drawn in warm amber, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "report-a-risky-contract.webp",
-        "prompt": "A small pennant flag mounted on a short pole planted in a gentle mound on a cream surface, the flag itself rendered in warm amber fabric, soft overhead lighting, editorial composition",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a small flag planted on a hill with the flag itself in warm amber, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "the-quiet-death-of-approve.webp",
-        "prompt": "A folded paper airplane in mid-flight above a cream surface, a dashed trail following its path, the airplane rendered in warm amber paper, soft studio lighting, editorial product shot",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a paper airplane in flight with a dotted trail behind it, the airplane rendered in warm amber, centered, simple elegant, editorial spot illustration",
+    },
+    {
+        "filename": "four-lenses-on-an-unknown-contract.webp",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a magnifying glass with four overlapping concentric lens rings, the innermost lens rendered in warm amber, centered, simple elegant, editorial spot illustration",
+    },
+    {
+        "filename": "how-to-revoke-a-permit2-approval.webp",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a pencil eraser rubbing out a handwritten signature line, the eraser rendered in warm amber, centered, simple elegant, editorial spot illustration",
+    },
+    {
+        "filename": "the-six-wallets-of-2026.webp",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, six small billfold wallets standing upright in a neat row, the third wallet rendered in warm amber, centered, simple elegant, editorial spot illustration",
     },
 ]
 

@@ -3189,5 +3189,283 @@ export const blogPosts: BlogPost[] = [
     category: 'Innovation',
     featured: false,
     tags: ['innovation', 'permit2', 'account-abstraction', 'session-keys', 'eip-7702', 'intents', 'approvals'],
+  },
+  {
+    slug: 'four-lenses-on-an-unknown-contract',
+    title: 'Four Lenses on an Unknown Contract: A Reading Strategy Before You Approve',
+    subtitle: 'How to read bytecode, source, history, and behaviour — in the ninety seconds you have before your wallet prompt times out',
+    content: `
+      <p>A smart contract you have never interacted with is asking for an approval. Your wallet modal is open. The spender address is unfamiliar. You have about ninety seconds before you make a decision, because in ninety seconds you will either click "Confirm" or you will click "Reject" and if you click "Reject" after too long the frontend assumes you are lost and drops you back to its landing page.</p>
+
+      <p>Ninety seconds is not enough time to read the full contract source. It is enough time to apply four cheap lenses that, in combination, get you most of the way to a good decision without needing to be a Solidity engineer. This post describes those four lenses, the order to apply them, and what signals to walk away on.</p>
+
+      <p>Throughout the piece, the working assumption is that you have a block explorer open (<a href="https://etherscan.io" target="_blank" rel="noopener noreferrer">Etherscan</a>, <a href="https://basescan.org" target="_blank" rel="noopener noreferrer">BaseScan</a>, <a href="https://arbiscan.io" target="_blank" rel="noopener noreferrer">Arbiscan</a>, etc., matching the chain of the contract). You do not need Foundry, you do not need Tenderly, and you do not need a mainnet fork. What you need is the ability to read a couple of tabs.</p>
+
+      <h2>Lens 1 — Bytecode (5 seconds)</h2>
+
+      <p>Paste the spender address into the block explorer. The first signal is in the first tab you land on, under "Contract": there is either source code or there is not. If the "Contract" tab shows nothing — just raw bytecode with no "Source Code" section — the contract is <em>unverified</em>. Its source was never published to the explorer; what the chain is executing is opaque to anyone without a decompiler.</p>
+
+      <p>Unverified ≠ malicious. Plenty of legitimate contracts ship unverified, particularly early or on L2s where verification tooling was immature. But unverified does mean you cannot apply Lens 2 or Lens 3. For a one-time, small-value interaction with a team you recognise by name, this may be acceptable. For an unlimited approval on a fresh wallet, it is not.</p>
+
+      <p>Five-second verdict: verified → continue to Lens 2. Unverified → walk away or dramatically cap the approval amount.</p>
+
+      <h2>Lens 2 — Source (20 seconds)</h2>
+
+      <p>Open the "Contract → Source Code" tab. You will see a list of files (most contracts are multi-file). Look at the top-level contract name — the one inheriting from the others. It tells you what the contract thinks it is: <code>Router</code>, <code>Pool</code>, <code>Bridge</code>, <code>Airdropper</code>, <code>Forwarder</code>, <code>Proxy</code>, etc. The name is a strong signal.</p>
+
+      <p>Scroll the main file for two things: (a) the public-function list, (b) the imports. Ctrl-F for <code>function</code> tells you what the contract can do. Look specifically for these names:</p>
+
+      <ul>
+        <li><code>execute</code>, <code>delegatecall</code>, <code>multicall</code>, <code>swap</code>, <code>bridge</code> — legitimate in routers, aggregators, bridges. Expected.</li>
+        <li><code>rescue</code>, <code>sweep</code>, <code>emergencyWithdraw</code>, <code>withdrawAll</code> — privileged functions. If an owner can pull any token that has approved the contract, you want to understand the owner relationship before signing (Lens 4).</li>
+        <li><code>transferFrom</code> called on an arbitrary token with arbitrary parameters — this is the drainer pattern. Very few legitimate contracts take arbitrary <code>(token, from, to, amount)</code> from untrusted input.</li>
+        <li><code>setApprovalForAll</code> on anything other than the contract's own NFT collection — suspicious.</li>
+      </ul>
+
+      <p>The imports tell you the inheritance. Common legitimate imports: OpenZeppelin <code>Ownable</code>, <code>ReentrancyGuard</code>, <code>Pausable</code>, <code>ERC20</code>, <code>ERC721</code>. Uniswap <code>IUniswapV2Router</code>, <code>IV3SwapRouter</code>. These are reassurance, not proof — drainers also import OpenZeppelin — but their absence, combined with a fresh deployer, is a flag.</p>
+
+      <p>Twenty-second verdict: function shape matches the contract's claimed role → continue. Function shape shows drain primitives the claimed role does not need → walk away.</p>
+
+      <h2>Lens 3 — Deployment history (20 seconds)</h2>
+
+      <p>Switch from "Contract" to "Events" or back to the main address view, and look at the first transaction: the <code>Contract Creation</code>. Two things to read.</p>
+
+      <p>First, the <strong>deployer address</strong>. Click through to the deployer's profile. The question is: has this deployer shipped other recognisable contracts? A deployer with a dozen other contracts over two years, mostly verified, mostly interacted with by many addresses, is a reputable entity. A deployer with one contract, deployed three hours ago, funded five hours ago from Tornado Cash or a known mixer, is the opposite.</p>
+
+      <p>Second, the <strong>age</strong>. Contracts deployed within the last 72 hours deserve extra scrutiny for user-approval flows. Most drainers are short-lived — phishers deploy, collect, abandon. A contract three weeks old with ten thousand interactions is qualitatively different from a contract deployed six hours ago with forty interactions (all from the same flow).</p>
+
+      <p>Twenty-second verdict: deployer has a track record and the contract is not freshly-deployed → continue. Fresh deployment from a mixer-funded deployer → walk away.</p>
+
+      <h2>Lens 4 — On-chain behaviour (30 seconds)</h2>
+
+      <p>The "Transactions" tab tells you how the contract is being used. Scroll the most recent 50 transactions and look for these patterns:</p>
+
+      <ul>
+        <li><strong>Many users, small amounts each.</strong> Normal retail usage. The contract is being used as intended by a distribution of wallets. Reassuring.</li>
+        <li><strong>A few users, escalating amounts.</strong> Interesting but inconclusive. Could be a concentrated product (treasury tool, institutional integration). Could be rehearsal for an extraction.</li>
+        <li><strong>Many users approve, no-one withdraws.</strong> The contract is collecting approvals but not doing anything else. Classic drainer setup.</li>
+        <li><strong>Constant calls from one or two addresses.</strong> Either a bot is farming the contract (could be legitimate, like an aggregator routing orders) or the contract is owned by those addresses and executes a narrow workflow.</li>
+        <li><strong>Withdrawals to a different address than deposits come from.</strong> If funds come in from users and leave to a non-user address, read that non-user address carefully. Is it the protocol treasury (labelled)? Is it an unlabelled new address that then forwards to a mixer?</li>
+      </ul>
+
+      <p>The "Token Transfers" tab is the sibling view — it shows which ERC-20s the contract is moving. For a claimed DEX router, you would expect the router to see every token under the sun pass through. For an NFT marketplace, you would expect <code>setApprovalForAll</code> calls followed by occasional <code>transferFrom</code> during sales. For a "yield aggregator," you would expect deposits and withdrawals of the underlying assets plus the aggregator's receipt token. Pattern mismatches between the contract's claimed role and its actual token movements are strong signals.</p>
+
+      <p>Thirty-second verdict: activity matches the contract's claimed role → continue to sign. Activity mismatches — especially the "many approvals, no withdrawals" pattern, or the "withdrawals to a mixer-adjacent address" pattern — walk away.</p>
+
+      <h2>Putting the four lenses together</h2>
+
+      <p>The combined verdict lives in how the four lenses agree. A contract that passes all four (verified source, function shape matches claimed role, reputable deployer, on-chain behaviour consistent) is a safe-enough sign. A contract that fails any one is worth at least reading more carefully; a contract that fails two or more is not worth the risk for most users in most contexts.</p>
+
+      <p>The honest caveat: this method is not an audit. An auditor reading the same contract for eight hours may find a subtle reentrancy bug you missed in thirty seconds. But the ninety-second read captures the large majority of outright-malicious contracts, because malicious contracts very rarely spend resources passing all four lenses — the payoff per contract is small and the operator moves on.</p>
+
+      <h2>Worked example — the Socket bridge, January 2024</h2>
+
+      <p>For grounding, apply the four lenses to what we now know about the Socket bridge incident. At the time of user approvals in 2023, Socket's contracts would have scored:</p>
+
+      <ul>
+        <li>Lens 1 (bytecode): <strong>PASS</strong>. Verified on Etherscan and BaseScan.</li>
+        <li>Lens 2 (source): <strong>PASS</strong>. Function names consistent with a cross-chain bridge (<code>bridge</code>, <code>swapAndBridge</code>, standard OZ imports). The vulnerable function's signature was not obviously dangerous to a quick read.</li>
+        <li>Lens 3 (history): <strong>PASS</strong>. Socket was a reputable, long-running project with many interactions.</li>
+        <li>Lens 4 (behaviour): <strong>PASS</strong>. Real bridging traffic, many users, withdrawals to labelled protocol addresses.</li>
+      </ul>
+
+      <p>All four lenses would have given Socket a green light. The exploit was a subsequently-discovered logic flaw in how the contract passed call data to external tokens — the kind of thing only a deeper audit catches. A user following the four-lens method in 2023 would have granted the approval with reasonable confidence; the later exploit vindicated the need for the approval-revocation habit that ended up mitigating the loss for users who had cleared their allowances.</p>
+
+      <p>That's the second lesson of the four-lens method: it catches <em>categorical fraud</em> (drainer contracts, phishing proxies) far better than it catches <em>latent protocol bugs</em>. Pair it with the hygiene habit of revoking approvals you are not actively using, and you are covering both exposure classes with roughly the time a single interaction demands.</p>
+
+      <h2>If you want a tool</h2>
+
+      <p>The four lenses are something you can apply manually in ninety seconds with a block explorer. If you would rather a tool apply them and produce a summary, our widget at <a href="/docs/widget">allowanceguard.com/docs/widget</a> embeds a pre-transaction review pane in dApps that integrate it, showing the key signals from lenses 1–4 for the spender of any approval you are about to sign. For post-hoc review of approvals you have already signed, the main scanner at <a href="/">allowanceguard.com</a> applies the same catalogue.</p>
+
+      <p>But the method is the point, not the tool. A reader of this post with a block explorer tab open is most of the way there on their own. Tools shorten the time; they do not invent the judgement.</p>
+    `,
+    publishedAt: '2026-04-19',
+    readTime: '13 min read',
+    category: 'Security',
+    featured: false,
+    tags: ['security', 'contract-review', 'approval-hygiene', 'bytecode', 'forensics'],
+  },
+  {
+    slug: 'how-to-revoke-a-permit2-approval',
+    title: 'How to Revoke a Permit2 Approval (The Signature-Based Kind)',
+    subtitle: 'Permit2 revocation is not the same as calling approve(0) — the mental model is different, and so is the UX',
+    content: `
+      <p>If you have used Uniswap, CoW, 1inch, or any modern DEX aggregator in the last two years, you have probably granted a Permit2 approval. You may not remember doing it — the prompt often reads as one of several signatures during a swap flow and the wallet modal usually just says "Sign typed data" without a loud "YOU ARE GRANTING A NEW PERMISSION" banner.</p>
+
+      <p>Revoking a Permit2 approval is different from revoking a classic ERC-20 approval. The mental model is different; the on-chain artefact is different; and sometimes the "revocation" does not require a chain transaction at all. This post is a short walk-through of what Permit2 revocation actually looks like, when it matters, and what the wallets and scanners can and cannot show you.</p>
+
+      <h2>The two layers of a Permit2 approval</h2>
+
+      <p>Permit2 is a contract at <code>0x000000000022D473030F116dDEE9F6B43aC78BA3</code> (same address on every major EVM chain). To use Permit2 on a given token, you:</p>
+
+      <ol>
+        <li><strong>Grant a one-time, usually unlimited, classic ERC-20 approval</strong> to the Permit2 contract itself. This is a regular on-chain <code>approve</code> transaction, and it is what Permit2 consumes when protocols actually move your tokens. After this step, the Permit2 contract has the ability to call <code>transferFrom</code> on the token for your address.</li>
+        <li><strong>Sign off-chain typed-data grants</strong> for specific downstream spenders. Each signed grant names a spender (e.g. the Uniswap Universal Router), an amount, and an expiry. These signatures sit off-chain until a downstream contract submits them to Permit2 to actually move tokens.</li>
+      </ol>
+
+      <p>Two layers means two things to potentially revoke. They behave completely differently.</p>
+
+      <h2>Layer 1 — revoking the token→Permit2 allowance</h2>
+
+      <p>The ERC-20 allowance you granted to the Permit2 contract in step (1) is on-chain and behaves like any other approval. You revoke it by calling <code>approve(permit2, 0)</code> on the token. This is the same mechanism as any classic revocation.</p>
+
+      <p>In our scanner at <a href="/">allowanceguard.com</a>, these rows appear with <strong>Permit2</strong> as the spender name. Tapping "Revoke" on such a row generates an on-chain <code>approve(permit2, 0)</code> transaction for your wallet to sign and pay gas for. Confirmation is immediate.</p>
+
+      <p>When to do this: if you are done using Permit2-integrated protocols for a token entirely, or if you want a fresh allowance ceiling, this is the right layer to revoke. It is the broad revocation — removing the entire Permit2 pathway for that token.</p>
+
+      <h2>Layer 2 — revoking individual off-chain grants</h2>
+
+      <p>The typed-data signatures in step (2) live in the Permit2 contract's storage as a pair of <code>(owner, token, spender)</code> → <code>(amount, expiration, nonce)</code>. Revoking a specific grant means calling <code>Permit2.lockdown([{ token, spender }])</code> or setting the allowance to zero for that particular spender, which is what lockdown does under the hood.</p>
+
+      <p>The UX reality: most wallet UIs do not surface Permit2 sub-allowances directly. Rabby does, and it has a dedicated revoke pane for them. MetaMask does not (as of 2026-04). The Uniswap frontend exposes revocation of your Permit2 grant to its own Universal Router in the wallet settings page but not grants to other downstream routers.</p>
+
+      <p>In the AllowanceGuard scanner, Permit2 sub-allowances appear as separate rows with the downstream spender (e.g. <strong>Uniswap Universal Router</strong>, <strong>CoW Settlement</strong>) as the row's spender, and <strong>via Permit2</strong> as a label. Tapping "Revoke" on these rows generates a Permit2 <code>lockdown</code> call, which is still an on-chain transaction and still costs gas — but the gas is usually lower than a full approval revoke because it's a storage-slot clear.</p>
+
+      <p>When to do this: if you used a specific integration once (aggregator X, then switched to aggregator Y) and want to tidy the specific grant without touching the broader token→Permit2 allowance, lockdown is the right tool.</p>
+
+      <h2>The trapdoor case — expired signatures you did not submit</h2>
+
+      <p>Here is where Permit2 gets unusual. Some Permit2 grants exist only as off-chain signatures you signed but never submitted — because the downstream protocol's router submits the signature when it executes a swap. If you signed a Permit2 grant for a large amount and a long expiry but then closed the tab before the swap executed, there is a signed message out there that a downstream spender could, in principle, submit to Permit2 up until the deadline passes.</p>
+
+      <p>You cannot directly revoke this, because there is nothing on-chain to change. But you can invalidate every unsubmitted signature for a given <code>(owner, token, spender)</code> triple by using Permit2's nonce-invalidation mechanism: <code>Permit2.invalidateNonces(token, spender, newNonce)</code>. Calling this with a nonce value higher than any you have signed invalidates all prior signed messages for that triple. It is a belt-and-braces call for anyone who has been signing Permit2 grants with long expiries.</p>
+
+      <p>When to do this: if you regularly sign Permit2 grants via aggregators, a periodic nonce-invalidation per (token, spender) on anything you care about is reasonable hygiene. It is overkill for most users; it is essential for treasury wallets.</p>
+
+      <h2>Can a scanner see un-submitted signatures?</h2>
+
+      <p>No. Un-submitted Permit2 signatures are pure off-chain data. No on-chain scanner — ours or anyone else's — can see them. The scanner sees the on-chain <em>consequence</em> (an approved-but-not-yet-consumed allowance, or a nonce that has been advanced) but not the signed message itself. This is why wallet-level typed-data decoding matters: Rabby showing you what you are signing at the moment of signature is the only defence for the off-chain layer. Our layer is the on-chain hygiene that follows.</p>
+
+      <h2>A clean sequence to clear Permit2 exposure for a token</h2>
+
+      <p>If you want to fully clear Permit2 exposure for a given token — for example, you are about to move that token to a cold wallet and never use it with a Permit2-integrated protocol again — the clean sequence is:</p>
+
+      <ol>
+        <li><strong>Invalidate nonces</strong> for each downstream spender you remember granting signatures to. One <code>invalidateNonces</code> call per (token, spender) triple, any reasonable future nonce value.</li>
+        <li><strong>Lockdown per spender</strong> for any Permit2 sub-allowances our scanner shows on that token. One <code>lockdown</code> call can batch multiple spenders.</li>
+        <li><strong>Revoke the token→Permit2 allowance</strong> on-chain with <code>approve(permit2, 0)</code>.</li>
+      </ol>
+
+      <p>In practice, steps 1 and 2 are the thorough version. Step 3 alone is enough for the vast majority of cases, because any downstream protocol trying to use an old signed grant would have to go through Permit2, and without the token→Permit2 allowance Permit2 cannot transfer anything. Steps 1 and 2 are belt-and-braces.</p>
+
+      <h2>Gas cost</h2>
+
+      <p>At current mainnet gas prices, each of these calls is roughly:</p>
+
+      <ul>
+        <li><code>approve(permit2, 0)</code> — ~46,000 gas. Same cost as any ERC-20 revoke.</li>
+        <li><code>Permit2.lockdown</code> — ~32,000 gas per (token, spender) pair.</li>
+        <li><code>Permit2.invalidateNonces</code> — ~28,000 gas per (token, spender) pair.</li>
+      </ul>
+
+      <p>On L2s (Arbitrum, Base, Optimism) these are sub-cent operations. On mainnet at moderate gas, the full three-step sequence for a token is under $3 total. The sequence is cheap relative to the risk coverage it delivers.</p>
+
+      <h2>Where our scanner helps</h2>
+
+      <p>The <a href="/">scanner</a> identifies Permit2 sub-allowances as separate rows with the downstream spender named, so you can revoke specific grants without touching the broader token→Permit2 allowance. Batch revoke (Pro tier) bundles multiple lockdown calls into a single EIP-5792 transaction where the chain supports it, so clearing ten Permit2 sub-allowances costs one signature and one gas payment instead of ten.</p>
+
+      <p>If you are done using Permit2-integrated protocols entirely for a token — and that is not always the right call — the top-level revoke of <code>token→Permit2</code> is the single most effective action. The rest is hygiene.</p>
+    `,
+    publishedAt: '2026-04-19',
+    readTime: '8 min read',
+    category: 'Tutorial',
+    featured: false,
+    tags: ['tutorial', 'permit2', 'revoke', 'approvals', 'how-to'],
+  },
+  {
+    slug: 'the-six-wallets-of-2026',
+    title: 'The Six Wallets of 2026: What Each One Shows You Before You Sign',
+    subtitle: 'MetaMask, Rabby, Frame, Safe, Coinbase Wallet, Phantom — a comparative read on signature transparency',
+    content: `
+      <p>Every wallet is a negotiation between two competing goals. First: let the user sign things. Second: let the user <em>understand</em> what they are signing. The six most-used wallets in Web3 in 2026 strike very different balances on this tradeoff, and the difference matters more than the user-facing feature lists suggest.</p>
+
+      <p>This post compares how each of the six renders a token approval, a Permit2 signature, a generic <code>eth_sign</code>, and an EIP-7702 authorization. The yardstick is signature transparency — can the user, at the moment of the prompt, tell what is actually being authorized? Everything else (transaction speed, fiat on-ramps, swap UX) is in scope elsewhere.</p>
+
+      <p>Caveats: wallet UIs change frequently. Every screenshot you may see in this post is from the version of each wallet current as of April 2026. Version-check before applying any specific visual observation. The design <em>patterns</em> tend to be more stable than the specific pixel details.</p>
+
+      <h2>1. MetaMask</h2>
+
+      <p>MetaMask is the default wallet for most Web3 users and carries roughly 30M monthly actives. Its approval rendering has evolved substantially since 2022; as of April 2026 it shows the spender address, the token being approved, and the amount (with an "Unlimited" indicator for <code>uint256.max</code> approvals). For Permit2 signatures, the wallet renders the EIP-712 typed data with field names and values visible, which is an improvement on the prior "sign this hash" era.</p>
+
+      <p>Signature transparency score: <strong>B+</strong>. The approval prompt is legible to a reader who knows what they are reading; the field labels could be friendlier to non-technical users. EIP-7702 authorizations are rendered as a prominent warning screen with the delegate address highlighted, which is appropriate given the new attack surface.</p>
+
+      <p>Weak spot: the "Advanced" section — where the raw transaction data lives — is behind two taps and hidden by default. A user who suspects something is off has to dig; the default view does not expose the call data.</p>
+
+      <h2>2. Rabby</h2>
+
+      <p>Rabby is the security-conscious power-user wallet. Built by the Debank team, it runs a "pre-execution simulation" on every transaction and shows the user what would happen if they signed — token balance diffs, NFT transfers, contract risk score, historical spender reputation. For an approval, Rabby shows the spender, the token, the amount, AND flags if the spender is unfamiliar or has a risk signal from Rabby's catalogue.</p>
+
+      <p>Signature transparency score: <strong>A</strong>. Rabby's Permit2 rendering is the best in the field — typed data is decoded, the deadline is shown in human-readable format, and the wallet flags any previous interactions with the downstream spender. For EIP-7702, Rabby refuses to sign without an explicit confirmation step, and it renders what the delegate can do.</p>
+
+      <p>Weak spot: market share. Rabby is excellent but small. Users who migrate to Rabby after a MetaMask-era scare tend to stay; users who never migrated often don't know what they are missing. Rabby is a browser extension + mobile; no custodial / exchange integration.</p>
+
+      <h2>3. Frame</h2>
+
+      <p>Frame is a desktop-first, hardware-wallet-native wallet. It targets the user who holds significant value cold and wants every signature to pass through a Ledger or Trezor. Frame's UI is stark by design: on a signature request, the app shows a structured decomposition of the message — function selector, resolved function name, parameters with labels — and then the user physically confirms on the hardware device.</p>
+
+      <p>Signature transparency score: <strong>A</strong>. Frame is closest to "what a Solidity engineer would want to see." Function name resolution is aggressive — if the ABI is in the selector registry, Frame will show <code>approve(address spender, uint256 value)</code> with both parameters labelled. Permit2 is handled with a custom decoder that labels the deadline and sub-permits. EIP-7702 is treated as a capital-S Signature and gets the full decomposition treatment.</p>
+
+      <p>Weak spot: desktop-only, intentionally technical UI. Casual users find it intimidating. Hardware wallet required in the default flow; software-only signing is available but discouraged.</p>
+
+      <h2>4. Safe (formerly Gnosis Safe)</h2>
+
+      <p>Safe is the multisig wallet for DAOs, treasuries, and teams. Not a single-user wallet per se — it is a smart-contract wallet holding assets that several EOAs collectively authorize. Signature transparency is exceptional because of the workflow: a transaction is <em>proposed</em> in the Safe UI, then <em>reviewed</em> by each co-signer asynchronously, then <em>executed</em> once threshold is met. There is no "ninety-second decision" because the asynchronous flow allows each signer to take their time.</p>
+
+      <p>Signature transparency score: <strong>A+</strong> for the use-case it serves. The proposal view shows decoded call data, simulated outcome, previous interactions with the target, and the full transaction hash. Each signer sees the same decoded view. For a DAO treasury, this is the correct wallet — the tradeoff of slower approvals for higher scrutiny is exactly the point.</p>
+
+      <p>Weak spot: Safe is overkill for personal daily use. The on-chain execution costs gas per signature step, which adds up. The UX is not well-suited to one-person hot-wallet operations.</p>
+
+      <h2>5. Coinbase Wallet</h2>
+
+      <p>Coinbase Wallet is the self-custody wallet that lives alongside Coinbase's custodial product. Heavy retail user base, iOS/Android first. Signature rendering has improved over 2024-2026 but remains less detailed than Rabby or Frame. For a classic ERC-20 approval, the wallet shows the spender, the token, and an amount-or-"unlimited" flag. Permit2 signatures are rendered as decoded typed data in recent versions; prior versions showed only the hash, which drew regulator criticism.</p>
+
+      <p>Signature transparency score: <strong>B</strong>. Coinbase Wallet's strength is onboarding flow (fiat on-ramp via Coinbase is seamless) and fraud warnings from their in-house catalogue. Its weakness is depth: the "what does this contract actually do" dimension is less developed than the security-focused wallets.</p>
+
+      <p>Weak spot: EIP-7702 authorization rendering as of April 2026 is still being built out; users on the Coinbase Wallet Pectra rollout have reported less-clear delegate-authorization prompts than on MetaMask or Rabby.</p>
+
+      <h2>6. Phantom</h2>
+
+      <p>Phantom started as the dominant Solana wallet and expanded to EVM chains in 2023. Its EVM surface is catching up to its Solana heritage and, as of April 2026, renders approvals with spender, token, amount, and a spender-reputation flag pulled from their own catalogue. Permit2 is supported with decoded typed data. Phantom's strength is cross-chain UX: a single wallet holding Solana, Ethereum, Base, and Polygon assets with a unified activity feed.</p>
+
+      <p>Signature transparency score: <strong>B+</strong>. Signature prompts are readable, reputation flags are present, and the decoded typed-data view is clean. What Phantom does not do, as well as Rabby or Frame, is simulated-outcome preview — you do not see "this transaction would cost you 1.3 ETH" before signing.</p>
+
+      <p>Weak spot: the cross-chain UX is where most engineering attention goes; on pure EVM signature transparency, the depth is one tier behind the security-focused EVM-first wallets.</p>
+
+      <h2>Comparative at a glance</h2>
+
+      <table>
+        <thead>
+          <tr><th>Wallet</th><th>ERC-20 approval</th><th>Permit2 typed data</th><th>EIP-7702 authorization</th><th>Simulation</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>MetaMask</td><td>Spender + amount + token</td><td>Decoded</td><td>Prominent warning</td><td>Basic (mainnet only)</td></tr>
+          <tr><td>Rabby</td><td>+ reputation flag</td><td>Best decoded UI</td><td>Explicit confirm step</td><td>Yes, all chains</td></tr>
+          <tr><td>Frame</td><td>Full function decomposition</td><td>Custom decoder</td><td>Full decomposition</td><td>Yes, hardware-first</td></tr>
+          <tr><td>Safe</td><td>Proposal + async review</td><td>Full decoded</td><td>Multisig consensus</td><td>Yes, via Tenderly</td></tr>
+          <tr><td>Coinbase Wallet</td><td>Spender + amount</td><td>Decoded (recent)</td><td>Less clear</td><td>Limited</td></tr>
+          <tr><td>Phantom</td><td>+ reputation flag</td><td>Decoded</td><td>Being developed</td><td>No</td></tr>
+        </tbody>
+      </table>
+
+      <h2>What this comparison is not</h2>
+
+      <p>This is a signature-transparency comparison. It is not a verdict on which wallet is "best" — the best wallet is a function of what you actually do. A DAO treasury manager and a daily DEX trader want very different things. The frame here is: given the same malicious approval prompt, which wallet gives you the most signal to refuse?</p>
+
+      <p>On that specific question, the hierarchy is roughly: <strong>Rabby ≈ Frame &gt; Safe (for use-case) &gt; MetaMask &gt; Phantom ≈ Coinbase Wallet</strong>. The gap between the top and bottom is smaller in 2026 than it was in 2023 — every wallet has invested in transaction decoding since the drainer-epidemic year — but the gap is not zero, and for high-value wallets, choosing the more transparent option is cheap insurance.</p>
+
+      <h2>A word on hardware wallets</h2>
+
+      <p>Every wallet in this list can pair with a hardware device (Ledger, Trezor, Keystone, GridPlus). When paired, the hardware device's own screen becomes the authoritative source of "what you are signing" — the wallet UI's decoding is the first line, the hardware screen is the second. Frame is the wallet most naturally designed for this; the others support it but treat it as an advanced option. For any approval that would move more than you are willing to lose, the hardware device's screen should be read independently and compared against the wallet UI's decoding. Discrepancies are the loudest signal that something is wrong.</p>
+
+      <h2>Closing observation</h2>
+
+      <p>Four years ago (2022) every EVM wallet was essentially a signing UX problem. The state of the art was "show the hash, let the user pray." The gap between that era and 2026 is substantial, and credit where due: MetaMask, Coinbase Wallet, and Phantom have all significantly improved their decoding. But the best-in-class (Rabby, Frame, Safe) set a higher bar — and users with non-trivial value on chain benefit meaningfully from choosing one of those three over the more general-purpose wallets.</p>
+
+      <p>If you use AllowanceGuard's scanner at <a href="/">allowanceguard.com</a> to clean up approvals you have already granted, pairing that with a wallet that helps you avoid granting the bad approval in the first place is a much better defence than either alone.</p>
+    `,
+    publishedAt: '2026-04-19',
+    readTime: '15 min read',
+    category: 'Education',
+    featured: false,
+    tags: ['education', 'wallets', 'comparative', 'signature-transparency', 'metamask', 'rabby', 'frame', 'safe'],
   }
 ]
