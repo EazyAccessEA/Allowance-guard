@@ -189,7 +189,7 @@ export default function ContactPage() {
  key={t.value}
  className={`relative flex flex-col cursor-pointer border px-4 py-3 transition-all ${
  selected
- ? 'border-amber-400/60 bg-paper-sub'
+ ? 'border-amber-deep bg-paper-sub'
  : 'border-ink-rule bg-paper-sub hover:border-ink-rule hover:bg-paper-sub'
  }`}
  >
@@ -199,7 +199,7 @@ export default function ContactPage() {
  value={t.value}
  checked={selected}
  onChange={() => update('topic', t.value)}
- className="sr-only"
+ className="absolute opacity-0 pointer-events-none w-0 h-0 accent-amber-deep"
  />
  <span
  className={`text-sm font-semibold ${
