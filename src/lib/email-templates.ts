@@ -66,10 +66,11 @@ const UNSUB_URL = (email: string) =>
   `https://allowanceguard.com/unsubscribe?email=${encodeURIComponent(email)}`
 
 // Asset served from the marketing site so Gmail, Outlook, and Apple Mail
-// can proxy-cache it without mixed-content warnings. Purpose-built PNG at
-// /public/images/branding/ag-logo-email.png — high-contrast ink silhouette
-// that reads on light and dark email client themes.
-const LOGO_URL = 'https://www.allowanceguard.com/images/branding/ag-logo-email.png'
+// can proxy-cache it without mixed-content warnings. Flat ink silhouette
+// on transparent — the same working mark used by the site header, footer,
+// and watermark. Flat geometry survives gradient-stripping email clients
+// far better than the previous photograph-style asset.
+const LOGO_URL = 'https://www.allowanceguard.com/images/branding/ag-logo-ink.png'
 
 /**
  * Logo + wordmark row. Table-based because Outlook ignores flex/grid
