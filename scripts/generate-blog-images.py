@@ -97,15 +97,15 @@ BLOG_IMAGES = [
     },
     {
         "filename": "eight-approval-exploits-one-pattern.webp",
-        "prompt": "Continuous single-line ink drawing of eight standing dominoes arranged in a straight row on cream paper, the first domino tipped and rendered in warm amber, minimalist editorial illustration, no gears, no wheels",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, row of dominoes tipping in sequence, first domino in warm amber, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "every-approval-you-sign-decoded.webp",
-        "prompt": "Continuous single-line ink drawing of four different ornate keys laid side by side on cream paper, the second key rendered in warm amber, minimalist editorial illustration, no gears, no wheels",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a key splitting into four differently shaped keys, one key in warm amber, centered, simple elegant, editorial spot illustration",
     },
     {
         "filename": "ten-minute-wallet-audit.webp",
-        "prompt": "Continuous single-line ink drawing of ten empty checkboxes in a column on cream paper, the top three boxes ticked with amber marks, minimalist editorial illustration",
+        "prompt": "minimal line art illustration, single continuous thin black ink stroke on plain white background, no shading, no fill, a simple stopwatch with the minute hand drawn in warm amber, centered, simple elegant, editorial spot illustration",
     },
 ]
 
