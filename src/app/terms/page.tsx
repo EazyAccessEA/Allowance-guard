@@ -47,8 +47,37 @@ export default function TermsPage() {
         </Container>
       </section>
 
+      {/* ── Contents ── */}
+      <section className="paper py-14 border-y border-ink-rule" aria-label="Table of contents">
+        <Container>
+          <div className="max-w-4xl">
+            <h2 className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-6">
+              Contents
+            </h2>
+            <ol className="grid sm:grid-cols-2 gap-x-10 gap-y-2">
+              {TOC.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex items-baseline gap-4 font-plex text-sm leading-relaxed"
+                >
+                  <span className="font-mono text-[11px] tabular-nums text-ink-whisper">
+                    {item.num}
+                  </span>
+                  <a
+                    href={`#${item.id}`}
+                    className="text-ink hover:text-amber-deep transition-colors"
+                  >
+                    {item.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
       {/* ── 01 Agreement ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-01" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -70,7 +99,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 02 What AG Does ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-02" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -100,7 +129,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 03 Service Tiers ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-03" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -121,7 +150,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 04 Subscription & Billing ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-04" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -142,7 +171,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 05 Refund Policy ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-05" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -164,7 +193,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 06 Disclaimers ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-06" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -203,7 +232,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 07 Data Handling ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-07" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -222,7 +251,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 08 Your Responsibilities ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-08" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -243,7 +272,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 09 Acceptable Use ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-09" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -267,7 +296,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 10 Termination ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-10" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -285,7 +314,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 11 Service Availability ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-11" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -302,7 +331,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 12 Changes ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-12" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -318,7 +347,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 13 Limitation of Liability ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-13" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -339,7 +368,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 14 Indemnity ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-14" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -355,7 +384,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 15 Governing Law ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-15" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -372,7 +401,7 @@ export default function TermsPage() {
       </section>
 
       {/* ── 16 Contact + Related ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-16" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-12">
@@ -415,6 +444,25 @@ export default function TermsPage() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════ */
+
+const TOC = [
+  { num: '01', id: 'sec-01', title: 'Agreement to these terms' },
+  { num: '02', id: 'sec-02', title: 'What AllowanceGuard does' },
+  { num: '03', id: 'sec-03', title: 'Service tiers' },
+  { num: '04', id: 'sec-04', title: 'Subscription & billing' },
+  { num: '05', id: 'sec-05', title: 'Refund policy' },
+  { num: '06', id: 'sec-06', title: 'Important disclaimers' },
+  { num: '07', id: 'sec-07', title: 'Data handling' },
+  { num: '08', id: 'sec-08', title: 'Your responsibilities' },
+  { num: '09', id: 'sec-09', title: 'What you agree not to do' },
+  { num: '10', id: 'sec-10', title: 'Ending your use' },
+  { num: '11', id: 'sec-11', title: 'Service availability' },
+  { num: '12', id: 'sec-12', title: 'Changes to these terms' },
+  { num: '13', id: 'sec-13', title: 'Limitation of liability' },
+  { num: '14', id: 'sec-14', title: 'Indemnity' },
+  { num: '15', id: 'sec-15', title: 'Governing law & disputes' },
+  { num: '16', id: 'sec-16', title: 'Questions about these terms' },
+]
 
 const TIERS = [
   {
