@@ -10,7 +10,7 @@
  *  Maren: grain on sections, Highlight on headline, amber hairlines
  *  Idris: CascadingScrollAnimation on card sections
  *  Noor: FAQ buttons have aria-expanded, feature lists have role=list
- *  #22 Conversion: Free CTA → "Join the waitlist" (product not live)
+ *  #22 Conversion: Free CTA → "Scan a wallet" (product is live; waitlist retired 2026-04-19)
  *  #20 Brand: "Pricing that respects your wallet" → editorial, not playful
  */
 

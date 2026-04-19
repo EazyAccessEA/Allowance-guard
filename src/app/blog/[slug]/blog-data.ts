@@ -1987,7 +1987,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>What\u2019s Next</h2>
 
-      <p>We\u2019re working on a native mobile app, a developer SDK for embedding security scanning in other dApps, and expanding chain coverage beyond EVM networks. If you want to be the first to know, <a href="/" className="text-amber-deep hover:underline">join the waitlist</a>.</p>
+      <p>We\u2019re working on a native mobile app, a developer SDK for embedding security scanning in other dApps, and expanding chain coverage beyond EVM networks. If you want to follow along, the <a href="/blog" className="text-amber-deep hover:underline">blog</a> is where we post updates, and <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">GitHub</a> tracks what\u2019s in flight.</p>
 
       <p>And if you want to contribute, the <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" className="text-amber-deep hover:underline">repo is open</a>. We welcome pull requests, bug reports, and security disclosures.</p>
 

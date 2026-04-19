@@ -16,7 +16,7 @@ import CascadingScrollAnimation from '@/components/CascadingScrollAnimation'
  * Noor: Semantic sections, AA contrast
  * #20 Brand:"The invisible attack surface, made visible" — strong, keep
  * #21 Technical: removed"No competitor offers this" (unverifiable)
- * #22 Conversion: CTA →"Join the waitlist" (product not yet live)
+ * #22 Conversion: CTA →"Scan a wallet" (product is live; waitlist retired 2026-04-19)
  * #11 Investor:"Why it matters" rewritten — mission, not pitch deck
  */
 
@@ -287,15 +287,15 @@ export default function FeaturesPage() {
  </h2>
 
  <p className="font-plex text-lg text-cream/75 leading-[1.55] mb-10 max-w-2xl mx-auto">
- Join the waitlist and be the first to know when we launch. The scanner is coming — and it&rsquo;s free.
+ The scanner is live across 27 chains. Paste any wallet address to see every active approval — free, no install, no account.
  </p>
 
  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
  <Link
- href="/"
+ href="/#scan"
  className="inline-flex items-center justify-center px-8 py-4 bg-cream text-oxblood font-medium font-plex text-[15px] hover:bg-cream/90 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream focus-visible:ring-offset-2 focus-visible:ring-offset-oxblood"
  >
- Join the waitlist
+ Scan a wallet
  </Link>
  <Link
  href="/docs"

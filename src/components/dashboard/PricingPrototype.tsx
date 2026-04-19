@@ -63,17 +63,17 @@ export default function PricingPrototype() {
  aria-checked={yearly}
  aria-label="Toggle yearly billing"
  className={cn(
- 'relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-200',
- 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep0 focus-visible:ring-offset-2 ',
+ 'relative inline-flex h-7 w-12 items-center border transition-colors duration-200',
+ 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:ring-offset-2 focus-visible:ring-offset-paper',
  yearly
- ? 'bg-amber-deep'
- : 'bg-ink '
+ ? 'bg-amber-deep border-amber-deep'
+ : 'bg-paper border-ink-rule'
  )}
  >
  <span
  className={cn(
- 'inline-block h-5 w-5 transform rounded-full bg-paper shadow-sm transition-transform duration-200',
- yearly ? 'translate-x-6' : 'translate-x-1'
+ 'inline-block h-5 w-5 transform transition-transform duration-200',
+ yearly ? 'translate-x-6 bg-paper' : 'translate-x-1 bg-ink'
  )}
  />
  </button>

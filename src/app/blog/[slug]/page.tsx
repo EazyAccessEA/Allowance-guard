@@ -180,10 +180,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
  </p>
  <div className="flex flex-col sm:flex-row gap-3">
  <Link
- href="/"
+ href="/#scan"
  className="inline-flex items-center justify-center px-6 py-3 bg-oxblood text-cream font-medium font-plex text-[15px] hover:bg-oxblood/90 transition-colors duration-150"
  >
- Join the waitlist
+ Scan a wallet
  </Link>
  <Link
  href="/docs"

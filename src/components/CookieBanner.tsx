@@ -123,7 +123,7 @@ export default function CookieBanner() {
  {/* Confirmation state */}
  {confirmation ? (
  <div className="p-8 text-center space-y-3">
- <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-paper-sub mx-auto">
+ <div className="inline-flex items-center justify-center w-12 h-12 bg-paper-sub border border-ink-rule mx-auto">
  <Check className="w-6 h-6 text-semantic-success-700" />
  </div>
  <p className="font-plex text-sm font-medium text-ink">{confirmation}</p>
@@ -309,15 +309,18 @@ function ToggleRow({
  </span>
  ) : (
  <button
+ type="button"
+ role="switch"
+ aria-checked={checked}
  onClick={onChange}
  aria-label={`${checked ? 'Disable' : 'Enable'} ${title} cookies`}
- className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${
- checked ? 'bg-ink' : 'bg-ink-rule'
+ className={`relative inline-flex h-6 w-11 items-center border transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-deep focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
+ checked ? 'bg-ink border-ink' : 'bg-paper border-ink-rule'
  }`}
  >
  <span
- className={`inline-block h-4 w-4 transform rounded-full bg-paper transition-transform ${
- checked ? 'translate-x-6' : 'translate-x-1'
+ className={`inline-block h-4 w-4 transform transition-transform ${
+ checked ? 'translate-x-6 bg-paper' : 'translate-x-1 bg-ink'
  }`}
  />
  </button>
