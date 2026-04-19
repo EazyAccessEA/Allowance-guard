@@ -3818,6 +3818,8 @@ button:disabled, input:disabled, select:disabled, textarea:disabled {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
   background-color: var(--ledger-paper-sub);
   border: 1px solid var(--ledger-ink-rule);
   color: var(--ledger-ink);
