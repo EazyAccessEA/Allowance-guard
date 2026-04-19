@@ -112,6 +112,14 @@ BLOG_IMAGES = [
 
 async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Semaphore):
     async with sem:
+        # Skip if the output already exists. Saves Runware quota on re-runs
+        # and makes this script safe to execute whenever a new entry is
+        # added below — the operator deletes a specific file to re-roll it.
+        filepath = os.path.join(OUTPUT_DIR, item["filename"])
+        if os.path.exists(filepath):
+            print(f"  SKIP: {item['filename']} (already generated)")
+            return
+
         payload = [
             {
                 "taskType": "imageInference",
@@ -154,7 +162,6 @@ async def generate_image(client: httpx.AsyncClient, item: dict, sem: asyncio.Sem
             img_resp = await client.get(image_url, timeout=60.0)
             img_resp.raise_for_status()
 
-            filepath = os.path.join(OUTPUT_DIR, item["filename"])
             with open(filepath, "wb") as f:
                 f.write(img_resp.content)
 
