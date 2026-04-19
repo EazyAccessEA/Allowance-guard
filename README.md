@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/images/branding/ag-logo-ink.png" alt="AllowanceGuard" width="180" />
+  <img src="public/images/branding/Gemini_Generated_Image_x01hgrx01hgrx01h.png" alt="AllowanceGuard" width="200" />
 </p>
 
 <h1 align="center">AllowanceGuard</h1>
