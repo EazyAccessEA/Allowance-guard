@@ -50,8 +50,37 @@ export default function CookiesPage() {
         </Container>
       </section>
 
+      {/* ── Contents ── */}
+      <section className="paper py-14 border-y border-ink-rule" aria-label="Table of contents">
+        <Container>
+          <div className="max-w-4xl">
+            <h2 className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-6">
+              Contents
+            </h2>
+            <ol className="grid sm:grid-cols-2 gap-x-10 gap-y-2">
+              {TOC.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex items-baseline gap-4 font-plex text-sm leading-relaxed"
+                >
+                  <span className="font-mono text-[11px] tabular-nums text-ink-whisper">
+                    {item.num}
+                  </span>
+                  <a
+                    href={`#${item.id}`}
+                    className="text-ink hover:text-amber-deep transition-colors"
+                  >
+                    {item.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
       {/* ── At a glance ── */}
-      <section className="paper-sub grain py-16 sm:py-20">
+      <section id="sec-glance" className="paper-sub grain py-16 sm:py-20 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <CascadingScrollAnimation direction="up" distance={40} delay={0}>
@@ -86,7 +115,7 @@ export default function CookiesPage() {
       </section>
 
       {/* ── The two cookies ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-01" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -124,7 +153,7 @@ export default function CookiesPage() {
       </section>
 
       {/* ── Server-side analytics ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-02" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -176,7 +205,7 @@ export default function CookiesPage() {
       </section>
 
       {/* ── Local storage ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-03" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -215,7 +244,7 @@ export default function CookiesPage() {
       </section>
 
       {/* ── Managing preferences ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-04" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -270,7 +299,7 @@ export default function CookiesPage() {
       </section>
 
       {/* ── Updates + related ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-05" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -305,7 +334,7 @@ export default function CookiesPage() {
 
               <CascadingScrollAnimation direction="up" distance={40} delay={200}>
                 <p className="font-plex text-xs text-ink-whisper text-center pt-8 border-t border-ink-rule">
-                  Last updated: April 14, 2026.
+                  Last updated: April 19, 2026.
                 </p>
               </CascadingScrollAnimation>
             </div>
@@ -323,13 +352,22 @@ export default function CookiesPage() {
  * Update both code and copy together.
  * ═══════════════════════════════════════════════════════════════════════ */
 
+const TOC = [
+  { num: '§', id: 'sec-glance', title: 'At a glance' },
+  { num: '01', id: 'sec-01', title: 'What we set (essential cookies)' },
+  { num: '02', id: 'sec-02', title: 'Why there are no analytics cookies' },
+  { num: '03', id: 'sec-03', title: 'What we keep in your browser (local storage)' },
+  { num: '04', id: 'sec-04', title: 'How to manage cookies' },
+  { num: '05', id: 'sec-05', title: 'When this changes' },
+]
+
 const COOKIES = [
   {
     name: 'ag_sess',
     purpose: 'Session authentication',
     description:
       'Identifies you to the server after sign-in so you don&rsquo;t have to re-authenticate on every request. ' +
-      'Issued when you sign in with your wallet (SIWE) and cleared when you sign out.',
+      'Issued when you sign in — either with your wallet (SIWE) or with an email one-time code (OTP) — and cleared when you sign out.',
     attrs: [
       { label: 'Type', value: 'First-party, essential' },
       { label: 'Lifetime', value: 'Up to 30 days' },

@@ -48,8 +48,37 @@ export default function PrivacyPage() {
         </Container>
       </section>
 
+      {/* ── Contents ── */}
+      <section className="paper py-14 border-y border-ink-rule" aria-label="Table of contents">
+        <Container>
+          <div className="max-w-4xl">
+            <h2 className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase text-ink-whisper mb-6">
+              Contents
+            </h2>
+            <ol className="grid sm:grid-cols-2 gap-x-10 gap-y-2">
+              {TOC.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex items-baseline gap-4 font-plex text-sm leading-relaxed"
+                >
+                  <span className="font-mono text-[11px] tabular-nums text-ink-whisper">
+                    {item.num}
+                  </span>
+                  <a
+                    href={`#${item.id}`}
+                    className="text-ink hover:text-amber-deep transition-colors"
+                  >
+                    {item.title}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
       {/* ── Data Controller ── */}
-      <section className="paper-sub grain py-16 sm:py-20">
+      <section id="sec-controller" className="paper-sub grain py-16 sm:py-20 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <CascadingScrollAnimation direction="up" distance={40} delay={0}>
@@ -69,7 +98,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── What We Collect ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-01" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -99,7 +128,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── How We Use It ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-02" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -127,7 +156,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── Retention ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-03" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -164,7 +193,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── Your Rights ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-04" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -204,7 +233,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── Cookies ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-05" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -251,7 +280,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── Third Parties ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-06" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -278,7 +307,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── International Transfers ── */}
-      <section className="paper grain py-20 sm:py-28">
+      <section id="sec-07" className="paper grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -307,7 +336,7 @@ export default function PrivacyPage() {
       </section>
 
       {/* ── Contact + Related ── */}
-      <section className="paper-sub grain py-20 sm:py-28">
+      <section id="sec-08" className="paper-sub grain py-20 sm:py-28 scroll-mt-24">
         <Container>
           <div className="max-w-4xl">
             <div className="mb-16">
@@ -337,12 +366,14 @@ export default function PrivacyPage() {
                   <Link href="/terms" className="paper-button text-sm">Terms of Service</Link>
                   <Link href="/cookies" className="paper-button text-sm">Cookie Policy</Link>
                   <Link href="/dpa" className="paper-button text-sm">Data Processing Agreement</Link>
+                  <Link href="/sla" className="paper-button text-sm">Service Level Agreement</Link>
+                  <Link href="/refund" className="paper-button text-sm">Refund Policy</Link>
                 </div>
               </CascadingScrollAnimation>
 
               <CascadingScrollAnimation direction="up" distance={40} delay={200}>
                 <p className="font-plex text-xs text-ink-whisper text-center pt-8 border-t border-ink-rule">
-                  Last updated: April 13, 2026. We notify registered users of significant changes via email with at least 30 days&rsquo; notice.
+                  Last updated: April 19, 2026. We notify registered users of significant changes via email with at least 30 days&rsquo; notice.
                 </p>
               </CascadingScrollAnimation>
             </div>
@@ -357,6 +388,18 @@ export default function PrivacyPage() {
  * Data — kept inline to avoid a separate file for a single page.
  * ═══════════════════════════════════════════════════════════════════════ */
 
+const TOC = [
+  { num: '§', id: 'sec-controller', title: 'Data controller' },
+  { num: '01', id: 'sec-01', title: 'What we collect and why' },
+  { num: '02', id: 'sec-02', title: 'How your data works for you' },
+  { num: '03', id: 'sec-03', title: 'How long we keep it' },
+  { num: '04', id: 'sec-04', title: 'What you can do about it' },
+  { num: '05', id: 'sec-05', title: 'What we set and why (cookies)' },
+  { num: '06', id: 'sec-06', title: 'Who else touches your data' },
+  { num: '07', id: 'sec-07', title: 'Where your data goes' },
+  { num: '08', id: 'sec-08', title: 'Questions about privacy' },
+]
+
 const DATA_COLLECTED = [
   {
     title: 'Wallet addresses',
@@ -364,16 +407,18 @@ const DATA_COLLECTED = [
     description:
       'When you scan a wallet, we query public blockchain data to retrieve your token approvals. ' +
       'Free-tier addresses are not stored beyond the session. Pro/Sentinel addresses are stored to ' +
-      'enable continuous monitoring, alerts, and historical tracking. SIWE sign-in links your wallet ' +
-      'to your account — this may constitute personal data under GDPR. You can remove wallets at any time.',
+      'enable continuous monitoring, alerts, and historical tracking. If you sign in with your wallet ' +
+      '(SIWE), that wallet is linked to your account — this may constitute personal data under GDPR. ' +
+      'You can remove wallets at any time.',
   },
   {
     title: 'Email address',
     basis: 'Contract · Consent',
     description:
       'Used for subscription billing, monitoring alerts (Pro/Sentinel), security notifications, and ' +
-      'team invitations. Authentication uses SIWE — no email required for login. Never shared with ' +
-      'third parties for marketing.',
+      'team invitations. Authentication supports Sign-in with Ethereum (SIWE) or email one-time codes ' +
+      '(OTP); if you choose OTP, your email address is required in order to receive the code. Never ' +
+      'shared with third parties for marketing.',
   },
   {
     title: 'Payment data',
@@ -468,7 +513,8 @@ const THIRD_PARTIES = [
   { name: 'Vercel', purpose: 'Hosting and CDN. SOC 2 compliant. Processes requests and serves assets.' },
   { name: 'Neon Database', purpose: 'PostgreSQL data storage. Encrypted at rest and in transit.' },
   { name: 'Stripe', purpose: 'Payment processing. PCI DSS Level 1. Handles all card data — we never see it.' },
-  { name: 'Postmark (ActiveCampaign)', purpose: 'Transactional email delivery (alerts, billing, magic links). Receives recipient email and message content only.' },
+  { name: 'Resend', purpose: 'Primary transactional email delivery (alerts, billing, one-time codes). Receives recipient email and message content only.' },
+  { name: 'Postmark', purpose: 'Fallback transactional email provider when Resend is unavailable. Same scope as Resend — recipient email and message content only.' },
   { name: 'Rollbar', purpose: 'Error monitoring. Receives anonymised error data and stack traces.' },
   { name: 'Reown (WalletConnect)', purpose: 'Wallet connection protocol. Facilitates wallet sign-in.' },
   { name: 'Blockchain RPCs', purpose: 'Public blockchain data queries. Only wallet addresses sent — no personal data.' },
