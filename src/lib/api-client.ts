@@ -1,4 +1,8 @@
 // API Client with retry logic and error handling for wallet scanning
+import { isOverloadStatus, parseRetryAfter } from './retry'
+
+const MAX_OVERLOAD_WAIT_MS = 30_000
+
 export class APIClient {
   private static async fetchWithRetry(
     url: string,
@@ -21,7 +25,15 @@ export class APIClient {
           return response
         }
 
-        // Don't retry on client errors (4xx)
+        // Overload / throttling: retry with backoff, respecting Retry-After.
+        if (isOverloadStatus(response.status) && attempt < maxRetries) {
+          const waitMs = parseRetryAfter(response.headers.get('retry-after'))
+            ?? computeBackoffMs(attempt)
+          await new Promise(resolve => setTimeout(resolve, Math.min(waitMs, MAX_OVERLOAD_WAIT_MS)))
+          continue
+        }
+
+        // Don't retry on client errors (4xx, excluding 429 handled above).
         if (response.status >= 400 && response.status < 500) {
           try {
             const errorData = await response.json()
@@ -40,9 +52,7 @@ export class APIClient {
           break
         }
 
-        // Exponential backoff
-        const delay = Math.pow(2, attempt) * 1000
-        await new Promise(resolve => setTimeout(resolve, delay))
+        await new Promise(resolve => setTimeout(resolve, computeBackoffMs(attempt)))
       }
     }
 
@@ -114,4 +124,10 @@ export class APIClient {
 
     return response.json()
   }
+}
+
+function computeBackoffMs(attempt: number): number {
+  const exp = Math.pow(2, attempt) * 1000
+  const jitter = Math.random() * exp * 0.3
+  return Math.min(MAX_OVERLOAD_WAIT_MS, exp + jitter)
 }

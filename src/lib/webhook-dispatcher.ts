@@ -8,6 +8,7 @@ import { createHmac, randomUUID } from 'crypto'
 import { pool } from '@/lib/db'
 import { secureLogger } from '@/lib/secure-logger'
 import { sendMail } from '@/lib/mailer'
+import { isOverloadStatus, parseRetryAfter } from '@/lib/retry'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -50,6 +51,7 @@ interface RegisteredWebhook {
 
 const MAX_RETRIES = 3
 const RETRY_DELAYS = [1000, 5000, 15000] // ms
+const MAX_RETRY_WAIT_MS = 60_000
 const TIMEOUT_MS = 10_000
 const MAX_FAILURE_COUNT = 10 // disable webhook after this many consecutive failures
 
@@ -68,7 +70,7 @@ function signPayload(payload: string, secret: string): string {
 async function deliverToWebhook(
   webhook: RegisteredWebhook,
   payload: WebhookPayload,
-): Promise<{ success: boolean; statusCode?: number; responseBody?: string }> {
+): Promise<{ success: boolean; statusCode?: number; responseBody?: string; retryAfterMs?: number }> {
   const body = JSON.stringify(payload)
   const signature = signPayload(body, webhook.secret)
 
@@ -92,8 +94,11 @@ async function deliverToWebhook(
 
     const responseBody = await res.text().catch(() => '')
     const success = res.status >= 200 && res.status < 300
+    const retryAfterMs = isOverloadStatus(res.status)
+      ? parseRetryAfter(res.headers.get('retry-after'))
+      : undefined
 
-    return { success, statusCode: res.status, responseBody: responseBody.slice(0, 1000) }
+    return { success, statusCode: res.status, responseBody: responseBody.slice(0, 1000), retryAfterMs }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     return { success: false, responseBody: message }
@@ -229,9 +234,13 @@ async function dispatchWithRetry(
       return
     }
 
-    // Wait before retry (except on last attempt)
+    // Wait before retry (except on last attempt). When the endpoint signals
+    // overload via Retry-After, honour it up to MAX_RETRY_WAIT_MS.
     if (attempt < MAX_RETRIES) {
-      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAYS[attempt - 1]))
+      const waitMs = result.retryAfterMs !== undefined
+        ? Math.min(result.retryAfterMs, MAX_RETRY_WAIT_MS)
+        : RETRY_DELAYS[attempt - 1]
+      await new Promise((resolve) => setTimeout(resolve, waitMs))
     }
   }
 
