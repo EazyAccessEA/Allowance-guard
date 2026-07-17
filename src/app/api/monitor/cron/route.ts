@@ -1,12 +1,15 @@
 /**
  * Cron endpoint for continuous monitoring.
  *
- * Called every ~15 minutes via cron-job.org.
+ * Called every 15 minutes via Vercel Cron (vercel.json), aligned with the
+ * other crons so Neon compute wakes in one shared window — see
+ * docs/ops-monitoring.md "Neon compute guardrails".
  * Picks wallets due for re-scan, enqueues scan jobs, then runs change detection
  * and dispatches alerts for any completed scans.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { getDueMonitors, enqueueMonitorScans, detectChanges, dispatchAlerts } from '@/lib/monitoring'
+import { kickJobProcessor } from '@/lib/job-kick'
 import { evaluateRules, executeRuleMatches } from '@/lib/rule-engine'
 import { dispatchWebhookEvent } from '@/lib/webhook-dispatcher'
 import { secureLogger } from '@/lib/secure-logger'
@@ -32,8 +35,11 @@ async function handleCron(_req: NextRequest) {
       return NextResponse.json({ ok: true, message: 'No wallets due for scan', queued: 0 })
     }
 
-    // 2. Enqueue scan jobs
+    // 2. Enqueue scan jobs and start processing them now — the jobs/process
+    //    cron fires in the same aligned minute and would otherwise miss
+    //    jobs enqueued moments after it ran
     const queued = await enqueueMonitorScans(dueMonitors)
+    if (queued.length > 0) kickJobProcessor()
 
     // 3. Run change detection on recently completed scans
     //    (wallets whose last scan completed since the last cron run)

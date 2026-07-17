@@ -12,6 +12,7 @@ import { authenticateApiKey, withUsageTracking } from '@/middleware/api-auth'
 import { checkBurstRateLimit } from '@/middleware/api-rate-limit'
 import { apiSuccess, apiBadRequest, apiServerError } from '@/lib/api-response'
 import { enqueueScan } from '@/lib/jobs'
+import { kickJobProcessor } from '@/lib/job-kick'
 import { enabledChainIds } from '@/lib/networks'
 import { walletAddressSchema, chainIdSchema } from '@/lib/validation'
 import { apiLogger } from '@/lib/logger'
@@ -72,6 +73,9 @@ export async function POST(req: NextRequest) {
     }
 
     apiLogger.info('v1.scan.queued', { wallet, chains: chainIds, jobId, keyId: apiKey.id })
+
+    // Start processing now instead of waiting for the fallback cron
+    kickJobProcessor()
 
     const response = apiSuccess(
       {

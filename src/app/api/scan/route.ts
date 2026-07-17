@@ -1,6 +1,7 @@
 // app/api/scan/route.ts
 import { NextResponse, NextRequest } from 'next/server'
 import { enqueueScan } from '@/lib/jobs'
+import { kickJobProcessor } from '@/lib/job-kick'
 import { withReq } from '@/lib/logger'
 import { enabledChainIds } from '@/lib/networks'
 import { scanRateLimit } from '@/lib/rate-limit'
@@ -111,6 +112,8 @@ export async function POST(req: Request) {
       try {
         backgroundJobId = await enqueueScan(addr, slowChains)
         L.info('scan.slow.queued', { wallet: addr, jobId: backgroundJobId, chains: slowChains.length })
+        // Start processing now instead of waiting for the fallback cron
+        kickJobProcessor()
       } catch (e: unknown) {
         // Duplicate is fine — another scan already covers these chains
         if (!(e instanceof Error && e.message.includes('uniq_jobs_active_wallet'))) {

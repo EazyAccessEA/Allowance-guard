@@ -2,7 +2,10 @@
  * Cron endpoint for webhook delivery retry processing.
  *
  * Retries failed webhook deliveries that haven't exhausted their retry budget.
- * Called every 5 minutes via cron-job.org.
+ * Called every 15 minutes via Vercel Cron (vercel.json), aligned with the
+ * other crons so Neon compute wakes in one shared window — see
+ * docs/ops-monitoring.md "Neon compute guardrails". First delivery attempts
+ * happen inline at dispatch time; this cron only handles retries.
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { pool } from '@/lib/db'

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { pool } from '@/lib/db'
 import { enqueueScan } from '@/lib/jobs'
+import { kickJobProcessor } from '@/lib/job-kick'
 import { enabledChainIds } from '@/lib/networks'
 
 export async function POST() {
@@ -19,6 +20,8 @@ export async function POST() {
     const jobId = await enqueueScan(addr.toLowerCase(), enabledChainIds())
     queued.push({ wallet: addr, jobId })
   }
+  // Start processing now instead of waiting for the fallback cron
+  if (queued.length > 0) kickJobProcessor()
   return NextResponse.json({ ok: true, queued })
 }
 

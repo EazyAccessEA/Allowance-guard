@@ -40,8 +40,9 @@ Allowance Guard includes comprehensive operational monitoring to track costs, us
 
 #### `/api/alerts/health`
 - **Purpose:** Health monitoring with alerts
-- **Schedule:** Every 10 minutes via cron-job.org
+- **Schedule:** Every 10 minutes via cron-job.org — **must use `?fast=1`** (see Neon compute guardrails below)
 - **Alerts:** Slack + email when health degrades
+- **Modes:** `?fast=1` checks app liveness only (no database/cache/RPC); without it, a deep check runs `SELECT 1` against Neon and sweeps all chain RPCs. Deep checks at most hourly.
 
 #### `/api/alerts/daily`
 - **Purpose:** Daily ops reports + user digests
@@ -111,9 +112,50 @@ curl "https://www.allowanceguard.com/api/alerts/daily"
 - Verify Slack webhook URL is working
 
 ### 2. Cron Jobs
-Cron jobs are managed externally via [cron-job.org](https://cron-job.org):
-- Health monitoring: Every 10 minutes
-- Daily reports: Daily at 8:05 AM UTC
+
+**Vercel Cron** (`vercel.json`) — all frequent jobs fire in the same aligned minutes (:00/:15/:30/:45) so Neon wakes in one shared window per 15 minutes:
+- `/api/jobs/process` — every 15 min (fallback only; scans are kicked on-demand at enqueue time via `lib/job-kick.ts`)
+- `/api/monitor/cron` — every 15 min
+- `/api/rules/evaluate` — every 15 min
+- `/api/webhooks/process` — every 15 min (retries only; first delivery is inline)
+- `/api/email/cron` — daily 10:00 UTC
+- `/api/jobs/cleanup` — daily 03:00 UTC
+
+**cron-job.org** (external — configure in the cron-job.org dashboard):
+- Health monitoring: Every 10 minutes → **must target `/api/alerts/health?fast=1`** (liveness only)
+- Optional deep health check: hourly at :00 → `/api/alerts/health` (no param)
+- Daily reports: Daily at 8:05 AM UTC → `/api/alerts/daily`
+
+## Neon Compute Guardrails
+
+**Incident (July 2026):** the Neon free-plan project ran out of its 100 CU-hour
+monthly compute allowance mid-month (80% alert July 14, 100% July 17). Neon
+bills for every minute the endpoint is awake and autosuspends after 5 idle
+minutes. A 1-minute `jobs/process` cron plus a 10-minute deep health ping meant
+the database never got 5 quiet minutes: awake 24/7 at the 0.25 CU minimum ≈
+180 CU-hours/month — exhausting 100 CU-hours on day ~17. It was idle polling,
+not user traffic.
+
+**Rules — hold these invariants or the allowance burns again:**
+
+1. **No schedule that touches the database may run more often than every
+   15 minutes.** This includes Vercel crons, cron-job.org jobs, and uptime
+   pingers hitting deep health checks.
+2. **Align all frequent schedules to the same minutes** (:00/:15/:30/:45).
+   Each wake-up costs ~5 awake minutes (the autosuspend timeout); staggered
+   schedules multiply wake windows, aligned ones share them.
+3. **Job processing is event-driven, not polled.** Routes that enqueue scans
+   call `kickJobProcessor()` (`src/lib/job-kick.ts`); the 15-minute cron is
+   only a safety net for lost kicks.
+4. **Frequent health pings use `?fast=1`.** The deep check (`SELECT 1` +
+   cache + 27 RPC probes) is for humans and at-most-hourly monitors.
+
+**Budget math** (0.25 CU minimum compute, 5-minute autosuspend): one aligned
+15-minute schedule ≈ 5.5 awake min per 15 ≈ 37% duty ≈ **~65 CU-hours/month**
+worst case, before on-demand scan activity. Within the 100 CU-hour free
+allowance, but with limited headroom — if usage grows, either upgrade to the
+Launch plan or stretch fallback schedules to every 30 minutes (halves the
+idle duty cycle; monitor freshness bound becomes 30 min).
 
 ### 3. Security
 - `OPS_DASH_TOKEN` protects the dashboard

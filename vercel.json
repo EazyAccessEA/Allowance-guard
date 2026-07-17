@@ -5,11 +5,11 @@
     "app/**/route.ts": { "maxDuration": 60 }
   },
   "crons": [
-    { "path": "/api/jobs/process",    "schedule": "* * * * *"    },
-    { "path": "/api/monitor/cron",    "schedule": "*/15 * * * *" },
-    { "path": "/api/rules/evaluate",  "schedule": "*/15 * * * *" },
-    { "path": "/api/webhooks/process", "schedule": "*/5 * * * *" },
-    { "path": "/api/email/cron",      "schedule": "0 10 * * *"   },
-    { "path": "/api/jobs/cleanup",    "schedule": "0 3 * * *"    }
+    { "path": "/api/jobs/process",     "schedule": "*/15 * * * *" },
+    { "path": "/api/monitor/cron",     "schedule": "*/15 * * * *" },
+    { "path": "/api/rules/evaluate",   "schedule": "*/15 * * * *" },
+    { "path": "/api/webhooks/process", "schedule": "*/15 * * * *" },
+    { "path": "/api/email/cron",       "schedule": "0 10 * * *"   },
+    { "path": "/api/jobs/cleanup",     "schedule": "0 3 * * *"    }
   ]
 }

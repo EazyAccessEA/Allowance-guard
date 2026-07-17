@@ -2,7 +2,9 @@
  * Cron endpoint for rule evaluation.
  *
  * Evaluates all enabled revocation rules for Sentinel-tier users.
- * Called every 15 minutes via cron-job.org.
+ * Called every 15 minutes via Vercel Cron (vercel.json), aligned with the
+ * other crons so Neon compute wakes in one shared window — see
+ * docs/ops-monitoring.md "Neon compute guardrails".
  */
 import { NextRequest, NextResponse } from 'next/server'
 import { evaluateRules, executeRuleMatches } from '@/lib/rule-engine'
