@@ -10,6 +10,9 @@
 <meta property="og:description" content="A walk-through of the free scanner from first click to cleaner wallet" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.allowanceguard.com/blog/ten-minute-wallet-audit-no-install/" />
+<meta property="og:image" content="https://www.allowanceguard.com/images/blog/ten-minute-wallet-audit.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://www.allowanceguard.com/images/blog/ten-minute-wallet-audit.webp" />
 <meta name="robots" content="index,follow" />
 <link rel="icon" href="/images/ag-logo-ink.png" />
 <link rel="stylesheet" href="/styles.css" />
@@ -27,10 +30,12 @@
 
   
     <div class="banner" role="note">
-      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
-      extension are no longer running. These articles remain as a free, archived
-      reference. To review or revoke live wallet approvals today, use
-      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+      <strong>AllowanceGuard has been retired.</strong> The scanner and API have been
+      shut down and the browser extension is no longer supported. These articles remain
+      as a free, archived reference. To review or revoke live wallet approvals today, use
+      an independent, maintained tool such as
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (a third-party service not
+      affiliated with AllowanceGuard).
     </div>
   <article class="post">
     <div class="post-head">
@@ -43,13 +48,13 @@
     <div class="post-body">
 <p>Most users who meant to audit their wallet approvals six months ago still haven't. The reason isn't laziness; it's friction. Installing a new app, creating another account, granting yet another browser extension permission to read every page — the friction adds up even for a task you genuinely intended to do.</p>
 
-      <p>This post is a ten-minute walk-through of an audit that requires none of those. No install, no account, no extension, no signed message until you want to revoke something. The tool is the free scanner at <a href="/#scan">allowanceguard.com</a>, and the goal is a realistic list of what your wallet has authorised, with enough context to decide what to clean up.</p>
+      <p>This post is a ten-minute walk-through of an audit that requires none of those. No install, no account, no extension, no signed message until you want to revoke something. The tool is the free scanner at <a href="/">allowanceguard.com</a>, and the goal is a realistic list of what your wallet has authorised, with enough context to decide what to clean up.</p>
 
       <p>What this will give you: an honest read of every active token approval across 27 chains, risk-scored, with a one-click revoke path for any approval you don't want any more. What this will not give you: a guarantee that your wallet is safe. Nothing does that, ours included. We'll set expectations honestly as we go.</p>
 
       <h2>Step 1 — Paste your address (60 seconds)</h2>
 
-      <p>Open <a href="/#scan">allowanceguard.com</a> in a normal browser window. Scroll to the scanner, paste a wallet address, press scan. No account, no login, no wallet connection needed for the scan itself — reading approvals is public on-chain data, so the scanner only needs your address.</p>
+      <p>Open <a href="/">allowanceguard.com</a> in a normal browser window. Scroll to the scanner, paste a wallet address, press scan. No account, no login, no wallet connection needed for the scan itself — reading approvals is public on-chain data, so the scanner only needs your address.</p>
 
       <p>You can paste an address you own, an address belonging to someone who asked you to audit their wallet, or — if you're curious — the address of a public figure's wallet to see what their approval hygiene looks like. The scanner doesn't know or care who owns the address; it just reads the approval state from the chain.</p>
 
@@ -128,9 +133,9 @@
 
       <h2>If you want to run this on multiple wallets</h2>
 
-      <p>The free tier covers up to three wallets at a time. For more — or for continuous monitoring (we scan on your behalf twice a day and alert you by email if something new appears) — the Pro plan at <a href="/pricing">allowanceguard.com/pricing</a> covers that. The core scanner is always free and will stay free; paid tiers extend volume and automation.</p>
+      <p>The free tier covers up to three wallets at a time. For more — or for continuous monitoring (we scan on your behalf twice a day and alert you by email if something new appears) — the Pro plan at <a href="/">allowanceguard.com/pricing</a> covers that. The core scanner is always free and will stay free; paid tiers extend volume and automation.</p>
 
-      <p>For developers wanting to run the same scan programmatically: the REST API at <a href="/docs/api-reference">allowanceguard.com/docs/api-reference</a> exposes the same allowance + risk-scoring engine. There's a framework-agnostic TypeScript client in <code>@allowance-guard/client</code> and React hooks in <code>@allowance-guard/react</code>, both open source.</p>
+      <p>For developers wanting to run the same scan programmatically: the REST API at <a href="/">allowanceguard.com/docs/api-reference</a> exposes the same allowance + risk-scoring engine. There's a framework-agnostic TypeScript client in <code>@allowance-guard/client</code> and React hooks in <code>@allowance-guard/react</code>, both open source.</p>
 
       <h2>Now do it</h2>
 
@@ -153,7 +158,8 @@
   product is retired; this archive is preserved under
   <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
   <p class="muted">Advisory content only. Nothing here is financial or security advice.
-  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+  For live approval management use an independent, maintained tool such as
+  <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (not affiliated with AllowanceGuard).</p>
 </footer>
 </body>
 </html>

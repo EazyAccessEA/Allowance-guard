@@ -10,6 +10,9 @@
 <meta property="og:description" content="The catalogue gets better because people tell us what they saw" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.allowanceguard.com/blog/report-a-risky-contract-community-signal/" />
+<meta property="og:image" content="https://www.allowanceguard.com/images/blog/report-a-risky-contract.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://www.allowanceguard.com/images/blog/report-a-risky-contract.webp" />
 <meta name="robots" content="index,follow" />
 <link rel="icon" href="/images/ag-logo-ink.png" />
 <link rel="stylesheet" href="/styles.css" />
@@ -27,10 +30,12 @@
 
   
     <div class="banner" role="note">
-      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
-      extension are no longer running. These articles remain as a free, archived
-      reference. To review or revoke live wallet approvals today, use
-      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+      <strong>AllowanceGuard has been retired.</strong> The scanner and API have been
+      shut down and the browser extension is no longer supported. These articles remain
+      as a free, archived reference. To review or revoke live wallet approvals today, use
+      an independent, maintained tool such as
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (a third-party service not
+      affiliated with AllowanceGuard).
     </div>
   <article class="post">
     <div class="post-head">
@@ -45,7 +50,7 @@
 
       <p>This piece is a quiet pitch: if you have ninety seconds and you saw something that felt off, the scanner gets measurably better when you submit it. Not because your single report is the full story — it rarely is — but because reports cluster, and a cluster is a signal. The first person to flag Socket's bridge contract in late 2023 did not have the full exploit in hand. They had a vague "my wallet is being drained and the only approval I had was to this bridge." That sentence, arriving once, is a lead. Arriving four times in two hours, from unconnected wallets, is an alert.</p>
 
-      <p>If you want to skip the essay and go straight to it: <a href="/tokens">allowanceguard.com/tokens</a> has a form. You do not need an account. You do not need to be technical. The form asks for a contract address, the chain, and a sentence about what you observed. That is the whole ask.</p>
+      <p>If you want to skip the essay and go straight to it: <a href="/">allowanceguard.com/tokens</a> has a form. You do not need an account. You do not need to be technical. The form asks for a contract address, the chain, and a sentence about what you observed. That is the whole ask.</p>
 
       <h2>What actually counts as a risky contract</h2>
 
@@ -72,7 +77,7 @@
 
       <h2>How to submit a report</h2>
 
-      <p>Go to <a href="/tokens">allowanceguard.com/tokens</a> and use the submission form. The fields are:</p>
+      <p>Go to <a href="/">allowanceguard.com/tokens</a> and use the submission form. The fields are:</p>
 
       <ol>
         <li><strong>Contract address.</strong> The 0x-prefixed address of the contract you are reporting. If you signed an approval, this is the <em>spender</em> address that appeared in the approval panel — not the address of the token you approved. Two very different things, and one of the most common reporting confusions.</li>
@@ -107,7 +112,7 @@
 
       <p>That information only comes from the user. The scanner cannot infer it. We cannot infer it by reading the bytecode. We infer it by collecting what users tell us, corroborating it, and publishing the result. That is what a community catalogue is, in the strict sense: a list of contracts that some number of users have collectively testified about.</p>
 
-      <p>It is also the reason we open-source most of the tooling. If the catalogue were a proprietary database, the community reporting against it would be unpaid labour for our business. By publishing the flag data via a public API and keeping the client-side and widget code open-source (see <a href="/contribute">/contribute</a> for how to work with the codebase), the catalogue becomes infrastructure — other wallets and tools can consume it, and the reports benefit the ecosystem rather than a single company. The incentive for a user to report something is clearer when the report benefits any wallet they or their friends use next, not just ours.</p>
+      <p>It is also the reason we open-source most of the tooling. If the catalogue were a proprietary database, the community reporting against it would be unpaid labour for our business. By publishing the flag data via a public API and keeping the client-side and widget code open-source (see <a href="/">/contribute</a> for how to work with the codebase), the catalogue becomes infrastructure — other wallets and tools can consume it, and the reports benefit the ecosystem rather than a single company. The incentive for a user to report something is clearer when the report benefits any wallet they or their friends use next, not just ours.</p>
 
       <h2>What a good report actually reads like</h2>
 
@@ -131,7 +136,7 @@
 
       <p>If you want to be more involved — if you have a security background and are willing to help review incoming reports — <a href="mailto:community@allowanceguard.com">community@allowanceguard.com</a> is the channel. We have a small rotation of reviewers and a clear induction. The work is light, the effect is real, and the catalogue is better for it.</p>
 
-      <p>That is the whole ask. Ninety seconds, one contract, the next wallet warned. If that is a worthwhile trade, the form is at <a href="/tokens">allowanceguard.com/tokens</a>.</p>
+      <p>That is the whole ask. Ninety seconds, one contract, the next wallet warned. If that is a worthwhile trade, the form is at <a href="/">allowanceguard.com/tokens</a>.</p>
     </div>
     
     <nav class="post-nav">
@@ -146,7 +151,8 @@
   product is retired; this archive is preserved under
   <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
   <p class="muted">Advisory content only. Nothing here is financial or security advice.
-  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+  For live approval management use an independent, maintained tool such as
+  <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (not affiliated with AllowanceGuard).</p>
 </footer>
 </body>
 </html>

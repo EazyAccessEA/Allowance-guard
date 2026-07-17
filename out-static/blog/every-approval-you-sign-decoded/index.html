@@ -10,6 +10,9 @@
 <meta property="og:description" content="A field guide to approve, permit, permit2, and setApprovalForAll" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.allowanceguard.com/blog/every-approval-you-sign-decoded/" />
+<meta property="og:image" content="https://www.allowanceguard.com/images/blog/every-approval-you-sign-decoded.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://www.allowanceguard.com/images/blog/every-approval-you-sign-decoded.webp" />
 <meta name="robots" content="index,follow" />
 <link rel="icon" href="/images/ag-logo-ink.png" />
 <link rel="stylesheet" href="/styles.css" />
@@ -27,10 +30,12 @@
 
   
     <div class="banner" role="note">
-      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
-      extension are no longer running. These articles remain as a free, archived
-      reference. To review or revoke live wallet approvals today, use
-      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+      <strong>AllowanceGuard has been retired.</strong> The scanner and API have been
+      shut down and the browser extension is no longer supported. These articles remain
+      as a free, archived reference. To review or revoke live wallet approvals today, use
+      an independent, maintained tool such as
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (a third-party service not
+      affiliated with AllowanceGuard).
     </div>
   <article class="post">
     <div class="post-head">
@@ -141,7 +146,7 @@
         <li><strong>Ask whether the amount needs to be unlimited.</strong> If the dApp supports a bounded approval, the inconvenience of a second transaction in six months is cheaper than the risk of a compromised spender.</li>
         <li><strong>If it's a <code>setApprovalForAll</code>, think about how often you trade this NFT collection.</strong> Never? Decline. Occasionally? Accept and revoke when the session ends. Every day? Accept and monitor.</li>
         <li><strong>If it's a <code>permit</code> or Permit2 signature, read the typed-data message.</strong> The spender and deadline fields are the most important. A deadline years in the future is a minor red flag; an unknown spender is a major one.</li>
-        <li><strong>Revoke the ones you have forgotten.</strong> Every wallet has old approvals no one is using. The free scanner at <a href="/#scan">allowanceguard.com</a> shows them across 27 chains in about a minute.</li>
+        <li><strong>Revoke the ones you have forgotten.</strong> Every wallet has old approvals no one is using. The free scanner at <a href="/">allowanceguard.com</a> shows them across 27 chains in about a minute.</li>
       </ul>
 
       <h2>The tools landscape</h2>
@@ -169,7 +174,8 @@
   product is retired; this archive is preserved under
   <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
   <p class="muted">Advisory content only. Nothing here is financial or security advice.
-  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+  For live approval management use an independent, maintained tool such as
+  <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (not affiliated with AllowanceGuard).</p>
 </footer>
 </body>
 </html>

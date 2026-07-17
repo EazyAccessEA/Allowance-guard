@@ -10,6 +10,9 @@
 <meta property="og:description" content="The Hidden Risks Behind the &quot;Connect Wallet&quot; Button" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.allowanceguard.com/blog/staying-safe-with-defi-dapps/" />
+<meta property="og:image" content="https://www.allowanceguard.com/images/blog/staying-safe-with-defi-dapps.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://www.allowanceguard.com/images/blog/staying-safe-with-defi-dapps.webp" />
 <meta name="robots" content="index,follow" />
 <link rel="icon" href="/images/ag-logo-ink.png" />
 <link rel="stylesheet" href="/styles.css" />
@@ -27,10 +30,12 @@
 
   
     <div class="banner" role="note">
-      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
-      extension are no longer running. These articles remain as a free, archived
-      reference. To review or revoke live wallet approvals today, use
-      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+      <strong>AllowanceGuard has been retired.</strong> The scanner and API have been
+      shut down and the browser extension is no longer supported. These articles remain
+      as a free, archived reference. To review or revoke live wallet approvals today, use
+      an independent, maintained tool such as
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (a third-party service not
+      affiliated with AllowanceGuard).
     </div>
   <article class="post">
     <div class="post-head">
@@ -85,7 +90,7 @@
 
       <p>Once you've verified the dapp, you will eventually be asked to sign a message or a transaction. This is the moment of truth. Your wallet's confirmation screen is your final line of defence—it tells you exactly what you are about to authorize. Your job is to read it.</p>
 
-      <table>
+      <div class="table-wrap"><table>
         <thead>
           <tr>
             <th>Type of Request</th>
@@ -110,7 +115,7 @@
             <td><strong>The Contract:</strong> You are giving permission to a specific contract. Does it match the dapp you are intending to use? A malicious signature can be used to drain your funds later.</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <p>A hardware wallet provides a critical advantage here. Its <strong>trusted display</strong> shows the raw details of the transaction, independent of what your computer screen says. If the website is a phishing clone telling you you're signing a simple message, your hardware wallet will show the truth: you're about to approve a transfer of all your assets.</p>
 
@@ -149,7 +154,8 @@
   product is retired; this archive is preserved under
   <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
   <p class="muted">Advisory content only. Nothing here is financial or security advice.
-  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+  For live approval management use an independent, maintained tool such as
+  <a href="https://revoke.cash" rel="noopener">Revoke.cash</a> (not affiliated with AllowanceGuard).</p>
 </footer>
 </body>
 </html>

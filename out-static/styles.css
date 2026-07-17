@@ -7,8 +7,8 @@
 @font-face{font-family:'Instrument Serif';src:url('/fonts/InstrumentSerif-Italic.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap}
 
 :root{
-  --paper:#FBFAF7; --paper-2:#F4F2EC; --ink:#0F172A; --ink-2:#334155; --muted:#64748B;
-  --line:#E2E8F0; --amber:#B45309; --amber-bright:#F59E0B; --amber-wash:#FEF3C7;
+  --paper:#FBFAF7; --paper-2:#F4F2EC; --ink:#0F172A; --ink-2:#334155; --muted:#556070;
+  --line:#E2E8F0; --line-strong:#64748B; --amber:#B45309; --amber-bright:#F59E0B; --amber-wash:#FEF3C7;
   --maxw:72rem;
 }
 *{box-sizing:border-box}
@@ -18,6 +18,9 @@ body{margin:0;background:var(--paper);color:var(--ink);
   line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
 a{color:var(--amber);text-decoration:none}
 a:hover{text-decoration:underline}
+a:focus-visible,.btn:focus-visible,.card-link:focus-visible,.mini-card:focus-visible,
+.card:focus-visible,.pn:focus-visible,.brand:focus-visible,.site-header nav a:focus-visible{
+  outline:2px solid var(--amber);outline-offset:2px;border-radius:4px}
 img{max-width:100%;height:auto;display:block}
 main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .ital{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:.01em}
@@ -26,15 +29,15 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .site-header{max-width:var(--maxw);margin:0 auto;padding:1.25rem;display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:.55rem;color:var(--ink);font-weight:600;font-size:1.05rem}
 .brand:hover{text-decoration:none}
-.site-header nav{display:flex;gap:1.25rem}
-.site-header nav a{color:var(--ink-2);font-size:.95rem}
+.site-header nav{display:flex;gap:1rem}
+.site-header nav a{color:var(--ink-2);font-size:.95rem;padding:.5rem .35rem;display:inline-block}
 .site-footer{max-width:var(--maxw);margin:4rem auto 3rem;padding:2rem 1.25rem 0;border-top:1px solid var(--line);color:var(--ink-2);font-size:.9rem}
 .site-footer .muted{color:var(--muted)}
 
 /* banner */
 .banner{background:var(--amber-wash);border:1px solid #FCD34D;border-radius:12px;
   padding:.9rem 1.1rem;margin:0 0 2.5rem;font-size:.95rem;color:#5b3a09}
-.banner a{color:var(--amber)}
+.banner a{color:#92400E;font-weight:600}
 
 /* hero / sunset */
 .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:600;color:var(--amber);margin:0 0 .75rem}
@@ -46,7 +49,7 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .btn:hover{text-decoration:none}
 .btn-primary{background:var(--ink);color:#fff}
 .btn-primary:hover{background:#1e293b}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong)}
 .btn-ghost:hover{border-color:var(--ink-2)}
 
 .notice{margin:3rem 0;padding:1.5rem 1.6rem;background:var(--paper-2);border-radius:14px;max-width:46rem}
@@ -96,10 +99,11 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .post-body strong{color:var(--ink)}
 .post-body blockquote{margin:1.5rem 0;padding:.5rem 0 .5rem 1.25rem;border-left:3px solid var(--amber);color:var(--ink-2);font-style:italic}
 .post-body code{background:var(--paper-2);padding:.12em .4em;border-radius:5px;font-size:.9em}
-.post-body pre{background:var(--ink);color:#e2e8f0;padding:1rem 1.2rem;border-radius:12px;overflow-x:auto;font-size:.85rem}
+.post-body pre{background:#0F172A;color:#e2e8f0;padding:1rem 1.2rem;border-radius:12px;overflow-x:auto;font-size:.85rem}
 .post-body pre code{background:none;padding:0;color:inherit}
 .post-body img{border-radius:12px;margin:1.5rem 0}
-.post-body table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.95rem;display:block;overflow-x:auto}
+.post-body .table-wrap{overflow-x:auto;margin:1.5rem 0;-webkit-overflow-scrolling:touch}
+.post-body table{width:100%;border-collapse:collapse;font-size:.95rem}
 .post-body th,.post-body td{border:1px solid var(--line);padding:.6rem .8rem;text-align:left;vertical-align:top}
 .post-body th{background:var(--paper-2);font-weight:600}
 
@@ -124,4 +128,5 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
   .post-body{color:#dbe4f0}
   .post-body strong{color:var(--ink)}
   .banner{color:#f5e9c8}
+  .banner a{color:var(--amber)}
 }

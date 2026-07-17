@@ -42,9 +42,24 @@ const posts = [...blogPosts].sort((a, b) => (a.publishedAt < b.publishedAt ? 1 :
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
-/** JSX authored content strings leaked `className=` — normalise to real HTML. */
+/**
+ * Normalise archived post HTML for static hosting:
+ *  - JSX `className=` → real `class=`
+ *  - internal /blog links get a trailing slash (pages live at /blog/<slug>/)
+ *  - every other internal app-route link (/#scan, /tokens, /contribute, /pricing,
+ *    /docs…) points at a now-dead surface — send it to the sunset home so no link
+ *    inside the surviving archive 404s or sends a reader to a tool this page retires
+ *  - wrap tables in a scroll container that preserves the table's a11y role
+ */
 const cleanBody = (html: string) =>
-  html.replace(/\bclassName=/g, 'class=').trim()
+  html
+    .replace(/\bclassName=/g, 'class=')
+    .replace(/href="\/blog"/g, 'href="/blog/"')
+    .replace(/href="\/blog\/([a-z0-9-]+)"/g, 'href="/blog/$1/"')
+    .replace(/href="\/(?!blog\/|")[^"]*"/g, 'href="/"')
+    .replace(/<table/g, '<div class="table-wrap"><table')
+    .replace(/<\/table>/g, '</table></div>')
+    .trim()
 
 const fmtDate = (iso: string) => {
   // Avoid Date() (unavailable in some sandboxes / non-deterministic) — parse the ISO by hand.
@@ -60,10 +75,12 @@ const fmtDate = (iso: string) => {
 // ---------------------------------------------------------------------------
 const RETIRED_BANNER = `
     <div class="banner" role="note">
-      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
-      extension are no longer running. These articles remain as a free, archived
-      reference. To review or revoke live wallet approvals today, use
-      <a href="${ALT}" rel="noopener">Revoke.cash</a>.
+      <strong>AllowanceGuard has been retired.</strong> The scanner and API have been
+      shut down and the browser extension is no longer supported. These articles remain
+      as a free, archived reference. To review or revoke live wallet approvals today, use
+      an independent, maintained tool such as
+      <a href="${ALT}" rel="noopener">Revoke.cash</a> (a third-party service not
+      affiliated with AllowanceGuard).
     </div>`
 
 function shell(opts: {
@@ -73,8 +90,11 @@ function shell(opts: {
   body: string
   bodyClass?: string
   jsonLd?: string
+  image?: string
+  robots?: string
 }): string {
-  const { title, description, canonical, body, bodyClass = '', jsonLd = '' } = opts
+  const { title, description, canonical, body, bodyClass = '', jsonLd = '', image = '', robots = 'index,follow' } = opts
+  const ogImage = image || `${SITE}/images/ag-logo-ink.png`
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,12 +102,15 @@ function shell(opts: {
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}" />
-<link rel="canonical" href="${canonical}" />
+${canonical ? `<link rel="canonical" href="${canonical}" />` : ''}
 <meta property="og:title" content="${esc(title)}" />
 <meta property="og:description" content="${esc(description)}" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="${canonical}" />
-<meta name="robots" content="index,follow" />
+${canonical ? `<meta property="og:url" content="${canonical}" />` : ''}
+<meta property="og:image" content="${ogImage}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="${ogImage}" />
+<meta name="robots" content="${robots}" />
 <link rel="icon" href="/images/ag-logo-ink.png" />
 <link rel="stylesheet" href="/styles.css" />
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>` : ''}
@@ -108,7 +131,8 @@ ${body}
   product is retired; this archive is preserved under
   <a href="${REPO}/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
   <p class="muted">Advisory content only. Nothing here is financial or security advice.
-  For live approval management use <a href="${ALT}" rel="noopener">Revoke.cash</a>.</p>
+  For live approval management use an independent, maintained tool such as
+  <a href="${ALT}" rel="noopener">Revoke.cash</a> (not affiliated with AllowanceGuard).</p>
 </footer>
 </body>
 </html>`
@@ -145,10 +169,10 @@ function sunsetPage(): string {
 
   <section class="notice">
     <h2>Need to check or revoke approvals right now?</h2>
-    <p>AllowanceGuard can no longer do this for you. Use a maintained tool such as
-    <a href="${ALT}" rel="noopener">Revoke.cash</a>, or the approval view built into
-    wallets like Rabby. Do not rely on any AllowanceGuard endpoint, extension, or
-    cached page for live security decisions.</p>
+    <p>AllowanceGuard can no longer do this for you. Use an independent, maintained tool
+    such as <a href="${ALT}" rel="noopener">Revoke.cash</a> (not affiliated with
+    AllowanceGuard), or a maintained wallet such as Rabby. Do not rely on any
+    AllowanceGuard endpoint, extension, or cached page for live security decisions.</p>
   </section>
 
   <section class="recent">
@@ -261,6 +285,7 @@ ${cleanBody(p.content)}
     body,
     bodyClass: 'page-post',
     jsonLd,
+    image: m?.image ? `${SITE}${m.image}` : '',
   })
 }
 
@@ -275,7 +300,8 @@ function notFoundPage(): string {
   return shell({
     title: 'Not found — AllowanceGuard',
     description: 'Page not found. AllowanceGuard is retired; the blog archive remains.',
-    canonical: `${SITE}/404`,
+    canonical: '',
+    robots: 'noindex,follow',
     body,
     bodyClass: 'page-sunset',
   })
@@ -293,8 +319,8 @@ const STYLES = `
 @font-face{font-family:'Instrument Serif';src:url('/fonts/InstrumentSerif-Italic.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap}
 
 :root{
-  --paper:#FBFAF7; --paper-2:#F4F2EC; --ink:#0F172A; --ink-2:#334155; --muted:#64748B;
-  --line:#E2E8F0; --amber:#B45309; --amber-bright:#F59E0B; --amber-wash:#FEF3C7;
+  --paper:#FBFAF7; --paper-2:#F4F2EC; --ink:#0F172A; --ink-2:#334155; --muted:#556070;
+  --line:#E2E8F0; --line-strong:#64748B; --amber:#B45309; --amber-bright:#F59E0B; --amber-wash:#FEF3C7;
   --maxw:72rem;
 }
 *{box-sizing:border-box}
@@ -304,6 +330,9 @@ body{margin:0;background:var(--paper);color:var(--ink);
   line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
 a{color:var(--amber);text-decoration:none}
 a:hover{text-decoration:underline}
+a:focus-visible,.btn:focus-visible,.card-link:focus-visible,.mini-card:focus-visible,
+.card:focus-visible,.pn:focus-visible,.brand:focus-visible,.site-header nav a:focus-visible{
+  outline:2px solid var(--amber);outline-offset:2px;border-radius:4px}
 img{max-width:100%;height:auto;display:block}
 main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .ital{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:.01em}
@@ -312,15 +341,15 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .site-header{max-width:var(--maxw);margin:0 auto;padding:1.25rem;display:flex;align-items:center;justify-content:space-between}
 .brand{display:flex;align-items:center;gap:.55rem;color:var(--ink);font-weight:600;font-size:1.05rem}
 .brand:hover{text-decoration:none}
-.site-header nav{display:flex;gap:1.25rem}
-.site-header nav a{color:var(--ink-2);font-size:.95rem}
+.site-header nav{display:flex;gap:1rem}
+.site-header nav a{color:var(--ink-2);font-size:.95rem;padding:.5rem .35rem;display:inline-block}
 .site-footer{max-width:var(--maxw);margin:4rem auto 3rem;padding:2rem 1.25rem 0;border-top:1px solid var(--line);color:var(--ink-2);font-size:.9rem}
 .site-footer .muted{color:var(--muted)}
 
 /* banner */
 .banner{background:var(--amber-wash);border:1px solid #FCD34D;border-radius:12px;
   padding:.9rem 1.1rem;margin:0 0 2.5rem;font-size:.95rem;color:#5b3a09}
-.banner a{color:var(--amber)}
+.banner a{color:#92400E;font-weight:600}
 
 /* hero / sunset */
 .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:600;color:var(--amber);margin:0 0 .75rem}
@@ -332,7 +361,7 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .btn:hover{text-decoration:none}
 .btn-primary{background:var(--ink);color:#fff}
 .btn-primary:hover{background:#1e293b}
-.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-strong)}
 .btn-ghost:hover{border-color:var(--ink-2)}
 
 .notice{margin:3rem 0;padding:1.5rem 1.6rem;background:var(--paper-2);border-radius:14px;max-width:46rem}
@@ -382,10 +411,11 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
 .post-body strong{color:var(--ink)}
 .post-body blockquote{margin:1.5rem 0;padding:.5rem 0 .5rem 1.25rem;border-left:3px solid var(--amber);color:var(--ink-2);font-style:italic}
 .post-body code{background:var(--paper-2);padding:.12em .4em;border-radius:5px;font-size:.9em}
-.post-body pre{background:var(--ink);color:#e2e8f0;padding:1rem 1.2rem;border-radius:12px;overflow-x:auto;font-size:.85rem}
+.post-body pre{background:#0F172A;color:#e2e8f0;padding:1rem 1.2rem;border-radius:12px;overflow-x:auto;font-size:.85rem}
 .post-body pre code{background:none;padding:0;color:inherit}
 .post-body img{border-radius:12px;margin:1.5rem 0}
-.post-body table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.95rem;display:block;overflow-x:auto}
+.post-body .table-wrap{overflow-x:auto;margin:1.5rem 0;-webkit-overflow-scrolling:touch}
+.post-body table{width:100%;border-collapse:collapse;font-size:.95rem}
 .post-body th,.post-body td{border:1px solid var(--line);padding:.6rem .8rem;text-align:left;vertical-align:top}
 .post-body th{background:var(--paper-2);font-weight:600}
 
@@ -410,6 +440,7 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
   .post-body{color:#dbe4f0}
   .post-body strong{color:var(--ink)}
   .banner{color:#f5e9c8}
+  .banner a{color:var(--amber)}
 }
 `
 
@@ -473,16 +504,59 @@ write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`)
 write(
   '_redirects',
   [
-    '# AllowanceGuard is retired. Keep the blog; send everything else to the sunset page.',
-    '/blog            /blog/            301',
-    '/dashboard/*     /                 301',
-    '/account/*       /                 301',
-    '/settings/*      /                 301',
-    '/docs            /                 301',
-    '/docs/*          /                 301',
-    '/pricing         /                 301',
-    '/features        /                 301',
-    '/api/*           /                 410',
+    '# AllowanceGuard is retired. The blog is the only surviving surface.',
+    '# Cloudflare Pages serves real files (/, /blog/, /blog/<slug>/, /styles.css,',
+    '# /images/*, /fonts/*, /sitemap.xml, /robots.txt) BEFORE these rules, so the',
+    '# archive is never caught by the catch-all. Everything else 301s to the sunset',
+    '# home. Codes limited to those Cloudflare Pages supports (301/302/303/307/308).',
+    '#',
+    '# apex vs www: bind the Pages project to www.allowanceguard.com (every canonical',
+    '# URL uses www) and 301 the apex -> www at the DNS/Pages level.',
+    '',
+    '/blog            /blog/     301',
+    '',
+    '# Former app + account routes (no-slash splat also matches the bare path)',
+    '/dashboard*      /          301',
+    '/account*        /          301',
+    '/settings*       /          301',
+    '/preferences*    /          301',
+    '/team*           /          301',
+    '/admin*          /          301',
+    '/ops*            /          301',
+    '/login           /          301',
+    '/cancel          /          301',
+    '/success         /          301',
+    '/thank-you       /          301',
+    '/unsubscribe     /          301',
+    '/coming-soon     /          301',
+    '',
+    '# Former marketing / product routes',
+    '/pricing         /          301',
+    '/features        /          301',
+    '/faq             /          301',
+    '/networks        /          301',
+    '/contact         /          301',
+    '/tokens          /          301',
+    '/report/*        /          301',
+    '/share/*         /          301',
+    '/docs*           /          301',
+    '',
+    '# Legal / policy pages (most likely linked from other sites)',
+    '/privacy         /          301',
+    '/terms           /          301',
+    '/cookies         /          301',
+    '/dpa             /          301',
+    '/sla             /          301',
+    '/refund          /          301',
+    '/contribute      /          301',
+    '',
+    '# Dead API surface. The published extension calls these; it is being delisted',
+    '# and shipped a kill-build. See SUNSET.md to serve a static "discontinued" JSON',
+    '# here instead of redirecting.',
+    '/api/*           /          301',
+    '',
+    '# Catch-all safety net — keep LAST. Real files above are served first.',
+    '/*               /          301',
     '',
   ].join('\n'),
 )

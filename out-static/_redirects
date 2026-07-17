@@ -1,10 +1,53 @@
-# AllowanceGuard is retired. Keep the blog; send everything else to the sunset page.
-/blog            /blog/            301
-/dashboard/*     /                 301
-/account/*       /                 301
-/settings/*      /                 301
-/docs            /                 301
-/docs/*          /                 301
-/pricing         /                 301
-/features        /                 301
-/api/*           /                 410
+# AllowanceGuard is retired. The blog is the only surviving surface.
+# Cloudflare Pages serves real files (/, /blog/, /blog/<slug>/, /styles.css,
+# /images/*, /fonts/*, /sitemap.xml, /robots.txt) BEFORE these rules, so the
+# archive is never caught by the catch-all. Everything else 301s to the sunset
+# home. Codes limited to those Cloudflare Pages supports (301/302/303/307/308).
+#
+# apex vs www: bind the Pages project to www.allowanceguard.com (every canonical
+# URL uses www) and 301 the apex -> www at the DNS/Pages level.
+
+/blog            /blog/     301
+
+# Former app + account routes (no-slash splat also matches the bare path)
+/dashboard*      /          301
+/account*        /          301
+/settings*       /          301
+/preferences*    /          301
+/team*           /          301
+/admin*          /          301
+/ops*            /          301
+/login           /          301
+/cancel          /          301
+/success         /          301
+/thank-you       /          301
+/unsubscribe     /          301
+/coming-soon     /          301
+
+# Former marketing / product routes
+/pricing         /          301
+/features        /          301
+/faq             /          301
+/networks        /          301
+/contact         /          301
+/tokens          /          301
+/report/*        /          301
+/share/*         /          301
+/docs*           /          301
+
+# Legal / policy pages (most likely linked from other sites)
+/privacy         /          301
+/terms           /          301
+/cookies         /          301
+/dpa             /          301
+/sla             /          301
+/refund          /          301
+/contribute      /          301
+
+# Dead API surface. The published extension calls these; it is being delisted
+# and shipped a kill-build. See SUNSET.md to serve a static "discontinued" JSON
+# here instead of redirecting.
+/api/*           /          301
+
+# Catch-all safety net — keep LAST. Real files above are served first.
+/*               /          301
