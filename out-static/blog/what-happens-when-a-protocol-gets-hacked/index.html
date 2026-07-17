@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>What Happens When a Protocol Gets Hacked — AllowanceGuard</title>
+<meta name="description" content="A step-by-step playbook for the first hour after an exploit." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/what-happens-when-a-protocol-gets-hacked/" />
+<meta property="og:title" content="What Happens When a Protocol Gets Hacked — AllowanceGuard" />
+<meta property="og:description" content="A step-by-step playbook for the first hour after an exploit." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/what-happens-when-a-protocol-gets-hacked/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"What Happens When a Protocol Gets Hacked","description":"A step-by-step playbook for the first hour after an exploit.","datePublished":"2026-04-13","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/what-happens-when-a-protocol-gets-hacked/","image":"https://www.allowanceguard.com/images/blog/what-happens-when-a-protocol-gets-hacked.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Security</p>
+      <h1>What Happens When a Protocol Gets Hacked</h1>
+      <p class="post-sub">A step-by-step playbook for the first hour after an exploit.</p>
+      <p class="post-meta">April 13, 2026 &middot; 6 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/what-happens-when-a-protocol-gets-hacked.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>You wake up to a flood of messages. A protocol you use has been exploited. Millions drained. The front-end is down. Twitter is chaos. Your wallet has an active approval to the compromised contract. What do you do?</p>
+      <p>Most people freeze. The ones who don’t lose the least. This is the playbook for the first hour.</p>
+      <h2>Minute 0–10: Confirm the Exploit</h2>
+      <p>Before you act, confirm the exploit is real. Check the protocol’s official Twitter/X account and Discord. Check on-chain data via Etherscan or the relevant block explorer. Look for large, unusual outflows from the protocol’s contracts. Do not trust DMs, random Telegram messages, or unofficial sources — phishing campaigns launch within minutes of every major exploit, impersonating the affected protocol.</p>
+      <h2>Minute 10–20: Revoke Your Approvals</h2>
+      <p>If you have an active approval to the compromised contract, revoke it immediately. This is the single most important action. An approval is a standing permission — even if the exploit has been “patched,” your approval may still grant access to a vulnerable code path. Use <a href="/" class="text-amber-deep hover:underline">AllowanceGuard</a> or any approval manager to find and revoke the relevant allowance. Do not wait for the protocol team to tell you it’s safe.</p>
+      <h2>Minute 20–40: Move Vulnerable Assets</h2>
+      <p>If the compromised contract has approval to tokens with significant value, and you cannot revoke quickly (network congestion, gas spikes), consider moving the tokens to a different wallet that has no approval to the compromised contract. This is a brute-force defence — if the tokens aren’t in the approved wallet, the approval is worthless.</p>
+      <h2>Minute 40–60: Assess Your Exposure</h2>
+      <p>Once the immediate threat is neutralised, audit the rest of your approvals. An exploit in one protocol may indicate a broader vulnerability — shared codebases, forked contracts, or common dependencies. Scan every chain you use. Look for approvals to contracts in the same ecosystem as the compromised one.</p>
+      <h2>After the First Hour</h2>
+      <ul>
+        <li><strong>Follow the post-mortem.</strong> Reputable protocols publish detailed post-mortems within 24–72 hours. Read them. They tell you what was vulnerable and whether your actions were sufficient.</li>
+        <li><strong>Check for compensation.</strong> Some protocols offer partial recovery through insurance funds, treasury reimbursement, or governance votes. Follow the official channels.</li>
+        <li><strong>Update your security routine.</strong> If this exploit caught you off guard, your monitoring wasn’t working. Set up continuous monitoring so the next alert comes before the Twitter thread.</li>
+      </ul>
+      <h2>The Rule</h2>
+      <p>In the first hour after an exploit, the order of operations is: <strong>confirm, revoke, move, assess.</strong> Every minute you spend reading Twitter instead of revoking is a minute your approval is live and your tokens are at risk. Act first. Read later.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/why-most-wallet-security-tools-fail/"><span>Older</span>Why Most Wallet Security Tools Fail</a>
+      <a class="pn pn-next" href="/blog/allowanceguard-vs-manual-security/"><span>Newer</span>AllowanceGuard vs Manual Security: A Comparison</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

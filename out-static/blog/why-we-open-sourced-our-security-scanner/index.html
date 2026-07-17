@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Why We Open-Sourced Our Security Scanner — AllowanceGuard</title>
+<meta name="description" content="The story behind AllowanceGuard and the decision to build in the open." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/why-we-open-sourced-our-security-scanner/" />
+<meta property="og:title" content="Why We Open-Sourced Our Security Scanner — AllowanceGuard" />
+<meta property="og:description" content="The story behind AllowanceGuard and the decision to build in the open." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/why-we-open-sourced-our-security-scanner/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Why We Open-Sourced Our Security Scanner","description":"The story behind AllowanceGuard and the decision to build in the open.","datePublished":"2026-04-13","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/why-we-open-sourced-our-security-scanner/","image":"https://www.allowanceguard.com/images/blog/why-we-open-sourced.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Community</p>
+      <h1>Why We Open-Sourced Our Security Scanner</h1>
+      <p class="post-sub">The story behind AllowanceGuard and the decision to build in the open.</p>
+      <p class="post-meta">April 13, 2026 &middot; 6 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/why-we-open-sourced.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>AllowanceGuard started with a spreadsheet.</p>
+
+      <p>In early 2024, after yet another approval-based exploit made headlines, we sat down and tried to catalogue every token approval across our own wallets. We had a dozen wallets across eight chains. Some had been active for years. The spreadsheet grew to hundreds of rows — and we still weren’t confident it was complete.</p>
+
+      <p>That was the moment we knew this needed to be a tool, not a spreadsheet. And we knew it needed to be open source.</p>
+
+      <h2>The Problem We Set Out to Solve</h2>
+
+      <p>Token approvals are the most common attack vector in DeFi, yet the tools available to manage them were either incomplete, hard to use, or limited to a single chain. Most users had no idea how many active approvals they had, let alone which ones were risky.</p>
+
+      <p>We wanted to build something that:</p>
+
+      <ul>
+        <li>Scanned multiple chains in a single pass</li>
+        <li>Scored risk, not just listed approvals</li>
+        <li>Made revocation simple and safe</li>
+        <li>Never required custody or access to your private keys</li>
+      </ul>
+
+      <h2>Why Open Source?</h2>
+
+      <p>A security tool that asks you to trust it with your wallet data has a credibility problem if its code is a black box. We believe in a simple principle: <strong>trust is earned through transparency</strong>.</p>
+
+      <p>Open-sourcing AllowanceGuard means:</p>
+
+      <ul>
+        <li><strong>You can verify what the code does.</strong> Every RPC call, every risk heuristic, every data transformation is visible on <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">GitHub</a>. We don’t ask you to take our word for it.</li>
+        <li><strong>Security researchers can audit it.</strong> Open code gets more eyes. Vulnerabilities are found and fixed faster when anyone can inspect the codebase.</li>
+        <li><strong>The community can contribute.</strong> Chain support, risk scoring improvements, UI enhancements — contributions from the community make the tool better for everyone.</li>
+        <li><strong>The tool survives us.</strong> If AllowanceGuard the company disappeared tomorrow, the code would still be available. Anyone could fork it and keep it running. Your security shouldn’t depend on our business continuity.</li>
+      </ul>
+
+      <h2>Open Source Doesn’t Mean Unsustainable</h2>
+
+      <p>We’re building AllowanceGuard as an open-core product. The core scanner — scan your wallet, see your approvals, revoke the risky ones — is free and open source. Always.</p>
+
+      <p>Premium features for power users and teams (continuous monitoring, automated rules, compliance exports, API access) are paid. This isn’t a contradiction. It’s how we fund the development of the free tool that everyone uses.</p>
+
+      <p>We chose the <a href="/blog/open-source-stronger-our-license-update" class="text-amber-deep hover:underline">AGPL-3.0 license</a> specifically because it protects the community. Anyone can use, modify, and redistribute the code. But if someone takes it, modifies it, and runs it as a competing web service, they must share their modifications. This prevents free-riding while keeping the ecosystem open.</p>
+
+      <h2>What We’ve Built So Far</h2>
+
+      <ul>
+        <li><strong>27 EVM chains</strong> scanned in a single pass</li>
+        <li><strong>Risk scoring</strong> that flags unlimited approvals, unverified contracts, and known threats</li>
+        <li><strong>Batch revocation</strong> to clean up multiple approvals in one transaction</li>
+        <li><strong>Non-custodial by design</strong> — we never touch your keys, never move your tokens</li>
+        <li><strong>No account required</strong> for the free scanner — paste an address and go</li>
+      </ul>
+
+      <h2>What’s Next</h2>
+
+      <p>We’re working on a native mobile app, a developer SDK for embedding security scanning in other dApps, and expanding chain coverage beyond EVM networks. If you want to follow along, the <a href="/blog" class="text-amber-deep hover:underline">blog</a> is where we post updates, and <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">GitHub</a> tracks what’s in flight.</p>
+
+      <p>And if you want to contribute, the <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">repo is open</a>. We welcome pull requests, bug reports, and security disclosures.</p>
+
+      <p>AllowanceGuard exists because Web3 security should be accessible to everyone — not just those who can read Solidity. Building it in the open is how we earn the trust to make that possible.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/cross-chain-security-bridging-without-getting-burned/"><span>Older</span>Cross-Chain Security: Bridging Without Getting Burned</a>
+      <a class="pn pn-next" href="/blog/a-non-technical-guide-to-reading-token-approvals/"><span>Newer</span>A Non-Technical Guide to Reading Token Approvals</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Quiet Death of approve(): Four Changes Coming to Wallet Permissions — AllowanceGuard</title>
+<meta name="description" content="Permit2, account abstraction, session keys, and intents are restructuring what consent means" />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/the-quiet-death-of-approve/" />
+<meta property="og:title" content="The Quiet Death of approve(): Four Changes Coming to Wallet Permissions — AllowanceGuard" />
+<meta property="og:description" content="Permit2, account abstraction, session keys, and intents are restructuring what consent means" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/the-quiet-death-of-approve/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The Quiet Death of approve(): Four Changes Coming to Wallet Permissions","description":"Permit2, account abstraction, session keys, and intents are restructuring what consent means","datePublished":"2026-04-19","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/the-quiet-death-of-approve/","image":"https://www.allowanceguard.com/images/blog/the-quiet-death-of-approve.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Innovation</p>
+      <h1>The Quiet Death of approve(): Four Changes Coming to Wallet Permissions</h1>
+      <p class="post-sub">Permit2, account abstraction, session keys, and intents are restructuring what consent means</p>
+      <p class="post-meta">April 19, 2026 &middot; 12 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/the-quiet-death-of-approve.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>For roughly a decade, <code>approve()</code> was the canonical way a wallet gave a contract the right to move a token on its behalf. The ERC-20 standard named it, every DeFi protocol consumed it, and every wallet modal presented it as its own kind of ritual — click, pay gas, wait for confirmation. Most of what an approval scanner like ours does is read the trail of on-chain allowances those calls left behind.</p>
+
+      <p>That model is ending. Not in a single event — there is no ERC that deprecates it — but in the way older protocols fade: newer patterns route around it, and over time the old path becomes a minority of new permission-grants while still living indefinitely as a legacy layer. The direction is already visible on mainnet today. This piece walks through the four changes doing the routing around, what each one is, what it buys the user, and what it costs the tooling that tries to keep users safe.</p>
+
+      <p>None of the four are pure wins. Each solves a problem that <code>approve()</code> had and introduces problems <code>approve()</code> did not. The interesting analysis is in the tradeoffs, not the headline that one replaces the other.</p>
+
+      <h2>1. Permit and Permit2 — signed approvals that live off-chain until used</h2>
+
+      <p>The first and most-established displacement is the signature-based approval: EIP-2612's <code>permit</code> for compliant tokens, and Uniswap's Permit2 for the much larger population of tokens that never implemented <code>permit</code> themselves.</p>
+
+      <p>The shape. Instead of a user submitting an on-chain <code>approve()</code> transaction and paying gas for it, the user signs a piece of typed data (EIP-712) in their wallet. The signature encodes: which spender is allowed, which token, which amount, and until when. The signature sits off-chain. When the spender wants to use the approval, it submits the signature plus the relevant call (a swap, a deposit) in a single on-chain transaction, which the contract verifies, applies the allowance, and consumes in one step.</p>
+
+      <p>The upside. The user pays gas only at the moment of the actual interaction, not for a separate approval step. The UX is visibly simpler: one signature, one prompt, a swap that starts and finishes inside the user's flow. For new protocols, Permit2 also re-centralises approvals: instead of granting 40 approvals to 40 protocols, the user grants one canonical approval to Permit2 itself and downstream protocols consume signed sub-permits.</p>
+
+      <p>The shift in trust. Off-chain signatures have a different security shape than on-chain approvals. A signed Permit with an unlimited amount and a two-year deadline can sit in an attacker's inbox for two years and be submitted at any moment. It does not appear on-chain until submitted. Approval scanners like ours, which read on-chain state, cannot show signed-but-unsubmitted permits. A user who signed something yesterday to a phishing contract may not know until the permit is submitted and their tokens move.</p>
+
+      <p>The mitigation on the user side is wallet-level. Rabby, Frame, and the forthcoming generations of MetaMask show the decoded contents of typed-data signatures — amount, spender, deadline — rather than the opaque hash. Users who sign <code>permit</code> prompts without reading the decoded fields are substituting signature-prompt fatigue for transaction-prompt fatigue. The off-chain nature of the grant does not change the fact that it is a grant; it only changes when it becomes visible.</p>
+
+      <p>What this means for scanners. An on-chain scanner has an inherent blindspot with signature-based approvals: they are invisible until activated. The compensation is wallet-side decoding and permission-level review (are the spenders in the Permit2 ecosystem reputable? How many sub-permits has this user signed?). We cover the on-chain side; wallet vendors cover the signing side. The division of labour is real and the user needs both.</p>
+
+      <h2>2. Account abstraction and session keys — time-bounded, scoped delegations</h2>
+
+      <p>ERC-4337 made programmable accounts viable on mainnet in 2023. Rather than the user's key signing every transaction directly, a smart contract wallet holds the user's assets, and the user authenticates to it through whatever mechanism the wallet chooses — an EOA signature, a passkey, a social-login recovery scheme, or a delegated session key.</p>
+
+      <p>The interesting primitive for this essay is the <strong>session key</strong>: a secondary key, held by the wallet or the application, that has permission to perform a narrow set of actions for a bounded period. For example, a game might hold a session key that can move up to 100 USDC per day within the game's contracts, valid for 30 days. The user signs one master transaction enabling the session; the game then transacts without prompting the user each time.</p>
+
+      <p>The upside. For the class of applications where <code>approve()</code> was a fatigue solution rather than a security primitive — interactive games, high-frequency DeFi strategies, dollar-cost-averaging bots — session keys turn the rhythm of approvals into a single opt-in moment. No more signing every buy. No more approving every swap.</p>
+
+      <p>The shift in trust. A session key is a live, narrow-scope key sitting on an application server (or on the user's device, depending on the wallet). The scope is typed: contract, function selectors, amount caps, time window. A compromised session key cannot exceed its scope. But a compromised session key with "move up to 100 USDC per day for 30 days" still costs the user up to 3000 USDC before the session expires. That is a smaller surface than an unlimited <code>approve()</code>, but a larger surface than no permission at all — the user has traded breadth of grant for a persistent presence.</p>
+
+      <p>The governance question session keys raise is who gets to set the scope. If the wallet lets the application prompt its own scope ("can this app approve session: move any token, unlimited, for 90 days?"), the user is back to granting broad permissions without understanding them. The good implementations (Argent, Safe with 4337 bundlers, Biconomy Smart Accounts) default to narrow scopes and force the user to explicitly widen them; the less-good ones are still shipping.</p>
+
+      <p>What this means for scanners. Session keys live inside the wallet's state, not the token contract's state. A scanner reading token allowances does not see them directly. The future of a good risk tool covers three layers: ERC-20 allowances (what we do now), Permit2 state (already partially covered), and smart-account session keys (early — no mature scanner for these yet). Users of 4337 wallets will need wallet-level dashboards showing their active session keys and scopes; token-allowance scanners are a partial view.</p>
+
+      <h2>3. EIP-7702 — EOAs that can temporarily behave like contracts</h2>
+
+      <p>EIP-7702 is a Pectra-era Ethereum change that lets a regular EOA (externally-owned account) delegate its execution, within a single transaction, to the code at another address. Informally: an EOA can sign a transaction saying "for this one call, treat me as though I were a smart contract at address X," and the chain will execute X's bytecode in the EOA's context.</p>
+
+      <p>The practical effect is that the enormous installed base of EOA wallets (every MetaMask, every hardware wallet, every mobile wallet) gets access to smart-contract features — batched calls, session keys, sponsored gas — without migrating funds to a new smart-account address. The user keeps their address; the EOA temporarily wears a smart-account hat when it wants to.</p>
+
+      <p>The upside. The transition to smart accounts has been bottlenecked on the fact that users don't want to move funds. 7702 removes the bottleneck. A user can, in a single signed transaction, approve ten things + swap + deposit + re-stake, all batched, with a session key handed to their preferred app for recurring actions, without having to tell their recipients "I'm changing my address."</p>
+
+      <p>The shift in trust. 7702 is also where the most novel failure modes sit. An EOA signing an authorization to "delegate my execution to address X" is signing, in effect, a blank cheque for whatever X's code does. If X is an attacker's contract, X can do anything a smart account can do — drain every token balance, re-delegate to more hostile code, set up session keys the user cannot see.</p>
+
+      <p>This is the new phishing front. Instead of asking you for an unlimited <code>approve()</code> (which scanners catch), an attacker convinces you to sign a 7702 authorization to a wrapper contract they control. The authorization itself looks innocuous in an unaware wallet UI — it is a signed bit of typed data, not an obvious approval. Wallet teams are scrambling to render 7702 authorizations with the same prominence they give unlimited approvals. The first six months of 7702 adoption will tell us how well that rendering lands.</p>
+
+      <p>What this means for scanners. A scanner that only reads <code>allowance()</code> calls is blind to 7702 authorizations — they do not appear in the token contract's state. Detection requires reading the EOA's authorization list directly, which is a new scan dimension. This is active work; it is not yet a standard feature of most tooling. Expect the catalogue equivalent of "risky smart-account-delegate addresses" to become a thing within 12 months.</p>
+
+      <h2>4. Intents — signing an outcome, not a transaction</h2>
+
+      <p>The fourth and youngest change is intent-based execution. Rather than the user constructing a specific transaction — "swap 1 ETH for USDC on Uniswap V3 at pool address Y" — the user signs an <strong>intent</strong>: "I want at least 3200 USDC for 1 ETH, any venue, any path, within 60 seconds." A solver (a specialised off-chain actor) reads the intent, competes with other solvers, and executes whatever combination of on-chain calls produces the requested outcome. The user pays for the result and signs at the outcome level.</p>
+
+      <p>UniswapX, CoW Protocol, Across, 1inch Fusion, and a growing roster of builders operate this way. The approval model beneath them is interesting: users typically grant a single approval to a router or settlement contract, and solvers consume that approval per intent, with the settlement contract enforcing the intent's constraints. The user's day-to-day signatures are at the intent level (EIP-712 again), not the transaction level.</p>
+
+      <p>The upside. Users stop needing to understand Uniswap's V3 tick math, Balancer's weighted pool formula, or the fourteen-DEX-aggregator mesh across L2s. They say what outcome they want. Solvers race. The winning solver gets paid a small margin for the execution. The user gets the quoted outcome or the transaction reverts. For users whose time is worth more than the solver fee, this is a massive win in both cognitive load and execution quality.</p>
+
+      <p>The shift in trust. Intents push trust to the solver layer. The user trusts the settlement contract (which enforces the intent's bounds) and implicitly trusts that the solver mesh is competitive enough that the winning quote is close to optimal. A solver that wins but executes suboptimally — takes a routable path that could have been better and pockets the difference — is a quiet cost to the user that is hard to audit without comparing to theoretical optima.</p>
+
+      <p>Approval-wise, the scanner's job is still to read the one approval the user granted to the settlement contract and surface whether that contract has a clean track record. The approval is narrow (the settlement contract can only do what its code permits it to do on the user's signed intent). The risk is mostly upstream of the approval — it lives in whether the intent you signed specified the constraints you meant.</p>
+
+      <p>What this means for scanners. The on-chain scanner's work on intents is cleaner than on 7702 or session keys: intents ultimately settle as on-chain calls through a known settlement contract, so the approvals granted are visible, finite, and scoped. Our work is to keep the settlement-contract catalogue current and well-labelled, and to flag approvals granted to settlement contracts with known issues (not all are equal; some solver networks have had MEV or rebate-extraction scandals).</p>
+
+      <h2>What this adds up to for the next few years</h2>
+
+      <p>Four distinct shapes of permission, live or near-live on mainnet today. None of them delete <code>approve()</code>. The legacy call will be with us for a decade more, carrying the long tail of protocols that will never upgrade. What changes is the share of new grants by type: five years from now, a typical wallet's "permissions" will be some mix of direct ERC-20 allowances, Permit2 signatures, smart-account session keys, 7702 delegates, and intent-level approvals to settlement contracts. A safety tool that only covers the first of those five is a partial view of the user's exposure.</p>
+
+      <p>The scanner's roadmap, in rough priority order:</p>
+
+      <ol>
+        <li><strong>Direct allowances</strong> — the thing we cover today. Stable; continues to be the bulk of active permissions for the near term.</li>
+        <li><strong>Permit2</strong> — partial coverage via the Permit2 contract itself, since its sub-permit state is partially visible on-chain. The off-chain signed-but-unsubmitted portion remains a wallet-side concern.</li>
+        <li><strong>Smart-account session keys</strong> — requires per-wallet integration; starts with the top three or four 4337 wallets and expands.</li>
+        <li><strong>7702 authorizations</strong> — requires reading authorization lists in EOA state; a new scan category.</li>
+        <li><strong>Intent settlement-contract catalogue</strong> — already partially in our address catalogue; needs richer labelling to distinguish "UniswapX settlement" from "unknown settlement contract."</li>
+      </ol>
+
+      <p>The honest summary: approvals are becoming <em>more</em> varied, not less. The simple world where "allowance = moving tokens" held for a decade. The world we're moving into has five permission primitives that all do something allowance-like but with different scopes, different surfaces, and different failure modes. An approval scanner worth using in 2028 will cover all five. The scanner worth using today covers the one that still accounts for most of the risk.</p>
+
+      <p>If you are curious about which of the five your own wallet currently has state in, a scan at <a href="/">allowanceguard.com</a> covers the first two. A scan of your 4337 account (if you use one) at your wallet's own dashboard covers the third. 7702 and intent scanning are tracked in our roadmap and will be announced as they ship. The broader point, though, is not any single feature: it is that the model of "one standing approval" is giving way to a fabric of permissions with different shapes, and understanding your exposure means reading all of them.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/report-a-risky-contract-community-signal/"><span>Older</span>Report a Risky Contract: How Ninety Seconds of Your Time Makes Every Wallet Safer</a>
+      <a class="pn pn-next" href="/blog/four-lenses-on-an-unknown-contract/"><span>Newer</span>Four Lenses on an Unknown Contract: A Reading Strategy Before You Approve</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

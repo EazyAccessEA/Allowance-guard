@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Four Lenses on an Unknown Contract: A Reading Strategy Before You Approve — AllowanceGuard</title>
+<meta name="description" content="How to read bytecode, source, history, and behaviour — in the ninety seconds you have before your wallet prompt times out" />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/four-lenses-on-an-unknown-contract/" />
+<meta property="og:title" content="Four Lenses on an Unknown Contract: A Reading Strategy Before You Approve — AllowanceGuard" />
+<meta property="og:description" content="How to read bytecode, source, history, and behaviour — in the ninety seconds you have before your wallet prompt times out" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/four-lenses-on-an-unknown-contract/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Four Lenses on an Unknown Contract: A Reading Strategy Before You Approve","description":"How to read bytecode, source, history, and behaviour — in the ninety seconds you have before your wallet prompt times out","datePublished":"2026-04-19","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/four-lenses-on-an-unknown-contract/","image":"https://www.allowanceguard.com/images/blog/four-lenses-on-an-unknown-contract.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Security</p>
+      <h1>Four Lenses on an Unknown Contract: A Reading Strategy Before You Approve</h1>
+      <p class="post-sub">How to read bytecode, source, history, and behaviour — in the ninety seconds you have before your wallet prompt times out</p>
+      <p class="post-meta">April 19, 2026 &middot; 13 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/four-lenses-on-an-unknown-contract.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>A smart contract you have never interacted with is asking for an approval. Your wallet modal is open. The spender address is unfamiliar. You have about ninety seconds before you make a decision, because in ninety seconds you will either click "Confirm" or you will click "Reject" and if you click "Reject" after too long the frontend assumes you are lost and drops you back to its landing page.</p>
+
+      <p>Ninety seconds is not enough time to read the full contract source. It is enough time to apply four cheap lenses that, in combination, get you most of the way to a good decision without needing to be a Solidity engineer. This post describes those four lenses, the order to apply them, and what signals to walk away on.</p>
+
+      <p>Throughout the piece, the working assumption is that you have a block explorer open (<a href="https://etherscan.io" target="_blank" rel="noopener noreferrer">Etherscan</a>, <a href="https://basescan.org" target="_blank" rel="noopener noreferrer">BaseScan</a>, <a href="https://arbiscan.io" target="_blank" rel="noopener noreferrer">Arbiscan</a>, etc., matching the chain of the contract). You do not need Foundry, you do not need Tenderly, and you do not need a mainnet fork. What you need is the ability to read a couple of tabs.</p>
+
+      <h2>Lens 1 — Bytecode (5 seconds)</h2>
+
+      <p>Paste the spender address into the block explorer. The first signal is in the first tab you land on, under "Contract": there is either source code or there is not. If the "Contract" tab shows nothing — just raw bytecode with no "Source Code" section — the contract is <em>unverified</em>. Its source was never published to the explorer; what the chain is executing is opaque to anyone without a decompiler.</p>
+
+      <p>Unverified ≠ malicious. Plenty of legitimate contracts ship unverified, particularly early or on L2s where verification tooling was immature. But unverified does mean you cannot apply Lens 2 or Lens 3. For a one-time, small-value interaction with a team you recognise by name, this may be acceptable. For an unlimited approval on a fresh wallet, it is not.</p>
+
+      <p>Five-second verdict: verified → continue to Lens 2. Unverified → walk away or dramatically cap the approval amount.</p>
+
+      <h2>Lens 2 — Source (20 seconds)</h2>
+
+      <p>Open the "Contract → Source Code" tab. You will see a list of files (most contracts are multi-file). Look at the top-level contract name — the one inheriting from the others. It tells you what the contract thinks it is: <code>Router</code>, <code>Pool</code>, <code>Bridge</code>, <code>Airdropper</code>, <code>Forwarder</code>, <code>Proxy</code>, etc. The name is a strong signal.</p>
+
+      <p>Scroll the main file for two things: (a) the public-function list, (b) the imports. Ctrl-F for <code>function</code> tells you what the contract can do. Look specifically for these names:</p>
+
+      <ul>
+        <li><code>execute</code>, <code>delegatecall</code>, <code>multicall</code>, <code>swap</code>, <code>bridge</code> — legitimate in routers, aggregators, bridges. Expected.</li>
+        <li><code>rescue</code>, <code>sweep</code>, <code>emergencyWithdraw</code>, <code>withdrawAll</code> — privileged functions. If an owner can pull any token that has approved the contract, you want to understand the owner relationship before signing (Lens 4).</li>
+        <li><code>transferFrom</code> called on an arbitrary token with arbitrary parameters — this is the drainer pattern. Very few legitimate contracts take arbitrary <code>(token, from, to, amount)</code> from untrusted input.</li>
+        <li><code>setApprovalForAll</code> on anything other than the contract's own NFT collection — suspicious.</li>
+      </ul>
+
+      <p>The imports tell you the inheritance. Common legitimate imports: OpenZeppelin <code>Ownable</code>, <code>ReentrancyGuard</code>, <code>Pausable</code>, <code>ERC20</code>, <code>ERC721</code>. Uniswap <code>IUniswapV2Router</code>, <code>IV3SwapRouter</code>. These are reassurance, not proof — drainers also import OpenZeppelin — but their absence, combined with a fresh deployer, is a flag.</p>
+
+      <p>Twenty-second verdict: function shape matches the contract's claimed role → continue. Function shape shows drain primitives the claimed role does not need → walk away.</p>
+
+      <h2>Lens 3 — Deployment history (20 seconds)</h2>
+
+      <p>Switch from "Contract" to "Events" or back to the main address view, and look at the first transaction: the <code>Contract Creation</code>. Two things to read.</p>
+
+      <p>First, the <strong>deployer address</strong>. Click through to the deployer's profile. The question is: has this deployer shipped other recognisable contracts? A deployer with a dozen other contracts over two years, mostly verified, mostly interacted with by many addresses, is a reputable entity. A deployer with one contract, deployed three hours ago, funded five hours ago from Tornado Cash or a known mixer, is the opposite.</p>
+
+      <p>Second, the <strong>age</strong>. Contracts deployed within the last 72 hours deserve extra scrutiny for user-approval flows. Most drainers are short-lived — phishers deploy, collect, abandon. A contract three weeks old with ten thousand interactions is qualitatively different from a contract deployed six hours ago with forty interactions (all from the same flow).</p>
+
+      <p>Twenty-second verdict: deployer has a track record and the contract is not freshly-deployed → continue. Fresh deployment from a mixer-funded deployer → walk away.</p>
+
+      <h2>Lens 4 — On-chain behaviour (30 seconds)</h2>
+
+      <p>The "Transactions" tab tells you how the contract is being used. Scroll the most recent 50 transactions and look for these patterns:</p>
+
+      <ul>
+        <li><strong>Many users, small amounts each.</strong> Normal retail usage. The contract is being used as intended by a distribution of wallets. Reassuring.</li>
+        <li><strong>A few users, escalating amounts.</strong> Interesting but inconclusive. Could be a concentrated product (treasury tool, institutional integration). Could be rehearsal for an extraction.</li>
+        <li><strong>Many users approve, no-one withdraws.</strong> The contract is collecting approvals but not doing anything else. Classic drainer setup.</li>
+        <li><strong>Constant calls from one or two addresses.</strong> Either a bot is farming the contract (could be legitimate, like an aggregator routing orders) or the contract is owned by those addresses and executes a narrow workflow.</li>
+        <li><strong>Withdrawals to a different address than deposits come from.</strong> If funds come in from users and leave to a non-user address, read that non-user address carefully. Is it the protocol treasury (labelled)? Is it an unlabelled new address that then forwards to a mixer?</li>
+      </ul>
+
+      <p>The "Token Transfers" tab is the sibling view — it shows which ERC-20s the contract is moving. For a claimed DEX router, you would expect the router to see every token under the sun pass through. For an NFT marketplace, you would expect <code>setApprovalForAll</code> calls followed by occasional <code>transferFrom</code> during sales. For a "yield aggregator," you would expect deposits and withdrawals of the underlying assets plus the aggregator's receipt token. Pattern mismatches between the contract's claimed role and its actual token movements are strong signals.</p>
+
+      <p>Thirty-second verdict: activity matches the contract's claimed role → continue to sign. Activity mismatches — especially the "many approvals, no withdrawals" pattern, or the "withdrawals to a mixer-adjacent address" pattern — walk away.</p>
+
+      <h2>Putting the four lenses together</h2>
+
+      <p>The combined verdict lives in how the four lenses agree. A contract that passes all four (verified source, function shape matches claimed role, reputable deployer, on-chain behaviour consistent) is a safe-enough sign. A contract that fails any one is worth at least reading more carefully; a contract that fails two or more is not worth the risk for most users in most contexts.</p>
+
+      <p>The honest caveat: this method is not an audit. An auditor reading the same contract for eight hours may find a subtle reentrancy bug you missed in thirty seconds. But the ninety-second read captures the large majority of outright-malicious contracts, because malicious contracts very rarely spend resources passing all four lenses — the payoff per contract is small and the operator moves on.</p>
+
+      <h2>Worked example — the Socket bridge, January 2024</h2>
+
+      <p>For grounding, apply the four lenses to what we now know about the Socket bridge incident. At the time of user approvals in 2023, Socket's contracts would have scored:</p>
+
+      <ul>
+        <li>Lens 1 (bytecode): <strong>PASS</strong>. Verified on Etherscan and BaseScan.</li>
+        <li>Lens 2 (source): <strong>PASS</strong>. Function names consistent with a cross-chain bridge (<code>bridge</code>, <code>swapAndBridge</code>, standard OZ imports). The vulnerable function's signature was not obviously dangerous to a quick read.</li>
+        <li>Lens 3 (history): <strong>PASS</strong>. Socket was a reputable, long-running project with many interactions.</li>
+        <li>Lens 4 (behaviour): <strong>PASS</strong>. Real bridging traffic, many users, withdrawals to labelled protocol addresses.</li>
+      </ul>
+
+      <p>All four lenses would have given Socket a green light. The exploit was a subsequently-discovered logic flaw in how the contract passed call data to external tokens — the kind of thing only a deeper audit catches. A user following the four-lens method in 2023 would have granted the approval with reasonable confidence; the later exploit vindicated the need for the approval-revocation habit that ended up mitigating the loss for users who had cleared their allowances.</p>
+
+      <p>That's the second lesson of the four-lens method: it catches <em>categorical fraud</em> (drainer contracts, phishing proxies) far better than it catches <em>latent protocol bugs</em>. Pair it with the hygiene habit of revoking approvals you are not actively using, and you are covering both exposure classes with roughly the time a single interaction demands.</p>
+
+      <h2>If you want a tool</h2>
+
+      <p>The four lenses are something you can apply manually in ninety seconds with a block explorer. If you would rather a tool apply them and produce a summary, our widget at <a href="/docs/widget">allowanceguard.com/docs/widget</a> embeds a pre-transaction review pane in dApps that integrate it, showing the key signals from lenses 1–4 for the spender of any approval you are about to sign. For post-hoc review of approvals you have already signed, the main scanner at <a href="/">allowanceguard.com</a> applies the same catalogue.</p>
+
+      <p>But the method is the point, not the tool. A reader of this post with a block explorer tab open is most of the way there on their own. Tools shorten the time; they do not invent the judgement.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/the-quiet-death-of-approve/"><span>Older</span>The Quiet Death of approve(): Four Changes Coming to Wallet Permissions</a>
+      <a class="pn pn-next" href="/blog/how-to-revoke-a-permit2-approval/"><span>Newer</span>How to Revoke a Permit2 Approval (The Signature-Based Kind)</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

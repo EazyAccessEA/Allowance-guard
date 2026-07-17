@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Report a Risky Contract: How Ninety Seconds of Your Time Makes Every Wallet Safer — AllowanceGuard</title>
+<meta name="description" content="The catalogue gets better because people tell us what they saw" />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/report-a-risky-contract-community-signal/" />
+<meta property="og:title" content="Report a Risky Contract: How Ninety Seconds of Your Time Makes Every Wallet Safer — AllowanceGuard" />
+<meta property="og:description" content="The catalogue gets better because people tell us what they saw" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/report-a-risky-contract-community-signal/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Report a Risky Contract: How Ninety Seconds of Your Time Makes Every Wallet Safer","description":"The catalogue gets better because people tell us what they saw","datePublished":"2026-04-19","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/report-a-risky-contract-community-signal/","image":"https://www.allowanceguard.com/images/blog/report-a-risky-contract.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Community</p>
+      <h1>Report a Risky Contract: How Ninety Seconds of Your Time Makes Every Wallet Safer</h1>
+      <p class="post-sub">The catalogue gets better because people tell us what they saw</p>
+      <p class="post-meta">April 19, 2026 &middot; 9 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/report-a-risky-contract.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>AllowanceGuard flags contracts as risky for one reason above any other: somebody, somewhere, saw the contract do something harmful, and told us. The catalogue is not downloaded from a vendor. It is not the output of a model trained on Twitter. It is a list assembled from post-mortems, incident threads, community reports, and our own on-chain observations — and the reports are the part that grows fastest.</p>
+
+      <p>This piece is a quiet pitch: if you have ninety seconds and you saw something that felt off, the scanner gets measurably better when you submit it. Not because your single report is the full story — it rarely is — but because reports cluster, and a cluster is a signal. The first person to flag Socket's bridge contract in late 2023 did not have the full exploit in hand. They had a vague "my wallet is being drained and the only approval I had was to this bridge." That sentence, arriving once, is a lead. Arriving four times in two hours, from unconnected wallets, is an alert.</p>
+
+      <p>If you want to skip the essay and go straight to it: <a href="/tokens">allowanceguard.com/tokens</a> has a form. You do not need an account. You do not need to be technical. The form asks for a contract address, the chain, and a sentence about what you observed. That is the whole ask.</p>
+
+      <h2>What actually counts as a risky contract</h2>
+
+      <p>The catalogue is not a list of "contracts I do not like." The threshold for a useful report is narrower and more grounded. A contract worth flagging usually matches one of these shapes:</p>
+
+      <ul>
+        <li><strong>It drained a wallet.</strong> Funds left the wallet after the user interacted with the contract — granted an approval, signed a permit, paid gas into a function call — and the funds did not come back. This is the clearest signal and the easiest one for the next person to recognise.</li>
+        <li><strong>It impersonates a real protocol.</strong> The contract's name, website, or deployer address is close enough to a legitimate project that a user searching for Uniswap or Aave might land on it by mistake. Phishing contracts live here. If the UI they're paired with looks like a real dApp but the contract on-chain is new and deployed by an unfamiliar address, that is worth a report.</li>
+        <li><strong>It has a "free airdrop" or "claim" trap.</strong> A site or tweet directs you to a contract that asks for token approvals before any airdrop lands. The approval is the attack. The airdrop, if it exists at all, is smaller than what the approval allows the contract to remove.</li>
+        <li><strong>It is a bridge or aggregator whose approvals were exploited.</strong> The honest kind of risk: a legitimate protocol whose contracts had a bug, got compromised, and could withdraw from anyone who had granted a non-zero approval. Socket's January 2024 incident was this pattern. Reports saying "I had an approval to this address, the approval was used unexpectedly" are the first draft of an incident thread.</li>
+        <li><strong>It is downstream of a known exploit.</strong> Stolen funds pass through address chains. Addresses that receive funds from a known drainer, or that hold value from a known rug-pull, are worth flagging so users who later encounter them get a warning. This is the most technical category and we do a lot of this work ourselves, but user reports help.</li>
+      </ul>
+
+      <p>What does <em>not</em> count as a useful report:</p>
+
+      <ul>
+        <li><strong>"I don't like this protocol."</strong> Dislike is not a security signal. Unless the contract did something harmful, we can't flag it.</li>
+        <li><strong>"This protocol was audited and I'm not sure I trust the auditor."</strong> Audit quality is a real conversation but it is not per-contract. Those conversations live on Twitter and in the auditor's own response to criticism.</li>
+        <li><strong>"This contract is new." </strong> New is not inherently risky. Many legitimate protocols are new. Absence of warning is the correct default for a new contract that has not yet exhibited harmful behaviour.</li>
+        <li><strong>"Someone told me to avoid this contract."</strong> We need your observation, not a forwarded claim. If someone told you, ask them what they saw, and if the answer is specific, let them submit the report themselves.</li>
+      </ul>
+
+      <p>The test, in practice, is: could a stranger look at what you saw and conclude the contract did something harmful? If yes, the report is worth making. If the answer requires belief in a prior claim — "I heard this contract is a scam" — the report does not stand on its own.</p>
+
+      <h2>How to submit a report</h2>
+
+      <p>Go to <a href="/tokens">allowanceguard.com/tokens</a> and use the submission form. The fields are:</p>
+
+      <ol>
+        <li><strong>Contract address.</strong> The 0x-prefixed address of the contract you are reporting. If you signed an approval, this is the <em>spender</em> address that appeared in the approval panel — not the address of the token you approved. Two very different things, and one of the most common reporting confusions.</li>
+        <li><strong>Chain.</strong> Ethereum, Base, Arbitrum, Polygon, or one of the 23 other chains the scanner covers. If you are not sure which chain, the transaction hash of the interaction will tell you — it only exists on one chain.</li>
+        <li><strong>Observation.</strong> A short sentence about what happened. "Approved this to a site pretending to be Uniswap; funds drained within 30 seconds." Or: "I had an open approval to this bridge; funds moved without my signature after the contract was paused." Specificity is what makes a report useful.</li>
+        <li><strong>Evidence (optional but helpful).</strong> A transaction hash, a link to a tweet or Discord post describing the incident, a link to the dApp URL that pointed to the contract. You do not need all of these. One is often enough.</li>
+      </ol>
+
+      <p>The form is deliberately short. We ran a longer version for two months and got fewer reports; people tapped the button, saw six fields, and closed the tab. Three fields and a free-text box gets the report.</p>
+
+      <p>You do not need to include your wallet address. You do not need to include the amount lost. Both are private; neither is a required input to the question "is this contract risky?" — which is the only question the form answers.</p>
+
+      <h2>What happens to a report after you submit it</h2>
+
+      <p>A submitted report is not auto-published as a catalogue entry. If it were, anyone could pollute the catalogue by reporting their competitor's contract ten times from ten wallets. The flow from report to catalogue looks roughly like this:</p>
+
+      <ol>
+        <li><strong>Intake.</strong> Your report lands in our review queue with a timestamp and the fields you submitted. Nothing happens yet.</li>
+        <li><strong>Triage.</strong> A reviewer — someone on the team, or an approved community reviewer — reads the report and looks at the on-chain behaviour of the contract. Was the approval used in the window you described? Did funds leave the victim address to the spender? Is the contract freshly deployed, or is it a legitimate protocol whose security posture recently changed?</li>
+        <li><strong>Corroboration.</strong> If the report is the first one for this contract, the reviewer often waits to see if others arrive. A single report for a contract with no other on-chain evidence is a lead, not a verdict.</li>
+        <li><strong>Catalogue action.</strong> If the evidence is sufficient, the contract gets a risk flag in the catalogue — the same flag that appears in the scanner when any user scans a wallet with an approval to that contract. Severity is calibrated; not every flagged contract is marked critical.</li>
+        <li><strong>Public note.</strong> For contracts flagged as critical, we publish a short note in the monthly roundup — what the contract was, what it did, who reported it (anonymously by default), and what users should do. The note is how the catalogue earns the reader's trust: decisions are legible.</li>
+      </ol>
+
+      <p>We also feed confirmed reports back into our own scanning infrastructure — the scanner's daily sweep picks up downstream addresses from a flagged contract, so a fresh-deployed address receiving funds from a known drainer is flagged within hours, not months. That downstream propagation is one of the practical benefits of maintaining our own catalogue rather than consuming someone else's: user reports have observable effects, not just on the one contract they reported but on the network of addresses connected to it.</p>
+
+      <h2>Why the community angle is the point, not a marketing line</h2>
+
+      <p>"Community-powered" is a phrase that has been thoroughly drained of meaning by product copy. A lot of products use it to describe a Discord server with two users and an unmoderated suggestions channel. We are aware of the risk of the phrase sounding like one more of those.</p>
+
+      <p>The reason we keep using it is that the security model of an approval scanner genuinely requires external input. The scanner looks at on-chain state. On-chain state tells you what permissions exist; it does not tell you which permissions were intended. Distinguishing "this user granted Uniswap an approval to swap tokens for them, as they intended" from "this user granted a phishing contract disguised as Uniswap an approval to drain them, which they did not intend" is not something the chain reveals directly. It requires the counterfactual: what the user thought they were doing.</p>
+
+      <p>That information only comes from the user. The scanner cannot infer it. We cannot infer it by reading the bytecode. We infer it by collecting what users tell us, corroborating it, and publishing the result. That is what a community catalogue is, in the strict sense: a list of contracts that some number of users have collectively testified about.</p>
+
+      <p>It is also the reason we open-source most of the tooling. If the catalogue were a proprietary database, the community reporting against it would be unpaid labour for our business. By publishing the flag data via a public API and keeping the client-side and widget code open-source (see <a href="/contribute">/contribute</a> for how to work with the codebase), the catalogue becomes infrastructure — other wallets and tools can consume it, and the reports benefit the ecosystem rather than a single company. The incentive for a user to report something is clearer when the report benefits any wallet they or their friends use next, not just ours.</p>
+
+      <h2>What a good report actually reads like</h2>
+
+      <p>An example of a useful observation field, pulled from a real recent report (address and chain changed to preserve the reporter's reference):</p>
+
+      <blockquote><p>"Signed what I thought was a Uniswap approval after clicking a Telegram ad. Contract wasn't Uniswap. Amount approved was unlimited. Within 2 minutes my USDC was gone. Tx hash <code>0xabc...</code> shows the Transfer out of my wallet to the spender. Deployer is new, deployed the contract 3 days ago."</p></blockquote>
+
+      <p>That is ninety seconds of typing. It contains: what the user thought was happening (Uniswap approval), what actually happened (non-Uniswap contract, unlimited approval, funds drained), the evidence (tx hash), and a forensic note (new deployer). A triaging reviewer can verify every claim in under five minutes and flag the contract with confidence.</p>
+
+      <p>Compare to a report that reads: "This contract is sketchy, please block it." There is nothing a reviewer can do with that. It might be right; it might be wrong; either way, without observation, the catalogue cannot learn.</p>
+
+      <h2>If you do not have a report to make right now</h2>
+
+      <p>Bookmark the page. The next time you sign an approval that immediately drained your wallet, the next time a friend describes the same pattern to you, the next time you see a Discord thread of four different users saying the same contract ripped them off — that is when the form becomes useful. Ninety seconds of your time, one contract's reputation updated, every future user's scanner slightly more informative.</p>
+
+      <p>The alternative is what this space had for its first decade: each user rediscovering the same scam contract independently, often after losing funds, without a durable record that the next user could consult. A catalogue that grows from reports is the only version of this that scales.</p>
+
+      <h2>A note on reviewer time</h2>
+
+      <p>We do triage reports as fast as we can, which is usually within 48 hours for a single report and faster if the report is corroborated. We do not send a reply to every submitter; we would spend all our time on replies. What we do promise is that a well-formed report is read by a human and, if the evidence holds, the catalogue is updated within a week. Sooner, for anything actively draining wallets.</p>
+
+      <p>If you want to be more involved — if you have a security background and are willing to help review incoming reports — <a href="mailto:community@allowanceguard.com">community@allowanceguard.com</a> is the channel. We have a small rotation of reviewers and a clear induction. The work is light, the effect is real, and the catalogue is better for it.</p>
+
+      <p>That is the whole ask. Ninety seconds, one contract, the next wallet warned. If that is a worthwhile trade, the form is at <a href="/tokens">allowanceguard.com/tokens</a>.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/ten-minute-wallet-audit-no-install/"><span>Older</span>Ten-Minute Wallet Audit, No Install</a>
+      <a class="pn pn-next" href="/blog/the-quiet-death-of-approve/"><span>Newer</span>The Quiet Death of approve(): Four Changes Coming to Wallet Permissions</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

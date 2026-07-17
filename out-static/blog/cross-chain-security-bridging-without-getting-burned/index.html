@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cross-Chain Security: Bridging Without Getting Burned — AllowanceGuard</title>
+<meta name="description" content="Bridge exploits are the largest category of DeFi loss. Here’s how to stay safe." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/cross-chain-security-bridging-without-getting-burned/" />
+<meta property="og:title" content="Cross-Chain Security: Bridging Without Getting Burned — AllowanceGuard" />
+<meta property="og:description" content="Bridge exploits are the largest category of DeFi loss. Here’s how to stay safe." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/cross-chain-security-bridging-without-getting-burned/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Cross-Chain Security: Bridging Without Getting Burned","description":"Bridge exploits are the largest category of DeFi loss. Here’s how to stay safe.","datePublished":"2026-04-13","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/cross-chain-security-bridging-without-getting-burned/","image":"https://www.allowanceguard.com/images/blog/cross-chain-security-bridging.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Education</p>
+      <h1>Cross-Chain Security: Bridging Without Getting Burned</h1>
+      <p class="post-sub">Bridge exploits are the largest category of DeFi loss. Here’s how to stay safe.</p>
+      <p class="post-meta">April 13, 2026 &middot; 8 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/cross-chain-security-bridging.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>In 2022 alone, cross-chain bridge exploits accounted for over $2 billion in stolen funds. The Ronin Bridge ($625M), Wormhole ($320M), and Nomad ($190M) hacks weren’t edge cases — they were the defining security events of the year. Bridges are where the most money is lost in DeFi, and it’s not close.</p>
+
+      <p>If you use multiple blockchain networks — and in 2026, most active DeFi users do — you’re using bridges. Understanding their risks isn’t optional. It’s essential.</p>
+
+      <h2>What Bridges Do and Why They’re Vulnerable</h2>
+
+      <p>A cross-chain bridge transfers value between blockchains that can’t natively communicate. You deposit tokens on Chain A, and the bridge mints or releases equivalent tokens on Chain B. The bridge holds your original tokens in custody until you want to move them back.</p>
+
+      <p>This creates a massive honeypot. A bridge securing billions in locked tokens is the highest-value target in DeFi. And bridges are architecturally complex — they combine smart contracts, off-chain relayers, validator sets, and cross-chain message passing. More complexity means more attack surface.</p>
+
+      <h2>The Three Ways Bridges Fail</h2>
+
+      <h3>1. Validator compromise</h3>
+      <p>Many bridges use a small set of validators to confirm cross-chain messages. If an attacker compromises enough validators, they can forge messages and drain the bridge. The <strong>Ronin Bridge</strong> hack ($625M) exploited exactly this: the attacker compromised 5 of 9 validator keys and submitted fraudulent withdrawal requests.</p>
+
+      <h3>2. Smart contract vulnerabilities</h3>
+      <p>The bridge’s smart contracts must handle token locking, minting, burning, and message verification. A bug in any of these functions can be catastrophic. The <strong>Wormhole</strong> hack ($320M) exploited a signature verification bug that let the attacker mint wrapped ETH without depositing real ETH.</p>
+
+      <h3>3. Verification failures</h3>
+      <p>The <strong>Nomad</strong> hack ($190M) was caused by a configuration error that made every message pass verification. Once one attacker discovered this, hundreds of others copied the exploit transaction — it became a free-for-all.</p>
+
+      <h2>How to Bridge More Safely</h2>
+
+      <ul>
+        <li><strong>Use canonical bridges when available.</strong> Each L2 has an “official” bridge operated by the rollup team (e.g., Arbitrum Bridge, Optimism Gateway, Base Bridge). These inherit the security of the L1 and are the safest option, though withdrawals to L1 may take 7 days for optimistic rollups.</li>
+        <li><strong>Prefer bridges with fraud proofs or ZK verification.</strong> Bridges that use cryptographic proofs to verify messages are fundamentally more secure than those relying on multisig validator sets.</li>
+        <li><strong>Check bridge TVL and track record.</strong> A bridge that has held billions for years without incident is a better bet than a new one with attractive yields. Check <a href="https://l2beat.com/bridges/tvl" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">L2BEAT</a> for bridge security assessments.</li>
+        <li><strong>Bridge only what you need.</strong> Don’t leave large amounts sitting in a bridge’s wrapped tokens on the destination chain. Bridge, use, and bridge back — or use native tokens where possible.</li>
+        <li><strong>Revoke bridge approvals after use.</strong> Bridges require token approvals on the source chain. Once your transfer is complete, revoke the approval. If the bridge contract is later compromised, your tokens on the source chain remain safe.</li>
+        <li><strong>Wait for finality.</strong> Don’t assume a bridge transfer is “done” when the destination chain shows a balance. On optimistic rollups, the canonical bridge has a 7-day challenge period. Third-party bridges may release funds faster, but they’re assuming the finality risk on your behalf.</li>
+      </ul>
+
+      <h2>AllowanceGuard and Multi-Chain Security</h2>
+
+      <p>AllowanceGuard scans 27 EVM networks. When you bridge to a new chain and interact with dApps there, those approvals are tracked too. A single scan shows your approval exposure across every chain you’ve ever used — including approvals to bridge contracts themselves.</p>
+
+      <p>This matters because bridge approvals are among the most dangerous to leave active. The approved contract holds hundreds of millions in user funds, making it a prime target. Revoking a bridge approval after use is one of the highest-impact security actions you can take.</p>
+
+      <h2>Practical Next Steps</h2>
+
+      <ol>
+        <li><strong>Audit your bridge approvals.</strong> Scan your wallet on every chain you’ve used. Look for active approvals to bridge contracts you’ve already finished using. Revoke them.</li>
+        <li><strong>Default to canonical bridges.</strong> For L2 transfers, use the rollup’s official bridge unless you have a specific reason not to.</li>
+        <li><strong>Bookmark trusted bridges.</strong> Phishing sites that impersonate popular bridges are common. Use bookmarks, not search results.</li>
+        <li><strong>Monitor bridge security disclosures.</strong> Follow <a href="https://l2beat.com/" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">L2BEAT</a> and the bridge project’s official channels for security updates.</li>
+      </ol>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/anatomy-of-an-approval-exploit/"><span>Older</span>The Anatomy of an Approval Exploit</a>
+      <a class="pn pn-next" href="/blog/why-we-open-sourced-our-security-scanner/"><span>Newer</span>Why We Open-Sourced Our Security Scanner</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

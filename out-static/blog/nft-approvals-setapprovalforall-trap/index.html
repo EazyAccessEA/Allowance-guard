@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NFT Approvals: The setApprovalForAll Trap — AllowanceGuard</title>
+<meta name="description" content="The one function that can drain your entire collection." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/nft-approvals-setapprovalforall-trap/" />
+<meta property="og:title" content="NFT Approvals: The setApprovalForAll Trap — AllowanceGuard" />
+<meta property="og:description" content="The one function that can drain your entire collection." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/nft-approvals-setapprovalforall-trap/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"NFT Approvals: The setApprovalForAll Trap","description":"The one function that can drain your entire collection.","datePublished":"2026-04-14","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/nft-approvals-setapprovalforall-trap/","image":"https://www.allowanceguard.com/images/blog/nft-approvals-setapprovalforall-trap.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Security</p>
+      <h1>NFT Approvals: The setApprovalForAll Trap</h1>
+      <p class="post-sub">The one function that can drain your entire collection.</p>
+      <p class="post-meta">April 14, 2026 &middot; 6 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/nft-approvals-setapprovalforall-trap.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>When you list an NFT on a marketplace, you sign something called <code>setApprovalForAll</code>. It’s the NFT equivalent of an ERC-20 token approval — but with a crucial difference. Instead of approving a specific amount of a specific token, you’re giving a contract permission to transfer <strong>every NFT you own or will ever own</strong> from a specific collection.</p>
+      <p>Most NFT holders click through this approval without thinking. Then they wonder how their Bored Ape got stolen while they were asleep.</p>
+      <h2>What setApprovalForAll Actually Does</h2>
+      <p>The ERC-721 and ERC-1155 standards define <code>setApprovalForAll(operator, approved)</code>. When you call it with <code>approved = true</code>, the operator address can move any NFT in that collection you hold — now or in the future. No per-token check. No amount limit. Total control.</p>
+      <p>Compare this to ERC-20’s <code>approve(spender, amount)</code>: you can set a specific spending cap, and you can approve a much smaller amount than you hold. With NFTs, it’s all or nothing. The function only accepts a boolean.</p>
+      <h2>Why It’s Dangerous</h2>
+      <p>Every major NFT marketplace (OpenSea, Blur, LooksRare, X2Y2) needs <code>setApprovalForAll</code> to function. You grant it once per collection, and every future listing uses the same approval. That’s efficient. It’s also what makes it catastrophic when things go wrong.</p>
+      <p>Three failure modes in the past three years:</p>
+      <ul>
+        <li><strong>Compromised marketplace contracts.</strong> If the marketplace contract is exploited, every user who has ever listed an NFT on it is at risk — not just the active listings.</li>
+        <li><strong>Phishing sites.</strong> A fake OpenSea clone asks you to "verify" your listing. You sign a <code>setApprovalForAll</code> approving a malicious contract. Your entire collection is drained.</li>
+        <li><strong>Malicious upgrades.</strong> Some marketplace proxies can be upgraded by an admin key. If that key is compromised, the contract you approved becomes a contract controlled by the attacker.</li>
+      </ul>
+      <h2>The Attack You Don’t See Coming</h2>
+      <p>The most insidious version: you signed a <code>setApprovalForAll</code> to a marketplace a year ago. The marketplace shut down. You forgot about it. An attacker buys the abandoned contract address or discovers a stale admin key. They drain every collection that still has active approvals to that contract. Your approval is still live. You signed it and walked away.</p>
+      <p>This is the <strong>stale approval problem</strong> specific to NFTs. Unlike ERC-20 tokens where you might spot a drained balance, NFTs sit silently in your wallet until the moment they don’t.</p>
+      <h2>How to Protect Yourself</h2>
+      <ul>
+        <li><strong>Audit your NFT approvals quarterly.</strong> Separately from ERC-20 approvals. Scan each collection for active <code>setApprovalForAll</code> grants and revoke any to marketplaces you no longer use.</li>
+        <li><strong>Revoke after selling out.</strong> Once you’ve sold the last NFT in a collection, revoke the marketplace approval. You can always re-grant it if you come back.</li>
+        <li><strong>Use a separate wallet for minting and trading.</strong> Keep long-hold NFTs in a cold wallet that has never signed <code>setApprovalForAll</code> to any marketplace. Only your active trading wallet carries the risk.</li>
+        <li><strong>Watch for upgradeable contracts.</strong> If a marketplace announces an upgrade or admin key rotation, revoke your approvals and re-grant to the new contract if you trust it.</li>
+        <li><strong>Check both standards.</strong> ERC-721 and ERC-1155 both use <code>setApprovalForAll</code>. A scan that only checks ERC-20 approvals will miss these entirely.</li>
+      </ul>
+      <h2>The Rule</h2>
+      <p>Every <code>setApprovalForAll</code> you’ve ever signed is a persistent permission on an entire collection. Treat each one like a signed cheque with your whole NFT collection as collateral. Review them. Revoke the ones you don’t need. The one you forgot about is the one that drains you.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/five-minutes-to-a-safer-wallet/"><span>Older</span>Five Minutes to a Safer Wallet</a>
+      <a class="pn pn-next" href="/blog/new-generation-signature-phishing/"><span>Newer</span>The New Generation of Signature Phishing Attacks</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

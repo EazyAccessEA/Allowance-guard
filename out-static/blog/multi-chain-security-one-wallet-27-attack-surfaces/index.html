@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multi-Chain Security: One Wallet, 27 Attack Surfaces — AllowanceGuard</title>
+<meta name="description" content="Every chain you touch is another set of permissions to manage." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/multi-chain-security-one-wallet-27-attack-surfaces/" />
+<meta property="og:title" content="Multi-Chain Security: One Wallet, 27 Attack Surfaces — AllowanceGuard" />
+<meta property="og:description" content="Every chain you touch is another set of permissions to manage." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/multi-chain-security-one-wallet-27-attack-surfaces/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Multi-Chain Security: One Wallet, 27 Attack Surfaces","description":"Every chain you touch is another set of permissions to manage.","datePublished":"2026-04-13","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/multi-chain-security-one-wallet-27-attack-surfaces/","image":"https://www.allowanceguard.com/images/blog/multi-chain-security-one-wallet-27-attack-surfaces.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Security</p>
+      <h1>Multi-Chain Security: One Wallet, 27 Attack Surfaces</h1>
+      <p class="post-sub">Every chain you touch is another set of permissions to manage.</p>
+      <p class="post-meta">April 13, 2026 &middot; 7 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/multi-chain-security-one-wallet-27-attack-surfaces.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>Your wallet address is the same on every EVM chain. Your approvals are not. Every time you bridge to a new chain and interact with a dApp, you create a new set of token approvals on that chain — independent of every other chain, managed by different contracts, with different risk profiles. One wallet, 27 potential attack surfaces.</p>
+      <h2>The Sprawl Problem</h2>
+      <p>Most DeFi users start on Ethereum mainnet. Then they bridge to Arbitrum for cheaper gas. Then Base because a friend told them about a new DEX. Then Polygon for an NFT mint. Then Optimism because a protocol they use launched there. Each interaction leaves behind approvals. After a year, a moderately active user has approvals on 4–8 chains — most of which they’ve forgotten about.</p>
+      <p>The approvals on each chain are completely independent. Revoking an approval on Ethereum does nothing to the same spender’s approval on Arbitrum. A compromised contract on Base doesn’t affect Polygon. But a compromised contract on Base that has your approval on Base can drain your tokens on Base — and you might not even know you had tokens there.</p>
+      <h2>Why Single-Chain Tools Fail</h2>
+      <p>A security tool that only scans one chain at a time creates a false sense of security. You scan Ethereum, see a clean report, and feel safe. Meanwhile, you have unlimited approvals to three unverified contracts on Arbitrum, a stale approval on Polygon from a protocol that was exploited last month, and tokens sitting in a bridge contract on Base that you forgot to revoke.</p>
+      <p>Multi-chain security requires multi-chain scanning. Not “select a network from this dropdown.” All networks, scanned in parallel, scored together, presented in one view.</p>
+      <h2>The Cross-Chain Risk Multiplier</h2>
+      <p>Approval risk multiplies across chains because:</p>
+      <ul>
+        <li><strong>Attention is finite.</strong> You can’t manually audit 8 chains monthly. You’ll do one or two and neglect the rest.</li>
+        <li><strong>Protocols fork across chains.</strong> The same contract code deployed on 5 chains means a vulnerability affects all 5.</li>
+        <li><strong>Bridge approvals are the most dangerous.</strong> They’re high-value targets, and they exist on the source chain where your tokens originated.</li>
+        <li><strong>Gas costs vary.</strong> Revoking on mainnet costs $5–15. On L2s it costs $0.01–0.05. Users delay mainnet revocations because of cost, leaving the highest-value approvals active the longest.</li>
+      </ul>
+      <h2>What to Do</h2>
+      <ol>
+        <li><strong>Scan every chain.</strong> Use a tool that covers all the networks you’ve ever touched — not just the ones you remember.</li>
+        <li><strong>Start with L2 revocations.</strong> They’re nearly free. Clean up Arbitrum, Base, Optimism, and Polygon first. Then address mainnet.</li>
+        <li><strong>Audit bridge approvals specifically.</strong> These are your highest-risk, highest-value approvals. Revoke them after every bridge transfer.</li>
+        <li><strong>Set up cross-chain monitoring.</strong> Get alerts when new high-risk approvals appear on any chain — not just the one you’re thinking about.</li>
+      </ol>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/the-web3-security-glossary/"><span>Older</span>The Web3 Security Glossary</a>
+      <a class="pn pn-next" href="/blog/the-principles-behind-allowanceguard/"><span>Newer</span>The Principles Behind AllowanceGuard</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

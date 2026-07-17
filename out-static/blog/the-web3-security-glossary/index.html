@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Web3 Security Glossary — AllowanceGuard</title>
+<meta name="description" content="Every term you need to know, defined plainly." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/the-web3-security-glossary/" />
+<meta property="og:title" content="The Web3 Security Glossary — AllowanceGuard" />
+<meta property="og:description" content="Every term you need to know, defined plainly." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/the-web3-security-glossary/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The Web3 Security Glossary","description":"Every term you need to know, defined plainly.","datePublished":"2026-04-13","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/the-web3-security-glossary/","image":"https://www.allowanceguard.com/images/blog/the-web3-security-glossary.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Education</p>
+      <h1>The Web3 Security Glossary</h1>
+      <p class="post-sub">Every term you need to know, defined plainly.</p>
+      <p class="post-meta">April 13, 2026 &middot; 6 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/the-web3-security-glossary.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>Web3 security has its own vocabulary. If you’ve ever read a security post and stumbled on terms like “spender,” “allowance,” or “ERC-4337,” this glossary is for you. Every term defined in plain language, alphabetically.</p>
+      <h2>A</h2>
+      <p><strong>Account Abstraction (ERC-4337)</strong> — A standard that turns your wallet from a simple key pair into a programmable smart contract. Enables session keys, batched transactions, gas sponsorship, and social recovery.</p>
+      <p><strong>Allowance</strong> — The amount of a specific token that a spender contract is permitted to move from your wallet. Set via the <code>approve()</code> function. Also called an “approval.”</p>
+      <p><strong>Approval</strong> — The act of granting a smart contract permission to move your tokens. Creates an allowance. Persists until revoked.</p>
+      <h2>B</h2>
+      <p><strong>Batch Revocation</strong> — Revoking multiple token approvals in a single transaction. Saves gas compared to revoking one at a time.</p>
+      <p><strong>Bridge</strong> — A protocol that transfers tokens between different blockchain networks. Bridges hold large amounts of locked tokens, making them high-value targets.</p>
+      <h2>C–D</h2>
+      <p><strong>CFG Scale</strong> — Not Web3 — this is an AI image generation parameter. If you’re here from the blog images discussion, wrong glossary.</p>
+      <p><strong>Contract</strong> — A program deployed on a blockchain that executes automatically when called. Smart contracts hold the logic for DeFi protocols, token transfers, and approval management.</p>
+      <p><strong>Custodial</strong> — A service that holds your private keys on your behalf (e.g., a centralised exchange). Opposite of non-custodial.</p>
+      <h2>E–G</h2>
+      <p><strong>EIP-2612</strong> — A standard that adds a <code>permit()</code> function to ERC-20 tokens, allowing approvals via off-chain signatures instead of on-chain transactions.</p>
+      <p><strong>ERC-20</strong> — The most common token standard on Ethereum and EVM chains. Defines functions including <code>approve()</code>, <code>transferFrom()</code>, and <code>allowance()</code>.</p>
+      <p><strong>EOA (Externally Owned Account)</strong> — A traditional wallet controlled by a private key. Not a smart contract. The default wallet type in MetaMask, Ledger, etc.</p>
+      <p><strong>Gas</strong> — The fee paid to execute a transaction on a blockchain. Measured in the network’s native token (ETH, MATIC, etc.).</p>
+      <h2>N–P</h2>
+      <p><strong>Non-Custodial</strong> — A service that never holds your private keys. You retain full control of your assets. AllowanceGuard is non-custodial by design.</p>
+      <p><strong>Permit2</strong> — A universal approval manager created by Uniswap Labs. You approve Permit2 once per token, then dApps request access via signed messages instead of on-chain transactions.</p>
+      <p><strong>Private Key</strong> — The secret string that controls your wallet. Whoever has it can move all your assets. Never share it with anyone, including security tools.</p>
+      <h2>R–S</h2>
+      <p><strong>Revoke</strong> — The act of setting an approval to zero, removing a spender’s permission to move your tokens. Costs a small gas fee. Reversible (you can re-approve later).</p>
+      <p><strong>Risk Score</strong> — A numerical assessment of how dangerous a specific approval is. Factors include: amount (unlimited vs limited), spender verification, contract age, known exploit history, and token value at risk.</p>
+      <p><strong>Seed Phrase</strong> — A 12–24 word recovery phrase that can regenerate your private key. Equivalent to your private key in terms of access. Never store digitally.</p>
+      <p><strong>Session Key</strong> — A temporary, scoped permission granted by a smart account (ERC-4337). Expires automatically. Replaces blanket approvals in account-abstracted wallets.</p>
+      <p><strong>Spender</strong> — The smart contract address that has been granted permission to move your tokens. Shown in approval dashboards as the entity your approval was granted to.</p>
+      <h2>T–U</h2>
+      <p><strong>Token</strong> — A digital asset on a blockchain. ERC-20 (fungible), ERC-721 (NFT), and ERC-1155 (multi-token) are the most common standards.</p>
+      <p><strong>transferFrom()</strong> — The ERC-20 function a spender calls to move tokens from your wallet. Only works if you’ve granted an approval for at least the requested amount.</p>
+      <p><strong>Unlimited Approval</strong> — An approval set to the maximum possible amount (<code>uint256.max</code>). Means the spender can move your entire balance of that token, now and in the future. The most common and most dangerous approval type.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/allowanceguard-vs-manual-security/"><span>Older</span>AllowanceGuard vs Manual Security: A Comparison</a>
+      <a class="pn pn-next" href="/blog/multi-chain-security-one-wallet-27-attack-surfaces/"><span>Newer</span>Multi-Chain Security: One Wallet, 27 Attack Surfaces</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

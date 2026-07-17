@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>I Think I’ve Been Scammed — Now What? — AllowanceGuard</title>
+<meta name="description" content="A step-by-step playbook for the first hour after a wallet compromise." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/i-think-ive-been-scammed-now-what/" />
+<meta property="og:title" content="I Think I’ve Been Scammed — Now What? — AllowanceGuard" />
+<meta property="og:description" content="A step-by-step playbook for the first hour after a wallet compromise." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/i-think-ive-been-scammed-now-what/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"I Think I’ve Been Scammed — Now What?","description":"A step-by-step playbook for the first hour after a wallet compromise.","datePublished":"2026-04-14","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/i-think-ive-been-scammed-now-what/","image":"https://www.allowanceguard.com/images/blog/i-think-ive-been-scammed-now-what.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Security</p>
+      <h1>I Think I’ve Been Scammed — Now What?</h1>
+      <p class="post-sub">A step-by-step playbook for the first hour after a wallet compromise.</p>
+      <p class="post-meta">April 14, 2026 &middot; 8 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/i-think-ive-been-scammed-now-what.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>You signed something you shouldn’t have. You approved a malicious contract. You connected to a phishing site. You’re staring at your wallet wondering how much you just lost.</p>
+      <p>Stop. Breathe. Read this carefully. Every minute matters.</p>
+      <h2>Minute 0–5: Assess, Don’t Panic</h2>
+      <p>First question: <strong>has anything actually been taken, or are you worried it might be?</strong> Open your wallet and check token balances. Check NFT holdings. Check open approvals. If nothing has moved yet, you have time.</p>
+      <p>If funds are already gone, your immediate goal is to prevent <strong>more</strong> from being taken. Attackers often drain in waves — large-value tokens first, then smaller positions, then NFTs. The longer your approvals stay active, the more they take.</p>
+      <h2>Minute 5–15: Revoke Every Approval You Can</h2>
+      <p>Scan your wallet with an approval checker. Revoke everything non-essential. Specifically:</p>
+      <ul>
+        <li>Every approval to a contract you don’t recognise</li>
+        <li>Every unlimited approval, regardless of the spender</li>
+        <li>Every <code>setApprovalForAll</code> on your NFTs</li>
+        <li>Every Permit2 approval on tokens with significant value</li>
+      </ul>
+      <p>Do this on every chain your wallet has ever used. Not just the chain where you think the scam happened. Attackers often have standing approvals they collected previously.</p>
+      <h2>Minute 15–30: Move What You Can</h2>
+      <p>If a wallet is actively being drained, you need to get assets out before approvals can be used. Priority:</p>
+      <ol>
+        <li><strong>High-value tokens first.</strong> Move large stablecoin, ETH, or WBTC positions to a fresh wallet with no approvals.</li>
+        <li><strong>NFTs next.</strong> Transfer valuable NFTs to a clean wallet. Note: if <code>setApprovalForAll</code> is already granted on the collection to a malicious contract, the attacker can still transfer NFTs <em>from</em> the destination wallet back to themselves unless you move to a wallet the attacker has no approvals on.</li>
+        <li><strong>Check for claimed airdrops.</strong> Some scam contracts masquerade as airdrops and drain tokens when the user "claims." Do not claim anything.</li>
+      </ol>
+      <p>Use a wallet you’ve never connected to any dApp. A hardware wallet initialised for this purpose is ideal.</p>
+      <h2>Minute 30–60: Document Everything</h2>
+      <p>While the drain is fresh, collect evidence:</p>
+      <ul>
+        <li>The transaction hash of the malicious signature or transaction</li>
+        <li>The contract address that drained you</li>
+        <li>The URL of the site that tricked you (screenshot, don’t revisit)</li>
+        <li>The time and date</li>
+        <li>Your wallet address</li>
+      </ul>
+      <p>This evidence is necessary for any future investigation, chain analysis, insurance claim, or law enforcement report.</p>
+      <h2>Hour 1+: Report and Recover</h2>
+      <p><strong>Report the scam.</strong> File reports with:</p>
+      <ul>
+        <li><a href="https://chainabuse.com/" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">Chainabuse</a> — shared database of malicious addresses</li>
+        <li><a href="https://www.ic3.gov/" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">IC3</a> (FBI) — if you’re in the US</li>
+        <li>Your local police cyber crime unit</li>
+        <li>The protocol or marketplace whose brand was impersonated (OpenSea, Uniswap, etc. all have security teams)</li>
+      </ul>
+      <p><strong>Do not pay recovery scammers.</strong> After any public scam report, you will be contacted by people claiming they can "recover your funds for a fee." They are scammers preying on scam victims. Real recovery, when it happens, comes through law enforcement or chain analytics firms working with exchanges — never through DMs.</p>
+      <p><strong>Check if you’re covered.</strong> Some wallets and platforms offer limited insurance or reimbursement for specific scam types. Coinbase, MetaMask, and some hardware wallet vendors have recovery programmes. Check the terms.</p>
+      <h2>After the Incident</h2>
+      <p>The wallet that was compromised should be considered burned. Even after you revoke every visible approval, there may be signatures you signed that haven’t been submitted yet. Treat the wallet as untrusted permanently.</p>
+      <p>Do not move large assets back into it. Do not treat it as a long-term holding address. If it still holds value you can’t easily move (e.g., locked tokens, staked positions), plan to migrate everything out as soon as the lock expires.</p>
+      <h2>The Hardest Rule</h2>
+      <p>Most scam victims are embarrassed. They don’t report. They don’t tell friends. They try to move on quietly. This is exactly what scammers rely on — silence lets the same attack work on the next person.</p>
+      <p>If you’ve been scammed, talk about it. Post on social media. File the reports. Add the attacker address to abuse databases. Your experience is the one thing that might stop the next person from losing the same way.</p>
+      <p>Getting scammed isn’t a reflection of your intelligence. Web3 is a hostile environment by design, and even experienced users get hit. What matters is what you do in the first hour after — and what you do with the story afterwards.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/new-generation-signature-phishing/"><span>Older</span>The New Generation of Signature Phishing Attacks</a>
+      <a class="pn pn-next" href="/blog/eight-approval-exploits-one-pattern/"><span>Newer</span>Eight Approval Exploits, One Pattern</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Permit2 and EIP-2612: The New Approval Frontier — AllowanceGuard</title>
+<meta name="description" content="The approval mechanism is evolving. Here’s what you need to know." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/permit2-and-eip-2612-the-new-approval-frontier/" />
+<meta property="og:title" content="Permit2 and EIP-2612: The New Approval Frontier — AllowanceGuard" />
+<meta property="og:description" content="The approval mechanism is evolving. Here’s what you need to know." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/permit2-and-eip-2612-the-new-approval-frontier/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Permit2 and EIP-2612: The New Approval Frontier","description":"The approval mechanism is evolving. Here’s what you need to know.","datePublished":"2026-04-13","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/permit2-and-eip-2612-the-new-approval-frontier/","image":"https://www.allowanceguard.com/images/blog/permit2-and-eip-2612.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Security</p>
+      <h1>Permit2 and EIP-2612: The New Approval Frontier</h1>
+      <p class="post-sub">The approval mechanism is evolving. Here’s what you need to know.</p>
+      <p class="post-meta">April 13, 2026 &middot; 7 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/permit2-and-eip-2612.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>If you’ve used Uniswap, 1inch, or any modern DEX in the past year, you’ve probably encountered a new kind of approval flow. Instead of the familiar “Approve” transaction followed by a swap, you signed a message in your wallet and the swap just… happened. No separate approval transaction. No gas for the approval step.</p>
+
+      <p>That’s Permit2 at work. And while it’s a genuine improvement in user experience, it introduces a new class of risk that most users don’t yet understand.</p>
+
+      <h2>The Problem Permit2 Solves</h2>
+
+      <p>Classic ERC-20 approvals have a well-known friction: before a DEX can move your tokens, you must send an on-chain <code>approve</code> transaction. This costs gas, takes time, and creates a persistent, often unlimited, allowance that lingers until you manually revoke it.</p>
+
+      <p>Uniswap Labs created <a href="https://docs.uniswap.org/contracts/permit2/overview" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">Permit2</a> as a universal approval manager. The idea: you approve Permit2 once per token, and from that point forward, any dApp that integrates with Permit2 can request access through a <strong>signed message</strong> rather than a separate on-chain transaction.</p>
+
+      <p>EIP-2612 is the underlying standard that makes this possible. It adds a <code>permit</code> function to ERC-20 tokens, allowing approvals via off-chain signatures rather than on-chain transactions.</p>
+
+      <h2>How Permit2 Works</h2>
+
+      <ol>
+        <li><strong>One-time approval:</strong> You send a single on-chain <code>approve</code> transaction granting the Permit2 contract access to a specific token. This is the only gas you pay for approvals.</li>
+        <li><strong>Signed permits:</strong> When a dApp wants to move your tokens, it asks you to sign a typed message (EIP-712). This signature specifies: which token, how much, which spender, and an expiration timestamp.</li>
+        <li><strong>Execution:</strong> The dApp submits your signature to the Permit2 contract, which verifies it and transfers the tokens in a single transaction.</li>
+      </ol>
+
+      <p>The result: fewer transactions, lower gas costs, and approvals that expire automatically.</p>
+
+      <h2>The New Risks</h2>
+
+      <p>Permit2 is better designed than legacy approvals, but it creates new attack surfaces:</p>
+
+      <h3>Signature phishing</h3>
+      <p>Because Permit2 approvals are <em>off-chain signatures</em>, they don’t appear as on-chain transactions in your wallet history. A phishing site can ask you to sign a Permit2 message that grants an attacker access to your tokens — and because it’s just a signature, not a transaction, many users don’t scrutinise it carefully.</p>
+
+      <p>The signed message is valid even if you close the phishing site. The attacker can submit it later, at their convenience.</p>
+
+      <h3>Batch permissions</h3>
+      <p>Permit2 supports <strong>batch permits</strong> — a single signature can authorise access to multiple tokens at once. A malicious dApp could bundle permissions for every token in your wallet into one signature request. If you sign without reading, you’ve approved everything in one click.</p>
+
+      <h3>The Permit2 “superapproval”</h3>
+      <p>When you first approve Permit2 for a token, you’re typically granting it an <strong>unlimited allowance</strong>. This means the Permit2 contract can move any amount of that token, subject only to the individual signed permits. If the Permit2 contract itself were compromised, all tokens you’ve approved to it would be at risk.</p>
+
+      <h2>How to Protect Yourself</h2>
+
+      <ul>
+        <li><strong>Read every signature request carefully.</strong> Your wallet will show you the EIP-712 typed data. Look for: the spender address, the token, the amount, and the expiration. If any field looks wrong, reject it.</li>
+        <li><strong>Never sign Permit2 messages on unfamiliar sites.</strong> Phishing sites can present themselves as legitimate dApps. Bookmark your trusted dApps and only sign from those bookmarks.</li>
+        <li><strong>Audit your Permit2 approvals.</strong> Tools like AllowanceGuard scan for Permit2 allowances alongside classic ERC-20 approvals. If you’ve approved Permit2 for tokens you no longer use, revoke the base approval.</li>
+        <li><strong>Prefer short expiration times.</strong> When a dApp lets you choose, set permit expirations to hours or days, not months. Most legitimate dApps submit the signature immediately.</li>
+        <li><strong>Check for batch requests.</strong> If a signature request covers multiple tokens, that’s unusual. Legitimate dApps typically request one token at a time. Multiple tokens in a single permit is a red flag.</li>
+      </ul>
+
+      <h2>The Bigger Picture</h2>
+
+      <p>Permit2 and EIP-2612 represent a genuine improvement to the approval model. Expiring, scoped, gasless approvals are what the ecosystem has needed for years. But better UX also means more sophisticated attack vectors. The security hygiene doesn’t change — it just moves from on-chain transactions to off-chain signatures.</p>
+
+      <p>The rule remains the same: understand what you’re signing before you sign it.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/open-source-stronger-our-license-update/"><span>Older</span>Open Source, Stronger: Our License Update to AGPL-3.0</a>
+      <a class="pn pn-next" href="/blog/anatomy-of-an-approval-exploit/"><span>Newer</span>The Anatomy of an Approval Exploit</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

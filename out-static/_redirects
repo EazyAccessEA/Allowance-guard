@@ -1,0 +1,10 @@
+# AllowanceGuard is retired. Keep the blog; send everything else to the sunset page.
+/blog            /blog/            301
+/dashboard/*     /                 301
+/account/*       /                 301
+/settings/*      /                 301
+/docs            /                 301
+/docs/*          /                 301
+/pricing         /                 301
+/features        /                 301
+/api/*           /                 410

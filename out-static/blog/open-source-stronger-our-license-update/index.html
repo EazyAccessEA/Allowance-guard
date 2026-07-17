@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Open Source, Stronger: Our License Update to AGPL-3.0 — AllowanceGuard</title>
+<meta name="description" content="Why We Switched Licenses and What It Means for You" />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/open-source-stronger-our-license-update/" />
+<meta property="og:title" content="Open Source, Stronger: Our License Update to AGPL-3.0 — AllowanceGuard" />
+<meta property="og:description" content="Why We Switched Licenses and What It Means for You" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/open-source-stronger-our-license-update/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Open Source, Stronger: Our License Update to AGPL-3.0","description":"Why We Switched Licenses and What It Means for You","datePublished":"2026-04-02","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/open-source-stronger-our-license-update/","image":"https://www.allowanceguard.com/images/blog/open-source-stronger-our-license-update.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Community</p>
+      <h1>Open Source, Stronger: Our License Update to AGPL-3.0</h1>
+      <p class="post-sub">Why We Switched Licenses and What It Means for You</p>
+      <p class="post-meta">April 2, 2026 &middot; 5 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/open-source-stronger-our-license-update.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>Today we are making an important change to how AllowanceGuard is licensed. We are moving from the <strong>GNU General Public License v3.0 (GPL-3.0)</strong> to the <strong>GNU Affero General Public License v3.0 (AGPL-3.0)</strong>, with a commercial dual-license option for enterprise users.</p>
+
+      <p>We want to be upfront about what this means, why we are doing it, and what it changes (and does not change) for you.</p>
+
+      <h2>What Is Changing?</h2>
+
+      <p>The license that governs AllowanceGuard&apos;s source code is changing from GPL-3.0 to AGPL-3.0. We are also introducing a <strong>commercial license option</strong> for organizations that need it.</p>
+
+      <p>In plain language:</p>
+
+      <ul>
+        <li><strong>AGPL-3.0</strong> is nearly identical to GPL-3.0, with one addition: if someone takes our code, modifies it, and runs it as a web service, they must share their modifications with users. GPL-3.0 only requires this when you distribute the actual software binary.</li>
+        <li><strong>Commercial license</strong> is an alternative for companies that cannot open-source their own code. They can license AllowanceGuard commercially instead of complying with AGPL-3.0.</li>
+      </ul>
+
+      <h2>Why Are We Doing This?</h2>
+
+      <p>AllowanceGuard is a web application. Under GPL-3.0, a competitor could fork our entire codebase — including premium features — host it as their own web service, and <strong>never share a single line of their modifications</strong> with the community. This is known as the "SaaS loophole" in GPL-3.0.</p>
+
+      <p>AGPL-3.0 closes that loophole. If someone builds on AllowanceGuard and offers it as a network service, they must contribute their improvements back. This protects the community that built this tool.</p>
+
+      <p>The commercial license exists because we are building AllowanceGuard into a sustainable business. Some enterprise customers have policies that prevent them from using AGPL-licensed software. The commercial license gives them a path to use AllowanceGuard while supporting the project financially.</p>
+
+      <h2>What Does NOT Change?</h2>
+
+      <p>This is the most important part:</p>
+
+      <ul>
+        <li><strong>The core scanner is still free and open source.</strong> You can scan your wallets, check your allowances, and revoke risky approvals without paying anything. Always.</li>
+        <li><strong>All existing open-source features remain available under AGPL-3.0.</strong> Nothing is being taken away.</li>
+        <li><strong>Individual users are completely unaffected.</strong> If you use AllowanceGuard through our website, nothing changes for you at all.</li>
+        <li><strong>Community contributions are still welcome.</strong> The project is still on GitHub, still open source, still community-driven.</li>
+        <li><strong>If you have forked AllowanceGuard for personal or non-commercial use</strong>, AGPL-3.0 works exactly the same as GPL-3.0 for you.</li>
+      </ul>
+
+      <h2>Who Is Affected?</h2>
+
+      <p>The only people affected by this change are organizations that:</p>
+
+      <ol>
+        <li>Take AllowanceGuard&apos;s source code</li>
+        <li>Modify it</li>
+        <li>Run it as a web service for others</li>
+        <li>Do <strong>not</strong> want to share their modifications</li>
+      </ol>
+
+      <p>Under GPL-3.0, this was allowed. Under AGPL-3.0, they must either share their source code or purchase a commercial license. We think that is fair.</p>
+
+      <h2>What About Contributors?</h2>
+
+      <p>We are introducing a <strong>Contributor License Agreement (CLA)</strong> for new contributions. This is a standard practice for dual-licensed open-source projects. The CLA:</p>
+
+      <ul>
+        <li>Grants AllowanceGuard the right to offer your contributions under both AGPL-3.0 and the commercial license</li>
+        <li><strong>You keep full copyright ownership of your work</strong></li>
+        <li>Is signed once, automatically, through GitHub using CLA Assistant</li>
+      </ul>
+
+      <p>Projects like MongoDB, Grafana, Nextcloud, and Minio all use a similar model. It is the industry standard for sustainable open-source businesses.</p>
+
+      <h2>The Big Picture</h2>
+
+      <p>We started AllowanceGuard because Web3 security should be accessible to everyone. That has not changed. The core tool is free, open source, and always will be.</p>
+
+      <p>But building and maintaining a security tool that people depend on costs real money — servers, API calls, security audits, development time. The dual license model lets us sustain the project without compromising on openness:</p>
+
+      <ul>
+        <li><strong>Community users</strong> get a stronger copyleft license that protects the ecosystem</li>
+        <li><strong>Enterprise customers</strong> get a licensing option that fits their compliance needs</li>
+        <li><strong>The project</strong> gets a sustainable revenue path that funds continued development</li>
+      </ul>
+
+      <p>Everyone wins.</p>
+
+      <h2>Questions?</h2>
+
+      <p>If you have questions about the license change, you can:</p>
+
+      <ul>
+        <li>Open a discussion on our <a href="https://github.com/EazyAccessEA/Allowance-guard" target="_blank" rel="noopener noreferrer" class="text-amber-deep hover:underline">GitHub repository</a></li>
+        <li>Email us at <a href="mailto:legal.support@allowanceguard.com" class="text-amber-deep hover:underline">legal.support@allowanceguard.com</a> for licensing questions</li>
+        <li>Email us at <a href="mailto:support@allowanceguard.com" class="text-amber-deep hover:underline">support@allowanceguard.com</a> for general questions</li>
+      </ul>
+
+      <p>Thank you for being part of the AllowanceGuard community. We are building something that matters, and we are doing it in the open.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/staying-safe-with-defi-dapps/"><span>Older</span>Staying Safe With DeFi Dapps</a>
+      <a class="pn pn-next" href="/blog/permit2-and-eip-2612-the-new-approval-frontier/"><span>Newer</span>Permit2 and EIP-2612: The New Approval Frontier</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

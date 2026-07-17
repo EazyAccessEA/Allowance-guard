@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The New Generation of Signature Phishing Attacks — AllowanceGuard</title>
+<meta name="description" content="Signature phishing has evolved. Here’s what you’re now up against." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/new-generation-signature-phishing/" />
+<meta property="og:title" content="The New Generation of Signature Phishing Attacks — AllowanceGuard" />
+<meta property="og:description" content="Signature phishing has evolved. Here’s what you’re now up against." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/new-generation-signature-phishing/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"The New Generation of Signature Phishing Attacks","description":"Signature phishing has evolved. Here’s what you’re now up against.","datePublished":"2026-04-14","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/new-generation-signature-phishing/","image":"https://www.allowanceguard.com/images/blog/new-generation-signature-phishing.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Security</p>
+      <h1>The New Generation of Signature Phishing Attacks</h1>
+      <p class="post-sub">Signature phishing has evolved. Here’s what you’re now up against.</p>
+      <p class="post-meta">April 14, 2026 &middot; 7 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/new-generation-signature-phishing.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>Two years ago, signature phishing meant a fake site asking you to sign a transaction that drained your wallet. Users learned to check transaction amounts and spender addresses. Attackers adapted.</p>
+      <p>The 2026 generation of signature phishing doesn’t need you to approve a transaction at all. It works by exploiting the <strong>gap between what your wallet shows you and what you’re actually signing</strong>.</p>
+      <h2>Attack 1: Blind Signing on Hardware Wallets</h2>
+      <p>Hardware wallets can’t decode every transaction. When a dApp asks you to sign a complex multicall or smart-contract interaction, your Ledger or Trezor shows you a hex string and a prompt: "Blind sign?" Most users click yes because the alternative is not using the dApp.</p>
+      <p>Attackers craft transactions that look routine but include a hidden <code>setApprovalForAll</code> or <code>permit</code> call. Your hardware wallet displays unverified data. You approve. The malicious call executes alongside the legitimate one.</p>
+      <p><strong>Defence</strong>: never blind sign. If your wallet can’t verify a transaction, don’t sign it. Use a wallet with clear signing support for the specific protocol (Ledger has expanded protocol support in recent firmware).</p>
+      <h2>Attack 2: Permit2 Signature Trees</h2>
+      <p>Permit2 allows batch signatures — one signature authorising multiple token spends. Attackers hide malicious tokens inside an otherwise legitimate signature tree. The wallet shows you the top-level structure ("Approve 3 tokens") but hides the details of each token and spender.</p>
+      <p>A legitimate DEX might ask you to approve USDC, USDT, and DAI to a router. A malicious site asks you to approve USDC, USDT, and a fourth token — one with a malicious spender address that drains any matching token you hold.</p>
+      <p><strong>Defence</strong>: always expand Permit2 signature trees fully before signing. Verify each token and each spender address individually. If your wallet doesn’t let you inspect the full tree, don’t use it for Permit2.</p>
+      <h2>Attack 3: Intent Swapping</h2>
+      <p>You visit a dApp. The UI shows a clear action: "Buy NFT for 0.5 ETH." You click. Your wallet prompts. But the signature request has been swapped — the UI shows one thing, the actual EIP-712 payload is different. This happens when the dApp’s frontend is compromised (injected malicious JS), the wallet connection is hijacked (WalletConnect impersonation), or the signature is crafted to look benign in a preview but have dangerous effects on execution.</p>
+      <p><strong>Defence</strong>: read the actual EIP-712 data your wallet displays, not the dApp’s UI. If your wallet shows different data than the website says it should, reject the signature immediately. This is where hardware wallets with trusted displays become critical — they show you what you’re actually signing, independent of the dApp.</p>
+      <h2>Attack 4: Gasless Signatures for Off-Chain Actions</h2>
+      <p>Some attacks don’t need you to broadcast a transaction. A gasless <code>permit</code> signature (EIP-2612) or an off-chain order (Seaport, 0x) can be submitted by the attacker days later. You sign what looks like a harmless message. The attacker holds it. When convenient, they submit it on-chain.</p>
+      <p>By the time the transaction appears on-chain, you’ve long since forgotten about the signature. The tokens vanish. No drain transaction appears in your history at the time of the theft — only the signature, which most wallets don’t log.</p>
+      <p><strong>Defence</strong>: be extremely cautious with off-chain signature requests. Never sign a message you don’t understand. If a site asks you to sign something to "verify ownership" or "update permissions" without any on-chain transaction, close the site.</p>
+      <h2>The Common Thread</h2>
+      <p>All four attacks exploit the same weakness: <strong>wallet UIs can’t always show you what you’re actually signing</strong>. Complex transactions, batch signatures, and off-chain data are all hard to render safely. Attackers weaponise that gap.</p>
+      <p>The old advice — "check the spender address, check the amount" — isn’t enough anymore. The new advice:</p>
+      <ol>
+        <li><strong>If you can’t read it, don’t sign it.</strong></li>
+        <li><strong>If the UI says one thing and the wallet shows another, trust the wallet.</strong></li>
+        <li><strong>Never blind sign anything.</strong></li>
+        <li><strong>Off-chain signatures are transactions you haven’t seen yet.</strong></li>
+      </ol>
+      <p>Signature phishing is no longer about spotting the fake OpenSea URL. It’s about knowing exactly what your signature does — every time, without exception.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/nft-approvals-setapprovalforall-trap/"><span>Older</span>NFT Approvals: The setApprovalForAll Trap</a>
+      <a class="pn pn-next" href="/blog/i-think-ive-been-scammed-now-what/"><span>Newer</span>I Think I’ve Been Scammed — Now What?</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>

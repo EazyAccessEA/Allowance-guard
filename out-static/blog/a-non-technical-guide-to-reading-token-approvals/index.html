@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Non-Technical Guide to Reading Token Approvals — AllowanceGuard</title>
+<meta name="description" content="What every column, number, and label on your approval dashboard actually means." />
+<link rel="canonical" href="https://www.allowanceguard.com/blog/a-non-technical-guide-to-reading-token-approvals/" />
+<meta property="og:title" content="A Non-Technical Guide to Reading Token Approvals — AllowanceGuard" />
+<meta property="og:description" content="What every column, number, and label on your approval dashboard actually means." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://www.allowanceguard.com/blog/a-non-technical-guide-to-reading-token-approvals/" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="/images/ag-logo-ink.png" />
+<link rel="stylesheet" href="/styles.css" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"A Non-Technical Guide to Reading Token Approvals","description":"What every column, number, and label on your approval dashboard actually means.","datePublished":"2026-04-13","author":{"@type":"Organization","name":"AllowanceGuard"},"publisher":{"@type":"Organization","name":"AllowanceGuard"},"mainEntityOfPage":"https://www.allowanceguard.com/blog/a-non-technical-guide-to-reading-token-approvals/","image":"https://www.allowanceguard.com/images/blog/non-technical-guide-to-approvals.webp"}</script>
+</head>
+<body class="page-post">
+<header class="site-header">
+  <a class="brand" href="/"><img src="/images/ag-logo-ink.png" alt="" width="28" height="28" /><span>AllowanceGuard</span></a>
+  <nav>
+    <a href="/blog/">Archive</a>
+    <a href="https://github.com/EazyAccessEA/Allowance-guard" rel="noopener">Source</a>
+  </nav>
+</header>
+<main>
+
+  
+    <div class="banner" role="note">
+      <strong>AllowanceGuard has been retired.</strong> The scanner, API, and browser
+      extension are no longer running. These articles remain as a free, archived
+      reference. To review or revoke live wallet approvals today, use
+      <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.
+    </div>
+  <article class="post">
+    <div class="post-head">
+      <p class="post-cat">Education</p>
+      <h1>A Non-Technical Guide to Reading Token Approvals</h1>
+      <p class="post-sub">What every column, number, and label on your approval dashboard actually means.</p>
+      <p class="post-meta">April 13, 2026 &middot; 7 min read</p>
+    </div>
+    <img class="post-hero" src="/images/blog/non-technical-guide-to-approvals.webp" alt="" width="1200" height="630" />
+    <div class="post-body">
+<p>You’ve scanned your wallet. The results are in. And now you’re looking at a table full of contract addresses, token names, approval amounts, and risk labels — and you’re not sure what any of it means or what to do about it.</p>
+
+      <p>You’re not alone. Token approval dashboards are designed by people who already understand them. This guide is for everyone else.</p>
+
+      <p>We’ll walk through every piece of information you see when you scan a wallet, explain what it means in plain language, and tell you exactly when to worry and when not to.</p>
+
+      <h2>The Basics: What Is an Approval?</h2>
+
+      <p>When you use a DeFi app — swapping tokens, providing liquidity, staking — you give that app <strong>permission to move a specific token from your wallet</strong>. This permission is called an approval (or allowance). It’s stored on the blockchain and stays active until you revoke it.</p>
+
+      <p>Think of it as giving someone a signed permission slip to withdraw from your bank account. The slip doesn’t expire. The person can use it whenever they want, for up to the amount you specified.</p>
+
+      <h2>Reading Your Approval Dashboard</h2>
+
+      <h3>Token</h3>
+      <p>The name and symbol of the token you’ve approved (e.g., USDC, WETH, DAI). This is the asset that’s at risk — the token the approved contract can move.</p>
+
+      <h3>Approved Spender</h3>
+      <p>The contract address you gave permission to. This is usually a DEX router, lending protocol, or bridge contract. The address itself is a long string of characters like <code>0x68b3...4a2f</code>. What matters more is the <strong>label</strong> — the name of the protocol the address belongs to. If the spender is labelled (e.g., “Uniswap V3 Router”), it means the address has been verified. If it says “Unknown” or has no label, that’s a flag worth investigating.</p>
+
+      <h3>Approved Amount</h3>
+      <p>How much of the token the spender is allowed to move. You’ll typically see one of three values:</p>
+
+      <ul>
+        <li><strong>Unlimited / MAX</strong> — The spender can move <em>all</em> of this token from your wallet, no matter how much you hold. This is the most common and most dangerous type. It’s set because it saves gas, but it means one vulnerability in the spender contract could drain your entire balance of that token.</li>
+        <li><strong>A specific number</strong> (e.g., 1,000 USDC) — The spender can move up to this amount. Once used, the remaining allowance decreases. This is safer because it limits your exposure.</li>
+        <li><strong>0</strong> — The approval has been revoked. The spender can no longer move this token. This is the safe state.</li>
+      </ul>
+
+      <h3>Risk Level</h3>
+      <p>A score or label indicating how risky this particular approval is. This is where automated analysis earns its value. Common risk factors include:</p>
+
+      <ul>
+        <li><strong>Critical</strong> — Unlimited approval to an unverified or flagged contract. Act immediately.</li>
+        <li><strong>High</strong> — Unlimited approval to a contract that hasn’t been interacted with recently, or one with known vulnerabilities.</li>
+        <li><strong>Medium</strong> — Limited approval to a known protocol, but with a large amount.</li>
+        <li><strong>Low</strong> — Small approval to a verified, well-known protocol with a clean track record.</li>
+      </ul>
+
+      <h3>Last Used</h3>
+      <p>When you last interacted with this spender contract. An approval to a protocol you used six months ago and haven’t touched since is higher risk than one you used yesterday. Stale approvals are the most dangerous — you’ve forgotten about them, but they’re still active.</p>
+
+      <h3>Chain</h3>
+      <p>Which blockchain network this approval exists on (e.g., Ethereum, Arbitrum, Base). If you use multiple chains, you’ll have separate approvals on each one. All of them need to be managed.</p>
+
+      <h2>What to Do: A Simple Decision Framework</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unlimited approval to an unknown/unverified contract</td>
+            <td><strong>Revoke immediately.</strong></td>
+          </tr>
+          <tr>
+            <td>Unlimited approval to a known protocol you no longer use</td>
+            <td><strong>Revoke.</strong> You can re-approve later if needed.</td>
+          </tr>
+          <tr>
+            <td>Unlimited approval to a protocol you use daily</td>
+            <td><strong>Consider reducing</strong> to a specific amount if your wallet supports it. Otherwise, keep it but review monthly.</td>
+          </tr>
+          <tr>
+            <td>Small, specific approval to a verified protocol</td>
+            <td><strong>Low priority.</strong> Review during your next regular audit.</td>
+          </tr>
+          <tr>
+            <td>Any approval flagged as Critical</td>
+            <td><strong>Revoke immediately.</strong> Investigate the spender.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Revoking: What Happens When You Click the Button</h2>
+
+      <p>Revoking an approval sends a small on-chain transaction that sets the approved amount to zero. This costs a small amount of gas (a few cents on L2 networks, potentially a few dollars on Ethereum mainnet).</p>
+
+      <p>Revoking does <strong>not</strong> move any tokens. It does <strong>not</strong> affect tokens you’ve already deposited in a protocol. It simply removes the spender’s permission to move tokens from your wallet in the future.</p>
+
+      <p>If you revoke an approval for a protocol you still use, you’ll simply be asked to approve it again the next time you interact with it. There’s no permanent consequence to revoking — it’s always reversible.</p>
+
+      <h2>Building the Habit</h2>
+
+      <p>You don’t need to understand every technical detail of token approvals to stay safe. You need three habits:</p>
+
+      <ol>
+        <li><strong>Scan monthly.</strong> Pick a day. Set a reminder. It takes under a minute.</li>
+        <li><strong>Revoke what you don’t recognise.</strong> If you can’t remember what a spender is, revoke it. You can always re-approve.</li>
+        <li><strong>Pay attention to “Unlimited.”</strong> Every unlimited approval is a blank cheque. Treat it accordingly.</li>
+      </ol>
+
+      <p>Security in Web3 isn’t about being a developer. It’s about being deliberate. And now you know enough to be exactly that.</p>
+    </div>
+    
+    <nav class="post-nav">
+      <a class="pn pn-prev" href="/blog/why-we-open-sourced-our-security-scanner/"><span>Older</span>Why We Open-Sourced Our Security Scanner</a>
+      <a class="pn pn-next" href="/blog/account-abstraction-future-of-wallet-approvals/"><span>Newer</span>Account Abstraction and the Future of Wallet Approvals</a>
+    </nav>
+    <p class="back"><a href="/blog/">&larr; All articles</a></p>
+  </article>
+</main>
+<footer class="site-footer">
+  <p>AllowanceGuard was an open-source Web3 wallet-approval scanner. The live
+  product is retired; this archive is preserved under
+  <a href="https://github.com/EazyAccessEA/Allowance-guard/blob/main/LICENSE" rel="noopener">AGPL-3.0</a>.</p>
+  <p class="muted">Advisory content only. Nothing here is financial or security advice.
+  For live approval management use <a href="https://revoke.cash" rel="noopener">Revoke.cash</a>.</p>
+</footer>
+</body>
+</html>
