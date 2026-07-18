@@ -4,7 +4,7 @@
 // the cron fallback route and on-demand kicks (lib/job-kick.ts). Keeping the
 // loop out of the route lets one invocation drain several jobs within its
 // time budget instead of one job per cron tick.
-import { claimPending, finishJob, JobRow } from '@/lib/jobs'
+import { claimPending, finishJob, countClaimablePending, JobRow } from '@/lib/jobs'
 import { scanWalletOnChain } from '@/lib/scanner'
 import { apiLogger } from '@/lib/logger'
 import { refreshRiskForWallet } from '@/lib/risk'
@@ -75,17 +75,33 @@ async function handle(job: JobRow) {
 }
 
 /**
- * Reset jobs stuck in 'running' for more than 3 minutes.
- * These are jobs where the function timed out before finishJob ran.
+ * Reset jobs stuck in 'running' for more than 3 minutes — jobs whose function
+ * was killed (e.g. maxDuration) before finishJob ran.
+ *
+ * A job that always outlives the function budget never reaches finishJob, so
+ * its attempts counter is bumped only by claimPending. Once it has been claimed
+ * max_attempts times we mark it 'failed' here instead of resetting it to
+ * 'pending' forever — otherwise a single poison job would wake Neon on every
+ * cron tick indefinitely. Jobs with attempts left go back to 'pending' with a
+ * fresh updated_at, so the retry cooldown in claimPending spaces out the retry.
  */
 async function resetStuckJobs() {
   const { rows } = await pool.query(
-    `UPDATE jobs SET status='pending'::job_status, started_at=NULL, updated_at=NOW()
-     WHERE status='running'::job_status AND started_at < NOW() - INTERVAL '3 minutes'
-     RETURNING id`
+    `UPDATE jobs
+        SET status = (CASE WHEN attempts >= max_attempts THEN 'failed' ELSE 'pending' END)::job_status,
+            started_at = CASE WHEN attempts >= max_attempts THEN started_at ELSE NULL END,
+            finished_at = CASE WHEN attempts >= max_attempts THEN NOW() ELSE finished_at END,
+            error = CASE WHEN attempts >= max_attempts
+                         THEN COALESCE(error, 'stuck: killed before finishJob, exceeded max_attempts')
+                         ELSE error END,
+            updated_at = NOW()
+      WHERE status='running'::job_status AND started_at < NOW() - INTERVAL '3 minutes'
+      RETURNING id, status`
   )
   if (rows.length > 0) {
-    apiLogger.info('reset.stuck.jobs', { count: rows.length, ids: rows.map((r: Record<string, unknown>) => r.id) })
+    const failed = rows.filter((r: Record<string, unknown>) => r.status === 'failed').map((r) => r.id)
+    const requeued = rows.filter((r: Record<string, unknown>) => r.status === 'pending').map((r) => r.id)
+    apiLogger.info('reset.stuck.jobs', { count: rows.length, requeued, failed })
   }
 }
 
@@ -109,16 +125,17 @@ export async function processPendingJobs(opts?: { deadlineMs?: number }): Promis
   // Recover jobs stuck in 'running' from previous timed-out invocations
   await resetStuckJobs()
 
-  const { rows: pendingRows } = await pool.query(
-    `SELECT COUNT(*)::int as cnt FROM jobs WHERE status='pending'::job_status`
-  )
-  const pending = (pendingRows[0]?.cnt as number | undefined) ?? 0
+  const pending = await countClaimablePending()
   apiLogger.info('jobs.process.start', { pending })
 
   let processed = 0
   let failed = 0
 
   while (Date.now() - startedAt < deadlineMs) {
+    // Claim only jobs past their retry cooldown — a job that fails inside this
+    // loop is returned to 'pending' with a fresh updated_at and will NOT be
+    // re-claimed here, so its remaining attempts are spread across invocations
+    // rather than consumed back-to-back.
     const jobs = await claimPending(1) // one job at a time — each scans up to 27 chains
     if (jobs.length === 0) break
 
@@ -137,10 +154,10 @@ export async function processPendingJobs(opts?: { deadlineMs?: number }): Promis
     }
   }
 
-  const { rows: remainingRows } = await pool.query(
-    `SELECT COUNT(*)::int as cnt FROM jobs WHERE status='pending'::job_status`
-  )
-  const remaining = (remainingRows[0]?.cnt as number | undefined) ?? 0
+  // Count only CLAIMABLE remainder so the self-chain in the route fires when
+  // real work is waiting — not for jobs merely serving out their cooldown
+  // (that would spin fresh invocations, waking Neon, until the cooldown ends).
+  const remaining = await countClaimablePending()
 
   return { pending, processed, failed, remaining }
 }

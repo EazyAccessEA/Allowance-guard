@@ -72,8 +72,16 @@ export async function enqueueMonitorScans(
       ? m.chains
       : [] // empty = use all enabled chains; the scan job resolver handles this
 
-    const jobId = await enqueueScan(m.wallet_address, chains)
-    queued.push({ walletAddress: m.wallet_address, jobId })
+    try {
+      const jobId = await enqueueScan(m.wallet_address, chains)
+      queued.push({ walletAddress: m.wallet_address, jobId })
+    } catch (e: unknown) {
+      // A scan is already queued/running for this wallet (unique active-job
+      // constraint). That's fine — skip it, but do NOT abort the batch, or one
+      // busy wallet would starve every other due monitor and drop the caller's
+      // job kick and change detection.
+      if (!(e instanceof Error && e.message.includes('uniq_jobs_active_wallet'))) throw e
+    }
 
     // Mark last_scan_at so we don't re-enqueue on the next cron tick
     await pool.query(

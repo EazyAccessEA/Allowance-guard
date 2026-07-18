@@ -15,20 +15,26 @@ async function timedCheck<T>(fn: () => Promise<T>): Promise<{ result: T; latency
 export async function GET(req: NextRequest) {
   if (!startedAt) startedAt = Date.now()
 
-  // fast=1 — liveness-only mode for frequent uptime pingers. Skips the
-  // database check (which wakes Neon compute; the free plan bills every
-  // awake minute), the cache check (which falls back to Postgres when
-  // Upstash is absent), and the 27-chain RPC sweep. Point any monitor
-  // that polls more often than hourly at /api/healthz?fast=1.
-  // See docs/ops-monitoring.md "Neon compute guardrails".
+  // Modes (see docs/ops-monitoring.md "Neon compute guardrails"):
+  //  - deep (default): database + cache + RPC. For humans / at-most-hourly monitors.
+  //  - fast=1: liveness only — skips the database check (which wakes Neon
+  //    compute; the free plan bills every awake minute), the cache check
+  //    (falls back to Postgres when Upstash is absent), and the RPC sweep.
+  //    Point any monitor that polls more often than hourly here.
+  //  - checks=rpc: RPC only — skips the Neon-waking database and cache checks
+  //    but still probes chain RPCs. Used by the in-app RpcStatusBanner, which
+  //    polls from every visitor tab and must never wake Neon.
   const fast = req.nextUrl.searchParams.get('fast') === '1'
+  const rpcOnly = req.nextUrl.searchParams.get('checks') === 'rpc'
+  const skipDb = fast || rpcOnly       // both skip the Neon-waking DB probe
+  const skipRpc = fast                 // only pure-liveness skips the RPC sweep
 
   const services: Record<string, { status: string; latency_ms?: number; details?: string }> = {}
   let overallOk = true
 
   // Database check — lazy import to avoid crash when DATABASE_URL is missing
-  if (fast) {
-    services.database = { status: 'skipped', details: 'fast mode' }
+  if (skipDb) {
+    services.database = { status: 'skipped', details: fast ? 'fast mode' : 'rpc-only mode' }
   } else if (process.env.DATABASE_URL) {
     try {
       const { pool } = await import('@/lib/db')
@@ -55,9 +61,10 @@ export async function GET(req: NextRequest) {
     services.upstash = { status: 'unavailable', details: 'Upstash not configured' }
   }
 
-  // Cache check — lazy import
-  if (fast) {
-    services.cache = { status: 'skipped', details: 'fast mode' }
+  // Cache check — lazy import. Skipped whenever the DB is skipped, because the
+  // cache health check falls back to a Postgres write/read when Upstash is absent.
+  if (skipDb) {
+    services.cache = { status: 'skipped', details: fast ? 'fast mode' : 'rpc-only mode' }
   } else {
     try {
       const { cacheHealthCheck } = await import('@/lib/cache')
@@ -71,8 +78,9 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // RPC checks per chain — lazy import
-  if (fast) {
+  // RPC checks per chain — lazy import. RPC probes do not touch Neon, so they
+  // run in deep and rpc-only modes; only pure-liveness (fast) skips them.
+  if (skipRpc) {
     services.rpc = { status: 'skipped', details: 'fast mode' }
   } else {
     try {
@@ -102,7 +110,7 @@ export async function GET(req: NextRequest) {
   const response = {
     ok: overallOk,
     status: overallOk ? 'healthy' : 'unhealthy',
-    mode: fast ? 'fast' : 'deep',
+    mode: fast ? 'fast' : rpcOnly ? 'rpc' : 'deep',
     version: pkg.version,
     uptime_seconds: uptimeSeconds,
     services,

@@ -8,14 +8,26 @@ export default function RpcStatusBanner() {
   useEffect(() => {
     let t: NodeJS.Timeout
     const MAX_CONSECUTIVE_FAILS = 10 // stop after ~30min of backoff
+    const BASE_INTERVAL = 60000 // 60s — this runs in every visitor tab
 
     const ping = async () => {
       try {
-        const r = await fetch('/api/healthz', { cache: 'no-store' })
+        // checks=rpc probes chain RPCs WITHOUT the database check. Hitting the
+        // default (deep) endpoint would run SELECT 1 against Neon on every poll
+        // in every open tab, which kept the free-plan compute awake 24/7.
+        // See docs/ops-monitoring.md "Neon compute guardrails".
+        const r = await fetch('/api/healthz?checks=rpc', { cache: 'no-store' })
         if (r.ok) {
           const j = await r.json()
-          const rpcBad = String(j.checks?.rpc || '').startsWith('fail') ||
-                 Object.values(j.checks?.chains || {}).some((status: unknown) => String(status).startsWith('fail'))
+          // healthz reports per-chain results under `services` keyed `rpc_<id>`,
+          // plus `services.rpc` when the RPC modules can't load at all.
+          const services: Record<string, { status?: string }> = j.services || {}
+          const rpcBad = Object.entries(services)
+            .filter(([key]) => key.startsWith('rpc'))
+            .some(([, v]) => {
+              const s = String(v?.status || '')
+              return s === 'degraded' || s === 'error' || s === 'unavailable'
+            })
           setBad(rpcBad)
           failCount.current = rpcBad ? failCount.current + 1 : 0
         } else if (r.status === 403 || r.status === 401) {
@@ -35,8 +47,8 @@ export default function RpcStatusBanner() {
       // Give up after too many consecutive failures
       if (failCount.current >= MAX_CONSECUTIVE_FAILS) return
 
-      // Back off: 30s → 60s → 120s → max 5min
-      const delay = Math.min(30000 * Math.pow(2, Math.min(failCount.current, 4)), 300000)
+      // Back off: 60s → 120s → 240s → max 5min
+      const delay = Math.min(BASE_INTERVAL * Math.pow(2, Math.min(failCount.current, 4)), 300000)
       t = setTimeout(ping, delay)
     }
 

@@ -121,7 +121,9 @@ curl "https://www.allowanceguard.com/api/alerts/daily"
 - `/api/email/cron` — daily 10:00 UTC
 - `/api/jobs/cleanup` — daily 03:00 UTC
 
-**cron-job.org** (external — configure in the cron-job.org dashboard):
+**External pingers** (cron-job.org was retired in favour of Vercel Cron — see
+`projects/allowanceguard/decisions/0003-vercel-cron.md`; anything still pointed
+at these routes must obey the guardrails below):
 - Health monitoring: Every 10 minutes → **must target `/api/alerts/health?fast=1`** (liveness only)
 - Optional deep health check: hourly at :00 → `/api/alerts/health` (no param)
 - Daily reports: Daily at 8:05 AM UTC → `/api/alerts/daily`
@@ -149,10 +151,19 @@ not user traffic.
    only a safety net for lost kicks.
 4. **Frequent health pings use `?fast=1`.** The deep check (`SELECT 1` +
    cache + 27 RPC probes) is for humans and at-most-hourly monitors.
+5. **Client-side pollers must never hit a database-touching endpoint.** The
+   in-app `RpcStatusBanner` (mounted in the root layout, so it runs in *every*
+   visitor tab) polls `/api/healthz?checks=rpc` — RPC only, no `SELECT 1`. A
+   single tab left open on the deep endpoint would keep Neon awake indefinitely.
+6. **Know which endpoints wake Neon.** Database-touching (do not poll frequently
+   or from clients): `/api/healthz` (deep, no param), `/api/readiness`
+   (`SELECT 1`, no fast mode — human/probe use only), `/api/ops/metrics`, and
+   every cron listed above. Non-waking: `/api/healthz?fast=1` and
+   `/api/healthz?checks=rpc`.
 
 **Budget math** (0.25 CU minimum compute, 5-minute autosuspend): one aligned
-15-minute schedule ≈ 5.5 awake min per 15 ≈ 37% duty ≈ **~65 CU-hours/month**
-worst case, before on-demand scan activity. Within the 100 CU-hour free
+15-minute schedule ≈ 5.5 awake min per 15 ≈ 37% duty ≈ **~65–70 CU-hours/month**
+worst case (varies with month length), before on-demand scan activity. Within the 100 CU-hour free
 allowance, but with limited headroom — if usage grows, either upgrade to the
 Launch plan or stretch fallback schedules to every 30 minutes (halves the
 idle duty cycle; monitor freshness bound becomes 30 min).

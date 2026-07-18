@@ -55,11 +55,33 @@ export async function getJob(id: number) {
   return rows[0] || null
 }
 
-/** Claim the oldest pending job for processing. */
+/**
+ * Retry cooldown. A job that fails but still has attempts left is returned to
+ * 'pending' with a fresh updated_at (finishJob / resetStuckJobs), so this
+ * window keeps it from being re-claimed immediately. Without it the drain loop
+ * in lib/job-runner.ts would burn all max_attempts back-to-back in a single
+ * invocation — turning transient RPC blips into hard failures. First attempts
+ * (attempts = 0) are never delayed, so fresh scans still start instantly.
+ */
+export const RETRY_COOLDOWN_SECONDS = 45
+
+/** SQL predicate for a pending job that is eligible to be claimed right now. */
+const CLAIMABLE = `status='pending'::job_status
+  AND (attempts = 0 OR updated_at < NOW() - INTERVAL '${RETRY_COOLDOWN_SECONDS} seconds')`
+
+/** Count pending jobs that are eligible to be claimed now (past their cooldown). */
+export async function countClaimablePending(): Promise<number> {
+  const { rows } = await pool.query(
+    `SELECT COUNT(*)::int AS cnt FROM jobs WHERE ${CLAIMABLE}`
+  )
+  return (rows[0]?.cnt as number | undefined) ?? 0
+}
+
+/** Claim the oldest claimable pending job for processing. */
 export async function claimPending(_limit = 1) {
-  // Step 1: find the oldest pending job (simple SELECT, no subquery)
+  // Step 1: find the oldest claimable pending job (simple SELECT, no subquery)
   const { rows: pending } = await pool.query(
-    `SELECT id FROM jobs WHERE status='pending'::job_status ORDER BY created_at ASC LIMIT 1`
+    `SELECT id FROM jobs WHERE ${CLAIMABLE} ORDER BY created_at ASC LIMIT 1`
   )
   if (!pending.length) return []
 

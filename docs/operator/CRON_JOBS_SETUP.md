@@ -1,10 +1,28 @@
 # Cron Jobs Setup - cron-jobs.org
 
-This document outlines the external cron job configuration using cron-jobs.org for Allowance Guard.
+> ⚠️ **SUPERSEDED — do not follow the schedules below verbatim.**
+> Scheduling moved to **Vercel Cron** (`vercel.json`); the external cron-job.org
+> scheduler was retired (see `projects/allowanceguard/decisions/0003-vercel-cron.md`).
+> This file is kept for historical reference only.
+>
+> **If any external pinger is still in use, it MUST obey the Neon compute
+> guardrails** (`docs/ops-monitoring.md` → "Neon Compute Guardrails"):
+> - **Never poll a database-touching endpoint more often than every 15 minutes.**
+>   The 1-minute `jobs/process` poll and 10-minute deep health ping this doc once
+>   described are exactly what exhausted the Neon free-plan compute allowance in
+>   July 2026.
+> - `/api/jobs/process` is **not** externally polled any more — it runs on a
+>   15-minute Vercel Cron fallback and is kicked on-demand when a scan is enqueued
+>   (`src/lib/job-kick.ts`). Do not re-add a frequent external poll.
+> - A frequent health pinger must target `/api/alerts/health?fast=1` (liveness
+>   only, no database check). Deep checks (`/api/alerts/health` with no param)
+>   run at most hourly.
 
 ## Overview
 
-Since we're using Vercel's Hobby plan which has limitations on cron jobs, we use external cron job service cron-jobs.org to trigger our scheduled tasks.
+Historically, on Vercel's Hobby plan, an external cron service (cron-job.org)
+triggered scheduled tasks. The project now runs on Vercel Cron; the sections
+below are retained only to document the original setup.
 
 ## Required Cron Jobs
 
@@ -16,18 +34,18 @@ Since we're using Vercel's Hobby plan which has limitations on cron jobs, we use
 - **Response**: JSON with sent counts and status
 
 ### 2. Health Monitoring
-- **URL**: `https://www.allowanceguard.com/api/alerts/health`
+- **URL**: `https://www.allowanceguard.com/api/alerts/health?fast=1` (liveness only — the `?fast=1` is mandatory for any sub-hourly poll; without it each ping runs `SELECT 1` against Neon)
 - **Method**: `GET`
-- **Schedule**: `*/60 * * * *` (Every 60 minutes)
-- **Purpose**: Monitor system health and send alerts if degraded
+- **Schedule**: `*/10 * * * *` (Every 10 minutes) — deep checks (no `?fast=1`) hourly at most
+- **Purpose**: Monitor app liveness and send alerts if degraded
 - **Response**: JSON with health status
 
 ### 3. Job Processing
-- **URL**: `https://www.allowanceguard.com/api/jobs/process`
-- **Method**: `GET` or `POST`
-- **Schedule**: `*/30 * * * *` (Every 30 minutes)
-- **Purpose**: Process queued wallet scan jobs
-- **Response**: JSON with processed job counts
+- **Now handled by Vercel Cron + on-demand kicks — do NOT add an external poll.**
+- The `/api/jobs/process` route runs on a 15-minute Vercel Cron fallback
+  (`vercel.json`) and is triggered on-demand whenever a scan is enqueued
+  (`src/lib/job-kick.ts`). A frequent external poll would keep Neon compute
+  awake around the clock; that is the regression this guardrail exists to prevent.
 
 ## cron-jobs.org Configuration
 
@@ -49,20 +67,18 @@ Timeout: 300 seconds
 #### Health Monitoring Job
 ```
 Title: Allowance Guard Health Monitoring
-URL: https://www.allowanceguard.com/api/alerts/health
+URL: https://www.allowanceguard.com/api/alerts/health?fast=1
 Method: GET
 Schedule: */10 * * * *
 Timeout: 60 seconds
 ```
+> `?fast=1` is required: it skips the Neon-waking database check. A sub-15-minute
+> poll of the deep (no-param) endpoint will exhaust the compute allowance.
 
 #### Job Processing Job
-```
-Title: Allowance Guard Job Processing
-URL: https://www.allowanceguard.com/api/jobs/process
-Method: GET
-Schedule: */5 * * * *
-Timeout: 300 seconds
-```
+> **Removed.** `/api/jobs/process` is driven by Vercel Cron + on-demand kicks
+> (see the note in "Required Cron Jobs" above). Do not configure an external
+> poll for it.
 
 ### Advanced Settings
 

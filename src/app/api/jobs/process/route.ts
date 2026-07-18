@@ -25,9 +25,12 @@ export async function POST(_req: NextRequest) {
     // Leave headroom under this function's 180s maxDuration (vercel.json)
     const result = await processPendingJobs({ deadlineMs: 150_000 })
 
-    // Self-chain: if the deadline hit with work still queued, hand the
-    // remainder to a fresh invocation with its own full time budget.
-    // Bounded — failing jobs leave 'pending' once attempts >= max_attempts.
+    // Self-chain: if the deadline hit with CLAIMABLE work still queued, hand
+    // the remainder to a fresh invocation with its own full time budget.
+    // Bounded: a job that keeps failing is marked 'failed' once attempts >=
+    // max_attempts (in finishJob, or in resetStuckJobs for jobs killed before
+    // finishing), and `remaining` excludes jobs still in their retry cooldown,
+    // so the chain drains and stops rather than spinning.
     if (result.remaining > 0) {
       apiLogger.info('jobs.process.chain', { remaining: result.remaining })
       kickJobProcessor()
