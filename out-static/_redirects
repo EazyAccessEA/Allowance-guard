@@ -1,8 +1,11 @@
 # AllowanceGuard is retired. The blog is the only surviving surface.
-# Cloudflare Pages serves real files (/, /blog/, /blog/<slug>/, /styles.css,
-# /images/*, /fonts/*, /sitemap.xml, /robots.txt) BEFORE these rules, so the
-# archive is never caught by the catch-all. Everything else 301s to the sunset
-# home. Codes limited to those Cloudflare Pages supports (301/302/303/307/308).
+# Every retired route is listed EXPLICITLY below and 301s to the sunset home.
+#
+# DO NOT add a `/*` catch-all. Cloudflare Pages evaluates these rules before
+# serving static assets, and the `/*` splat matches `/` itself — which makes the
+# homepage redirect to the homepage and the site dies with ERR_TOO_MANY_REDIRECTS.
+# Unmatched paths fall through to 404.html, which is correct anyway.
+# Codes limited to those Cloudflare Pages supports (301/302/303/307/308).
 #
 # apex vs www: bind the Pages project to www.allowanceguard.com (every canonical
 # URL uses www) and 301 the apex -> www at the DNS/Pages level.
@@ -48,6 +51,3 @@
 # and shipped a kill-build. See SUNSET.md to serve a static "discontinued" JSON
 # here instead of redirecting.
 /api/*           /          301
-
-# Catch-all safety net — keep LAST. Real files above are served first.
-/*               /          301
