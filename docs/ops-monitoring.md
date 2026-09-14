@@ -195,3 +195,31 @@ For ops monitoring issues:
 3. Test endpoints manually
 4. Verify environment variables
 5. Check cron-job.org job status
+
+## Neon compute guardrail (cron alignment)
+
+**Do not increase cron frequency without reading this.**
+
+Neon bills *compute-hours*, not queries. The compute autosuspends after an idle
+window (default 5 min) and bills nothing while asleep. Every cron hit resets that
+idle timer, so the poll interval — not the query cost — decides the monthly bill.
+
+In August 2026 `/api/jobs/process` ran at `* * * * *`. A DB query every 60s meant
+the compute never got an idle window, ran 24/7, and burned the entire 100 CU-hour
+monthly allowance in ~17 days (730h x 0.25 CU minimum = 182 CU-h/month needed).
+
+**The rule:** every cron is aligned to minute `0` and `30`. The DB therefore wakes
+at most twice an hour and *all* scheduled work shares those two wakes. Staggering
+the schedules is worse than clustering them — two crons five minutes apart cause
+two separate wakes, not one.
+
+Rough cost at this configuration: ~30 CU-hours/month against a 100 CU-hour free
+allowance. Dropping Neon's autosuspend setting to 60s takes it to ~10 CU-hours.
+
+**Why a 30-minute queue delay is acceptable:** `/api/scan` is two-phase. Fast
+chains are scanned *inline* and returned in the response; only slow chains are
+queued via `enqueueScan` for the cron to drain. The delay affects background
+completion of slow chains, never the user-visible scan result.
+
+If sub-30-minute job pickup is ever genuinely needed, make it event-driven —
+trigger processing after `enqueueScan` — rather than polling more often.
